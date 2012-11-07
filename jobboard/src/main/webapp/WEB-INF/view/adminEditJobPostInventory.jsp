@@ -202,7 +202,7 @@ function closePopup() {
 					value="${nsId}" />&nbsp;&nbsp;
 
 				<input type="button" value="find" name="find" id="find"
-					class="btn_sm orange" />
+					class="btn_sm orange cursor" />
 			</div>
 				<input type="hidden" name="nsId" />
 				<input type="hidden" name="empList" />

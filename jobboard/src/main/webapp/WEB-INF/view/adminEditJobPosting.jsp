@@ -174,7 +174,7 @@ function loadTable(){
 		style="display: block">
 		<div class="popupHeader">
 			<h2>MANAGE/EDIT JOB POSTING EXPIRE DATE</h2>
-			<img id="closeCheckOut" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close"/>
+			<img id="closeCheckOut" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose cursor" alt="Close"/>
 		</div>
 		<div class="row">
 		<span id="ErrorMsg" class="FormErrorDisplayText01"> </span>
@@ -190,14 +190,14 @@ function loadTable(){
 						Adv Job Id
 					</span>
 					<input name="advJobId" id="advJobId" class="job_seeker_email" type="text"/>&nbsp;&nbsp;&nbsp;
-					<input type="button" value="Search" name="SearchJob" id="SearchJob" class="btn_sm orange"  />
+					<input type="button" value="Search" name="SearchJob" id="SearchJob" class="btn_sm orange cursor"  />
 					<!-- <div class="toolTip"><span class="classic">Example: Only Job id like 15030</span></div> -->
 			</div>
 			 <jsp:include page="adminEditJobSave.jsp" />
 		 	 <div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 						<span class="floatLeft marginTop10">
-							<input type="button" value="Save" name="Save" id="Save" class="btn_sm orange" />
-							<input type="button" value="Cancel" name="Cancel" id="Cancel" class="orange" />
+							<input type="button" value="Save" name="Save" id="Save" class="btn_sm orange cursor" />
+							<input type="button" value="Cancel" name="Cancel" id="Cancel" class="orange cursor" />
 								
 						</span>
 					</div>

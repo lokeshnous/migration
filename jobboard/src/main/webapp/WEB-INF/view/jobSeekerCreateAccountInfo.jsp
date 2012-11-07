@@ -41,7 +41,7 @@ function validateNumber(event) {
 </script> 
 <script type="text/javascript">
 		    jQuery(document).ready(function(){
-		    	$("#phone").inputmask("mask", {"mask": "(999) 999-9999"}); 
+		    	$("#phone").inputmask("mask", {"mask": "(999) 999-9999"});
 		    //	$('[id^=zipCode]').keypress(validateNumber);
 		    jQuery(".megamenu").megamenu();
 
@@ -85,7 +85,8 @@ function validateNumber(event) {
 								if (country == "USA" || country == "US") {           		
 				            		 var checks = ["2","3","4"];
 				            		 $(":checkbox").val(checks).filter(":checked").attr("disabled",true);
-				            		               	
+				            		 $(":checkbox").val(checks).filter(":checked").attr("checked",false); 
+				            		 $("#waitmsg").hide();
 				            	}else{
 				            		var checks = ["1","2","3","4"];
 				           		    $(":checkbox").val(checks).filter(":checked").attr("disabled",false);           		
@@ -121,7 +122,8 @@ function validateNumber(event) {
 							if ($("#countryDpId").val() == "USA") {           		
 			            		 var checks = ["2","3","4"];
 			            		 $(":checkbox").val(checks).filter(":checked").attr("disabled",true);
-			            		               	
+			            		 $(":checkbox").val(checks).filter(":checked").attr("checked",false);
+			            		 $("#waitmsg").hide();              	
 			            	}else{
 			            		var checks = ["1","2","3","4"];
 			           		    $(":checkbox").val(checks).filter(":checked").attr("disabled",false);
@@ -145,15 +147,6 @@ function validateNumber(event) {
 			});
 
 		});
-		    
-		    function modifyMsg(){
-				var checkIt = $('#checkIt').is(':checked');
-				if(checkIt){
-					$("#waitmsg").html("<span>Please choose required publications for selected subscriptions using DASHBOARD -> MODIFY SUBSCRIPTION option.</span>");
-				}else{
-					$("#waitmsg").html("");
-				}
-				}
 		   
 		</script>
 		<script type="text/javascript">
@@ -163,19 +156,49 @@ function validateNumber(event) {
 		</script>
 		
 		<script type="text/javascript">
+		jQuery(document).ready(function(){
+			$("#waitmsg").hide();
+		     var countryVal = $('.countryDpId').val();
+		     if($(":checkbox").is(':checked')){
+		     $("#waitmsg").show();
+		     }
+		    if (countryVal == "USA") {           		
+          		 var checks = ["2","3","4"];
+          		 $(":checkbox").val(checks).filter(":checked").attr("disabled",true);
+          		$(":checkbox").val(checks).filter(":checked").attr("checked",false);
+          		$("#waitmsg").hide();                 	
+          	}
+
+		});
+		    function modifyMsg(id){
+				/* var checkIt = $(id).is(':checked');
+				if(checkIt){
+					 $("#waitmsg").show();
+				}else{
+					 $("#waitmsg").hide();
+				} */
+		    	if($(":checkbox").is(':checked')){//and not equal to disabled
+				     $("#waitmsg").show();
+				     }else{
+				    	 $("#waitmsg").hide();	 
+				     }
+			}
            
-            
-            function modify(selectedVal){           	
-            	 if (selectedVal == "USA") {           		
-            		 var checks = ["2","3","4"];
-            		 $(":checkbox").val(checks).filter(":checked").attr("disabled",true);
-            		 $("#waitmsg").html("");
-            		               	
-            	}else{
-            		var checks = ["1","2","3","4"];
-           		    $(":checkbox").val(checks).filter(":checked").attr("disabled",false);  
-           			modifyMsg();
-            	}               
+            function displayMsg(selectedVal) {
+            	if (selectedVal == "USA") {           		
+           		 var checks = ["2","3","4"];
+           		 $(":checkbox").val(checks).filter(":checked").attr("disabled",true);
+           		$(":checkbox").val(checks).filter(":checked").attr("checked",false);
+           		 $("#waitmsg").hide();
+           		               	
+           	}else{
+           		var checks = ["1","2","3","4"];
+          		    $(":checkbox").val(checks).filter(":checked").attr("disabled",false);  
+          		  $("#waitmsg").show();
+           	}
+			}
+            function modify(selectedVal){
+            	displayMsg(selectedVal);
             }
             
         </script>
@@ -285,7 +308,7 @@ function validateNumber(event) {
 								<c:if test="${profAttrib.strLabelName == 'Country'}">
 									<div class="row">
 										<span class="lableTextSelect ">Country:</span>
-												<form:select path="listProfAttribForms[${status.index}].strLabelValue" id="countryDpId" class="jb_input3 jb_input_width3" onchange="modify(this.value);">
+												<form:select path="listProfAttribForms[${status.index}].strLabelValue" id="countryDpId" class="countryDpId jb_input3 jb_input_width3" onchange="modify(this.value);">
 													<form:option value="0" label="Select" />
 													<form:options items="${profAttrib.dropdown}" itemValue="optionId"
 														itemLabel="optionName" />
@@ -297,7 +320,7 @@ function validateNumber(event) {
 									<div class="rowEvenNewSpacing">
 										<span class="lableText3">Phone Number:</span>
 										<form:input path="listProfAttribForms[${status.index}].strLabelValue" id="phone"
-											class="job_seeker_password textBox350" />
+											class="job_seeker_password textBox350"/>
 											<div class="toolTip marginTop5 marginLeft5">
 											<span class="classic">Valid format for Phone number is (xxx)xxx-xxxx</span>
 										</div>
@@ -397,13 +420,13 @@ function validateNumber(event) {
 		
 									<div class="centerAlign">
 										<ul>
-											<c:forEach items="${profAttrib.dropdown}" var="dropdown" varStatus="index">
+											<c:forEach items="${profAttrib.dropdown}" var="dropdown" varStatus="subIndex">
 												<li>
 													<div>
 														<form:checkbox path="listProfAttribForms[${status.index}].subs"
 															label="${dropdown.optionName}"
 															value="${dropdown.optionId}"
-															cssStyle="width:20px" id="checkIt" onchange="modifyMsg()"/>
+															cssStyle="width:20px" id="checkIt${subIndex.index}" onchange="modifyMsg(this)"/>
 													</div>
 												</li>
 											</c:forEach>
@@ -411,7 +434,9 @@ function validateNumber(event) {
 									</div>
 								</c:if>				
 						</c:forEach>		
-						<div id="waitmsg"  class="FormErrorDisplayText"></div>	
+						<div id="waitmsg"  class="FormErrorDisplayText">
+						<span>Please choose required publications for selected subscriptions using DASHBOARD -> MODIFY SUBSCRIPTION option.</span>
+						</div>	
 							<div
 								class="popUpButtonRow">
 								<!-- <a href="" class="btn_sm white">Back</a> -->

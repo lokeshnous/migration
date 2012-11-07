@@ -138,7 +138,7 @@ function validateFacility() {
 		<div class="popupHeader">
 			<h2>MANAGE/EDIT FACILITY</h2>
 			<a href="#"><img src="../resources/images/Close.png"
-				title="Close" width="19" height="19" onclick="closePopup();"
+				title="Close" width="19" height="19" class="nyroModalClose cursor"
 				alt=""></a>
 		</div>
 		<div class="row">
@@ -159,7 +159,7 @@ function validateFacility() {
 					value="${nsId}" />&nbsp;&nbsp;
 
 				<input type="button" value="find" name="find" id="find"
-					class="btn_sm orange" />
+					class="btn_sm orange cursor" />
 			</div>
 			<div class="rowEvenNewSpacing" >
 				<span class="splLableText">Company Name:</span>
@@ -176,8 +176,8 @@ function validateFacility() {
 			</div>
 				<input type="hidden" name="pageValue" value="inventoryPage" />
 				<div class="row marginTop20 paddingBottom10">
-					<input type="submit" value="SAVE" class="purchaseJobPostings btn_sm orange" onclick="return validateFacility();">
-					<input type="button" id="cancelbutton" class="orange" value="Cancel" onclick="parent.$.nmTop().close();" />
+					<input type="submit" value="SAVE" class="purchaseJobPostings btn_sm orange cursor" onclick="return validateFacility();">
+					<input type="button" id="cancelbutton" class="orange cursor" value="Cancel" onclick="parent.$.nmTop().close();" />
 				</div>
 			</form:form>
 		</div>

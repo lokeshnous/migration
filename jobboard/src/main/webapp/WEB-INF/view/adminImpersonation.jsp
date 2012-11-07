@@ -47,7 +47,7 @@
 		<div class="popupHeader">
 			<h2>Impersonation</h2>
 			<img id="closeCheckOut" src="../resources/images/Close.png" title="Close"
-				width="19" height="19" alt="" class="nyroModalClose">
+				width="19" height="19" alt="" class="nyroModalClose cursor">
 		</div>
 		<div class="popUpContainerWrapper">
 			<div class="popUpContainerWrapper">
@@ -80,9 +80,9 @@
 						
 						<div class="rowEvenNewSpacing">
 							<span class="lableText5"></span>
-							<input type="button" value="Impersonate" id="impersonate" class="orange"/>
+							<input type="button" value="Impersonate" id="impersonate" class="orange cursor"/>
 							<!-- <a href="" class="btn_sm orange">Cancel</a> -->
-							<input type="button" id="cancelbutton" class="orange" value="Cancel" onclick="parent.$.nmTop().close();" />
+							<input type="button" id="cancelbutton" class="orange cursor" value="Cancel" onclick="parent.$.nmTop().close();" />
 						</div>
 					</div>
 				</form:form>
