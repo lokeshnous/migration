@@ -374,7 +374,10 @@
               </span><span class="ContactInfoAreaRight"><c:out value="${reference.referenceType}"/></span> </div>
             </c:forEach>
 
-              <div class="IconsArea"><a href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}"><div class="download"></div></a>&nbsp; <a href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${createResume.uploadResumeId}"><div class="printOrange"></div></a></div>
+              <div class="IconsArea">
+              <a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}">
+              <div class="download"></div></a>&nbsp; 
+              <a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${createResume.uploadResumeId}"><div class="printOrange"></div></a></div>
           </div>
                 </div>
 
