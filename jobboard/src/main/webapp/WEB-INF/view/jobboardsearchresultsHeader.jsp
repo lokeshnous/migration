@@ -9,7 +9,9 @@
 <script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
 <script>
 	$(document).ready(function() {
-		$("#seeallpopup").displaypopup("#seeallpopup", "790","370");
+
+		$("#seeallpopup").attr("href", "../jobsearch/seeallsearch.html");
+		$("#seeallpopup").displaypopup("#seeallpopup", "790", "370");
 		$('#submitval').click(function() {
 			parent.right_frame.location.reload();
 		});
@@ -121,8 +123,7 @@
 					<security:authorize access="hasRole('ROLE_JOB_SEEKER')">
 						<div>MY RECENT SEARCHES:</div>
 						<a class="cursor" id="clearMe" onclick="clearAll();">Clear All</a> | <a
-							href="../jobsearch/seeallsearch.html" id="seeallpopup">See
-							All</a>
+							href="#nogo" id="seeallpopup">See All</a>
 						<div id="jobboardSearchResultsHitoryId"></div>
 
 						<!-- search_info_box1 -->
