@@ -103,6 +103,9 @@
 						<form:input path="fileContent" type="file" id="filePath" size="20"
 							class="job_seeker_login_email fileType" />
 					</div>
+					<div class="toolTip marginTop8">
+						<span class="classic">Select the resume you want to upload. Accepted file types are .doc, .docx and PDF only</span>
+					</div>
 					<span class="required">(Required)</span>
 					
 				</div>
