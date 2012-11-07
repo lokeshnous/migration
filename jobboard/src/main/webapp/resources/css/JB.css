@@ -2784,12 +2784,13 @@ a.link_color1_emphasized,a.link_color2_emphasized,.link_color2_selected
 .job_seeker_login input.job_seeker_email,.job_seeker_login input.job_seeker_password
 	{
 	width: 205px;
-	height: 25px;
+	height: 15px;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	background-color: #f0f0f0;
 	font-size: 15px;
+	padding:5px 0;
 }
 
 input.job_seeker_Resume {
