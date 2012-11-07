@@ -114,7 +114,7 @@
 								<li>Post a resume to be found by registered employers</li>
 								<li>Create a Job Alert and more for free</li>
 							</ul>
-							<a title="Coming Soon" href="">Create an Account</a>
+							<a href="<%=request.getContextPath()%>/jobseekerregistration/createJobSeekerCreateYrAcct.html">Create an Account</a>
 						</div>
 					</security:authorize>
 					<!-- search_info_box1 -->
