@@ -112,7 +112,7 @@
 									</div>
 									<div class="lableTextDashBoard">
 										<p>
-											<a title="Coming Soon" id="modifySubs"
+											<a id="modifySubs"
 												href="<%=request.getContextPath()%>/subscriptions/modifyFacilitySubscriptions.html">Modify
 												Subscriptions</a>
 										</p>
