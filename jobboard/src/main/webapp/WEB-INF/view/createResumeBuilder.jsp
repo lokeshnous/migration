@@ -171,6 +171,7 @@ function validateNumber(event) {
 		$("#saveResBuilderBtId").click(function(){
 			$.ajax({
 				type : "POST",
+				data:$('#createResumeBuilderId').serialize(),
 				url : "${pageContext.request.contextPath}/jobSeekerResume/getResumeProgress.html",
 				success : function(data) {		
 						val=data;
