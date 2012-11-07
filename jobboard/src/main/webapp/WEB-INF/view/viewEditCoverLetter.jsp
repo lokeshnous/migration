@@ -10,7 +10,10 @@
 <jsp:include page="common/include.jsp" />
 		<script type="text/javascript">
 		jQuery(document).ready(function(){  
-			 	
+
+			var existingLength = $('#coverletterText').val().length;
+			$('#counterTextID').val(5000 - existingLength) ;
+			
 			$('#save').click(function(){			
 	 			
 				$.ajax({url:"${pageContext.request.contextPath}/jobSeekerCoverLetter/jobseekerupdateCoverLetter.html",
@@ -152,7 +155,7 @@
 								<span class="lableText3">
 								
 								</span>
-								<input readonly type="text" class="input2000_width" name="countdownCoverLetter" size="3" value="5000">characters remaining.<div class="required2" style="float:right">(Required)</div>
+								<input readonly type="text" class="input2000_width" name="countdownCoverLetter" id="counterTextID" size="3" value="5000">characters remaining.<div class="required2" style="float:right">(Required)</div>
 								</p>
 							</div>						
 						<div class="rowEvenNewSpacing">
