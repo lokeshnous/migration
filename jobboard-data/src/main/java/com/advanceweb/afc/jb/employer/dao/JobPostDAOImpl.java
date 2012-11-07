@@ -59,6 +59,8 @@ public class JobPostDAOImpl implements JobPostDAO {
 	private static final String FIND_INVENTORY_DETAILS = "select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 "
 			+ "and dtl.productId=? and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) order by dtl.availableqty ";
 	private static final String FIND_INVENTORY_DETAILS_BY_INV_ID = "from AdmInventoryDetail inv  where inv.invDetailId=?)";
+	private static final String FIND_JP_JOB = "SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId=";
+	private static final String FIND_JP_JOB_COUNT = "SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId=";
 	private static final long MILLIS_IN_DAY = 24 * 60 * 60 * 1000;
 
 	private static final Logger LOGGER = Logger.getLogger(JobPostDAOImpl.class);
@@ -137,7 +139,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 								dto.getFacilityId()))) {
 				return false;
 			}
-			if ((dto.getJobId() > 0 && dto.isbActive() == true)
+			if ((dto.getJobId() > 0 && dto.isbActive())
 					&& ((MMJBCommonConstants.POST_JOB_SCHEDULED.equals(dto
 							.getJobStatus()) || (MMJBCommonConstants.POST_JOB_DRAFT
 							.equals(dto.getJobStatus())))
@@ -270,7 +272,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 					.getSessionFactory()
 					.getCurrentSession()
 					.createQuery(
-							"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+							FIND_JP_JOB
 									+ employerId + "and a.deleteDt is NULL ");
 			query.setFirstResult(offset);
 			query.setMaxResults(noOfRecords);
@@ -373,7 +375,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
-	public boolean updateManageJob(boolean autoRenew, String brandTemplate,
+	public boolean updateManageJob(boolean autoRenew, int brandTemplate,
 			int jobId, int userId) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
 		try {
@@ -381,9 +383,9 @@ public class JobPostDAOImpl implements JobPostDAO {
 			job.setUpdateDt(new Timestamp(new Date().getTime()));
 			job.setAutoRenew(autoRenew ? 1 : 0);
 			JpTemplate template = null;
-			if (Integer.valueOf(brandTemplate) > 0) {
+			if (brandTemplate > 0) {
 				template = hibernateTemplate.load(JpTemplate.class,
-						Integer.valueOf(brandTemplate));
+						brandTemplate);
 			}
 
 			job.setJpTemplate(template);
@@ -520,14 +522,14 @@ public class JobPostDAOImpl implements JobPostDAO {
 						.getSessionFactory()
 						.getCurrentSession()
 						.createQuery(
-								"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+								FIND_JP_JOB
 										+ userId
 										+ " and a.active = 1 and(DATE_FORMAT(a.startDt, '%Y-%m-%d') <= CURRENT_DATE and DATE_FORMAT(a.endDt, '%Y-%m-%d') >= CURRENT_DATE)  and a.deleteDt is NULL");
 				jobCount = (Long) hibernateTemplate
 						.getSessionFactory()
 						.getCurrentSession()
 						.createQuery(
-								"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+								FIND_JP_JOB_COUNT
 										+ userId
 										+ " and a.active = 1 and (DATE_FORMAT(a.startDt, '%Y-%m-%d') <= CURRENT_DATE and DATE_FORMAT(a.endDt, '%Y-%m-%d') >= CURRENT_DATE)  and a.deleteDt is NULL")
 						.uniqueResult();
@@ -539,14 +541,14 @@ public class JobPostDAOImpl implements JobPostDAO {
 						.getSessionFactory()
 						.getCurrentSession()
 						.createQuery(
-								"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+								FIND_JP_JOB
 										+ userId
 										+ " and (a.active = 0 and DATE_FORMAT(a.startDt, '%Y-%m-%d') <= CURRENT_DATE) and a.deleteDt is NULL");
 				jobCount = (Long) hibernateTemplate
 						.getSessionFactory()
 						.getCurrentSession()
 						.createQuery(
-								"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+								FIND_JP_JOB_COUNT
 										+ userId
 										+ " and (a.active = 0 and DATE_FORMAT(a.startDt, '%Y-%m-%d') <= CURRENT_DATE) and a.deleteDt is NULL")
 						.uniqueResult();
@@ -557,14 +559,14 @@ public class JobPostDAOImpl implements JobPostDAO {
 						.getSessionFactory()
 						.getCurrentSession()
 						.createQuery(
-								"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+								FIND_JP_JOB
 										+ userId
 										+ " and (a.active = 0 and a.startDt is NULL and a.endDt is NULL) and a.deleteDt is NULL");
 				jobCount = (Long) hibernateTemplate
 						.getSessionFactory()
 						.getCurrentSession()
 						.createQuery(
-								"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+								FIND_JP_JOB_COUNT
 										+ userId
 										+ " and (a.active = 0 and a.startDt is NULL and a.endDt is NULL) and a.deleteDt is NULL")
 						.uniqueResult();
@@ -575,14 +577,14 @@ public class JobPostDAOImpl implements JobPostDAO {
 						.getSessionFactory()
 						.getCurrentSession()
 						.createQuery(
-								"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+								FIND_JP_JOB
 										+ userId
 										+ " and (a.active = 1 and DATE_FORMAT(a.endDt, '%Y-%m-%d') < CURRENT_DATE) and a.deleteDt is NULL");
 				jobCount = (Long) hibernateTemplate
 						.getSessionFactory()
 						.getCurrentSession()
 						.createQuery(
-								"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+								FIND_JP_JOB_COUNT
 										+ userId
 										+ " and (a.active = 1 and DATE_FORMAT(a.endDt, '%Y-%m-%d') < CURRENT_DATE) and a.deleteDt is NULL")
 						.uniqueResult();
@@ -593,14 +595,14 @@ public class JobPostDAOImpl implements JobPostDAO {
 						.getSessionFactory()
 						.getCurrentSession()
 						.createQuery(
-								"SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+								FIND_JP_JOB
 										+ userId
 										+ " and (a.active = 0 and DATE_FORMAT(a.startDt, '%Y-%m-%d') > CURRENT_DATE) and a.deleteDt is NULL");
 				jobCount = (Long) hibernateTemplate
 						.getSessionFactory()
 						.getCurrentSession()
 						.createQuery(
-								"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+								FIND_JP_JOB_COUNT
 										+ userId
 										+ " and (a.active = 0 and DATE_FORMAT(a.startDt, '%Y-%m-%d') > CURRENT_DATE) and a.deleteDt is NULL")
 						.uniqueResult();
@@ -623,7 +625,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 					.getSessionFactory()
 					.getCurrentSession()
 					.createQuery(
-							"SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId="
+							FIND_JP_JOB_COUNT
 									+ employerId + "and a.deleteDt is NULL")
 					.uniqueResult();
 			return jobCount.intValue();
@@ -1024,12 +1026,12 @@ public class JobPostDAOImpl implements JobPostDAO {
 		final String OLD_FORMAT = "MM/dd/yyyy HH:mm:ss";
 		final String NEW_FORMAT = "yyyy-MM-dd HH:mm:ss";
 		String newDateString;
-		SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
+		SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT, Locale.ENGLISH);
 		try {
-			Date d = sdf.parse(date);
+			Date utilDate = sdf.parse(date);
 			sdf.applyPattern(NEW_FORMAT);
-			newDateString = sdf.format(d);
-			SimpleDateFormat sdfSource = new SimpleDateFormat(NEW_FORMAT);
+			newDateString = sdf.format(utilDate);
+			SimpleDateFormat sdfSource = new SimpleDateFormat(NEW_FORMAT, Locale.ENGLISH);
 			dateValue = sdfSource.parse(newDateString);
 		} catch (ParseException e) {
 			LOGGER.info("Date parsing in Job save by admin wrong");

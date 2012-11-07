@@ -29,7 +29,7 @@ public interface JobPostService {
 
 	boolean deleteJob(int jobId, int userId);
 
-	boolean updateManageJob(boolean autoRenew, String brandTemplate, int jobId,
+	boolean updateManageJob(boolean autoRenew, int brandTemplate, int jobId,
 			int userId);
 
 	boolean deactivateJob(int jobId, int userId);

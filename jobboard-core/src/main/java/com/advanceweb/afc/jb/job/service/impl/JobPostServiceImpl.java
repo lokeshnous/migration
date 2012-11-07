@@ -95,7 +95,7 @@ public class JobPostServiceImpl implements JobPostService {
 	}
 
 	@Override
-	public boolean updateManageJob(boolean autoRenew, String brandTemplate,
+	public boolean updateManageJob(boolean autoRenew, int brandTemplate,
 			int jobId, int userId) {
 		return employerJobPostDAO.updateManageJob(autoRenew,brandTemplate,jobId, userId);
 	}

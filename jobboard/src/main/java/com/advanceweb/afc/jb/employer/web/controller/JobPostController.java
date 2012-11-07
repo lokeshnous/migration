@@ -128,7 +128,7 @@ public class JobPostController extends AbstractController {
 			List<DropDownDTO> jobPostTypeCombo = populateDropdownsService
 					.populateJobPostingTypeDropdown(facilityId,
 							Integer.parseInt(jobPostType));
-			if (null != jobPostTypeCombo && jobPostTypeCombo.size() > 0) {
+			if (null != jobPostTypeCombo && !jobPostTypeCombo.isEmpty()) {
 				for (DropDownDTO dropDown : jbPostingTypeList) {
 					if (dropDown.getOptionName().equals(
 							jobPostTypeCombo.get(0).getOptionName())) {
@@ -1016,7 +1016,7 @@ public class JobPostController extends AbstractController {
 	ModelAndView updateJobs(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,
 			JobPostForm jobPostform, @RequestParam("jobId") int jobId) {
-		String template = null;
+		int template = 0;
 		boolean autoRenew = false;
 		ModelAndView model = new ModelAndView();
 		for (JobPostDTO jobPostDTO : jobPostform.getJobPostDTOList()) {
@@ -1027,7 +1027,7 @@ public class JobPostController extends AbstractController {
 			}
 		}
 
-		if (null != template) {
+		if (MMJBCommonConstants.ZERO_INT != template) {
 			employerJobPost
 					.updateManageJob(autoRenew, template, jobId,
 							(Integer) session
@@ -1103,14 +1103,13 @@ public class JobPostController extends AbstractController {
 		while (tokenize.hasMoreTokens()) {
 			jobId = Integer.valueOf(tokenize.nextToken());
 			JobPostDTO jobPostDTO = employerJobPost.retrieveJobById(jobId);
-			if (null != jobPostDTO) {
-				if (jobPostDTO.getJobStatus() != MMJBCommonConstants.POST_JOB_EXPIRED
-						&& jobPostDTO.getJobStatus() != MMJBCommonConstants.POST_JOB_INACTIVE) {
-					model = populateDropdowns(model, session);
-					model.setViewName(FORWORD_MANAGE_JOBPOST);
-					model.addObject(ERROR_MESSAGE, repostFail);
-					return model;
-				}
+			if (null != jobPostDTO
+					&& jobPostDTO.getJobStatus() != MMJBCommonConstants.POST_JOB_EXPIRED
+					&& jobPostDTO.getJobStatus() != MMJBCommonConstants.POST_JOB_INACTIVE) {
+				model = populateDropdowns(model, session);
+				model.setViewName(FORWORD_MANAGE_JOBPOST);
+				model.addObject(ERROR_MESSAGE, repostFail);
+				return model;
 			}
 			int jobPostType = employerJobPost
 					.getinvDetIdByJobId(jobId, (Integer) session

@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AddOnDTO;
@@ -16,7 +17,6 @@ import com.advanceweb.afc.jb.common.CommonUtil;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.JpAddon;
 import com.advanceweb.afc.jb.data.entities.JpJob;
@@ -37,7 +37,8 @@ import com.advanceweb.afc.jb.data.entities.JpTemplate;
  */
 @Repository("jobPostConversionHelper")
 public class JobPostConversionHelper<JobPostForm> {
-	
+	private static final Logger LOGGER = Logger
+			.getLogger(JobPostConversionHelper.class);
 	 public JpJob  transformJobDtoToJpJob(JobPostDTO dto, 
 			 JpTemplate template, AdmFacility admFacility){
 		
@@ -81,7 +82,7 @@ public class JobPostConversionHelper<JobPostForm> {
 		if (MMJBCommonConstants.POST_NEW_JOB.equals(dto.getJobStatus())) {
 			jpJob.setStartDt(new Date());
 		}
-		if ((dto.getJobId() > 0 && dto.isbActive() == true) && (MMJBCommonConstants.POST_JOB_SCHEDULED.equals(dto.getJobStatus())
+		if ((dto.getJobId() > 0 && dto.isbActive()) && (MMJBCommonConstants.POST_JOB_SCHEDULED.equals(dto.getJobStatus())
 				|| MMJBCommonConstants.POST_JOB_DRAFT
 						.equals(dto.getJobStatus()))) {
 			Calendar now = Calendar.getInstance();
@@ -164,8 +165,8 @@ public class JobPostConversionHelper<JobPostForm> {
 				jobPostDTO.setAutoRenew(job.getAutoRenew() == 0 ? false : true);
 				//jobPostDTO.setJobPostingType(job.getJpJobType().getName());
 				if (null != job.getJpTemplate()) {
-					jobPostDTO.setBrandTemplate(String.valueOf(job
-							.getJpTemplate().getTemplateId()));
+					jobPostDTO.setBrandTemplate(job
+							.getJpTemplate().getTemplateId());
 				}
 
 				setJobStatus(job, jobPostDTO);
@@ -321,7 +322,7 @@ public class JobPostConversionHelper<JobPostForm> {
 				hideCountry = jobJobLocation.getHideCountry();
 				hidePostcode = jobJobLocation.getHidePostcode();
 			}catch (Exception e) {
-				//LOGGER.info("Locations not found for Job Id :"+jobDTO.getJobID());
+				LOGGER.error("Locations not found for Job Id", e);
 			}
 
 				jobPostDTO.setbHideCity(hideCity == 1?true:false);
@@ -339,8 +340,8 @@ public class JobPostConversionHelper<JobPostForm> {
 		jobPostDTO.setFacilityId(jpJob.getAdmFacility().getFacilityId());
 		jobPostDTO.setTrackPixel(jpJob.getTrackingPixel());
 		if (null != jpJob.getJpTemplate()) {
-			jobPostDTO.setBrandTemplate(String.valueOf(jpJob.getJpTemplate()
-					.getTemplateId()));
+			jobPostDTO.setBrandTemplate(jpJob.getJpTemplate()
+					.getTemplateId());
 		}
 
 		setJobStatus(jpJob, jobPostDTO);

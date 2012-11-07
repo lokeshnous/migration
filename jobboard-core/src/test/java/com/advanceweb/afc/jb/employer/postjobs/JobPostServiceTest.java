@@ -26,7 +26,7 @@ public class JobPostServiceTest extends ServiceTest{
 	private JobPostService employerJobPost;
 	
 	@Test
-	public void postNewJob(){
+	public void testPostNewJob(){
 		JobPostDTO dto = new JobPostDTO();
 		dto.setApplicationMethod("ApplyToEMail");
 		dto.setApplyEmail("www.google.com");
@@ -35,7 +35,7 @@ public class JobPostServiceTest extends ServiceTest{
 		dto.setbHideCompName(true);
 		dto.setbHideCountry(true);
 		dto.setbHideZipCode(true);
-		dto.setBrandTemplate("Template 2");
+		dto.setBrandTemplate(2);
 		dto.setCompanyName("Nous");
 		dto.setCustomerNo("1234");
 		dto.setDisCompanyName("Nous");
@@ -58,52 +58,52 @@ public class JobPostServiceTest extends ServiceTest{
 		
 	}
 	@Test
-	public void editJob(){
+	public void testEditJob(){
 		JobPostDTO dto = new JobPostDTO();
 		dto = employerJobPost.retrieveJobById(1606);
 		Assert.assertEquals(dto.getJobId(), 1606);
 	}
 	@Test
-	public void retrieveAllJobPost(){
+	public void testRetrieveAllJobPost(){
 		List <JobPostDTO> dto = new ArrayList<JobPostDTO>();
 		dto = employerJobPost.retrieveAllJobPost(1606,1,20);
-		Assert.assertTrue("Total Record Found", !dto.isEmpty()?true:false);
+		Assert.assertTrue("Total Record Found", dto.isEmpty()?false:true);
 	}
 	@Test
-	public void retrieveAllJobPostByStatus(){
+	public void testRetrieveAllJobPostByStatus(){
 		List <JobPostDTO> dto = new ArrayList<JobPostDTO>();
 		dto = employerJobPost.retrieveAllJobByStatus("Active", 1606,1,20);
-		Assert.assertTrue("Total Record Found", !dto.isEmpty()?true:false);
+		Assert.assertTrue("Total Record Found", dto.isEmpty()?false:true);
 	}
 	
 	@Test
-	public void deleteJobs(){
+	public void testDeleteJobs(){
 		
 		boolean deleted = employerJobPost.deleteJob(13101, 1606);
 		Assert.assertTrue("Data Deleted Successfully", deleted);
 	}
 	@Test
-	public void updateJobs(){
+	public void testUpdateJobs(){
 		
-		boolean updated = employerJobPost.updateManageJob(false, "2", 13101, 1606);
+		boolean updated = employerJobPost.updateManageJob(false, 2, 13101, 1606);
 		Assert.assertTrue("Data Updated Successfully", updated);
 	}
 	@Test
-	public void deactivateJobs(){
+	public void testDeactivateJobs(){
 		
 		boolean deactivated = employerJobPost.deactivateJob(13101, 1606);
 		Assert.assertTrue("Deactivated Successfully", deactivated);
 	}
 	
 	@Test
-	public void repostJobs(){
+	public void testRepostJobs(){
 		
 		boolean repost = employerJobPost.repostJob(13101);
 		Assert.assertTrue("Job Reposted Successfully", repost);
 	}
 	
 	@Test
-	public void getJobPostingPlansTest(){
+	public void testGetJobPostingPlansTest(){
 		List<JobPostingPlanDTO> jobPostingPlanDTOList = employerJobPost.getJobPostingPlans();
 		Assert.assertNotNull(jobPostingPlanDTOList);
 	}
