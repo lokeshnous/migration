@@ -17,7 +17,16 @@
 
 		<script type="text/javascript">
 		    jQuery(document).ready(function(){
-		    jQuery(".megamenu").megamenu();
+		    $(".megamenu").megamenu();
+		    
+		    $(".IconsArea a").click(function(){
+		    	var resumeId = $(this).attr("id");
+		    	if(resumeId == 0){
+		    		alert("Please save the resume before you download/print.");
+		    		return false;
+		    	}
+		    	return true;
+		    });
 		});
 		</script>
 		</head>
@@ -65,8 +74,12 @@
             <span>
                     <p class="marginTop3">Available 08/01/2012</p>
                     </span> </div>
-                  <div class="IconsArea"><a href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}"><div class="download"></div></a>&nbsp; 
-                  <a href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${createResume.uploadResumeId}"><div class="printOrange"></div></a></div>
+                  <div class="IconsArea">
+                  <a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}">
+                  <div class="download"></div></a>&nbsp; 
+                  	<a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${createResume.uploadResumeId}" target="_blank">
+                  <div class="printOrange"></div></a>
+                  </div>
                 </div>
         <!---->
 
