@@ -9,9 +9,9 @@
 		<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>ADVANCE Heathcare Jobs</title>
-		<jsp:include page="common/include.jsp"/>
+		<%-- <jsp:include page="common/include.jsp"/> --%>
 		
-		<script type="text/javascript">
+		<!-- <script type="text/javascript">
 	jQuery(document).ready(
 	window.onload = function() {
 		loadMetricsDetails();
@@ -82,9 +82,228 @@
 				}
 		});
 	}
-</script>
-		</head>
+</script> -->
 
+
+<script type="text/javascript">
+var chart;
+var options = {
+    chart: {
+        renderTo: 'container',
+        defaultSeriesType: 'funnel',
+        borderWidth: 1
+    },
+    title: {
+        text: ''
+    },
+    plotArea: {
+        shadow: null,
+        borderWidth: null,
+        backgroundColor: null
+    },
+    tooltip: {
+        formatter: function() {
+            return '<b>'+ this.point.name +'</b>: '+ Highcharts.numberFormat(this.y, 0);
+        }
+    },
+    plotOptions: {
+        series: {
+            dataLabels: {            	
+                enabled: true, 
+                connectorWidth: 0,
+        		connectorColor: '#FFFFFF',
+                formatter: function() {
+                    return '<b>'+ this.point.name +'</b> ('+ Highcharts.numberFormat(this.point.y, 0) +')';
+                },
+                color: 'black'
+            }
+        }
+    },
+    legend: {
+        enabled: false
+    },
+    series: [{
+        name: 'Browser share',
+         data: [
+                  ['Views',   10],
+                  ['Clicks',   20],
+                  ['Applies', 30]
+              ]       
+    }]
+};
+	jQuery(document).ready(
+			function() {
+				
+				$("#metricsExcel")
+				.click(
+						function() {
+						$.ajax({
+									url : "${pageContext.request.contextPath}/employer/getExcelSheet.html",
+								    
+
+									success : function(data) {
+										
+										defaultOptions.exporting = {
+												
+												type: 'image/png',
+												
+												width: 800,
+												buttons: {
+													exportButton: {
+														//enabled: true,
+														symbol: 'exportIcon',
+														x: -10,
+														symbolFill: '#A8BF77',
+														hoverSymbolFill: '#768F3E',
+														_id: 'exportButton',
+														_titleKey: 'exportButtonTitle',
+														menuItems: [{
+															textKey: 'downloadPNG',
+															onclick: function () {
+																this.exportChart();
+															}
+														}, {
+															textKey: 'downloadJPEG',
+															onclick: function () {
+																this.exportChart({
+																	type: 'image/jpeg'
+																});
+															}
+														}, 
+														
+														]
+
+													},
+													printButton: {
+														symbol: 'printIcon',
+														x: -36,
+														symbolFill: '#B5C9DF',
+														hoverSymbolFill: '#779ABF',
+														_id: 'printButton',
+														_titleKey: 'printButtonTitle',
+														onclick: function () {
+															this.print();
+														}
+													}
+												}
+											};
+										
+									}
+									
+								});
+					}); 
+				$("#showMertics")
+				.click(
+						function() {
+							var startDate = $("#startDate")
+									.val();
+							var endDate = $("#endDate").val();
+							var selEmployerId = $(
+									"#selEmployer").val();
+									$.ajax({
+										url : "${pageContext.request.contextPath}/employer/showMertics.html?startDate="
+												+ startDate
+												+ "&endDate="
+												+ endDate
+												+ "&selEmployerId="
+												+ selEmployerId,
+										success : function(data) {
+											loadMetricsDetails();
+										},
+									});
+						});
+				 chart = new Highcharts.Chart(options);
+			});
+
+	function getData(obj) {
+		id = $(obj).attr("id");
+		var metrices = id.split("-");
+		views = parseInt(metrices[0]);
+		clicks = parseInt(metrices[1]);
+		applies = parseInt(metrices[2]);
+		if ((views == 0) && (clicks == 0) && (applies == 0)) {
+			$("#container").html("No data available.");
+			$("#container").css("width", "550px");
+			$("#container").css("text-align", "center");
+			$("#container").css("color", "#FF0000");
+		} else {
+			$("#container").html('');
+			$("#container").css("width", "290px");
+			chart = new Highcharts.Chart(options);
+			chart.series[0].setData([ [ 'Views', views ], [ 'Clicks', clicks ],
+					[ 'Applies', applies ] ], false);
+			chart.redraw(true);
+		}
+	}
+	window.onload = function() {
+		loadMetricsDetails();
+	};
+	function loadMetricsDetails() {
+		$.ajaxSetup({
+			cache : false
+		});
+		$.ajax({
+			url : '../employer/metricsDetails.html',
+			data : ({}),
+
+			success : function(data) {
+				$("#metricsDetails").html(data);
+			},
+			error : function(data) {
+				// alert('Unable to process');
+			},
+			complete : function(data) {
+			}
+		});
+	}
+	function changeMetrics() {
+		var selEmployerId = $("#selEmployer").val();
+		$
+				.ajax({
+					url : "${pageContext.request.contextPath}/employer/viewEmployerMetrics.html?selEmployerId="
+							+ selEmployerId,
+					data : $('#selEmployerId').serialize(),
+					type : "GET",
+					success : function(data) {
+						loadMetricsDetails();
+					},
+					error : function(data) {
+						// alert('Unable to process');
+					}
+				});
+	}
+	
+	function getActiveAndAvailJbPosting(selEmployerId) {
+		alert("getActiveAndAvailJbPosting::" + selEmployerId);
+		$
+				.ajax({
+					url : "${pageContext.request.contextPath}/employer/availableJobPostings.html?selEmployerId="
+							+ selEmployerId,
+					data : $('#selEmployerId').serialize(),
+					type : "GET",
+					success : function(data) {
+						$("#avaQuantity").text(data.avaQuantity);
+						$("#count").text(data.count);
+					},
+					error : function(data) {
+					}
+				});
+	}
+	$(function() {
+		$("#startDate").datepicker({
+			dateFormat : "dd/mm/yy"
+		}).val();
+	});
+
+	$(function() {
+		$("#endDate").datepicker({
+			dateFormat : "dd/mm/yy"
+		}).val();
+	});
+	
+</script>
+
+		</head>
 		<body class="job_board">
         <div id="jobSeekerRegister1" class="job_seeker_login popUpContainer" style="display:block">
           <div class="popupHeader">
@@ -129,7 +348,7 @@
 									<div id="metricsDetails" ></div>								
 							</div>
                 <!--T-->
-                <div class="rowBox EDPricec marginLeft5">
+                <!-- <div class="rowBox EDPricec marginLeft5">
                           <div class="floatLeft marginTop3"><strong>&nbsp;&nbsp;&nbsp;Date range</strong></div>
                           <div class="floatLeft marginTop3">&nbsp;&nbsp;&nbsp;From:</div>
                           <div class="floatLeft">
@@ -143,9 +362,58 @@
                   </div>
                           <div class="EDBox01 marginLeft25"><strong>SHOW</strong></div>
                           <div class="floatLeft marginTop5 marginLeft15"><a href="#">Export</a></div>
-                        </div>
+                        </div> -->
+                        
+                        <form:form method="GET" action="" commandName="epform"
+								id="empMetricsForm">
+								<div class="rowBox EDPricec">
+									<div class="floatLeft marginTop3">
+										<strong>&nbsp;&nbsp;&nbsp;Date range</strong>
+									</div>
+									<div class="floatLeft marginTop3">&nbsp;&nbsp;&nbsp;From:</div>
+									<div class="floatLeft">
+
+										<div class="floatLeft">
+											<!--  <input type="text" name="startDate" class="EDTextBox" id="startDate"/> -->
+											
+											<input type="text" name="startDate" class="EDTextBox" id="startDate" size="14"/> 
+										</div>
+
+
+										<div class="calender">
+											<a href="#"><img src="../resources/images/tranBg.png"
+												width="14" height="14" alt="Datepick"></a>
+										</div>
+									</div>
+									<div class="floatLeft marginTop3 marginLeft25">To:</div>
+									<div class="floatLeft">
+										<div class="floatLeft">
+											<!--  <input type="text" name="endDate" class="EDTextBox" id="endDate"/>  -->
+											<input type="text" name="endDate" class="EDTextBox" id="endDate" size="14"/> 
+											
+										</div>
+										<div class="calender">
+											<a href="#"><img src="../resources/images/tranBg.png"
+												width="14" height="14" alt="Datepick"></a>
+										</div>
+									</div>
+									<div class="">
+										<input type="button" name="SHOW" id="showMertics"
+											class="orange" value="SHOW" />
+										<!-- <button type="button" class="orange" onclick="myFunction()">SHOW</button> -->
+
+
+									</div>
+
+									<div class="floatLeft marginTop5 marginLeft15">
+										<a href="../employer/getExcelSheet.html" id="metricsExcel">Export</a>
+										
+									</div>
+
+								</div>
+							</form:form>
                 <!--T-->
-                <div class="rowBox marginLeft5">
+                <!-- <div class="rowBox marginLeft5">
 				<div class="rowBox Padding0 AutoWidth AutoHeight">
                           <div class="EDBoxMinW">
                           <div class="EDBox02">
@@ -164,7 +432,35 @@
                   </div>
                   <div class="rowBox marginLeft25 Padding0 AutoWidth AutoHeight">
             <img src="../resources/images/EmpDimg.png" width="250" height="208" alt="img"></div>
-                        </div>
+                        </div> -->
+                        
+                        <div class="rowBox">
+								<div class="rowBox Padding0 AutoWidth AutoHeight">
+									<div class="EDBoxMinW">
+										<div class="EDBox02">
+											<div class="row borderBottomDotted Height25">
+											
+												<p class="floatLeft">Available Job Postings</p>
+												
+												<p class="floatRight TextAlignR" id="avaQuantity">${avaQuantity}</p>
+										
+											</div>
+											<div class="row marginTop10">
+												<p class="floatLeft">Active Job Postings</p>
+											
+											<p class="floatRight TextAlignR" id="count">${count}</p> 
+												
+											</div>
+										</div>
+									</div>
+									<div class=" clearfix"></div>
+									<%-- <span class="FloatLeft"><a href="<%=request.getContextPath()%>/employer/manageJobPost.html">View Individual
+											Job Posting Stats</a></span> --%>
+											
+											
+								</div>
+								 <div id="container" style="height: 250px; width: 290px"></div>
+							</div>
               
               </div></div>
             </form:form>
