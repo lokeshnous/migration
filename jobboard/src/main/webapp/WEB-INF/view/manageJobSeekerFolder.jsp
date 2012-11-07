@@ -22,6 +22,8 @@
 <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 <script type="text/javascript">
 jQuery(document).ready(function() {
+
+	noOfPageValue=$("#noOfPage").val();
 	if($("#folderId").val()>0){
 		$(".refineResultsItem").click();
 	//	$("#myFolder").attr("class","refineResultsItem minus");
@@ -33,7 +35,7 @@ jQuery(document).ready(function() {
 	$("#all").attr("style", "color:#52a4dc");
 	}
 		$(".folderdetail").click(
-						function() {
+						function() { 
 							val = $(this).attr("id");
 							$("#all").attr("style","color:#6B7B84");
 							$('#subContent').find('span').each(function() { 
@@ -49,7 +51,7 @@ jQuery(document).ready(function() {
 							$("#folderId").val(val);
 							$("#folderName").val($(this).attr("title"));
 							$.ajax({url : "${pageContext.request.contextPath}/employer/manageJobSeeker.html?folderId="
-								+ val,
+								+ val+"&noOfPage="+noOfPageValue,
 				    			data:$('#manageJobSeeker').serialize(),
 								type: "POST",
 								success : function(data) {
@@ -74,7 +76,7 @@ jQuery(document).ready(function() {
 							     $("#"+id).attr("style", "color:##6B7B84");
 								});
 							$.ajax({url : "${pageContext.request.contextPath}/employer/manageJobSeeker.html?folderId="
-								+ 0,
+								+ 0 +"&noOfPage="+noOfPageValue,
 				    			data:$('#manageJobSeeker').serialize(),
 								type: "POST",
 								success : function(data) {

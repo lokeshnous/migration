@@ -13,6 +13,9 @@ jQuery(document).ready(function() {
 	 $("#noOfPageId").val(noOfPageValue);
 	 $("#noOfPageLowerId").val(noOfPageValue);
 	var folderIdVal=$("#folderId").val();
+	if(folderIdVal==0){
+		folderIdVal=-1;
+	}
 	 $('#noOfPageId').change(
 				function() {
 					val = $(this).val();
@@ -98,7 +101,6 @@ jQuery(document).ready(function() {
 
 		});
 		
-				jQuery(".megamenu").megamenu();
 		
 	$("#tb_manage_job_seeker img")
 	.click(
@@ -141,6 +143,8 @@ jQuery(document).ready(function() {
 				}
 
 			});
+
+	jQuery(".megamenu").megamenu();
 });
 </script>
 </head>
@@ -148,6 +152,7 @@ jQuery(document).ready(function() {
 	<form:form commandName="manageJobSeekerForm" id="manageJobSeeker">
 		<form:hidden path="folderId" />
 		<form:hidden path="folderName" />
+		<form:hidden path="noOfPage" />
 		<div class="column2">
 			<div id="errorMsg" class="FormErrorDisplayText01 marginBottom5">
 				<c:if test="${errorMsg != null}">
@@ -178,7 +183,7 @@ jQuery(document).ready(function() {
 					<%--For displaying Previous link except for the 1st page --%>
 					<c:if test="${currentPage != 1 && noOfPages gt 1}">
 						<td><a
-							href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=${manageJobSeekerForm.folderId}&page=${currentPage - 1}&next=${begin-1}">
+							href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=${manageJobSeekerForm.folderId}&compare=true&page=${currentPage - 1}&next=${begin-1}">
 								<img src="../resources/images/ArrowLeft.png"> Previous
 						</a></td>
 					</c:if>
@@ -195,7 +200,7 @@ jQuery(document).ready(function() {
 							<c:otherwise>
 								<span class="active"> <c:if test="${i lt begin+10}">
 										<a
-											href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=${manageJobSeekerForm.folderId}&page=${i}&noOfPage=${manageJobSeekerForm.noOfPage}
+											href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=${manageJobSeekerForm.folderId}&compare=true&page=${i}&noOfPage=${manageJobSeekerForm.noOfPage}
 													">${i}</a>
 									</c:if></span>
 
@@ -206,7 +211,7 @@ jQuery(document).ready(function() {
 					<span> <c:if
 							test="${noOfPages gt 1 && noOfPages != currentPage}">
 							<a
-								href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=${manageJobSeekerForm.folderId}&page=${currentPage+1}&next=${begin+1}&noOfPage=${manageJobSeekerForm.noOfPage}">Next
+								href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=${manageJobSeekerForm.folderId}&compare=true&page=${currentPage+1}&next=${begin+1}&noOfPage=${manageJobSeekerForm.noOfPage}">Next
 								<img src="../resources/images/ArrowRight.png">
 							</a>
 						</c:if></span>
@@ -326,7 +331,7 @@ jQuery(document).ready(function() {
 					<%--For displaying Previous link except for the 1st page --%>
 					<c:if test="${currentPage != 1 && noOfPages gt 1}">
 						<td><a
-							href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=${manageJobSeekerForm.folderId}&page=${currentPage - 1}&next=${begin-1}&noOfPage=${manageJobSeekerForm.noOfPage}">
+							href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=${manageJobSeekerForm.folderId}&compare=true&page=${currentPage - 1}&next=${begin-1}&noOfPage=${manageJobSeekerForm.noOfPage}">
 								<img src="../resources/images/ArrowLeft.png"> Previous
 						</a></td>
 					</c:if>
@@ -343,7 +348,7 @@ jQuery(document).ready(function() {
 							<c:otherwise>
 								<span class="active"> <c:if test="${i lt begin+10}">
 										<a
-											href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=${manageJobSeekerForm.folderId}&page=${i}&noOfPage=${manageJobSeekerForm.noOfPage}
+											href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=${manageJobSeekerForm.folderId}&compare=true&page=${i}&noOfPage=${manageJobSeekerForm.noOfPage}
 													">${i}</a>
 									</c:if></span>
 
@@ -354,7 +359,7 @@ jQuery(document).ready(function() {
 					<span> <c:if
 							test="${noOfPages gt 1 && noOfPages != currentPage }">
 							<a
-								href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=${manageJobSeekerForm.folderId}&page=${currentPage+1}&next=${begin+1}&noOfPage=${manageJobSeekerForm.noOfPage}">Next
+								href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=${manageJobSeekerForm.folderId}&compare=true&page=${currentPage+1}&next=${begin+1}&noOfPage=${manageJobSeekerForm.noOfPage}">Next
 								<img src="../resources/images/ArrowRight.png">
 							</a>
 						</c:if></span>

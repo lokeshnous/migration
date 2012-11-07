@@ -105,7 +105,6 @@
 	<form:form commandName="manageJobSeekerForm" id="manageJobSeeker">
 		<form:hidden path="selectedRow" id="selectedRow" />
 		<form:hidden path="rating" id="ratingId" />
-		<form:hidden path="noOfPage" />
 		<form:hidden path="rating" id="ratingId" />
 		<form:hidden path="folderId" id="folderId" />
 		<div class="ad_page_top">${adPageTop }</div>
@@ -135,158 +134,11 @@
 							</div>
 
 							<!-- column1 -->
-							<%-- div class="column2">
-								<div id="errorMsg" class="FormErrorDisplayText01 marginBottom5">
-														<c:if test="${errorMsg != null}">
-														<c:out value="${errorMsg}"></c:out>
-														</c:if>
-														
-														</div>
-								<div class="searchResultsNavigation width98P">
-									<div class="searchResultsNavigationColumn1">
-
-										<!--Added Class "marginTop5"-->
-										<span>Results viewable:</span> <span class="Padding0">
-											<select id="noOfPageId" 
-												class="jb_input4 margin0">
-												<option value="10">10</option>
-												<option value="20">20</option>
-												<option value="30">30</option>
-												<option value="40">40</option>
-												<option value="50">50</option>
-											</select>
-										</span>
-										<!--Added Class "marginTop5"-->
-										<span class="marginTop5">per page</span>
-									</div>
-									<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;&nbsp;
-									</div>
-									<div class="searchResultsNavigationColumn2 floatRight">
-										<!-- <span>Page:</span> -->
-										For displaying Previous link except for the 1st page
-										<c:if test="${currentPage != 1 && noOfPages gt 1}">
-											<td><a
-												href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=${manageJobSeekerForm.folderId}&page=${currentPage - 1}&next=${begin-1}">
-													<img src="../resources/images/ArrowLeft.png">
-													Previous
-											</a></td>
-										</c:if>
-
-
-
-										<c:forEach begin="${begin}" end="${noOfPages}" var="i">
-											<c:choose>
-												<c:when test="${currentPage eq i}">
-
-													<span class="active">${i}</span>
-
-												</c:when>
-												<c:otherwise>
-													<span class="active"> <c:if test="${i lt begin+10}">
-															<a
-													href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=${manageJobSeekerForm.folderId}&page=${i}&noOfPage=${manageJobSeekerForm.noOfPage}
-													">${i}</a>
-														</c:if></span>
-
-												</c:otherwise>
-											</c:choose>
-										</c:forEach>
-
-										<span> <c:if
-												test="${noOfPages gt 1 && noOfPages != currentPage}">
-												<a
-													href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=${manageJobSeekerForm.folderId}&page=${currentPage+1}&next=${begin+1}&noOfPage=${manageJobSeekerForm.noOfPage}">Next
-													<img src="../resources/images/ArrowRight.png">
-												</a>
-											</c:if></span>
-
-
-
-
-									</div>
-								</div>
-								<!--button-->
-								<div class="row marginTop10 paddingBottom5">
-									<span><a href="#" class="btn_sm orange" id="compareSelected">Compare
-											Selected</a><a href="#" id="moveToFolder" class="btn_sm orange">Move
-											To Folder</a></span>
-								</div> 
-
-								<div class="clearfix"></div>--%>
+					
 							<div id="contentDiv">
 								<jsp:include page="manageJobSeekerContent.jsp"></jsp:include>
 							</div>
-							<%-- <div class="row marginTop15 paddingBottom5">
-									<span><a href="#" class="btn_sm orange" id="compareSelectedLower">Compare
-											Selected</a><a href="#" id="moveToFolderlower"
-										class="btn_sm orange">Move To Folder</a></span>
-								</div>
-								<a href="" id="moveToFolderPopup" style="display:none;">Move</a>
-								<div class="clearfix"></div>
-								<div
-									class="searchResultsNavigation width98P FloatLeft marginTop20">
-									<div class="searchResultsNavigationColumn1">
-
-										<!--Added Class "marginTop5"-->
-										<span>Results viewable:</span> <span class="Padding0"><select
-												id="noOfPageLowerId"
-												class="jb_input4 margin0">
-												
-												<option value="10">10</option>
-												<option value="20">20</option>
-												<option value="30">30</option>
-												<option value="40">40</option>
-												<option value="50">50</option>
-											<select> </span>
-										<!--Added Class "marginTop5"-->
-										<span class="marginTop5">per page</span>
-									</div>
-									<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;&nbsp;
-									</div>
-									<div class="searchResultsNavigationColumn2 floatRight">
-										<!-- <span>Page: </span> -->
-
-										For displaying Previous link except for the 1st page
-										<c:if test="${currentPage != 1 && noOfPages gt 1}">
-											<td><a
-												href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=${manageJobSeekerForm.folderId}&page=${currentPage - 1}&next=${begin-1}&noOfPage=${manageJobSeekerForm.noOfPage}">
-													<img src="../resources/images/ArrowLeft.png">
-													Previous
-											</a></td>
-										</c:if>
-
-
-
-										<c:forEach begin="${begin}" end="${noOfPages}" var="i">
-											<c:choose>
-												<c:when test="${currentPage eq i}">
-
-													<span class="active">${i}</span>
-
-												</c:when>
-												<c:otherwise>
-													<span class="active"> <c:if test="${i lt begin+10}">
-															<a
-													href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=${manageJobSeekerForm.folderId}&page=${i}&noOfPage=${manageJobSeekerForm.noOfPage}
-													">${i}</a>
-														</c:if></span>
-
-												</c:otherwise>
-											</c:choose>
-										</c:forEach>
-
-										<span> <c:if
-												test="${noOfPages gt 1 && noOfPages != currentPage }">
-												<a
-													href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=${manageJobSeekerForm.folderId}&page=${currentPage+1}&next=${begin+1}&noOfPage=${manageJobSeekerForm.noOfPage}">Next
-													<img src="../resources/images/ArrowRight.png">
-												</a>
-											</c:if></span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div> --%>
+							
 							<!--Start:MidContant-->
 							<div class="clearfix"></div>
 							<!-- content_wrapper -->
