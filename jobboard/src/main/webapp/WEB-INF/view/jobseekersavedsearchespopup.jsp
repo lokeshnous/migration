@@ -12,8 +12,8 @@
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 function closePopup() {
-	//parent.window.location.reload();
-	parent.$.nmTop().close();
+	parent.window.location.reload();
+	//parent.$.nmTop().close();
 }
 $(document).keyup(function(event) {
 	if (event.keyCode == 27) {
@@ -41,7 +41,8 @@ $(document).keyup(function(event) {
 									$.ajax({url: "${pageContext.request.contextPath}/savedSearches/deleteSavedSearch.html?saveSearchId="+saveSearchId,
 											success: function(data){ 
 											    if(data.success != null){
-											    	rowObj.remove();
+											    	$("#mySavedSearches").click();
+											    	//rowObj.remove();
 											    }
 											    if(data.failure != null){
 											    	alert(data.failure);
@@ -235,9 +236,12 @@ var id = searchJobId.replace("viewSavedSearch", "");
 					</a> <em class="lineHeight16">${msg.jsSavedSearchInfo}</em>
 				</div>			
 			<div class="popUpButtonRow">
+			 <c:if test="${not empty saveSearchedJobsDTOList}">
 				<input type="button" id="saveData" class="orange cursor" value="Save"/>
+			 </c:if>	
 				<input type="button" onclick="closePopup();" class="orange cursor" value="Cancel"/>
 			</div>
+			<a id="mySavedSearches" href="<%=request.getContextPath()%>/savedSearches/viewMySavedSearches.html" class="nyroModal"></a>
 			</form:form>
 		</div>
 		<div class="clearfix"></div>
