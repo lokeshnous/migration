@@ -41,9 +41,9 @@ function validateNumber(event) {
     }
     else return true;
 };
-function cancelProcess() {
+/* function cancelProcess() {
 	parent.$.nmTop().close();
-}
+} */
 function closePopup() {
 	parent.window.location.reload();
 }
@@ -266,8 +266,9 @@ function closePopup() {
 				</div>
 				<input type="hidden" name="pageValue" value="inventoryPage" />
 				<div class="row marginTop20 paddingBottom10">
-					<a id="save" class="purchaseJobPostings btn_sm orange">SAVE</a>
-					<a href="" onclick="cancelProcess();" class="btn_sm orange">Cancel</a>
+					<a id="save" class="purchaseJobPostings btn_sm orange cursor">SAVE</a>
+					<a href="" class="nyroModalClose btn_sm orange cursor">Cancel</a>
+
 				</div>
 			</form:form>
 		</div>
