@@ -173,10 +173,10 @@
 									<div class="row">
 										<a
 											href="<%=request.getContextPath()%>/agency/getAddFacilityPopup.html"
-											id="createEmployerpopup" class="btn_sm orange">ADD
+											id="createEmployerpopup" class="btn_sm orange cursor">ADD
 											EMPLOYER</a><a
 											href="<%=request.getContextPath()%>/agency/getManageFacilityPopup.html"
-											id="manageEmployers" class="btn_sm orange">MANAGE
+											id="manageEmployers" class="btn_sm orange cursor">MANAGE
 											EMPLOYERS</a>
 									</div>
 								</div>

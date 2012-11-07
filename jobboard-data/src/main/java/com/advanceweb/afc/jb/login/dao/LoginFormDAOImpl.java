@@ -8,6 +8,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -101,16 +102,29 @@ public class LoginFormDAOImpl implements LoginFormDAO {
 			userDetailsDTO.setUserID(merUserNew.getUserId());
 		}
 
-		if (userDetailsDTO.getUserID() != 0) {
-			AdmUserFacility facility = (AdmUserFacility) hibernateTemplate
-					.find("from AdmUserFacility e where e.id.userId = "
-							+ userDetailsDTO.getUserID()).get(0);
+		AdmUserRole userRole = (AdmUserRole) hibernateTemplate.find(
+				"from AdmUserRole a where a.rolePK.userId ="
+						+ userDetailsDTO.getUserID()).get(0);
 
-			AdmFacility admFacility = (AdmFacility) hibernateTemplate.find(
-					"from AdmFacility a where a.facilityId=?",
-					facility.getAdmFacility().getFacilityId()).get(0);
-			userDetailsDTO.setRoleId(facility.getAdmRole().getRoleId());
-			userDetailsDTO.setFacilityType(admFacility.getFacilityType());
+		if (userRole.getRolePK().getRoleId() != 0) {
+			userDetailsDTO.setRoleId(userRole.getRolePK().getRoleId());
+		}
+		if (userDetailsDTO.getUserID() != 0
+				&& userRole.getRolePK().getRoleId() != 2) {
+			try {
+				AdmUserFacility facility = (AdmUserFacility) hibernateTemplate
+						.find("from AdmUserFacility e where e.id.userId = "
+								+ userDetailsDTO.getUserID()).get(0);
+
+				AdmFacility admFacility = (AdmFacility) hibernateTemplate.find(
+						"from AdmFacility a where a.facilityId=?",
+						facility.getAdmFacility().getFacilityId()).get(0);
+				userDetailsDTO.setRoleId(facility.getAdmRole().getRoleId());
+				userDetailsDTO.setFacilityType(admFacility.getFacilityType());
+			} catch (DataAccessException e) {
+
+			}
+
 		}
 		return userDetailsDTO;
 	}

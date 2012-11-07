@@ -90,8 +90,8 @@
 				<span class="FormErrorDisplayText"><div id="emailmsg"></div></span>  
 				
 				<div class="popUpButtonRow">					 
-					     <input type="button" id="emailbutton" class="orange" value="Send"/>
-					     <input type="button" id="cancelbutton" class="orange" value="Cancel" onclick="parent.$.nmTop().close();" />
+					     <input type="button" id="emailbutton" class="orange cursor" value="Send"/>
+					     <input type="button" id="cancelbutton" class="orange cursor" value="Cancel" onclick="parent.$.nmTop().close();" />
 				</div>
 			</form:form>
 		</div>
