@@ -145,52 +145,54 @@ public class ManageJobSeekerController {
 		 String next = request.getParameter("next");
 		 int page = 1;
 		 int displayRecordsPerPage=10;
-		 if(null!=request.getParameter("noOfPage")){
-			 displayRecordsPerPage =Integer.parseInt(request.getParameter("noOfPage"));
-			 manageJobSeekerForm.setNoOfPage(displayRecordsPerPage);
-			 manageJobSeekerForm.setNoOfPageLower(displayRecordsPerPage);
-		 }
-			if (request.getParameter("page") != null) {
-				page = Integer.parseInt(request.getParameter("page"));
-			}
-			int recordsPerPage = 0;
+		if (null != request.getParameter("noOfPage")) {
+			displayRecordsPerPage = Integer.parseInt(request
+					.getParameter("noOfPage"));
+		}
+		manageJobSeekerForm.setNoOfPage(displayRecordsPerPage);
+		manageJobSeekerForm.setNoOfPageLower(displayRecordsPerPage);
+		if (request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+		}
+		int recordsPerPage = 0;
 
-			int noOfRecords = 0;
+		int noOfRecords = 0;
 		manageJobSeekerForm.setFolderId(folderId);
 		if ((Integer) session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
-			recordsPerPage =displayRecordsPerPage;
+			recordsPerPage = displayRecordsPerPage;
 			try {
 				if (folderId > 0) {
 					manageJobSeekerDTOList = manageJobSeekerService
 							.retrieveAllResumeByFolder((Integer) session
 									.getAttribute(MMJBCommonConstants.USER_ID),
-									folderId,(page - 1) * recordsPerPage, recordsPerPage);
+									folderId, (page - 1) * recordsPerPage,
+									recordsPerPage);
 					noOfRecords = manageJobSeekerService
 							.getTotalNumberOfRecords((Integer) session
 									.getAttribute(MMJBCommonConstants.USER_ID));
-					if (null != request.getParameter("compare") && request.getParameter("compare").equals("true") ) {
+					if (null != request.getParameter("compare")
+							&& request.getParameter("compare").equals("true")) {
 						model.setViewName("manageJobSeekers");
-					}else{
-								model.setViewName("manageJobSeekerContent");
+					} else {
+						model.setViewName("manageJobSeekerContent");
 					}
 				} else if (folderId == 0) {
 					manageJobSeekerDTOList = manageJobSeekerService
 							.retrieveAllResume((Integer) session
-									.getAttribute(MMJBCommonConstants.USER_ID),(page - 1) * recordsPerPage, recordsPerPage);
+									.getAttribute(MMJBCommonConstants.USER_ID),
+									(page - 1) * recordsPerPage, recordsPerPage);
 					model.setViewName("manageJobSeekerContent");
-					noOfRecords = manageJobSeekerService
-							.getTotalNumberOfRecords((Integer) session
-									.getAttribute(MMJBCommonConstants.USER_ID));
 
 				} else {
 					manageJobSeekerDTOList = manageJobSeekerService
 							.retrieveAllResume((Integer) session
-									.getAttribute(MMJBCommonConstants.USER_ID),(page - 1) * recordsPerPage, recordsPerPage);
+									.getAttribute(MMJBCommonConstants.USER_ID),
+									(page - 1) * recordsPerPage, recordsPerPage);
 					model.setViewName("manageJobSeekers");
-					noOfRecords = manageJobSeekerService
-							.getTotalNumberOfRecords((Integer) session
-									.getAttribute(MMJBCommonConstants.USER_ID));
 				}
+				noOfRecords = manageJobSeekerService
+						.getTotalNumberOfRecords((Integer) session
+								.getAttribute(MMJBCommonConstants.USER_ID));
 				appStatusList = manageJobSeekerService.applicationStatusList();
 				admFolderDTOList = manageJobSeekerService
 						.folderDetailList((Integer) session

@@ -59,7 +59,7 @@ public class JobPostForm {
     private List<JobPostDTO> jobPostDTOList;
     private String statusValue;
     private int noOfPage;
-    private int beginVal=1;
+    private int beginVal=0;
     private boolean activeOrInactive;
     private boolean enableJobTitle;
     /*

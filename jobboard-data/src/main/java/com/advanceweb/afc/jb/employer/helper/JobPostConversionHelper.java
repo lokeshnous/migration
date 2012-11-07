@@ -213,8 +213,8 @@ public class JobPostConversionHelper<JobPostForm> {
 			long millisInDay = 60 * 60 * 24 * 1000;
 			Date startDt = new Date(job.getStartDt().getTime());
 			//Start date with out time
-			long startDate = startDt.getTime();
-			long startDateAsTimestamp = (startDate / millisInDay) * millisInDay;
+			long startDateAsTimestamp = startDt.getTime();
+			//long startDateAsTimestamp = (startDate / millisInDay) * millisInDay;
 			//current date with out time
 			long dateOnly = new Date().getTime();
 			long currentTimestamp = (dateOnly / millisInDay) * millisInDay;
@@ -225,9 +225,8 @@ public class JobPostConversionHelper<JobPostForm> {
 				jobPostDTO.setEndDt(formatter.format(job.getEndDt()));
 				//End date with out time
 				Date endtDt = new Date(job.getEndDt().getTime());
-				long endDate = endtDt.getTime();
-				long endtDateAsTimestamp = (endDate / millisInDay)
-						* millisInDay;
+				long endtDateAsTimestamp = endtDt.getTime();
+				//long endtDateAsTimestamp = (endDate / millisInDay)* millisInDay;
 
 				if (job.getActive() == 1
 						&& endtDateAsTimestamp < currentTimestamp) {

@@ -247,8 +247,8 @@
 						<div class="searchResultsNavigationColumn2 floatRight">
 							<!-- <span>Page:</span> -->
 							<%--For displaying Previous link except for the 1st page --%>
-							<c:if test="${currentPage != 1 && noOfPages gt 1}">
-								<td><a href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage - 1}&jobStatus=${statusValue}&next=${begin-10}"> <img
+							<c:if test="${currentPage != 1 && noOfPages gt 10}">
+								<td><a href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage-10}&jobStatus=${statusValue}&next=${begin-10}&noOfPage=${jobPostForm.noOfPage}"> <img
 										src="../resources/images/ArrowLeft.png"> Previous</a></td>
 							</c:if>
 
@@ -273,8 +273,8 @@
 							</c:forEach>
 							
 								<span>
-								<c:if test="${noOfPages gt 1 && noOfPages != currentPage}"><a
-									href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage + 1}&jobStatus=${jobPostForm.statusValue}&next=${begin+10}">Next <img
+								<c:if test="${noOfPages gt 10 && noOfPages != currentPage}"><a
+									href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage+10}&jobStatus=${jobPostForm.statusValue}&next=${begin+10}&noOfPage=${jobPostForm.noOfPage}">Next <img
 										src="../resources/images/ArrowRight.png">
 								</a></c:if></span>
 							
@@ -449,8 +449,8 @@
 							<!-- <span>Page: </span> -->
 							
 							<%--For displaying Previous link except for the 1st page --%>
-							<c:if test="${currentPage != 1 && noOfPages gt 1}">
-								<td><a href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage - 1}&jobStatus=${statusValue}&next=${begin-10}"> <img
+							<c:if test="${currentPage != 1 && noOfPages gt 10}">
+								<td><a href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage-10}&jobStatus=${statusValue}&next=${begin-10}"> <img
 										src="../resources/images/ArrowLeft.png"> Previous</a></td>
 							</c:if>
 
@@ -474,8 +474,8 @@
 							</c:forEach>
 							
 								<span>
-								<c:if test="${noOfPages gt 1 && noOfPages != currentPage }"><a
-									href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage + 1}&jobStatus=${jobPostForm.statusValue}&next=${begin+10}">Next <img
+								<c:if test="${noOfPages gt 10 && noOfPages != currentPage}"><a
+									href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage+10}&jobStatus=${jobPostForm.statusValue}&next=${begin+10}&noOfPage=${jobPostForm.noOfPage}">Next <img
 										src="../resources/images/ArrowRight.png">
 								</a></c:if></span>
 						</div>

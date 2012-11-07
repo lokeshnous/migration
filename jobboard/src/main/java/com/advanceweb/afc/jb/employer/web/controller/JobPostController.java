@@ -884,7 +884,7 @@ public class JobPostController extends AbstractController {
 		autoRenewList.add(downDTO);
 		int page = 1;
 		int displayRecordsPerPage = 10;
-		if (null != request.getParameter("noOfPage")) {
+		if (null != request.getParameter("noOfPage")&& Integer.parseInt(request.getParameter("noOfPage"))>0) {
 			displayRecordsPerPage = Integer.parseInt(request
 					.getParameter("noOfPage"));
 			jobPostform.setNoOfPage(displayRecordsPerPage);
