@@ -947,19 +947,19 @@ function validateNumber(event) {
 					<!--Test-->
 					<div class="clearfix"></div>
 					<br /> <span class="marginBottom50 FloatLeft"> 
-					<input type="button" value="Post new job" class="btn_sm white" id="postNewJobButId" /> 
-					<input type="button" value="Schedule job" class="btn_sm white" id="scheduleNewJobButId"> 
-					<input type="button" value="Save as draft" class="btn_sm white"	name="SaveAsDraft" id="saveAsDraftJobButId"> 
+					<input type="button" value="Post new job" class="btn_sm white cursor" id="postNewJobButId" /> 
+					<input type="button" value="Schedule job" class="btn_sm white cursor" id="scheduleNewJobButId"> 
+					<input type="button" value="Save as draft" class="btn_sm white cursor"	name="SaveAsDraft" id="saveAsDraftJobButId"> 
 					<!-- <input type="submit" value="Cancel" class="btn_sm white" name="Cancel" id="cancel"> -->
 					
 					<c:if test="${jobPostForm.activeOrInactive == true}">
-							<input type="button" value="Save" class="btn_sm white" id="saveJobPostId"/>
+							<input type="button" value="Save" class="btn_sm white cursor" id="saveJobPostId"/>
 					</c:if>
-					<input type="button" value="Cancel" class="btn_sm white" name="Cancel" id="cancel" onclick="cancelProcess()">
+					<input type="button" value="Cancel" class="btn_sm white cursor" name="Cancel" id="cancel" onclick="cancelProcess()">
 					<%-- <a href="<%=request.getContextPath()%>/employer/employerDashBoard.html" id="cancel" class="btn_sm white">Cancel</a> --%>
-					<input type="submit" value="Post new job" class="btn_sm white" name="PostNewJob" id="postNewJobButHideId" style="visibility: hidden;" /> 
-					<input type="submit" value="Schedule job" class="btn_sm white" name="ScheduleJob" id="scheduleJobButHideId" style="visibility: hidden;" /> 
-					<input type="submit" value="Save as draft" class="btn_sm white"	name="SaveAsDraft" id="savePostJobButHideId" style="visibility: hidden;" /> <!-- 	              	<a href="#" class="btn_sm white">Post new job</a> 
+					<input type="submit" value="Post new job" class="btn_sm white cursor" name="PostNewJob" id="postNewJobButHideId" style="visibility: hidden;" /> 
+					<input type="submit" value="Schedule job" class="btn_sm white cursor" name="ScheduleJob" id="scheduleJobButHideId" style="visibility: hidden;" /> 
+					<input type="submit" value="Save as draft" class="btn_sm white cursor"	name="SaveAsDraft" id="savePostJobButHideId" style="visibility: hidden;" /> <!-- 	              	<a href="#" class="btn_sm white">Post new job</a> 
 	              	<a href="#" class="btn_sm white">Schedule job</a> 
 	              	<a href="#" class="btn_sm white">save as draft</a> 
 	              	<a href="#" class="btn_sm white">Cancel</a> -->
