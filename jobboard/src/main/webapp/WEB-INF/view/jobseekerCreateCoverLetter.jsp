@@ -82,14 +82,14 @@
 							</div>	
 											
 						<div class="rowEvenNewSpacing">
-								<span class="lableText7">
+								<span class="lableText7" style="margin-top:8px;">
 								Body Text:
 								</span>
 								<form:textarea path="coverletterText" name="coverletterText"  class="textareaBoxCResume textareaBoxCResumeTemplate" resize="none"  rows="5" cols="20"
 								id="coverletterText"
 									onKeyDown="limitText(this.form.coverletterText,this.form.countdownCoverLetter,5000);"
 									onKeyUp="limitText(this.form.coverletterText,this.form.countdownCoverLetter,5000);"/>
-									<div class="required2" style="float:right; margin-right:15px;">(Required)</div>
+									<div class="required2" style="float:right; margin-right:23px;">(Required)</div>
 									</div>
 									
 								<div class="rowEvenNewSpacing magrin_top0">
