@@ -247,8 +247,8 @@ function validateNumber(event) {
 					<!--Test-->
 					<div class="searchResultsListing">
 						<div class="searchResultsItem MarginBottom10">
-							<ul class="searchResultsJobInfo closed">
-								<li class="searchResultsColumn1">
+							<ul class="resumeBuilderTab closed">
+								<li class="resumeBuilderColumn">
 									<div class="sectionHeaderCreateResume">
 										<div class="floatLeft">
 
@@ -259,7 +259,7 @@ function validateNumber(event) {
 									</div>
 								</li>
 							</ul>
-							<div class="searchResultsSubContent">
+							<div class="resumeBuilderTabContent">
 								<div class="job_seeker_login leftFormHolderResumepage">
 
 									<div class="rowEvenNewSpacing">
@@ -396,9 +396,9 @@ function validateNumber(event) {
 							</div>
 						</div>
 						<div class="searchResultsItem">
-							<ul class="searchResultsJobInfo closed">
+							<ul class="resumeBuilderTab closed">
 
-								<li class="searchResultsColumn1">
+								<li class="resumeBuilderColumn">
 									<div class="sectionHeaderCreateResume">
 										<div class="floatLeft">
 											<h2 class="noBorder">Objective</h2>
@@ -408,7 +408,7 @@ function validateNumber(event) {
 								</li>
 
 							</ul>
-							<div class="searchResultsSubContent">
+							<div class="resumeBuilderTabContent">
 								<div class="job_seeker_login leftFormHolderResumepage">
 									<div class="row MarginBottom10 ">
 										<div class="lableText3 marginTop10">Your Career
@@ -425,9 +425,9 @@ function validateNumber(event) {
 							</div>
 						</div>
 						<div class="searchResultsItem">
-							<ul class="searchResultsJobInfo closed">
+							<ul class="resumeBuilderTab closed">
 
-								<li class="searchResultsColumn1">
+								<li class="resumeBuilderColumn">
 									<div class="sectionHeaderCreateResume">
 										<div class="floatLeft">
 											<h2 class="noBorder">Work
@@ -438,7 +438,7 @@ function validateNumber(event) {
 								</li>
 
 							</ul>
-							<div class="searchResultsSubContent">
+							<div class="resumeBuilderTabContent">
 							<div id="listOfWorkExpId">
 								<c:forEach items="${createResume.listWorkExpForm}" var="workExp"
 									varStatus="status">
@@ -570,9 +570,9 @@ function validateNumber(event) {
 							</div>
 						</div>
 						<div class="searchResultsItem">
-							<ul class="searchResultsJobInfo closed">
+							<ul class="resumeBuilderTab closed">
 
-								<li class="searchResultsColumn1">
+								<li class="resumeBuilderColumn">
 									<div class="sectionHeaderCreateResume">
 										<div class="floatLeft">
 											<h2 class="noBorder">Education</h2>
@@ -582,7 +582,7 @@ function validateNumber(event) {
 								</li>
 
 							</ul>
-							<div class="searchResultsSubContent">
+							<div class="resumeBuilderTabContent">
 							<div id="listOfEduId">
 								<c:forEach items="${createResume.listEduForm}" var="education" varStatus="status">
 									 <c:if test="${status.count != 1}">   
@@ -673,8 +673,8 @@ function validateNumber(event) {
 							</div>
 						</div>
 						<div class="searchResultsItem">
-							<ul class="searchResultsJobInfo closed">
-								<li class="searchResultsColumn1">
+							<ul class="resumeBuilderTab closed">
+								<li class="resumeBuilderColumn">
 									<div class="sectionHeaderCreateResume">
 										<div class="floatLeft">
 
@@ -684,7 +684,7 @@ function validateNumber(event) {
 									</div>
 								</li>
 							</ul>
-							<div class="searchResultsSubContent" >
+							<div class="resumeBuilderTabContent" >
 								<div id="listOfCertsId">
 								<c:forEach items="${createResume.listCertForm}" var="certification" varStatus="status">
 									 <c:if test="${status.count != 1}">   
@@ -735,8 +735,8 @@ function validateNumber(event) {
 
 						</div>
 						<div class="searchResultsItem">
-							<ul class="searchResultsJobInfo closed">
-								<li class="searchResultsColumn1">
+							<ul class="resumeBuilderTab closed">
+								<li class="resumeBuilderColumn">
 									<div class="sectionHeaderCreateResume">
 										<div class="floatLeft">
 											<h2 class="noBorder">Skills</h2>
@@ -746,7 +746,7 @@ function validateNumber(event) {
 									</div>
 								</li>
 							</ul>
-							<div class="searchResultsSubContent">
+							<div class="resumeBuilderTabContent">
 								<div class="job_seeker_login leftFormHolderResumepage">
 									<div class="rowEvenNewSpacing">
 										<span class="lableText3">Skill:</span> 
@@ -772,8 +772,8 @@ function validateNumber(event) {
 							</div>
 						</div>
 						<div class="searchResultsItem">
-							<ul class="searchResultsJobInfo closed">
-								<li class="searchResultsColumn1">
+							<ul class="resumeBuilderTab closed">
+								<li class="resumeBuilderColumn">
 									<div class="sectionHeaderCreateResume">
 
 										<div class="floatLeft">
@@ -783,7 +783,7 @@ function validateNumber(event) {
 									</div>
 								</li>
 							</ul>
-							<div class="searchResultsSubContent">
+							<div class="resumeBuilderTabContent">
 								<div id="listOfLangId">
 								<c:forEach items="${createResume.listLangForm}" var="languageObj"
 									varStatus="status">
@@ -823,8 +823,8 @@ function validateNumber(event) {
 							</div>
 						</div>
 						<div class="searchResultsItem">
-							<ul class="searchResultsJobInfo closed">
-								<li class="searchResultsColumn1">
+							<ul class="resumeBuilderTab closed">
+								<li class="resumeBuilderColumn">
 									<div class="sectionHeaderCreateResume">
 										<div class="floatLeft">
 											<h2 class="noBorder">Awards</h2>
@@ -834,7 +834,7 @@ function validateNumber(event) {
 									</div>
 								</li>
 							</ul>
-							<div class="searchResultsSubContent">
+							<div class="resumeBuilderTabContent">
 								<div class="job_seeker_login leftFormHolderResumepage">
 									<div class="row MarginBottom10 ">
 										<div class="lableText3 marginTop10">
@@ -854,9 +854,9 @@ function validateNumber(event) {
 							</div>
 						</div>
 						<div class="searchResultsItem">
-							<ul class="searchResultsJobInfo closed">
+							<ul class="resumeBuilderTab closed">
 
-								<li class="searchResultsColumn1">
+								<li class="resumeBuilderColumn">
 									<div class="sectionHeaderCreateResume">
 										<div class="floatLeft">
 											<h2 class="noBorder">Memberships</h2>
@@ -866,7 +866,7 @@ function validateNumber(event) {
 								</li>
 
 							</ul>
-							<div class="searchResultsSubContent">
+							<div class="resumeBuilderTabContent">
 								<div class="job_seeker_login leftFormHolderResumepage">
 									<div class="row MarginBottom10 ">
 										<div class="lableText3 marginTop10">If you're a member
@@ -884,8 +884,8 @@ function validateNumber(event) {
 							</div>
 						</div>
 						<div class="searchResultsItem">
-							<ul class="searchResultsJobInfo closed">
-								<li class="searchResultsColumn1">
+							<ul class="resumeBuilderTab closed">
+								<li class="resumeBuilderColumn">
 									<div class="sectionHeaderCreateResume">
 
 										<div class="floatLeft">
@@ -895,7 +895,7 @@ function validateNumber(event) {
 									</div>
 								</li>
 							</ul>
-							<div class="searchResultsSubContent">
+							<div class="resumeBuilderTabContent">
 
 								<div class="job_seeker_login leftFormHolderResumepage">
 									<div class="row MarginBottom10 ">
@@ -917,8 +917,8 @@ function validateNumber(event) {
 						</div>
 
 						<div class="searchResultsItem MarginBottom10">
-							<ul class="searchResultsJobInfo closed">
-								<li class="searchResultsColumn1">
+							<ul class="resumeBuilderTab closed">
+								<li class="resumeBuilderColumn">
 									<div class="sectionHeaderCreateResume">
 										<div class="floatLeft">
 											<h2 class="noBorder">References</h2>
@@ -928,7 +928,7 @@ function validateNumber(event) {
 									</div>
 								</li>
 							</ul>
-							<div class="searchResultsSubContent">
+							<div class="resumeBuilderTabContent">
 							<div id="listOfRefId">
 								<c:forEach items="${createResume.listRefForm}" var="reference" varStatus="status">
 									 <c:if test="${status.count != 1}">   

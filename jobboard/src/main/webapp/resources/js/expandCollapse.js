@@ -8,12 +8,6 @@ jQuery(function(){
 			
 			$(".searchResultsSubContent").hide();
 			
-			$(".searchResultsJobInfo").click(function(e){
-				$(this).next().toggle();
-				$(this).toggleClass('closed open');
-				$(this).children(".searchResultsColumn1").children(".sectionHeader").children().next().toggleClass("accord-open accord-close");
-			});
-			
 			$(".clickableLink").click(function(e){
 				$(this).parent().parent().next().toggle();
 				$(this).parent().parent().toggleClass('closed open');
@@ -23,6 +17,15 @@ jQuery(function(){
 			$("#orange-bg").click(function(){
 				//alert('');
 				$(this).addClass("orange-bg");
+			});
+			
+			//Tab toggle for resume builder
+			$(".resumeBuilderTabContent").hide();
+			
+			$(".resumeBuilderTab").click(function(e){
+				$(this).next().toggle();
+				$(this).toggleClass('closed open');
+				$(this).children(".resumeBuilderColumn").children(".sectionHeaderCreateResume").children().next().toggleClass("accord-open accord-close");
 			});
 			
 		});
