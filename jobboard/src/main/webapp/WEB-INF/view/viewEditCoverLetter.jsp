@@ -102,7 +102,7 @@
 								readonly="true" />
 							<p class="magrin_top0">
 								<span class="lableText3"> </span> <input readonly type="text"
-									class="input2000_width" name="countdownCoverLetter" size="3"
+									class="input2000_width" name="countdownCoverLetter" id="counterTextID" size="3"
 									value="5000">characters remaining.
 							</p>
 						</div>
