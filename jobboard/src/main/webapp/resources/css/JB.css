@@ -3960,10 +3960,10 @@ orange:hover {
 }
 
 .dBEmpRightColumns {
-	width: 615px;
+	width: 614px;
 	padding-left: 10px;
 	height: auto;
-	float: left
+	float: right;
 }
 
 .innerColumn {
