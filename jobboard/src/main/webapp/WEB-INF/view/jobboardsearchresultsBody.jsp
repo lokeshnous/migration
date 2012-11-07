@@ -76,7 +76,7 @@
 									<script>$("#radiusPlus").click();</script>
 									</c:if>
 
-									<div class="refineResultsSubContent">
+									<div class="refineResultsSubContent cursor">
 										<ul>
 											<c:if test="${refineRadius==5}">
 											<span style="font-weight:bold;"> 
@@ -125,7 +125,7 @@
 									<script>$("#companyPlus").click();</script>
 									</c:if>
 
-									<div class="refineResultsSubContent">
+									<div class="refineResultsSubContent cursor">
 										<ul>
 											<c:forEach items="${company}" var="displayCompany" varStatus="status" >
 											<c:if test="${fn:startsWith(company[status.index], secondFQParam) and secondFQParam != null}">
@@ -146,7 +146,7 @@
 									<script>$("#statePlus").click();</script>
 									</c:if>
 
-									<div class="refineResultsSubContent">
+									<div class="refineResultsSubContent cursor">
 										<ul>
 											<c:forEach items="${state}" var="displayState" varStatus="status">
 												<c:if test="${fn:startsWith(state[status.index], thirdFQParam) and thirdFQParam != null}">
@@ -164,7 +164,7 @@
 									<c:if test="${fouthFQParam != null}">
 									<script>$("#cityPlus").click();</script>
 									</c:if>
-									<div class="refineResultsSubContent">
+									<div class="refineResultsSubContent cursor">
 										<ul>
 										<c:forEach items="${city}" var="displayCity" varStatus="status">
 											<c:if test="${fn:startsWith(city[status.index], fouthFQParam) and fouthFQParam != null}">
