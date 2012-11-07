@@ -677,7 +677,10 @@ public class ResumeController extends AbstractController{
 		/**
 		 *  Introduced a new variable "createResumed" to resolve PMD issue. 
 		 */
-		CreateResume createResume =createResumed; 
+		CreateResume createResume =createResumed;
+		if("0".equals(createResume.getUploadResumeId())){
+			createResume.setUploadResumeId(null);
+		}
 		ModelAndView model = new ModelAndView();
 		ResumeDTO resumeDTO = new ResumeDTO();
 		createResume.setUserId((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
@@ -696,7 +699,10 @@ public class ResumeController extends AbstractController{
 		}
 		
 		resumeDTO = transCreateResume.transformCreateResumeToResumeDTO(createResume);
-		resumeDTO = resumeService.createResume(resumeDTO);
+		//if resume does not exist create resume
+		if(StringUtils.isEmpty(createResume.getUploadResumeId())){
+			resumeDTO = resumeService.createResume(resumeDTO);
+		}
 		
 		AddressDTO addDTO = transformJobSeekerRegistration
 				.createAddressDTO(createResume.getContactInfoForm());
@@ -739,6 +745,9 @@ public class ResumeController extends AbstractController{
 	public ModelAndView previewResumeBuilder(CreateResume createResume) {
 		ModelAndView model = new ModelAndView();
 		model.addObject(CREATE_RESUME, createResume);
+		if(StringUtils.isEmpty(createResume.getUploadResumeId())){
+			createResume.setUploadResumeId("0");
+		}
 		model.setViewName("viewresume");
 		return model;
 

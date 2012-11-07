@@ -57,7 +57,8 @@ function validateNumber(event) {
 
 	jQuery(document).ready(function() {	
 				
-		$("#phone").inputmask("mask", {"mask": "(999) 999-9999"}); 
+		$(".phoneNo").inputmask("mask", {"mask": "(999) 999-9999"});
+		
 		//Date picker
     	$(function() {
     		$( ".datepicker" ).datepicker();
@@ -377,7 +378,7 @@ function validateNumber(event) {
 												<form:select path="listPhoneDtlForm[${status.index}].phoneType" id="exclude" class="jb_input75">
 													<form:options items="${phoneTypeList}" itemValue="optionId" itemLabel="optionName" />
 												</form:select>
-												<form:input id="phone" path="listPhoneDtlForm[${status.index}].phoneNumber" class="job_seeker_password" />
+												<form:input id="phone" path="listPhoneDtlForm[${status.index}].phoneNumber" class="job_seeker_password phoneNo" />
 												<span class="required ">(Required)</span>
 											</div>
 										</c:forEach>
@@ -955,7 +956,7 @@ function validateNumber(event) {
 											<span class="lableText3">Phone Number:</span>
 
 											<form:input path="listRefForm[${status.index}].phoneNo"
-												class="job_seeker_password textBox350" />
+												class="job_seeker_password textBox350 phoneNo" />
 										</div>
 										<div class="rowEvenNewSpacing">
 											<span class="lableText3">Email Address:</span>
