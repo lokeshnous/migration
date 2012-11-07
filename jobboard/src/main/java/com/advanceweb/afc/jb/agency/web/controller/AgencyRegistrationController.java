@@ -56,13 +56,13 @@ import com.advanceweb.common.client.ClientContext;
 @RequestMapping("/agencyRegistration")
 @SessionAttributes("agencyRegForm")
 @Scope("session")
-public class AgencyRegistrationController extends AbstractController{
+public class AgencyRegistrationController extends AbstractController {
 
 	private static final Logger LOGGER = Logger
 			.getLogger(AgencyRegistrationController.class);
 	private static final String AGENCY_REG_FORM = "agencyRegForm";
 	private static final String MESSAGE = "message";
-	
+
 	@Autowired
 	private ProfileRegistration agencyRegistration;
 
@@ -83,21 +83,20 @@ public class AgencyRegistrationController extends AbstractController{
 
 	@Autowired
 	private AdService adService;
-	
+
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
 	@Value("${socialSignupMsg}")
-	private  String socialSignupMsg;
+	private String socialSignupMsg;
 
 	@Value("${age.all.req.fields}")
 	private String reqFields;
-	
+
 	@Value("${age.email.exists}")
 	private String emailExists;
 
 	@Value("${ns.validate.user}")
 	private String nsValidateUser;
-	
 
 	private String recaptchaResponse;
 	private String recaptchaChallenge;
@@ -106,12 +105,19 @@ public class AgencyRegistrationController extends AbstractController{
 	private final static String AGENCYREG = "addAgencyRegistration";
 
 	/**
-	 * This method is called to display  agency registration page
+	 * This method is called to display agency registration page
 	 * 
-	 * @param HttpSession session
-	 * @param String profileId(Optional,used while displaying the the registration page if user wants to register with his social media(e.g Facebook,LinkedIn) account)
-	 * @param String serviceProviderId(Optional,used while displaying the the registration page if user wants to register with his social media(e.g Facebook,LinkedIn) account)
-	 * @return ModelAndView 
+	 * @param HttpSession
+	 *            session
+	 * @param String
+	 *            profileId(Optional,used while displaying the the registration
+	 *            page if user wants to register with his social media(e.g
+	 *            Facebook,LinkedIn) account)
+	 * @param String
+	 *            serviceProviderId(Optional,used while displaying the the
+	 *            registration page if user wants to register with his social
+	 *            media(e.g Facebook,LinkedIn) account)
+	 * @return ModelAndView
 	 */
 	@RequestMapping(value = "/agencyregistration", method = RequestMethod.GET)
 	public ModelAndView showAgencyRegistrationForm(
@@ -136,14 +142,14 @@ public class AgencyRegistrationController extends AbstractController{
 			agencyRegForm.setUserId(userDTO.getUserId());
 			agencyRegForm.setbReadOnly(true);
 		}
-		
-			if(profileId!=null){
-				agencyRegForm.setServiceProviderName(serviceProviderId);
-				agencyRegForm.setSocialProfileId(profileId);
-				agencyRegForm.setSocialSignUp(true);
-				model.addObject("socialSignUpMsg", socialSignupMsg.replace(
-						"?serviceProviderId", serviceProviderId));
-			}
+
+		if (profileId != null) {
+			agencyRegForm.setServiceProviderName(serviceProviderId);
+			agencyRegForm.setSocialProfileId(profileId);
+			agencyRegForm.setSocialSignUp(true);
+			model.addObject("socialSignUpMsg", socialSignupMsg.replace(
+					"?serviceProviderId", serviceProviderId));
+		}
 		List<AgencyProfileAttribForm> listProfAttribForms = transformAgencyRegistration
 				.transformDTOToProfileAttribForm(registerDTO, userDTO);
 		agencyRegForm.setListProfAttribForms(listProfAttribForms);
@@ -198,21 +204,24 @@ public class AgencyRegistrationController extends AbstractController{
 	/**
 	 * This method is called to save the agency registration information
 	 * 
-	 * @param AgencyRegistrationForm agencyRegistrationForm
-	 * @param HttpSession session 
-	 * @param HttpServletRequest req
-	 * @param BindingResult result
+	 * @param AgencyRegistrationForm
+	 *            agencyRegistrationForm
+	 * @param HttpSession
+	 *            session
+	 * @param HttpServletRequest
+	 *            req
+	 * @param BindingResult
+	 *            result
 	 * @return ModelAndView
 	 */
 	@RequestMapping(value = "/saveAgencyRegistraion", method = RequestMethod.POST)
 	public ModelAndView saveEmployerRegistration(
 			@ModelAttribute(AGENCY_REG_FORM) AgencyRegistrationForm agencyRegistrationForm,
-			HttpSession session,HttpServletRequest req,
-			BindingResult result) {
+			HttpSession session, HttpServletRequest req, BindingResult result) {
 		ModelAndView model = new ModelAndView();
-		
+
 		getAds(req, session, model);
-		
+
 		if (null != agencyRegistrationForm.getListProfAttribForms()) {
 			model.setViewName(AGENCYREG);
 			if (!validateEmpRegForm(agencyRegistrationForm, model, result)) {
@@ -220,31 +229,28 @@ public class AgencyRegistrationController extends AbstractController{
 			}
 		}
 		// Spring Recaptcha Starts here
-		if (StringUtils.isEmpty(req
-				.getParameter("recaptcha_response_field"))) {
+		if (StringUtils.isEmpty(req.getParameter("recaptcha_response_field"))) {
 			model.setViewName(AGENCYREG);
 			model.addObject("errorMessage", "Captcha should not be blank");
 			return model;
 		}
 		if (req.getParameter("recaptcha_response_field") != null) {
-			recaptchaResponse = req
-					.getParameter("recaptcha_response_field");
-			recaptchaChallenge = req
-					.getParameter("recaptcha_challenge_field");
+			recaptchaResponse = req.getParameter("recaptcha_response_field");
+			recaptchaChallenge = req.getParameter("recaptcha_challenge_field");
 			remoteAddr = req.getRemoteAddr();
 		}
 		ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
 		reCaptcha.setPrivateKey(MMJBCommonConstants.RECAPTCHA_PRIVATE_KEY);
-		ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(
-				remoteAddr, recaptchaChallenge, recaptchaResponse);
+		ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(remoteAddr,
+				recaptchaChallenge, recaptchaResponse);
 		// Send HTTP request to validate user's Captcha
-		if (!reCaptchaResponse.isValid()) { 
+		if (!reCaptchaResponse.isValid()) {
 			// Check if valid
 			model.setViewName(AGENCYREG);
 			model.addObject("errorMessage", "Captcha is invalid!");
 			return model;
 		}
-		//Recaptcha ends here
+		// Recaptcha ends here
 		AgencyProfileDTO empDTO = new AgencyProfileDTO();
 		UserDTO userDTO = transformAgencyRegistration
 				.createUserDTO(agencyRegistrationForm);
@@ -269,6 +275,8 @@ public class AgencyRegistrationController extends AbstractController{
 					.getUserId());
 			session.setAttribute(MMJBCommonConstants.FACILITY_ID,
 					infoDTO.getFacilityId());
+			session.setAttribute(MMJBCommonConstants.COMPANY_EMP,
+					infoDTO.getCustomerName());
 			model.setViewName("redirect:/agency/agencyDashboard.html");
 		}
 		authenticateUserAndSetSession(userDTO, req);

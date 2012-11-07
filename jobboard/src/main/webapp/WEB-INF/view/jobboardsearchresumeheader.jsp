@@ -134,7 +134,7 @@
 								<!-- <a href="#" class="btn_sm orange margin0"
 									onclick="searchResume();">SEARCH</a> --><br>
 								<div class="floatRight marginTop5">
-									<a title="Coming Soon" href="../employerSearchResume/advanceresumesearch.html">Advanced Search</a>
+									<a href="../employerSearchResume/advanceresumesearch.html">Advanced Search</a>
 								</div>
 							</div>
 						</div>
