@@ -16,6 +16,41 @@
 	window.onload = function() {
 		loadMetricsDetails();
 	});
+	function getData(obj) {
+
+		/* id = $(obj).attr("id");
+
+		var metrices = id.split("-");
+
+		views = parseInt(metrices[0]);
+
+		clicks = parseInt(metrices[1]);
+
+		applies = parseInt(metrices[2]);
+
+		if ((views == 0) && (clicks == 0) && (applies == 0)) {
+
+			
+			$("#container").html("No data available.");
+			$("#container").css("width", "550px");
+			$("#container").css("text-align", "center");
+			$("#container").css("color", "#FF0000");
+			//alert("No data available");
+
+		} else {
+			
+			$("#container").html('');
+			$("#container").css("width", "290px");
+			
+			chart = new Highcharts.Chart(options);
+
+			chart.series[0].setData([ [ 'Views', views ], [ 'Clicks', clicks ],
+					[ 'Applies', applies ] ], false);
+
+			chart.redraw(true);
+		} */
+
+	}
 	function loadMetricsDetails(){
 		$.ajaxSetup({ cache: false });
 		$.ajax({
