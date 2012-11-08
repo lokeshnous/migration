@@ -142,11 +142,11 @@
 								</div>
 								<div class="searchResultsNavigationColumn2">
 									<!-- <span>Page:</span> --> <span class="active">1</span> <span><a
-										href="">2</a></span> <span><a href="">3</a></span> <span><a
-										href="">4</a></span> <span><a href="">5</a></span> <span><a
-										href="">6</a></span> <span><a href="">7</a></span> <span><a
-										href="">8</a></span> <span><a href="">9</a></span> <span><a
-										href="">Next<img src="../resources/images/ArrowRight.png"></a></span>
+										href="#">2</a></span> <span><a href="#">3</a></span> <span><a
+										href="#">4</a></span> <span><a href="#">5</a></span> <span><a
+										href="#">6</a></span> <span><a href="#">7</a></span> <span><a
+										href="#">8</a></span> <span><a href="#">9</a></span> <span><a
+										href="#">Next<img src="../resources/images/ArrowRight.png"></a></span>
 								</div>
 							</div>
 							<div class=" floatLeft marginBottom15 marginTop10">
@@ -216,11 +216,11 @@
 								</div>
 								<div class="searchResultsNavigationColumn2">
 									<!-- <span>Page:</span> --> <span class="active">1</span> <span><a
-										href="">2</a></span> <span><a href="">3</a></span> <span><a
-										href="">4</a></span> <span><a href="">5</a></span> <span><a
-										href="">6</a></span> <span><a href="">7</a></span> <span><a
-										href="">8</a></span> <span><a href="">9</a></span> <span><a
-										href="">Next<img src="../resources/images/ArrowRight.png"></a></span>
+										href="#">2</a></span> <span><a href="#">3</a></span> <span><a
+										href="#">4</a></span> <span><a href="#">5</a></span> <span><a
+										href="#">6</a></span> <span><a href="#">7</a></span> <span><a
+										href="#">8</a></span> <span><a href="#">9</a></span> <span><a
+										href="#">Next<img src="../resources/images/ArrowRight.png"></a></span>
 								</div>
 							</div>
 							<div class=" floatLeft marginBottom15 marginTop5">
