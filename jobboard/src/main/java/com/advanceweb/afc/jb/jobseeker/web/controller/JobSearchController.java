@@ -598,7 +598,7 @@ public class JobSearchController extends AbstractController {
 			}
 			try {
 				sendMailOfAppliedJob(session, request, jobDTO, attachmentpaths,
-						coverLetterText);
+					coverLetterText);
 			} catch (Exception e) {
 				jsonObject.put(ajaxMsg, commonMailErrMsg);
 				LOGGER.error(e.getMessage(), e);
@@ -711,7 +711,7 @@ public class JobSearchController extends AbstractController {
 			applyJobDTO.setJpJob(jpJob);
 			applyJobDTO.setUserId(userId);
 			applyJobDTO.setJobTitle(jobDTO.getJobTitle());
-			applyJobDTO.setFacilityName(jobDTO.getCompanyNameDisp());
+			applyJobDTO.setFacilityName(jobDTO.getCompany());
 			applyJobDTO.setCreateDt(currentDate.toString());
 			applyJobDTO.setAppliedDt(currentDate.toString());
 			applyJobDTO.setDeleteDt(null);
@@ -1468,7 +1468,7 @@ public class JobSearchController extends AbstractController {
 		saveJobDTO.setJpJob(jpJob);
 		saveJobDTO.setUserId(userId);
 		saveJobDTO.setJobTitle(jobDTO.getJobTitle());
-		saveJobDTO.setFacilityName(jobDTO.getCompanyNameDisp());
+		saveJobDTO.setFacilityName(jobDTO.getCompany());
 		saveJobDTO.setCreateDt(currentDate.toString());
 		saveJobDTO.setAppliedDt(null);
 		saveJobDTO.setDeleteDt(null);
