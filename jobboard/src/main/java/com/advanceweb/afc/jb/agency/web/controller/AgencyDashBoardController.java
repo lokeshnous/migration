@@ -57,6 +57,7 @@ import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.FacilityDTO;
+import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
@@ -71,6 +72,8 @@ import com.advanceweb.afc.jb.employer.web.controller.EmployerRegistrationForm;
 import com.advanceweb.afc.jb.employer.web.controller.MetricsForm;
 import com.advanceweb.afc.jb.employer.web.controller.TransformEmployerRegistration;
 import com.advanceweb.afc.jb.exception.JobBoardException;
+import com.advanceweb.afc.jb.job.service.JobPostInventoryService;
+import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 import com.advanceweb.afc.jb.pgi.web.controller.BillingAddressForm;
@@ -106,6 +109,8 @@ public class AgencyDashBoardController extends AbstractController {
 	private EmloyerRegistartionService empRegService;
 	@Autowired
 	protected DatabaseAuthenticationManager customAuthenticationManager;
+	@Autowired
+	private JobPostInventoryService inventoryService;
 
 	@Autowired
 	private FacilityService facilityService;
@@ -115,7 +120,8 @@ public class AgencyDashBoardController extends AbstractController {
 
 	@Autowired
 	private TransformUserubscription userubscription;
-
+	@Autowired
+	private LoginService loginService;
 	@Autowired
 	private AgencyService agencyService;
 	@Autowired
@@ -620,11 +626,12 @@ public class AgencyDashBoardController extends AbstractController {
 			UserDTO userDTO = agencyService.getNSCustomerDetails(facilityDTO
 					.getNsCustomerID());
 			List<String> emailList = userDTO.getEmailList();
-			
-			 if (emailList != null && emailList.contains(email)) {
-			 agencyService.linkFacility(dto, facilityId); } else { return
-			 employerAddValidation; }
-			 
+			if (emailList != null && emailList.contains(email)) {
+				agencyService.linkFacility(dto, facilityId);
+			} else {
+				return employerAddValidation;
+			}
+
 		} catch (JobBoardException e) {
 			LOGGER.debug("Error while linking the selected facility to the corresponding agency"
 					+ e);
@@ -774,11 +781,25 @@ public class AgencyDashBoardController extends AbstractController {
 		List<DropDownDTO> downDTOs = new ArrayList<DropDownDTO>();
 		FacilityDTO employerDetails = facilityService
 				.getFacilityByFacilityId(facilityId);
+		int userId = (Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID);
+		List<JobPostingInventoryDTO> inventiryDTO = inventoryService
+				.getInventoryDetails(userId, facilityId);
+		int avaQuantity = 0;
+		for (JobPostingInventoryDTO dto : inventiryDTO) {
+			avaQuantity = avaQuantity + dto.getAvailableQty();
+
+		}
 		try {
 			downDTOs = facilityService.getFacilityGroup(facilityId);
+			// active job posting
+			int count = loginService.getactivejobposting(facilityId);
+			session.setAttribute("count", count);
+			session.setAttribute("avaQuantity", avaQuantity);
 		} catch (JobBoardException e) {
 			LOGGER.info("Error occurred while getting data for metrics" + e);
 		}
+
 		// getting the metrics details
 		jbPostTotalList = getMetricsDetails(facilityId);
 		model.addObject("downDTOs", downDTOs);

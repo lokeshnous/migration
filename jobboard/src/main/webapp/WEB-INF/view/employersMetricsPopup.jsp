@@ -9,48 +9,14 @@
 		<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>ADVANCE Heathcare Jobs</title>
-		<%-- <jsp:include page="common/include.jsp"/> --%>
 		
-		<!-- <script type="text/javascript">
+		
+		<script type="text/javascript">
 	jQuery(document).ready(
 	window.onload = function() {
 		loadMetricsDetails();
 	});
-	function getData(obj) {
-
-		/* id = $(obj).attr("id");
-
-		var metrices = id.split("-");
-
-		views = parseInt(metrices[0]);
-
-		clicks = parseInt(metrices[1]);
-
-		applies = parseInt(metrices[2]);
-
-		if ((views == 0) && (clicks == 0) && (applies == 0)) {
-
-			
-			$("#container").html("No data available.");
-			$("#container").css("width", "550px");
-			$("#container").css("text-align", "center");
-			$("#container").css("color", "#FF0000");
-			//alert("No data available");
-
-		} else {
-			
-			$("#container").html('');
-			$("#container").css("width", "290px");
-			
-			chart = new Highcharts.Chart(options);
-
-			chart.series[0].setData([ [ 'Views', views ], [ 'Clicks', clicks ],
-					[ 'Applies', applies ] ], false);
-
-			chart.redraw(true);
-		} */
-
-	}
+	
 	function loadMetricsDetails(){
 		$.ajaxSetup({ cache: false });
 		$.ajax({
@@ -69,7 +35,7 @@
 		}
 		);
 	}
-	function changeMetrics(){
+	 function changeMetrics(){
 		var selEmployerId = $("#selEmployer").val();
 		$.ajax({url:"${pageContext.request.contextPath}/agency/viewFacilityMetrics.html?facilityId="+selEmployerId,
 			data:$('#selEmployerId').serialize(),
@@ -81,8 +47,8 @@
 					// alert('Unable to process');
 				}
 		});
-	}
-</script> -->
+	} 
+</script>
 
 
 <script type="text/javascript">
@@ -272,22 +238,7 @@ var options = {
 			}
 		});
 	}
-	function changeMetrics() {
-		var selEmployerId = $("#selEmployer").val();
-		$
-				.ajax({
-					url : "${pageContext.request.contextPath}/employer/viewEmployerMetrics.html?selEmployerId="
-							+ selEmployerId,
-					data : $('#selEmployerId').serialize(),
-					type : "GET",
-					success : function(data) {
-						loadMetricsDetails();
-					},
-					error : function(data) {
-						// alert('Unable to process');
-					}
-				});
-	}
+	
 	
 	function getActiveAndAvailJbPosting(selEmployerId) {
 		alert("getActiveAndAvailJbPosting::" + selEmployerId);
@@ -363,23 +314,6 @@ var options = {
 									<br/>
 									<div id="metricsDetails" ></div>								
 							</div>
-                <!--T-->
-                <!-- <div class="rowBox EDPricec marginLeft5">
-                          <div class="floatLeft marginTop3"><strong>&nbsp;&nbsp;&nbsp;Date range</strong></div>
-                          <div class="floatLeft marginTop3">&nbsp;&nbsp;&nbsp;From:</div>
-                          <div class="floatLeft">
-                            <div class="floatLeft">
-                              <input type="text" name="firstName" class="EDTextBox" /></div>
-                            <div class="calender"><a href="#"><img src="../resources/images/tranBg.png" width="14" height="14" alt="Datepick"></a> </div>
-          </div>
-                          <div class="floatLeft marginTop3 marginLeft25">To:</div>
-                          <div class="floatLeft"><div class="floatLeft">
-                    <input type="text" name="firstName" class="EDTextBox" /></div><div class="calender"><a href="#"><img src="../resources/images/tranBg.png" width="14" height="14" alt="Datepick"></a> </div>
-                  </div>
-                          <div class="EDBox01 marginLeft25"><strong>SHOW</strong></div>
-                          <div class="floatLeft marginTop5 marginLeft15"><a href="#">Export</a></div>
-                        </div> -->
-                        
                         <form:form method="GET" action="" commandName="epform"
 								id="empMetricsForm">
 								<div class="rowBox EDPricec">
@@ -390,8 +324,6 @@ var options = {
 									<div class="floatLeft">
 
 										<div class="floatLeft">
-											<!--  <input type="text" name="startDate" class="EDTextBox" id="startDate"/> -->
-											
 											<input type="text" name="startDate" class="EDTextBox" id="startDate" size="14"/> 
 										</div>
 
@@ -404,7 +336,6 @@ var options = {
 									<div class="floatLeft marginTop3 marginLeft25">To:</div>
 									<div class="floatLeft">
 										<div class="floatLeft">
-											<!--  <input type="text" name="endDate" class="EDTextBox" id="endDate"/>  -->
 											<input type="text" name="endDate" class="EDTextBox" id="endDate" size="14"/> 
 											
 										</div>
@@ -416,9 +347,6 @@ var options = {
 									<div class="">
 										<input type="button" name="SHOW" id="showMertics"
 											class="orange" value="SHOW" />
-										<!-- <button type="button" class="orange" onclick="myFunction()">SHOW</button> -->
-
-
 									</div>
 
 									<div class="floatLeft marginTop5 marginLeft15">
@@ -428,28 +356,7 @@ var options = {
 
 								</div>
 							</form:form>
-                <!--T-->
-                <!-- <div class="rowBox marginLeft5">
-				<div class="rowBox Padding0 AutoWidth AutoHeight">
-                          <div class="EDBoxMinW">
-                          <div class="EDBox02">
-                    <div class="row borderBottomDotted Height25">
-                              <p class="floatLeft">Available Job Postings</p>
-                              <p class="floatRight TextAlignR">3</p>
-                            </div>
-                    <div class="row marginTop10">
-                              <p class="floatLeft">Active Job Postings</p>
-                              <p class="floatRight TextAlignR">3</p>
-                            </div>
-                  </div>
-                  </div>
-                  <div class=" clearfix"></div>
-                  <span class="FloatLeft"><a href="">View Individual Job Posting Stats</a></span>
-                  </div>
-                  <div class="rowBox marginLeft25 Padding0 AutoWidth AutoHeight">
-            <img src="../resources/images/EmpDimg.png" width="250" height="208" alt="img"></div>
-                        </div> -->
-                        
+                       
                         <div class="rowBox">
 								<div class="rowBox Padding0 AutoWidth AutoHeight">
 									<div class="EDBoxMinW">
@@ -470,10 +377,6 @@ var options = {
 										</div>
 									</div>
 									<div class=" clearfix"></div>
-									<%-- <span class="FloatLeft"><a href="<%=request.getContextPath()%>/employer/manageJobPost.html">View Individual
-											Job Posting Stats</a></span> --%>
-											
-											
 								</div>
 								 <div id="container" style="height: 250px; width: 290px"></div>
 							</div>
