@@ -102,13 +102,15 @@ public class LoginFormDAOImpl implements LoginFormDAO {
 			userDetailsDTO.setPassword(merUserNew.getPassword());
 			userDetailsDTO.setUserID(merUserNew.getUserId());
 		}
+		AdmUserRole userRole = null;
+		if (userDetailsDTO.getUserID() != 0) {
+			userRole = (AdmUserRole) hibernateTemplate.find(
+					"from AdmUserRole a where a.rolePK.userId ="
+							+ userDetailsDTO.getUserID()).get(0);
 
-		AdmUserRole userRole = (AdmUserRole) hibernateTemplate.find(
-				"from AdmUserRole a where a.rolePK.userId ="
-						+ userDetailsDTO.getUserID()).get(0);
-
-		if (userRole.getRolePK().getRoleId() != 0) {
-			userDetailsDTO.setRoleId(userRole.getRolePK().getRoleId());
+			if (userRole.getRolePK().getRoleId() != 0) {
+				userDetailsDTO.setRoleId(userRole.getRolePK().getRoleId());
+			}
 		}
 
 		if (userDetailsDTO.getUserID() != 0
