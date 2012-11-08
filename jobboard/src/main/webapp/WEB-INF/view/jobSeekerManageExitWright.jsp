@@ -98,7 +98,7 @@
 						cellSpacing="0" cellPadding="0">
 						<thead>
 							<tr class="borderTopNone">
-								<th width="38%" align="center" scope="col">Cover Letter
+								<th width="38%" align="left" scope="col">Cover Letter
 									Name</th>
 								<th width="23%" align="center" scope="col">Visibility*</th>
 								<th width="18%" align="center" scope="col">Modified</th>
@@ -109,7 +109,7 @@
 						<tbody>
 							<c:forEach items="${jobOwners}" var="job" varStatus="status">
 								<tr id="${job.coverletterId}">
-									<td align="center" valign="middle">${job.name}</td>
+									<td align="left" valign="middle">${job.name}</td>
 									<td align="center" valign="middle"><c:if
 											test="${job.active=='1'}">Public</c:if> <c:if
 											test="${job.active=='0'}">Private</c:if></td>
