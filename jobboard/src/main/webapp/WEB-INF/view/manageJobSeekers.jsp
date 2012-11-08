@@ -80,8 +80,9 @@
 							});
 						}
 						function renameCall(folderId,folderName){
-							$("#addBtn").attr('hidden','true');
-							$(".floatRight").attr('hidden','true');
+							$(".AddNewBtn").attr('hidden','true');
+							$("#edit").attr('hidden','true');
+							$("#"+folderName).attr('hidden','true');
 							
 							$("#"+folderId).replaceWith("<div class='addButtonRow' >" +
 									" <input type ='text' id='"+folderId+"' class='addButtonRow' value='"+folderName+"' onClick='resetValRename("+folderId+");' onBlur='Javascript: checkEventRename("+folderId+");'onKeydown='Javascript: if (event.keyCode==13) checkEventRename("+folderId+");'/> "
