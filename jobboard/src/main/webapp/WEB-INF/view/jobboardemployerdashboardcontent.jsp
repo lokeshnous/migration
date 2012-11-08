@@ -178,6 +178,26 @@ var options = {
 				$("#showMertics")
 				.click(
 						function() {
+							$("#container").text("");
+							var startDate = $("#startDate")
+									.val();
+							var endDate = $("#endDate").val();
+							if(startDate == '' || endDate == ''){
+								$("#container").html("Please enter both start date and end date");
+								$("#container").css("width", "550px");
+								$("#container").css("text-align", "center");
+								$("#container").css("color", "#FF0000");
+								return false;
+							}
+							var convStartDate = new Date(startDate);
+					        var convEndDate = new Date(endDate);
+					        if(convEndDate < convStartDate){
+					        	$("#container").html("Please enter end date greater than start date!");
+								$("#container").css("width", "550px");
+								$("#container").css("text-align", "center");
+								$("#container").css("color", "#FF0000");
+								return false;
+					        }
 							
 							var startDate = $("#startDate")
 									.val();
