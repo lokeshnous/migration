@@ -596,6 +596,7 @@ jobboard/src/main/resources/jobboard-scheduler.properties -text
 jobboard/src/main/resources/log4j.properties -text
 jobboard/src/main/resources/mailServer.properties -text
 jobboard/src/main/resources/messages_en.properties -text
+jobboard/src/main/resources/netSuite.properties -text svneol=unset#text/plain
 jobboard/src/main/resources/openx.properties -text
 jobboard/src/main/resources/pdfGenerator.properties -text
 jobboard/src/main/resources/springSocial.properties -text
