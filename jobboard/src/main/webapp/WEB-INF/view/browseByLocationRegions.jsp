@@ -29,7 +29,7 @@
 		<div class="row width400 paddingLeft15 BorderLeft marginBottom15">
 			<c:forEach items="${areaList}" varStatus="status" begin="1"
 				end="${jbsByLocationList.size()}" step="2">
-				<h3 class="marginBottom3">
+				<h3 class="marginBottom3 cursor">
 					<a onclick="searchByLocationRegion('${areaList[status.index]}');">
 						${areaList[status.index]}</a>
 				</h3>
