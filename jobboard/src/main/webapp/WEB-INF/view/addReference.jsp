@@ -2,6 +2,12 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<jsp:include page="common/include.jsp" />
+<script type="text/javascript">
+	jQuery(document).ready(function() {	
+		$(".addReference").inputmask("mask", {"mask": "(999) 999-9999"});
+	});		
+</script>
 
 <div class="job_seeker_login leftFormHolderResumepage">
 <p class="borderBottomDotted marginBottom15">&nbsp;</p> 
@@ -24,8 +30,8 @@
 	<div class="rowEvenNewSpacing">
 		<span class="lableText3">Phone Number:</span>
 
-		<form:input path="createResume.listRefForm[${refPositionId}].phoneNo"
-			class="job_seeker_password textBox350" />
+		<form:input path="createResume.listRefForm[${refPositionId}].phoneNo" 
+			class="job_seeker_password textBox350 addReference" />
 	</div>
 	<div class="rowEvenNewSpacing">
 		<span class="lableText3">Email Address:</span>
