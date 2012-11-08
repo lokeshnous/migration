@@ -30,7 +30,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -55,6 +54,7 @@ import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AdmFacilityContactDTO;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
+import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
@@ -75,6 +75,7 @@ import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 import com.advanceweb.afc.jb.pgi.web.controller.BillingAddressForm;
 import com.advanceweb.afc.jb.pgi.web.controller.TransformPaymentMethod;
+import com.advanceweb.afc.jb.security.DatabaseAuthenticationManager;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 import com.advanceweb.afc.jb.user.UserSubscriptionService;
@@ -93,18 +94,19 @@ import com.advanceweb.common.client.ClientContext;
 
 @Controller
 @RequestMapping("/agency")
-public class AgencyDashBoardController extends AbstractController{
+public class AgencyDashBoardController extends AbstractController {
 
 	private static final Logger LOGGER = Logger
 			.getLogger(AgencyDashBoardController.class);
 	private static final String FACILITY_ID = "facilityId";
-	
+
 	private static final String JB_POST_TOTAL_LIST = "jbPostTotalList";
-	
+
 	@Autowired
 	private EmloyerRegistartionService empRegService;
 	@Autowired
-	protected AuthenticationManager customAuthenticationManager;
+	protected DatabaseAuthenticationManager customAuthenticationManager;
+
 	@Autowired
 	private FacilityService facilityService;
 
@@ -130,7 +132,7 @@ public class AgencyDashBoardController extends AbstractController{
 
 	@Autowired
 	private AdService adService;
-	
+
 	@Value("${requiredField}")
 	private String requiredField;
 	@Value("${requiredAllFields}")
@@ -161,7 +163,8 @@ public class AgencyDashBoardController extends AbstractController{
 	private String accountStreet;
 
 	@RequestMapping("/agencyDashboard")
-	public ModelAndView displayDashBoard(HttpSession session, HttpServletRequest request) {
+	public ModelAndView displayDashBoard(HttpSession session,
+			HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
 		Map<String, List<FacilityDTO>> emplyrsByState = new HashMap<String, List<FacilityDTO>>();
 		Set<String> stateList = new HashSet<String>();
@@ -188,8 +191,8 @@ public class AgencyDashBoardController extends AbstractController{
 
 		// Retrieve Current subscriptions of the user
 		List<DropDownDTO> currentSubs = getCurrentSubscriptions(facilityId);
-		Set<DropDownDTO> set=new HashSet<DropDownDTO>();
-		for(DropDownDTO dto:currentSubs){
+		Set<DropDownDTO> set = new HashSet<DropDownDTO>();
+		for (DropDownDTO dto : currentSubs) {
 			set.add(dto);
 		}
 
@@ -617,11 +620,11 @@ public class AgencyDashBoardController extends AbstractController{
 			UserDTO userDTO = agencyService.getNSCustomerDetails(facilityDTO
 					.getNsCustomerID());
 			List<String> emailList = userDTO.getEmailList();
-			if (emailList != null && emailList.contains(email)) {
-				agencyService.linkFacility(dto, facilityId);
-			} else {
-				return employerAddValidation;
-			}
+			
+			 if (emailList != null && emailList.contains(email)) {
+			 agencyService.linkFacility(dto, facilityId); } else { return
+			 employerAddValidation; }
+			 
 		} catch (JobBoardException e) {
 			LOGGER.debug("Error while linking the selected facility to the corresponding agency"
 					+ e);
@@ -693,6 +696,9 @@ public class AgencyDashBoardController extends AbstractController{
 			session.removeAttribute(MMJBCommonConstants.FACILITY_FULL_ACCESS);
 		}
 		int userId = facilityService.getfacilityUserId(facilityId);
+		EmployerInfoDTO infoDTO = facilityService.facilityDetails(userId);
+		session.setAttribute(MMJBCommonConstants.COMPANY_EMP,
+				infoDTO.getCustomerName());
 		UserDTO userDTO = agencyService.getUserByUserId(userId);
 		session.setAttribute(MMJBCommonConstants.USER_ID, userDTO.getUserId());
 		session.setAttribute(MMJBCommonConstants.USER_NAME,
@@ -727,6 +733,11 @@ public class AgencyDashBoardController extends AbstractController{
 				session.getAttribute(MMJBCommonConstants.AGENCY_EMAIL));
 		session.removeAttribute(MMJBCommonConstants.FACILITY_POST_EDIT);
 		session.removeAttribute(MMJBCommonConstants.FACILITY_FULL_ACCESS);
+		EmployerInfoDTO infoDTO = facilityService
+				.facilityDetails((Integer) session
+						.getAttribute(MMJBCommonConstants.AGENCY_USER_ID));
+		session.setAttribute(MMJBCommonConstants.COMPANY_EMP,
+				infoDTO.getCustomerName());
 		UserDTO userDTO = agencyService.getUserByUserId((Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID));
 		model.setViewName("redirect:/agency/agencyDashboard.html");
@@ -965,9 +976,9 @@ public class AgencyDashBoardController extends AbstractController{
 		return currentSubs;
 
 	}
-	
+
 	/**
-	 * This method displays the ads 
+	 * This method displays the ads
 	 * 
 	 * @param session
 	 * @param request
@@ -975,37 +986,37 @@ public class AgencyDashBoardController extends AbstractController{
 	 */
 	private void getAds(HttpSession session, HttpServletRequest request,
 			ModelAndView model) {
-		// Add the Ads 
+		// Add the Ads
 		String bannerString = null;
 		try {
 			ClientContext clientContext = getClientContextDetails(request,
 					session, PageNames.AGENCY_DASHBOARD);
 			AdSize size = AdSize.IAB_LEADERBOARD;
 			AdPosition position = AdPosition.TOP;
-			bannerString = adService
-					.getBanner(clientContext, size, position).getTag();
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
 			model.addObject("adPageTop", bannerString);
-			
+
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
 			position = AdPosition.RIGHT_TOP;
-			bannerString = adService
-					.getBanner(clientContext, size, position).getTag();
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
 			model.addObject("adPageRightTop", bannerString);
-			
+
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
 			position = AdPosition.RIGHT_MIDDLE;
-			bannerString = adService
-					.getBanner(clientContext, size, position).getTag();
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
 			model.addObject("adPageRightMiddle", bannerString);
 
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
-			bannerString = adService
-					.getBanner(clientContext, size, position).getTag();
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
 			model.addObject("adPageBottom", bannerString);
 		} catch (Exception e) {
-			LOGGER.error("Error occurred while getting the html content for Ads"
-					, e);
+			LOGGER.error(
+					"Error occurred while getting the html content for Ads", e);
 		}
 	}
 }
