@@ -65,7 +65,8 @@ public interface MMJBCommonConstants {
 
 	String AUTOLOAD = "autoload";
 	String SAVE_SEARCH_ID = "saveSearchId";
-
+	String RETAIN_SEARCH = "retainSaveSearch";
+	
 	String CITY = "city";
 	String STATE = "state";
 	String COMPANY = "company";

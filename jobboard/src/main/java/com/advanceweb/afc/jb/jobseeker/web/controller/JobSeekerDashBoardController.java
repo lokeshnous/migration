@@ -1,6 +1,5 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -184,13 +183,8 @@ public class JobSeekerDashBoardController extends AbstractController {
 				model.addObject(SearchParamDTO.RADIUS, radius);
 
 				LOGGER.info("Removing from session....");
-
-				session.removeAttribute(sessionMap
-						.remove(SearchParamDTO.KEYWORDS));
-				session.removeAttribute(sessionMap
-						.remove(SearchParamDTO.CITY_STATE));
-				session.removeAttribute(sessionMap
-						.remove(SearchParamDTO.RADIUS));
+				
+				removeSessionAttr(session, sessionMap);
 			}
 
 		}
@@ -239,4 +233,19 @@ public class JobSeekerDashBoardController extends AbstractController {
 		}
 	}
 
+	/**
+	 * This method removes the session attributes
+	 * 
+	 * @param session
+	 * @param sessionMap
+	 */
+	public void removeSessionAttr(HttpSession session,
+			Map<String, String> sessionMap) {
+		if (null == session.getAttribute(MMJBCommonConstants.RETAIN_SEARCH)) {
+			session.removeAttribute(sessionMap.remove(SearchParamDTO.KEYWORDS));
+			session.removeAttribute(sessionMap
+					.remove(SearchParamDTO.CITY_STATE));
+			session.removeAttribute(sessionMap.remove(SearchParamDTO.RADIUS));
+		}
+	}	
 }

@@ -1,6 +1,7 @@
 <%@ page isELIgnored="false"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@page import="com.advanceweb.afc.jb.common.util.MMJBCommonConstants"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -14,6 +15,11 @@
 <script type="text/javascript">
 function closePopup() {
 	//parent.window.location.reload();
+	
+<%if(null != session.getAttribute(MMJBCommonConstants.RETAIN_SEARCH))
+{
+	session.removeAttribute(MMJBCommonConstants.RETAIN_SEARCH);
+}%>
 	parent.$.nmTop().close();
 	
 }

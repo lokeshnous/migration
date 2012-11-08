@@ -38,7 +38,7 @@
 				<div class="MidContent_Wrapper">
 					<span class="floatleft">This feature is only available for
 						registered users.Click here to <a
-						href="../commonLogin/login.html?page=jobSeeker" id="id">Signin
+						href="../savedSearches/retainSaveSearch.html" id="id">Signin
 					</a>now.
 					</span>
 				</div>

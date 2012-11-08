@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import="com.advanceweb.afc.jb.common.util.MMJBCommonConstants"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -45,6 +46,13 @@ jQuery(document).ready(
 			
 			$("#profileViewCount").displaypopup(
 					"#profileViewCount", "400", "350");
+			$("#retainThisJobId").displaypopup(
+					"#retainThisJobId", "790", "252");
+			var status = <%= session.getAttribute(MMJBCommonConstants.RETAIN_SEARCH)%>
+			if(status)
+			{
+				$("#retainThisJobId").click();
+			}
 		});
 </script>
 </head>
@@ -322,6 +330,7 @@ jQuery(document).ready(
 
 
 
+			<a class="nyroModal" href="<%=request.getContextPath()%>/savedSearches/saveSearchPopup.html" id="retainThisJobId"></a>
 
 			</form:form>
 				</div>

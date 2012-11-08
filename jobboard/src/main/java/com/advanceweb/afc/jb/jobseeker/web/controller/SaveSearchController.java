@@ -50,6 +50,8 @@ public class SaveSearchController {
 
 	private String navigationPath;
 
+	private static final String LOGGED_NAV_PATH = "LoggedInNavigationPath";
+	private static final String SAVE_SEARCH_FORM = "SaveSearchForm";
 	@Autowired
 	private SaveSearchService saveSearchService;
 
@@ -140,7 +142,11 @@ public class SaveSearchController {
 					} else {
 						saveSearchService.saveSearchedJobs(searchedJobsDTO);
 					}
-					jsonObject.put("LoggedInNavigationPath", "");
+					if (null != session
+							.getAttribute(MMJBCommonConstants.RETAIN_SEARCH)) {
+						session.removeAttribute(MMJBCommonConstants.RETAIN_SEARCH);
+					}
+					jsonObject.put(LOGGED_NAV_PATH, "");
 				}
 			}
 
@@ -174,8 +180,8 @@ public class SaveSearchController {
 
 			// Check for job seeker login
 			if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
-				model.put("SaveSearchForm", new SaveSearchForm());
-				jsonObject.put("LoggedInNavigationPath",
+				model.put(SAVE_SEARCH_FORM, new SaveSearchForm());
+				jsonObject.put(LOGGED_NAV_PATH,
 						"../savedSearches/anonymousSaveThisSearchPopUp");
 			} else if ((sessionMap
 					.get(MMJBCommonConstants.PERFORM_SAVED_SEARCH) == null)
@@ -221,8 +227,8 @@ public class SaveSearchController {
 
 			} else {
 				if (keywords != null && keywords != MMJBCommonConstants.EMPTY) {
-					model.put("SaveSearchForm", new SaveSearchForm());
-					jsonObject.put("LoggedInNavigationPath",
+					model.put(SAVE_SEARCH_FORM, new SaveSearchForm());
+					jsonObject.put(LOGGED_NAV_PATH,
 							"../savedSearches/displaySaveThisSearchPopup");
 				} else {
 					jsonObject.put("failure", saveThisSearchErrMsg);
@@ -262,8 +268,8 @@ public class SaveSearchController {
 
 			// Check for job seeker login
 			if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
-				model.put("SaveSearchForm", new SaveSearchForm());
-				jsonObject.put("LoggedInNavigationPath",
+				model.put(SAVE_SEARCH_FORM, new SaveSearchForm());
+				jsonObject.put(LOGGED_NAV_PATH,
 						"../savedSearches/anonymousSaveThisSearchPopUp");
 			} else if ((sessionMap
 					.get(MMJBCommonConstants.PERFORM_SAVED_SEARCH) == null)
@@ -283,8 +289,8 @@ public class SaveSearchController {
 
 			} else {
 				if (keywords != null && keywords != MMJBCommonConstants.EMPTY) {
-					model.put("SaveSearchForm", new SaveSearchForm());
-					jsonObject.put("LoggedInNavigationPath",
+					model.put(SAVE_SEARCH_FORM, new SaveSearchForm());
+					jsonObject.put(LOGGED_NAV_PATH,
 							"../savedSearches/displaySaveThisSearchPopup");
 				} else {
 					jsonObject.put("failure", saveThisSearchErrMsg);
@@ -319,7 +325,7 @@ public class SaveSearchController {
 	@RequestMapping(value = "/displaySaveThisSearchPopup", method = RequestMethod.GET)
 	public ModelAndView displaySaveThisSearchPopup(
 			Map<String, SaveSearchForm> model) {
-		model.put("saveSearchForm", new SaveSearchForm());
+		model.put(SAVE_SEARCH_FORM, new SaveSearchForm());
 		return new ModelAndView("jobseekersavethissearchpopup");
 	}
 
@@ -332,7 +338,7 @@ public class SaveSearchController {
 	 */
 	@RequestMapping(value = "/viewMySavedSearches", method = RequestMethod.GET)
 	public ModelAndView viewMySavedSearches(
-			@ModelAttribute("saveSearchForm") SaveSearchForm saveSearchForm,
+			@ModelAttribute(SAVE_SEARCH_FORM) SaveSearchForm saveSearchForm,
 			BindingResult result, HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		int userId = (Integer) session
@@ -361,7 +367,7 @@ public class SaveSearchController {
 	 */
 	@RequestMapping(value = "/viewMySavedSearchRecord", method = RequestMethod.GET)
 	public String viewMySavedSearchRecord(
-			@ModelAttribute("saveSearchForm") SaveSearchForm saveSearchForm,
+			@ModelAttribute(SAVE_SEARCH_FORM) SaveSearchForm saveSearchForm,
 			BindingResult result) {
 
 		// List<SaveSearchedJobsDTO> saveSearchedJobsDTOList =
@@ -514,6 +520,36 @@ public class SaveSearchController {
 			saveStatusJson.put("failed", "Failed to update the data");
 		}
 		return saveStatusJson;
+	}
+
+	/**
+	 * This method redirects user to job seeker login page
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/retainSaveSearch", method = RequestMethod.GET)
+	public ModelAndView retainSaveSearch(HttpSession session) {
+		ModelAndView model = new ModelAndView();
+		session.setAttribute(MMJBCommonConstants.RETAIN_SEARCH, true);
+		model.setViewName("redirect:/commonLogin/login.html?page=jobSeeker");
+		return model;
+
+	}
+
+	/**
+	 * This method calls the Save This Search Popup when an anonymous user logs
+	 * in
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/saveSearchPopup", method = RequestMethod.GET)
+	public ModelAndView callSaveSearchPopup(HttpSession session) {
+		ModelAndView model = new ModelAndView();
+		model.setViewName("jobseekersavethissearchpopup");
+		return model;
+
 	}
 
 }
