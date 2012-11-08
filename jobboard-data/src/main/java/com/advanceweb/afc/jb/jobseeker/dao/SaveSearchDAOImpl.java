@@ -148,7 +148,7 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 	 */
 	public boolean deleteFirstSearch(int userId) {
 		List<AdmSaveSearch> searchResults = hibernateTemplate
-				.find("from AdmSaveSearch e where e.userId=? and e.createDt is not NULL and e.deleteDt is NULL",
+				.find("from AdmSaveSearch e where e.userId=? and e.searchName <>' ' and e.createDt is not NULL and e.deleteDt is NULL",
 						userId);
 		AdmSaveSearch admSaveSearch = searchResults.get(0);
 		AdmSaveSearch search = hibernateTemplate.load(AdmSaveSearch.class,

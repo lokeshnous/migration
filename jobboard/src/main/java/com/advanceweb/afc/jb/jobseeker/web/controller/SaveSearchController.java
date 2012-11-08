@@ -87,8 +87,7 @@ public class SaveSearchController {
 		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
 				.viewMySavedSearches(userId);
 		int savedSearchCount = saveSearchedJobsDTOList.size();
-		if (savedSearchCount == Integer.parseInt(savedSearchsLimit)
-				|| savedSearchCount > 5) {
+		if (savedSearchCount == Integer.parseInt(savedSearchsLimit)) {
 			saveSearchService.deleteFirstSearch(userId);
 		}
 
@@ -273,8 +272,6 @@ public class SaveSearchController {
 									.get(MMJBCommonConstants.SEARCH_TYPE)
 									.equals(MMJBCommonConstants.BASIC_SEARCH_TYPE) && sessionMap
 							.get(MMJBCommonConstants.SAVE_SEARCH_NAME) != null)) {
-
-				SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
 
 				session.removeAttribute(sessionMap
 						.remove(MMJBCommonConstants.SAVE_SEARCH_NAME));
