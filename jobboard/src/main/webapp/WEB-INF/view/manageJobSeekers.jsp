@@ -81,12 +81,12 @@
 						}
 						function renameCall(folderId,folderName){
 							$(".AddNewBtn").attr('hidden','true');
-							$("#edit").attr('hidden','true');
-							$("#"+folderName).attr('hidden','true');
-							
+							$("#div_manage_job_seeker img").each(function(event) {
+								$(this).attr('hidden','true');
+							});
 							$("#"+folderId).replaceWith("<div class='addButtonRow' >" +
-									" <input type ='text' id='"+folderId+"' class='addButtonRow' value='"+folderName+"' onClick='resetValRename("+folderId+");' onBlur='Javascript: checkEventRename("+folderId+");'onKeydown='Javascript: if (event.keyCode==13) checkEventRename("+folderId+");'/> "
-									+ "<div class='check' title='save' name='check'> </div> </div>");
+									" <input type ='text'size='16' maxlength='16' id='"+folderId+"' class='addButtonRow' value='"+folderName+"' onClick='resetValRename("+folderId+");' onBlur='Javascript: checkEventRename("+folderId+");'onKeydown='Javascript: if (event.keyCode==13) checkEventRename("+folderId+");'/> "
+									+ "<div class='check floatRight' title='save' name='check'> </div> </div><br>");
 							document.getElementById(folderId).select();
 							document.getElementById(folderId).style.borderColor="red";
 							document.getElementById(folderId).style.borderStyle="solid";

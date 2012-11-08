@@ -167,7 +167,7 @@ jQuery(document).ready(function() {
 									<c:if test="${!fn:contains(folder.folderName, 'Default Folder')}">
 								<div class="floatRight">
 									<a href="#"><img src="../resources/images/Edit.png"
-										width="15" height="15" alt="edit" title="Edit Folder" id="edit"
+										width="15" height="15" alt="edit" title="Edit Folder" 
 										onclick="renameCall(${folder.folderId},'${folder.folderName}');"></a>
 									<a href="#"><img src="../resources/images/CloseGray.jpg"
 										id="${folder.folderName}" alt="remove" title="Delete" width="15" height="15">
