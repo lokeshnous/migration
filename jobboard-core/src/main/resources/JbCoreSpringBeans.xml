@@ -36,7 +36,15 @@
 
 	<!-- Job Search Index -->
 	<bean id="jobSearchIndex" class="com.advanceweb.afc.jb.search.SearchIndex">
-		<property name="name" value="jobPost" />
+		<!--  If Solr mapped to jobPost -->
+		<!-- <property name="name" value="jobPost" /> -->
+		
+		<!--  If Solr mapped to jobPostTest -->
+		<property name="name" value="jobPostTest" />
+		
+		<!--  If Solr mapped to jobPostQA -->
+		<!-- <property name="name" value="jobPostQA" /> -->
+		
 		<property name="group" value="careers" />
 		<property name="environment" value="DEV" />
 	</bean>
@@ -77,11 +85,11 @@
 		</property>
 	</bean>
 	
-	<!-- NetSuite services -->
+	<!-- NetSuite Services -->
 	<bean id="netSuiteCredential" class="com.advanceweb.afc.jb.netsuite.NetSuiteCredential">
-		<property name="account" value="1338577" />
-		<property name="email" value="pravinma@nousinfo.com" />
-		<property name="password" value="pravin123" />
+		<property name="account" value="${netsuite.account.number}" />
+		<property name="email" value="${netsuite.account.email}" />
+		<property name="password" value="${netsuite.account.password}" />
 		<property name="role" value="3" />
 	</bean>
 
