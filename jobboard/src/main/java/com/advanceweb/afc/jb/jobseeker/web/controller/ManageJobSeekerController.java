@@ -178,7 +178,12 @@ public class ManageJobSeekerController {
 							.retrieveAllResume((Integer) session
 									.getAttribute(MMJBCommonConstants.USER_ID),
 									(page - 1) * recordsPerPage, recordsPerPage);
-					model.setViewName("manageJobSeekerContent");
+					if (null != request.getParameter("compare")
+							&& request.getParameter("compare").equals("true")) {
+						model.setViewName("manageJobSeekers");
+					} else {
+						model.setViewName("manageJobSeekerContent");
+					}
 
 				} else {
 					manageJobSeekerDTOList = manageJobSeekerService

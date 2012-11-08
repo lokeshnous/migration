@@ -67,7 +67,6 @@ jQuery(document).ready(function() {
 				$(".refineResult").click(
 						function() {
 							$("#folderId").val(0);
-							val = $(this).attr("id");
 							
 							$("#"+val).attr("style","font-weight:bold;");
 							$("#"+val).attr("style", "color:#52a4dc");
