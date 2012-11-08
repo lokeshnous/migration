@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.LoginDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
@@ -109,8 +110,9 @@ public class LoginFormDAOImpl implements LoginFormDAO {
 		if (userRole.getRolePK().getRoleId() != 0) {
 			userDetailsDTO.setRoleId(userRole.getRolePK().getRoleId());
 		}
+
 		if (userDetailsDTO.getUserID() != 0
-				&& userRole.getRolePK().getRoleId() != 2) {
+				&& userRole.getRolePK().getRoleId() != MMJBCommonConstants.JOBSEEKER_ROLE_ID) {
 			try {
 				AdmUserFacility facility = (AdmUserFacility) hibernateTemplate
 						.find("from AdmUserFacility e where e.id.userId = "

@@ -87,7 +87,8 @@ public class SaveSearchController {
 		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
 				.viewMySavedSearches(userId);
 		int savedSearchCount = saveSearchedJobsDTOList.size();
-		if (savedSearchCount == Integer.parseInt(savedSearchsLimit)) {
+		if (savedSearchCount == Integer.parseInt(savedSearchsLimit)
+				|| savedSearchCount > 5) {
 			saveSearchService.deleteFirstSearch(userId);
 		}
 
@@ -167,9 +168,6 @@ public class SaveSearchController {
 			@RequestParam("keywords") String keywords) {
 
 		JSONObject jsonObject = new JSONObject();
-
-		
-
 		try {
 
 			Map<String, String> sessionMap = checkSessionMap
@@ -238,11 +236,7 @@ public class SaveSearchController {
 		}
 		return jsonObject;
 	}
-	
-	
-	
-	
-	
+
 	/**
 	 * This method is used to navigate the save this search pages to Login page
 	 * or pop up page depending upon whether the user is a ananymous user or
@@ -282,7 +276,6 @@ public class SaveSearchController {
 
 				SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
 
-			
 				session.removeAttribute(sessionMap
 						.remove(MMJBCommonConstants.SAVE_SEARCH_NAME));
 				session.removeAttribute(sessionMap
@@ -307,7 +300,6 @@ public class SaveSearchController {
 		}
 		return jsonObject;
 	}
-	
 
 	/**
 	 * The method is called to close the SaveThisJob popup

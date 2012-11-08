@@ -300,7 +300,7 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 		List<JpJob> jpJbList = new ArrayList<JpJob>();
 		try {
 			jpJbList = hibernateTemplate
-					.find("SELECT distinct j.facility,count(j.facility)  from JpJob j where j.active=1 group by j.facility");
+					.find("SELECT distinct j.facility,count(j.facility)  from JpJob j where j.active=1 and j.facility <>' ' group by j.facility");
 			Iterator<?> iterator = jpJbList.iterator();
 			while (iterator.hasNext()) {
 				JobDTO dto = new JobDTO();
