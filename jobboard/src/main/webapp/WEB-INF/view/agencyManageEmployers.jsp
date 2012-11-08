@@ -10,8 +10,11 @@
 
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
-/* $("#createEmployerpopup").displaypopup("#createEmployerpopup",
-		"750", "350"); */
+		$(document).keyup(function(event) {
+			if (event.keyCode == 27) {
+				parent.window.location.reload();
+			}
+		});
 jQuery(document).ready(function() {
 	
 	$("#tb_manage_employer img").click(function(event) {
@@ -27,6 +30,7 @@ jQuery(document).ready(function() {
 						success: function(data){ 
 						    if(data.success != null){
 						    	rowObj.remove();
+						    	
 						    }
 						    if(data.failure != null){
 						    	alert(data.failed);

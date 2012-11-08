@@ -11,6 +11,11 @@
 		<jsp:include page="common/include.jsp" />
 		
 		<script type="text/javascript">
+		$(document).keyup(function(event) {
+			if (event.keyCode == 27) {
+				parent.window.location.reload();
+			}
+		});
            $(document).ready(function(){
         	   $(".deleteSavedJob").displaypopup(".deleteSavedJob","770","360");
         	   /*$("#id").click(function() {

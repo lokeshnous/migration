@@ -16,6 +16,11 @@
 		<script type="text/javascript" src="../resources/js/slider.js"></script>
 		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 		<script type="text/javascript">
+		$(document).keyup(function(event) {
+			if (event.keyCode == 27) {
+				parent.window.location.reload();
+			}
+		});
             $(document).ready(function(){
             	$(".deleteSavedJob").displaypopup(".deleteSavedJob","770","360");
         		$("#id").click(function() {
