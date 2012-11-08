@@ -264,12 +264,12 @@ public class ManageJobSeekerServiceImpl implements ManageJobSeekerService {
  * @see com.advanceweb.afc.jb.job.service.ManageJobSeekerService#getTotalNumberOfJobRecords(int)
  */
 @Override
-public int getTotalNumberOfRecords(int userId)
+public int getTotalNumberOfRecords(int userId,int folderId)
 		throws JobBoardServiceException {
 	int count;
 
 	try {
-		count = manageJobSeekerDAO.getTotalNumberOfJobRecords(userId);
+		count = manageJobSeekerDAO.getTotalNumberOfJobRecords(userId,folderId);
 	} catch (JobBoardDataException jdex) {
 		LOGGER.debug(jdex);
 		throw new JobBoardServiceException(

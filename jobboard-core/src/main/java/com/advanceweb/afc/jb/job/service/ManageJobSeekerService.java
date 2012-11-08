@@ -112,5 +112,5 @@ public interface ManageJobSeekerService {
 	 * @param employerId
 	 * @return
 	 */
-	int getTotalNumberOfRecords(int employerId) throws JobBoardServiceException;
+	int getTotalNumberOfRecords(int employerId,int folderId) throws JobBoardServiceException;
 	}

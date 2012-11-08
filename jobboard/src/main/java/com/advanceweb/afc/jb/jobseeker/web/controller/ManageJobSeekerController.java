@@ -167,9 +167,6 @@ public class ManageJobSeekerController {
 									.getAttribute(MMJBCommonConstants.USER_ID),
 									folderId, (page - 1) * recordsPerPage,
 									recordsPerPage);
-					noOfRecords = manageJobSeekerService
-							.getTotalNumberOfRecords((Integer) session
-									.getAttribute(MMJBCommonConstants.USER_ID));
 					if (null != request.getParameter("compare")
 							&& request.getParameter("compare").equals("true")) {
 						model.setViewName("manageJobSeekers");
@@ -192,7 +189,7 @@ public class ManageJobSeekerController {
 				}
 				noOfRecords = manageJobSeekerService
 						.getTotalNumberOfRecords((Integer) session
-								.getAttribute(MMJBCommonConstants.USER_ID));
+								.getAttribute(MMJBCommonConstants.USER_ID),folderId);
 				appStatusList = manageJobSeekerService.applicationStatusList();
 				admFolderDTOList = manageJobSeekerService
 						.folderDetailList((Integer) session
@@ -283,6 +280,23 @@ public class ManageJobSeekerController {
 		List<DropDownDTO> appStatusList = new ArrayList<DropDownDTO>();
 		List<ManageJobSeekerDTO> manageJobSeekerDTOList = new ArrayList<ManageJobSeekerDTO>();
 		int folderId =0;
+		 int page = 1;
+		int displayRecordsPerPage=10;
+		if (null != request.getParameter("noOfPage")) {
+			displayRecordsPerPage = Integer.parseInt(request
+					.getParameter("noOfPage"));
+		}else if(manageJobSeekerForm.getNoOfPage()>0){
+			displayRecordsPerPage=manageJobSeekerForm.getNoOfPage();
+		}
+		
+		manageJobSeekerForm.setNoOfPage(displayRecordsPerPage);
+		manageJobSeekerForm.setNoOfPageLower(displayRecordsPerPage);
+		if (request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+		}
+		
+
+		int noOfRecords = 0;
 		if(null!=request.getParameter("folderId")){
 			folderId =  Integer.parseInt(request.getParameter("folderId"));
 		}
@@ -302,10 +316,27 @@ public class ManageJobSeekerController {
 				}
 				appStatusList = manageJobSeekerService.applicationStatusList();
 				model.addObject(APP_STATUS_LIST, appStatusList);
+				noOfRecords = manageJobSeekerService
+						.getTotalNumberOfRecords((Integer) session
+								.getAttribute(MMJBCommonConstants.USER_ID),folderId);
 			} catch (JobBoardServiceException jbex) {
 				LOGGER.error("Error occured while Updating The Rating", jbex);
 			}
 		}
+		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / displayRecordsPerPage);
+
+		 String next = request.getParameter("next");
+		if (null == next || !next.isEmpty()) {
+			manageJobSeekerForm.setBeginVal((page / 10) * 10);
+		} else {
+			manageJobSeekerForm.setBeginVal(Integer.parseInt(next));
+			page = Integer.parseInt(next);
+		}
+
+		model.addObject("noOfPages", noOfPages);
+		model.addObject("currentPage", page);
+		model.addObject("begin", (manageJobSeekerForm.getBeginVal() <= 0 ? 1
+				: manageJobSeekerForm.getBeginVal()));
 		if (null != manageJobSeekerDTOList && !manageJobSeekerDTOList.isEmpty()) {
 			manageJobSeekerForm
 					.setManageJobSeekerDTOList(manageJobSeekerDTOList);

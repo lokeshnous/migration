@@ -297,15 +297,22 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 	}
 
 	@Override
-	public int getTotalNumberOfJobRecords(int userId)
+	public int getTotalNumberOfJobRecords(int userId,int folderId)
 			throws JobBoardDataException {
+		String queryString = null;
+		if (folderId > 0) {
+			queryString = "SELECT count(a) from AdmFolderResume a,AdmFolder c where c.folderId=a.id.folderId and c.userId="
+					+ userId
+					+ "and a.id.folderId="
+					+ folderId
+					+ "and a.deleteDt is NULL ";
+		} else {
+			queryString = "SELECT count(a) from AdmFolderResume a,AdmFolder c where c.folderId=a.id.folderId and c.userId="
+					+ userId + "and a.deleteDt is NULL ";
+		}
 		try {
-			Long jobCount = (Long) hibernateTemplate
-					.getSessionFactory()
-					.getCurrentSession()
-					.createQuery(
-							"SELECT count(a) from AdmFolderResume a,AdmFolder c where c.folderId=a.id.folderId and c.userId="
-									+ userId + "and a.deleteDt is NULL ")
+			Long jobCount = (Long) hibernateTemplate.getSessionFactory()
+					.getCurrentSession().createQuery(queryString)
 					.uniqueResult();
 			return jobCount.intValue();
 		} catch (DataAccessException e) {

@@ -14,9 +14,6 @@
 
 <script type="text/javascript">
 	jQuery(document).ready(function() {	
-		 /* noOfPageValue=$("#noOfPage").val();
-		 $("#noOfPageId").val(noOfPageValue);
-		 $("#noOfPageLowerId").val(noOfPageValue); */
 				jQuery(".megamenu").megamenu();
 			});
 						function checkevent(){
@@ -97,6 +94,20 @@
 						function sendResumeToFrd(resumeId,resumeName,context) {	
 							var currentUrl = window.location.pathname;
 							$.nmManual(context+'/employer/sendtofriend.html?id='+resumeId+'&resumeName='+resumeName+'&currentUrl='+currentUrl);
+						}
+						function moveToFolder(){
+							var val = [];
+							$(':checkbox:checked').each(function(i) {
+								val[i] = $(this).val();
+							});
+							if (val != "") {
+								$('#selectedRow').val(val);
+								$('#moveToFolderPopup').attr("href","${pageContext.request.contextPath}/employer/moveToFolder.html?folderId=0&selectedVal="+val);
+								$.nmManual($('#moveToFolderPopup').attr("href"));
+								
+							} else {
+								alert("Please select a resume!");
+							}
 						}
 </script>
 

@@ -71,35 +71,6 @@ jQuery(document).ready(function() {
 			}
 
 		});
-
-		$('#moveToFolder').live("click", function() {
-			var val = [];
-			$(':checkbox:checked').each(function(i) {						
-				val[i] = $(this).val();
-			});
-			if (val != "") {						
-				$('#selectedRow').val(val);
-				$('#moveToFolderPopup').attr("href","${pageContext.request.contextPath}/employer/moveToFolder.html?folderId=0&selectedVal="+val);	
-				$.nmManual($('#moveToFolderPopup').attr("href"));
-			} else {
-				alert("Please select a resume!");
-			}
-
-		});
-		$('#moveToFolderlower').click(function() {
-			var val = [];
-			$(':checkbox:checked').each(function(i) {
-				val[i] = $(this).val();
-			});
-			if (val != "") {
-				$('#selectedRow').val(val);
-				$('#moveToFolderPopup').attr("href","${pageContext.request.contextPath}/employer/moveToFolder.html?folderId=0&selectedVal="+val);
-				$.nmManual($('#moveToFolderPopup').attr("href"));
-			} else {
-				alert("Please select a resume!");
-			}
-
-		});
 		
 		
 	$("#tb_manage_job_seeker img")
@@ -224,7 +195,7 @@ jQuery(document).ready(function() {
 			<!--button-->
 			<div class="row marginTop10 paddingBottom5">
 				<span><a href="#" class="btn_sm orange" id="compareSelected">Compare
-						Selected</a><a href="#" id="moveToFolder" class="btn_sm orange">Move
+						Selected</a><a href="#" id="moveToFolder" onclick="moveToFolder();" class="btn_sm orange">Move
 						To Folder</a></span>
 			</div>
 			<div class="clearfix"></div>
@@ -303,7 +274,7 @@ jQuery(document).ready(function() {
 			<div class="row marginTop15 paddingBottom5">
 				<span><a href="#" class="btn_sm orange"
 					id="compareSelectedLower">Compare Selected</a><a href="#"
-					id="moveToFolderlower" class="btn_sm orange">Move To Folder</a></span>
+					id="moveToFolderlower" class="btn_sm orange" onclick="moveToFolder();">Move To Folder</a></span>
 			</div>
 			<a href="" id="moveToFolderPopup" style="display: none;">Move</a>
 			<div class="clearfix"></div>
