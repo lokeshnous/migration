@@ -89,7 +89,8 @@ function validateNumber(event) {
 				            		 $("#waitmsg").hide();
 				            	}else{
 				            		var checks = ["1","2","3","4"];
-				           		    $(":checkbox").val(checks).filter(":checked").attr("disabled",false);           		
+				           		    $(":checkbox").val(checks).filter(":checked").attr("disabled",false);  
+				           		    $(":checkbox").val(checks).filter(":checked").attr("checked",false); 
 				            	} 
 							},
 						}); 
@@ -127,7 +128,8 @@ function validateNumber(event) {
 			            	}else{
 			            		var checks = ["1","2","3","4"];
 			           		    $(":checkbox").val(checks).filter(":checked").attr("disabled",false);
-			           		 $("#waitmsg").show();
+			           		 $(":checkbox").val(checks).filter(":checked").attr("checked",false); 
+			      
 			            	} 
 						}
 					});		
@@ -194,7 +196,7 @@ function validateNumber(event) {
            	}else{
            		var checks = ["1","2","3","4"];
           		    $(":checkbox").val(checks).filter(":checked").attr("disabled",false);  
-          		  $("#waitmsg").show();
+          		  $(":checkbox").val(checks).filter(":checked").attr("checked",false); 
            	}
 			}
             function modify(selectedVal){
