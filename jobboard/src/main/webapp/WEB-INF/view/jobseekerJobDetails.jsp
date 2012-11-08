@@ -110,7 +110,8 @@
 									 
 									 
 									<div class="ShareText">|&nbsp;&nbsp;Print:&nbsp;</div>
-									<a rel="nofollow,noindex" href=""><div
+									<a rel="nofollow,noindex" href="" onclick="window.print();"
+									><div
 											class="printJBdetail"></div></a>
 								</div>
 								<div class="rowEvenTB10Spacing">
@@ -147,7 +148,8 @@
 									 		
 													
 											<div class="ShareText">|&nbsp;&nbsp;Print:&nbsp;</div>
-											<a href=""><div class="printJBdetail"></div></a>
+											<a href="" onclick="window.print();"
+											><div class="printJBdetail"></div></a>
 										</div>
 										<div class="rowEvenTB10Spacing">
 											<a

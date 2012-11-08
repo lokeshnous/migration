@@ -354,7 +354,8 @@
                     <div class="ShareArea">
                     <span>
                     <div class="ShareText">|&nbsp;&nbsp;Print:&nbsp;</div>
-                     <img class="printJBdetail" src="<%= request.getContextPath() %>/resources/images/tranBg.png">
+                     <a href="" onclick="window.print();"
+											><div class="printJBdetail"></div></a>
                     </span>
                     </div>
                   </div>
@@ -399,8 +400,8 @@
                         From This Employer </h1>
                             </div>
                     <c:forEach items="${jobDTOList}" var="jobDTO">   
-	                    <div class="BlueBoxCont"><a href="#" class="TextColorA02Link" onclick="viewJobDetails(${jobDTO.jobId},${jobDTO.jobTitle})">
-	                      <h3 class="TextColor02">${jobDTO.jobTitle}</h3>
+	                    <div class="BlueBoxCont"><a href="#" class="TextColorA02Link" onclick="viewJobDetails(${jobDTO.jobId},'${jobDTO.jobTitle}')">
+	                      <h3> class="TextColor02">${jobDTO.jobTitle}</h3>
 	                      </a></div>
                     </c:forEach> 
                  </div>
@@ -472,7 +473,7 @@
                     <div class="ShareArea">
                     <span>
                     <div class="ShareText">|&nbsp;&nbsp;Print:&nbsp;</div>
-                     <img class="printJBdetail" src="<%= request.getContextPath() %>/resources/images/tranBg.png">
+                    <a href="" onclick="window.print();" ><div class="printJBdetail"></div></a>
                     </span>
                     </div>
 	                  </div>
