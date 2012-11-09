@@ -83,7 +83,6 @@
 						$('#Country2').val(data.country);
 						$("#cityTown2").val(data.city);
 					},error : function(data) {
-						// alert('Unable to process');
 					},
 					complete : function(data) {
 					}

@@ -550,7 +550,7 @@ public class PDFGenerator {
 						getLabelFontFactory()));
 
 				certificationTable.addCell(new Paragraph(
-						"Certificatying Authority", getLabelFontFactory()));
+						"Certifying Authority", getLabelFontFactory()));
 				certificationTable.addCell(certificationDTO
 						.getCertifyingAuthority());
 
@@ -628,12 +628,12 @@ public class PDFGenerator {
 				educationTable = new PdfPTable(2);
 				educationTable.getDefaultCell().setBorder(0);
 
-				educationTable.addCell(getHeadPdfCell("Institution Name",
+				/*educationTable.addCell(getHeadPdfCell("Institution Name",
 						getLabelFontFactory()));
 				educationTable
 						.addCell(getHeadPdfCell(
 								educationDTO.getInstituteName(),
-								getLabelFontFactory()));
+								getLabelFontFactory()));*/
 
 				educationTable.addCell(new Paragraph("Degree Level",
 						getLabelFontFactory()));
@@ -651,7 +651,7 @@ public class PDFGenerator {
 						getLabelFontFactory()));
 				educationTable.addCell(educationDTO.getEndDate());
 
-				educationTable.addCell(new Paragraph("Degree",
+				educationTable.addCell(new Paragraph("Degrees",
 						getLabelFontFactory()));
 				educationTable.addCell(educationDTO.getDegrees());
 
@@ -729,7 +729,7 @@ public class PDFGenerator {
 						getLabelFontFactory()));
 				workExpTable.addCell(workExpDTO.getEmployerName());
 
-				workExpTable.addCell(new Paragraph("Employement Type",
+				workExpTable.addCell(new Paragraph("Employment Type",
 						getLabelFontFactory()));
 				workExpTable.addCell(workExpDTO.getEmploymentType());
 
@@ -745,7 +745,7 @@ public class PDFGenerator {
 						getLabelFontFactory()));
 				workExpTable.addCell(workExpDTO.getYrsAtPostion());
 
-				workExpTable.addCell(new Paragraph("Current Level",
+				workExpTable.addCell(new Paragraph("Career Level",
 						getLabelFontFactory()));
 				workExpTable.addCell(workExpDTO.getCurrentCareerLvl());
 
@@ -769,27 +769,27 @@ public class PDFGenerator {
 						getLabelFontFactory()));
 				workExpTable.addCell(workExpDTO.getState());
 
-				workExpTable.addCell(new Paragraph("Coutry",
+				workExpTable.addCell(new Paragraph("Country",
 						getLabelFontFactory()));
 				workExpTable.addCell(workExpDTO.getCountry());
 
 				workExpTable.addCell(new Paragraph("Still Employed",
 						getLabelFontFactory()));
 				workExpTable
-						.addCell((workExpDTO.getStillEmployed() == 0 ? Boolean.FALSE
-								: Boolean.TRUE).toString());
+						.addCell((workExpDTO.getStillEmployed() == 0 ? "No"
+								: "Yes"));
 
 				workExpTable.addCell(new Paragraph(
 						"Is this my current career level",
 						getLabelFontFactory()));
 				workExpTable
-						.addCell((workExpDTO.isbCurrentCareerLevel() ? Boolean.TRUE
-								: Boolean.FALSE).toString());
+						.addCell((workExpDTO.isbCurrentCareerLevel() ? "Yes"
+								:"No"));
 
 				workExpTable.addCell(new Paragraph("Present",
 						getLabelFontFactory()));
-				workExpTable.addCell((workExpDTO.isbPresent() ? Boolean.TRUE
-						: Boolean.FALSE).toString());
+				workExpTable.addCell((workExpDTO.isbPresent() ? "Yes"
+						: "No"));
 
 			}
 

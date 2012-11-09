@@ -263,6 +263,10 @@ public class ResumeConversionHelper {
 				 dto.setBuilderEmpId(entity.getBuilderEmploymentId());
 				 dto.setbCurrentCareerLevel(entity.getIsCurCareerLevel() != 0);
 				 dto.setbPresent(entity.getStillEmployed() != 0);
+				 dto.setState(entity.getState());
+				 dto.setCity(entity.getCity());
+				 dto.setCountry(entity.getCountry());
+				 dto.setStillEmployed(entity.getStillEmployed());
 				 
 				 listWorkExpDTO.add(dto);
 			}
@@ -286,6 +290,7 @@ public class ResumeConversionHelper {
 			resumeDTO.setUploadResumeId(resume.getUploadResumeId());
 			resumeDTO.setResumeName(resume.getResumeName());
 			resumeDTO.setResumeVisibility(String.valueOf(resume.getIsPublished()));
+			resumeDTO.setFilePath(resume.getFilePath());
 			if (resume.getUpdateDt() != null) {
 				resumeDTO.setUpdateDt(CommonUtil
 						.convertSQLDateTimeToStdDateTime(resume.getUpdateDt()

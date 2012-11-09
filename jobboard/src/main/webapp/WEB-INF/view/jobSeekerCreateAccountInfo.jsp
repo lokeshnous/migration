@@ -95,7 +95,6 @@ function validateNumber(event) {
 							},
 						}); 
 					},error : function(data) {
-						// alert('Unable to process');
 					},
 					complete : function(data) {
 					}
@@ -117,7 +116,6 @@ function validateNumber(event) {
 							$('#countryDpId').val(data.country);
 							$("#cityAutoPopulation").val(data.city);
 						},error : function(data) {
-							// alert('Unable to process');
 						},
 						complete : function(data) {
 							if ($("#countryDpId").val() == "USA") {           		

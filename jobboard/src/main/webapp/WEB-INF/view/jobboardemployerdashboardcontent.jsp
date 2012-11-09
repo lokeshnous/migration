@@ -287,7 +287,6 @@ var options = {
 				$("#metricsDetails").html(data);
 			},
 			error : function(data) {
-				// alert('Unable to process');
 			},
 			complete : function(data) {
 				// do nothing for now.
@@ -306,7 +305,6 @@ var options = {
 						loadMetricsDetails();
 					},
 					error : function(data) {
-						// alert('Unable to process');
 					}
 				});
 	}
@@ -325,7 +323,6 @@ var options = {
 						$("#count").text(data.count);
 					},
 					error : function(data) {
-						//alert('Unable to process');
 
 					}
 				});

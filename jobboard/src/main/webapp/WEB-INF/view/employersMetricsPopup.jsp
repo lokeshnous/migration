@@ -27,7 +27,6 @@
 			$("#metricsDetails").html(data);
 			},
 			error : function(data) {
-				// alert('Unable to process');
 			},
 			complete : function(data) {
 				// do nothing for now.
@@ -44,7 +43,6 @@
 		loadMetricsDetails();
 			 },
 				error : function(data) {
-					// alert('Unable to process');
 				}
 		});
 	} 
@@ -232,7 +230,6 @@ var options = {
 				$("#metricsDetails").html(data);
 			},
 			error : function(data) {
-				// alert('Unable to process');
 			},
 			complete : function(data) {
 			}
