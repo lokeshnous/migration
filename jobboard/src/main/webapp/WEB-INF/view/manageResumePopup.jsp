@@ -81,16 +81,6 @@
 
 		});
 	});
-	function printDoc(val)
-	{
-		alert(val);
-		window.print(); 
-		function revertback(){
-		document.location.href =("../jobSeekerResume/manageResume.html");
-		$.nmManual("../jobSeekerResume/manageResume.html");
-		}
-		window.onafterprint=revertback;
-	}
 </script>
 </head>
 
@@ -130,7 +120,7 @@
 									<a href="#" class="view"><img title="View" src="../resources/images/tranBg.png" width="20" height="20" alt="view"></a>
 									<a href='<%=request.getContextPath()%>/jobSeekerResume/editResume.html?resumeId=${resume.uploadResumeId}' class="nyroModal editFile"><img title="Edit" src="../resources/images/tranBg.png" width="20" height="20" alt="edit"></a>
 									<a href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${resume.uploadResumeId}" title="download"><img title="Download" src="../resources/images/tranBg.png" width="20" height="20" alt="download" class="download"></a>
-									<a href="#" onclick="printDoc('${resume.filePath}');" title="print" target="_blank"><img title="Print" src="../resources/images/tranBg.png" width="20" height="20" alt="print" class="printOrange"></a>
+									<a href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${resume.uploadResumeId}" title="print" target="_blank"><img title="Print" src="../resources/images/tranBg.png" width="20" height="20" alt="print" class="printOrange"></a>
 									<a href="#" title="delete"><img title="Delete" src="../resources/images/tranBg.png" width="20" height="20" alt="delete" class="delete"></a>
 									</td>
 								</tr>
