@@ -14,7 +14,15 @@
 	type="text/css">
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-
+		
+		function isPositiveInt(number){
+			var intRegex = /^\d+$/;
+			if(!intRegex.test(number.toString())) {
+				return true;
+			}
+			return false;
+		}
+		
 		jQuery(".megamenu").megamenu();
 
 		$("#continueToNext").click(function() {
@@ -28,7 +36,7 @@
 		
 		$("#purchaseCart input").change(function(){
 			var quantity = $(this).val();
-			if("" == quantity || null == quantity || isNaN(quantity) || quantity <= 0){
+			if(isNaN(quantity) || quantity <= 0 || isPositiveInt(quantity)){
 				alert("Please enter quantity in numerics( > 0)");
 				return;
 			}

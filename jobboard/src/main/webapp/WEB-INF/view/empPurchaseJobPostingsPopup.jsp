@@ -10,8 +10,16 @@
 
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
+
+		function isPositiveInt(number){
+			var intRegex = /^\d+$/;
+			if(!intRegex.test(number.toString())) {
+				return true;
+			}
+			return false;
+		}
+
 		jQuery(document).ready(function() {
-		
 		
 		jQuery(".megamenu").megamenu();
 		
@@ -68,7 +76,8 @@
 		
 		$("#jobPostingsCart input").change(function(){
 			var quantity = $(this).val();
-			if("" == quantity || null == quantity || isNaN(quantity) || quantity <= 0){
+			
+			if(isNaN(quantity) || quantity <= 0 || isPositiveInt(quantity)){
 				alert("Please enter quantity in numerics( > 0)");
 				return;
 			}
@@ -94,7 +103,7 @@
 					count++;
 					var quantity = $(this).parent().parent().find("td").eq(2).children(0).val();
 					
-					if("" == quantity || null == quantity || isNaN(quantity) || quantity <= 0){
+					if(isNaN(quantity) || quantity <= 0 || isPositiveInt(quantity)){
 						alert("Please enter quantity in numerics( > 0)");
 						return;
 					}
