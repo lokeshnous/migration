@@ -725,7 +725,7 @@ public class PDFGenerator {
 				workExpTable.addCell(getHeadPdfCell(workExpDTO.getJobTitle(),
 						getLabelFontFactory()));
 
-				workExpTable.addCell(new Paragraph("employer Name",
+				workExpTable.addCell(new Paragraph("Employer Name",
 						getLabelFontFactory()));
 				workExpTable.addCell(workExpDTO.getEmployerName());
 
@@ -761,7 +761,7 @@ public class PDFGenerator {
 						getLabelFontFactory()));
 				workExpTable.addCell(workExpDTO.getDescription());
 
-				workExpTable.addCell(new Paragraph("City",
+				/*workExpTable.addCell(new Paragraph("City",
 						getLabelFontFactory()));
 				workExpTable.addCell(workExpDTO.getCity());
 
@@ -771,7 +771,7 @@ public class PDFGenerator {
 
 				workExpTable.addCell(new Paragraph("Country",
 						getLabelFontFactory()));
-				workExpTable.addCell(workExpDTO.getCountry());
+				workExpTable.addCell(workExpDTO.getCountry());*/
 
 				workExpTable.addCell(new Paragraph("Still Employed",
 						getLabelFontFactory()));
@@ -786,10 +786,10 @@ public class PDFGenerator {
 						.addCell((workExpDTO.isbCurrentCareerLevel() ? "Yes"
 								:"No"));
 
-				workExpTable.addCell(new Paragraph("Present",
+				/*workExpTable.addCell(new Paragraph("Present",
 						getLabelFontFactory()));
 				workExpTable.addCell((workExpDTO.isbPresent() ? "Yes"
-						: "No"));
+						: "No"));*/
 
 			}
 

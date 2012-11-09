@@ -275,6 +275,7 @@ public class AgencyDashBoardController extends AbstractController {
 				session.setAttribute(MMJBCommonConstants.USER_NAME,
 						employeeAccountForm.getFirstName() + " "
 								+ employeeAccountForm.getLastName());
+				session.setAttribute(MMJBCommonConstants.COMPANY_EMP, employeeAccountForm.getCompany());
 				if (isUpdated) {
 					LOGGER.info("This is Account Addresss edite option done successfully");
 				} else {

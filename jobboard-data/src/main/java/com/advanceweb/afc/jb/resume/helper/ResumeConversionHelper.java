@@ -263,9 +263,9 @@ public class ResumeConversionHelper {
 				 dto.setBuilderEmpId(entity.getBuilderEmploymentId());
 				 dto.setbCurrentCareerLevel(entity.getIsCurCareerLevel() != 0);
 				 dto.setbPresent(entity.getStillEmployed() != 0);
-				 dto.setState(entity.getState());
-				 dto.setCity(entity.getCity());
-				 dto.setCountry(entity.getCountry());
+				 dto.setState(resumeBuilder.getState());
+				 dto.setCity(entity.getResBuilderResume().getCity());
+				 dto.setCountry(resumeBuilder.getCountry());
 				 dto.setStillEmployed(entity.getStillEmployed());
 				 
 				 listWorkExpDTO.add(dto);
