@@ -23,13 +23,16 @@
 			return false;
 		}
 		
-		jQuery(".megamenu").megamenu();
+		$("#errorMsg").html("");
+		
+		$(".megamenu").megamenu();
 
 		$("#continueToNext").click(function() {
 			if($("#grandTotalId").text() == "0" || $("#grandTotalId").text() == "0.0"){
 				alert("Please select any one of the package to proceed to place order");
 				return false;
 			}
+			$("#errorMsg").html("<span>Processing...</span>");
 			$("#creditConfirmForm").attr("action","${pageContext.request.contextPath}/pgiController/placeOrder.html");
 			$("#creditConfirmForm").submit();
 		});
@@ -85,6 +88,7 @@
 					<form:form action="../pgiController/placeOrder.html"
 						id="creditConfirmForm" method="POST" class="firstForm"
 						modelAttribute="paymentGatewayForm">
+						<div id="errorMsg" class="FormErrorDisplayText"></div>
 						<div class="row">
 							<h3 class="gatewayBreadcrumbs main_section">Review Order</h3>
 							<p class="form_notes review_order">Please review your order
