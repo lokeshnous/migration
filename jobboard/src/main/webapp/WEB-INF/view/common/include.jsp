@@ -1,5 +1,6 @@
 		<!-- STYLESHEETS -->
 <link href="<%= request.getContextPath() %>/resources/css/JB.css" rel="stylesheet" type="text/css" />
+<link href="<%= request.getContextPath() %>/resources/css/JB_nav.css" rel="stylesheet" type="text/css" />
 <link href="<%= request.getContextPath() %>/resources/css/jquery.megamenu.css" rel="stylesheet"	type="text/css" />
 <link href="<%= request.getContextPath() %>/resources/css/SliderStyles.css" rel="stylesheet"	type="text/css">
 <link href="<%= request.getContextPath() %>/resources/css/jquery-auto-ui.css" rel="stylesheet" type="text/css">

@@ -80,81 +80,93 @@ JAVASCRIPT FILES
 				</div>
 				<!-- header_wrapper -->
 
-				<div id="nav">
-					<ul class="megamenu">
-						<li><a href="javascript:">Magazines</a>
-							<div class="megamenuContainer">
-								<div class="column">
-									<a href="http://nursing.advanceweb.com/">
-										<p>Nurses</p>
-									</a> <a href="http://physical-therapy.advanceweb.com/">
-										<p>Physical Therapy and Rehab Medicine</p>
-									</a> <a href="http://occupational-therapy.advanceweb.com/">
-										<p>Occupational Therapy Practitioners</p>
-									</a> <a href="http://imaging-radiation-oncology.advanceweb.com/">
-										<p>Imaging & Radiattion Oncology</p>
-									</a> <a href="http://audiology.advanceweb.com/">
-										<p>Hearing Practice Management</p>
-									</a>
+				<div class="css_nav">
+					<ul class="css_main_menu">
+						<li class="css_main_menu_item"><a href="#">Magazines</a>
+							<ul class="css_subContainer">
+								<div class="css_column">
+									<li><a href="http://nursing.advanceweb.com/">Nurses</a></li>
+									<li><a href="http://physical-therapy.advanceweb.com/">Physical
+											Therapy and Rehab Medicine</a></li>
+									<li><a href="http://occupational-therapy.advanceweb.com/">Occupational
+											Therapy Practitioners</a></li>
+									<li><a
+										href="http://imaging-radiation-oncology.advanceweb.com/">Imaging
+											& Radiattion Oncology</a></li>
+									<li><a href="http://audiology.advanceweb.com/">Hearing
+											Practice Management</a></li>
 								</div>
-								<div class="column">
-									<a
-										href="http://speech-language-pathology-audiology.advanceweb.com/">
-										<p>Speech-Language Pathologists & Audiologists</p>
-									</a> <a
-										href="http://respiratory-care-sleep-medicine.advanceweb.com/">
-										<p>Respiratory Care and Sleep Medicine</p>
-									</a> <a href="http://laboratory-manager.advanceweb.com/">
-										<p>Administrators of the Laboratory</p>
-									</a> <a href="http://laboratorian.advanceweb.com/">
-										<p>Medical Laboratory Professionals</p>
-									</a> <a href="http://health-information.advanceweb.com/">
-										<p>Health Information Professionals</p>
-									</a>
+								<!-- END css_column -->
+
+								<div class="css_column">
+									<li><a
+										href="http://speech-language-pathology-audiology.advanceweb.com/">Speech-Language
+											Pathologists & Audiologists</a></li>
+									<li><a
+										href="http://respiratory-care-sleep-medicine.advanceweb.com/">Respiratory
+											Care and Sleep Medicine</a></li>
+									<li><a href="http://laboratory-manager.advanceweb.com/">Administrators
+											of the Laboratory</a></li>
+									<li><a href="http://laboratorian.advanceweb.com/">Medical
+											Laboratory Professionals</a></li>
+									<li><a href="http://health-information.advanceweb.com/">Health
+											Information Professionals</a></li>
 								</div>
-								<div class="column">
-									<a href="http://long-term-care.advanceweb.com/">
-										<p>Long-Term Care Management</p>
-									</a> <a
-										href="http://nurse-practitioners-and-physician-assistants.advanceweb.com/">
-										<p>NPs & PAs</p>
-									</a> <a href="http://healthcare-executive-insight.advanceweb.com/">
-										<p>Executive Insight</p>
-									</a>
+								<!-- END css_column -->
+
+								<div class="css_column">
+									<li><a href="http://long-term-care.advanceweb.com/">Long-Term
+											Care Management</a></li>
+									<li><a
+										href="http://nurse-practitioners-and-physician-assistants.advanceweb.com/">NPs
+											& PAs</a></li>
+									<li><a
+										href="http://healthcare-executive-insight.advanceweb.com/">Executive
+											Insight</a></li>
 								</div>
-							</div></li>
-						<li><a href="javascript:">Job Search</a>
-							<div class="megamenuContainer">
-								<div class="column">
-									<a href="http://health-care-jobs.advanceweb.com/">
-										<p>Quick Search</p>
-									</a> <a
-										href="http://health-care-jobs.advanceweb.com/ResumeBuilder/Default.aspx">
-										<p>Resume Builder</p>
-									</a> <a
-										href="http://health-care-jobs.advanceweb.com/Salary/Default.aspx">
-										<p>Salary Calculator</p>
-									</a> <a
-										href="http://health-care-jobs.advanceweb.com/AdvanceMessenger/Default.aspx">
-										<p>
-											<i>ADVANCE</i> Messenger
-										</p>
-									</a> <a
-										href="http://health-care-jobs.advanceweb.com/careers/article.aspx?cc=251059">
-										<p>Career Resource Center</p>
-									</a> <a
-										href="http://health-care-jobs.advanceweb.com/FeaturedFacilities/Default.aspx">
-										<p>Featured Facilities</p>
-									</a> <a href="http://health-care-jobs.advanceweb.com/Default.aspx">
-										<p>Home</p>
-									</a>
+								<!-- END css_column -->
+							</ul>
+							<!-- END css_subContainer --></li>
+						<!-- END css_main_menu_item -->
+
+						<li class="css_main_menu_item"><a href="#">Job Search</a>
+							<ul class="css_subContainer">
+								<div class="css_column">
+									<li><a href="http://health-care-jobs.advanceweb.com/">Quick
+											Search</a></li>
+									<li><a
+										href="http://health-care-jobs.advanceweb.com/ResumeBuilder/Default.aspx">Resume
+											Builder</a></li>
+									<li><a
+										href="http://health-care-jobs.advanceweb.com/Salary/Default.aspx">Salary
+											Calculator</a></li>
+									<li><a
+										href="http://health-care-jobs.advanceweb.com/AdvanceMessenger/Default.aspx"><em>ADVANCE</em>
+											Messenger</a></li>
+									<li><a
+										href="http://health-care-jobs.advanceweb.com/careers/article.aspx?cc=251059">Career
+											Resource Center</a></li>
+									<li><a
+										href="http://health-care-jobs.advanceweb.com/FeaturedFacilities/Default.aspx">Featured
+											Facilities</a></li>
+									<li><a
+										href="http://health-care-jobs.advanceweb.com/Default.aspx">Home</a></li>
 								</div>
-							</div></li>
-						<li><a href="javascript:">Education</a></li>
-						<li><a href="javascript:">Events</a></li>
-						<li><a href="javascript:">Community</a></li>
-						<li><a href="javascript:">Healthcare Shop</a></li>
-						<li><a href="javascript:">Custom Promotions</a></li>
+								<!-- END css_column -->
+							</ul>
+							<!-- END css_subContainer --></li>
+						<!-- END css_main_menu_item -->
+
+						<li class="css_main_menu_item"><a
+							href="http://www.advanceweb.com/Advertise/CE2.aspx">Education</a></li>
+						<li class="css_main_menu_item"><a
+							href="http://events.advanceweb.com/Attendee/Default.aspx">Events</a></li>
+						<li class="css_main_menu_item"><a
+							href="http://community.advanceweb.com/bloggroups/2/Home.aspx">Community</a></li>
+						<li class="css_main_menu_item"><a
+							href="http://shop.advanceweb.com">Healthcare Shop</a></li>
+						<li class="css_main_menu_item"><a
+							href="http://promotions.advanceweb.com">Custom Promotions</a></li>
 					</ul>
 				</div>
 				<!--nav-->

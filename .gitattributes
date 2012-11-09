@@ -732,6 +732,7 @@ jobboard/src/main/webapp/index.jsp -text
 jobboard/src/main/webapp/resources/MediaFiles/wmvplayer.xaml -text
 jobboard/src/main/webapp/resources/css/Gateway.css -text
 jobboard/src/main/webapp/resources/css/JB.css -text
+jobboard/src/main/webapp/resources/css/JB_nav.css -text
 jobboard/src/main/webapp/resources/css/SliderStyles.css -text
 jobboard/src/main/webapp/resources/css/basic.css -text
 jobboard/src/main/webapp/resources/css/basic_ie.css -text

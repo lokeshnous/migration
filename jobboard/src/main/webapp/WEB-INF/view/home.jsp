@@ -126,6 +126,50 @@ type="text/css">
 					<!-- column2-->
 					<!--<a href="<%=request.getContextPath()%>/employer/postNewJobs.html">Post New Job</a>-->
 				</div>
+					<div class="SEO_text">
+						<!-- added November 8, 2012 -->
+						<p>
+							According to the Bureau of Labor Statistics, 296,000 jobs were
+							added in the healthcare industry between October 2011 and October
+							2012. New opportunities are popping up every day, and the best
+							place to find them is on the <em>ADVANCE Healthcare Jobs</em>
+							website. Other healthcare job boards simply can't match our
+							massive database of job listings, our helpful healthcare career
+							advice or our incredibly accurate search functions. We've
+							optimized every piece of this resource so you can find exactly
+							what you need as quickly as possible.
+						</p>
+
+						<p>When you search for healthcare jobs here, you'll notice we
+							have thousands of quality opportunities for professionals in
+							every field. We're striving to include all types of healthcare
+							careers, so you can be sure you'll find the openings you're
+							looking for no matter what your specialty is. You have free
+							access to all of the healthcare jobs in our database, and you can
+							apply for as many as you like with just a click of the mouse.</p>
+
+						<p>
+							We've integrated a powerful Resume Builder so you can upload your
+							resume and create new ones with our step-by-step program,
+							allowing you to apply for a wide variety of healthcare jobs
+							instantly. And if you've signed up for a free <em>ADVANCE</em>
+							account, you can keep tabs on all of the jobs you've applied for
+							with your personalized job-seeker dashboard. This handy homepage
+							features everything you need to lead a successful job hunt. It's
+							an invaluable resource you won't find on any other healthcare job
+							boards.
+						</p>
+
+						<p>In addition to helping you track your applications, your
+							dashboard shows you at a glance how many times your resumes have
+							been viewed by employers. It also displays jobs you've saved
+							during your searches and lets you set job alerts so you're the
+							first to know when new healthcare jobs are posted. All you need
+							to do is save your favorite job searches and our precision job
+							match technology guarantees you never miss the opportunities that
+							are perfect for you. Get started today and we'll help you take
+							your healthcare career to the next level.</p>
+					</div>
 				</div>
 				<br class="clearfix" />
 				
