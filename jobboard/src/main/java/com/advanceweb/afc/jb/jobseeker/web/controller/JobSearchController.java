@@ -2350,7 +2350,7 @@ public class JobSearchController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/seeallsearch", method = RequestMethod.GET)
-	public ModelAndView clearalllist(HttpSession session,
+	public ModelAndView seeallsearch(HttpSession session,
 			MyRecentSearchesForm myrecentsearchform, BindingResult result) {
 
 		ModelAndView modelAndView = new ModelAndView();
@@ -2361,7 +2361,7 @@ public class JobSearchController extends AbstractController {
 				.viewMyRecentSearches(userId);
 
 		List<SaveSearchedJobsDTO> recentSplit = new ArrayList<SaveSearchedJobsDTO>();
- int i=0;
+       int i=0;
 		for (SaveSearchedJobsDTO jobsDTO : recentSearch) {
 			if(i==20){break;}
 			SaveSearchedJobsDTO dto = new SaveSearchedJobsDTO(
@@ -2384,7 +2384,7 @@ public class JobSearchController extends AbstractController {
 
 	@RequestMapping(value = "/clearalllist", method = RequestMethod.GET)
 	public @ResponseBody
-	String seeallsearchjob(HttpSession session,
+	String clearalllist(HttpSession session,
 			MyRecentSearchesForm myrecentsearchform, BindingResult result,
 			HttpServletRequest request) {
 
@@ -2438,6 +2438,7 @@ public class JobSearchController extends AbstractController {
 						dto.setCreatedDate(jobsDTO.getCreatedDate());
 						dto.setKeywords(keyword[1].substring(9));
 						dto.setSearchName(keyword[2].substring(10));
+						dto.setSaveSearchID(jobsDTO.getSaveSearchID());
 
 				recentSplit.add(dto);
 			}
