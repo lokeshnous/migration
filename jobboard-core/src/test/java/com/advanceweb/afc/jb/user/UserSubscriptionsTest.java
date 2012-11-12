@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
-import com.advanceweb.jb.test.ServiceTest;
+import com.advanceweb.jb.test.ServiceTestBase;
 
 /**
  * 
@@ -18,7 +18,7 @@ import com.advanceweb.jb.test.ServiceTest;
  * @Version 1.0
  * @Since 2nd July, 2012
  */
-public class UserSubscriptionsTest extends ServiceTest {
+public class UserSubscriptionsTest extends ServiceTestBase {
 
 	@Autowired
 	public UserSubscriptionService subscriptionService;

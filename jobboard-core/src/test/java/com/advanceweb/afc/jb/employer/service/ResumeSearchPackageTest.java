@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.advanceweb.afc.jb.common.ResumePackageDTO;
 import com.advanceweb.afc.jb.employer.service.impl.ResumePackageServiceImpl;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
-import com.advanceweb.jb.test.ServiceTest;
+import com.advanceweb.jb.test.ServiceTestBase;
 
 /**
  * This class has been created to unit test the Resume Search Packages
@@ -22,7 +22,7 @@ import com.advanceweb.jb.test.ServiceTest;
  * @version 1.0
  * @since 15 Oct 2012
  */
-public class ResumeSearchPackageTest extends ServiceTest {
+public class ResumeSearchPackageTest extends ServiceTestBase {
 	
 	private static final Logger LOGGER = Logger
 			.getLogger(ResumePackageServiceImpl.class);

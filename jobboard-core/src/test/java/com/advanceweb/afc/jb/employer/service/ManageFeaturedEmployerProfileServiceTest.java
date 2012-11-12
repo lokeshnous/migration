@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
-import com.advanceweb.jb.test.ServiceTest;
+import com.advanceweb.jb.test.ServiceTestBase;
 
-public class ManageFeaturedEmployerProfileServiceTest extends ServiceTest {
+public class ManageFeaturedEmployerProfileServiceTest extends ServiceTestBase {
 
 	@Autowired
 	private ManageFeaturedEmployerProfile manageFeaturedEmployerProfile;

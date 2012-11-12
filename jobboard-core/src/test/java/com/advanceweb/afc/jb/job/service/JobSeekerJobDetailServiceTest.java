@@ -1,8 +1,8 @@
 package com.advanceweb.afc.jb.job.service;
 
-import com.advanceweb.jb.test.ServiceTest;
+import com.advanceweb.jb.test.ServiceTestBase;
 
-public class JobSeekerJobDetailServiceTest extends ServiceTest {
+public class JobSeekerJobDetailServiceTest extends ServiceTestBase {
 
 	//TODO: Need to modify as per the change of DB
 //	@Autowired

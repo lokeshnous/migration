@@ -16,9 +16,9 @@ import com.advanceweb.afc.jb.common.SalesItemDTO;
 import com.advanceweb.afc.jb.common.SalesOrderDTO;
 import com.advanceweb.afc.jb.job.service.JobPostService;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
-import com.advanceweb.jb.test.ServiceTest;
+import com.advanceweb.jb.test.ServiceTestBase;
 
-public class PaymentGatewayServiceTest extends ServiceTest{
+public class PaymentGatewayServiceTest extends ServiceTestBase{
 
 	@Autowired
 	private PaymentGatewayService paymentGatewayService;

@@ -14,7 +14,7 @@ import org.springframework.mail.MailParseException;
 
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
-import com.advanceweb.jb.test.ServiceTest;
+import com.advanceweb.jb.test.ServiceTestBase;
 
 /**
  * <code>MMEmailServiceTest</code> is a test class for email service
@@ -24,7 +24,7 @@ import com.advanceweb.jb.test.ServiceTest;
  * @since 18 July 2012
  * 
  */
-public class MMEmailServiceTest extends ServiceTest {
+public class MMEmailServiceTest extends ServiceTestBase {
 
 	@Autowired
 	private MMEmailService emailService;

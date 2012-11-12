@@ -11,9 +11,9 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
-import com.advanceweb.jb.test.ServiceTest;
+import com.advanceweb.jb.test.ServiceTestBase;
 
-public class SaveSearchServiceTest extends ServiceTest {
+public class SaveSearchServiceTest extends ServiceTestBase {
 	
 	private static final Logger LOGGER = Logger
 			.getLogger(SaveSearchServiceTest.class);

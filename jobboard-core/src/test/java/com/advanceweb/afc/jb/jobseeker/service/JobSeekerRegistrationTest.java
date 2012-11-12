@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
-import com.advanceweb.jb.test.ServiceTest;
+import com.advanceweb.jb.test.ServiceTestBase;
 
 /**
  * 
@@ -17,7 +17,7 @@ import com.advanceweb.jb.test.ServiceTest;
  * @Version 1.0
  * @Since 2nd July, 2012
  */
-public class JobSeekerRegistrationTest  extends ServiceTest{
+public class JobSeekerRegistrationTest  extends ServiceTestBase{
 	
 	@Autowired
 	private ProfileRegistration profileRegistration;

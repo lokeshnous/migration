@@ -22,9 +22,9 @@ import com.advanceweb.afc.jb.common.EducationDegreeDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
-import com.advanceweb.jb.test.ServiceTest;
+import com.advanceweb.jb.test.ServiceTestBase;
 
-public class ResumeServiceTest extends ServiceTest {
+public class ResumeServiceTest extends ServiceTestBase {
 
 	@Autowired
 	private ResumeService resumeService;

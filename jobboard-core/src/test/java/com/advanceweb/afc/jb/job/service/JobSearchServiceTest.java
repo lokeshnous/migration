@@ -14,7 +14,7 @@ import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
 import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.search.service.JobSearchService;
-import com.advanceweb.jb.test.ServiceTest;
+import com.advanceweb.jb.test.ServiceTestBase;
 
 /**
  * <code> JobSearchServiceTest </code> is a Test class for JobSearchService
@@ -24,7 +24,7 @@ import com.advanceweb.jb.test.ServiceTest;
  * @since 17 July 2012
  * 
  */
-public class JobSearchServiceTest extends ServiceTest {
+public class JobSearchServiceTest extends ServiceTestBase {
 
 	private static final String NOT_READY_FOR_TEST = "Not Ready For Test";
 	@Autowired

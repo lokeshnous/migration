@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.advanceweb.common.ads.AdSize;
 import com.advanceweb.common.ads.Banner;
 import com.advanceweb.common.client.ClientContext;
-import com.advanceweb.jb.test.ServiceTest;
+import com.advanceweb.jb.test.ServiceTestBase;
 
-public class OpenxAdServiceDelegateTest extends ServiceTest {
+public class OpenxAdServiceDelegateTest extends ServiceTestBase {
 	private static final Logger LOGGER = Logger
 			.getLogger(OpenxAdServiceDelegateTest.class);
 
@@ -20,9 +20,9 @@ public class OpenxAdServiceDelegateTest extends ServiceTest {
 	@Autowired
 	private OpenxAdServiceDelegate openxAdServiceDelegate;
 
-	AdSize[] adSizes = { AdSize.IAB_LEADERBOARD, AdSize.IAB_MEDIUM_RECTANGLE,
+	private AdSize[] adSizes = { AdSize.IAB_LEADERBOARD, AdSize.IAB_MEDIUM_RECTANGLE,
 			new AdSize(120, 90) };
-	String[] auids = { "284880", "284879", "309613" };
+	private String[] auids = { "284880", "284879", "309613" };
 
 	@Test
 	public void testGetBanner() {

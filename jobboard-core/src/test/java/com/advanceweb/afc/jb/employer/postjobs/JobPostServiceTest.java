@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.job.service.JobPostService;
-import com.advanceweb.jb.test.ServiceTest;
+import com.advanceweb.jb.test.ServiceTestBase;
 
 /**
  * 
@@ -20,7 +20,7 @@ import com.advanceweb.jb.test.ServiceTest;
  * @Since 2nd July, 2012
  */
 
-public class JobPostServiceTest extends ServiceTest{
+public class JobPostServiceTest extends ServiceTestBase{
 	
 	@Autowired
 	private JobPostService employerJobPost;

@@ -25,7 +25,7 @@ import com.advanceweb.afc.jb.common.ResumeAttribListDTO;
 import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
-import com.advanceweb.jb.test.ServiceTest;
+import com.advanceweb.jb.test.ServiceTestBase;
 
 /**
  * @Author : Prince Mathew
@@ -34,7 +34,7 @@ import com.advanceweb.jb.test.ServiceTest;
    @Purpose: For JUnit test for all the drop down of Advance Search
  */
 
-public class PopulateDropdownsTest extends ServiceTest{
+public class PopulateDropdownsTest extends ServiceTestBase{
 
 	@Autowired
 	private PopulateDropdowns popService;

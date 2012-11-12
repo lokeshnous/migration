@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
 import com.advanceweb.afc.jb.employer.dao.BrandingTemplateDAO;
-import com.advanceweb.jb.test.ServiceTest;
+import com.advanceweb.jb.test.ServiceTestBase;
 
 /**
  * <code>BrandTemplateServiceTest</code> is a Test class for EmpBrandTemp
@@ -22,7 +22,7 @@ import com.advanceweb.jb.test.ServiceTest;
  * @since 24 July 2012
  * 
  */
-public class BrandTemplateServiceTest extends ServiceTest {
+public class BrandTemplateServiceTest extends ServiceTestBase {
 
 	@Autowired
 	private BrandingTemplateDAO empBrandTempDAO;

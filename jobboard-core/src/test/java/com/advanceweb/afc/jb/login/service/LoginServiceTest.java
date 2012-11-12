@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.advanceweb.jb.test.ServiceTest;
+import com.advanceweb.jb.test.ServiceTestBase;
 
 /**
  * 
@@ -15,7 +15,7 @@ import com.advanceweb.jb.test.ServiceTest;
  * @since 24th July 2012
  */
 
-public class LoginServiceTest extends ServiceTest {
+public class LoginServiceTest extends ServiceTestBase {
 
 	private static final Logger LOGGER = Logger
 			.getLogger(LoginServiceTest.class);

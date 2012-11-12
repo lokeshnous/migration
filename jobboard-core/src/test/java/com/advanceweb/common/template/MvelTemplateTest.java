@@ -9,9 +9,9 @@ import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.advanceweb.jb.test.ServiceTest;
+import com.advanceweb.jb.test.ServiceTestBase;
 
-public class MvelTemplateTest extends ServiceTest {
+public class MvelTemplateTest extends ServiceTestBase {
 	private static final Logger LOGGER = Logger
 			.getLogger(MvelTemplateTest.class);
 	private static final String ERROR_MSG = "The parameter %s is not replaced with %s in the mvel template";
