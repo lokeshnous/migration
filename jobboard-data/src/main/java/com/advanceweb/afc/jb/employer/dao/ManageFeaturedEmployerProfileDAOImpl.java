@@ -229,7 +229,7 @@ public class ManageFeaturedEmployerProfileDAOImpl implements
 
 			// modified to bring all facility groups in futured employer list.
 			query = session.createQuery(
-					"from AdmFacility where facilityParentId = 0");
+					"from AdmFacility adm where adm.facilityParentId = 0");
 			query.setFirstResult(startRow);
 			query.setMaxResults(endRow);
 			List<?> admFacilityList = query.list();
