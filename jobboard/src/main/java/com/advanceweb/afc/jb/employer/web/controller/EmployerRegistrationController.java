@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -52,6 +54,8 @@ import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.EmloyerRegistartionService;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
+import com.advanceweb.afc.jb.mail.service.EmailDTO;
+import com.advanceweb.afc.jb.mail.service.MMEmailService;
 import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 import com.advanceweb.afc.jb.pgi.web.controller.BillingAddressForm;
 import com.advanceweb.afc.jb.pgi.web.controller.TransformPaymentMethod;
@@ -106,6 +110,21 @@ public class EmployerRegistrationController extends AbstractController{
 	@Autowired
 	private EmloyerRegistartionService empRegService;
 
+	@Value("${advanceWebAddress}")
+	private String advanceWebAddress;
+
+	@Value("${welcomeMailMessage}")
+	private String 	welcomeMailMessage;
+
+	@Value("${navigationPath}")
+	private String navigationPath;
+	@Value("${employerPageExtention}")
+	private String employerPageExtention;
+	@Autowired
+	private MMEmailService emailService;
+
+	@Value("${dothtmlExtention}")
+	private String dothtmlExtention;
 	// @Autowired
 	// private AdmManagePermission admManagePermission;
 
@@ -304,7 +323,11 @@ public class EmployerRegistrationController extends AbstractController{
 		empDTO.setAttribList(attribLists);
 		empDTO.setMerUserDTO(userDTO);
 		userDTO = employerRegistration.createUser(empDTO);
-
+		
+		// send welcome e-mail- starts
+		sendEmployerWelcomeEmail(request, userDTO);
+		// send welcome e-mail- Ends
+		
 		if (userDTO.getEmailId() == null) {
 			model.addObject(MESSAGE, nsValidateUser);
 			return model;
@@ -334,6 +357,74 @@ public class EmployerRegistrationController extends AbstractController{
 			return model;
 		}
 
+	}
+
+	/**
+	 * @param request
+	 * @param userDTO
+	 */
+	private void sendEmployerWelcomeEmail(HttpServletRequest request,
+			UserDTO userDTO) {
+		InternetAddress[] jsToAddress = new InternetAddress[1];
+
+		try {
+			jsToAddress[0] = new InternetAddress(userDTO.getEmailId());
+		} catch (AddressException jbex) {
+			LOGGER.error(
+					"Error occured while geting InternetAddress reference",
+					jbex);
+		}
+
+		EmployerInfoDTO facilityDetail = facilityService
+				.facilityDetails(userDTO.getUserId());
+		if (null != facilityDetail) {
+			userDTO.setCompany(facilityDetail.getCustomerName());
+		}
+		EmailDTO emailDTO = new EmailDTO();
+		emailDTO.setToAddress(jsToAddress);
+		emailDTO.setFromAddress(advanceWebAddress);
+		emailDTO.setSubject(welcomeMailMessage);
+		int start, end;
+		String loginPath = navigationPath.substring(2);
+		String employerloginUrl = request.getRequestURL().toString()
+				.replace(request.getServletPath(), loginPath)
+				+ dothtmlExtention + employerPageExtention;
+		start = MMJBCommonConstants.employerWelcomeMailBody.toString().indexOf(
+				"?user_name");
+		end = start + "?user_name".length();
+		if (start > 0 && end > 0) {
+			MMJBCommonConstants.employerWelcomeMailBody.replace(start, end,
+					userDTO.getFirstName());
+		}
+		start = MMJBCommonConstants.employerWelcomeMailBody.toString().indexOf(
+				"?userName");
+		end = start + "?userName".length();
+		if (start > 0 && end > 0) {
+			MMJBCommonConstants.employerWelcomeMailBody.replace(start, end,
+					userDTO.getFirstName());
+		}
+
+		start = MMJBCommonConstants.employerWelcomeMailBody.toString().indexOf(
+				"?company_name");
+		end = start + "?company_name".length();
+		if (start > 0 && end > 0 && null != userDTO.getCompany()) {
+			MMJBCommonConstants.employerWelcomeMailBody.replace(start, end,
+					userDTO.getCompany());
+		}
+		start = MMJBCommonConstants.employerWelcomeMailBody.toString().indexOf(
+				"?empdashboardLink");
+		end = start + "?empdashboardLink".length();
+		if (start > 0 && end > 0) {
+			MMJBCommonConstants.employerWelcomeMailBody.replace(start, end,
+					employerloginUrl);
+		}
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append(MMJBCommonConstants.employerEmailHeader);
+		stringBuffer.append(MMJBCommonConstants.employerWelcomeMailBody);
+		stringBuffer.append(MMJBCommonConstants.emailFooter);
+		emailDTO.setBody(stringBuffer.toString());
+		emailDTO.setHtmlFormat(true);
+		emailService.sendEmail(emailDTO);
 	}
 	
 	/**

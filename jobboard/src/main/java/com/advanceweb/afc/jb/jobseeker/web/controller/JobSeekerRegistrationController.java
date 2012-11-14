@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -43,21 +45,28 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.common.controller.AbstractController;
 import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.DropDownDTO;
+import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
+import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.login.web.controller.ChangePasswordForm;
+import com.advanceweb.afc.jb.mail.service.EmailDTO;
+import com.advanceweb.afc.jb.mail.service.MMEmailService;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
+import com.advanceweb.afc.jb.user.dao.UserDao;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
 import com.advanceweb.common.client.ClientContext;
+
 @Controller
 @RequestMapping("/jobseekerregistration")
 @SessionAttributes("registerForm")
 @Scope("session")
-public class JobSeekerRegistrationController extends AbstractController{
+public class JobSeekerRegistrationController extends AbstractController {
 	private static final Logger LOGGER = Logger
 			.getLogger(JobSeekerRegistrationController.class);
 	@Autowired
@@ -74,9 +83,9 @@ public class JobSeekerRegistrationController extends AbstractController{
 
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
-	
+
 	@Value("${socialSignupMsg}")
-	private  String socialSignupMsg;
+	private String socialSignupMsg;
 
 	@Value("${followuplinkfacebook}")
 	private String followuplinkfacebook;
@@ -95,7 +104,7 @@ public class JobSeekerRegistrationController extends AbstractController{
 
 	@Value("${js.email.exists}")
 	private String emailExists;
-	
+
 	@Autowired
 	private AdService adService;
 
@@ -114,6 +123,26 @@ public class JobSeekerRegistrationController extends AbstractController{
 	@Value("${js.pwd.equal}")
 	private String pwdEqual;
 
+	@Value("${advanceWebAddress}")
+	private String advanceWebAddress;
+	@Value("${changePasswordSuccessful.subject}")
+	private String changePasswordSubject;
+	@Value("${welcomeMailMessage}")
+	private String 	welcomeMailMessage;
+	@Value("${dothtmlExtention}")
+	private String dothtmlExtention;
+	@Value("${jobseekerPageExtention}")
+	private String jobseekerPageExtention;
+	@Value("${navigationPath}")
+	private String navigationPath;
+	@Value("${employerPageExtention}")
+	private String employerPageExtention;
+	@Autowired
+	private MMEmailService emailService;
+	@Autowired
+	private UserDao userDAO;
+	@Autowired
+	private FacilityService facilityService;
 	// Spring ReCaptcha
 
 	private String recaptchaResponse;
@@ -121,15 +150,16 @@ public class JobSeekerRegistrationController extends AbstractController{
 	private String remoteAddr;
 
 	private Long placeKey;
-	
+
 	private static final String JS_CREATE_ACCOUNT = "jobSeekerCreateAccount";
-	
+
 	private static final String REGISTER_FORM = "registerForm";
 
 	/**
 	 * This method is called to display job seeker registration page Step1
 	 * Create Your Account
-	 * @param request 
+	 * 
+	 * @param request
 	 * 
 	 * @param model
 	 * @return
@@ -138,7 +168,8 @@ public class JobSeekerRegistrationController extends AbstractController{
 	public ModelAndView createJobSeekerRegistrationStep1(
 			HttpSession session,
 			@RequestParam(value = "profileId", required = false) String profileId,
-			@RequestParam(value = "serviceProviderId", required = false) String serviceProviderId, HttpServletRequest request) {
+			@RequestParam(value = "serviceProviderId", required = false) String serviceProviderId,
+			HttpServletRequest request) {
 
 		ModelAndView model = new ModelAndView();
 		JobSeekerRegistrationForm registerForm = new JobSeekerRegistrationForm();
@@ -174,7 +205,7 @@ public class JobSeekerRegistrationController extends AbstractController{
 		return model;
 
 	}
-	
+
 	/**
 	 * Get Ads for job seeker create account page
 	 * 
@@ -182,7 +213,7 @@ public class JobSeekerRegistrationController extends AbstractController{
 	 * @param session
 	 * @param model
 	 */
-	private void getAdsForjobSeekerCreateAcc (HttpServletRequest request,
+	private void getAdsForjobSeekerCreateAcc(HttpServletRequest request,
 			HttpSession session, ModelAndView model) {
 		String bannerString = null;
 		try {
@@ -206,13 +237,15 @@ public class JobSeekerRegistrationController extends AbstractController{
 					.getTag();
 			model.addObject("adPageBtm", bannerString);
 		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);		}
+			LOGGER.error(e.getMessage(), e);
+		}
 	}
 
 	/**
 	 * This method is called to display job seeker registration page Create Your
 	 * information
-	 * @param request 
+	 * 
+	 * @param request
 	 * 
 	 * @param model
 	 * @return
@@ -220,7 +253,8 @@ public class JobSeekerRegistrationController extends AbstractController{
 	@RequestMapping(value = "/createJobSeekerYourInfo", method = RequestMethod.POST, params = "Next")
 	public ModelAndView createJobSeekerRegistration(
 			@ModelAttribute(REGISTER_FORM) JobSeekerRegistrationForm registerForm,
-			BindingResult result, HttpServletRequest req, HttpSession session, HttpServletRequest request) {
+			BindingResult result, HttpServletRequest req, HttpSession session,
+			HttpServletRequest request) {
 
 		placeKey = new Random().nextLong();
 		ModelAndView model = new ModelAndView();
@@ -242,16 +276,16 @@ public class JobSeekerRegistrationController extends AbstractController{
 				 * @since Sep 4 2012
 				 * 
 				 */
-//				boolean isinvaliduser = OpenAMEUtility
-//						.openAMValidateEmail(registerForm.getEmailId());
-//				if (isinvaliduser) {
-//					LOGGER.info("OpenAM : user is already exist !");
-//					model.setViewName(JS_CREATE_ACCOUNT);
-//					result.rejectValue("emailId", "NotEmpty", emailExists);
-//					return model;
-//				} else {
-//					LOGGER.info("OpenAM : valid user!");
-//				}
+				// boolean isinvaliduser = OpenAMEUtility
+				// .openAMValidateEmail(registerForm.getEmailId());
+				// if (isinvaliduser) {
+				// LOGGER.info("OpenAM : user is already exist !");
+				// model.setViewName(JS_CREATE_ACCOUNT);
+				// result.rejectValue("emailId", "NotEmpty", emailExists);
+				// return model;
+				// } else {
+				// LOGGER.info("OpenAM : valid user!");
+				// }
 
 				// Ends of OpenAM code
 
@@ -318,7 +352,7 @@ public class JobSeekerRegistrationController extends AbstractController{
 		return model;
 
 	}
-	
+
 	/**
 	 * Get Ads for job seeker create account info page
 	 * 
@@ -326,7 +360,7 @@ public class JobSeekerRegistrationController extends AbstractController{
 	 * @param session
 	 * @param model
 	 */
-	private void getAdsForjobSeekerCreateAccInfo (HttpServletRequest request,
+	private void getAdsForjobSeekerCreateAccInfo(HttpServletRequest request,
 			HttpSession session, ModelAndView model) {
 		String bannerString = null;
 		try {
@@ -356,9 +390,9 @@ public class JobSeekerRegistrationController extends AbstractController{
 					.getTag();
 			model.addObject("adPageBtm", bannerString);
 		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);		}
+			LOGGER.error(e.getMessage(), e);
+		}
 	}
-
 
 	/**
 	 * This method is called to save employee registration
@@ -392,11 +426,15 @@ public class JobSeekerRegistrationController extends AbstractController{
 						.getListProfAttribForms()) {
 
 					if (form.getStrLabelName() != null
-							&& form.getStrLabelName().equalsIgnoreCase(MMJBCommonConstants.MYPROFESSION)) {
-						for(DropDownDTO dropDown:form.getDropdown()){
-							if(MMJBCommonConstants.PROFESSION_OTHERS.equals(dropDown.getOptionName()) && 
-									form.getStrLabelValue().equals(dropDown.getOptionId())){
-								form.setStrLabelValue(registerForm.getOtherProfession());
+							&& form.getStrLabelName().equalsIgnoreCase(
+									MMJBCommonConstants.MYPROFESSION)) {
+						for (DropDownDTO dropDown : form.getDropdown()) {
+							if (MMJBCommonConstants.PROFESSION_OTHERS
+									.equals(dropDown.getOptionName())
+									&& form.getStrLabelValue().equals(
+											dropDown.getOptionId())) {
+								form.setStrLabelValue(registerForm
+										.getOtherProfession());
 							}
 						}
 					}
@@ -442,8 +480,8 @@ public class JobSeekerRegistrationController extends AbstractController{
 			UserDTO userDTO = transformJobSeekerRegistration
 					.createUserDTO(registerForm);
 			List<ProfileAttribDTO> attribLists = transformJobSeekerRegistration
-					.transformProfileAttribFormToDTO(registerForm
-							.getListProfAttribForms(), registerForm);
+					.transformProfileAttribFormToDTO(
+							registerForm.getListProfAttribForms(), registerForm);
 			jsRegistrationDTO.setAttribList(attribLists);
 			jsRegistrationDTO.setMerUserDTO(userDTO);
 
@@ -458,17 +496,21 @@ public class JobSeekerRegistrationController extends AbstractController{
 			 * @since Sep 4 2012
 			 * 
 			 */
-//			boolean isCreated = OpenAMEUtility.openAMCreateUser(userDTO,
-//					hashmap);
-//			LOGGER.info("Open AM : User is created!" + isCreated);
+			// boolean isCreated = OpenAMEUtility.openAMCreateUser(userDTO,
+			// hashmap);
+			// LOGGER.info("Open AM : User is created!" + isCreated);
 			// Ends of OpenAM code
-
-			session.setAttribute("userName", userDTO.getFirstName() + " "
-					+ userDTO.getLastName());
+			
+			// send welcome e-mail- starts
+			sendJobSeekerWelcomeEmail(session, request, userDTO);
+			// send welcome e-mail- Ends
+			session.setAttribute("userName",
+					userDTO.getFirstName() + " " + userDTO.getLastName());
 			session.setAttribute(MMJBCommonConstants.USER_ID, userDTO.getUserId());
 			session.setAttribute("userEmail", userDTO.getEmailId());
 			session.setAttribute(MMJBCommonConstants.LAST_PLACE_KEY, placeKey);
-
+			// send welcome email ends
+			
 			model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
 			if (session.getAttribute("jobId") != null) {
 				model.setViewName("redirect:/jobsearch/viewJobDetails.html?id="
@@ -483,6 +525,56 @@ public class JobSeekerRegistrationController extends AbstractController{
 			LOGGER.error(e);
 		}
 		return model;
+	}
+
+	/**
+	 * Method To send Welcome Email
+	 * @param session
+	 * @param request
+	 * @param userDTO
+	 */
+	private void sendJobSeekerWelcomeEmail(HttpSession session,
+			HttpServletRequest request, UserDTO userDTO) {
+		StringBuffer stringBuffer = new StringBuffer();
+		InternetAddress[] jsToAddress = new InternetAddress[1];
+
+		try {
+			jsToAddress[0] = new InternetAddress(userDTO.getEmailId());
+		} catch (AddressException jbex) {
+			LOGGER.error(
+					"Error occured while geting InternetAddress reference",
+					jbex);
+		}
+
+		EmailDTO emailDTO = new EmailDTO();
+		emailDTO.setToAddress(jsToAddress);
+		emailDTO.setFromAddress(advanceWebAddress);
+		emailDTO.setSubject(welcomeMailMessage);
+		int start, end;
+		String loginPath = navigationPath.substring(2);
+		String jonseekerloginUrl = request.getRequestURL().toString()
+				.replace(request.getServletPath(), loginPath)
+				+ dothtmlExtention + jobseekerPageExtention;
+		start = MMJBCommonConstants.jobSeekerWelcomeMailBody.toString()
+				.indexOf("?jobSeekerFirstName");
+		end = start + "?jobSeekerFirstName".length();
+		if (start > 0 && end > 0) {
+			MMJBCommonConstants.jobSeekerWelcomeMailBody.replace(start, end,
+					userDTO.getFirstName());
+		}
+		start = MMJBCommonConstants.jobSeekerWelcomeMailBody.toString()
+				.indexOf("?jsdashboardLink");
+		end = start + "?jsdashboardLink".length();
+		if (start > 0 && end > 0) {
+			MMJBCommonConstants.jobSeekerWelcomeMailBody.replace(start, end,
+					jonseekerloginUrl);
+		}
+		stringBuffer.append(MMJBCommonConstants.jobSeekerEmailHeader);
+		stringBuffer.append(MMJBCommonConstants.jobSeekerWelcomeMailBody);
+		stringBuffer.append(MMJBCommonConstants.emailFooter);
+		emailDTO.setBody(stringBuffer.toString());
+		emailDTO.setHtmlFormat(true);
+		emailService.sendEmail(emailDTO);
 	}
 
 	private void authenticateUserAndSetSession(UserDTO user,
@@ -512,7 +604,7 @@ public class JobSeekerRegistrationController extends AbstractController{
 			BindingResult result) {
 		ModelAndView model = new ModelAndView();
 		registerForm.setClickBack(true);
-		model.addObject(REGISTER_FORM,registerForm);
+		model.addObject(REGISTER_FORM, registerForm);
 		model.setViewName(JS_CREATE_ACCOUNT);
 		return model;
 	}
@@ -547,21 +639,25 @@ public class JobSeekerRegistrationController extends AbstractController{
 			JobSeekerRegistrationForm form = new JobSeekerRegistrationForm();
 			// Call to service layer
 			JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration
-					.viewProfile((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
+					.viewProfile((Integer) session
+							.getAttribute(MMJBCommonConstants.USER_ID));
 			List<JobSeekerProfileAttribForm> listProfAttribForms = transformJobSeekerRegistration
 					.transformDTOToProfileAttribForm(jsRegistrationDTO, null);
 
 			for (JobSeekerProfileAttribForm profileForm : listProfAttribForms) {
-						
-				if(profileForm.getStrLabelValue()!= null 
-								&& profileForm.getStrLabelName().equalsIgnoreCase(MMJBCommonConstants.MYPROFESSION) 
-								&& !isInteger(profileForm.getStrLabelValue())) {
-							form.setOtherProfession(profileForm.getStrLabelValue());
-							for(DropDownDTO dropDown:profileForm.getDropdown()){
-								if(MMJBCommonConstants.PROFESSION_OTHERS.equals(dropDown.getOptionName())){
-									profileForm.setStrLabelValue(dropDown.getOptionId());
-								}
-							}
+
+				if (profileForm.getStrLabelValue() != null
+						&& profileForm.getStrLabelName().equalsIgnoreCase(
+								MMJBCommonConstants.MYPROFESSION)
+						&& !isInteger(profileForm.getStrLabelValue())) {
+					form.setOtherProfession(profileForm.getStrLabelValue());
+					for (DropDownDTO dropDown : profileForm.getDropdown()) {
+						if (MMJBCommonConstants.PROFESSION_OTHERS
+								.equals(dropDown.getOptionName())) {
+							profileForm
+									.setStrLabelValue(dropDown.getOptionId());
+						}
+					}
 				}
 			}
 
@@ -652,18 +748,19 @@ public class JobSeekerRegistrationController extends AbstractController{
 
 			JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
 			List<ProfileAttribDTO> attribList = transformJobSeekerRegistration
-					.transformProfileAttribFormToDTO(registerForm
-							.getListProfAttribForms(), registerForm);
+					.transformProfileAttribFormToDTO(
+							registerForm.getListProfAttribForms(), registerForm);
 			UserDTO userDTO = transformJobSeekerRegistration
 					.createUserDTO(registerForm);
-			userDTO.setUserId((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
+			userDTO.setUserId((Integer) session
+					.getAttribute(MMJBCommonConstants.USER_ID));
 			jsRegistrationDTO.setAttribList(attribList);
 			jsRegistrationDTO.setMerUserDTO(userDTO);
 
 			// OpenAM code for Modify the user profile details
 			// Added by Santhosh Gampa on Sep 4 2012
-//			boolean isUdated = OpenAMEUtility.openAMUpdateUser(userDTO, hm);
-//			LOGGER.info("User Profile updated in OpenAM - " + isUdated);
+			// boolean isUdated = OpenAMEUtility.openAMUpdateUser(userDTO, hm);
+			// LOGGER.info("User Profile updated in OpenAM - " + isUdated);
 			// End of OpenAM code
 
 			// Call to service layer
@@ -702,7 +799,8 @@ public class JobSeekerRegistrationController extends AbstractController{
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/jobSeekerUpdatePassword", method = RequestMethod.POST)
-	public String updateNewPassword(ChangePasswordForm form, HttpSession session) {
+	public String updateNewPassword(ChangePasswordForm form,
+			HttpSession session, HttpServletRequest request) {
 		try {
 
 			JobSeekerRegistrationDTO jsRegistrationDTO = new JobSeekerRegistrationDTO();
@@ -715,7 +813,9 @@ public class JobSeekerRegistrationController extends AbstractController{
 
 			UserDTO userDTO = transformJobSeekerRegistration
 					.transformChangePasswordFormToMerUserDTO(form);
-			userDTO.setUserId((Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
+			userDTO.setUserId((Integer) session
+					.getAttribute(MMJBCommonConstants.USER_ID));
+
 			jsRegistrationDTO.setMerUserDTO(userDTO);
 
 			// Call to service layer
@@ -723,17 +823,18 @@ public class JobSeekerRegistrationController extends AbstractController{
 
 				// OpenAM User Update password
 				// Added by Santhosh Gampa on 4th Sep 2012
-//				boolean isUdated = OpenAMEUtility.openAMUpdatePassword(
-//						form.getEmailId(), form.getPassword());
-//				LOGGER.info("User password updated - " + isUdated);
+				// boolean isUdated = OpenAMEUtility.openAMUpdatePassword(
+				// form.getEmailId(), form.getPassword());
+				// LOGGER.info("User password updated - " + isUdated);
 				// Ends OpenAM User Update password
 
 				profileRegistration.changePassword(jsRegistrationDTO);
+
+				sendUpdatedPasswordMail(session, request, jsRegistrationDTO);
 			} else {
 				return "Invalid Current Password";
 			}
 		} catch (Exception e) {
-			// TODO
 			LOGGER.error(e);
 		}
 		return "";
@@ -800,18 +901,128 @@ public class JobSeekerRegistrationController extends AbstractController{
 		}
 		return "jobseekerchangepassword";
 	}
-	
-    public boolean isInteger( String input )  
-    {  
-       try  
-       {  
-          Integer.parseInt( input );  
-          return true;  
-       }  
-       catch( Exception e)  
-       {  
-          return false;  
-       }  
-    }  
 
+	public boolean isInteger(String input) {
+		try {
+			Integer.parseInt(input);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public void sendUpdatedPasswordMail(HttpSession session,
+			HttpServletRequest request,
+			JobSeekerRegistrationDTO jsRegistrationDTO) {
+		StringBuffer stringBuffer = new StringBuffer();
+		
+		if (null != jsRegistrationDTO.getMerUserDTO()
+				&& null != jsRegistrationDTO.getMerUserDTO().getEmailId()) {
+			UserDTO userDTO = userDAO.getUser(jsRegistrationDTO
+					.getMerUserDTO().getEmailId());
+			EmployerInfoDTO facilityDetail =facilityService.facilityDetails(userDTO.getUserId());
+			if(null !=facilityDetail){
+			userDTO.setCompany(facilityDetail.getCustomerName());
+			}
+			List<UserRoleDTO> userRoleDTOs = userDAO.getUserRole(userDTO
+					.getUserId());
+			String userRole = userRoleDTOs.get(0).getRoleName();
+			String loginPath = navigationPath.substring(2);
+			EmailDTO emailDTO =prepareEmailDTO(session, request, jsRegistrationDTO, stringBuffer,
+					userDTO, userRole, loginPath);
+
+			emailDTO.setHtmlFormat(true);
+			emailService.sendEmail(emailDTO);
+			LOGGER.info("Mail sent to JobSeeker");
+		}
+
+	}
+
+	/**
+	 * @param session
+	 * @param request
+	 * @param emailDTO
+	 * @param stringBuffer
+	 * @param userDTO
+	 * @param userRole
+	 * @param loginPath
+	 */
+	private EmailDTO prepareEmailDTO(HttpSession session,
+			HttpServletRequest request, JobSeekerRegistrationDTO jsRegistrationDTO,
+			StringBuffer stringBuffer, UserDTO userDTO, String userRole,
+			String loginPath) {
+		int start;
+		int end;
+		EmailDTO emailDTO = new EmailDTO();
+		InternetAddress[] jsToAddress = new InternetAddress[1];
+
+		try {
+			jsToAddress[0] = new InternetAddress(jsRegistrationDTO
+					.getMerUserDTO().getEmailId());
+		} catch (AddressException jbex) {
+			LOGGER.error(
+					"Error occured while geting InternetAddress reference",
+					jbex);
+		}
+		emailDTO.setToAddress(jsToAddress);
+		emailDTO.setFromAddress(advanceWebAddress);
+		emailDTO.setSubject(changePasswordSubject);
+		if (null != userRole && userRole.equals(MMJBCommonConstants.JOBSEEKER)) {
+			String jonseekerloginUrl = request.getRequestURL().toString()
+					.replace(request.getServletPath(), loginPath)
+					+ dothtmlExtention + jobseekerPageExtention;
+			start = MMJBCommonConstants.jobSeekerChangePwdBody.toString()
+					.indexOf("?jobSeekerFirstName");
+			end = start + "?jobSeekerFirstName".length();
+			if (start > 0 && end > 0) {
+				MMJBCommonConstants.jobSeekerChangePwdBody.replace(start, end,
+						userDTO.getFirstName());
+			}
+			start = MMJBCommonConstants.jobSeekerChangePwdBody.toString()
+					.indexOf("?jsdashboardLink");
+			end = start + "?jsdashboardLink".length();
+			if (start > 0 && end > 0) {
+				MMJBCommonConstants.jobSeekerChangePwdBody.replace(start, end,
+						jonseekerloginUrl);
+			}
+			stringBuffer.append(MMJBCommonConstants.jobSeekerEmailHeader);
+			stringBuffer.append(MMJBCommonConstants.jobSeekerChangePwdBody);
+			stringBuffer.append(MMJBCommonConstants.emailFooter);
+			emailDTO.setBody(stringBuffer.toString());
+		} else {
+			String employerloginUrl = request.getRequestURL().toString()
+					.replace(request.getServletPath(), loginPath)
+					+ dothtmlExtention + employerPageExtention;
+
+			start = MMJBCommonConstants.employerChangePwdBody.toString()
+					.indexOf("?user_name");
+			end = start + "?user_name".length();
+			if (start > 0 && end > 0) {
+			MMJBCommonConstants.employerChangePwdBody.replace(start, end,
+					(String) session
+							.getAttribute(MMJBCommonConstants.USER_NAME));
+			}
+
+			start = MMJBCommonConstants.employerChangePwdBody.toString()
+					.indexOf("?company_name");
+			end = start + "?company_name".length();
+			if (start > 0 && end > 0 && null != userDTO.getCompany()) {
+			MMJBCommonConstants.employerChangePwdBody.replace(start, end,
+					userDTO.getCompany());
+			}
+			start = MMJBCommonConstants.employerChangePwdBody.toString()
+					.indexOf("?empdashboardLink");
+			end = start + "?empdashboardLink".length();
+			if (start > 0 && end > 0) {
+			MMJBCommonConstants.employerChangePwdBody.replace(start, end,
+					employerloginUrl);
+			}
+
+			stringBuffer.append(MMJBCommonConstants.employerEmailHeader);
+			stringBuffer.append(MMJBCommonConstants.employerChangePwdBody);
+			stringBuffer.append(MMJBCommonConstants.emailFooter);
+			emailDTO.setBody(stringBuffer.toString());
+		}
+		return emailDTO;
+	}
 }
