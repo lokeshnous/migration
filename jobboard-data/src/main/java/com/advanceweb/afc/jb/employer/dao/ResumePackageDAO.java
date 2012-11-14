@@ -22,4 +22,6 @@ public interface ResumePackageDAO {
 	 * @throws JobBoardDataException
 	 */
 	List<ResumePackageDTO> showResumeSearchPackages() throws JobBoardDataException;
+	
+	boolean isResumePackageActive(int facilityId);
 }

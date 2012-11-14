@@ -144,6 +144,12 @@ function saveThisResume() {
 	});
 }
 
+function openPopUpToPurchase(){
+	
+	$.nmManual("../employerSearchResume/employerpurchaseresumepopup.html");
+	
+}
+
 /*
  * function viewResume(id){ alert(id);
  * //$.nmManual("../employerSearchResume/viewResume.html?resumeId="+id);

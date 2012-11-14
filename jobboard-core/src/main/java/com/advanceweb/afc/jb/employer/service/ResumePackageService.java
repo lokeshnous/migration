@@ -23,4 +23,7 @@ public interface ResumePackageService {
 	 * @throws JobBoardServiceException
 	 */
 	List<ResumePackageDTO> showResumeSearchPackages() throws JobBoardServiceException;
+	
+	
+	boolean isResumePackageActive(int facilityId);
 }

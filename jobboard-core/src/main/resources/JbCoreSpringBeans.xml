@@ -36,8 +36,9 @@
 
 	<!-- Job Search Index -->
 	<bean id="jobSearchIndex" class="com.advanceweb.afc.jb.search.SearchIndex">
-		<!--  If Solr mapped to jobPostTest -->
-		<property name="name" value="jobPostTest" />
+
+		<!--  If Solr mapped to jobPost -->
+		<property name="name" value="jobPost" />
 		<property name="group" value="careers" />
 		<property name="environment" value="DEV" />
 	</bean>

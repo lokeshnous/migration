@@ -40,5 +40,11 @@ public class ResumePackageServiceImpl implements ResumePackageService{
 			
 		}
 	}
+	
+	public boolean isResumePackageActive(int facilityId){
+		
+		return resumePackageDAO.isResumePackageActive(facilityId);
+		
+	}
 
 }

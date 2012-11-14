@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions"  prefix="fn" %>
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 
@@ -187,7 +188,46 @@
 										<td align="center">${job["EmploymentType"]}</td>
 										<td>${job["Relocate"]}</td>
 										<td>${job["posted_dt"]}</td>
-										<td align="center"><a href="../employerSearchResume/viewResume.html?resumeId=${job['UploadResumeId']}"><div class="view"></div></a><a href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${job['UploadResumeId']}"><div class="download"></div></a><a href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${job['UploadResumeId']}"><div class="printOrange"></div></a></td>
+										
+										<%-- <c:out value="Test"></c:out> --%>
+										<%-- -------------"${isResumePackageActive}"-------- --%>
+										<c:if test="${isResumePackageActive}">
+											<td align="center"><a href="../employerSearchResume/viewResume.html?resumeId=${job['UploadResumeId']}"><div class="view"></div></a>
+													<a href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${job['UploadResumeId']}"><div class="download"></div></a>
+													<a href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${job['UploadResumeId']}"><div class="printOrange"></div></a>
+											</td>
+										 </c:if>  
+										 <c:if test="${! (isResumePackageActive)}">
+											<td align="center" onclick="openPopUpToPurchase();"><a href="#"><div class="view"></div></a>
+													<a href="#" ><div class="download"></div></a>
+													<a href="#"><div class="printOrange"></div></a>
+											</td>
+										 </c:if>  
+										
+										
+										<%-- <c:choose>
+										<c:when test="${empty (job["isResumePackageActive"])}">
+										<td align="center"><a href="../employerSearchResume/viewResume.html?resumeId=${job['UploadResumeId']}"><div class="view"></div></a>
+													<a href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${job['UploadResumeId']}"><div class="download"></div></a>
+													<a href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${job['UploadResumeId']}"><div class="printOrange"></div></a>
+											</td>
+										</c:when>
+										<c:otherwise>
+										<td align="center" onclick="openPopUpToPurchage();"><a href="#"><div class="view"></div></a>
+													<a href="#" ><div class="download"></div></a>
+													<a href="#"><div class="printOrange"></div></a>
+											</td>
+										</c:otherwise>
+										</c:choose> --%>
+										
+										
+										<%-- </c:if> --%>
+										<%-- <c:if test="${!(job["isResumePackageActive"])}">
+											<td align="center" onclick="openPopUpToPurchage();"><a href="#"><div class="view"></div></a>
+													<a href="#" ><div class="download"></div></a>
+													<a href="#"><div class="printOrange"></div></a>
+											</td>
+										</c:if> --%>
 									</tr>
 							</c:forEach>
 									

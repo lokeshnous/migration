@@ -37,6 +37,7 @@ import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.constants.PageNames;
+import com.advanceweb.afc.jb.employer.service.ResumePackageService;
 import com.advanceweb.afc.jb.employer.web.controller.MetricsForm;
 import com.advanceweb.afc.jb.event.service.ClickService;
 import com.advanceweb.afc.jb.exception.JobBoardException;
@@ -110,6 +111,9 @@ public class SearchResumeController extends AbstractController {
 	
 	@Autowired
 	private ResumeSearchValidator resumeSearchValidator;
+	
+	@Autowired
+	private ResumePackageService resumePackageService;
 
 	private static final String STR_SRCH_RES_FORM = "searchResumeForm";
 
@@ -579,6 +583,17 @@ public class SearchResumeController extends AbstractController {
 		// add values in session
 		jobSrchJsonObj.put(MMJBCommonConstants.KEYWORD_STRING, searchResumeForm.getKeywords());
 		jobSrchJsonObj.put(MMJBCommonConstants.RESUME_RECORDS_COUNT, resumeSearchService.getTotalNumberOfResume());
+		
+		// This is to check if Resume Package is ACTIVE for the logged in user.
+		if (session.getAttribute(MMJBCommonConstants.FACILITY_ID) != null) {
+			int facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
+			
+			System.out.println("Valu=================="+resumePackageService.isResumePackageActive(facilityId));
+			
+			//jobSrchJsonObj.put(MMJBCommonConstants.IS_RESUME_PACKAGE_ACTIVE, resumePackageService.isResumePackageActive(userID));
+			session.setAttribute(MMJBCommonConstants.IS_RESUME_PACKAGE_ACTIVE, resumePackageService.isResumePackageActive(facilityId));
+		}
+		
 		
 		session.setAttribute(MMJBCommonConstants.RESUME_SEARCH_JSON_LIST, jobSrchJsonObj);
 //		session.setAttribute(MMJBCommonConstants.KEYWORD_STRING,
@@ -1294,6 +1309,16 @@ public class SearchResumeController extends AbstractController {
 		// resumeSearchResultDTO.getResultList();
 
 		return jobSrchJsonObj;
+	}
+	
+	/**
+	 * The method is called to close the SaveThisJob popup
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/employerpurchaseresumepopup")
+	public ModelAndView openEmployerPurchaseResumePopup() {
+		return new ModelAndView("employerpurchaseresumepopup");
 	}
 
 }
