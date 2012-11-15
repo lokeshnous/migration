@@ -45,12 +45,43 @@
 		</property>
 	</bean>
 
+<!-- Weekly Job List -->
+	<bean id="weeklyJobList" class="java.util.ArrayList">
+		<constructor-arg>
+			<list>
+				<ref bean="profileViewSendMailJobWorker" />
+			</list>
+		</constructor-arg>
+	</bean>
+	
+<!-- JobScheduler for Weekly Jobs -->
+
+	<bean id="weeklyJobScheduler"
+		class="com.advanceweb.afc.jb.schedulers.service.impl.JobBoardSchedulerServiceImpl">
+		<property name="jobWorkers" ref="weeklyJobList"></property>
+	</bean>
+
+	<bean id="weeklyJobBean"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="weeklyJobScheduler" />
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+
+	<bean id="weeklyJobTrigger" class="com.advanceweb.afc.jb.common.schedulers.jobs.JobBoardCronTrigger">
+		<property name="jobDetail" ref="weeklyJobBean" />
+		<property name="cronExp" value="${jobboard.scheduler.cronexp.profViewSendMail}">
+		</property>
+	</bean>
+
 
 	<bean id="scheduler"
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
 				<ref bean="dailyJobTrigger" />
+				<ref bean="weeklyJobTrigger" />
 				<!-- <ref bean="monthlyJobTrigger" /> -->
 			</list>
 		</property>
