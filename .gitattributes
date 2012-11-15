@@ -257,6 +257,7 @@ jobboard-core/src/test/java/com/advanceweb/common/template/MvelTemplateTest.java
 jobboard-core/src/test/java/com/advanceweb/common/template/VelocityTemplateTest.java -text
 jobboard-core/src/test/java/com/advanceweb/jb/test/ServiceTestBase.java -text
 jobboard-core/src/test/resources/applicationContext-test.xml -text
+jobboard-core/src/test/resources/log4j.properties -text
 jobboard-core/src/test/resources/templates/openx/ad_tag.tpl -text
 jobboard-core/src/test/resources/templates/openx/ad_tag.vtl -text
 jobboard-data/pom.xml -text
