@@ -464,8 +464,9 @@ public interface MMJBCommonConstants {
 	int DIGITAL_SUBSCRIPTION = 5;
 	int ENEWS_LETTER_SUBSCRIPTION = 6;
 	int EMAIL_SUBSCRIPTION = 7;
-	//Email 
 	
+	//Email 
+	String purchageReceipt="Order ?ordernumber Receipt";
 	StringBuffer employerEmailHeader = new StringBuffer(
 			"<body style=\"margin:0; padding:0; background-color:#FFFFFF;\">"
 					+ "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:12px; background-color:#FFFFFF;\">"
@@ -547,4 +548,28 @@ public interface MMJBCommonConstants {
 					+ "</td></tr></table><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#333333;\">"
 					+ "<br />You can log in and begin recruiting right away. <a href=\"?empdashboardLink\" target=\"_blank\" style=\"color:#FF9900;\"><strong>Head over to your dashboard now</strong></a> to get started. "
 					+ "<br /><br />If you ever have any questions, please give us a call at 800-355-5627.<br /><br /><br /></span></td></tr></table>");
+	StringBuffer salesReceiptBody = new StringBuffer(
+			"<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\">"
+					+ "<tr> <td height=\"138\" align=\"left\" valign=\"top\" style=\"border-top:1px solid #cccccc; "
+					+ "border-bottom:1px solid #cccccc;\"><br /> <br /><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:18px; color:#FF9900;\"><strong>ORDER  RECEIPT</strong>"
+					+ "</span><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#333333;\">"
+					+ "<br /><br />Here's your receipt from order ?orderNumber. Please save this email for your records."
+					+ "<br/><br/></span>"
+					+ "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"font-size:13px; padding-top:0px; font-family:Arial, Helvetica, sans-serif;\">"
+					+ "<tr> <td width=\"100%\" align=\"left\" valign=\"middle\" style=\"padding-top:20px; padding-left:20px; padding-bottom:20px; border:1px solid #cccccc; background-color:#FFFFFF;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\"><strong>USER:</strong> ?userName<br />"
+					+ "  <strong>COMPANY:</strong> ?companyName <br /> <strong>ORDER NUMBER:</strong> ?orderNumber1"
+					+ "<br />?ordersum</span></td>"
+					+ "</tr></table><br /><br /><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#333333;\"><a href=\"?empdashboardLink\" target=\"_blank\" style=\"color:#FF9900;\"><strong>Head over to your dashboard now</strong></a>"
+					+ " to put your purchase into action.   <br /><br /><br /></span></td> </tr></table>");
+	StringBuffer newJobPostCreditAvailable = new StringBuffer(
+			"<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\">"
+					+ "<tr><td height=\"138\" align=\"left\" valign=\"top\" style=\"border-top:1px solid #cccccc; border-bottom:1px solid #cccccc;\">"
+					+ "<br /><br /><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:18px; color:#FF9900;\"><strong>YOU HAVE NEW JOB POSTINGS </strong></span>"
+					+ "<br /><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#333333;\"><br />The following job postings  have been added to your account."
+					+ "<br/><br/></span><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"font-size:13px; padding-top:0px; font-family:Arial, Helvetica, sans-serif;\">"
+					+ "<tr> <td width=\"25%\" align=\"center\" valign=\"middle\" style=\"padding-top:5px; padding-bottom:5px; border:1px solid #cccccc; background-color:#FFFFFF;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\"><strong>USER</strong></span>"
+					+ "</td> <td width=\"25%\" align=\"center\" valign=\"middle\" style=\"padding-top:5px; padding-bottom:5px; border:1px solid #cccccc; background-color:#FFFFFF;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\"><strong>COMPANY</strong></span>"
+					+ "</td><td width=\"25%\" align=\"center\" valign=\"middle\" style=\"padding-top:5px; padding-bottom:5px; border:1px solid #cccccc; background-color:#FFFFFF;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\"><strong>AVAILABLE "
+					+ "<br /> JOB POSTINGS</strong></span></td> <td width=\"25%\" align=\"center\" valign=\"middle\" style=\"padding-top:5px; padding-bottom:5px; border:1px solid #cccccc; background-color:#FFFFFF;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\"><strong>TYPE OF "
+					+ "<br />JOB POSTINGS</strong></span></td></tr>");
 }

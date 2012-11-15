@@ -3,12 +3,15 @@ package com.advanceweb.afc.jb.pgi.web.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,11 +23,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.common.controller.AbstractController;
 import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.CountryDTO;
+import com.advanceweb.afc.jb.common.EmployerInfoDTO;
+import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.OrderDetailsDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
+import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.employer.service.ManageFeaturedEmployerProfile;
 import com.advanceweb.afc.jb.employer.web.controller.AddOnForm;
 import com.advanceweb.afc.jb.employer.web.controller.JobPostingsForm;
@@ -32,8 +38,11 @@ import com.advanceweb.afc.jb.employer.web.controller.PurchaseJobPostForm;
 import com.advanceweb.afc.jb.employer.web.controller.PurchaseResumeSearchForm;
 import com.advanceweb.afc.jb.employer.web.controller.ResumeSearchPackageForm;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
+import com.advanceweb.afc.jb.mail.service.EmailDTO;
+import com.advanceweb.afc.jb.mail.service.MMEmailService;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
+import com.advanceweb.afc.jb.user.dao.UserDao;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
 import com.advanceweb.common.client.ClientContext;
@@ -82,7 +91,22 @@ public class PaymentGatewayController extends AbstractController{
 	
 	@Autowired
 	private AdService adService;
-	
+	@Value("${advanceWebAddress}")
+	private String advanceWebAddress;
+	@Value("${newCreditmessage}")
+	private String 	newCreditmessage;
+	@Value("${dothtmlExtention}")
+	private String dothtmlExtention;
+	@Value("${navigationPath}")
+	private String navigationPath;
+	@Value("${employerPageExtention}")
+	private String employerPageExtention;
+	@Autowired
+	private MMEmailService emailService;
+	@Autowired
+	private FacilityService facilityService;
+	@Autowired
+	private UserDao userDAO;
 	@RequestMapping(value = "/callPaymentMethod", method = RequestMethod.GET)
 	public ModelAndView callPaymentMethod(@Valid PaymentGatewayForm paymentGatewayForm,
 			HttpSession session,@RequestParam(value = "purchaseType", required = false ) String purchaseType, HttpServletRequest request) {
@@ -481,7 +505,8 @@ public class PaymentGatewayController extends AbstractController{
 		orderDetailsDTO.setNsCustomeId(paymentGatewayForm.getNsCustomerId());
 
 		UserDTO userDTO = paymentGatewayService.createOrder(orderDetailsDTO);
-
+		userDTO.setUserId((Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID));
 		int netSuiteStatus = Integer.parseInt(userDTO.getNsStatus());
 
 		Map<Integer, String> statusCode = userDTO.getNsStatusCode();
@@ -495,6 +520,16 @@ public class PaymentGatewayController extends AbstractController{
 			model.addObject(STATUS_CODE, MMJBCommonConstants.STATUS_CODE_200);
 			paymentGatewayForm = clearSessionFormData(session,
 					paymentGatewayForm);
+			UserDTO merUserdto = userDAO.getUserByUserId(userDTO.getUserId());
+			EmployerInfoDTO facilityDetail = facilityService
+					.facilityDetails(userDTO.getUserId());
+			if (null != facilityDetail && null != merUserdto) {
+				userDTO.setCompany(facilityDetail.getCustomerName());
+				userDTO.setEmailId(merUserdto.getEmailId());
+				userDTO.setFirstName(merUserdto.getFirstName());
+				userDTO.setLastName(merUserdto.getLastName());
+				sendDetailEmail(session, request, userDTO,orderDetailsDTO);
+			}
 		} else {
 			switch (netSuiteStatus) {
 			case MMJBCommonConstants.STATUS_CODE_400:
@@ -608,5 +643,170 @@ public class PaymentGatewayController extends AbstractController{
 		paymentGatewayForm = new PaymentGatewayForm();
 		return paymentGatewayForm;
 	}
+	/**
+	 * Method To send New Job Posting Credit Detail Email
+	 * @param session
+	 * @param request
+	 * @param userDTO
+	 */
+	private void sendDetailEmail(HttpSession session,
+			HttpServletRequest request, UserDTO userDTO,
+			OrderDetailsDTO orderDetailsDTO) {
+		StringBuffer stringBuffer = new StringBuffer();
+		InternetAddress[] jsToAddress = new InternetAddress[1];
 
+		try {
+			jsToAddress[0] = new InternetAddress(userDTO.getEmailId());
+		} catch (AddressException jbex) {
+			LOGGER.error(
+					"Error occured while geting InternetAddress reference",
+					jbex);
+		}
+
+		EmailDTO emailDTO = new EmailDTO();
+		emailDTO.setToAddress(jsToAddress);
+		emailDTO.setFromAddress(advanceWebAddress);
+		emailDTO.setSubject(newCreditmessage);
+
+		String loginPath = navigationPath.substring(2);
+		String employerloginUrl = request.getRequestURL().toString()
+				.replace(request.getServletPath(), loginPath)
+				+ dothtmlExtention + employerPageExtention;
+		if (null != orderDetailsDTO
+				&& null != orderDetailsDTO.getJobPostingPlanDTOList()
+				&& !orderDetailsDTO.getJobPostingPlanDTOList().isEmpty()) {
+
+			String userName = userDTO.getFirstName() + " "
+					+ userDTO.getLastName();
+			String comapnyName = userDTO.getCompany();
+			// sending mail -New purchase - starts
+			sendPurchageDetailEmail(orderDetailsDTO, stringBuffer, emailDTO,
+					employerloginUrl, userName, comapnyName);
+			// sending mail -New purchase - ends
+
+			// Purchase receipt -send mail -Starts
+			sendPurcahgeReceipt(orderDetailsDTO, emailDTO, employerloginUrl,
+					userName, comapnyName);
+			// Purchase receipt -send mail -end
+		}
+	}
+
+	/**
+	 * @param orderDetailsDTO
+	 * @param emailDTO
+	 * @param employerloginUrl
+	 * @param userName
+	 * @param comapnyName
+	 */
+	private void sendPurcahgeReceipt(OrderDetailsDTO orderDetailsDTO,
+			EmailDTO emailDTO, String employerloginUrl, String userName,
+			String comapnyName) {
+		StringBuffer receiptDetail = new StringBuffer();
+		int start, end;
+		start = MMJBCommonConstants.salesReceiptBody.toString().indexOf(
+				"?orderNumber");
+		end = start + "?orderNumber".length();
+		if (start > 0 && end > 0) {
+			MMJBCommonConstants.salesReceiptBody
+					.replace(start, end, orderDetailsDTO
+							.getOrderPaymentDTO().getTransactionId());
+		}
+		start = MMJBCommonConstants.salesReceiptBody.toString().indexOf(
+				"?orderNumber");
+		end = start + "?orderNumber1".length();
+		if (start > 0 && end > 0) {
+			MMJBCommonConstants.salesReceiptBody
+					.replace(start, end, orderDetailsDTO
+							.getOrderPaymentDTO().getTransactionId());
+		}
+		start = MMJBCommonConstants.salesReceiptBody.toString().indexOf(
+				"?userName");
+		end = start + "?userName".length();
+		if (start > 0 && end > 0) {
+			MMJBCommonConstants.salesReceiptBody.replace(start, end,
+					userName);
+		}
+		start = MMJBCommonConstants.salesReceiptBody.toString().indexOf(
+				"?companyName");
+		end = start + "?companyName".length();
+		if (start > 0 && end > 0) {
+			MMJBCommonConstants.salesReceiptBody.replace(start, end,
+					comapnyName);
+		}
+		start = MMJBCommonConstants.salesReceiptBody.toString().indexOf(
+				"?ordersum");
+		end = start + "?ordersum".length();
+		if (start > 0 && end > 0) {
+			MMJBCommonConstants.salesReceiptBody.replace(start, end,
+					"<b>Order summary :</b>"
+							+ "<br> Total Payment:"
+							+ orderDetailsDTO.getOrderPaymentDTO()
+									.getPaidAmount()
+							+ "<br> Payment Method:"
+							+ orderDetailsDTO.getOrderPaymentDTO()
+									.getMethod()
+							+ "<br> Payment Date:"
+							+ orderDetailsDTO.getOrderPaymentDTO()
+									.getTransactionDate());
+		}
+		start = MMJBCommonConstants.salesReceiptBody.toString().indexOf(
+				"?empdashboardLink");
+		end = start + "?empdashboardLink".length();
+		if (start > 0 && end > 0) {
+			MMJBCommonConstants.salesReceiptBody.replace(start, end,
+					employerloginUrl);
+		}
+		emailDTO.setSubject(MMJBCommonConstants.purchageReceipt.replace(
+				"?ordernumber", orderDetailsDTO.getOrderPaymentDTO()
+						.getTransactionId()));
+		receiptDetail.append(MMJBCommonConstants.employerEmailHeader);
+		receiptDetail.append(MMJBCommonConstants.salesReceiptBody);
+		receiptDetail.append(MMJBCommonConstants.emailFooter);
+		emailDTO.setBody(receiptDetail.toString());
+		emailDTO.setHtmlFormat(true);
+		emailService.sendEmail(emailDTO);
+	}
+
+	/**
+	 * @param orderDetailsDTO
+	 * @param stringBuffer
+	 * @param emailDTO
+	 * @param employerloginUrl
+	 * @param userName
+	 * @param comapnyName
+	 */
+	private void sendPurchageDetailEmail(OrderDetailsDTO orderDetailsDTO,
+			StringBuffer stringBuffer, EmailDTO emailDTO,
+			String employerloginUrl, String userName, String comapnyName) {
+		String jobPostType;
+		String quantiy;
+		for (JobPostingPlanDTO jobPostPlaningDto : orderDetailsDTO
+				.getJobPostingPlanDTOList()) {
+			jobPostType = jobPostPlaningDto.getJobPostPlanName();
+			quantiy = String.valueOf(jobPostPlaningDto.getQuanity());
+			MMJBCommonConstants.newJobPostCreditAvailable
+					.append("<tr><td width=\"25%\" align=\"center\" valign=\"middle\" style=\"padding-top:5px; padding-bottom:5px; border:1px solid #cccccc;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\">"
+							+ userName
+							+ "</span>"
+							+ "</td><td width=\"25%\" align=\"center\" valign=\"middle\" style=\"padding-top:5px; padding-bottom:5px; border:1px solid #cccccc;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\">"
+							+ comapnyName
+							+ "</span>"
+							+ "</td><td width=\"25%\" align=\"center\" valign=\"middle\" style=\"padding-top:5px; padding-bottom:5px; border:1px solid #cccccc;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\">"
+							+ quantiy
+							+ "</span>"
+							+ "</td><td width=\"25%\" align=\"center\" valign=\"middle\" style=\"padding-top:5px; padding-bottom:5px; border:1px solid #cccccc;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\">"
+							+ jobPostType + "</span>" + "</td></tr>");
+		}
+		MMJBCommonConstants.newJobPostCreditAvailable
+				.append("</table><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#333333;\"><br /><a href=\""
+						+ employerloginUrl
+						+ "\" target=\"_blank\" style=\"color:#FF9900;\"><strong>Head over to your dashboard now</strong></a> to start posting new jobs. "
+						+ "<br /><br /><br /></span> </td></tr></table>");
+		stringBuffer.append(MMJBCommonConstants.employerEmailHeader);
+		stringBuffer.append(MMJBCommonConstants.newJobPostCreditAvailable);
+		stringBuffer.append(MMJBCommonConstants.emailFooter);
+		emailDTO.setBody(stringBuffer.toString());
+		emailDTO.setHtmlFormat(true);
+		emailService.sendEmail(emailDTO);
+	}
 }
