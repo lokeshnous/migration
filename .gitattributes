@@ -75,6 +75,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SalesOrderDTO.java -t
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SaveOrApplyJobDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SaveSearchedJobsDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SavedJobDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SchedulerDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/StateDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SubscriptionListDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SubscriptionsDTO.java -text
