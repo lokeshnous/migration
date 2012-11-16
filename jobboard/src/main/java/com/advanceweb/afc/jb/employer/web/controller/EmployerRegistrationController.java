@@ -325,7 +325,12 @@ public class EmployerRegistrationController extends AbstractController{
 		userDTO = employerRegistration.createUser(empDTO);
 		
 		// send welcome e-mail- starts
-		sendEmployerWelcomeEmail(request, userDTO);
+		try{
+			sendEmployerWelcomeEmail(request, userDTO);
+		}
+		catch(Exception e){
+			LOGGER.error("Mail sending failed : "+e);
+		}
 		// send welcome e-mail- Ends
 		
 		if (userDTO.getEmailId() == null) {

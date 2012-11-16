@@ -502,7 +502,13 @@ public class JobSeekerRegistrationController extends AbstractController {
 			// Ends of OpenAM code
 			
 			// send welcome e-mail- starts
-			sendJobSeekerWelcomeEmail(session, request, userDTO);
+			try{
+				sendJobSeekerWelcomeEmail(session, request, userDTO);
+			}
+			catch(Exception e){
+				LOGGER.error("Mail sending failed : "+e);
+			}
+			
 			// send welcome e-mail- Ends
 			session.setAttribute("userName",
 					userDTO.getFirstName() + " " + userDTO.getLastName());
