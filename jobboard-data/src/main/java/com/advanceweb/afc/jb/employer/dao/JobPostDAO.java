@@ -5,6 +5,7 @@ import java.util.List;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
+import com.advanceweb.afc.jb.data.entities.AdmFacilityJpAudit;
 
 
 /**
@@ -58,4 +59,5 @@ public interface JobPostDAO {
 	 * @return
 	 */
 	int getinvDetIdByJobId(int jobId,int facilityId,int userId);
+	AdmFacilityJpAudit getinvDtlByJobId(int jobId);
 }

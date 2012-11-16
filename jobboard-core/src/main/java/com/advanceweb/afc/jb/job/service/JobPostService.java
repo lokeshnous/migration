@@ -6,6 +6,8 @@ import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.data.entities.AdmFacilityJpAudit;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 
 /**
@@ -77,4 +79,10 @@ public interface JobPostService {
 	 * @return
 	 */
 	int getinvDetIdByJobId(int jobId, int facilityId, int userId);
+	/**
+	 * 
+	 * @param jobId
+	 * @return
+	 */
+	AdmFacilityJpAudit getinvDtlByJobId(int jobId);
 }

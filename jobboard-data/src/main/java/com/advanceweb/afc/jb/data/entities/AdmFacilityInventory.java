@@ -44,10 +44,11 @@ public class AdmFacilityInventory {
     
 	@Column(name="order_id")
 	private int orderId;
-	
+	@Column(name="facility_id")
+	private int facilityId;
 	//bi-directional many-to-one association to AdmFacility
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="facility_id")
+	@JoinColumn(name="facility_id",insertable=false ,updatable=false)
 	private AdmFacility admFacility;
 	
 	//bi-directional many-to-one association to MerProfileAttribList
@@ -102,6 +103,20 @@ public class AdmFacilityInventory {
 
 	public void setAdmInventoryDetail(AdmInventoryDetail admInventoryDetail) {
 		this.admInventoryDetail = admInventoryDetail;
+	}
+
+	/**
+	 * @return the facilityId
+	 */
+	public int getFacilityId() {
+		return facilityId;
+	}
+
+	/**
+	 * @param facilityId the facilityId to set
+	 */
+	public void setFacilityId(int facilityId) {
+		this.facilityId = facilityId;
 	}
 
 

@@ -466,8 +466,11 @@ public interface MMJBCommonConstants {
 	int EMAIL_SUBSCRIPTION = 7;
 	
 	//Email 
-	String purchageReceipt="Order ?ordernumber Receipt";
-	StringBuffer employerEmailHeader = new StringBuffer(
+	String PURCHAGERECEIPT="Order ?ordernumber Receipt";
+	String ADMIN_IMPERSONATION_CHANGE="Impersonation by admin";
+	String ADMIN_JOBPOST_EXPIREDATE_CHANGE="Expire date of Job ?jobId has been changed by admin";
+	String ADMIN_INVENTORY_CHANGE="Inventory has been edited";
+	StringBuffer EMPLOYEREMAILHEADER = new StringBuffer(
 			"<body style=\"margin:0; padding:0; background-color:#FFFFFF;\">"
 					+ "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:12px; background-color:#FFFFFF;\">"
 					+ "<tr>  <td align=\"center\" valign=\"top\" bgcolor=\"#FFFFFF\">  <br /> "
@@ -476,7 +479,7 @@ public interface MMJBCommonConstants {
 					+ "<td width=\"302\" align=\"left\" valign=\"top\" style=\"padding-top:5px; padding-bottom:5px;\"><a href=\"http://health-care-jobs.advanceweb.com\" target=\"_blank\"><img src=\"http://www.advanceweb.com/web/AdvertisingPromos/2012/JobBoardTemplates/Button_VisitJobBoard.jpg\" alt=\"Visit Job Board\" width=\"302\" height=\"47\" border=\"0\" /></a><a href=\"http://www.advanceweb.com/web/Media_Kit/intro.html\" target=\"_blank\"><img src=\"http://www.advanceweb.com/web/AdvertisingPromos/2012/JobBoardTemplates/Button_Advertise.jpg\" alt=\"Advertise with ADVANCE\" width=\"302\" height=\"42\" border=\"0\" /></a></td>"
 					+ "</tr>"
 					+ "<tr><td height=\"259\" colspan=\"2\" valign=\"top\" style=\"background-color:#FFFFFF; padding-left:20px; padding-top:0px; padding-right:20px; padding-bottom:10px;\">");
-	StringBuffer jobSeekerEmailHeader = new StringBuffer(
+	StringBuffer JOBSEEKEREMAILHEADER = new StringBuffer(
 			"<body style=\"margin:0; padding:0; background-color:#FFFFFF;\">"
 					+ "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:12px; background-color:#FFFFFF;\">"
 					+ "<tr>  <td align=\"center\" valign=\"top\" bgcolor=\"#FFFFFF\">  <br /> "
@@ -485,14 +488,14 @@ public interface MMJBCommonConstants {
 					+ "<td width=\"302\" align=\"left\" valign=\"top\" style=\"padding-top:5px; padding-bottom:5px;\"><a href=\"http://health-care-jobs.advanceweb.com\" target=\"_blank\"><img src=\"http://www.advanceweb.com/web/AdvertisingPromos/2012/JobBoardTemplates/Button_VisitJobBoard.jpg\" alt=\"Visit Job Board\" width=\"302\" height=\"47\" border=\"0\" /></a><a href=\"http://advanceweb.com\" target=\"_blank\"><img src=\"http://www.advanceweb.com/web/AdvertisingPromos/2012/JobBoardTemplates/ButtonMoreADVANCE.jpg\" alt=\"More From ADVANCE\" width=\"302\" height=\"42\" border=\"0\" /></a></td>"
 					+ "</tr>"
 					+ "<tr><td height=\"259\" colspan=\"2\" valign=\"top\" style=\"background-color:#FFFFFF; padding-left:20px; padding-top:0px; padding-right:20px; padding-bottom:10px;\">");
-	StringBuffer emailFooter = new StringBuffer(
+	StringBuffer EMAILFOOTER = new StringBuffer(
 			"<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\">"
 					+ "      <tr>"
 					+ "      <td height=\"38\" align=\"center\" valign=\"top\"><br />"
 					+ "<span style=\"font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#999999;\">Sent to you by Merion Matters, 2900 Horizon Drive, King of Prussia, PA 19406, 800-355-5627.<br /><br /><br />"
 					+ "</span>" + "</td>" + " </tr></table>" + "</td></tr>"
 					+ "    </table></td>" + "</tr>" + "</table></body>");
-	StringBuffer employerChangePwdBody = new StringBuffer(
+	StringBuffer EMPLOYERCHANGEPWDBODY = new StringBuffer(
 			"<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\"><tr>"
 					+ "<td height=\"138\" align=\"left\" valign=\"top\" style=\"border-top:1px solid #cccccc; border-bottom:1px solid #cccccc;\"><br />"
 					+ "<br />"
@@ -517,7 +520,7 @@ public interface MMJBCommonConstants {
 					+ "If you didn\'t authorize this change, please  call us at 800-355-5627."
 					+ "       <br />" + "       <br /><br />" + "</span>"
 					+ " </td>" + " </tr></table>");
-	StringBuffer jobSeekerChangePwdBody = new StringBuffer(
+	StringBuffer JOBSEEKERCHANGEPWDBODY = new StringBuffer(
 			"<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\"><tr>"
 					+ "<td height=\"176\" align=\"left\" valign=\"top\" style=\"border-top:1px solid #cccccc; border-bottom:1px solid #cccccc;\">"
 					+ "<br /> <br /><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:18px; color:#FF9900;\"><strong>YOUR PASSWORD HAS BEEN CHANGED</strong></span>"
@@ -525,7 +528,7 @@ public interface MMJBCommonConstants {
 					+ "<br />Hello ?jobSeekerFirstName,<br /><br />Your password has been successfully changed. You can"
 					+ " <a href=\"?jsdashboardLink\" style=\"color:#FF9900;\"><strong>sign in now</strong></a> using your new login information."
 					+ "If you didn\'t authorize this change, please call us at 800-355-5627.<br /><br /><br /></span></td></tr></table>");
-	StringBuffer jobSeekerWelcomeMailBody = new StringBuffer(
+	StringBuffer JOBSEEKERWELCOMEMAILBODY = new StringBuffer(
 			"<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\">"
 					+ "<tr><td height=\"138\" align=\"left\" valign=\"top\" style=\"border-top:1px solid #cccccc; border-bottom:1px solid #cccccc;\">"
 					+ "<br /><br /><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:18px; color:#FF9900;\"><strong>WELCOME TO <em>ADVANCE</em> HEALTHCARE JOBS</strong></span>"
@@ -534,7 +537,7 @@ public interface MMJBCommonConstants {
 					+ "You can log in and begin applying for jobs right away. <a href=\"?jsdashboardLink\" style=\"color:#FF9900;\"><strong>"
 					+ "Head over to your dashboard</strong></a> now to get started.If you ever have any questions, please give us a call at 800-355-5627."
 					+ " <br /><br /><br /></span></td></tr></table>");
-	StringBuffer employerWelcomeMailBody = new StringBuffer(
+	StringBuffer EMPLOYERWELCOMEMAILBODY = new StringBuffer(
 			"<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\">"
 					+ "<tr> <td height=\"138\" align=\"left\" valign=\"top\" style=\"border-top:1px solid #cccccc; border-bottom:1px solid #cccccc;\">"
 					+ "<br /> <br /><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:18px; color:#FF9900;\">"
@@ -548,7 +551,7 @@ public interface MMJBCommonConstants {
 					+ "</td></tr></table><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#333333;\">"
 					+ "<br />You can log in and begin recruiting right away. <a href=\"?empdashboardLink\" target=\"_blank\" style=\"color:#FF9900;\"><strong>Head over to your dashboard now</strong></a> to get started. "
 					+ "<br /><br />If you ever have any questions, please give us a call at 800-355-5627.<br /><br /><br /></span></td></tr></table>");
-	StringBuffer salesReceiptBody = new StringBuffer(
+	StringBuffer SALESRECEIPTBODY = new StringBuffer(
 			"<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\">"
 					+ "<tr> <td height=\"138\" align=\"left\" valign=\"top\" style=\"border-top:1px solid #cccccc; "
 					+ "border-bottom:1px solid #cccccc;\"><br /> <br /><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:18px; color:#FF9900;\"><strong>ORDER  RECEIPT</strong>"
@@ -561,7 +564,7 @@ public interface MMJBCommonConstants {
 					+ "<br />?ordersum</span></td>"
 					+ "</tr></table><br /><br /><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#333333;\"><a href=\"?empdashboardLink\" target=\"_blank\" style=\"color:#FF9900;\"><strong>Head over to your dashboard now</strong></a>"
 					+ " to put your purchase into action.   <br /><br /><br /></span></td> </tr></table>");
-	StringBuffer newJobPostCreditAvailable = new StringBuffer(
+	StringBuffer NEWJOBPOSTCREDITAVAILABLE = new StringBuffer(
 			"<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\">"
 					+ "<tr><td height=\"138\" align=\"left\" valign=\"top\" style=\"border-top:1px solid #cccccc; border-bottom:1px solid #cccccc;\">"
 					+ "<br /><br /><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:18px; color:#FF9900;\"><strong>YOU HAVE NEW JOB POSTINGS </strong></span>"
@@ -572,4 +575,19 @@ public interface MMJBCommonConstants {
 					+ "</td><td width=\"25%\" align=\"center\" valign=\"middle\" style=\"padding-top:5px; padding-bottom:5px; border:1px solid #cccccc; background-color:#FFFFFF;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\"><strong>AVAILABLE "
 					+ "<br /> JOB POSTINGS</strong></span></td> <td width=\"25%\" align=\"center\" valign=\"middle\" style=\"padding-top:5px; padding-bottom:5px; border:1px solid #cccccc; background-color:#FFFFFF;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\"><strong>TYPE OF "
 					+ "<br />JOB POSTINGS</strong></span></td></tr>");
+	StringBuffer ADMINSTRATORCHANGEEMAILBODY = new StringBuffer(
+			"<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\">"
+					+ "<tr><td height=\"138\" align=\"left\" valign=\"top\" style=\"border-top:1px solid #cccccc; border-bottom:1px solid #cccccc;\">"
+					+ "<br /> <br /><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:18px; color:#FF9900;\"><strong>AN ADMINISTRATOR CHANGE HAS BEEN MADE TO YOUR ACCOUNT</strong></span>"
+					+ "<br /><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#333333;\"><br />The following administrator change has been made to your account."
+					+ "<br/><br/></span><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"font-size:13px; padding-top:0px; font-family:Arial, Helvetica, "
+					+ "sans-serif;\"><tr> <td width=\"33%\" align=\"center\" valign=\"middle\" style=\"padding-top:5px; padding-bottom:5px; border:1px solid #cccccc; background-color:#FFFFFF;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\"><strong>USER</strong></span>"
+					+ "</td> <td width=\"33%\" align=\"center\" valign=\"middle\" style=\"padding-top:5px; padding-bottom:5px; border:1px solid #cccccc; background-color:#FFFFFF;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\"><strong>COMPANY</strong></span>"
+					+ "</td><td width=\"33%\" align=\"center\" valign=\"middle\" style=\"padding-top:5px; padding-bottom:5px; border:1px solid #CCCCCC; background-color:#FFFFFF;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #333333\"><strong>ADMINISTRATOR CHANGE</strong></span>"
+					+ "</td></tr><tr><td width=\"33%\" align=\"center\" valign=\"middle\" style=\"padding-top:5px; padding-bottom:5px; border:1px solid #cccccc;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\">?userName</span>"
+					+ "</td><td width=\"33%\" align=\"center\" valign=\"middle\" style=\"padding-top:5px; padding-bottom:5px; border:1px solid #cccccc;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\">?companyName</span>"
+					+ "</td><td width=\"33%\" align=\"center\" valign=\"middle\" style=\"padding-top:5px; padding-bottom:5px; border:1px solid #cccccc;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\">?changeType</span>"
+					+ "</td></tr></table><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#333333;\">"
+					+ "<br /><a href=\"?empdashboardLink\" target=\"_blank\" style=\"color:#FF9900;\"><strong>Log in now</strong></a> to see what's changed."
+					+ " <br /> <br /><br /></span>      </td>    </tr></table>");
 }

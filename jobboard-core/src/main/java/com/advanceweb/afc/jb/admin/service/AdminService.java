@@ -68,5 +68,9 @@ public interface AdminService {
 	 * @return
 	 */
 	boolean saveEditFacilityGroup(EmpSearchDTO dto);
-
+	/**
+	 * @param invDtlId
+	 * @return
+	 */
+	JobPostingInventoryDTO getInventoryDetailsByDtlId(int invDtlId);
 }
