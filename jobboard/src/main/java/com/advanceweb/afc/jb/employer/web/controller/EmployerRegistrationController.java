@@ -394,39 +394,39 @@ public class EmployerRegistrationController extends AbstractController{
 		String employerloginUrl = request.getRequestURL().toString()
 				.replace(request.getServletPath(), loginPath)
 				+ dothtmlExtention + employerPageExtention;
-		start = MMJBCommonConstants.employerWelcomeMailBody.toString().indexOf(
+		start = MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.toString().indexOf(
 				"?user_name");
 		end = start + "?user_name".length();
 		if (start > 0 && end > 0) {
-			MMJBCommonConstants.employerWelcomeMailBody.replace(start, end,
+			MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.replace(start, end,
 					userDTO.getFirstName());
 		}
-		start = MMJBCommonConstants.employerWelcomeMailBody.toString().indexOf(
+		start = MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.toString().indexOf(
 				"?userName");
 		end = start + "?userName".length();
 		if (start > 0 && end > 0) {
-			MMJBCommonConstants.employerWelcomeMailBody.replace(start, end,
+			MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.replace(start, end,
 					userDTO.getFirstName());
 		}
 
-		start = MMJBCommonConstants.employerWelcomeMailBody.toString().indexOf(
+		start = MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.toString().indexOf(
 				"?company_name");
 		end = start + "?company_name".length();
 		if (start > 0 && end > 0 && null != userDTO.getCompany()) {
-			MMJBCommonConstants.employerWelcomeMailBody.replace(start, end,
+			MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.replace(start, end,
 					userDTO.getCompany());
 		}
-		start = MMJBCommonConstants.employerWelcomeMailBody.toString().indexOf(
+		start = MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.toString().indexOf(
 				"?empdashboardLink");
 		end = start + "?empdashboardLink".length();
 		if (start > 0 && end > 0) {
-			MMJBCommonConstants.employerWelcomeMailBody.replace(start, end,
+			MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.replace(start, end,
 					employerloginUrl);
 		}
 		StringBuffer stringBuffer = new StringBuffer();
-		stringBuffer.append(MMJBCommonConstants.employerEmailHeader);
-		stringBuffer.append(MMJBCommonConstants.employerWelcomeMailBody);
-		stringBuffer.append(MMJBCommonConstants.emailFooter);
+		stringBuffer.append(MMJBCommonConstants.EMPLOYEREMAILHEADER);
+		stringBuffer.append(MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY);
+		stringBuffer.append(MMJBCommonConstants.EMAILFOOTER);
 		emailDTO.setBody(stringBuffer.toString());
 		emailDTO.setHtmlFormat(true);
 		emailService.sendEmail(emailDTO);

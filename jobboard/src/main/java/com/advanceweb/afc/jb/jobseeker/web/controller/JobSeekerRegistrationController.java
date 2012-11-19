@@ -561,23 +561,23 @@ public class JobSeekerRegistrationController extends AbstractController {
 		String jonseekerloginUrl = request.getRequestURL().toString()
 				.replace(request.getServletPath(), loginPath)
 				+ dothtmlExtention + jobseekerPageExtention;
-		start = MMJBCommonConstants.jobSeekerWelcomeMailBody.toString()
+		start = MMJBCommonConstants.JOBSEEKERWELCOMEMAILBODY.toString()
 				.indexOf("?jobSeekerFirstName");
 		end = start + "?jobSeekerFirstName".length();
 		if (start > 0 && end > 0) {
-			MMJBCommonConstants.jobSeekerWelcomeMailBody.replace(start, end,
+			MMJBCommonConstants.JOBSEEKERWELCOMEMAILBODY.replace(start, end,
 					userDTO.getFirstName());
 		}
-		start = MMJBCommonConstants.jobSeekerWelcomeMailBody.toString()
+		start = MMJBCommonConstants.JOBSEEKERWELCOMEMAILBODY.toString()
 				.indexOf("?jsdashboardLink");
 		end = start + "?jsdashboardLink".length();
 		if (start > 0 && end > 0) {
-			MMJBCommonConstants.jobSeekerWelcomeMailBody.replace(start, end,
+			MMJBCommonConstants.JOBSEEKERWELCOMEMAILBODY.replace(start, end,
 					jonseekerloginUrl);
 		}
-		stringBuffer.append(MMJBCommonConstants.jobSeekerEmailHeader);
-		stringBuffer.append(MMJBCommonConstants.jobSeekerWelcomeMailBody);
-		stringBuffer.append(MMJBCommonConstants.emailFooter);
+		stringBuffer.append(MMJBCommonConstants.JOBSEEKEREMAILHEADER);
+		stringBuffer.append(MMJBCommonConstants.JOBSEEKERWELCOMEMAILBODY);
+		stringBuffer.append(MMJBCommonConstants.EMAILFOOTER);
 		emailDTO.setBody(stringBuffer.toString());
 		emailDTO.setHtmlFormat(true);
 		emailService.sendEmail(emailDTO);
@@ -977,56 +977,56 @@ public class JobSeekerRegistrationController extends AbstractController {
 			String jonseekerloginUrl = request.getRequestURL().toString()
 					.replace(request.getServletPath(), loginPath)
 					+ dothtmlExtention + jobseekerPageExtention;
-			start = MMJBCommonConstants.jobSeekerChangePwdBody.toString()
+			start = MMJBCommonConstants.JOBSEEKERCHANGEPWDBODY.toString()
 					.indexOf("?jobSeekerFirstName");
 			end = start + "?jobSeekerFirstName".length();
 			if (start > 0 && end > 0) {
-				MMJBCommonConstants.jobSeekerChangePwdBody.replace(start, end,
+				MMJBCommonConstants.JOBSEEKERCHANGEPWDBODY.replace(start, end,
 						userDTO.getFirstName());
 			}
-			start = MMJBCommonConstants.jobSeekerChangePwdBody.toString()
+			start = MMJBCommonConstants.JOBSEEKERCHANGEPWDBODY.toString()
 					.indexOf("?jsdashboardLink");
 			end = start + "?jsdashboardLink".length();
 			if (start > 0 && end > 0) {
-				MMJBCommonConstants.jobSeekerChangePwdBody.replace(start, end,
+				MMJBCommonConstants.JOBSEEKERCHANGEPWDBODY.replace(start, end,
 						jonseekerloginUrl);
 			}
-			stringBuffer.append(MMJBCommonConstants.jobSeekerEmailHeader);
-			stringBuffer.append(MMJBCommonConstants.jobSeekerChangePwdBody);
-			stringBuffer.append(MMJBCommonConstants.emailFooter);
+			stringBuffer.append(MMJBCommonConstants.JOBSEEKEREMAILHEADER);
+			stringBuffer.append(MMJBCommonConstants.JOBSEEKERCHANGEPWDBODY);
+			stringBuffer.append(MMJBCommonConstants.EMAILFOOTER);
 			emailDTO.setBody(stringBuffer.toString());
 		} else {
 			String employerloginUrl = request.getRequestURL().toString()
 					.replace(request.getServletPath(), loginPath)
 					+ dothtmlExtention + employerPageExtention;
 
-			start = MMJBCommonConstants.employerChangePwdBody.toString()
+			start = MMJBCommonConstants.EMPLOYERCHANGEPWDBODY.toString()
 					.indexOf("?user_name");
 			end = start + "?user_name".length();
 			if (start > 0 && end > 0) {
-			MMJBCommonConstants.employerChangePwdBody.replace(start, end,
+			MMJBCommonConstants.EMPLOYERCHANGEPWDBODY.replace(start, end,
 					(String) session
 							.getAttribute(MMJBCommonConstants.USER_NAME));
 			}
 
-			start = MMJBCommonConstants.employerChangePwdBody.toString()
+			start = MMJBCommonConstants.EMPLOYERCHANGEPWDBODY.toString()
 					.indexOf("?company_name");
 			end = start + "?company_name".length();
 			if (start > 0 && end > 0 && null != userDTO.getCompany()) {
-			MMJBCommonConstants.employerChangePwdBody.replace(start, end,
+			MMJBCommonConstants.EMPLOYERCHANGEPWDBODY.replace(start, end,
 					userDTO.getCompany());
 			}
-			start = MMJBCommonConstants.employerChangePwdBody.toString()
+			start = MMJBCommonConstants.EMPLOYERCHANGEPWDBODY.toString()
 					.indexOf("?empdashboardLink");
 			end = start + "?empdashboardLink".length();
 			if (start > 0 && end > 0) {
-			MMJBCommonConstants.employerChangePwdBody.replace(start, end,
+			MMJBCommonConstants.EMPLOYERCHANGEPWDBODY.replace(start, end,
 					employerloginUrl);
 			}
 
-			stringBuffer.append(MMJBCommonConstants.employerEmailHeader);
-			stringBuffer.append(MMJBCommonConstants.employerChangePwdBody);
-			stringBuffer.append(MMJBCommonConstants.emailFooter);
+			stringBuffer.append(MMJBCommonConstants.EMPLOYEREMAILHEADER);
+			stringBuffer.append(MMJBCommonConstants.EMPLOYERCHANGEPWDBODY);
+			stringBuffer.append(MMJBCommonConstants.EMAILFOOTER);
 			emailDTO.setBody(stringBuffer.toString());
 		}
 		return emailDTO;

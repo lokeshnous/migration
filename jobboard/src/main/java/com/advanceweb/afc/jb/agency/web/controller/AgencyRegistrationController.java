@@ -3,6 +3,8 @@ package com.advanceweb.afc.jb.agency.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -42,6 +44,8 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
+import com.advanceweb.afc.jb.mail.service.EmailDTO;
+import com.advanceweb.afc.jb.mail.service.MMEmailService;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
@@ -101,7 +105,21 @@ public class AgencyRegistrationController extends AbstractController {
 	private String recaptchaResponse;
 	private String recaptchaChallenge;
 	private String remoteAddr;
+	@Value("${advanceWebAddress}")
+	private String advanceWebAddress;
 
+	@Value("${welcomeMailMessage}")
+	private String 	welcomeMailMessage;
+
+	@Value("${navigationPath}")
+	private String navigationPath;
+	@Value("${employerPageExtention}")
+	private String employerPageExtention;
+	@Autowired
+	private MMEmailService emailService;
+
+	@Value("${dothtmlExtention}")
+	private String dothtmlExtention;
 	private final static String AGENCYREG = "addAgencyRegistration";
 
 	/**
@@ -259,7 +277,14 @@ public class AgencyRegistrationController extends AbstractController {
 		empDTO.setAttribList(attribLists);
 		empDTO.setMerUserDTO(userDTO);
 		userDTO = agencyRegistration.createUser(empDTO);
-
+		// send welcome e-mail- starts
+				try{
+					sendEmployerWelcomeEmail(req, userDTO);
+				}
+				catch(Exception e){
+					LOGGER.error("Mail sending failed : "+e);
+				}
+				// send welcome e-mail- Ends
 		if (userDTO.getEmailId() == null) {
 			model.addObject(MESSAGE, nsValidateUser);
 			return model;
@@ -369,5 +394,71 @@ public class AgencyRegistrationController extends AbstractController {
 
 		SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
 	}
+	/**
+	 * @param request
+	 * @param userDTO
+	 */
+	private void sendEmployerWelcomeEmail(HttpServletRequest request,
+			UserDTO userDTO) {
+		InternetAddress[] jsToAddress = new InternetAddress[1];
 
+		try {
+			jsToAddress[0] = new InternetAddress(userDTO.getEmailId());
+		} catch (AddressException jbex) {
+			LOGGER.error(
+					"Error occured while geting InternetAddress reference",
+					jbex);
+		}
+
+		EmployerInfoDTO facilityDetail = facilityService
+				.facilityDetails(userDTO.getUserId());
+		if (null != facilityDetail) {
+			userDTO.setCompany(facilityDetail.getCustomerName());
+		}
+		EmailDTO emailDTO = new EmailDTO();
+		emailDTO.setToAddress(jsToAddress);
+		emailDTO.setFromAddress(advanceWebAddress);
+		emailDTO.setSubject(welcomeMailMessage);
+		int start, end;
+		String loginPath = navigationPath.substring(2);
+		String employerloginUrl = request.getRequestURL().toString()
+				.replace(request.getServletPath(), loginPath)
+				+ dothtmlExtention + employerPageExtention;
+		start = MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.toString().indexOf(
+				"?user_name");
+		end = start + "?user_name".length();
+		if (start > 0 && end > 0) {
+			MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.replace(start, end,
+					userDTO.getFirstName());
+		}
+		start = MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.toString().indexOf(
+				"?userName");
+		end = start + "?userName".length();
+		if (start > 0 && end > 0) {
+			MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.replace(start, end,
+					userDTO.getFirstName());
+		}
+
+		start = MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.toString().indexOf(
+				"?company_name");
+		end = start + "?company_name".length();
+		if (start > 0 && end > 0 && null != userDTO.getCompany()) {
+			MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.replace(start, end,
+					userDTO.getCompany());
+		}
+		start = MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.toString().indexOf(
+				"?empdashboardLink");
+		end = start + "?empdashboardLink".length();
+		if (start > 0 && end > 0) {
+			MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.replace(start, end,
+					employerloginUrl);
+		}
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append(MMJBCommonConstants.EMPLOYEREMAILHEADER);
+		stringBuffer.append(MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY);
+		stringBuffer.append(MMJBCommonConstants.EMAILFOOTER);
+		emailDTO.setBody(stringBuffer.toString());
+		emailDTO.setHtmlFormat(true);
+		emailService.sendEmail(emailDTO);
+	}
 }
