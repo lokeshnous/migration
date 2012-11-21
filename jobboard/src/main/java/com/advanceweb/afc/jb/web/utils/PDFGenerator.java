@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.web.utils;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,21 +24,20 @@ import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.resume.web.controller.ResumeController;
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.draw.LineSeparator;
-import com.itextpdf.text.pdf.draw.VerticalPositionMark;
+import com.lowagie.text.Chunk;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
+import com.lowagie.text.pdf.draw.LineSeparator;
+import com.lowagie.text.pdf.draw.VerticalPositionMark;
 
 /**
  * 
@@ -263,7 +263,7 @@ public class PDFGenerator {
 			if (null != referencesPara) {
 				Paragraph languageHeadingPara = generateParagraph(
 						"Personal References", paragraphFontName,
-						sectionHeadingFontSize, Font.BOLD, BaseColor.BLACK);
+						sectionHeadingFontSize, Font.BOLD, Color.BLACK);
 				document.add(Chunk.NEWLINE);
 				document.add(languageHeadingPara);
 				document.add(Chunk.NEWLINE);
@@ -347,11 +347,11 @@ public class PDFGenerator {
 
 			Paragraph otherDetailsPara = generateParagraph(
 					resumeDTO.getOtherDetails(), paragraphFontName,
-					paragraphFontSize, Font.NORMAL, BaseColor.BLACK);
+					paragraphFontSize, Font.NORMAL, Color.BLACK);
 			if (null != otherDetailsPara) {
 				Paragraph otherDetailsHeadingPara = generateParagraph(
 						"Memberships", paragraphFontName,
-						sectionHeadingFontSize, Font.BOLD, BaseColor.BLACK);
+						sectionHeadingFontSize, Font.BOLD, Color.BLACK);
 				document.add(Chunk.NEWLINE);
 				document.add(otherDetailsHeadingPara);
 				document.add(otherDetailsPara);
@@ -378,11 +378,11 @@ public class PDFGenerator {
 
 			Paragraph membershipPara = generateParagraph(
 					resumeDTO.getMemberships(), paragraphFontName,
-					paragraphFontSize, Font.NORMAL, BaseColor.BLACK);
+					paragraphFontSize, Font.NORMAL, Color.BLACK);
 			if (null != membershipPara) {
 				Paragraph membershipHeadingPara = generateParagraph("Others",
 						paragraphFontName, sectionHeadingFontSize, Font.BOLD,
-						BaseColor.BLACK);
+						Color.BLACK);
 				document.add(Chunk.NEWLINE);
 				document.add(membershipHeadingPara);
 				document.add(membershipPara);
@@ -408,11 +408,11 @@ public class PDFGenerator {
 
 			Paragraph awardsPara = generateParagraph(resumeDTO.getAwards(),
 					paragraphFontName, paragraphFontSize, Font.NORMAL,
-					BaseColor.BLACK);
+					Color.BLACK);
 			if (null != awardsPara) {
 				Paragraph awardsHeadingPara = generateParagraph("Awards",
 						paragraphFontName, sectionHeadingFontSize, Font.BOLD,
-						BaseColor.BLACK);
+						Color.BLACK);
 				document.add(Chunk.NEWLINE);
 				document.add(awardsHeadingPara);
 				document.add(awardsPara);
@@ -440,11 +440,11 @@ public class PDFGenerator {
 
 			Paragraph skillsPara = generateParagraph(resumeDTO.getSkills(),
 					paragraphFontName, paragraphFontSize, Font.NORMAL,
-					BaseColor.BLACK);
+					Color.BLACK);
 			if (null != skillsPara) {
 				Paragraph skillsHeadingPara = generateParagraph("Skills",
 						paragraphFontName, sectionHeadingFontSize, Font.BOLD,
-						BaseColor.BLACK);
+						Color.BLACK);
 				document.add(Chunk.NEWLINE);
 				document.add(skillsHeadingPara);
 				document.add(skillsPara);
@@ -455,7 +455,7 @@ public class PDFGenerator {
 			if (null != languagesPara) {
 				Paragraph languageHeadingPara = generateParagraph("Language",
 						paragraphFontName, paragraphFontSize, Font.BOLD,
-						BaseColor.BLACK);
+						Color.BLACK);
 				document.add(Chunk.NEWLINE);
 				document.add(languageHeadingPara);
 				document.add(languagesPara);
@@ -512,7 +512,7 @@ public class PDFGenerator {
 			certificationHeadingPara.add(certTab);
 			certificationHeadingPara.add(generateParagraph("Certification",
 					paragraphFontName, sectionHeadingFontSize, Font.BOLD,
-					BaseColor.BLACK));
+					Color.BLACK));
 			document.add(Chunk.NEWLINE);
 			document.add(certificationHeadingPara);
 			document.add(Chunk.NEWLINE);
@@ -595,7 +595,7 @@ public class PDFGenerator {
 			educationHeadingPara.add(expTab);
 			educationHeadingPara.add(generateParagraph("Education",
 					paragraphFontName, sectionHeadingFontSize, Font.BOLD,
-					BaseColor.BLACK));
+					Color.BLACK));
 			document.add(Chunk.NEWLINE);
 			document.add(educationHeadingPara);
 			document.add(Chunk.NEWLINE);
@@ -689,7 +689,7 @@ public class PDFGenerator {
 			workExpHeadingPara.add(expTab);
 			workExpHeadingPara.add(generateParagraph("Work Experience",
 					paragraphFontName, sectionHeadingFontSize, Font.BOLD,
-					BaseColor.BLACK));
+					Color.BLACK));
 			document.add(Chunk.NEWLINE);
 			document.add(workExpHeadingPara);
 			document.add(Chunk.NEWLINE);
@@ -821,12 +821,12 @@ public class PDFGenerator {
 			objectiverHeadingPara.add(objectiveTab);
 			objectiverHeadingPara.add(generateParagraph("Objective",
 					paragraphFontName, sectionHeadingFontSize, Font.BOLD,
-					BaseColor.BLACK));
+					Color.BLACK));
 			document.add(objectiverHeadingPara);
 
 			Paragraph paragraph = generateParagraph(resumeDTO.getObjective(),
 					paragraphFontName, paragraphFontSize, Font.NORMAL,
-					BaseColor.BLACK);
+					Color.BLACK);
 			document.add(Chunk.NEWLINE);
 			document.add(paragraph);
 
@@ -840,7 +840,7 @@ public class PDFGenerator {
 	 */
 	private void drawLineSeperator(Document document) throws DocumentException {
 		LineSeparator sectionSeperator = new LineSeparator(1, 100,
-				BaseColor.BLACK, Element.ALIGN_CENTER, -2);
+				Color.black, Element.ALIGN_CENTER, -2);
 		document.add(Chunk.NEWLINE);
 		document.add(sectionSeperator);
 	}
@@ -1050,11 +1050,11 @@ public class PDFGenerator {
 
 			Paragraph referencesPara = generateParagraph(
 					resumeDTO.getResumeText(), paragraphFontName,
-					sectionHeadingFontSize, Font.BOLD, BaseColor.BLACK);
+					sectionHeadingFontSize, Font.BOLD, Color.BLACK);
 			if (null != referencesPara) {
 				Paragraph languageHeadingPara = generateParagraph(
 						"Resume Details", paragraphFontName,
-						sectionHeadingFontSize, Font.BOLD, BaseColor.BLACK);
+						sectionHeadingFontSize, Font.BOLD, Color.BLACK);
 				document.add(Chunk.NEWLINE);
 				document.add(languageHeadingPara);
 				document.add(Chunk.NEWLINE);
@@ -1085,7 +1085,7 @@ public class PDFGenerator {
 
 	private Paragraph generateParagraph(String paragraphText,
 			String paraFontName, float paraFontSize, int paraFontStyle,
-			BaseColor fontColor) {
+			Color fontColor) {
 
 		Paragraph paragraph = null;
 
@@ -1110,7 +1110,7 @@ public class PDFGenerator {
 	 * @return
 	 */
 	private Font getParaFactoryFont(String paraFontName, float paraFontSize,
-			int paraFontStyle, BaseColor fontColor) {
+			int paraFontStyle, Color fontColor) {
 
 		/*
 		 * //if theFont Name is not set then the default Font from the
@@ -1133,12 +1133,12 @@ public class PDFGenerator {
 
 	private Font getLabelFontFactory() {
 		return FontFactory.getFont(labelFontName, labelFontSize,
-				Font.BOLDITALIC, BaseColor.BLACK);
+				Font.BOLDITALIC, Color.BLACK);
 	}
 
 	private PdfPCell getHeadPdfCell(String string, Font font) {
 		PdfPCell pCell = new PdfPCell(new Phrase(string, font));
-		pCell.setBackgroundColor(BaseColor.GRAY);
+		pCell.setBackgroundColor(Color.GRAY);
 		pCell.setBorder(0);
 		pCell.setColspan(1);
 		return pCell;
