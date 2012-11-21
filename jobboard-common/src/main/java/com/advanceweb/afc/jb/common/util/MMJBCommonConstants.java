@@ -469,6 +469,7 @@ public interface MMJBCommonConstants {
 	String PURCHAGERECEIPT="Order ?ordernumber Receipt";
 	String ADMIN_IMPERSONATION_CHANGE="Impersonation by admin";
 	String ADMIN_JOBPOST_EXPIREDATE_CHANGE="Expire date of Job ?jobId has been changed by admin";
+	String ADMIN_MANAGE_EDIT_FACILITY_GROUP_CHANGE="Facility group modification done by admin";
 	String ADMIN_INVENTORY_CHANGE="Inventory has been edited";
 	StringBuffer EMPLOYEREMAILHEADER = new StringBuffer(
 			"<body style=\"margin:0; padding:0; background-color:#FFFFFF;\">"

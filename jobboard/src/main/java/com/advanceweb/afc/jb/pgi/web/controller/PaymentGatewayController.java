@@ -703,41 +703,41 @@ public class PaymentGatewayController extends AbstractController{
 			String comapnyName) {
 		StringBuffer receiptDetail = new StringBuffer();
 		int start, end;
-		start = MMJBCommonConstants.salesReceiptBody.toString().indexOf(
+		start = MMJBCommonConstants.SALESRECEIPTBODY.toString().indexOf(
 				"?orderNumber");
 		end = start + "?orderNumber".length();
 		if (start > 0 && end > 0) {
-			MMJBCommonConstants.salesReceiptBody
+			MMJBCommonConstants.SALESRECEIPTBODY
 					.replace(start, end, orderDetailsDTO
 							.getOrderPaymentDTO().getTransactionId());
 		}
-		start = MMJBCommonConstants.salesReceiptBody.toString().indexOf(
+		start = MMJBCommonConstants.SALESRECEIPTBODY.toString().indexOf(
 				"?orderNumber");
 		end = start + "?orderNumber1".length();
 		if (start > 0 && end > 0) {
-			MMJBCommonConstants.salesReceiptBody
+			MMJBCommonConstants.SALESRECEIPTBODY
 					.replace(start, end, orderDetailsDTO
 							.getOrderPaymentDTO().getTransactionId());
 		}
-		start = MMJBCommonConstants.salesReceiptBody.toString().indexOf(
+		start = MMJBCommonConstants.SALESRECEIPTBODY.toString().indexOf(
 				"?userName");
 		end = start + "?userName".length();
 		if (start > 0 && end > 0) {
-			MMJBCommonConstants.salesReceiptBody.replace(start, end,
+			MMJBCommonConstants.SALESRECEIPTBODY.replace(start, end,
 					userName);
 		}
-		start = MMJBCommonConstants.salesReceiptBody.toString().indexOf(
+		start = MMJBCommonConstants.SALESRECEIPTBODY.toString().indexOf(
 				"?companyName");
 		end = start + "?companyName".length();
 		if (start > 0 && end > 0) {
-			MMJBCommonConstants.salesReceiptBody.replace(start, end,
+			MMJBCommonConstants.SALESRECEIPTBODY.replace(start, end,
 					comapnyName);
 		}
-		start = MMJBCommonConstants.salesReceiptBody.toString().indexOf(
+		start = MMJBCommonConstants.SALESRECEIPTBODY.toString().indexOf(
 				"?ordersum");
 		end = start + "?ordersum".length();
 		if (start > 0 && end > 0) {
-			MMJBCommonConstants.salesReceiptBody.replace(start, end,
+			MMJBCommonConstants.SALESRECEIPTBODY.replace(start, end,
 					"<b>Order summary :</b>"
 							+ "<br> Total Payment:"
 							+ orderDetailsDTO.getOrderPaymentDTO()
@@ -749,19 +749,19 @@ public class PaymentGatewayController extends AbstractController{
 							+ orderDetailsDTO.getOrderPaymentDTO()
 									.getTransactionDate());
 		}
-		start = MMJBCommonConstants.salesReceiptBody.toString().indexOf(
+		start = MMJBCommonConstants.SALESRECEIPTBODY.toString().indexOf(
 				"?empdashboardLink");
 		end = start + "?empdashboardLink".length();
 		if (start > 0 && end > 0) {
-			MMJBCommonConstants.salesReceiptBody.replace(start, end,
+			MMJBCommonConstants.SALESRECEIPTBODY.replace(start, end,
 					employerloginUrl);
 		}
-		emailDTO.setSubject(MMJBCommonConstants.purchageReceipt.replace(
+		emailDTO.setSubject(MMJBCommonConstants.PURCHAGERECEIPT.replace(
 				"?ordernumber", orderDetailsDTO.getOrderPaymentDTO()
 						.getTransactionId()));
-		receiptDetail.append(MMJBCommonConstants.employerEmailHeader);
-		receiptDetail.append(MMJBCommonConstants.salesReceiptBody);
-		receiptDetail.append(MMJBCommonConstants.emailFooter);
+		receiptDetail.append(MMJBCommonConstants.EMPLOYEREMAILHEADER);
+		receiptDetail.append(MMJBCommonConstants.SALESRECEIPTBODY);
+		receiptDetail.append(MMJBCommonConstants.EMAILFOOTER);
 		emailDTO.setBody(receiptDetail.toString());
 		emailDTO.setHtmlFormat(true);
 		emailService.sendEmail(emailDTO);
@@ -784,7 +784,7 @@ public class PaymentGatewayController extends AbstractController{
 				.getJobPostingPlanDTOList()) {
 			jobPostType = jobPostPlaningDto.getJobPostPlanName();
 			quantiy = String.valueOf(jobPostPlaningDto.getQuanity());
-			MMJBCommonConstants.newJobPostCreditAvailable
+			MMJBCommonConstants.NEWJOBPOSTCREDITAVAILABLE
 					.append("<tr><td width=\"25%\" align=\"center\" valign=\"middle\" style=\"padding-top:5px; padding-bottom:5px; border:1px solid #cccccc;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\">"
 							+ userName
 							+ "</span>"
@@ -797,14 +797,14 @@ public class PaymentGatewayController extends AbstractController{
 							+ "</td><td width=\"25%\" align=\"center\" valign=\"middle\" style=\"padding-top:5px; padding-bottom:5px; border:1px solid #cccccc;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\">"
 							+ jobPostType + "</span>" + "</td></tr>");
 		}
-		MMJBCommonConstants.newJobPostCreditAvailable
+		MMJBCommonConstants.NEWJOBPOSTCREDITAVAILABLE
 				.append("</table><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#333333;\"><br /><a href=\""
 						+ employerloginUrl
 						+ "\" target=\"_blank\" style=\"color:#FF9900;\"><strong>Head over to your dashboard now</strong></a> to start posting new jobs. "
 						+ "<br /><br /><br /></span> </td></tr></table>");
-		stringBuffer.append(MMJBCommonConstants.employerEmailHeader);
-		stringBuffer.append(MMJBCommonConstants.newJobPostCreditAvailable);
-		stringBuffer.append(MMJBCommonConstants.emailFooter);
+		stringBuffer.append(MMJBCommonConstants.EMPLOYEREMAILHEADER);
+		stringBuffer.append(MMJBCommonConstants.NEWJOBPOSTCREDITAVAILABLE);
+		stringBuffer.append(MMJBCommonConstants.EMAILFOOTER);
 		emailDTO.setBody(stringBuffer.toString());
 		emailDTO.setHtmlFormat(true);
 		emailService.sendEmail(emailDTO);
