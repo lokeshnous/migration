@@ -1066,7 +1066,7 @@ public class ManageJobSeekerController {
 				}
 				jobSeekerEmailDTO.setAttachmentPaths(attachmentpaths);
 				String Subject = subOfmail + " " + jobseekerName+".";
-				
+				mesg = mesg.append(MMJBCommonConstants.JOBSEEKEREMAILHEADER);
 				String bodyHead2 = sendtofriendmail.getMessage();
 				String jobUrl = sendtofriendmail.getJoburl();
 				mesg = mesg.append("<TABLE><TR><TD>" + Subject + END_TAGS);
@@ -1076,7 +1076,7 @@ public class ManageJobSeekerController {
 						+ END_TAGS);
 				mesg = mesg.append("<TR><TD>" + bodyOfMailFirst + "." 
 						+ END_TAGS);
-				
+				mesg = mesg.append(MMJBCommonConstants.EMAILFOOTER);
 				bodyMesg = mesg.toString();
 				jobSeekerEmailDTO.setBody(bodyMesg);
 				jobSeekerEmailDTO.setHtmlFormat(true);

@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
 import com.advanceweb.afc.jb.common.JobDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.job.web.controller.JobApplicationForm;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
@@ -103,6 +104,8 @@ public class JobApplicationController {
 			BindingResult result,
 			HttpServletRequest request, HttpSession session) {
 		ModelAndView model=new ModelAndView();
+
+		StringBuffer mailBody = new StringBuffer();
 		//try {
 			// send mail to employer email id which is given while posting the
 			 // job and attach the anonymous job seeker resume as
@@ -137,7 +140,10 @@ public class JobApplicationController {
 					"?empDashboardLink", employerloginUrl);
 			employerMailBody = employerMailBody.replace("?jobseekername",
 					form.getUserName());
-			toEmployer.setBody(employerMailBody);
+			mailBody.append(MMJBCommonConstants.EMPLOYEREMAILHEADER);
+			mailBody.append(employerMailBody);
+			mailBody.append(MMJBCommonConstants.EMAILFOOTER);
+			toEmployer.setBody(mailBody.toString());
 			toEmployer.setHtmlFormat(true);
 			List<String> attachmentpaths = new ArrayList<String>();
                 MultipartFile file = form.getFileContent();
@@ -153,6 +159,7 @@ public class JobApplicationController {
 				LOGGER.info("Resume not found");
 				// TODO:Exception Handling
 			}
+			
 			emailService.sendEmail(toEmployer);
 			// LOGGER.info("Mail sent to employer");
 
@@ -186,6 +193,8 @@ public class JobApplicationController {
 			HttpSession session, ModelAndView model, JobDTO jobDTO,
 			EmailDTO toJobSeeker, InternetAddress[] jsToAddress)
 			throws AddressException {
+
+		StringBuffer mailBody = new StringBuffer();
 		jsToAddress[0] = new InternetAddress(form.getUserEmail());
 		toJobSeeker.setToAddress(jsToAddress);
 		toJobSeeker.setFromAddress(advanceWebAddress);
@@ -206,8 +215,12 @@ public class JobApplicationController {
 			jobseekerMailSub = jobAppSub.replace(
 					"?companyname", jobDTO.getCompanyNameDisp());
 		}
-		toJobSeeker.setBody(jobseekerMailBody);
+		mailBody.append(MMJBCommonConstants.EMPLOYEREMAILHEADER);
+		mailBody.append(jobseekerMailBody);
+		mailBody.append(MMJBCommonConstants.EMAILFOOTER);
+		toJobSeeker.setBody(mailBody.toString());
 		toJobSeeker.setHtmlFormat(true);
+		
 		emailService.sendEmail(toJobSeeker);
 		session.removeAttribute("jobId");
 		model.setViewName("redirect:/jobsearch/findJobPage.html");

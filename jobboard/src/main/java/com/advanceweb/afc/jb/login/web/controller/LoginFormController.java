@@ -276,6 +276,7 @@ public class LoginFormController extends AbstractController{
 		String finalresult = "";
 		boolean value = false;
 		String page = form.getPage();
+		StringBuffer mailBody= new StringBuffer();
 		LoginDTO formDTO = loginService.getUserEmailDetails(emailAddress);
 
 		// User Validation based on email address of user
@@ -333,12 +334,15 @@ public class LoginFormController extends AbstractController{
 				// String forgotPwdMailBody =
 				// jobseekerForgotPwdBody.replace("?temporarypassword",
 				// tempassword);
+				mailBody.append(MMJBCommonConstants.EMPLOYEREMAILHEADER);
 				String forgotPwdMailBody = jobseekerForgotPwdBody.replace(
 						"?temporarypassword", formDTO.getPassword());
 
 				forgotPwdMailBody = forgotPwdMailBody.replace("?jsLoginLink",
 						jonseekerloginUrl);
-				jobSeekerEmailDTO.setBody(forgotPwdMailBody);
+				mailBody.append(forgotPwdMailBody);
+				mailBody.append(MMJBCommonConstants.EMAILFOOTER);
+				jobSeekerEmailDTO.setBody(mailBody.toString());
 				jobSeekerEmailDTO.setHtmlFormat(true);
 				emailService.sendEmail(jobSeekerEmailDTO);
 				// }

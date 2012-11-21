@@ -630,6 +630,7 @@ public class JobSearchController extends AbstractController {
 				.getAttribute(MMJBCommonConstants.USER_NAME);
 		String userEmail = (String) session
 				.getAttribute(MMJBCommonConstants.USER_EMAIL);
+		StringBuffer mailBody= new StringBuffer();
 		// Send mail to Employer regarding job application
 		String loginPath = navigationPath.substring(2);
 		EmailDTO employerEmailDTO = new EmailDTO();
@@ -646,13 +647,19 @@ public class JobSearchController extends AbstractController {
 		String employerMailBody = employeJobApplicationBody.replace(
 				"?empDashboardLink", employerloginUrl);
 		employerMailBody = employerMailBody.replace("?jobseekername", userName);
+		mailBody.append(MMJBCommonConstants.EMPLOYEREMAILHEADER);
+		
+		
 		if (coverLetterTxt == null) {
-			employerEmailDTO.setBody(employerMailBody);
+			mailBody.append(employerMailBody);
 		} else {
 			coverLetterTxt = coverLetterTxt.replace("\r\n", "<br/>");
-			employerEmailDTO.setBody(coverLetterTxt + "<br/>"
+			mailBody.append(coverLetterTxt + "<br/>"
 					+ employerMailBody);
 		}
+		
+		mailBody.append(MMJBCommonConstants.EMAILFOOTER);
+		employerEmailDTO.setBody(mailBody.toString());
 		employerEmailDTO.setHtmlFormat(true);
 		employerEmailDTO.setAttachmentPaths(attachmentpaths);
 		emailService.sendEmail(employerEmailDTO);
@@ -1776,6 +1783,7 @@ public class JobSearchController extends AbstractController {
 				 * String joburl = urlLinkFirst + MMJBCommonConstants.EMPTY +
 				 * jobUrl + MMJBCommonConstants.EMPTY + urlLinkSecond;
 				 */
+				mesg=mesg.append(MMJBCommonConstants.JOBSEEKEREMAILHEADER);
 				mesg = mesg.append("<TABLE><TR><TD>" + Subject + END_TAGS);
 				mesg = mesg.append("<TR><TD>" + bodyHead1 + "\n" + bodyHead2
 						+ END_TAGS);
@@ -1794,6 +1802,7 @@ public class JobSearchController extends AbstractController {
 				mesg = mesg.append("</TD></TR>\n\n\n");
 				mesg = mesg.append("<TR><TD>" + sendtofriendmail.getJoburl()
 						+ "</TD></TR></TABLE>");
+				mesg=mesg.append(MMJBCommonConstants.EMAILFOOTER);
 				bodyMesg = mesg.toString();
 				jobSeekerEmailDTO.setBody(bodyMesg);
 				jobSeekerEmailDTO.setHtmlFormat(true);
