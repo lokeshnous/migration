@@ -188,13 +188,13 @@ public class SearchResumeController extends AbstractController {
 				page = Integer.parseInt(request
 						.getParameter(MMJBCommonConstants.PAGE));
 			}
-			if (request.getParameter(MMJBCommonConstants.RECORDS_PER_PAGE) != null) {
+			if (request.getParameter(MMJBCommonConstants.JOBSEACRH_PAGE_SIZE) != null) {
 				displayRecordsPerPage = Integer.parseInt(request
-						.getParameter(MMJBCommonConstants.RECORDS_PER_PAGE));
+						.getParameter(MMJBCommonConstants.JOBSEACRH_PAGE_SIZE));
 			}
 
 			if (0 == displayRecordsPerPage) {
-				displayRecordsPerPage = MMJBCommonConstants.DEFAULT_PAGE_SIZE;
+				displayRecordsPerPage = MMJBCommonConstants.JOBSEACRH_DEFAULT_PAGE_SIZE;
 			}
 			recordsPerPage = displayRecordsPerPage;
 			start = (page - 1) * recordsPerPage;
@@ -348,7 +348,7 @@ public class SearchResumeController extends AbstractController {
 			int beginVal, JSONObject jobSrchJsonObj) {
 		sessionMap.put(MMJBCommonConstants.SEARCH_RESULTS_LIST, jobSrchJsonObj
 				.get(MMJBCommonConstants.JSON_ROWS).toString());
-		sessionMap.put(MMJBCommonConstants.RECORDS_COUNT,
+		sessionMap.put(MMJBCommonConstants.SEARCHED_JOBSCOUNT,
 				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS)
 						.toString());
 		sessionMap.put(MMJBCommonConstants.BEGIN_VAL, String.valueOf(beginVal));
@@ -643,7 +643,7 @@ public class SearchResumeController extends AbstractController {
 		session.removeAttribute("jobTitlePage");
 		session.removeAttribute("employerPage");
 		session.removeAttribute("locationPage");
-		session.removeAttribute(MMJBCommonConstants.BROWSE_BY_TITLE);
+//		session.removeAttribute(MMJBCommonConstants.BROWSE_BY_TITLE);
 		session.removeAttribute("list");
 		// session.removeAttribute("locationPage");
 		session.removeAttribute("areaPage");

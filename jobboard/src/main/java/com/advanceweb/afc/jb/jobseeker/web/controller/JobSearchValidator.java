@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
+import com.advanceweb.afc.jb.search.SearchParamDTO;
 
 /**
  * 
@@ -100,20 +101,29 @@ public class JobSearchValidator {
 	 * Method called to validate the search criteria
 	 * 
 	 * @param jobSearchResultForm
+	 * @param session 
 	 * @param jsonObject
 	 */
-	public JSONObject validateJobSearch(JobSearchResultForm jobSearchResultForm
+	public JSONObject validateJobSearch(JobSearchResultForm jobSearchResultForm, HttpSession session
 			) {
+		
 		JSONObject jsonObject = null;
-		if (StringUtils.isEmpty(jobSearchResultForm.getKeywords().trim())) {
-			jsonObject = new JSONObject();
-			jsonObject.put(ajaxMsg, jbSearchValKeyword);
-		} else if ((!jobSearchResultForm.getRadius().equalsIgnoreCase(
-				MMJBCommonConstants.ZERO))
-				&& StringUtils.isEmpty(jobSearchResultForm.getCityState()
-						.trim())) {
-			jsonObject = new JSONObject();
-			jsonObject.put(ajaxMsg, jbSearchValCity);
+		if (session.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP) != null) {			
+//			String searchtype =((HashMap<String, String>) session
+//					.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP))
+//					.get(MMJBCommonConstants.SEARCH_TYPE);
+			String searchtype = jobSearchResultForm.getSearchtype();	
+			if(searchtype.equalsIgnoreCase(MMJBCommonConstants.KEYWORD_SEARCH))
+				if (StringUtils.isEmpty(jobSearchResultForm.getKeywords().trim())) {
+					jsonObject = new JSONObject();
+					jsonObject.put(ajaxMsg, jbSearchValKeyword);
+				} else if ((!jobSearchResultForm.getRadius().equalsIgnoreCase(
+						MMJBCommonConstants.ZERO))
+						&& StringUtils.isEmpty(jobSearchResultForm.getCityState()
+								.trim())) {
+					jsonObject = new JSONObject();
+					jsonObject.put(ajaxMsg, jbSearchValCity);
+				}
 		}
 		return jsonObject;
 	}

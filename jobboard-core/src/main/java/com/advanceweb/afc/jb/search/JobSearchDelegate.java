@@ -14,7 +14,7 @@ public interface JobSearchDelegate {
 	 * @param start
 	 * @return JobSearchResultDTO
 	 */
-	JobSearchResultDTO jobSearch(String searchName, Map<String, String> paramMap, long start, long rows) throws JobBoardServiceException;
-	
-	
+	JobSearchResultDTO jobSearch(Map<String, String> paramMap, long start,
+			long rows) throws JobBoardServiceException;
+
 }

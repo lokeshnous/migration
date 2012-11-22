@@ -11,10 +11,10 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<jsp:include page="common/include.jsp" />
-<title>ADVANCE Heathcare Jobs</title>
 <meta name="robots" content="noindex, follow"> 
+<title>ADVANCE Heathcare Jobs</title>
 <!-- JAVASCRIPT FILES -->
+<jsp:include page="common/include.jsp" />
 <script type="text/javascript" src="../resources/js/slider.js"></script>
 <link href="../resources/css/jquery-ui.css" rel="stylesheet"
 	type="text/css">

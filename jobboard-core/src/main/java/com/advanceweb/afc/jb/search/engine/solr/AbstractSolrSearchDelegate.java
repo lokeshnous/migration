@@ -79,17 +79,16 @@ public abstract class AbstractSolrSearchDelegate {
 		 * query with server details.
 		 */
 		QueryDTO queryDTO = null;
-
-		try {
-			queryDTO = searchDAO.getSearchQueryDTO(searchIndex.getName(),
-					searchIndex.getEnvironment(), searchIndex.getGroup(),
-					searchName);
-		} catch (JobBoardDataException jde) {
-			LOGGER.debug(jde);
-			throw new JobBoardServiceException(
-					"Error while fetching the q parameters from the Database..."
-							+ jde);
-		}
+			try {
+				queryDTO = searchDAO.getSearchQueryDTO(searchIndex.getName(),
+						searchIndex.getEnvironment(), searchIndex.getGroup(),
+						searchName);
+			} catch (JobBoardDataException jde) {
+				LOGGER.debug(jde);
+				throw new JobBoardServiceException(
+						"Error while fetching the q parameters from the Database..."
+								+ jde);
+			}
 
 		// Create the solr url and check if it is accessible
 		String solrServerURL = createSolrBaseURL(queryDTO);
@@ -98,14 +97,20 @@ public abstract class AbstractSolrSearchDelegate {
 				.isServerAccessible(solrServerURL);
 
 		if (serverAccessible) {
-
-			// Merge the parameters
-			List<SearchParamDTO> queryParams = searchParamBuilder.buildParams(
-					queryDTO.getmSrchParamList(), inputParams);
-
-			// Get the SOLR query response by execution of the query.
-			QueryResponse response = executeSolrQuery(solrServerURL,
-					queryParams);
+			QueryResponse response = null;
+			if(!inputParams.get(SearchParamDTO.KEYWORDS).equalsIgnoreCase("*")){
+				
+				// Merge the parameters
+				List<SearchParamDTO> queryParams = searchParamBuilder.buildParams(
+						queryDTO.getmSrchParamList(), inputParams);
+				
+				// Get the SOLR query response by execution of the query.
+				response = executeSolrQuery(solrServerURL,
+						queryParams);
+			} else {
+				List<SearchParamDTO> queryParams = createParamForAllJobs(inputParams);
+				response = executeSolrQuery(solrServerURL, queryParams);
+			}
 			
 			// Convert and return the result
 			return fillSearchResult(response, clazz);
@@ -243,22 +248,48 @@ public abstract class AbstractSolrSearchDelegate {
 
 		// Creating Lists of Facets(List<String>) by iterating the
 		// FacetFieldList
-		
-		for (FacetField facetField : facetFieldList) {
-			List<SearchFacetDTO> searchFacetDTOList = new ArrayList<SearchFacetDTO>();
-			if(facetField.getValues() == null){
-				LOGGER.info(facetField.getName()+" facet not found.");
-			}else{
-				for (Count countObj : facetField.getValues()) {
-					searchFacetDTOList.add(new SearchFacetDTO(countObj.getName(),
-							countObj.getCount()));
+		if(facetFieldList != null && !facetFieldList.isEmpty() ){
+			for (FacetField facetField : facetFieldList) {
+				List<SearchFacetDTO> searchFacetDTOList = new ArrayList<SearchFacetDTO>();
+				if(facetField.getValues() == null){
+					LOGGER.info(facetField.getName()+" facet not found.");
+				}else{
+					for (Count countObj : facetField.getValues()) {
+						searchFacetDTOList.add(new SearchFacetDTO(countObj.getName(),
+								countObj.getCount()));
+					}
+					facetMap.put(facetField.getName(), searchFacetDTOList);
 				}
-				facetMap.put(facetField.getName(), searchFacetDTOList);
 			}
 		}
 		resultDTO.setFacetMap(facetMap);
 
 		return resultDTO;
+	}
+	
+	List<SearchParamDTO> createParamForAllJobs(Map<String, String> inputParams) {
+		List<SearchParamDTO> result = new ArrayList<SearchParamDTO>();
+		// TODO create and use a constructor
+		SearchParamDTO resultParam = new SearchParamDTO();
+		resultParam.setParameterName("q");
+		resultParam.setParameterValue(inputParams.get(SearchParamDTO.KEYWORDS));
+		// resultParam.setSearchParamId(param.getSearchParamId());
+		// resultParam.setSeq(param.getSeq());
+		result.add(resultParam);
+		resultParam = new SearchParamDTO();
+		resultParam.setParameterName("start");
+		resultParam.setParameterValue(inputParams.get(SearchParamDTO.START));
+		// resultParam.setSearchParamId(param.getSearchParamId());
+		// resultParam.setSeq(param.getSeq());
+		result.add(resultParam);
+		resultParam = new SearchParamDTO();
+		resultParam.setParameterName("rows");
+		resultParam.setParameterValue(inputParams.get(SearchParamDTO.ROWS));
+		// resultParam.setSearchParamId(param.getSearchParamId());
+		// resultParam.setSeq(param.getSeq());
+		result.add(resultParam);
+		
+		return result;
 	}
 
 }

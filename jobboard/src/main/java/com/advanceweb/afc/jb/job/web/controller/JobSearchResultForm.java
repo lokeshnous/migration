@@ -11,20 +11,9 @@ public class JobSearchResultForm {
 	private String saveSearchName;
 	private boolean autoload;
 	private boolean refined;
-	private String jobTitlePage;
-	private String employerPage;
-	private String locationPage;
-	private boolean browseBy;
+	
 	// Added for Browse JObs
 	private String jobPosition;
-
-	public boolean isBrowseBy() {
-		return browseBy;
-	}
-
-	public void setBrowseBy(boolean browseBy) {
-		this.browseBy = browseBy;
-	}
 
 	public boolean isAutoload() {
 		return autoload;
@@ -96,30 +85,6 @@ public class JobSearchResultForm {
 
 	public void setRefined(boolean refined) {
 		this.refined = refined;
-	}
-
-	public String getJobTitlePage() {
-		return jobTitlePage;
-	}
-
-	public void setJobTitlePage(String jobTitlePage) {
-		this.jobTitlePage = jobTitlePage;
-	}
-
-	public String getEmployerPage() {
-		return employerPage;
-	}
-
-	public void setEmployerPage(String employerPage) {
-		this.employerPage = employerPage;
-	}
-
-	public String getLocationPage() {
-		return locationPage;
-	}
-
-	public void setLocationPage(String locationPage) {
-		this.locationPage = locationPage;
 	}
 
 	public String getJobPosition() {

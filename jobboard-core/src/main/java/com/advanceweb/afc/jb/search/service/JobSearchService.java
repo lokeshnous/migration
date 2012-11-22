@@ -24,8 +24,6 @@ public interface JobSearchService {
 	 * This method is used to do the Job Search by taking the following
 	 * parameters.
 	 * 
-	 * @param searchName
-	 *            represents the type of the job search
 	 * @param paramMap
 	 *            contains the input parameters from the UI
 	 * @param rows
@@ -34,11 +32,10 @@ public interface JobSearchService {
 	 *            represents the starting point of the search
 	 * @return JobSearchResultDTO
 	 */
-
-	JobSearchResultDTO jobSearch(String searchName,
-			Map<String, String> paramMap, long start, long rows)
-			throws JobBoardServiceException;
-
+	
+	JobSearchResultDTO jobSearch(Map<String, String> paramMap, long start, long rows)
+					throws JobBoardServiceException;
+	
 	/**
 	 * get job details by job ID
 	 * 

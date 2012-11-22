@@ -6,12 +6,10 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>${metaTitle}</title>
 <meta name="description" content="${metaDesc}">
 <link href="${canonicalUrl}" rel="canonical" />
-</head>
 <jsp:include page="common/include.jsp" />
-
-<title>${metaTitle}</title>
 <script src="<%=request.getContextPath()%>/resources/js/FB.Share" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/resources/js/in.js" type="text/javascript"></script>
 <script  src="<%=request.getContextPath()%>/resources/js/widgets.js"></script>
@@ -49,6 +47,7 @@
 
 							<div class="floatLeft">
 								<h3 class="jobDetailsEyebrowHeader">Job Details</h3>
+								<input value="<%=request.getContextPath()%>" type="hidden" id="contextPath">
 								<!-- <a name="fb_share" style="display: none;visibility: hidden;" href="http://www.facebook.com/sharer.php" target="_blank"></a> -->
 							</div>
 							<div class="floatRight">
@@ -56,7 +55,7 @@
 								<c:choose>
 									<c:when test="${isReturnResults}">
 										<%-- <a href="${returnResults}" class="link_color2_emphasized">Return to Search Results &nbsp; </a> --%>
-										<a rel="nofollow,noindex"
+										<a 
 											href='<%=request.getContextPath()%>/jobsearch/findJobPage.html'
 											class="link_color2_emphasized">Return to Search Results
 											&nbsp; </a>
@@ -99,7 +98,7 @@
 								<div class="rowEvenTB10Spacing">
 									<div class="ShareText">Send to friend: &nbsp;</div>
 									<a
-										onclick="sendToFrd(${jobDetail.jobId}, '${jobDetail.jobTitle}','<%= request.getContextPath() %>');"><div
+										onclick="sendToFrd(${jobDetail.jobId}, '${jobDetail.jobTitle}');"><div
 											class="email cursor"></div></a>
 									<div class="ShareText">|&nbsp;&nbsp;Share:&nbsp;</div>
 									
@@ -116,9 +115,9 @@
 								</div>
 								<div class="rowEvenTB10Spacing">
 									<a
-										onclick="applyThisJob(${jobDetail.jobId},'<%= request.getContextPath() %>');"
+										onclick="applyThisJob(${jobDetail.jobId});"
 										class="btn_sm orange">Apply Now</a>&nbsp;&nbsp;&nbsp;&nbsp; <a
-										onclick="saveThisJob(${jobDetail.jobId},'<%= request.getContextPath() %>')"
+										onclick="saveThisJob(${jobDetail.jobId})"
 										id="saveThisJobId" class="btn_sm orange">SAVE THIS JOB</a>
 								</div>
 

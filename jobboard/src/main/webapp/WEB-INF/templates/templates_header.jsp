@@ -1,31 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<!-- <script type="text/javascript">
-//$("*").css("cursor", "progress");
-  $("html").bind("ajaxStart", function(){  
-     $(this).addClass('busy');  
-   }).bind("ajaxStop", function(){  
-     $(this).removeClass('busy');  
-   }); 
-</script>
-<style type="text/css">
-html.busy, html.busy * {  
-  cursor: wait !important; 
- /* cursor : url(../resources/images/ads/google-loading-icon.gif), -moz-zoom-in, auto; */
-   
-} 
-</style> -->
-</head>
-
-<body class="job_board">
 	<div class="header_wrapper">
 	<c:choose>
 	<c:when test="${homePage}">
@@ -279,5 +255,3 @@ html.busy, html.busy * {
 		</ul>
 	</div>
 	<!--css_nav-->
-</body>
-</html>

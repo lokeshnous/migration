@@ -347,7 +347,7 @@
                   	<div class="ShareArea">
                     <span>
                     <div class="ShareText">Send to friend:&nbsp;</div>
-                    <img class = "email" onclick="sendToFrd(${jobDetail.jobID}, '${job.jobTitle}','<%= request.getContextPath() %>');">
+                    <img class = "email" onclick="sendToFrd(${jobDetail.jobID}, '${job.jobTitle}');">
                     </span>
                     </div>
                     <div class="ShareArea">
@@ -459,7 +459,7 @@
                   	<div class="ShareArea">
                     <span>
                     <div class="ShareText">Send to friend:&nbsp;</div>
-                    <img class = "email" onclick="sendToFrd(${jobDetail.jobID}, '${jobDetail.jobTitle}','<%= request.getContextPath() %>');">
+                    <img class = "email" onclick="sendToFrd(${jobDetail.jobID}, '${jobDetail.jobTitle}');">
                     </span>
                     </div>
                     <div class="ShareArea">

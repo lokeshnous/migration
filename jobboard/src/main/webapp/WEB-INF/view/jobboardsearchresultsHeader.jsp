@@ -3,10 +3,6 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
-<head>
-<script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
 <script>
 	$(document).ready(function() {
 
@@ -32,8 +28,6 @@
 
 					});
 </script>
-</head>
-<body class="job_board">
 
 	<div class="mainTwo">
 		<div class="row">
@@ -41,12 +35,20 @@
 				style="margin-right: 10px;">
 				<%-- <form method=""> --%>
 				<%--  <form:form method="GET" action="findJobSearch.html" commandName="jobSearchResultForm">  --%>
-				<form:form method="" action="" commandName="jobSearchResultForm">
+				<form:form method="" action="" commandName="jobSearchResultForm" id="jobSearchResultHeaderFormId">
 					<div class="search_form">
-
+					<c:choose>
+						<c:when test="${isHomePage}">
 						<h1 class="marginBottom5">
 							Search <span id="TotalNoRecords"></span> Healthcare Jobs
 						</h1>
+						</c:when>
+						<c:otherwise>
+						<h2 class=" option2 marginBottom5">
+							Search <span id="TotalNoRecords"></span> Healthcare Jobs
+						</h2>
+						</c:otherwise>
+						</c:choose>
 						<form:input path="keywords" maxlength="60" id="keywords"
 							cssClass="jb_input1" />
 						<div class="toolTipBefore">
@@ -92,7 +94,8 @@
 						<!-- <a href="#" class="btn_sm orange jb_search_submit">Find Jobs</a> -->
 						<div class="FormErrorDisplayText" id="findSearchInfo"></div>
 						<div class="rowEvenNewSpacing">
-							<input type="button" id="submitval" onclick="findJobs();"
+							<!-- onclick="findJobs();" -->
+							<input type="button" id="submitval" 
 								value="Find Jobs" class="orange jb_search_submit cursor" />
 							<!-- <input type="submit" id= "submit" value="Find Jobs" class="orange jb_search_submit" /> -->
 							<%-- </form:form>     --%>
@@ -100,7 +103,7 @@
 							<!-- 	<a href="../jobsearch/advanceSearch.html">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
 								onclick="postYourResume();" class="cursor">Post Your Resume</a> -->
 							<a title="Coming Soon" href="../jobsearch/advanceSearch.html">Advanced
-								Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a rel="nofollow,noindex"
+								Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
 								onclick="postYourResume();" class="cursor">Post Your Resume</a>
 						</div>
 					</div>
@@ -131,21 +134,18 @@
 					<div class="search_info_box2"></div>
 					<!-- search_info_box2 -->
 
-					<div class="browse_bar bold">
-						<span>BROWSE JOBS:</span>&nbsp;&nbsp;
-							 <a onclick="getByJobTitle()" class="cursor">By Job Title</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-						<a onclick="getByEmployer()" class="cursor">By
-							Employer</a>&nbsp;&nbsp;|&nbsp;&nbsp; 
-							<a onclick="getByLocation()" class="cursor">By Location</a>
-					</div>
-
-					<!-- browse_bar -->
-
-					<form:hidden path="start" id="start" />
-					<form:hidden path="rows" id="rows" />
-
-					<form:hidden path="searchtype" id="searchtype" value="basic" />
-					<!-- <input type="hidden" id="searchtype" value="basic"></input>
+            <div class="browse_bar bold"> <span>BROWSE JOBS:</span>&nbsp;&nbsp;
+            <a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/browse/jobtitles.html" class="cursor">By Job Title</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/browse/employers.html" class="cursor">By Employer</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/browse/locations.html" class="cursor">By Location</a>
+            </div>
+            <!-- browse_bar -->
+            
+            <form:hidden path="start" id="start"/>
+            <form:hidden path="rows" id="rows"/>
+            <input value="<%=request.getContextPath()%>" type="hidden" id="contextPath">
+            <form:hidden path="searchtype" id="searchtype" value= "basic"/>
+            <!-- <input type="hidden" id="searchtype" value="basic"></input>
             </div> -->
 				</form:form>
 				<%-- </form> --%>

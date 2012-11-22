@@ -518,11 +518,12 @@ public class JobSeekerRegistrationController extends AbstractController {
 			// send welcome email ends
 			
 			model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
+			
 			if (session.getAttribute("jobId") != null) {
-				model.setViewName("redirect:/jobsearch/viewJobDetails.html?id="
-						+ session.getAttribute("jobId") + "&currentUrl="
-						+ request.getContextPath()
-						+ "/jobsearch/findJobPage.html" + "&clickType=view");
+				String jobTitle = (String) session.getAttribute("jobTitle");
+				jobTitle = jobTitle.replace(" ", "-").toLowerCase();
+				model.setViewName("redirect:/jobsearch/jobview/"
+						+ session.getAttribute("jobId") +jobTitle+ ".html");
 			}
 			authenticateUserAndSetSession(userDTO, request);
 

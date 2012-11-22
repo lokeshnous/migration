@@ -154,10 +154,11 @@ public class HomeController extends AbstractController{
 			model.addAttribute("followuplinklinkedin", followuplinklinkedin);
 //			JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
 			model.addAttribute("jobSearchResultForm", jobSearchResultForm);
+			model.addAttribute("isHomePage", true);
 
-			// get the Ads
-			getAdsForHomePage(request, session, model);
-
+			// populate the Ads
+			populateAds(request, session, model, PageNames.HOME);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			model.addAttribute("healthcarenew",
@@ -167,46 +168,63 @@ public class HomeController extends AbstractController{
 					+ e);
 		}
 		// Get the SEO Details
-		getSEODetails(model,request);
+		getSEODetails(model, request);
+		// Create the URL for home page to get all jobs titles.
+		String jobsUrl = request.getRequestURL().toString()
+				.replace(request.getServletPath(), "")
+				+ "/jobs/alljobs.html";
+		model.addAttribute("jobsUrl", jobsUrl);
+		String jobsUrlMessage = seoConfiguration
+				.getProperty("homepage.jobsurlmessage").trim();
+		String staticContent = seoConfiguration
+				.getProperty("homepage.staticContent").trim();
+		model.addAttribute("jobsUrlTitle", jobsUrlMessage);
+		model.addAttribute("staticContent", staticContent);		
 		return "home";
 	}
 
 	/**
-	 * Get the ads for home page
+	 * populate the ads for home ,featured employers list and featured employer detail page 
 	 * 
 	 * @param request
 	 * @param model
 	 * @param session
+	 * @param pageName 
 	 */
-	private void getAdsForHomePage(HttpServletRequest request, HttpSession session,
-			Model model) {
+	private void populateAds(HttpServletRequest request, HttpSession session,
+			Model model, String pageName) {
 		String bannerString = null;
 		try {
+			
 			ClientContext clientContext = getClientContextDetails(request,
-					session, PageNames.HOME);
+					session, pageName);
 			AdSize size = AdSize.IAB_LEADERBOARD;
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService
 					.getBanner(clientContext, size, position).getTag();
 			model.addAttribute("adPageTop", bannerString);
 			
-			size = AdSize.IAB_MEDIUM_RECTANGLE;
-			position = AdPosition.RIGHT_TOP;
-			bannerString = adService
-					.getBanner(clientContext, size, position).getTag();
-			model.addAttribute("adPageRightTop", bannerString);
-			
-			size = AdSize.IAB_MEDIUM_RECTANGLE;
-			position = AdPosition.RIGHT_MIDDLE;
-			bannerString = adService
-					.getBanner(clientContext, size, position).getTag();
-			model.addAttribute("adPageRightMiddle", bannerString);
-
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService
 					.getBanner(clientContext, size, position).getTag();
 			model.addAttribute("adPageBtm", bannerString);
+			
+			if(pageName.equalsIgnoreCase(PageNames.HOME)){
+				size = AdSize.IAB_MEDIUM_RECTANGLE;
+				position = AdPosition.RIGHT_TOP;
+				bannerString = adService
+						.getBanner(clientContext, size, position).getTag();
+				model.addAttribute("adPageRightTop", bannerString);
+				
+				size = AdSize.IAB_MEDIUM_RECTANGLE;
+				position = AdPosition.RIGHT_MIDDLE;
+				bannerString = adService
+						.getBanner(clientContext, size, position).getTag();
+				model.addAttribute("adPageRightMiddle", bannerString);
+			}
+
+
 		} catch (Exception e) {
 			LOGGER.error("Error occurred while getting the html content for Ads"
 					+ e);
@@ -223,9 +241,11 @@ public class HomeController extends AbstractController{
 	private void getSEODetails(Model model,
 			HttpServletRequest request) {		
 		String metaDesc = seoConfiguration
-				.getProperty("homepage.meta.description");
+				.getProperty("homepage.meta.description").trim();
+		String jobsCount = String.valueOf(jobSearchService.getTotalActiveJobs());
+		metaDesc = metaDesc.replace("?jobsCount", jobsCount);
 		String metaTitle = seoConfiguration
-				.getProperty("homepage.meta.title");
+				.getProperty("homepage.meta.title").trim();
 		model.addAttribute("metaDesc", metaDesc);
 		model.addAttribute("metaTitle", metaTitle);
 		model.addAttribute("canonicalUrl", request.getRequestURL());
@@ -239,46 +259,11 @@ public class HomeController extends AbstractController{
 		model.addAttribute("companyProfileDTOList", companyProfileDTOList);
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
 		model.addAttribute("jobSearchResultForm", jobSearchResultForm);
-		// get the Ads
-		getAdsForFeaturedEmps (request, session, model);
+		// populate the Ads
+		populateAds(request, session, model, PageNames.FEATURED_EMPS);
 		return "featuredemployers";
 	}
 	
-	/**
-	 * Get Ads for featured employers page
-	 * 
-	 * @param request
-	 * @param session
-	 * @param model
-	 */
-	private void getAdsForFeaturedEmps (HttpServletRequest request,
-			HttpSession session, Model model) {
-		String bannerString = null;
-		try {
-			ClientContext clientContext = getClientContextDetails(request,
-					session, PageNames.FEATURED_EMPS);
-			AdSize size = AdSize.IAB_LEADERBOARD;
-			AdPosition position = AdPosition.TOP;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addAttribute("adPageTop", bannerString);
-
-			size = AdSize.IAB_MEDIUM_RECTANGLE;
-			position = AdPosition.RIGHT_TOP;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addAttribute("adPageRightTop", bannerString);
-
-			size = AdSize.IAB_LEADERBOARD;
-			position = AdPosition.BOTTOM;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addAttribute("adPageBtm", bannerString);
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);		}
-	}
-
-
 	/**
 	 * Method called to get the featured employer details by facility Id
 	 * 
@@ -321,41 +306,11 @@ public class HomeController extends AbstractController{
 		model.addAttribute("windowmediaplayerfilepath", path);
 		model.addAttribute("employerProfileManagementForm",
 				employerProfileManagementForm);
-		// get the Ads
-		getAdsForFeaturedEmp (request, session, model);
+		// populate the Ads
+		populateAds(request, session, model, PageNames.FEATURED_EMP);
 		return "featuredemployerdetails";
 	}
 	
-	/**
-	 * Get Ads for featured employer page
-	 * 
-	 * @param request
-	 * @param session
-	 * @param model
-	 */
-	private void getAdsForFeaturedEmp (HttpServletRequest request,
-			HttpSession session, Model model) {
-		String bannerString = null;
-		try {
-			ClientContext clientContext = getClientContextDetails(request,
-					session, PageNames.FEATURED_EMP);
-			AdSize size = AdSize.IAB_LEADERBOARD;
-			AdPosition position = AdPosition.TOP;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addAttribute("adPageTop", bannerString);
-
-			
-			size = AdSize.IAB_LEADERBOARD;
-			position = AdPosition.BOTTOM;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addAttribute("adPageBtm", bannerString);
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);		}
-	}
-
-
 	@RequestMapping("/logo")
 	public void getPhoto(@RequestParam("id") Long id,
 			HttpServletResponse response, HttpServletRequest request) {
@@ -637,6 +592,25 @@ public class HomeController extends AbstractController{
 			Model model) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("homeFeaturedEmps");
+		return modelAndView;
+	}
+	
+	/**
+	 * Navigate to site Map page
+	 * 
+	 * @param response
+	 * @param request
+	 * @param model
+	 * @param session 
+	 * @return
+	 */
+	@RequestMapping(value = "/sitemap")
+	public ModelAndView siteMapPage(
+			HttpServletResponse response, HttpServletRequest request,
+			Model model, HttpSession session) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("sitemap");
+		populateAds(request, session, model, PageNames.JOBSEEKER_SITE_MAP);
 		return modelAndView;
 	}
 

@@ -2,8 +2,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" 
                                                   prefix="fn" %>
-<script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
-
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/expandCollapse.js"></script>
 		<c:choose>
 		<c:when test="${jobTitlePage}">
 			<jsp:include page="browseByJobTitle.jsp"></jsp:include>
@@ -22,7 +21,7 @@
 		    </c:choose>			
 		</c:when> 		
 		<c:otherwise>
-			<form:form method="POST" action="" commandName="jobSearchResultForm">
+			<form:form method="POST" action="" commandName="jobSearchResultForm" id="jobSearchResultBodyFormId">
 					
 					<div class="row">
 
@@ -32,8 +31,9 @@
 						</div>
 							<div class="floatLeft width100P">
 								<h1>
-								<c:if test="${totalNoOfRecords != null}">
-									<span>${totalNoOfRecords}</span> ${jobSearchResultForm.keywords} jobs match your search criteria.
+								<c:if test="${searchedJobCount != null}">
+									<%-- <span>${searchedJobCount}</span> ${jobSearchResultForm.keywords} jobs match your search criteria. --%>
+									<span>${searchedJobCount}</span> ${jobSearchMatchInfo }
 								</c:if>
 								</h1>
 							</div>
@@ -120,7 +120,7 @@
 									<span class="refineResultsItem plus" id="companyPlus">Employer</span>
 									<c:if test="${secondFQParam != null}">
 									<script>$("#companyPlus").click();</script>
-									</c:if>
+									</c:if> 
 
 									<div class="refineResultsSubContent cursor">
 										<ul>
@@ -175,10 +175,25 @@
 										</ul>
 									</div>
 								</div>
-							<input type="hidden" name="selectedRadius" id="selectedRadius" value="${refineRadius}"/>
-							<input type="hidden" name="selectedCompany" id="selectedCompany" value="${secondFQParam}" />
-							<input type="hidden" name="selectedState" id="selectedState" value="${thirdFQParam}" />
-							<input type="hidden" name="selectedCity" id="selectedCity" value="${fouthFQParam}" />
+							<%-- <input type="text" name="selectedRadius" id="selectedRadius" value="${refineRadius}"/>
+							<input type="text" name="selectedJobtitle" id="selectedJobtitle" value="${firstFQParam}"/>
+							<input type="text" name="selectedCompany" id="selectedCompany" value="${secondFQParam}" />
+							<input type="text" name="selectedState" id="selectedState" value="${thirdFQParam}" />
+							<input type="text" name="selectedCity" id="selectedCity" value="${fouthFQParam}" />
+							<input type="text" name="selectedArea" id="selectedArea" value="${fifthFQParam}" /> --%>
+							<div id="selectedRadius" style="display: none">${refineRadius}</div>
+							<div id="selectedJobtitle" style="display: none">${firstFQParam}</div>
+							<div id="selectedCompany"  style="display: none">${secondFQParam}</div>
+							<div id="selectedState" style="display: none">${thirdFQParam}</div>
+							<div id="selectedCity"  style="display: none">${fouthFQParam}</div>
+							<div id="selectedArea"  style="display: none">${fifthFQParam}</div>  
+							
+							<%-- <div id="selectedRadius" >${refineRadius}</div>
+							<div id="selectedJobtitle" >${firstFQParam}</div>
+							<div id="selectedCompany" >${secondFQParam}</div>
+							<div id="selectedState" >${thirdFQParam}</div>
+							<div id="selectedCity" >${fouthFQParam}</div>
+							<div id="selectedArea" >${fifthFQParam}</div>  --%>
 							</div>
 
 
@@ -192,13 +207,14 @@
 		<div class="searchResultsNavigationColumn1 SearchPerPage">
 		<input type="hidden" value="${beginVal}"/>
 			<span class="ShareText">Results viewable:</span> <span
-				class="Padding0"> <select name="noOfPage" id="noOfPage"
-				class="jb_input4 margin0" onchange="applyFilter();">
+				class="Padding0"> 
+				<select name="noOfPage" id="noOfPage"
+						class="jb_input4 margin0" onchange="applyFilter();">
 					<option value="20">20</option>
 					<option value="30">30</option>
 					<option value="40">40</option>
 					<option value="50">50</option>
-			</select>
+				</select>						
 			<%-- <form:select path="${filterVal}" itemValue="optionId" 
 								itemLabel="optionName" items="${filterVals}"></form:select>  --%> 
 						</span><span class="ShareText">per page</span>
@@ -207,16 +223,16 @@
 
 						<div class="searchResultsNavigationColumn3 ViewNumPage">
 							&nbsp;&nbsp;
-							<c:if test="${totalNoOfRecords != null and totalNoOfRecords != 0}">
-							${startRow} &#45; ${endRow} of ${totalNoOfRecords}&nbsp;
+							<c:if test="${searchedJobCount != null and searchedJobCount != 0}">
+							${startRow} &#45; ${endRow} of ${searchedJobCount}&nbsp;
 						</c:if>
 						</div>
 						<div class="searchResultsNavigationColumn2 GetNumPage">
 						<!-- <span>Page:</span> -->
-						<c:if test="${totalNoOfRecords != null and totalNoOfRecords != null}">
+						<c:if test="${searchedJobCount != null and searchedJobCount != 0}">
 						<c:if test="${currentPage > 9 && noOfPages gt 10}">
 							<td><a class="cursor"
-								onclick="getPrevPages(${begin - 10}, ${begin-10});">
+								onclick="getPrevPages(${begin - 10});">
 									<img src="<%=request.getContextPath()%>/resources/images/ArrowLeft.png"> Previous
 							</a></td>
 						</c:if>
@@ -228,16 +244,16 @@
 									</c:when>
                    				 <c:otherwise>
                        				 <span><c:if test="${i lt begin+10}">
-                       				 <a onclick="getNextPage(${i});" class="cursor">${i}</a></c:if></span>
+                       				 <a onclick="getPage(${i}, ${begin});" class="cursor">${i}</a></c:if></span>
                    				 </c:otherwise>
                				 </c:choose> 
            				 </c:forEach>
            				 <c:if test="${(begin+10) lt noOfPages}">
-           				 <span><a onclick="getNextPages(${begin + 10} ,${begin+10});" class="cursor"
+           				 <span><a onclick="getNextPages(${begin + 10});" class="cursor"
 							>Next<img src="<%=request.getContextPath()%>/resources/images/ArrowRight.png">
 							</a></span>
        					</c:if>  
-       					</c:if>     		 
+						</c:if>
 					</div>
 				</div>
 
@@ -256,11 +272,10 @@
 				</div>
 				<div class="searchResultsListing">
 
-					<div class="searchResultsItem">
+					<div class="searchResultsItem" id="searchResultsItem">
 					<c:if test="${searchResultsList == null || searchResultsList.size() == 0}">
 					No results found
 					</c:if>
-					
 					<c:forEach items="${searchResultsList}" var="job" varStatus="status">
 					<%-- <form:hidden path="jobDTOs[${status.index}].jobId"/> --%>
 								<ul
@@ -296,17 +311,17 @@
 
 								<div class="searchResultsSubContentButtonArea">
 									<div class="searchResultsSubContentButtons">
-										<a onclick="applyThisJob(${job.JobId},'<%= request.getContextPath() %>');" class="btn_sm white"
+										<a onclick="applyThisJob(${job.JobId});" class="btn_sm white"
 											id="applyJobid${job.JobId}">Apply</a>
 									</div>
 									<div class="searchResultsSubContentButtons">
-										<a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/viewJobDetails/
+										<a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/jobview/
 										${job.JobId}/${fn:toLowerCase(fn:replace(job.JobTitle, 
                                 					' ', '-'))}.html" class="btn_sm white">View
 											Details</a>
 									</div>
 									<div class="searchResultsSubContentButtons">
-										<a onclick="saveThisJob(${job.JobId},'<%= request.getContextPath() %>')"
+										<a onclick="saveThisJob(${job.JobId})"
 											id="saveThisJobId${job.JobId}"
 											class="btn_sm white">Save This Job</a>
 									</div>
@@ -326,7 +341,7 @@
 
 								<div class="ShareSearch">
 									<span class="ShareText"> Send to
-										Friend:&nbsp;</span><span><a onclick="sendToFrd(${job.JobId}, '${job.jobTitle}','<%= request.getContextPath() %>');"><span
+										Friend:&nbsp;</span><span><a onclick="sendToFrd(${job.JobId}, '${job.jobTitle}');"><span
 												class="email cursor"></span></a></span>
 								</div>
 
@@ -347,11 +362,6 @@
 							<div class="FormErrorDisplayText row" id="topjobActionInfo${job.JobId}" ></div>
 							
 						</div>
-				<c:if test="${(status.index + 1) % 10 == 0}">
-					<div class="ad_wrapper">
-						<img src="<%=request.getContextPath()%>/resources/images/ads/banner_ad_fpo.png">
-					</div>
-				</c:if>
 			</c:forEach>
 					</div>
 				</div>
@@ -380,16 +390,16 @@
 
 						<div class="searchResultsNavigationColumn3 ViewNumPage">
 							&nbsp;&nbsp;
-							<c:if test="${totalNoOfRecords != null and totalNoOfRecords != 0}">
-							${startRow} &#45; ${endRow} of ${totalNoOfRecords}&nbsp;
+							<c:if test="${searchedJobCount != null and searchedJobCount != 0}">
+							${startRow} &#45; ${endRow} of ${searchedJobCount}&nbsp;
 						</c:if>
 						</div>
 						<div class="searchResultsNavigationColumn2 GetNumPage">
 						<!-- <span>Page: </span> -->
-						<c:if test="${totalNoOfRecords != null}">
+						<c:if test="${searchedJobCount != null and searchedJobCount != 0}">
 						<c:if test="${currentPage > 9 && noOfPages gt 10}">
 							<td><a class="cursor"
-								onclick="getPrevPages(${begin - 10}, ${begin-10});">
+								onclick="getPrevPages(${begin - 10})">
 									<img src="<%=request.getContextPath()%>/resources/images/ArrowLeft.png"> Previous
 							</a></td>
 						</c:if>
@@ -401,12 +411,12 @@
 									</c:when>
                    				 <c:otherwise>
                        				 <span><c:if test="${i lt begin+10}">
-                       				 <a onclick="getNextPage(${i});" class="cursor">${i}</a></c:if></span>
+                       				 <a onclick="getPage(${i}, ${begin});" class="cursor">${i}</a></c:if></span>
                    				 </c:otherwise>
                				 </c:choose> 
            				 </c:forEach>
            				 <c:if test="${(begin+10) lt noOfPages}">
-           				 <span><a onclick="getNextPages(${begin + 10} ,${begin+10});"
+           				 <span><a onclick="getNextPages(${begin + 10});"
 							class="cursor">Next<img src="<%=request.getContextPath()%>/resources/images/ArrowRight.png">
 							</a></span>
        					</c:if>  
@@ -421,6 +431,7 @@
 
 					</div> 
 					</form:form>
+					<input value="false" type="hidden" id="isSortGrid">
 					</c:otherwise>
 		</c:choose>
 		<div class="clearfix"></div>

@@ -1,3 +1,4 @@
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="footer_wrapper">
 		<div class="container1">
 			<h4>Professions:</h4>
@@ -31,6 +32,9 @@
 				<li><a href="#">Buyers Guide</a></li>
 				<li><a href="#">Community</a></li>
 				<li><a href="#">Downloads</a></li>
+				<li>
+				<a href="<%=request.getContextPath()%>/healthcarejobs/sitemap.html">Site Map</a>
+				</li>
 			</ul>
 		</div>
 		<!-- end container2 -->
@@ -73,6 +77,9 @@
 				<li><a href="#">Privacy Policy</a></li>
 				<li><a href="#">Term of Service</a></li>
 				<li><a href="#">Help</a></li>
+				<li><c:if test="${not empty jobsUrl}">
+				<a  target="_blank" href="${jobsUrl}">${jobsUrlTitle}</a>
+				</c:if></li>
 			</ul>
 		</div>
 		<!-- end container5 -->

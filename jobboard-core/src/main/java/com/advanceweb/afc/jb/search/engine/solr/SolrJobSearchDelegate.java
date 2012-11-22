@@ -46,8 +46,6 @@ public class SolrJobSearchDelegate extends AbstractSolrSearchDelegate
 	 * This method is used to do the Solr Server Job Search based on the passed
 	 * parameters.
 	 * 
-	 * @param searchName
-	 *            represents the type of the job search
 	 * @param inputParams
 	 *            contains the input parameters from the UI
 	 * @param rows
@@ -58,24 +56,25 @@ public class SolrJobSearchDelegate extends AbstractSolrSearchDelegate
 	 * @throws JobBoardServiceException
 	 * @throws JobBoardServiceException
 	 */
-
 	@Override
-	public JobSearchResultDTO jobSearch(String searchName,
+	public JobSearchResultDTO jobSearch(
 			Map<String, String> inputParams, long start, long rows)
-			throws JobBoardServiceException {
-
+					throws JobBoardServiceException {
+		
+		// get the search name
+		String searchName = inputParams.get(SearchParamDTO.SEARCH_NAME);
 		/*
 		 * Check whether all the parameters coming from the UI is blank or not.
 		 */
-		if (!searchName.equals(MMJBCommonConstants.BROWSE_SEARCH) && validateInputParams(inputParams)) {
+		if (searchName.equals(MMJBCommonConstants.KEYWORD_SEARCH) && validateInputParams(inputParams)) {
 			LOGGER.info("Empty Search criteria. Please enter a search criteria to search jobs.");
 			return null;
 		}
-
+		
 		// Prepare the parameters to be replaced in the buildParams method
 		inputParams.put(SearchParamDTO.ROWS, Long.toString(rows));
 		inputParams.put(SearchParamDTO.START, Long.toString(start));
-
+		
 		// The query parameter related to location is received as a name of a
 		// city / state or as a pincode. The search parameter requires a
 		// position represented as a sting of latitude and longitude in the
@@ -88,20 +87,20 @@ public class SolrJobSearchDelegate extends AbstractSolrSearchDelegate
 					+ location.getLongitude();
 			inputParams.put("position", position);
 		}
-
+		
 		SearchResultDTO<SolrJobDTO> searchResult = search(searchName,
 				inputParams, SolrJobDTO.class);
-
+		
 		if (searchResult == null) {
 			LOGGER.info("No Results Found...");
 			return null;
-
+			
 		} else {
 			return prepareSearchResult(searchResult);
 		}
-
+		
 	}
-
+	
 	/**
 	 * Convert the SOLR specific result bean to JobDTO within the search result
 	 * 

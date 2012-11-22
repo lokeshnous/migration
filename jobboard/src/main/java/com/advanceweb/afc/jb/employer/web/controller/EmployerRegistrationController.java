@@ -224,40 +224,10 @@ public class EmployerRegistrationController extends AbstractController{
 		// map.put("empRegisterForm", empRegisterForm);
 		model.setViewName(EMPLOYERREG);
 		// get the Ads
-		getAdsForEmpRegistration (request, session, model);
+		populateAds (request, session, model, PageNames.EMPLOYER_REGISTRATION);
 		return model;
 	}
 	
-	/**
-	 * Get Ads for employer registration page
-	 * 
-	 * @param request
-	 * @param session
-	 * @param model
-	 */
-	private void getAdsForEmpRegistration (HttpServletRequest request,
-			HttpSession session, ModelAndView model) {
-		String bannerString = null;
-		try {
-			ClientContext clientContext = getClientContextDetails(request,
-					session, PageNames.EMPLOYER_REGISTRATION);
-			AdSize size = AdSize.IAB_LEADERBOARD;
-			AdPosition position = AdPosition.TOP;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject("adPageTop", bannerString);
-
-			
-			size = AdSize.IAB_LEADERBOARD;
-			position = AdPosition.BOTTOM;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject("adPageBtm", bannerString);
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);		}
-	}
-
-
 	/**
 	 * This method is called to save the employer registration information
 	 * @param request 
@@ -280,7 +250,7 @@ public class EmployerRegistrationController extends AbstractController{
 		if (null != empRegForm.getListProfAttribForms()) {
 			model.setViewName(EMPLOYERREG);
 			// get the Ads
-			getAdsForEmpRegistration (request, session, model);
+			populateAds (request, session, model, PageNames.EMPLOYER_REGISTRATION);
 			if (!validateEmpRegForm(empRegForm, model, result)) {
 				return model;
 			}
@@ -290,7 +260,7 @@ public class EmployerRegistrationController extends AbstractController{
 				.getParameter("recaptcha_response_field"))) {
 			model.setViewName(EMPLOYERREG);
 			// get the Ads
-			getAdsForEmpRegistration (request, session, model);
+			populateAds (request, session, model,PageNames.EMPLOYER_REGISTRATION);
 			model.addObject("errorMessage", "Captcha should not be blank");
 			return model;
 		}
@@ -311,7 +281,7 @@ public class EmployerRegistrationController extends AbstractController{
 			// Check if valid
 			model.setViewName(EMPLOYERREG);
 			// get the Ads
-			getAdsForEmpRegistration (request, session, model);
+			populateAds (request, session, model, PageNames.EMPLOYER_REGISTRATION);
 			model.addObject("errorMessage", "Captcha is invalid!");
 			return model;
 		}
@@ -358,7 +328,7 @@ public class EmployerRegistrationController extends AbstractController{
 			}
 			authenticateUserAndSetSession(userDTO, req, role);
 			// get the Ads
-			getAdsForEmpPostJob (request, session, model);
+			populateAds (request, session, model, PageNames.EMPLOYER_POSTJOB_REG);
 			return model;
 		}
 
@@ -433,18 +403,19 @@ public class EmployerRegistrationController extends AbstractController{
 	}
 	
 	/**
-	 * Get Ads for Employer Post Job page
+	 * Populate the Ads for Employer Post Job and employer registration pages
 	 * 
 	 * @param request
 	 * @param session
 	 * @param model
+	 * @param pageName
 	 */
-	private void getAdsForEmpPostJob (HttpServletRequest request,
-			HttpSession session, ModelAndView model) {
+	private void populateAds (HttpServletRequest request,
+			HttpSession session, ModelAndView model, String pageName) {
 		String bannerString = null;
 		try {
 			ClientContext clientContext = getClientContextDetails(request,
-					session, PageNames.EMPLOYER_POSTJOB_REG);
+					session, pageName);
 			AdSize size = AdSize.IAB_LEADERBOARD;
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)

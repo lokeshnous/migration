@@ -178,23 +178,24 @@ public class JobPostController extends AbstractController {
 		model.addObject(JOB_POST_FORM, jobPostForm);
 		model.setViewName(POST_NEW_JOBS);
 		// Ads for job Post page
-		getAdsForJobPost(request, session, model);
+		populateAds(request, session, model, PageNames.EMPLOYER_JOBPOST);
 		return model;
 	}
 
 	/**
-	 * Get Ads for job Post page
+	 * Populate Ads for job Post and manage job Post page
 	 * 
 	 * @param request
 	 * @param session
 	 * @param model
+	 * @param pageName
 	 */
-	private void getAdsForJobPost(HttpServletRequest request,
-			HttpSession session, ModelAndView model) {
+	private void populateAds(HttpServletRequest request,
+			HttpSession session, ModelAndView model, String pageName) {
 		String bannerString = null;
 		try {
 			ClientContext clientContext = getClientContextDetails(request,
-					session, PageNames.EMPLOYER_JOBPOST);
+					session, pageName);
 			AdSize size = AdSize.IAB_LEADERBOARD;
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
@@ -959,8 +960,8 @@ public class JobPostController extends AbstractController {
 
 		model.addObject(COMPANY_LIST, companyList);
 		model.setViewName("manageJobPosting");
-		// get the Ads
-		getAdsForManageJobPost(request, session, model);
+		// populate the Ads
+		populateAds (request, session, model,PageNames.EMPLOYER_MANAGE_JOBPOST);
 		return model;
 	}
 

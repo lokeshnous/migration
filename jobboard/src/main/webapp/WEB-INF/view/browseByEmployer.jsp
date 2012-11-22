@@ -1,6 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" 
+                                                  prefix="fn" %>
 <div class="clearfix"></div>
 <div class="row marginBottom20 ">
 	<div class="row marginTop10 paddingBottom05">
@@ -27,7 +28,8 @@
 				<ul class="MarginBottom10">
 					<c:forEach items="${jobByEmployer.value}" var="emplyrsName"
 						varStatus="emplyrsStatus">
-						<li><a onclick="searchByEmployer('${emplyrsName.company}');"
+						<li><a 
+						href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/employer/${fn:replace(fn:trim(emplyrsName.company),' ', '-')}.html"
 							class="link_color2_basic cursor">${emplyrsName.company}
 								(${emplyrsName.count})</a></li>
 					</c:forEach>
@@ -44,7 +46,8 @@
 				<ul class="MarginBottom10">
 					<c:forEach items="${jobByEmployer.value}" var="emplyrsName"
 						varStatus="emplyrsStatus">
-						<li><a onclick="searchByEmployer('${emplyrsName.company}');"
+						<li><a
+						href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/employer/${fn:replace(fn:trim(emplyrsName.company),' ', '-')}.html" 
 							class="link_color2_basic cursor">${emplyrsName.company}
 								(${emplyrsName.count})</a></li>
 					</c:forEach>
@@ -59,7 +62,8 @@
 				<ul class="MarginBottom10">
 					<c:forEach items="${jobByEmployer.value}" var="emplyrsName"
 						varStatus="emplyrsStatus">
-						<li><a onclick="searchByEmployer('${emplyrsName.company}');"
+						<li><a 
+						href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/employer/${fn:replace(fn:trim(emplyrsName.company),' ', '-')}.html"
 							class="link_color2_basic cursor">${emplyrsName.company}
 								(${emplyrsName.count})</a></li>
 					</c:forEach>

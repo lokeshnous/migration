@@ -8,7 +8,7 @@
         <title>${jobDetail.jobTitle} on ADVANCE Heathcare Jobs.com</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="description" content="${metaDesc}"> 
-		<link href="${canonicalUrl}" rel="canonical" /></head>
+		<link href="${canonicalUrl}" rel="canonical" />
 	
         <!-- JAVASCRIPT FILES -->
 		<!-- <script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/jquery.cycle.all.min.js"></script>
@@ -132,6 +132,7 @@
          
           <!--BANNER AREA-->
           <div class="row">
+          <input value="<%=request.getContextPath()%>" type="hidden" id="contextPath">
          	<div class="BannerAreaBox" style="background: ${jobDetail.getColor().substring(4)}">
                    <div class="BannerAreaInnerBox">
                <div class="BannerImgBox" > <img src="<%=request.getContextPath()%>/jobsearch/viewImage.html?id=${jobDetail.getImagePath()}" width="490" height="319" alt="Main image"></div>
@@ -329,8 +330,8 @@
                 <div class="ContantMiddleLeftLink">
                           <div class="row">
                     <div class="rowEvenButSpacing paddingBottom10"> <span class="floatLeft marginTop10">
-                    <a class="btn_smB ColorButton cursor" style="background-color: ${jobDetail.getColor().substring(4)}" onclick="applyThisJob(${jobDetail.jobId},'<%= request.getContextPath() %>');" >Apply now</a> 
-                    <a class="btn_smC white01 cursor" style="color: ${jobDetail.getColor().substring(4)}" onclick="saveThisJob(${jobDetail.jobId},'<%= request.getContextPath() %>');" id="btsaveThisJobId" >save this job</a></span> </div>
+                    <a class="btn_smB ColorButton cursor" style="background-color: ${jobDetail.getColor().substring(4)}" onclick="applyThisJob(${jobDetail.jobId});" >Apply now</a> 
+                    <a class="btn_smC white01 cursor" style="color: ${jobDetail.getColor().substring(4)}" onclick="saveThisJob(${jobDetail.jobId});" id="btsaveThisJobId" >save this job</a></span> </div>
                  <br/><br/>
 			    <div class="FormErrorDisplayText" id="topjobActionInfo" ></div><br/><br/><br/>
                   </div>
@@ -338,7 +339,7 @@
                   	<div class="ShareArea">
                     <span>
                     <div class="ShareText">Send to friend:&nbsp;</div>
-                    <img class = "email cursor" onclick="sendToFrd(${jobDetail.jobId}, '${jobDetail.jobTitle}','<%= request.getContextPath() %>');">
+                    <img class = "email cursor" onclick="sendToFrd(${jobDetail.jobId}, '${jobDetail.jobTitle}');">
                     </span>
                     </div>
                     <div class="ShareArea">
@@ -447,8 +448,8 @@
 	                <div class="ContantMiddleLeftLink marginBottom20">
 	                          <div class="row">
 	                    <div class="rowEvenButSpacing paddingBottom10"> <span class="floatLeft marginTop10">
-	                    <a class="btn_smB ColorButton cursor" style="background-color: ${jobDetail.getColor().substring(4)}" onclick="btapplyThisJob(${jobDetail.jobId},'<%= request.getContextPath() %>');" >Apply now</a> 
-	                    <a class="btn_smC white01 cursor" style="color: ${jobDetail.getColor().substring(4)}" onclick="btsaveThisJob(${jobDetail.jobId},'<%= request.getContextPath() %>');" id="btsaveThisJobId">save this job</a>
+	                    <a class="btn_smB ColorButton cursor" style="background-color: ${jobDetail.getColor().substring(4)}" onclick="btapplyThisJob(${jobDetail.jobId});" >Apply now</a> 
+	                    <a class="btn_smC white01 cursor" style="color: ${jobDetail.getColor().substring(4)}" onclick="btsaveThisJob(${jobDetail.jobId});" id="btsaveThisJobId">save this job</a>
 	                    </span> </div>
 	                     <br/><br/>
 			     <div class="FormErrorDisplayText" id="bottomjobActionInfo" ></div><br/><br/><br/>
@@ -457,7 +458,7 @@
 	                  	<div class="ShareArea">
                     <span>
                     <div class="ShareText">Send to friend:&nbsp;</div>
-                    <img class = "email cursor" onclick="sendToFrd(${jobDetail.jobId}, '${jobDetail.jobTitle}','<%= request.getContextPath() %>');">
+                    <img class = "email cursor" onclick="sendToFrd(${jobDetail.jobId}, '${jobDetail.jobTitle}');">
                     </span>
                     </div>
                     <div class="ShareArea">

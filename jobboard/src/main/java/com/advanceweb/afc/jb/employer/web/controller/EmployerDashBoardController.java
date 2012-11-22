@@ -185,20 +185,20 @@ public class EmployerDashBoardController extends AbstractController {
 		model.addObject(EMPLOYERDASHBOARDFORM, employerDashBoardForm);
 		model.setViewName("employerDashboard");
 		// get the Ads
-		getAdsForEmployerDashboard(request, session, model);
+		populateAdsForEmployerDashboard(request, session, model);
 
 		return model;
 
 	}
 
 	/**
-	 * Get Ads for employer dashboard page
+	 * Populate the Ads for employer dashboard page
 	 * 
 	 * @param request
 	 * @param session
 	 * @param model
 	 */
-	private void getAdsForEmployerDashboard(HttpServletRequest request,
+	private void populateAdsForEmployerDashboard (HttpServletRequest request,
 			HttpSession session, ModelAndView model) {
 		String bannerString = null;
 		try {

@@ -39,8 +39,6 @@ public class JobSearchServiceImpl implements JobSearchService {
 	 * This method is used to do the Job Search by taking the following
 	 * parameters.
 	 * 
-	 * @param searchName
-	 *            represents the type of the job search
 	 * @param paramMap
 	 *            contains the input parameters from the UI
 	 * @param rows
@@ -49,10 +47,10 @@ public class JobSearchServiceImpl implements JobSearchService {
 	 *            represents the starting point of the search
 	 * @return JobSearchResultDTO
 	 */
-	public JobSearchResultDTO jobSearch(final String searchName,
+	public JobSearchResultDTO jobSearch(
 			final Map<String, String> paramMap, final long start,
 			final long rows) throws JobBoardServiceException {
-		return jobSearchDelegate.jobSearch(searchName, paramMap, start, rows);
+		return jobSearchDelegate.jobSearch(paramMap, start, rows);
 	}
 
 	/**

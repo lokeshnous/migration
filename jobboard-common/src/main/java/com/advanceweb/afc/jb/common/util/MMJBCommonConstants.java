@@ -291,12 +291,16 @@ public interface MMJBCommonConstants {
 	int AUTO_RENEWAL_DAYS = 29;
 	// For Job search results
 	int DEFAULT_PAGE_SIZE = 20;
-	int ADDS_PER_PAGE = 10;
+	int JOBSEACRH_DEFAULT_PAGE_SIZE = 20;
+	int JOBSEACRH_FAST_FORWARD = 10;	
+	int JOBSEARCH_GRID_PAGES_COUNT = 10;
+	String FAST_FORWARD = "fastforward";
 	String SEARCH_RESULTS_LIST = "searchResultsList";
 	String NO_OF_PAGES = "noOfPages";
 	String CURRENT_PAGE = "currentPage";
-	String RECORDS_PER_PAGE = "displayRecordsPerPage";
-	String RECORDS_COUNT = "totalNoOfRecords";
+	String JOBSEACRH_PAGE_SIZE = "pageSize";
+	String JOBSEACRH_PAGE_SORT = "isSorting";
+	String SEARCHED_JOBSCOUNT = "searchedJobCount";
 	String RESUME_RECORDS_COUNT = "totalNumberOfSearchedResume";
 	String START_ROW = "startRow";
 	String END_ROW = "endRow";
@@ -308,7 +312,9 @@ public interface MMJBCommonConstants {
 	String HASHMAP_KEY = "key";
 	String HASHMAP_VALUE = "value";
 	String PREV_JOB_SEARCH_KEYWORDS = "prevJobSearchKeywords";
-
+	String RECORDS_PER_PAGE = "displayRecordsPerPage";
+	String RECORDS_COUNT = "totalNoOfRecords";
+	
 	// Kartik Add many Variable for account setting and Mail send
 	String WEB_MAIL_SERVER = "merion@nousinfosystems.com";
 	String EMAIL_MESSAGE = "Please enter correct Email address.";
@@ -408,6 +414,7 @@ public interface MMJBCommonConstants {
 	String FQ_COMPANY = "{!tag=dt}company:\"";
 	String FQ_STATE = "{!tag=dt}state:\"";
 	String FQ_CITY = "{!tag=dt}city:\"";
+	String FQ_AREA = "{!tag=dt}area:\"";
 	String REFINED = "refined";
 	String REFINERADIUS = "refineRadius";
 	String RADIUS = "radius";
@@ -434,11 +441,6 @@ public interface MMJBCommonConstants {
 	String RESUME_SEARCH_JSON_LIST = "resSrchJsonList";
 
 	// for browseByJobs
-	String BROWSE_BY_SEARCH = "browseBySearch";
-	String BROWSE_BY_TITLE = "browseByTitle";
-	String BROWSE_BY_LOCATION = "browseByLocation";
-	String BROWSE_BY_EMPLOYER = "browseByEmployer";
-	String BROWSE_BY_LOCAION_REG = "browseByLocationReg";
 	String FIRST_PARAMETER = "firstFQParam";
 
 	// for reCapcha
@@ -464,6 +466,12 @@ public interface MMJBCommonConstants {
 	int DIGITAL_SUBSCRIPTION = 5;
 	int ENEWS_LETTER_SUBSCRIPTION = 6;
 	int EMAIL_SUBSCRIPTION = 7;
+
+	// SEO info
+	int JOBTITLES_GRID_PAGESIZE = 100;
+	String JOBTITLES_NEXT_PAGE_URL = "nextPageUrl";
+	String JOBTITLES_PREV_PAGE_URL = "prevPageUrl";
+	int JOB_SEARCH_MAX_AREAS = 100;
 	
 	//Email 
 	String PURCHAGERECEIPT="Order ?ordernumber Receipt";

@@ -120,24 +120,25 @@ public class EmployerProfileManagementController extends AbstractController{
 		}
 		model.setViewName("manageFeatureEmpPro");
 		// get the Ads
-		getAdsForManagedFeaturedEmp(request, session, model);
+		populateAds (request, session, model, PageNames.EMPLOYER_MANAGE_FEATURED_EMP);
 
 		return model;
 	}
 	
 	/**
-	 * Get Ads for manage featured employers page
+	 * Populate the Ads for manage featured employer page
 	 * 
 	 * @param request
 	 * @param session
 	 * @param model
+	 * @param pageName
 	 */
-	private void getAdsForManagedFeaturedEmp (HttpServletRequest request,
-			HttpSession session, ModelAndView model) {
+	private void populateAds (HttpServletRequest request,
+			HttpSession session, ModelAndView model, String pageName) {
 		String bannerString = null;
 		try {
 			ClientContext clientContext = getClientContextDetails(request,
-					session, PageNames.EMPLOYER_MANAGE_FEATURED_EMP);
+					session, pageName);
 			AdSize size = AdSize.IAB_LEADERBOARD;
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)

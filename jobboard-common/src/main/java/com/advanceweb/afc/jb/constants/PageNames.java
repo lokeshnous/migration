@@ -165,4 +165,19 @@ public interface PageNames {
 	 */
 	String ADMIN_LOGIN = "login_admin";
 	
+	/**
+	 * The browse category page for job seeker
+	 */
+	String JOBSEEKER_BROWSE_JOB_TITLES = "browse_jobtitle_jobseekers";
+	
+	/**
+	 * The browse category page for job seeker
+	 */
+	String JOBSEEKER_SITE_MAP = "sitemap_jobseekers";
+
+	/**
+	 * The browse category page for job seeker
+	 */
+	String JOBSEEKER_BROWSE_JOBS = "browse_jobs_jobseekers";
+	
 }

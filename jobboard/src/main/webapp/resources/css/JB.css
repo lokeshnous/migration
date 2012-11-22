@@ -1230,6 +1230,13 @@ h3.jobSummaryTitle {
 	padding-left: 10px;
 	width: 759px;
 }
+.content_columns_search_results .column3 {
+	border-left: 1px solid #CCCCCC;
+	float: left;
+	margin-left: 0;
+	padding-left: 10px;
+	width: 960px;
+}
 
 .content_columns_search_results .column2 .searchResults {
 	float: left;
@@ -4202,3 +4209,25 @@ Border:1px solid #ccc;padding: 25px;}
 .NameSelectonArea ul {float:right;}
 .NameSelectonArea li a { font-size:14px; color:#6A7B83;padding:0 3px;}
 .width526 {width:526px; float:left; height: auto;}
+.alignCenter{margin-left:10% !important;border: none !important;}
+.job_seeker_login_width ul {
+    padding: 5px 25px;
+
+}
+.job_seeker_login_width ul li {
+    padding: 5px 0;
+	list-style:disc;
+}
+h2.option2 {
+    font-size: 26px;
+    font-weight: normal;
+    border:none;
+    padding:0;
+}
+h2.option2 span {color: #FE9400;
+    font-weight: bold;
+    font-size: 26px;
+   background: none;
+   float:inherit;
+   padding:0;
+   }

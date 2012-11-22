@@ -217,7 +217,7 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 				sendRedirect(
 						request,
 						response,
-						"/jobsearch/viewJobDetails/"
+						"/jobsearch/jobview/"
 								+ session.getAttribute("jobId")+
 								"/"+jobTitle+dothtmlExtention);
 			}
