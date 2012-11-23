@@ -170,13 +170,5 @@ public class JobPostServiceImpl implements JobPostService {
 		return employerJobPostDAO.getinvDetIdByJobId(jobId, facilityId, userId);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.advanceweb.afc.jb.job.service.JobPostService#getinvDetDtlByJobId(int)
-	 */
-	@Override
-	public AdmFacilityJpAudit getinvDtlByJobId(int jobId) {
-		return employerJobPostDAO.getinvDtlByJobId(jobId);
-	}
-
 
 }

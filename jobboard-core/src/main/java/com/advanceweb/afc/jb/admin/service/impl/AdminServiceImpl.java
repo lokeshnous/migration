@@ -130,13 +130,4 @@ public class AdminServiceImpl implements ProfileRegistration,
 			int facilityId) {
 		return adminDAO.getInventoryDetails(userId, facilityId);
 	}
-	/**
-	 * This method to get job posting inventory details
-	 * 
-	 * @param invDtlId
-	 * @return JobPostingInventoryDTO
-	 */
-	public JobPostingInventoryDTO getInventoryDetailsByDtlId(int invDtlId) {
-		return adminDAO.getInventoryDetailsByDtlId(invDtlId);
-	}
 }

@@ -25,12 +25,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.jb.admin.service.AdminService;
 import com.advanceweb.afc.jb.common.EmpSearchDTO;
 import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
-import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.employer.dao.FacilityDAO;
 import com.advanceweb.afc.jb.employer.web.controller.InventoryForm;
 import com.advanceweb.afc.jb.employer.web.controller.JobPostForm;
-import com.advanceweb.afc.jb.user.dao.UserDao;
 
 /**
  * 
@@ -52,12 +49,7 @@ public class AdminJobPostingInventoryController {
 
 	@Autowired
 	private AdminService adminService;
-	@Autowired
-	private UserDao userDAO;
-	@Autowired
-	private FacilityDAO facilityDAO;
-	@Autowired
-	private AdminController adminController;
+
 	@RequestMapping(value = "/jobPostSearch", method = RequestMethod.GET)
 	public @ResponseBody
 	JSONObject jobSearchByComName(HttpServletRequest request,
@@ -235,14 +227,14 @@ public class AdminJobPostingInventoryController {
 		// Splitting the string
 		StringTokenizer stringNew = new StringTokenizer(stringObjNew, ";");
 		List<JobPostingInventoryDTO> jobPostDTOs = new ArrayList<JobPostingInventoryDTO>();
-        List<Integer> invIdList= new ArrayList<Integer>();
+
 		while (stringNew.hasMoreElements()) {
 			JobPostingInventoryDTO jobPostInvDto = new JobPostingInventoryDTO();
 			String stringObject = (String) stringNew.nextElement();
 			StringTokenizer stringAlter = new StringTokenizer(stringObject, "=");
 			int invId = Integer.parseInt((String) stringAlter.nextElement());
 			int availQty = Integer.parseInt((String) stringAlter.nextElement());
-			invIdList.add(invId);
+
 			jobPostInvDto.setInvDetailId(invId);
 			jobPostInvDto.setAvailableQty(availQty);
 			jobPostDTOs.add(jobPostInvDto);
@@ -251,13 +243,6 @@ public class AdminJobPostingInventoryController {
 		boolean saveData = adminService.saveModifiedData(jobPostDTOs);
 //		JSONObject saveStatusJson = new JSONObject();
 		if (saveData) {
-			if(invIdList.size()>0){			
-				int invDtlId=invIdList.get(0);
-				JobPostingInventoryDTO invetoryDeatil=adminService.getInventoryDetailsByDtlId(invDtlId);
-				UserDTO userDTO = userDAO.getUserByUserId(facilityDAO.getfacilityUserId(invetoryDeatil.getFacilityId()));
-				adminController.sendAdministratorUpdateMail(userDTO.getEmailId(), request, MMJBCommonConstants.ADMIN_INVENTORY_CHANGE);
-			
-			}
 			saveStatusJson = true;
 		}
 		return saveStatusJson;

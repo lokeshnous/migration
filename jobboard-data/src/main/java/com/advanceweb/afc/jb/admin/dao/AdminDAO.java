@@ -72,13 +72,5 @@ public interface AdminDAO {
 	 * @return
 	 */
 	boolean saveEditFacilityGroup(EmpSearchDTO dto);
-	/**
-	 * This method to get job posting inventory details
-	 * 
-	 * @param userId
-	 * @param facilityId
-	 * @return JobPostingInventoryDTO
-	 */
-	JobPostingInventoryDTO getInventoryDetailsByDtlId(int invDtlId);
 
 }

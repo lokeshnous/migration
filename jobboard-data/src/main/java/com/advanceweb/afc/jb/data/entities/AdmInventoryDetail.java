@@ -28,8 +28,8 @@ public class AdmInventoryDetail {
 	@Column(name="inventory_detail_id")
 	private int invDetailId;
 	
-	@Column(name="inventory_id")
-	private String inventoryId;
+	@Column(name="product_type")
+	private String productType;
 	
 	@Column(name="product_id")
 	private int productId;	
@@ -41,11 +41,9 @@ public class AdmInventoryDetail {
 	@Column(name="order_qty")
 	private int orderQty;
 	
-	@Column(name="product_type")
-	private String productType;
 	//bi-directional many-to-one association to MerProfileAttrib
 	@OneToOne(fetch=FetchType.LAZY,cascade = CascadeType.ALL)
-	@JoinColumn(name="inventory_id",insertable=false ,updatable=false)
+	@JoinColumn(name="inventory_id")
 	private AdmFacilityInventory admFacilityInventory;
 	
 	public int getInvDetailId() {
@@ -94,20 +92,6 @@ public class AdmInventoryDetail {
 
 	public void setOrderQty(int orderQty) {
 		this.orderQty = orderQty;
-	}
-
-	/**
-	 * @return the inventoryId
-	 */
-	public String getInventoryId() {
-		return inventoryId;
-	}
-
-	/**
-	 * @param inventoryId the inventoryId to set
-	 */
-	public void setInventoryId(String inventoryId) {
-		this.inventoryId = inventoryId;
 	}	
 	
 }

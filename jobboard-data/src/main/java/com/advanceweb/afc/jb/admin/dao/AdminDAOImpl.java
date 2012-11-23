@@ -23,7 +23,6 @@ import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
-import com.advanceweb.afc.jb.data.entities.AdmFacilityInventory;
 import com.advanceweb.afc.jb.data.entities.AdmInventoryDetail;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
@@ -393,24 +392,4 @@ public class AdminDAOImpl implements AdminDAO {
 		}
 		return false;
 	}
-	/**
-	 * This method to get job posting inventory details
-	 * 
-	 * @param invDtlId
-	 * @return JobPostingInventoryDTO
-	 */
-	@Override
-	public JobPostingInventoryDTO getInventoryDetailsByDtlId(int invDtlId) {
-		
-		AdmInventoryDetail invetoryDeatil =  (AdmInventoryDetail) hibernateTemplateCareers.get(AdmInventoryDetail.class, invDtlId);
-		JobPostingInventoryDTO inventoryDTOs = new JobPostingInventoryDTO();
-		if (null != invetoryDeatil) {
-			AdmFacilityInventory admFacilityInventory= hibernateTemplateCareers.get(AdmFacilityInventory.class, Integer.valueOf(invetoryDeatil.getInventoryId()));
-			inventoryDTOs
-					.setFacilityId(admFacilityInventory.getFacilityId());
-
-		}
-		return inventoryDTOs;
-	}
-
 }
