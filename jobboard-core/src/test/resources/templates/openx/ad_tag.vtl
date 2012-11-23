@@ -1,7 +1,7 @@
 <script type="text/javascript">
 	if (!window.OX_ads) { OX_ads = []; }
 #if($vars)
-	OX_ads.push({ "auid" : "$auid" ,"vars":{"topic" : "$vars.get("topic")"}});
+	OX_ads.push({ "auid" : "$auid" ,"vars":{"keyword" : "$vars.get("keyword")"}});
 #else
 	OX_ads.push({ "auid" : "$auid"});	
 #end

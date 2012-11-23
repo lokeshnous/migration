@@ -10,15 +10,15 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.common.index.service.KeywordIndexService;
 import com.advanceweb.jb.test.ServiceTestBase;
 
-public class KeywordIndexServiceImplTest extends ServiceTestBase {
+public class KeywordIndexServiceTest extends ServiceTestBase {
 
 	private static final Logger LOGGER = Logger
-			.getLogger(KeywordIndexServiceImplTest.class);
+			.getLogger(KeywordIndexServiceTest.class);
 
 	@Autowired
-	KeywordIndexService keywordIndexService;
+	private KeywordIndexService keywordIndexService;
 
-	String[] testData = { "Nusre"};
+	private String[] testData = {""};
 
 	@Test
 	public void findMatchesTest() {

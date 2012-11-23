@@ -90,7 +90,7 @@ public class LuceneKeywordIndex {
 				query.add(nameQuery, Occur.SHOULD);
 				query.add(new FuzzyQuery(new Term(FIELD_RELATED, str)), Occur.SHOULD);
 			}
-
+			
 			IndexReader reader = IndexReader.open(indexDirectory);
 			searcher = new IndexSearcher(reader);
 

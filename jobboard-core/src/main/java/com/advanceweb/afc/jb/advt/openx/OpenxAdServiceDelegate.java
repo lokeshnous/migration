@@ -6,15 +6,18 @@ import java.util.Properties;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.advanceweb.afc.jb.advt.service.impl.AdServiceDelegate;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
 import com.advanceweb.common.ads.Banner;
 import com.advanceweb.common.client.ClientContext;
+import com.advanceweb.common.index.service.KeywordIndexService;
 import com.advanceweb.common.template.AdvanceTemplate;
 
 /**
@@ -58,6 +61,9 @@ public class OpenxAdServiceDelegate implements AdServiceDelegate {
 	@Autowired
 	private AdvanceTemplate defaultAdTemplate;
 
+	@Autowired
+	private KeywordIndexService keywordIndexService;
+
 	/**
 	 * This method retrieves the ad for the parameters given by the user.
 	 * <p>
@@ -69,7 +75,6 @@ public class OpenxAdServiceDelegate implements AdServiceDelegate {
 	 * in the web page. If no auid is received this method returns a default ad
 	 * for the given size.
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public Banner getBanner(ClientContext context, AdSize size,
 			AdPosition position) {
@@ -80,11 +85,15 @@ public class OpenxAdServiceDelegate implements AdServiceDelegate {
 		LOGGER.debug(("Received request from context " + context.toString()
 				+ " for banner size " + size.toString()));
 
-		Map params = new HashMap();
+		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("url", openxProperties.getProperty("openx.url"));
 		params.put("size", size);
 
-		String auid = openxProperties.getProperty(getAuidKey(context, size));
+		Map<String, Object> vars = new HashMap<String, Object>();
+		vars.put("keyword", getKeyword(context));
+		params.put("vars", vars);
+
+		String auid = openxProperties.getProperty(getAuidKey(size));
 		if (auid == null || auid.isEmpty()) {
 			// Set the default banner
 			banner.setTag(defaultAdTemplate.process(params));
@@ -100,15 +109,57 @@ public class OpenxAdServiceDelegate implements AdServiceDelegate {
 	/**
 	 * Genreate the adunit id key of the form <b>auid.WidthxHeight</b>
 	 * 
-	 * @param context
-	 *            The context passed from the client. This parameter is not used
-	 *            now.
+	 * 
+	 * now.
+	 * 
 	 * @param size
 	 *            The Size of the ad requested
 	 * @return The property key to access the auid for the given ad.
 	 */
-	private String getAuidKey(ClientContext context, AdSize size) {
+	private String getAuidKey(AdSize size) {
 		return String.format("openx.auid.%sx%s", size.getWidth(),
 				size.getHeight());
+	}
+
+	/**
+	 * 
+	 * @param context
+	 *            The context passed from the client. This is used to determine
+	 *            the keywords to match
+	 * @return
+	 */
+	private String getKeyword(ClientContext context) {
+		String keyword = null;
+		try {
+			// Try the following searches in sequence to find a match
+			String[] searchStrings = {
+					context.getProperty(ClientContext.USER_CURRENT_SEARCH),
+					context.getProperty(ClientContext.USER_PREVIOUS_SEARCH),
+					context.getProperty(ClientContext.USER_PROFESSION),
+					context.getProperty(ClientContext.USER_ROLE) };
+
+			for (String str : searchStrings) {
+				if (!StringUtils.isEmpty(str)) {
+					LOGGER.debug("Searching for Ad keyword matching " + str);
+					keyword = keywordIndexService.findBestMatch(str);
+					if (!StringUtils.isEmpty(keyword)) {
+						LOGGER.debug("Found Ad keyword " + keyword);
+						break;
+					}
+				}
+			}
+		} catch (JobBoardServiceException ex) {
+			// Just log the error and proceed. The keyword will be set to
+			// default
+			LOGGER.error("Error while resolving keyword for Openx Ad", ex);
+		}
+
+		if (StringUtils.isEmpty(keyword)) {
+			keyword = "Nursing";
+			LOGGER.debug("Ad keyword set to default value " + keyword);
+		}
+
+		return keyword;
+
 	}
 }

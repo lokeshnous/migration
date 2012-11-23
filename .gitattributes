@@ -259,7 +259,7 @@ jobboard-core/src/test/java/com/advanceweb/afc/jb/resume/ResumeServiceTest.java 
 jobboard-core/src/test/java/com/advanceweb/afc/jb/resume/search/engine/solr/JobSearchDeleagateImplTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/user/UserSubscriptionsTest.java -text
 jobboard-core/src/test/java/com/advanceweb/afc/jb/webservice/CustomerDetailsWSTest.java -text
-jobboard-core/src/test/java/com/advanceweb/common/index/KeywordIndexServiceImplTest.java -text
+jobboard-core/src/test/java/com/advanceweb/common/index/KeywordIndexServiceTest.java -text
 jobboard-core/src/test/java/com/advanceweb/common/template/MvelTemplateTest.java -text
 jobboard-core/src/test/java/com/advanceweb/common/template/VelocityTemplateTest.java -text
 jobboard-core/src/test/java/com/advanceweb/jb/test/ServiceTestBase.java -text
