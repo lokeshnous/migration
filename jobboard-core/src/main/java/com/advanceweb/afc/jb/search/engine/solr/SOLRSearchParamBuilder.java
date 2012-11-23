@@ -38,7 +38,7 @@ public class SOLRSearchParamBuilder implements SearchParamBuilder {
 	 *            separated values
 	 */
 	public SOLRSearchParamBuilder(Map<String, String> fieldValues) {
-		LOGGER.info("Constructing " + getClass().getName());
+		LOGGER.trace("Constructing " + getClass().getName());
 		fieldMap = new LinkedHashMap<String, String[]>();
 		for (Map.Entry<String, String> entry : fieldValues.entrySet()) {
 			fieldMap.put(entry.getKey(), entry.getValue().split(","));

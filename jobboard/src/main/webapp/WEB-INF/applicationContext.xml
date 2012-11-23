@@ -14,7 +14,11 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-	<mvc:annotation-driven />
+	<mvc:annotation-driven />	
+	<context:annotation-config />
+	<context:component-scan base-package="com.advanceweb.afc.jb" />
+	<context:component-scan base-package="com.advanceweb.common" />
+	
 	<context:property-placeholder
 		location="classpath:jobboard-scheduler.properties,classpath:mailServer.properties,classpath:common.properties,classpath:log4j.properties,classpath:database.properties,classpath:messages_en.properties,classpath:springSocial.properties,classpath:pdfGenerator.properties,classpath:netSuite.properties" />
 

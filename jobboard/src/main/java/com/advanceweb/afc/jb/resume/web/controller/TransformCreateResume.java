@@ -3,7 +3,7 @@ package com.advanceweb.afc.jb.resume.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.cxf.common.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.CertificationDTO;
