@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
+import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.jobseeker.dao.JobSeekerJobDetailDAO;
 import com.advanceweb.afc.jb.jobseeker.service.JobSeekerJobDetailService;
@@ -81,4 +82,22 @@ public class JobSeekerJobDetailServiceImpl implements JobSeekerJobDetailService 
 		return jobSeekerJobDetailDAO.getEmployerViews(jobSeekerId);
 	}
 
+	/**
+	 * Method to Get all the job applied by the specified jobseeker in the given
+	 * date
+	 * 
+	 * @param jobSeekerId
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws JobBoardDataException
+	 */
+	public List<AdmSaveJob> getAppliedJobsByCriteria(int jobSeekerId, String startDate,
+			String endDate) throws JobBoardServiceException{
+				try {
+					return jobSeekerJobDetailDAO.getAppliedJobsByCriteria(jobSeekerId, startDate, endDate);
+				} catch (JobBoardDataException e) {
+					throw new JobBoardServiceException(e);
+				}
+			}
 }

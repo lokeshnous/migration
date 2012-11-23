@@ -3,6 +3,8 @@ package com.advanceweb.afc.jb.jobseeker.service;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
+import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
+import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 /**
@@ -48,4 +50,16 @@ public interface JobSeekerJobDetailService {
 	 */
 	List<Integer> getEmployerViews(int jobSeekerId);
 
+	/**
+	 * Method to Get all the job applied by the specified jobseeker in the given
+	 * date
+	 * 
+	 * @param jobSeekerId
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 * @throws JobBoardDataException
+	 */
+	List<AdmSaveJob> getAppliedJobsByCriteria(int jobSeekerId, String startDate,
+			String endDate) throws JobBoardServiceException;
 }

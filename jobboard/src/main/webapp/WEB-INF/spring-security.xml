@@ -57,7 +57,7 @@
 		<!-- Added for SSL Implementation -end -->
 
 		<security:logout success-handler-ref="customLogoutSuccessHandler"
-			invalidate-session="true" logout-url="/logout.html" />
+			invalidate-session="false" logout-url="/logout.html" />
 		<security:custom-filter ref="authenticationFilter"
 			position="FORM_LOGIN_FILTER" />
 		<security:custom-filter ref="rememberMeProcessingFilter"

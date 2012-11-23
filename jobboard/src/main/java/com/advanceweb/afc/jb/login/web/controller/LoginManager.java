@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.login.web.controller;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -68,6 +69,8 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 		session.setAttribute(MMJBCommonConstants.USER_EMAIL, user.getEmailId());
 
 		if (isJobSeeker(authentication, pageValue)) {
+			session.setAttribute(MMJBCommonConstants.LOGIN_DATE_TIME,
+					new Date());
 			redirectJobSeeker(user, request, response, session);
 		} else if (isFacility(authentication, pageValue)) {
 
@@ -104,6 +107,7 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 							+ "&socalLogin=" + socalLogin);
 
 		}
+		
 	}
 
 	/**

@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.service.ManageAccessPermissionService;
 import com.advanceweb.afc.jb.login.service.LoginService;
@@ -31,6 +33,7 @@ import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
+import com.advanceweb.afc.jb.user.dao.UserDao;
 
 /**
  * 
@@ -61,6 +64,8 @@ public class ManageAccessPermissionController {
 	@Value("${dothtmlExtention}")
 	private String dothtmlExtention;
 
+	@Autowired
+	private FacilityService facilityService;
 	@Value("${navigationPath}")
 	private String navigationPath;
 	@Value("${jobOwnerExist}")
@@ -73,6 +78,13 @@ public class ManageAccessPermissionController {
 
 	@Autowired
 	private LoginService loginService;
+
+	@Autowired
+	private UserDao userDAO;
+	@Value("${adminChangeMailSubject}")
+	private String adminChangeMailSubject;
+	@Value("${employerPageExtention}")
+	private String employerPageExtention;
 
 	@RequestMapping(value = "/manageAccessPermission")
 	public ModelAndView showJobOwnerDetails(
@@ -200,8 +212,21 @@ public class ManageAccessPermissionController {
 		} catch (JobBoardException jbex) {
 			LOGGER.error("Error occured while creating the new job owner", jbex);
 		}
-
-		sendEmail(manageAccessPermissionForm, userDTO, request, session);
+		EmployerInfoDTO facilityDetail =facilityService.facilityDetails(userDTO.getUserId());
+		if(null !=facilityDetail){
+		userDTO.setCompany(facilityDetail.getCustomerName());
+		}
+		String accessType=null;
+		if(null !=manageAccessPermissionForm.getFullAccess()&& manageAccessPermissionForm.getFullAccess().equals("5") ){
+			accessType="Full access";
+		}else{
+			accessType = "Post / Edit access";
+		}
+        String changeRgn= MMJBCommonConstants.ADMIN_JOB_OWNER_ADDED.replace("?companyName", userDTO.getCompany());
+        changeRgn=changeRgn.replace("?accessType", accessType);
+		
+		sendAdministratorUpdateMail(manageAccessPermissionForm.getOwnerEmail(),request,changeRgn.replace("?temporarypassword",userDTO.getPassword()));
+		//sendEmail(manageAccessPermissionForm, userDTO, request, session);
 		LOGGER.info("Email : sent Email!");
 		warningMessage.put("success", jobOwnerAddSuccess);
 		return warningMessage;
@@ -232,7 +257,7 @@ public class ManageAccessPermissionController {
 		ModelAndView model = new ModelAndView();
 
 		try {
-			LOGGER.info("Request For - update user Id ");
+			LOGGER.info("Request For - update access permission ");
 			if (null != manageAccessPermissionForm
 					.getManageAccessPermissiondetails()
 					&& manageAccessPermissionForm
@@ -267,7 +292,7 @@ public class ManageAccessPermissionController {
 		InternetAddress[] employerToAddress = new InternetAddress[1];
 		String loginPath = navigationPath.substring(2);
 		String employerloginUrl;
-
+		StringBuffer mailBody = new StringBuffer();
 		// Below condition differs for agency and employer.If owner is creating
 		// from agency dash board then, in email login link should be agency
 		// login and same applies to employer
@@ -302,7 +327,11 @@ public class ManageAccessPermissionController {
 			}
 			forgotPwdMailBody = forgotPwdMailBody.replace("?permission",
 					permissionType);
-			emailDTO.setBody(forgotPwdMailBody);
+
+            mailBody.append(MMJBCommonConstants.EMPLOYEREMAILHEADER);
+            mailBody.append(forgotPwdMailBody);
+            mailBody.append(MMJBCommonConstants.EMAILFOOTER);
+			emailDTO.setBody(mailBody.toString());
 			emailDTO.setHtmlFormat(true);
 			emailService.sendEmail(emailDTO);
 		} catch (AddressException ex) {
@@ -310,4 +339,69 @@ public class ManageAccessPermissionController {
 		}
 
 	}
+	/**
+	 * method to send mail when change made by administrator
+	 * @param form
+	 */
+	public void sendAdministratorUpdateMail(String email,HttpServletRequest request,String ChangeRsn) {
+		UserDTO merUserdto = userDAO.getUser(email);
+		EmployerInfoDTO facilityDetail = facilityService
+				.facilityDetails(merUserdto.getUserId());
+		StringBuffer admChangeDetail = new StringBuffer();
+		int start, end;
+		String userName=merUserdto.getFirstName()+" " + merUserdto.getLastName();
+		String loginPath = navigationPath.substring(2);
+		String employerloginUrl = request.getRequestURL().toString()
+				.replace(request.getServletPath(), loginPath)
+				+ dothtmlExtention + employerPageExtention;
+		start = MMJBCommonConstants.ADMINSTRATORCHANGEEMAILBODY.toString().indexOf(
+				"?userName");
+		end = start + "?userName".length();
+		if (start > 0 && end > 0) {
+			MMJBCommonConstants.ADMINSTRATORCHANGEEMAILBODY
+					.replace(start, end,userName);
+		}
+		start = MMJBCommonConstants.ADMINSTRATORCHANGEEMAILBODY.toString().indexOf(
+				"?companyName");
+		end = start + "?companyName".length();
+		if (start > 0 && end > 0) {
+			MMJBCommonConstants.ADMINSTRATORCHANGEEMAILBODY
+					.replace(start, end,facilityDetail.getCustomerName());
+		}
+		start = MMJBCommonConstants.ADMINSTRATORCHANGEEMAILBODY.toString().indexOf(
+				"?empdashboardLink");
+		end = start + "?empdashboardLink".length();
+		if (start > 0 && end > 0) {
+			MMJBCommonConstants.ADMINSTRATORCHANGEEMAILBODY
+					.replace(start, end,employerloginUrl);
+		}
+		
+		start = MMJBCommonConstants.ADMINSTRATORCHANGEEMAILBODY.toString().indexOf(
+				"?changeType");
+		end = start + "?changeType".length();
+		if (start > 0 && end > 0) {
+			MMJBCommonConstants.ADMINSTRATORCHANGEEMAILBODY
+					.replace(start, end,ChangeRsn);
+		}
+		EmailDTO emailDTO = new EmailDTO();
+		InternetAddress[] jsToAddress = new InternetAddress[1];
+
+		try {
+			jsToAddress[0] = new InternetAddress(email);
+		} catch (AddressException jbex) {
+			LOGGER.error(
+					"Error occured while geting InternetAddress reference",
+					jbex);
+		}
+		emailDTO.setToAddress(jsToAddress);
+		emailDTO.setFromAddress(advanceWebAddress);
+		emailDTO.setSubject(adminChangeMailSubject);
+		admChangeDetail.append(MMJBCommonConstants.EMPLOYEREMAILHEADER);
+		admChangeDetail.append(MMJBCommonConstants.ADMINSTRATORCHANGEEMAILBODY);
+		admChangeDetail.append(MMJBCommonConstants.EMAILFOOTER);
+		emailDTO.setBody(admChangeDetail.toString());
+		emailDTO.setHtmlFormat(true);
+		emailService.sendEmail(emailDTO);
+	}
+
 }

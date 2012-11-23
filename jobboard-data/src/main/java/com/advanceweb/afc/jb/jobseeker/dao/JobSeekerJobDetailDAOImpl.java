@@ -171,5 +171,26 @@ public class JobSeekerJobDetailDAOImpl implements JobSeekerJobDetailDAO {
 		return empViews;
 
 	}
-	
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly = true)
+	@Override
+	public List<AdmSaveJob> getAppliedJobsByCriteria(int jobSeekerId,String startDate,String endDate)throws JobBoardDataException   {
+		List<AdmSaveJob> jobList = null;
+
+		try {
+			if (jobSeekerId != 0) {
+				 jobList = (List<AdmSaveJob>) hibernateTemplate
+						.find("from AdmSaveJob asj where asj.userId=? and  (asj.appliedDt > DATE_FORMAT('"+startDate+"', '%Y-%m-%d %T') and asj.appliedDt < DATE_FORMAT('"+endDate+"', '%Y-%m-%d %T')) and asj.deleteDt is NULL",
+								jobSeekerId);
+			}
+		} catch (Exception e) {
+			LOGGER.debug("Error while fetching the applied jobs of the corresponding job seeker");
+			throw new JobBoardDataException(
+					"Error while fetching the applied jobs of the corresponding job seeker"
+							+ e);
+		}
+
+		return jobList;
+
+	}
 }

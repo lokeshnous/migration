@@ -224,7 +224,7 @@ public interface MMJBCommonConstants {
 	String USER_NAME = "userName";
 	String PAGE_VALUE = "pageValue";
 	String FACILITY_ID = "facilityId";
-
+	String LOGIN_DATE_TIME = "dateTime";
 	// For Agency Impersonation
 	String AGENCY_USER_ID = "agencyUserId";
 	String AGENCY_FACILITY_ID = "agencyFacilityId";
@@ -475,10 +475,8 @@ public interface MMJBCommonConstants {
 	
 	//Email 
 	String PURCHAGERECEIPT="Order ?ordernumber Receipt";
-	String ADMIN_IMPERSONATION_CHANGE="Impersonation by admin";
-	String ADMIN_JOBPOST_EXPIREDATE_CHANGE="Expire date of Job ?jobId has been changed by admin";
-	String ADMIN_MANAGE_EDIT_FACILITY_GROUP_CHANGE="Facility group modification done by admin";
-	String ADMIN_INVENTORY_CHANGE="Inventory has been edited";
+	String ADMIN_JOB_OWNER_ADDED="<li>You are now a jobowner for company ?companyName with ?accessType permissions</li> <br/>" +
+			"<br/><li>To access the JB Application here's a temporary password for you to use:  ?temporarypassword </li>";
 	StringBuffer EMPLOYEREMAILHEADER = new StringBuffer(
 			"<body style=\"margin:0; padding:0; background-color:#FFFFFF;\">"
 					+ "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"font-family:Arial, Helvetica, sans-serif; font-size:12px; background-color:#FFFFFF;\">"
@@ -599,4 +597,16 @@ public interface MMJBCommonConstants {
 					+ "</td></tr></table><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#333333;\">"
 					+ "<br /><a href=\"?empdashboardLink\" target=\"_blank\" style=\"color:#FF9900;\"><strong>Log in now</strong></a> to see what's changed."
 					+ " <br /> <br /><br /></span>      </td>    </tr></table>");
+	StringBuffer JOBSEEKER_APPLY_EMAIL_BODY = new StringBuffer(
+			"<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\">"
+					+ "<tr><td height=\"288\" align=\"left\" valign=\"top\" style=\"border-top:1px solid #cccccc; border-bottom:1px solid #cccccc;\">"
+					+ "<br /> <br /><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:18px; color:#FF9900;\"><strong>JOB APPLICATION STATUS UPDATE</strong></span>"
+					+ "<br /><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#333333;\"><br />Hello ?jobSeekerFirstName,"
+					+ "<br /><br />Here's a quick report on your pending job applications. <br /><br /><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"font-size:13px; padding-top:0px; font-family:Arial, Helvetica, sans-serif;\">    "
+					+ "<tr>  <td width=\"33%\" align=\"center\" valign=\"middle\" style=\"padding-top:10px; padding-bottom:10px; border:1px solid #cccccc;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #333333\"><strong>JOB TITLE</strong></span>"
+					+ "</td>  <td width=\"33%\" align=\"center\" valign=\"middle\" style=\"padding-top:10px; padding-bottom:10px; border:1px solid #cccccc;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #333333\"><strong>EMPLOYER</strong></span>"
+					+ "</td>  <td width=\"33%\" align=\"center\" valign=\"middle\" style=\"padding-top:10px; padding-bottom:10px; border:1px solid #cccccc;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px; color: #333333\"><strong>APPLICATION DATE</strong></span>"
+					+ "</td></tr>");
+	String JOBSEEKER_APPLY_EMAIL_BODY_1="</table><br /><a href=\"?jsdashboardLink\" style=\"color:#FF9900;\"><strong>Head over to your dashboard</strong></a> to search and apply for more jobs."
+		+ "<br /><br /><br /></span></td>    </tr></table>";
 }
