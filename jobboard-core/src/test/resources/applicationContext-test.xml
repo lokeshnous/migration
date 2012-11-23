@@ -11,13 +11,17 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
+	<context:annotation-config />
+	<context:component-scan base-package="com.advanceweb.afc.jb" />
+	<context:component-scan base-package="com.advanceweb.common" />
+	
 	<context:property-placeholder location="classpath:*.properties" />
 
 	<import resource="classpath:HibernateSessionFactory.xml" />
 	<import resource="classpath:JbCoreSpringBeans.xml" />
 
 	<!-- Spring Quartz framework for schedulers -->
-	<context:annotation-config />
+
 	<import resource="classpath:jobboard-scheduler.xml" />
 
 	<bean id="mvelTestTemplate" class="com.advanceweb.common.template.MvelTemplate">
@@ -26,4 +30,8 @@
 	<bean id="velocityTestTemplate" class="com.advanceweb.common.template.VelocityTemplate">
 		<constructor-arg type="java.lang.String" value="/templates/openx/ad_tag.vtl" />
 	</bean>
+	<!-- 
+	<bean id="keywordIndexService" class="com.advanceweb.common.index.KeywordIndexServiceImpl" />
+	<bean id="luceneKeywordIndex" class="com.advanceweb.common.index.LuceneKeywordIndex" />
+	 -->
 </beans>

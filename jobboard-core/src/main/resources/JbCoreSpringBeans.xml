@@ -13,7 +13,7 @@
 	<!-- For Legacy ad server -->
 	<util:properties id="adsConfiguration" location="classpath:ads.properties" />
 	<!-- For SEO server -->
-	<util:properties id="seoConfiguration" location="classpath:SEO.properties" />	
+	<util:properties id="seoConfiguration" location="classpath:SEO.properties" />
 	<!-- For SOLR search -->
 	<util:properties id="solrConfiguration" location="classpath:solr.properties" />
 
@@ -37,7 +37,7 @@
 	<!-- Job Search Index -->
 	<bean id="jobSearchIndex" class="com.advanceweb.afc.jb.search.SearchIndex">
 
-		<!--  If Solr mapped to jobPost -->
+		<!-- If Solr mapped to jobPost -->
 		<property name="name" value="jobPost" />
 		<property name="group" value="careers" />
 		<property name="environment" value="DEV" />
@@ -78,7 +78,7 @@
 			</props>
 		</property>
 	</bean>
-	
+
 	<!-- NetSuite Services -->
 	<bean id="netSuiteCredential" class="com.advanceweb.afc.jb.netsuite.NetSuiteCredential">
 		<property name="account" value="${netsuite.account.number}" />
@@ -88,7 +88,8 @@
 	</bean>
 
 	<!-- Velocity Engine settings -->
-	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+	<bean id="velocityEngine"
+		class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
 		<property name="velocityProperties">
 			<props>
 				<prop key="resource.loader">class</prop>
@@ -98,16 +99,21 @@
 			</props>
 		</property>
 	</bean>
-	
-	<util:properties id="openxConfiguration" location="classpath:openx.properties"/>
-	
+
+	<util:properties id="openxConfiguration" location="classpath:openx.properties" />
+
 	<bean id="adTagTemplate" class="com.advanceweb.common.template.VelocityTemplate">
-		<constructor-arg type="java.lang.String" value="/templates/openx/ad_tag.vtl"/>		
+		<constructor-arg type="java.lang.String" value="/templates/openx/ad_tag.vtl" />
 	</bean>
 
 	<bean id="defaultAdTemplate" class="com.advanceweb.common.template.VelocityTemplate">
-		<constructor-arg type="java.lang.String" value="/templates/openx/default_ad_tag.vtl"/>		
+		<constructor-arg type="java.lang.String"
+			value="/templates/openx/default_ad_tag.vtl" />
 	</bean>
 
-	<bean id="adServiceDelegate" class="com.advanceweb.afc.jb.advt.openx.OpenxAdServiceDelegate"/>
+	<bean id="adServiceDelegate" class="com.advanceweb.afc.jb.advt.openx.OpenxAdServiceDelegate" />
+
+	<bean id="keywordIndexer" class="com.advanceweb.common.index.lucene.ExcelKeywordIndexer">
+		<constructor-arg type="java.lang.String" value="/import/OpenX-JB2 Mapping.xlsx" />
+	</bean>
 </beans>
