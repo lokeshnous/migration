@@ -411,13 +411,19 @@ public interface MMJBCommonConstants {
 	String SPACE_OPN_BRCKT = " (";
 	String CLSG_BRCKT = ")";
 	String DISPLAY_RADIUS = "displayRadius";
-	String FQ_COMPANY = "{!tag=dt}company:\"";
-	String FQ_STATE = "{!tag=dt}state:\"";
-	String FQ_CITY = "{!tag=dt}city:\"";
-	String FQ_AREA = "{!tag=dt}area:\"";
+	String FQ_REFINE_KEYWORD = "{!tag=dt}";
+	String FQ_REFINE_KEYWORD2 = "\"";
+	String FQ_JOB_POSITION = "jobposition:\"";
+	String FQ_COMPANY = "company:\"";
+	String FQ_STATE = "state:\"";
+	String FQ_CITY = "city:\"";
+	String FQ_AREA = "area:\"";
 	String REFINED = "refined";
 	String REFINERADIUS = "refineRadius";
 	String RADIUS = "radius";
+	String AREA = "area";
+	String METRO_AREA = "Metro Area";
+	String BROWSE_BY_LOCATION_REG = "browseByLocationReg";
 
 	// Added for Resume search
 	String RESUME_LOCATION_SEARCH = "CANDIDATE-LOCATION";
@@ -449,15 +455,6 @@ public interface MMJBCommonConstants {
 
 	String MODULE_STRING = "module";
 	String KEYWORD_STRING = "keywords";
-
-	String BROWSE_JOB_POSITION = "jobposition:\"";
-	String BROWSE_COMPANY = "company:\"";
-	String BROWSE_LOCATION = "state:\"";
-	String BROWSE_LOCATION_CITY = "city:\"";
-	String BROWSE_LOCATION_REGION = "area:\"";
-	String AREA = "area";
-	String METRO_AREA = "Metro Area";
-	String BROWSE_BY_LOCATION_REG = "browseByLocationReg";
 
 	int PRINT_JS_SUBSCRIPTION = 1;
 	int DIGITAL_JS_SUBSCRIPTION = 2;

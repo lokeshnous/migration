@@ -199,7 +199,7 @@ jQuery(document).ready(function() {
 					start = $("#start").val();
 					searchtype = $("#searchtype").val();
 					isSorting = false;
-					var navUrl =  $("#contextPath").val()+"/jobsearch/searchJob.html?iskeywordsearch="+true;
+					var navUrl =  $("#contextPath").val()+"/jobsearch/searchJob.html";
 					var formData= $("#jobSearchResultBodyFormId").serialize()+$("#jobSearchResultHeaderFormId").serialize();
 					$("#TotalRecord").text("");
 					$.getJSON(navUrl,formData,function(data) {
@@ -352,6 +352,7 @@ jQuery(document).ready(function() {
 				
 				function getPage(page, begin) {
 					var pageSize = $("#noOfPage").val();
+					refined= false;
 					var navUrl =  $("#contextPath").val()+"/jobsearch/searchJob.html?pageSize="+ pageSize+ "&page="+page
 					+"&isSorting="+isSorting+"&freshjobsearch=false"+"&next="+begin+"&refined="+refined;
 					var formData= $("#jobSearchResultFormId").serialize()+$("#jobSearchResultHeaderFormId").serialize();
@@ -364,6 +365,7 @@ jQuery(document).ready(function() {
 				function getNextPages(page) {
 					var pageSize = $("#noOfPage").val();
 					var fastforward = true;
+					refined= false;
 					var formData= $("#jobSearchResultFormId").serialize()+$("#jobSearchResultHeaderFormId").serialize();
 					var navUrl =  $("#contextPath").val()+"/jobsearch/searchJob.html?pageSize="+ pageSize+ "&page="+page+"&fastforward="+fastforward+"&isSorting="+isSorting
 					+"&freshjobsearch=false"+"&next="+page+"&refined="+refined;
@@ -376,6 +378,7 @@ jQuery(document).ready(function() {
 				function getPrevPages(page) {
 					var pageSize = $("#noOfPage").val();
 					var fastforward = false;
+					refined= false;
 					var formData= $("#jobSearchResultFormId").serialize()+$("#jobSearchResultHeaderFormId").serialize();
 					var navUrl =  $("#contextPath").val()+"/jobsearch/searchJob.html?pageSize="+ pageSize+ "&page="+page+"&fastforward="+fastforward+"&isSorting="+isSorting
 					+"&freshjobsearch=false"+"&next="+page+"&refined="+refined;
@@ -641,58 +644,75 @@ jQuery(document).ready(function() {
 				}
 
 				
-				function refineByRadius(selectedRadius){
-					if(selectedRadius == $("#selectedRadius").text())
+				function refineByRadius(selectedRadius, isSelected){
+					var radius = selectedRadius;
+					if(isSelected == 'true'){
+						radius = 0;
+					}
+					
+					/*if(selectedRadius == $("#selectedRadius").text())
 					{
 						$("#selectedRadius").text(0);
 					}
 					else
 					{
 						$("#selectedRadius").text(selectedRadius);
-					}
-					refineSearch();
+					}*/
+					refineSearch("refineRadius", radius);
 				}
 				
-				function refineByCompany(selectedComp){
+				function refineByCompany(selectedComp, isSelected){
 					var company = selectedComp.split(" (");
-					if(company[0] == $("#selectedCompany").text())
+					var selectedCompany = company[0];
+					if(isSelected == 'true'){
+						selectedCompany = '';
+					}
+					/*if(company[0] == $("#selectedCompany").text())
 					{
 						$("#selectedCompany").text('');
 					}
 					else
 					{
 						$("#selectedCompany").text(company[0]);
-					}
-					refineSearch();
+					}*/
+					refineSearch("secondFQParam", selectedCompany);
 				}
 				
-				function refineByState(selectedState){
+				function refineByState(selectedState, isSelected){
 					var state = selectedState.split(" (");
-					if(state[0] == $("#selectedState").text())
+					var selectedState = state[0];
+					if(isSelected == 'true'){
+						selectedState = '';
+					}
+					/*if(state[0] == $("#selectedState").text())
 					{
 						$("#selectedState").text('');
 					}
 					else
 					{
 						$("#selectedState").text(state[0]);
-					}
-					refineSearch();
+					}*/
+					refineSearch("thirdFQParam",selectedState);
 				}
 				
-				function refineByCity(selectedCity){
+				function refineByCity(selectedCity, isSelected){
 					var city = selectedCity.split(" (");
-					if(city[0] == $("#selectedCity").text())
+					var selectedCity = city[0];
+					if(isSelected == 'true'){
+						selectedCity = '';
+					}
+					/*if(city[0] == $("#selectedCity").text())
 					{
 						$("#selectedCity").text('');
 					}
 					else
 					{
 						$("#selectedCity").text(city[0]);
-					}
-					refineSearch();
+					}*/
+					refineSearch("fouthFQParam", selectedCity);
 				}
 				
-				function refineSearch() {
+				function refineSearch(refineKey, refineVal) {
 					$("#autoload").val(false);
 					$("#rows").val(25000);
 					$("#start").val("0");
@@ -710,20 +730,22 @@ jQuery(document).ready(function() {
 //					var secondFQParam = $.trim($("#selectedCompany").val());
 //					var thirdFQParam = $.trim($("#selectedState").val());
 //					var fouthFQParam = $.trim($("#selectedCity").val());
-					var firstFQParam = $("#selectedJobtitle").text();
-					var secondFQParam = $("#selectedCompany").text();
-					var thirdFQParam = $("#selectedState").text();
-					var fouthFQParam = $("#selectedCity").text();
-					var fifthFQParam = $("#selectedArea").text();
+//					var firstFQParam = $("#selectedJobtitle").text();
+//					var secondFQParam = $("#selectedCompany").text();
+//					var thirdFQParam = $("#selectedState").text();
+//					var fouthFQParam = $("#selectedCity").text();
+//					var fifthFQParam = $("#selectedArea").text();
 					if($("#selectedRadius").val() != 0 || $("#selectedRadius").val() != "")
 					{
 						radius = $("#selectedRadius").val();
 					}
 					
-					var navUrl =  $("#contextPath").val()+"/jobsearch/searchJob.html?keywords="+keywords+"&cityState="
+					/*var navUrl =  $("#contextPath").val()+"/jobsearch/searchJob.html?keywords="+keywords+"&cityState="
 					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype+
 					"&isSorting="+isSorting+"&firstFQParam="+firstFQParam+"&secondFQParam="+secondFQParam+"&thirdFQParam="+thirdFQParam+
-					"&fouthFQParam="+fouthFQParam+"&fifthFQParam="+fifthFQParam+"&refined="+refined;
+					"&fouthFQParam="+fouthFQParam+"&fifthFQParam="+fifthFQParam+"&refined="+refined;*/
+					var navUrl =  $("#contextPath").val()+"/jobsearch/searchJob.html?isSorting="+isSorting+
+					"&refineKey="+refineKey+"&refineVal="+refineVal+"&refined="+refined+"&freshjobsearch=false";
 					$("#TotalRecord").text("");
 					$.getJSON(navUrl,function(data) {
 						 $.ajaxSetup({ cache: true });

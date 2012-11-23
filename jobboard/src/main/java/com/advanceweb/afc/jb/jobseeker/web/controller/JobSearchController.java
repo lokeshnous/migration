@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -869,7 +870,7 @@ public class JobSearchController extends AbstractController {
 		if (category.equalsIgnoreCase("employers")) {
 			clearSession(session);
 			try {
-				Map<String, List<JobDTO>> emplyrsByName = new HashMap<String, List<JobDTO>>();
+				Map<String, List<JobDTO>> emplyrsByName = new TreeMap<String, List<JobDTO>>();
 				Set<String> nameList = new HashSet<String>();	
 				// get the states list from DB
 				List<JobDTO> jbsByEmployerList = jobSearchService
@@ -1110,11 +1111,11 @@ public class JobSearchController extends AbstractController {
 				jobSrchJsonObj.get(MMJBCommonConstants.STATE));
 		modelAndView.addObject(MMJBCommonConstants.COMPANY,
 				jobSrchJsonObj.get(MMJBCommonConstants.COMPANY));
-		session.setAttribute("firstFQParam",jobTitle);
-		session.removeAttribute("secondFQParam");
-		session.removeAttribute("thirdFQParam");
-		session.removeAttribute("fouthFQParam");
-		session.removeAttribute("fifthFQParam");
+//		session.setAttribute("firstFQParam",jobTitle);
+//		session.removeAttribute("secondFQParam");
+//		session.removeAttribute("thirdFQParam");
+//		session.removeAttribute("fouthFQParam");
+//		session.removeAttribute("fifthFQParam");
 		
 		
 		String jobSearchMatchInfo = seoConfiguration
@@ -1245,11 +1246,6 @@ public class JobSearchController extends AbstractController {
 				jobSrchJsonObj.get(MMJBCommonConstants.STATE));
 		modelAndView.addObject(MMJBCommonConstants.COMPANY,
 				jobSrchJsonObj.get(MMJBCommonConstants.COMPANY));
-		session.removeAttribute("firstFQParam");
-		session.setAttribute("secondFQParam", employer);
-		session.removeAttribute("thirdFQParam");
-		session.removeAttribute("fouthFQParam");
-		session.removeAttribute("fifthFQParam");
 		
 		String jobSearchMatchInfo = seoConfiguration
 				.getProperty("jobsearchpage.jobsearchmatchinfo").trim();
@@ -1380,11 +1376,11 @@ public class JobSearchController extends AbstractController {
 				jobSrchJsonObj.get(MMJBCommonConstants.STATE));
 		modelAndView.addObject(MMJBCommonConstants.COMPANY,
 				jobSrchJsonObj.get(MMJBCommonConstants.COMPANY));
-		session.removeAttribute("firstFQParam");
-		session.removeAttribute("secondFQParam");
-		session.setAttribute("thirdFQParam", state);
-		session.removeAttribute("fouthFQParam");
-		session.removeAttribute("fifthFQParam");
+//		session.removeAttribute("firstFQParam");
+//		session.removeAttribute("secondFQParam");
+//		session.setAttribute("thirdFQParam", state);
+//		session.removeAttribute("fouthFQParam");
+//		session.removeAttribute("fifthFQParam");
 		
 		String jobSearchMatchInfo = seoConfiguration
 				.getProperty("jobsearchpage.jobsearchmatchinfo").trim();
@@ -1518,11 +1514,11 @@ public class JobSearchController extends AbstractController {
 				jobSrchJsonObj.get(MMJBCommonConstants.STATE));
 		modelAndView.addObject(MMJBCommonConstants.COMPANY,
 				jobSrchJsonObj.get(MMJBCommonConstants.COMPANY));
-		session.removeAttribute("firstFQParam");
-		session.removeAttribute("secondFQParam");
-		session.setAttribute("thirdFQParam", selectedLocation);
-		session.removeAttribute("fouthFQParam");
-		session.setAttribute("fifthFQParam", selectedArea);
+//		session.removeAttribute("firstFQParam");
+//		session.removeAttribute("secondFQParam");
+//		session.setAttribute("thirdFQParam", selectedLocation);
+//		session.removeAttribute("fouthFQParam");
+//		session.setAttribute("fifthFQParam", selectedArea);
 		
 		String jobSearchMatchInfo = seoConfiguration
 				.getProperty("jobsearchpage.jobsearchmatchinfo").trim();
@@ -1631,14 +1627,23 @@ public class JobSearchController extends AbstractController {
 			searchName = MMJBCommonConstants.LOCATION_SEARCH;
 			session.setAttribute(MMJBCommonConstants.DISPLAY_RADIUS, true);
 		}*/
-		if (request.getParameter("iskeywordsearch") != null
-				|| Boolean.valueOf(request.getParameter("iskeywordsearch"))) {
+//		if (request.getParameter("iskeywordsearch") != null
+//				|| Boolean.valueOf(request.getParameter("iskeywordsearch"))) {
 			searchName = MMJBCommonConstants.KEYWORD_SEARCH;
-		}else{
-			searchName = ((HashMap<String, String>) session
-					.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP))
-					.get(MMJBCommonConstants.SEARCH_TYPE);
-		}
+			if ((jobSearchResultForm.getCityState() != null)
+					&& !(StringUtils.isEmpty(jobSearchResultForm.getCityState()
+							.trim()))) {
+				if (!StringUtils.isEmpty(jobSearchResultForm.getKeywords().trim())) {
+					searchName = MMJBCommonConstants.LOCATION_SEARCH;
+					session.setAttribute(MMJBCommonConstants.DISPLAY_RADIUS, true);
+				}
+				// If search is browse by then set search name as BROWSE-JB2
+			}
+//		}else{
+//			searchName = ((HashMap<String, String>) session
+//					.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP))
+//					.get(MMJBCommonConstants.SEARCH_TYPE);
+//		}
 		return searchName;
 	}
 
@@ -1647,7 +1652,7 @@ public class JobSearchController extends AbstractController {
 	 * 
 	 * @param request
 	 * @return mapFQ
-	 */
+	 *//*
 	public Map<String, String> getFQParams(HttpServletRequest request,
 			HttpSession session) {
 		String firstFQParam = MMJBCommonConstants.EMPTY;
@@ -1657,7 +1662,23 @@ public class JobSearchController extends AbstractController {
 		String fifthFQParam = MMJBCommonConstants.EMPTY;
 
 		Map<String, String> mapFQ = new HashMap<String, String>();
-
+		String fQParamName = request.getParameter("refineKey");
+		String fQParamVal = request.getParameter("refineVal");
+		
+		if(fQParamName.equalsIgnoreCase(MMJBCommonConstants.FIRST_FQ_PARAM)){
+			firstFQParam = MMJBCommonConstants.FQ_REFINE_KEYWORD+fQParamVal;
+		}else if(fQParamName.equalsIgnoreCase(MMJBCommonConstants.SECOND_FQ_PARAM)){
+			secondFQParam = MMJBCommonConstants.FQ_REFINE_KEYWORD+fQParamVal;
+		}else if(fQParamName.equalsIgnoreCase(MMJBCommonConstants.THIRD_FQ_PARAM)){
+			thirdFQParam = MMJBCommonConstants.FQ_REFINE_KEYWORD+fQParamVal;
+		}else if(fQParamName.equalsIgnoreCase(MMJBCommonConstants.FOURTH_FQ_PARAM)){
+			fouthFQParam = MMJBCommonConstants.FQ_REFINE_KEYWORD+fQParamVal;
+		}else if(fQParamName.equalsIgnoreCase(MMJBCommonConstants.FIFTH_FQ_PARAM)){
+			fifthFQParam = MMJBCommonConstants.FQ_REFINE_KEYWORD+fQParamVal;
+		}else{
+			
+		}
+		
 		if (null == request.getParameter(MMJBCommonConstants.FIRST_FQ_PARAM)
 				|| request.getParameter(MMJBCommonConstants.FIRST_FQ_PARAM)
 						.isEmpty()) {
@@ -1731,7 +1752,7 @@ public class JobSearchController extends AbstractController {
 		mapFQ.put(MMJBCommonConstants.FIFTH_FQ_PARAM, fifthFQParam);
 
 		return mapFQ;
-	}
+	}*/
 
 	/**
 	 * Method helps to set the sort order for job search results grid and toggle the order.
@@ -1993,7 +2014,7 @@ public class JobSearchController extends AbstractController {
 		session.removeAttribute("areaPage");
 
 		// Remove FQ params for non Refine Search
-		if (null == session.getAttribute(MMJBCommonConstants.REFINED)
+		/*if (null == session.getAttribute(MMJBCommonConstants.REFINED)
 				|| session.getAttribute(MMJBCommonConstants.REFINED).toString()
 						.isEmpty()
 				|| !Boolean.valueOf(session.getAttribute(
@@ -2002,7 +2023,7 @@ public class JobSearchController extends AbstractController {
 			session.removeAttribute(MMJBCommonConstants.THIRD_FQ_PARAM);
 			session.removeAttribute(MMJBCommonConstants.FOURTH_FQ_PARAM);
 			session.removeAttribute(MMJBCommonConstants.REFINERADIUS);
-		}
+		}*/
 	}
 
 	/**
@@ -3137,6 +3158,7 @@ public class JobSearchController extends AbstractController {
 	 * @param request
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	private Map<String, String> getParameterMap(
 			JobSearchResultForm jobSearchResultForm,
 			String sortByParam, HttpSession session, HttpServletRequest request) {
@@ -3173,35 +3195,35 @@ public class JobSearchController extends AbstractController {
 					.getSearchtype().trim());
 			String firstFQParam = MMJBCommonConstants.EMPTY;
 			if (request.getAttribute(MMJBCommonConstants.FIRST_FQ_PARAM) != null) {
-				firstFQParam = MMJBCommonConstants.BROWSE_JOB_POSITION
+				firstFQParam = MMJBCommonConstants.FQ_JOB_POSITION
 						+ request
 								.getAttribute(MMJBCommonConstants.FIRST_FQ_PARAM)
 						+ '"';
 			}
 			String secondFQParam = MMJBCommonConstants.EMPTY;
 			if (request.getAttribute(MMJBCommonConstants.SECOND_FQ_PARAM) != null) {
-				secondFQParam = MMJBCommonConstants.BROWSE_COMPANY
+				secondFQParam = MMJBCommonConstants.FQ_COMPANY
 						+ request
 								.getAttribute(MMJBCommonConstants.SECOND_FQ_PARAM)
 						+ '"';
 			}
 			String thirdFQParam = MMJBCommonConstants.EMPTY;
 			if (request.getAttribute(MMJBCommonConstants.THIRD_FQ_PARAM) != null) {
-				thirdFQParam = MMJBCommonConstants.BROWSE_LOCATION
+				thirdFQParam = MMJBCommonConstants.FQ_STATE
 						+ request
 								.getAttribute(MMJBCommonConstants.THIRD_FQ_PARAM)
 						+ '"';
 			}
 			String fouthFQParam = MMJBCommonConstants.EMPTY;
 			if (request.getAttribute(MMJBCommonConstants.FOURTH_FQ_PARAM) != null) {
-				fouthFQParam = MMJBCommonConstants.BROWSE_LOCATION_CITY
+				fouthFQParam = MMJBCommonConstants.FQ_CITY
 						+ request
 								.getAttribute(MMJBCommonConstants.FOURTH_FQ_PARAM)
 						+ '"';
 			}
 			String fifthFQParam = MMJBCommonConstants.EMPTY;
 			if (request.getAttribute(MMJBCommonConstants.FIFTH_FQ_PARAM) != null) {
-				fifthFQParam = MMJBCommonConstants.BROWSE_LOCATION_REGION
+				fifthFQParam = MMJBCommonConstants.FQ_AREA
 						+ request
 								.getAttribute(MMJBCommonConstants.FIFTH_FQ_PARAM)
 						+ '"';
@@ -3209,21 +3231,6 @@ public class JobSearchController extends AbstractController {
 			String facetSort = MMJBCommonConstants.COUNT_STR;
 			// set the sort order for search results
 			String sortOrder = setSortOrder(session, request);
-
-			// Parameter value setting if its refined search
-			if (jobSearchResultForm.isRefined()) {
-				Map<String, String> mapFQParams = getFQParams(request, session);
-				firstFQParam = mapFQParams
-						.get(MMJBCommonConstants.FIRST_FQ_PARAM);
-				secondFQParam = mapFQParams
-						.get(MMJBCommonConstants.SECOND_FQ_PARAM);
-				thirdFQParam = mapFQParams
-						.get(MMJBCommonConstants.THIRD_FQ_PARAM);
-				fouthFQParam = mapFQParams
-						.get(MMJBCommonConstants.FOURTH_FQ_PARAM);
-				fifthFQParam = mapFQParams
-						.get(MMJBCommonConstants.FIFTH_FQ_PARAM);
-			}
 
 			// Putting all the parameters coming from the UI into a Map for
 			// further
@@ -3282,6 +3289,12 @@ public class JobSearchController extends AbstractController {
 					fqParamMap.get(MMJBCommonConstants.SORT_ORDER));
 			paramMap.put(MMJBCommonConstants.FACET_SORT,
 					fqParamMap.get(MMJBCommonConstants.FACET_SORT));
+//			boolean displayRadius = false;
+//			if(jobSearchResultForm.getSearchtype().trim().equalsIgnoreCase(MMJBCommonConstants.LOCATION_SEARCH)){
+//				displayRadius = true;
+////				session.setAttribute(MMJBCommonConstants.DISPLAY_RADIUS, displayRadius);
+//			}
+//			paramMap.put(MMJBCommonConstants.DISPLAY_RADIUS, String.valueOf(displayRadius));
 		}else {
 			LOGGER.info("Loading the search parameters from session");
 			paramMap = (HashMap<String, String>) session
@@ -3289,56 +3302,83 @@ public class JobSearchController extends AbstractController {
 			// set the sort order for search results
 			String sortOrder = setSortOrder(session, request);
 			paramMap.put(MMJBCommonConstants.SORT_ORDER,sortOrder);
-			// set session values of FQ params
+			
+			if (paramMap.get(SearchParamDTO.SEARCH_NAME).equalsIgnoreCase(
+					MMJBCommonConstants.LOCATION_SEARCH)) {
+				session.setAttribute(MMJBCommonConstants.DISPLAY_RADIUS,
+						true);
+			}
+			
+			// Parameter value setting if its refined search
 			if (jobSearchResultForm.isRefined()) {
-				session.setAttribute(
-						"firstFQParam",
-						paramMap.get(MMJBCommonConstants.FIRST_FQ_PARAM)
-								.replace(
-										MMJBCommonConstants.BROWSE_JOB_POSITION,
-										"").replace("\"", ""));
-				session.setAttribute("secondFQParam",
-						paramMap.get(MMJBCommonConstants.SECOND_FQ_PARAM)
-								.replace(MMJBCommonConstants.FQ_COMPANY, "").replace("\"", ""));
-				session.setAttribute("thirdFQParam",
-						paramMap.get(MMJBCommonConstants.THIRD_FQ_PARAM)
-								.replace(MMJBCommonConstants.FQ_STATE, "").replace("\"", ""));
-				session.setAttribute("fouthFQParam",
-						paramMap.get(MMJBCommonConstants.FOURTH_FQ_PARAM)
-								.replace(MMJBCommonConstants.FQ_CITY, "").replace("\"", ""));
-				session.setAttribute("fifthFQParam",
-						paramMap.get(MMJBCommonConstants.FIFTH_FQ_PARAM)
-								.replace(MMJBCommonConstants.FQ_AREA, "").replace("\"", ""));
-			} else {
-				session.setAttribute(
-						"firstFQParam",
-						paramMap.get(MMJBCommonConstants.FIRST_FQ_PARAM)
-								.replace(
-										MMJBCommonConstants.BROWSE_JOB_POSITION,
-										"").replace("\"", ""));
-				session.setAttribute(
-						"secondFQParam",
-						paramMap.get(MMJBCommonConstants.SECOND_FQ_PARAM)
-								.replace(MMJBCommonConstants.BROWSE_COMPANY, "")
-								.replace("\"", ""));
-				session.setAttribute(
-						"thirdFQParam",
-						paramMap.get(MMJBCommonConstants.THIRD_FQ_PARAM)
-								.replace(MMJBCommonConstants.BROWSE_LOCATION,
-										"").replace("\"", ""));
-				session.setAttribute(
-						"fouthFQParam",
-						paramMap.get(MMJBCommonConstants.FOURTH_FQ_PARAM)
-								.replace(
-										MMJBCommonConstants.BROWSE_LOCATION_CITY,
-										"").replace("\"", ""));
-				session.setAttribute(
-						"fifthFQParam",
-						paramMap.get(MMJBCommonConstants.FIFTH_FQ_PARAM)
-								.replace(
-										MMJBCommonConstants.BROWSE_LOCATION_REGION,
-										"").replace("\"", ""));
-
+				paramMap.put(SearchParamDTO.REFINED,
+						String.valueOf(jobSearchResultForm.isRefined()));
+				String fQParamName = request.getParameter("refineKey");
+				String fQParamVal = request.getParameter("refineVal");
+				
+				if (fQParamName
+						.equalsIgnoreCase(MMJBCommonConstants.FIRST_FQ_PARAM)) {
+					if(fQParamVal.isEmpty()){
+						paramMap.put(MMJBCommonConstants.FIRST_FQ_PARAM,MMJBCommonConstants.EMPTY);
+					}else{
+						paramMap.put(MMJBCommonConstants.FIRST_FQ_PARAM,
+								MMJBCommonConstants.FQ_REFINE_KEYWORD +MMJBCommonConstants.FQ_JOB_POSITION+ fQParamVal
+								+"\"");
+					}
+				} else if (fQParamName
+						.equalsIgnoreCase(MMJBCommonConstants.SECOND_FQ_PARAM)) {
+					if(fQParamVal.isEmpty()){
+						paramMap.put(MMJBCommonConstants.SECOND_FQ_PARAM,MMJBCommonConstants.EMPTY);
+					}else{
+						paramMap.put(MMJBCommonConstants.SECOND_FQ_PARAM,
+								MMJBCommonConstants.FQ_REFINE_KEYWORD +MMJBCommonConstants.FQ_COMPANY+ fQParamVal+"\"");
+					}
+					
+				} else if (fQParamName
+						.equalsIgnoreCase(MMJBCommonConstants.THIRD_FQ_PARAM)) {
+					
+					if(fQParamVal.isEmpty()){
+						paramMap.put(MMJBCommonConstants.THIRD_FQ_PARAM,MMJBCommonConstants.EMPTY);
+					}else{
+						paramMap.put(MMJBCommonConstants.THIRD_FQ_PARAM,
+								MMJBCommonConstants.FQ_REFINE_KEYWORD +MMJBCommonConstants.FQ_STATE+ fQParamVal+"\"");
+					}
+					
+				} else if (fQParamName
+						.equalsIgnoreCase(MMJBCommonConstants.FOURTH_FQ_PARAM)) {
+					if(fQParamVal.isEmpty()){
+						paramMap.put(MMJBCommonConstants.FOURTH_FQ_PARAM,MMJBCommonConstants.EMPTY);
+					}else{
+						paramMap.put(MMJBCommonConstants.FOURTH_FQ_PARAM,
+								MMJBCommonConstants.FQ_REFINE_KEYWORD +MMJBCommonConstants.FQ_CITY+ fQParamVal+"\"");
+					}
+					
+				} else if (fQParamName
+						.equalsIgnoreCase(MMJBCommonConstants.FIFTH_FQ_PARAM)) {
+					if(fQParamVal.isEmpty()){
+						paramMap.put(MMJBCommonConstants.FIFTH_FQ_PARAM,MMJBCommonConstants.EMPTY);
+					}else{
+						paramMap.put(MMJBCommonConstants.FIFTH_FQ_PARAM,
+								MMJBCommonConstants.FQ_REFINE_KEYWORD +MMJBCommonConstants.FQ_AREA+ fQParamVal+"\"");
+					}					
+				} else if (fQParamName
+						.equalsIgnoreCase(MMJBCommonConstants.REFINERADIUS)) {
+					
+					if(fQParamVal.isEmpty()){
+						paramMap.put(SearchParamDTO.RADIUS, String.valueOf(0));
+						paramMap.put(MMJBCommonConstants.REFINERADIUS, String.valueOf(0));
+					}else{
+						paramMap.put(SearchParamDTO.RADIUS, fQParamVal);
+						paramMap.put(MMJBCommonConstants.REFINERADIUS,
+								fQParamVal);
+					}					
+				}
+//				if(jobSearchResultForm.getRadius() != null){
+//					paramMap.put(SearchParamDTO.RADIUS, jobSearchResultForm
+//							.getRadius().trim());
+//				}else{
+//					paramMap.put(SearchParamDTO.RADIUS, MMJBCommonConstants.EMPTY);
+//				}
 			}
 		}
 		session.setAttribute(SearchParamDTO.SEARCH_SESSION_MAP, paramMap);
@@ -3371,14 +3411,14 @@ public class JobSearchController extends AbstractController {
 		// clear session attributes		
 		clearSession(session);
 		
-		if (request.getParameter("iskeywordsearch") != null
-				|| Boolean.valueOf(request.getParameter("iskeywordsearch"))) {
-			session.removeAttribute("firstFQParam");
-			session.removeAttribute("secondFQParam");
-			session.removeAttribute("thirdFQParam");
-			session.removeAttribute("fouthFQParam");
-			session.removeAttribute("fifthFQParam");
-		}
+//		if (request.getParameter("iskeywordsearch") != null
+//				|| Boolean.valueOf(request.getParameter("iskeywordsearch"))) {
+//			session.removeAttribute("firstFQParam");
+//			session.removeAttribute("secondFQParam");
+//			session.removeAttribute("thirdFQParam");
+//			session.removeAttribute("fouthFQParam");
+//			session.removeAttribute("fifthFQParam");
+//		}
 		
 		// validate the inputs
 		JobSearchResultDTO jobSearchResultDTO = null;

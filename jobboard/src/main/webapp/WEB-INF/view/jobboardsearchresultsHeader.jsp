@@ -102,7 +102,7 @@
 
 							<!-- 	<a href="../jobsearch/advanceSearch.html">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
 								onclick="postYourResume();" class="cursor">Post Your Resume</a> -->
-							<a title="Coming Soon" href="../jobsearch/advanceSearch.html">Advanced
+							<a title="Coming Soon" href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/advanceSearch.html">Advanced
 								Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
 								onclick="postYourResume();" class="cursor">Post Your Resume</a>
 						</div>

@@ -532,31 +532,31 @@ public class JobsController extends AbstractController {
 
 		String firstFQParam = MMJBCommonConstants.EMPTY;
 		if (request.getAttribute(MMJBCommonConstants.FIRST_FQ_PARAM) != null) {
-			firstFQParam = MMJBCommonConstants.BROWSE_JOB_POSITION
+			firstFQParam = MMJBCommonConstants.FQ_JOB_POSITION
 					+ request.getAttribute(MMJBCommonConstants.FIRST_FQ_PARAM)
 					+ '"';
 		}
 		String secondFQParam = MMJBCommonConstants.EMPTY;
 		if (request.getAttribute(MMJBCommonConstants.SECOND_FQ_PARAM) != null) {
-			secondFQParam = MMJBCommonConstants.BROWSE_COMPANY
+			secondFQParam = MMJBCommonConstants.FQ_COMPANY
 					+ request.getAttribute(MMJBCommonConstants.SECOND_FQ_PARAM)
 					+ '"';
 		}
 		String thirdFQParam = MMJBCommonConstants.EMPTY;
 		if (request.getAttribute(MMJBCommonConstants.THIRD_FQ_PARAM) != null) {
-			thirdFQParam = MMJBCommonConstants.BROWSE_LOCATION
+			thirdFQParam = MMJBCommonConstants.FQ_STATE
 					+ request.getAttribute(MMJBCommonConstants.THIRD_FQ_PARAM)
 					+ '"';
 		}
 		String fouthFQParam = MMJBCommonConstants.EMPTY;
 		if (request.getAttribute(MMJBCommonConstants.FOURTH_FQ_PARAM) != null) {
-			fouthFQParam = MMJBCommonConstants.BROWSE_LOCATION_CITY
+			fouthFQParam = MMJBCommonConstants.FQ_CITY
 					+ request.getAttribute(MMJBCommonConstants.FOURTH_FQ_PARAM)
 					+ '"';
 		}
 		String fifthFQParam = MMJBCommonConstants.EMPTY;
 		if (request.getAttribute(MMJBCommonConstants.FIFTH_FQ_PARAM) != null) {
-			fifthFQParam = MMJBCommonConstants.BROWSE_LOCATION_REGION
+			fifthFQParam = MMJBCommonConstants.FQ_AREA
 					+ request.getAttribute(MMJBCommonConstants.FIFTH_FQ_PARAM)
 					+ '"';
 		}
@@ -597,69 +597,6 @@ public class JobsController extends AbstractController {
 
 		return paramMap;
 
-	}
-
-	/**
-	 * This method provides a map of FQ parameters for Solr
-	 * 
-	 * @param request
-	 * @return mapFQ
-	 */
-	public Map<String, String> getFQParams(HttpServletRequest request,
-			HttpSession session) {
-		String secondFQParam = MMJBCommonConstants.EMPTY;
-		String thirdFQParam = MMJBCommonConstants.EMPTY;
-		String fouthFQParam = MMJBCommonConstants.EMPTY;
-
-		Map<String, String> mapFQ = new HashMap<String, String>();
-
-		if (null == request.getParameter(MMJBCommonConstants.SECOND_FQ_PARAM)
-				|| request.getParameter(MMJBCommonConstants.SECOND_FQ_PARAM)
-						.isEmpty()) {
-			session.removeAttribute(MMJBCommonConstants.SECOND_FQ_PARAM);
-		} else {
-			secondFQParam = MMJBCommonConstants.FQ_COMPANY
-					+ request.getParameter(MMJBCommonConstants.SECOND_FQ_PARAM)
-					+ '"';
-			session.setAttribute(MMJBCommonConstants.SECOND_FQ_PARAM,
-					request.getParameter(MMJBCommonConstants.SECOND_FQ_PARAM));
-		}
-
-		if (null == request.getParameter(MMJBCommonConstants.THIRD_FQ_PARAM)
-				|| request.getParameter(MMJBCommonConstants.THIRD_FQ_PARAM)
-						.isEmpty()) {
-			session.removeAttribute(MMJBCommonConstants.THIRD_FQ_PARAM);
-		} else {
-			thirdFQParam = MMJBCommonConstants.FQ_STATE
-					+ request.getParameter(MMJBCommonConstants.THIRD_FQ_PARAM)
-					+ '"';
-			session.setAttribute(MMJBCommonConstants.THIRD_FQ_PARAM,
-					request.getParameter(MMJBCommonConstants.THIRD_FQ_PARAM));
-		}
-
-		if (null == request.getParameter(MMJBCommonConstants.FOURTH_FQ_PARAM)
-				|| request.getParameter(MMJBCommonConstants.FOURTH_FQ_PARAM)
-						.isEmpty()) {
-			session.removeAttribute(MMJBCommonConstants.FOURTH_FQ_PARAM);
-		} else {
-			fouthFQParam = MMJBCommonConstants.FQ_CITY
-					+ request.getParameter(MMJBCommonConstants.FOURTH_FQ_PARAM)
-					+ '"';
-			session.setAttribute(MMJBCommonConstants.FOURTH_FQ_PARAM,
-					request.getParameter(MMJBCommonConstants.FOURTH_FQ_PARAM));
-		}
-
-		if (null != request.getParameter(MMJBCommonConstants.RADIUS)
-				&& !request.getParameter(MMJBCommonConstants.RADIUS).isEmpty()) {
-			session.setAttribute(MMJBCommonConstants.REFINERADIUS,
-					request.getParameter(MMJBCommonConstants.RADIUS));
-		}
-
-		mapFQ.put(MMJBCommonConstants.SECOND_FQ_PARAM, secondFQParam);
-		mapFQ.put(MMJBCommonConstants.THIRD_FQ_PARAM, thirdFQParam);
-		mapFQ.put(MMJBCommonConstants.FOURTH_FQ_PARAM, fouthFQParam);
-
-		return mapFQ;
 	}
 
 	/**

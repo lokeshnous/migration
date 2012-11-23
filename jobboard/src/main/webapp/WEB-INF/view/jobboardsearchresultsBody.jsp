@@ -69,108 +69,155 @@
 
 									<c:if test="${displayRadius}">
 									<span class="refineResultsItem plus" id="radiusPlus">Radius</span>
-									<c:if test="${refineRadius != 0}">
+									<c:if test="${sessionMap.get('refineRadius') != '0'}">
 									<script>$("#radiusPlus").click();</script>
 									</c:if>
 
 									<div class="refineResultsSubContent cursor">
 										<ul>
-											<c:if test="${refineRadius==5}">
-											<span style="font-weight:bold;"> 
-											</c:if>
-											<li><a onclick="refineByRadius('5')" >5 Miles</a></li>
-											<c:if test="${refineRadius==5}">
-											</span>
-											</c:if>
+											<c:choose>
+												<c:when test="${sessionMap.get('refineRadius')== '5'}">
+												<span style="font-weight:bold;"> 
+													<li><a onclick="refineByRadius('5', 'true')" >5 Miles</a></li>
+												</span>
+												</c:when>
+												<c:otherwise>
+													<li><a onclick="refineByRadius('5', 'false')" >5 Miles</a></li>
+												</c:otherwise>
+											</c:choose>
 											
-											<c:if test="${refineRadius==10}">
-											<span style="font-weight:bold;"> 
-											</c:if>
-											<li><a onclick="refineByRadius('10')" >10 Miles</a></li>
-											<c:if test="${refineRadius==10}">
-											</span>
-											</c:if>
+											<c:choose>
+												<c:when test="${sessionMap.get('refineRadius')== '10'}">
+												<span style="font-weight:bold;"> 
+													<li><a onclick="refineByRadius('10', 'true')" >10 Miles</a></li>
+												</span>
+												</c:when>
+												<c:otherwise>
+													<li><a onclick="refineByRadius('10', 'false')" >10 Miles</a></li>
+												</c:otherwise>
+											</c:choose>
 											
-											<c:if test="${refineRadius==25}">
-											<span style="font-weight:bold;"> 
-											</c:if>
-											<li><a onclick="refineByRadius('25')" >25 Miles</a></li>
-											<c:if test="${refineRadius==25}">
-											</span>
-											</c:if>
+											<c:choose>
+												<c:when test="${sessionMap.get('refineRadius')== '25'}">
+												<span style="font-weight:bold;"> 
+													<li><a onclick="refineByRadius('25', 'true')" >25 Miles</a></li>
+												</span>
+												</c:when>
+												<c:otherwise>
+													<li><a onclick="refineByRadius('25', 'false')" >25 Miles</a></li>
+												</c:otherwise>
+											</c:choose>
 											
-											<c:if test="${refineRadius==50}">
-											<span style="font-weight:bold;"> 
-											</c:if>
-											<li><a onclick="refineByRadius('50')" >50 Miles</a></li>
-											<c:if test="${refineRadius==50}">
-											</span>
-											</c:if>
+											<c:choose>
+												<c:when test="${sessionMap.get('refineRadius')== '50'}">
+												<span style="font-weight:bold;"> 
+													<li><a onclick="refineByRadius('50', 'true')" >50 Miles</a></li>
+												</span>
+												</c:when>
+												<c:otherwise>
+													<li><a onclick="refineByRadius('50', 'false')" >50 Miles</a></li>
+												</c:otherwise>
+											</c:choose>
 											
-											<c:if test="${refineRadius==100}">
-											<span style="font-weight:bold;"> 
-											</c:if>
-											<li><a onclick="refineByRadius('100')" >100 Miles</a></li>
-											<c:if test="${refineRadius==100}">
-											</span>
-											</c:if>
+											<c:choose>
+												<c:when test="${sessionMap.get('refineRadius')== '100'}">
+												<span style="font-weight:bold;"> 
+													<li><a onclick="refineByRadius('100', 'true')" >100 Miles</a></li>
+												</span>
+												</c:when>
+												<c:otherwise>
+													<li><a onclick="refineByRadius('100', 'false')" >100 Miles</a></li>
+												</c:otherwise>
+											</c:choose>
+											
 										</ul>
 									</div>
 									</c:if>
 									<span class="refineResultsItem plus" id="companyPlus">Employer</span>
-									<c:if test="${secondFQParam != null}">
+									<c:if test="${sessionMap.get('secondFQParam') != ''}">
 									<script>$("#companyPlus").click();</script>
 									</c:if> 
 
 									<div class="refineResultsSubContent cursor">
 										<ul>
 											<c:forEach items="${company}" var="displayCompany" varStatus="status" >
-											<c:if test="${fn:startsWith(company[status.index], secondFQParam) and secondFQParam != null}">
+											<c:choose>
+											<c:when test="${sessionMap.get('secondFQParam') != '' and  fn:startsWith(company[status.index], fn:split(sessionMap.get('secondFQParam'), '\"')[1])}">
+											<span style="font-weight:bold;"> 
+												<li><a onclick="refineByCompany('${company[status.index]}', 'true');">${company[status.index]}</a></li>
+											</span>
+											</c:when>
+											<c:otherwise>
+												<li><a onclick="refineByCompany('${company[status.index]}', 'false');">${company[status.index]}</a></li>
+											</c:otherwise>
+											</c:choose>
+											<%-- <c:if test="${fn:startsWith(company[status.index], secondFQParam) and secondFQParam != null}">
 											<span style="font-weight:bold;"> 
 											</c:if>
 												<li><a onclick="refineByCompany('${company[status.index]}');">${company[status.index]}</a></li>
 											<c:if test="${fn:startsWith(company[status.index], secondFQParam) and secondFQParam != null}">
 											</span> 
-											</c:if>
+											</c:if> --%>
 											</c:forEach>
 										</ul>
 									</div>
 									
 									<input type="hidden" name="refined" id="refined" />
-									
 									<span class="refineResultsItem plus" id="statePlus">State</span>
-									<c:if test="${thirdFQParam != null}">
+									<c:if test="${sessionMap.get('thirdFQParam') != ''}">
 									<script>$("#statePlus").click();</script>
 									</c:if>
 
 									<div class="refineResultsSubContent cursor">
 										<ul>
 											<c:forEach items="${state}" var="displayState" varStatus="status">
-												<c:if test="${fn:startsWith(state[status.index], thirdFQParam) and thirdFQParam != null}">
+											<c:choose>
+											<c:when test="${sessionMap.get('thirdFQParam') != '' and fn:startsWith(state[status.index],fn:split(sessionMap.get('thirdFQParam'), '\"')[1])}">
+											<span style="font-weight:bold;"> 
+												<li><a onclick="refineByState('${state[status.index]}','true');">${state[status.index]}</a></li>
+											</span>
+											</c:when>
+											<c:otherwise>
+												<li><a onclick="refineByState('${state[status.index]}','false');">${state[status.index]}</a></li>
+											</c:otherwise>
+											</c:choose>
+												
+												<%-- <c:if test="${fn:startsWith(state[status.index], thirdFQParam) and thirdFQParam != null}">
 												<span style="font-weight:bold;"> 
 												</c:if>
 												<li><a onclick="refineByState('${state[status.index]}');">${state[status.index]}</a></li>
 													<c:if test="${fn:startsWith(state[status.index], thirdFQParam) and thirdFQParam != null}">
 												</span> 
-												</c:if>
+												</c:if> --%>
 											</c:forEach>
 										</ul>
 									</div>
 
 									<span class="refineResultsItem plus" id="cityPlus">City</span>
-									<c:if test="${fouthFQParam != null}">
+									<c:if test="${sessionMap.get('fouthFQParam') != null}">
 									<script>$("#cityPlus").click();</script>
 									</c:if>
 									<div class="refineResultsSubContent cursor">
 										<ul>
 										<c:forEach items="${city}" var="displayCity" varStatus="status">
-											<c:if test="${fn:startsWith(city[status.index], fouthFQParam) and fouthFQParam != null}">
+											<c:choose>
+											<c:when test="${sessionMap.get('fouthFQParam') != '' and fn:startsWith(city[status.index], fn:split(sessionMap.get('fouthFQParam'), '\"')[1])}">
+											<span style="font-weight:bold;"> 
+												<li><a onclick="refineByCity('${city[status.index]}', 'true');">${city[status.index]}</a></li>
+											</span>
+											</c:when>
+											<c:otherwise>
+												<li><a onclick="refineByCity('${city[status.index]}', 'false');">${city[status.index]}</a></li>
+											</c:otherwise>
+											</c:choose>
+											
+											<%-- <c:if test="${fn:startsWith(city[status.index], fouthFQParam) and fouthFQParam != null}">
 											<span style="font-weight:bold;">  
 											</c:if>
 											<li><a onclick="refineByCity('${city[status.index]}');">${city[status.index]}</a></li>
 											<c:if test="${fn:startsWith(city[status.index], fouthFQParam) and fouthFQParam != null}">
 											</span>
-											</c:if>
+											</c:if> --%>
 										</c:forEach>
 										</ul>
 									</div>
@@ -181,12 +228,12 @@
 							<input type="text" name="selectedState" id="selectedState" value="${thirdFQParam}" />
 							<input type="text" name="selectedCity" id="selectedCity" value="${fouthFQParam}" />
 							<input type="text" name="selectedArea" id="selectedArea" value="${fifthFQParam}" /> --%>
-							<div id="selectedRadius" style="display: none">${refineRadius}</div>
+							<%-- <div id="selectedRadius" style="display: none">${refineRadius}</div>
 							<div id="selectedJobtitle" style="display: none">${firstFQParam}</div>
 							<div id="selectedCompany"  style="display: none">${secondFQParam}</div>
 							<div id="selectedState" style="display: none">${thirdFQParam}</div>
 							<div id="selectedCity"  style="display: none">${fouthFQParam}</div>
-							<div id="selectedArea"  style="display: none">${fifthFQParam}</div>  
+							<div id="selectedArea"  style="display: none">${fifthFQParam}</div>   --%>
 							
 							<%-- <div id="selectedRadius" >${refineRadius}</div>
 							<div id="selectedJobtitle" >${firstFQParam}</div>
