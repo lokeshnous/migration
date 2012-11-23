@@ -145,7 +145,7 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 		for (AdmSaveJob admSaveJob : appliedJobDTOList) {
 			try {
 				merUserdto = userDAO.getUserByUserId(admSaveJob.getUserId());
-				jsToAddress[0] = new InternetAddress("deviprasadm@nousinfo.com");
+				jsToAddress[0] = new InternetAddress(merUserdto.getEmailId());
 			} catch (AddressException jbex) {
 				jbex.printStackTrace();
 			}
