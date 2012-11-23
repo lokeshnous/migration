@@ -1106,27 +1106,6 @@ public class JobPostDAOImpl implements JobPostDAO {
 		}
 		return invDetailId;
 	}
-	@Override
-	public AdmFacilityJpAudit getinvDtlByJobId(int jobId) {
-		AdmFacilityJpAudit invDetail = new AdmFacilityJpAudit();
-		try {
-			Query query = hibernateTemplate
-					.getSessionFactory()
-					.getCurrentSession()
-					.createQuery(
-							"SELECT a from AdmFacilityJpAudit a where a.id.jobId=" + jobId);
-
-			List<AdmFacilityJpAudit> admFacilityJpAuditList = (List<AdmFacilityJpAudit>) query
-					.list();
-			if (null != admFacilityJpAuditList
-					&& !admFacilityJpAuditList.isEmpty()) {
-				invDetail = admFacilityJpAuditList.get(0);
-			}
-		} catch (DataAccessException e) {
-			LOGGER.error(e);
-		}
-		return invDetail;
-	}
 
 	/**
 	 * This method is used to get the net suite customer id based on adm
