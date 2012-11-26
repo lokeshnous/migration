@@ -602,6 +602,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/web/utils/ReadFile.java -text
 jobboard/src/main/resources/SEO.properties -text
 jobboard/src/main/resources/common.properties -text
 jobboard/src/main/resources/database.properties -text
+jobboard/src/main/resources/email.properties -text
 jobboard/src/main/resources/import/OpenX-JB2[!!-~]Mapping.xlsx -text
 jobboard/src/main/resources/jobboard-scheduler.properties -text
 jobboard/src/main/resources/log4j.properties -text

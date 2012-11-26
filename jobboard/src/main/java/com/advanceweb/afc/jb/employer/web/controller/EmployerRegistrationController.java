@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.annotation.Resource;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
@@ -125,6 +127,9 @@ public class EmployerRegistrationController extends AbstractController{
 
 	@Value("${dothtmlExtention}")
 	private String dothtmlExtention;
+	@Autowired
+	@Resource(name = "emailConfiguration")
+	private Properties emailConfiguration;
 	// @Autowired
 	// private AdmManagePermission admManagePermission;
 
@@ -359,44 +364,27 @@ public class EmployerRegistrationController extends AbstractController{
 		emailDTO.setToAddress(jsToAddress);
 		emailDTO.setFromAddress(advanceWebAddress);
 		emailDTO.setSubject(welcomeMailMessage);
-		int start, end;
 		String loginPath = navigationPath.substring(2);
+		String employerWelcomeMailBody = emailConfiguration.getProperty(
+				"employer.welcome.mail.body").trim();
 		String employerloginUrl = request.getRequestURL().toString()
 				.replace(request.getServletPath(), loginPath)
 				+ dothtmlExtention + employerPageExtention;
-		start = MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.toString().indexOf(
-				"?user_name");
-		end = start + "?user_name".length();
-		if (start > 0 && end > 0) {
-			MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.replace(start, end,
-					userDTO.getFirstName());
-		}
-		start = MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.toString().indexOf(
-				"?userName");
-		end = start + "?userName".length();
-		if (start > 0 && end > 0) {
-			MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.replace(start, end,
-					userDTO.getFirstName());
-		}
+		employerWelcomeMailBody = employerWelcomeMailBody.replace("?user_name",
+				userDTO.getFirstName());
+		employerWelcomeMailBody = employerWelcomeMailBody.replace("?userName",
+				userDTO.getFirstName());
+		employerWelcomeMailBody = employerWelcomeMailBody.replace(
+				"?company_name", userDTO.getCompany());
+		employerWelcomeMailBody = employerWelcomeMailBody.replace(
+				"?empdashboardLink", employerloginUrl);
 
-		start = MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.toString().indexOf(
-				"?company_name");
-		end = start + "?company_name".length();
-		if (start > 0 && end > 0 && null != userDTO.getCompany()) {
-			MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.replace(start, end,
-					userDTO.getCompany());
-		}
-		start = MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.toString().indexOf(
-				"?empdashboardLink");
-		end = start + "?empdashboardLink".length();
-		if (start > 0 && end > 0) {
-			MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY.replace(start, end,
-					employerloginUrl);
-		}
 		StringBuffer stringBuffer = new StringBuffer();
-		stringBuffer.append(MMJBCommonConstants.EMPLOYEREMAILHEADER);
-		stringBuffer.append(MMJBCommonConstants.EMPLOYERWELCOMEMAILBODY);
-		stringBuffer.append(MMJBCommonConstants.EMAILFOOTER);
+		stringBuffer.append(emailConfiguration.getProperty(
+				"employer.email.header").trim());
+		stringBuffer.append(employerWelcomeMailBody);
+		stringBuffer.append(emailConfiguration.getProperty("email.footer")
+				.trim());
 		emailDTO.setBody(stringBuffer.toString());
 		emailDTO.setHtmlFormat(true);
 		emailService.sendEmail(emailDTO);

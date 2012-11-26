@@ -14,6 +14,8 @@
 	<util:properties id="adsConfiguration" location="classpath:ads.properties" />
 	<!-- For SEO server -->
 	<util:properties id="seoConfiguration" location="classpath:SEO.properties" />
+	<!-- For Email's -->
+	<util:properties id="emailConfiguration" location="classpath:email.properties" />
 	<!-- For SOLR search -->
 	<util:properties id="solrConfiguration" location="classpath:solr.properties" />
 

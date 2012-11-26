@@ -5,7 +5,9 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
+import javax.annotation.Resource;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
@@ -74,6 +76,9 @@ public class JobApplicationController {
 	@Value("${anonymousJobApplicationBody}")
 	private  String jobAppBody;
 
+	@Autowired
+	@Resource(name = "emailConfiguration")
+	private Properties emailConfiguration;
 	 //TODO:this will we used for saving the anonymous user record
 	 //@Autowired private TransformAnonymousUserJobApply
 	 //transformAnonymousUserJobApply;
@@ -140,9 +145,11 @@ public class JobApplicationController {
 					"?empDashboardLink", employerloginUrl);
 			employerMailBody = employerMailBody.replace("?jobseekername",
 					form.getUserName());
-			mailBody.append(MMJBCommonConstants.EMPLOYEREMAILHEADER);
+			mailBody.append(emailConfiguration.getProperty(
+					"employer.email.header").trim());
 			mailBody.append(employerMailBody);
-			mailBody.append(MMJBCommonConstants.EMAILFOOTER);
+			mailBody.append(emailConfiguration.getProperty("email.footer")
+					.trim());
 			toEmployer.setBody(mailBody.toString());
 			toEmployer.setHtmlFormat(true);
 			List<String> attachmentpaths = new ArrayList<String>();
@@ -199,28 +206,28 @@ public class JobApplicationController {
 		toJobSeeker.setToAddress(jsToAddress);
 		toJobSeeker.setFromAddress(advanceWebAddress);
 		String jobseekerMailSub = "";
-		if(jobDTO.getCompanyNameDisp() == null){
-			jobseekerMailSub = jobAppSub.replace(
-					"to ?companyname", "");
-		}else{
-			jobseekerMailSub = jobAppSub.replace(
-					"?companyname", jobDTO.getCompanyNameDisp());
+		if (jobDTO.getCompanyNameDisp() == null) {
+			jobseekerMailSub = jobAppSub.replace("to ?companyname", "");
+		} else {
+			jobseekerMailSub = jobAppSub.replace("?companyname",
+					jobDTO.getCompanyNameDisp());
 		}
 		toJobSeeker.setSubject(jobseekerMailSub);
 		String jobseekerMailBody = jobAppBody;
-		if(jobDTO.getCompanyNameDisp() == null){
-			jobseekerMailBody = jobseekerMailBody.replace("to ?companyname",
-					"");
-		}else{
-			jobseekerMailSub = jobAppSub.replace(
-					"?companyname", jobDTO.getCompanyNameDisp());
+		if (jobDTO.getCompanyNameDisp() == null) {
+			jobseekerMailBody = jobseekerMailBody
+					.replace("to ?companyname", "");
+		} else {
+			jobseekerMailSub = jobAppSub.replace("?companyname",
+					jobDTO.getCompanyNameDisp());
 		}
-		mailBody.append(MMJBCommonConstants.EMPLOYEREMAILHEADER);
+		mailBody.append(emailConfiguration.getProperty("employer.email.header")
+				.trim());
 		mailBody.append(jobseekerMailBody);
-		mailBody.append(MMJBCommonConstants.EMAILFOOTER);
+		mailBody.append(emailConfiguration.getProperty("email.footer").trim());
 		toJobSeeker.setBody(mailBody.toString());
 		toJobSeeker.setHtmlFormat(true);
-		
+
 		emailService.sendEmail(toJobSeeker);
 		session.removeAttribute("jobId");
 		model.setViewName("redirect:/jobsearch/findJobPage.html");

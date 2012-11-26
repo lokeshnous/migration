@@ -9,8 +9,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.StringTokenizer;
 
+import javax.annotation.Resource;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -120,7 +122,9 @@ public class ManageJobSeekerController {
 	String emailMsgBlank;
 	private @Value("${basedirectorypathUpload}")
 	String basedirectorypathUpload;
-	
+	@Autowired
+	@Resource(name = "emailConfiguration")
+	private Properties emailConfiguration;
 	private static final String CURRENT_URL = "currentUrl";
 	private static final String END_TAGS = "</TD></TR>\n";
 	/**
@@ -1066,7 +1070,8 @@ public class ManageJobSeekerController {
 				}
 				jobSeekerEmailDTO.setAttachmentPaths(attachmentpaths);
 				String Subject = subOfmail + " " + jobseekerName+".";
-				mesg = mesg.append(MMJBCommonConstants.JOBSEEKEREMAILHEADER);
+				mesg = mesg.append(emailConfiguration.getProperty(
+						"jobseeker.email.header").trim());
 				String bodyHead2 = sendtofriendmail.getMessage();
 				String jobUrl = sendtofriendmail.getJoburl();
 				mesg = mesg.append("<TABLE><TR><TD>" + Subject + END_TAGS);
@@ -1076,7 +1081,8 @@ public class ManageJobSeekerController {
 						+ END_TAGS);
 				mesg = mesg.append("<TR><TD>" + bodyOfMailFirst + "." 
 						+ END_TAGS);
-				mesg = mesg.append(MMJBCommonConstants.EMAILFOOTER);
+				mesg = mesg.append(emailConfiguration.getProperty("email.footer")
+						.trim());
 				bodyMesg = mesg.toString();
 				jobSeekerEmailDTO.setBody(bodyMesg);
 				jobSeekerEmailDTO.setHtmlFormat(true);

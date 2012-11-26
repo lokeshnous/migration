@@ -1,7 +1,9 @@
 package com.advanceweb.afc.jb.login.web.controller;
 
 import java.util.Map;
+import java.util.Properties;
 
+import javax.annotation.Resource;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -88,6 +90,9 @@ public class LoginFormController extends AbstractController{
 	@Autowired
 	private LoginFormValidator loginValidator;
 
+	@Autowired
+	@Resource(name = "emailConfiguration")
+	private Properties emailConfiguration;
 	/**
 	 * This controller called to redirect to particular page from where login
 	 * attempt happened, displayed error message depending on the login attempt
@@ -334,14 +339,16 @@ public class LoginFormController extends AbstractController{
 				// String forgotPwdMailBody =
 				// jobseekerForgotPwdBody.replace("?temporarypassword",
 				// tempassword);
-				mailBody.append(MMJBCommonConstants.EMPLOYEREMAILHEADER);
+				mailBody.append(emailConfiguration
+						.getProperty("employer.email.header").trim());
 				String forgotPwdMailBody = jobseekerForgotPwdBody.replace(
 						"?temporarypassword", formDTO.getPassword());
 
 				forgotPwdMailBody = forgotPwdMailBody.replace("?jsLoginLink",
 						jonseekerloginUrl);
 				mailBody.append(forgotPwdMailBody);
-				mailBody.append(MMJBCommonConstants.EMAILFOOTER);
+				mailBody.append(emailConfiguration
+						.getProperty("email.footer").trim());
 				jobSeekerEmailDTO.setBody(mailBody.toString());
 				jobSeekerEmailDTO.setHtmlFormat(true);
 				emailService.sendEmail(jobSeekerEmailDTO);

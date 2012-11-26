@@ -2,7 +2,9 @@ package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
+import javax.annotation.Resource;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
@@ -85,7 +87,9 @@ public class ManageAccessPermissionController {
 	private String adminChangeMailSubject;
 	@Value("${employerPageExtention}")
 	private String employerPageExtention;
-
+	@Autowired
+	@Resource(name = "emailConfiguration")
+	private Properties emailConfiguration;
 	@RequestMapping(value = "/manageAccessPermission")
 	public ModelAndView showJobOwnerDetails(
 			ManageAccessPermissionForm manageAccessPermissionForm,
@@ -212,7 +216,7 @@ public class ManageAccessPermissionController {
 		} catch (JobBoardException jbex) {
 			LOGGER.error("Error occured while creating the new job owner", jbex);
 		}
-		EmployerInfoDTO facilityDetail =facilityService.facilityDetails(userDTO.getUserId());
+		EmployerInfoDTO facilityDetail =facilityService.facilityDetails(userIdParent);
 		if(null !=facilityDetail){
 		userDTO.setCompany(facilityDetail.getCustomerName());
 		}
@@ -222,7 +226,10 @@ public class ManageAccessPermissionController {
 		}else{
 			accessType = "Post / Edit access";
 		}
-        String changeRgn= MMJBCommonConstants.ADMIN_JOB_OWNER_ADDED.replace("?companyName", userDTO.getCompany());
+        String changeRgn=emailConfiguration
+				.getProperty("admin.jobowner.added").trim(); 
+        		
+        changeRgn=changeRgn.replace("?companyName", userDTO.getCompany());
         changeRgn=changeRgn.replace("?accessType", accessType);
 		
 		sendAdministratorUpdateMail(manageAccessPermissionForm.getOwnerEmail(),request,changeRgn.replace("?temporarypassword",userDTO.getPassword()));
@@ -327,10 +334,11 @@ public class ManageAccessPermissionController {
 			}
 			forgotPwdMailBody = forgotPwdMailBody.replace("?permission",
 					permissionType);
-
-            mailBody.append(MMJBCommonConstants.EMPLOYEREMAILHEADER);
-            mailBody.append(forgotPwdMailBody);
-            mailBody.append(MMJBCommonConstants.EMAILFOOTER);
+			mailBody.append(emailConfiguration.getProperty(
+					"employer.email.header").trim());
+			mailBody.append(forgotPwdMailBody);
+			mailBody.append(emailConfiguration.getProperty("email.footer")
+					.trim());
 			emailDTO.setBody(mailBody.toString());
 			emailDTO.setHtmlFormat(true);
 			emailService.sendEmail(emailDTO);
@@ -343,46 +351,30 @@ public class ManageAccessPermissionController {
 	 * method to send mail when change made by administrator
 	 * @param form
 	 */
-	public void sendAdministratorUpdateMail(String email,HttpServletRequest request,String ChangeRsn) {
+	public void sendAdministratorUpdateMail(String email,
+			HttpServletRequest request, String ChangeRsn) {
 		UserDTO merUserdto = userDAO.getUser(email);
 		EmployerInfoDTO facilityDetail = facilityService
 				.facilityDetails(merUserdto.getUserId());
 		StringBuffer admChangeDetail = new StringBuffer();
-		int start, end;
-		String userName=merUserdto.getFirstName()+" " + merUserdto.getLastName();
+		String userName = merUserdto.getFirstName() + " "
+				+ merUserdto.getLastName();
 		String loginPath = navigationPath.substring(2);
 		String employerloginUrl = request.getRequestURL().toString()
 				.replace(request.getServletPath(), loginPath)
 				+ dothtmlExtention + employerPageExtention;
-		start = MMJBCommonConstants.ADMINSTRATORCHANGEEMAILBODY.toString().indexOf(
-				"?userName");
-		end = start + "?userName".length();
-		if (start > 0 && end > 0) {
-			MMJBCommonConstants.ADMINSTRATORCHANGEEMAILBODY
-					.replace(start, end,userName);
-		}
-		start = MMJBCommonConstants.ADMINSTRATORCHANGEEMAILBODY.toString().indexOf(
-				"?companyName");
-		end = start + "?companyName".length();
-		if (start > 0 && end > 0) {
-			MMJBCommonConstants.ADMINSTRATORCHANGEEMAILBODY
-					.replace(start, end,facilityDetail.getCustomerName());
-		}
-		start = MMJBCommonConstants.ADMINSTRATORCHANGEEMAILBODY.toString().indexOf(
-				"?empdashboardLink");
-		end = start + "?empdashboardLink".length();
-		if (start > 0 && end > 0) {
-			MMJBCommonConstants.ADMINSTRATORCHANGEEMAILBODY
-					.replace(start, end,employerloginUrl);
-		}
-		
-		start = MMJBCommonConstants.ADMINSTRATORCHANGEEMAILBODY.toString().indexOf(
-				"?changeType");
-		end = start + "?changeType".length();
-		if (start > 0 && end > 0) {
-			MMJBCommonConstants.ADMINSTRATORCHANGEEMAILBODY
-					.replace(start, end,ChangeRsn);
-		}
+		String emailContent = emailConfiguration.getProperty(
+				"adminstrator.change.email.body").trim();
+
+		emailContent = emailContent.replace("?userName", userName);
+
+		emailContent = emailContent.replace("?companyName",
+				facilityDetail.getCustomerName());
+
+		emailContent = emailContent.replace("?empdashboardLink",
+				employerloginUrl);
+
+		emailContent = emailContent.replace("?changeType", ChangeRsn);
 		EmailDTO emailDTO = new EmailDTO();
 		InternetAddress[] jsToAddress = new InternetAddress[1];
 
@@ -396,9 +388,11 @@ public class ManageAccessPermissionController {
 		emailDTO.setToAddress(jsToAddress);
 		emailDTO.setFromAddress(advanceWebAddress);
 		emailDTO.setSubject(adminChangeMailSubject);
-		admChangeDetail.append(MMJBCommonConstants.EMPLOYEREMAILHEADER);
-		admChangeDetail.append(MMJBCommonConstants.ADMINSTRATORCHANGEEMAILBODY);
-		admChangeDetail.append(MMJBCommonConstants.EMAILFOOTER);
+		admChangeDetail.append(emailConfiguration.getProperty(
+				"employer.email.header").trim());
+		admChangeDetail.append(emailContent);
+		admChangeDetail.append(emailConfiguration.getProperty("email.footer")
+				.trim());
 		emailDTO.setBody(admChangeDetail.toString());
 		emailDTO.setHtmlFormat(true);
 		emailService.sendEmail(emailDTO);

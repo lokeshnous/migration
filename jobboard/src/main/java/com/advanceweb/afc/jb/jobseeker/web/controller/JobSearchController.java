@@ -256,7 +256,9 @@ public class JobSearchController extends AbstractController {
 	@Autowired
 	@Resource(name = "seoConfiguration")
 	private Properties seoConfiguration;
-
+	@Autowired
+	@Resource(name = "emailConfiguration")
+	private Properties emailConfiguration;
 	@Autowired
 	private ClickController clickController;
 
@@ -649,8 +651,8 @@ public class JobSearchController extends AbstractController {
 		String employerMailBody = employeJobApplicationBody.replace(
 				"?empDashboardLink", employerloginUrl);
 		employerMailBody = employerMailBody.replace("?jobseekername", userName);
-		mailBody.append(MMJBCommonConstants.EMPLOYEREMAILHEADER);
-		
+		mailBody.append(emailConfiguration
+				.getProperty("employer.email.header").trim());
 		
 		if (coverLetterTxt == null) {
 			mailBody.append(employerMailBody);
@@ -660,7 +662,8 @@ public class JobSearchController extends AbstractController {
 					+ employerMailBody);
 		}
 		
-		mailBody.append(MMJBCommonConstants.EMAILFOOTER);
+		mailBody.append(emailConfiguration
+				.getProperty("email.footer").trim());
 		employerEmailDTO.setBody(mailBody.toString());
 		employerEmailDTO.setHtmlFormat(true);
 		employerEmailDTO.setAttachmentPaths(attachmentpaths);
@@ -2402,7 +2405,8 @@ public class JobSearchController extends AbstractController {
 				 * String joburl = urlLinkFirst + MMJBCommonConstants.EMPTY +
 				 * jobUrl + MMJBCommonConstants.EMPTY + urlLinkSecond;
 				 */
-				mesg=mesg.append(MMJBCommonConstants.JOBSEEKEREMAILHEADER);
+				mesg=mesg.append(emailConfiguration.getProperty(
+						"jobseeker.email.header").trim());
 				mesg = mesg.append("<TABLE><TR><TD>" + Subject + END_TAGS);
 				mesg = mesg.append("<TR><TD>" + bodyHead1 + "\n" + bodyHead2
 						+ END_TAGS);
@@ -2421,7 +2425,8 @@ public class JobSearchController extends AbstractController {
 				mesg = mesg.append("</TD></TR>\n\n\n");
 				mesg = mesg.append("<TR><TD>" + sendtofriendmail.getJoburl()
 						+ "</TD></TR></TABLE>");
-				mesg=mesg.append(MMJBCommonConstants.EMAILFOOTER);
+				mesg=mesg.append(emailConfiguration.getProperty("email.footer")
+						.trim());
 				bodyMesg = mesg.toString();
 				jobSeekerEmailDTO.setBody(bodyMesg);
 				jobSeekerEmailDTO.setHtmlFormat(true);

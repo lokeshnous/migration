@@ -5,7 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
 
+import javax.annotation.Resource;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.ServletException;
@@ -50,7 +52,9 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 	private String jobseekerPageExtention;
 	@Value("${jobAppliedSubject}")
 	private String jobAppliedSubject;
-	
+	@Autowired
+	@Resource(name = "emailConfiguration")
+	private Properties emailConfiguration;
 	@Override
 	public void onLogoutSuccess(HttpServletRequest request,
 			HttpServletResponse response, Authentication authentication)
@@ -73,6 +77,8 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 			if (authentication.getAuthorities().contains(
 					new SimpleGrantedAuthority(
 							MMJBCommonConstants.ROLE_JOB_SEEKER))) {
+				if(null !=session
+						.getAttribute(MMJBCommonConstants.LOGIN_DATE_TIME)){
 				Date loginDate = (Date) session
 						.getAttribute(MMJBCommonConstants.LOGIN_DATE_TIME);
 				Date logoutDate = MMUtils.getCurrentDateAndTime();
@@ -95,6 +101,7 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 					}
 				} catch (JobBoardServiceException e) {
 					e.printStackTrace();
+				}
 				}
 				if (session != null) {
 					session.invalidate();
@@ -142,6 +149,8 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 				.replace(request.getServletPath(), loginPath)
 				+ dothtmlExtention + jobseekerPageExtention;
 		EmailDTO emailDTO = new EmailDTO();
+		String jobseekerApplyEmailBody = emailConfiguration.getProperty(
+				"jobseeker.apply.email.body").trim();
 		for (AdmSaveJob admSaveJob : appliedJobDTOList) {
 			try {
 				merUserdto = userDAO.getUserByUserId(admSaveJob.getUserId());
@@ -153,41 +162,37 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 			emailDTO.setToAddress(jsToAddress);
 			emailDTO.setFromAddress(advanceWebAddress);
 			emailDTO.setSubject(jobAppliedSubject);
-			int start, end;
 
-			start = MMJBCommonConstants.JOBSEEKER_APPLY_EMAIL_BODY.toString()
-					.indexOf("?jobSeekerFirstName");
-			end = start + "?jobSeekerFirstName".length();
-			if (start > 0 && end > 0) {
-				MMJBCommonConstants.JOBSEEKER_APPLY_EMAIL_BODY.replace(start,
-						end, merUserdto.getFirstName());
-			}
+			jobseekerApplyEmailBody = jobseekerApplyEmailBody.replace(
+					"?jobSeekerFirstName", merUserdto.getFirstName());
+
 			String empName;
 			if (null == admSaveJob.getFacilityName()) {
 				empName = "";
 			} else {
 				empName = admSaveJob.getFacilityName();
 			}
-			
-			MMJBCommonConstants.JOBSEEKER_APPLY_EMAIL_BODY
-					.append("<tr>  <td width=\"33%\" align=\"center\" valign=\"middle\" style=\"padding-top:10px; padding-bottom:10px; border:1px solid #cccccc;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\"><span style=\"color: #333333\">"
-							+ admSaveJob.getJobtitle()
-							+ "</span></span>"
-							+ "</td>  <td width=\"33%\" align=\"center\" valign=\"middle\" style=\"padding-top:10px; padding-bottom:10px; border:1px solid #cccccc;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\"><span style=\"color: #333333\">"
-							+ empName
-							+ "</span></span>"
-							+ "</td>  <td width=\"33%\" align=\"center\" valign=\"middle\" style=\"padding-top:10px; padding-bottom:10px; border:1px solid #cccccc;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\">"
-							+ CommonUtil.convertToReqdDateString(admSaveJob.getAppliedDt())
-							+ "</span>"
-							+ "</td></tr>");
+
+			jobseekerApplyEmailBody = jobseekerApplyEmailBody
+					+ "<tr>  <td width=\"33%\" align=\"center\" valign=\"middle\" style=\"padding-top:10px; padding-bottom:10px; border:1px solid #cccccc;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\"><span style=\"color: #333333\">"
+					+ admSaveJob.getJobtitle()
+					+ "</span></span>"
+					+ "</td>  <td width=\"33%\" align=\"center\" valign=\"middle\" style=\"padding-top:10px; padding-bottom:10px; border:1px solid #cccccc;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\"><span style=\"color: #333333\">"
+					+ empName
+					+ "</span></span>"
+					+ "</td>  <td width=\"33%\" align=\"center\" valign=\"middle\" style=\"padding-top:10px; padding-bottom:10px; border:1px solid #cccccc;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\">"
+					+ CommonUtil.convertToReqdDateString(admSaveJob
+							.getAppliedDt()) + "</span>" + "</td></tr>";
 
 		}
-		MMJBCommonConstants.JOBSEEKER_APPLY_EMAIL_BODY
-				.append(MMJBCommonConstants.JOBSEEKER_APPLY_EMAIL_BODY_1
-						.replace("?jsdashboardLink", jonseekerloginUrl));
-		stringBuffer.append(MMJBCommonConstants.JOBSEEKEREMAILHEADER);
-		stringBuffer.append(MMJBCommonConstants.JOBSEEKER_APPLY_EMAIL_BODY);
-		stringBuffer.append(MMJBCommonConstants.EMAILFOOTER);
+		jobseekerApplyEmailBody = jobseekerApplyEmailBody
+				+ emailConfiguration.getProperty("jobseeker.apply.email.body1")
+						.trim().replace("?jsdashboardLink", jonseekerloginUrl);
+		stringBuffer.append(emailConfiguration.getProperty(
+				"jobseeker.email.header").trim());
+		stringBuffer.append(jobseekerApplyEmailBody);
+		stringBuffer.append(emailConfiguration.getProperty("email.footer")
+				.trim());
 		emailDTO.setBody(stringBuffer.toString());
 		emailDTO.setHtmlFormat(true);
 		emailService.sendEmail(emailDTO);
