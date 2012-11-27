@@ -39,6 +39,11 @@ public class PaymentGatewayDelegateImpl implements PaymentGatewayDelegate{
 		//get the entity id from DB using facility id 
 		UserDTO userDTO = new UserDTO();
 		userDTO.setNsCustomerID(orderDetailsDTO.getNsCustomeId());
+		//if purchase type is job posting, then create the sale order items here 
+		if(MMJBCommonConstants.PURCHASE_JOB_POST.equals(orderDetailsDTO.getPurchaseType())){
+			paymentGatewayDao.createJobPostOrderItems(orderDetailsDTO);
+		}
+		
 		userDTO.setSalesOrderDTO(orderDetailsDTO.getSalesOrderDTO());
 		// call to NetSuite WS 
 		userDTO = nsSalesOrderService.createSalesOrder(userDTO);		

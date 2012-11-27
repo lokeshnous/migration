@@ -40,13 +40,9 @@ public class JpJobType implements Serializable {
 
 	private String name;
 	
-	@Column(name="netsuite_id")
-	private int netSuiteId;
-
 	//bi-directional many-to-one association to JpJob
 	@OneToMany(mappedBy="jpJobType")
 	private List<JpJob> jpJobs;
-	
 
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -86,14 +82,6 @@ public class JpJobType implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public int getNetSuiteId() {
-		return netSuiteId;
-	}
-
-	public void setNetSuiteId(int netSuiteId) {
-		this.netSuiteId = netSuiteId;
 	}
 
 	public List<JpJob> getJpJobs() {

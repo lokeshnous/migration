@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.pgi.dao;
 
 import com.advanceweb.afc.jb.common.AccountBillingDTO;
 import com.advanceweb.afc.jb.common.OrderDetailsDTO;
+import com.advanceweb.afc.jb.common.SalesItemDTO;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 
 /**
@@ -58,4 +59,13 @@ public interface PaymentGatewayDao {
 	 * @return
 	 */
 	boolean saveInventoryDetails(OrderDetailsDTO orderDetailsDTO);
+	
+	/**
+	 * This method is used to create the sale order items for the job post selected by taking the following
+	 * parameters.
+	 * 
+	 * @param orderDetailsDTO
+	 * @return
+	 */
+	void createJobPostOrderItems(OrderDetailsDTO orderDetailsDTO);
 }

@@ -16,7 +16,6 @@ public class JobPostingPlanDTO {
 	private String jobPostPlanName;
 	private String jobPostPlanDescr;
 	private String jobPostPlanCretitAmt;
-	private String jobPostNetSuiteId;
 	private List<AddOnDTO> addOnDTOList;
 	private int quanity;
 	private int packageSubTotal;
@@ -44,12 +43,6 @@ public class JobPostingPlanDTO {
 	}
 	public void setJobPostPlanCretitAmt(String jobPostPlanCretitAmt) {
 		this.jobPostPlanCretitAmt = jobPostPlanCretitAmt;
-	}
-	public String getJobPostNetSuiteId() {
-		return jobPostNetSuiteId;
-	}
-	public void setJobPostNetSuiteId(String jobPostNetSuiteId) {
-		this.jobPostNetSuiteId = jobPostNetSuiteId;
 	}
 	public List<AddOnDTO> getAddOnDTOList() {
 		return addOnDTOList;

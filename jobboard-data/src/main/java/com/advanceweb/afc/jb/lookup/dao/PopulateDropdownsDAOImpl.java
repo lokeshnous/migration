@@ -15,6 +15,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -540,54 +541,17 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
 	private void getJobPostingComboList(List<DropDownDTO> jbPostings,
 			List<AdmInventoryDetail> invList) {
+		DropDownDTO dto = null;
 		if (!invList.isEmpty()) {
 			for (AdmInventoryDetail inv : invList) {
-				DropDownDTO dto = new DropDownDTO();
-				dto.setOptionId(String.valueOf(inv.getInvDetailId()));
-				if (MMJBCommonConstants.JOB_TYPE_COMBO.equals(inv
-						.getProductType())) {
-					List<JpJobTypeCombo> comboList = hibernateTemplate.find(
-							"from JpJobTypeCombo combo where combo.comboId=?",
-							inv.getProductId());
-					if (!comboList.isEmpty()) {
-
-						JpJobTypeCombo combo = comboList.get(0);
-						if (combo.getJobType().contains(
-								MMJBCommonConstants.STANDARD_JOB_POSTING)) {
-							dto.setOptionName(MMJBCommonConstants.STANDARD_POSTING
-									+ " + " + combo.getAddons().trim());
-						} else if (combo.getJobType().contains(
-								MMJBCommonConstants.JOB_POSTING_SLOT)) {
-							dto.setOptionName(MMJBCommonConstants.SLOT_POSTING
-									+ " + " + combo.getAddons().trim());
-						}
-						if (combo.getAddons().contains("Job Posting")) {
-							combo.setAddons(combo.getAddons().replace(
-									"Job Posting", ""));
-							if (combo.getAddons().contains("Upgrade".trim())) {
-								combo.setAddons(combo.getAddons().replace(
-										"Upgrade", ""));
-							}
-						}
-						jbPostings.add(dto);
-					}
-				} else {
-					List<JpJobType> jpTypleList = hibernateTemplate.find(
-							"from JpJobType type where type.jobTypeId=?",
-							inv.getProductId());
-					if (!jpTypleList.isEmpty()) {
-						JpJobType type = jpTypleList.get(0);
-
-						if (type.getName().contains(
-								MMJBCommonConstants.STANDARD_JOB_POSTING)) {
-							dto.setOptionName(MMJBCommonConstants.STANDARD_POSTING);
-						} else if (type.getName().contains(
-								MMJBCommonConstants.JOB_POSTING_SLOT)) {
-							dto.setOptionName(MMJBCommonConstants.SLOT_POSTING);
-						}
-						// dto.setOptionName(MMJBCommonConstants.STANDARD_POSTING);
-						jbPostings.add(dto);
-					}
+				dto = new DropDownDTO();
+				
+				JpJobTypeCombo combo = DataAccessUtils.uniqueResult(hibernateTemplate
+						.find("from JpJobTypeCombo combo where combo.comboId=?",inv.getProductId()));
+				if (null != combo) {
+					dto.setOptionId(String.valueOf(inv.getInvDetailId()));
+					dto.setOptionName(combo.getAddons());
+					jbPostings.add(dto);
 				}
 			}
 		}

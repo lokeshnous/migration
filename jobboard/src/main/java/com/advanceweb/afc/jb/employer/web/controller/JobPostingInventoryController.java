@@ -50,81 +50,37 @@ public class JobPostingInventoryController {
 			BindingResult result,
 			@RequestParam(value = PAGE, required = false) String page,
 			HttpSession session) {
-		String status = null;
+		
 		ModelAndView model = new ModelAndView();
 		try{
 		// If Inventory page is from dashboard then we need to provide action
 		// column
-		if (page != null && page.equals("inventoryPage")) {
-			session.removeAttribute(" MMJBCommonConstants.POST_JOB_PAGE");
-		}
+		
+		int userId = (Integer) session.getAttribute(MMJBCommonConstants.USER_ID);
+		int facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
 
-		// If Inventory page is from post new job page then we action column has
-		// to remove
-		if ((page != null && page.equals(MMJBCommonConstants.POST_JOB_PAGE))
-				|| (null != session.getAttribute(PAGE) && session
-						.getAttribute(PAGE).equals(
-								MMJBCommonConstants.POST_JOB_PAGE))) {
-			inventoryForm.setPostJobPage("true");
-			session.setAttribute(PAGE, MMJBCommonConstants.POST_JOB_PAGE);
-		} else {
-			status = "true";
-		}
-
-		int userId = (Integer) session
-				.getAttribute(MMJBCommonConstants.USER_ID);
-		int facilityId = (Integer) session
-				.getAttribute(MMJBCommonConstants.FACILITY_ID);
-
-		List<JobPostingInventoryDTO> inventiryDTO = inventoryService
-				.getInventoryDetails(userId, facilityId);
+		List<JobPostingInventoryDTO> inventiryDTOList = inventoryService.getInventoryDetails(userId, facilityId);
 
 		List<JobPostingInventoryDTO> jbPostList = new ArrayList<JobPostingInventoryDTO>();
 		List<JobPostingInventoryDTO> jbSlotList = new ArrayList<JobPostingInventoryDTO>();
-		JobPostingInventoryDTO postingInventoryDTO = new JobPostingInventoryDTO();
-		String Duration = Integer.toString(MMJBCommonConstants.PLAN_DAYS) + " "
-				+ MMJBCommonConstants.DAYS;
-		for (int i = 0; i < inventiryDTO.size(); i++) {
-			postingInventoryDTO = inventiryDTO.get(i);
-			JobPostingInventoryDTO dto = new JobPostingInventoryDTO();
-			if (postingInventoryDTO.getJbType().equalsIgnoreCase(
-					MMJBCommonConstants.STANDARD_JOB_POSTING)
-					&& postingInventoryDTO.getProductType().equals(
-							MMJBCommonConstants.JOB_TYPE_COMBO)) {
-				dto.setAddon(MMJBCommonConstants.BASIC_JOB_TYPE + "+"
-						+ postingInventoryDTO.getAddon());
-				dto.setDuration(Duration);
+		JobPostingInventoryDTO dto = null;
+		
+		String duration = Integer.toString(MMJBCommonConstants.PLAN_DAYS) + " "+ MMJBCommonConstants.DAYS;
+		
+		for (JobPostingInventoryDTO postingInventoryDTO : inventiryDTOList) {
+			
+			dto = new JobPostingInventoryDTO();
+			
+			if (MMJBCommonConstants.STANDARD_JOB_POSTING.equalsIgnoreCase(postingInventoryDTO.getJbType())) {
+				dto.setAddon(postingInventoryDTO.getAddon());
+				dto.setDuration(duration);
 				dto.setQuantity(postingInventoryDTO.getQuantity());
 				dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
 				dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
 				jbPostList.add(dto);
-			} else if (postingInventoryDTO.getJbType().equalsIgnoreCase(
-					MMJBCommonConstants.STANDARD_JOB_POSTING)
-					&& postingInventoryDTO.getProductType().equals(
-							MMJBCommonConstants.JOB_TYPE)) {
-				dto.setAddon(MMJBCommonConstants.BASIC_JOB_TYPE);
-				dto.setDuration(Duration);
-				dto.setQuantity(postingInventoryDTO.getQuantity());
-				dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
-				dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
-				jbPostList.add(dto);
-			} else if (postingInventoryDTO.getJbType().equalsIgnoreCase(
-					MMJBCommonConstants.JOB_POSTING_SLOT)
-					&& postingInventoryDTO.getProductType().equals(
-							MMJBCommonConstants.JOB_TYPE_COMBO)) {
-				dto.setAddon(MMJBCommonConstants.BASIC_JOB_TYPE + "+"
-						+ postingInventoryDTO.getAddon());
-				dto.setDuration(Duration);
-				dto.setQuantity(postingInventoryDTO.getQuantity());
-				dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
-				dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
-				jbSlotList.add(dto);
-			} else if (postingInventoryDTO.getJbType().equalsIgnoreCase(
-					MMJBCommonConstants.JOB_POSTING_SLOT)
-					&& postingInventoryDTO.getProductType().equals(
-							MMJBCommonConstants.JOB_TYPE)) {
-				dto.setAddon(MMJBCommonConstants.BASIC_JOB_TYPE);
-				dto.setDuration(Duration);
+			}else if (MMJBCommonConstants.JOB_POSTING_SLOT.equalsIgnoreCase(postingInventoryDTO.getJbType())) {
+				dto.setAddon(postingInventoryDTO.getAddon());
+				dto.setDuration(duration);
 				dto.setQuantity(postingInventoryDTO.getQuantity());
 				dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
 				dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
@@ -133,7 +89,7 @@ public class JobPostingInventoryController {
 		}
 		model.addObject("jbPostList", jbPostList);
 		model.addObject("jbSlotList", jbSlotList);
-		model.addObject("isAction", status);
+		model.addObject("pageName", page);
 		model.setViewName("jobPostingInventoryPopup");
 		}catch(Exception e){
 			LOGGER.error(e);

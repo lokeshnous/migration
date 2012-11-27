@@ -20,6 +20,7 @@ import com.advanceweb.afc.jb.common.AddOnDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.OrderDetailsDTO;
 import com.advanceweb.afc.jb.common.ResumePackageDTO;
+import com.advanceweb.afc.jb.common.SalesItemDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
@@ -29,6 +30,8 @@ import com.advanceweb.afc.jb.data.entities.AdmOrderAddress;
 import com.advanceweb.afc.jb.data.entities.AdmOrderHeader;
 import com.advanceweb.afc.jb.data.entities.AdmOrderItem;
 import com.advanceweb.afc.jb.data.entities.AdmOrderPayment;
+import com.advanceweb.afc.jb.data.entities.JpAddon;
+import com.advanceweb.afc.jb.data.entities.JpJobTypeCombo;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 import com.advanceweb.afc.jb.pgi.helper.PaymentGatewayHelper;
 
@@ -244,6 +247,7 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 			}	
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			LOGGER.error("ERROR : " + e);
 			return false;
 		}
@@ -287,6 +291,7 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 						admFacilityInventory.setOrderId(orderId);
 						admFacilityInventory.setAdmFacility(admFacility);
 						admFacilityInventory.setCreateDt(new Date());
+						admFacilityInventory.setFacilityId(admFacility.getFacilityId());
 						
 						AdmInventoryDetail admInventoryDetail = transformToAdmInventoryDetail(admFacilityInventory,resSearchPackageDTO);
 						admFacilityInventory.setAdmInventoryDetail(admInventoryDetail);
@@ -309,7 +314,7 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 						admFacilityInventory.setOrderId(orderId);
 						admFacilityInventory.setAdmFacility(admFacility);
 						admFacilityInventory.setCreateDt(new Date());
-						
+						admFacilityInventory.setFacilityId(admFacility.getFacilityId());
 						AdmInventoryDetail admInventoryDetail = transformToAdmInventoryDetail(admFacilityInventory,jobPostingPlanDTO);
 						admFacilityInventory.setAdmInventoryDetail(admInventoryDetail);
 						admFacilityInventoryList.add(admFacilityInventory);
@@ -332,38 +337,12 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 		 AdmInventoryDetail admInventoryDetail = new AdmInventoryDetail();
 			
 			admInventoryDetail.setAdmFacilityInventory(admFacilityInventory);
-			
-			//if its just basic then this is fine to go with 
-			if(jobPostingPlanDTO.getAddOnDTOList().size() == 0){
-				admInventoryDetail.setProductId(Integer.parseInt(jobPostingPlanDTO.getJobPostPlanId()));
-				admInventoryDetail.setProductType(MMJBCommonConstants.JOB_TYPE);
-			}	
-			else{
-				//call the SP to get the combo id & add it as product id 
-				int jobTypeId = Integer.parseInt(jobPostingPlanDTO.getJobPostPlanId());
-				int [] inputs={0,0,0,0,0,0,0};
-				int index = 0;
-				inputs[index] = jobTypeId;
-				
-				for(AddOnDTO addOnDTO : jobPostingPlanDTO.getAddOnDTOList()){
-					// product id is combo id
-					index = Integer.parseInt(addOnDTO.getAddOnId());
-					inputs[index] = index;
-				}
-				
-				Query query = hibernateTemplate.getSessionFactory().getCurrentSession().createSQLQuery(" { call Get_comboId(?,?,?,?,?,?,?) }");
-				for(int i = 0;i<inputs.length; i++){
-					query.setInteger(i, inputs[i]);
-				}	
-				// call SP here to get the combo id & set it as product id 
-				int comboId = DataAccessUtils.intResult(query.list());
-				
-				admInventoryDetail.setProductId(comboId);
-				admInventoryDetail.setProductType(MMJBCommonConstants.JOB_TYPE_COMBO);
-			}
+			admInventoryDetail.setProductId(Integer.parseInt(jobPostingPlanDTO.getJobPostPlanId()));
+			admInventoryDetail.setProductType(MMJBCommonConstants.JOB_TYPE_COMBO);
 			admInventoryDetail.setOrderQty(jobPostingPlanDTO.getQuanity());
 			admInventoryDetail.setAvailableqty(jobPostingPlanDTO.getQuanity());
-		return admInventoryDetail;
+			
+			return admInventoryDetail;
 	}
 	
 	/**
@@ -381,5 +360,66 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 		admInventoryDetail.setAvailableqty(resSearchPackageDTO.getQuantity());
 		
 		return admInventoryDetail;
+	}
+
+	@Override
+	public void createJobPostOrderItems(OrderDetailsDTO orderDetailsDTO) {
+		
+		List<SalesItemDTO> salesItemDTOList = new ArrayList<SalesItemDTO>();
+		SalesItemDTO salesItemDTO = null;
+		
+		List<JobPostingPlanDTO> jobPostingPlanDTOList = new ArrayList<JobPostingPlanDTO>();
+		JobPostingPlanDTO jobPostingDTO = null;
+		
+		for (JobPostingPlanDTO jobPostingPlanDTO : orderDetailsDTO.getJobPostingPlanDTOList()) {
+			salesItemDTO = new SalesItemDTO();
+			// call the SP to get the combo id & add it as product id
+			int jobTypeId = Integer.parseInt(jobPostingPlanDTO
+					.getJobPostPlanId());
+			int[] inputs = { 0, 0, 0, 0, 0, 0, 0 };
+			int index = 0;
+			inputs[index] = jobTypeId;
+			
+			//if its just basic then find the combo id for basic
+			if(jobPostingPlanDTO.getAddOnDTOList().size() == 0){
+				//This value find it from db using 'Basic' String from jp_addon table
+				JpAddon jpAddOn = DataAccessUtils.uniqueResult(hibernateTemplate.find("from JpAddon where name = ?", MMJBCommonConstants.BASIC_JOB_TYPE));
+				inputs[jpAddOn.getAddonId()] = jpAddOn.getAddonId(); 
+			}
+			
+			for (AddOnDTO addOnDTO : jobPostingPlanDTO.getAddOnDTOList()) {
+				// product id is combo id
+				index = Integer.parseInt(addOnDTO.getAddOnId());
+				inputs[index] = index;
+			}
+
+			Query query = hibernateTemplate.getSessionFactory().getCurrentSession().
+					createSQLQuery(" { call Get_comboId(?,?,?,?,?,?,?) }");
+			for (int i = 0; i < inputs.length; i++) {
+				query.setInteger(i, inputs[i]);
+			}
+			// call SP here to get the combo id & set it as item
+			int comboId = DataAccessUtils.intResult(query.list());
+			
+			//Find the netsuite id using the combo id
+			JpJobTypeCombo jobTypeCombo  = hibernateTemplate.get(JpJobTypeCombo.class, comboId);
+			
+			//creating the salesItem DTO
+			salesItemDTO.setItem(String.valueOf(jobTypeCombo.getNetSuiteId()));
+			salesItemDTO.setQuantity(String.valueOf(jobPostingPlanDTO.getQuanity()));
+			salesItemDTOList.add(salesItemDTO);
+			
+			
+			//create the jobPostingPlanDTO list to store in order & inventory tables
+			jobPostingDTO = new JobPostingPlanDTO();
+			jobPostingDTO.setJobPostPlanId(String.valueOf(jobTypeCombo.getComboId()));
+			jobPostingDTO.setJobPostPlanName(jobTypeCombo.getAddons());
+			jobPostingDTO.setJobPostPlanCretitAmt(String.valueOf(jobTypeCombo.getBasePrice()));
+			jobPostingDTO.setQuanity(jobPostingPlanDTO.getQuanity());
+			jobPostingPlanDTOList.add(jobPostingDTO);
+			
+		}
+		orderDetailsDTO.setJobPostingPlanDTOList(jobPostingPlanDTOList);
+		orderDetailsDTO.getSalesOrderDTO().setSalesItemDTOList(salesItemDTOList);
 	}
 }

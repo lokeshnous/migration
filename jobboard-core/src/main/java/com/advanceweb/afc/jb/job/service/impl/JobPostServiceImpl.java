@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
+import com.advanceweb.afc.jb.common.SchedulerDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityJpAudit;
 import com.advanceweb.afc.jb.employer.dao.JobPostDAO;
@@ -170,5 +171,10 @@ public class JobPostServiceImpl implements JobPostService {
 		return employerJobPostDAO.getinvDetIdByJobId(jobId, facilityId, userId);
 	}
 
+	
+	@Override
+	public AdmFacilityJpAudit getinvDtlByJobId(int jobId) {
+		return employerJobPostDAO.getinvDtlByJobId(jobId);
+	} 
 
 }

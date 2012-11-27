@@ -248,8 +248,8 @@ public interface MMJBCommonConstants {
 	String POST_JOB_INACTIVE = "Inactive";
 	byte ACTIVE = 1;
 	byte INACTIVE = 0;
-	String STANDARD_POSTING = "Standard Posting";
-	String SLOT_POSTING = "Slot Posting";
+	String STANDARD_POSTING = "Job Posting";
+	String SLOT_POSTING = "Job Slot";
 	// For Apply job type
 	String APPLY_TO_URL = "ApplyToURL";
 	String APPLY_TO_ATS = "ApplyToATS";
@@ -469,5 +469,4 @@ public interface MMJBCommonConstants {
 	String JOBTITLES_NEXT_PAGE_URL = "nextPageUrl";
 	String JOBTITLES_PREV_PAGE_URL = "prevPageUrl";
 	int JOB_SEARCH_MAX_AREAS = 100;
-	
 }

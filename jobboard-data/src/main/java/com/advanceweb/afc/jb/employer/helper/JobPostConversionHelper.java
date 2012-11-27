@@ -213,8 +213,8 @@ public class JobPostConversionHelper<JobPostForm> {
 			long millisInDay = 60 * 60 * 24 * 1000;
 			Date startDt = new Date(job.getStartDt().getTime());
 			//Start date with out time
-			long startDateAsTimestamp = startDt.getTime();
-			//long startDateAsTimestamp = (startDate / millisInDay) * millisInDay;
+			long startDate = startDt.getTime();
+			long startDateAsTimestamp = (startDate / millisInDay) * millisInDay;
 			//current date with out time
 			long dateOnly = new Date().getTime();
 			long currentTimestamp = (dateOnly / millisInDay) * millisInDay;
@@ -225,8 +225,9 @@ public class JobPostConversionHelper<JobPostForm> {
 				jobPostDTO.setEndDt(formatter.format(job.getEndDt()));
 				//End date with out time
 				Date endtDt = new Date(job.getEndDt().getTime());
-				long endtDateAsTimestamp = endtDt.getTime();
-				//long endtDateAsTimestamp = (endDate / millisInDay)* millisInDay;
+				long endDate = endtDt.getTime();
+				long endtDateAsTimestamp = (endDate / millisInDay)
+						* millisInDay;
 
 				if (job.getActive() == 1
 						&& endtDateAsTimestamp < currentTimestamp) {
@@ -364,7 +365,7 @@ public class JobPostConversionHelper<JobPostForm> {
 			jobPostingPlanDTO.setJobPostPlanName(jobType.getName());
 			jobPostingPlanDTO.setJobPostPlanDescr(jobType.getDescription());
 			jobPostingPlanDTO.setJobPostPlanCretitAmt(String.valueOf(jobType.getCreditAmt()));
-			jobPostingPlanDTO.setJobPostNetSuiteId(String.valueOf(jobType.getNetSuiteId()));
+			
 			List<AddOnDTO> addOnDTOList = new ArrayList<AddOnDTO>();
 			for(JpAddon jpAddon : jobType.getJpAddons()){
 				addOnDTOList.add(transformJpAddOnToAddOnDTO(jpAddon));
@@ -388,7 +389,6 @@ public class JobPostConversionHelper<JobPostForm> {
 		addOnDTO.setAddOnName(jpAddon.getName());
 		addOnDTO.setAddOnDescription(jpAddon.getDescription());
 		addOnDTO.setAddOnCreditAmt(String.valueOf(jpAddon.getCreditAmt()));
-		addOnDTO.setAddOnNetSuiteId(String.valueOf(jpAddon.getNetSuiteId()));
 		return addOnDTO;
 	}
 }

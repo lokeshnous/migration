@@ -120,6 +120,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/agency/service/impl/AgencyServ
 jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/ActiveJobsJobWorker.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/AutoRenewalJobWorker.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/JobBoardCronTrigger.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/JobPostExpireSoon.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/JobWorker.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/ProfileViewSendMailJobWorker.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/common/util/DateUtils.java -text

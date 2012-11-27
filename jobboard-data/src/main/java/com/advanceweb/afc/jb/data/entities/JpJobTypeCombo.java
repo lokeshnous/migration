@@ -10,12 +10,13 @@ import javax.persistence.Table;
 
 
 /**
- * The persistent class for the adm_facility_detail database table.
+ * The persistent class for the jp_jobtype_combo database table.
  * 
  */
 @Entity
 @Table(name="jp_jobtype_combo")
 public class JpJobTypeCombo {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -29,6 +30,12 @@ public class JpJobTypeCombo {
 	
 	@Column(name="addons")
 	private String addons;
+	
+	@Column(name="netsuite_id")
+	private int netSuiteId;
+	
+	@Column(name="base_price")
+	private float basePrice;
 	
 	public int getComboId() {
 		return comboId;
@@ -52,5 +59,25 @@ public class JpJobTypeCombo {
 
 	public void setAddons(String addons) {
 		this.addons = addons;
-	}	
+	}
+	
+	public int getNetSuiteId() {
+		return netSuiteId;
+	}
+
+	public void setNetSuiteId(int netSuiteId) {
+		this.netSuiteId = netSuiteId;
+	}
+
+	public float getBasePrice() {
+		return basePrice;
+	}
+
+	public void setBasePrice(float basePrice) {
+		this.basePrice = basePrice;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 }

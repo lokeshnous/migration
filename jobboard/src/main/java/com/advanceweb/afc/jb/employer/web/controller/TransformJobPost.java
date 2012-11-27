@@ -132,7 +132,6 @@ public class TransformJobPost {
 			jobPostingsForm.setJobPostPlanName(jobPostingPlanDTO.getJobPostPlanName());
 			jobPostingsForm.setJobPostPlanDescr(jobPostingPlanDTO.getJobPostPlanDescr());
 			jobPostingsForm.setJobPostPlanCretitAmt(jobPostingPlanDTO.getJobPostPlanCretitAmt());
-			jobPostingsForm.setJobPostNetSuiteId(jobPostingPlanDTO.getJobPostNetSuiteId());
 			addOnFormList = new ArrayList<AddOnForm>();
 			for(AddOnDTO addOnDTO : jobPostingPlanDTO.getAddOnDTOList()){
 				addOnFormList.add(transformAddOnDTOToAddOnForm(addOnDTO));
@@ -155,7 +154,6 @@ public class TransformJobPost {
 		addOnForm.setAddOnName(addOnDTO.getAddOnName());
 		addOnForm.setAddOnDescription(addOnDTO.getAddOnDescription());
 		addOnForm.setAddOnCreditAmt(addOnDTO.getAddOnCreditAmt());
-		addOnForm.setAddOnNetSuiteId(addOnDTO.getAddOnNetSuiteId());
 		return addOnForm;
 	}
 	
@@ -177,7 +175,6 @@ public class TransformJobPost {
 			jobPostingPlanDTO.setJobPostPlanName(jobPostingsForm.getJobPostPlanName());
 			jobPostingPlanDTO.setJobPostPlanDescr(jobPostingsForm.getJobPostPlanDescr());
 			jobPostingPlanDTO.setJobPostPlanCretitAmt(jobPostingsForm.getJobPostPlanCretitAmt());
-			jobPostingPlanDTO.setJobPostNetSuiteId(jobPostingsForm.getJobPostNetSuiteId());
 			jobPostingPlanDTO.setQuanity(jobPostingsForm.getQuantity());
 			jobPostingPlanDTO.setPackageSubTotal(jobPostingsForm.getPackageSubTotal());
 			addOnDTOList = new ArrayList<AddOnDTO>();
@@ -203,7 +200,6 @@ public class TransformJobPost {
 		addOnDTO.setAddOnName(addOnForm.getAddOnName());
 		addOnDTO.setAddOnDescription(addOnForm.getAddOnDescription());
 		addOnDTO.setAddOnCreditAmt(addOnForm.getAddOnCreditAmt());
-		addOnDTO.setAddOnNetSuiteId(addOnForm.getAddOnNetSuiteId());
 		return addOnDTO;
 	}
 }

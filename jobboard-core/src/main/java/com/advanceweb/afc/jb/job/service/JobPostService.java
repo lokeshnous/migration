@@ -79,4 +79,6 @@ public interface JobPostService {
 	 * @return
 	 */
 	int getinvDetIdByJobId(int jobId, int facilityId, int userId);
+	
+	AdmFacilityJpAudit getinvDtlByJobId(int jobId);
 }

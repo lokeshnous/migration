@@ -5,6 +5,7 @@ import java.util.List;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
+import com.advanceweb.afc.jb.common.SchedulerDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityJpAudit;
 
 
@@ -32,8 +33,8 @@ public interface JobPostDAO {
 	int getTotalNumberOfJobRecords(int employerId);
 	int getTotalNumberOfJobRecordsByStatus();
 	
-	boolean executeActiveJobWorker(List<JobPostDTO> jobsList);
-	boolean executeAutoRenewalJobWorker(List<JobPostDTO> jobsList);
+	List<SchedulerDTO> executeActiveJobWorker(List<JobPostDTO> jobsList);
+	List<SchedulerDTO> executeAutoRenewalJobWorker(List<JobPostDTO> jobsList);
 	List<JobPostDTO> retreiveAllScheduledJobs();
 	List<JobPostDTO> retreiveAllExpiredJobs();
 	
@@ -59,4 +60,10 @@ public interface JobPostDAO {
 	 * @return
 	 */
 	int getinvDetIdByJobId(int jobId,int facilityId,int userId);
+	
+	AdmFacilityJpAudit getinvDtlByJobId(int jobId);
+	
+	public List<SchedulerDTO> retreiveActiveJobsExpireSoon();
+	
+	public List<SchedulerDTO> executeExpireJobs();
 }

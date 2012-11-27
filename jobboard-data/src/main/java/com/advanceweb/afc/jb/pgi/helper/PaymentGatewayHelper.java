@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AccountBillingDTO;
-import com.advanceweb.afc.jb.common.AddOnDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.OrderPaymentDTO;
 import com.advanceweb.afc.jb.common.ResumePackageDTO;
@@ -150,32 +149,18 @@ public class PaymentGatewayHelper {
 		List<AdmOrderItem> admOrderItemList = new ArrayList<AdmOrderItem>();
 		AdmOrderItem admOrderItem = null;
 		int itemNumber = 0;
-		
 		for(JobPostingPlanDTO jobPostingPlanDTO : jobPostingPlanDTOList){
 			admOrderItem = new AdmOrderItem();
 			
 			admOrderItem.setAdmOrderHeader(admOrderHeader);
-			admOrderItem.setPrice(Float.parseFloat(jobPostingPlanDTO.getJobPostPlanCretitAmt()));
 			admOrderItem.setProductId(Integer.parseInt(jobPostingPlanDTO.getJobPostPlanId()));
-			admOrderItem.setProductType(MMJBCommonConstants.JOB_TYPE);
+			admOrderItem.setProductType(MMJBCommonConstants.JOB_TYPE_COMBO);
 			admOrderItem.setProductName(jobPostingPlanDTO.getJobPostPlanName());
+			admOrderItem.setPrice(Float.parseFloat(jobPostingPlanDTO.getJobPostPlanCretitAmt()));
 			admOrderItem.setQtyOrdered(jobPostingPlanDTO.getQuanity());
 			admOrderItem.setOrderStatus(orderStatusStr);
 			admOrderItem.setItemNumber(++itemNumber);
 			admOrderItemList.add(admOrderItem);
-			
-			for(AddOnDTO addOnDTO : jobPostingPlanDTO.getAddOnDTOList()){
-				admOrderItem = new AdmOrderItem();
-				admOrderItem.setAdmOrderHeader(admOrderHeader);
-				admOrderItem.setPrice(Float.parseFloat(addOnDTO.getAddOnCreditAmt()));
-				admOrderItem.setProductId(Integer.parseInt(addOnDTO.getAddOnId()));
-				admOrderItem.setProductType(MMJBCommonConstants.JOB_TYPE_ADDON);
-				admOrderItem.setProductName(addOnDTO.getAddOnName());
-				admOrderItem.setQtyOrdered(jobPostingPlanDTO.getQuanity());
-				admOrderItem.setOrderStatus(orderStatusStr);
-				admOrderItem.setItemNumber(itemNumber);
-				admOrderItemList.add(admOrderItem);
-			}
 		}
 		return admOrderItemList;
 	}

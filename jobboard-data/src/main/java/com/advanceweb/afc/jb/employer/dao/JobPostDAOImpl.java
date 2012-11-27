@@ -25,6 +25,8 @@ import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
+import com.advanceweb.afc.jb.common.SchedulerDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityJpAudit;
@@ -39,6 +41,7 @@ import com.advanceweb.afc.jb.data.entities.JpJobTypeCombo;
 import com.advanceweb.afc.jb.data.entities.JpLocation;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
 import com.advanceweb.afc.jb.employer.helper.JobPostConversionHelper;
+import com.advanceweb.afc.jb.user.dao.UserDao;
 
 /**
  * @Author : Prince Mathew
@@ -62,10 +65,21 @@ public class JobPostDAOImpl implements JobPostDAO {
 	private static final String FIND_JP_JOB = "SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId=";
 	private static final String FIND_JP_JOB_COUNT = "SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId=";
 	private static final long MILLIS_IN_DAY = 24 * 60 * 60 * 1000;
-
+	
+	/*private static final String FIND_ACTIVE_JOBS_EXPIRE_SOON = "select job.jobId,job.admFacility.facilityId,userFacility.facilityPK.userId," +
+			"facility.name,job.endDt as expiteDate from JpJob job INNER JOIN AdmUserFacility userFacility INNER JOIN AdmFacility facility " +
+			"where job.admFacility.facilityId=userFacility.admFacility.facilityId and job.admFacility.facilityId = facility.facilityId and job.active = 1 " +
+			"and date_format(job.startDt, '%Y-%m-%d') <= CURRENT_DATE and date_format(job.endDt, '%Y-%m-%d') >= CURRENT_DATE " +
+			"and (job.deleteDt is null) and DATEDIFF(date_format(job.endDt, '%Y-%m-%d'),CURRENT_DATE) <= 2";*/
+	
+	private static final String FIND_ACTIVE_JOBS_EXPIRE_SOON = "select job.job_id,job.facility_id,facility.user_id,fec.name,job.end_dt from jp_job job join adm_user_facility facility join adm_facility fec where job.facility_id=facility.facility_id and job.facility_id=fec.facility_id and job.active = 1 and date_format(job.start_dt, '%Y-%m-%d') <= CURRENT_DATE and date_format(job.end_dt, '%Y-%m-%d') >= CURRENT_DATE and (job.delete_dt is null) and DATEDIFF(date_format(job.end_dt, '%Y-%m-%d'),CURRENT_DATE) <= 3";
+	
 	private static final Logger LOGGER = Logger.getLogger(JobPostDAOImpl.class);
+	
 	private HibernateTemplate hibernateTemplate;
+	
 	private int numberOfJobRecordsByStatus;
+	
 	@Autowired
 	private JobPostConversionHelper<?> jobPostConversionHelper;
 
@@ -74,6 +88,11 @@ public class JobPostDAOImpl implements JobPostDAO {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
 	}
 
+	@Autowired
+	UserDao userDAO;
+	
+	@Autowired
+	private FacilityDAO facilityDAO;
 	/*
 	 * @Autowired public void setHibernateTemplate(SessionFactory
 	 * sessionFactory) { this.hibernateTemplateTracker = new
@@ -687,14 +706,52 @@ public class JobPostDAOImpl implements JobPostDAO {
 		}
 		return null;
 	}
-
+	
+	/**
+	 * This method is called to retreive all the active jobs which expire in 2 days
+	 */
+	public List<SchedulerDTO> retreiveActiveJobsExpireSoon() {
+		//list the  Active Jobs Expiring Soon
+		List<SchedulerDTO> schedulerDTOList = new ArrayList<SchedulerDTO>();
+		
+		SchedulerDTO schedulerDTO = null;
+		try {
+			Query query = hibernateTemplate.getSessionFactory().openSession().createSQLQuery(FIND_ACTIVE_JOBS_EXPIRE_SOON);
+			List<Object[]> jobs = query.list();
+			for( Object[] obj : jobs){
+				
+				schedulerDTO = new SchedulerDTO();
+				schedulerDTO.setJobId(Integer.parseInt(String.valueOf(obj[0])));
+				schedulerDTO.setUserId(Integer.parseInt(String.valueOf(obj[2])));
+				schedulerDTO.setCompanyName(String.valueOf(obj[3]));
+				schedulerDTO.setExpireDate(String.valueOf(obj[4]));
+				
+				//get the user details from the mer_user table using the user id with which job has been posted
+				UserDTO userDTO = userDAO.getUserByUserId(schedulerDTO.getUserId());
+				
+				schedulerDTO.setFirstName(userDTO.getFirstName());
+				schedulerDTO.setLastName(userDTO.getLastName());
+				schedulerDTO.setEmailId(userDTO.getEmailId());
+				schedulerDTOList.add(schedulerDTO);
+			}
+			
+			
+		} catch (DataAccessException e) {
+			LOGGER.error(e);
+		}
+		return schedulerDTOList;
+	}
+	
+	
 	@Override
-	public boolean executeActiveJobWorker(List<JobPostDTO> jobsList) {
+	public List<SchedulerDTO> executeExpireJobs() {
 		LOGGER.info("Executing -> executeActiveJobWorker()");
+		
+		List<SchedulerDTO> schedulerDTOList = new ArrayList<SchedulerDTO>();
+		
 		// Update Jobs as expired
 		try {
-
-			// Identify the expired jobs
+			// Identify jobs eligible for expire
 			List<JpJob> expiredJobs = hibernateTemplate.find(FIND_EXPIRED_JOBS,
 					getOneDayBeforeDate());
 
@@ -702,23 +759,33 @@ public class JobPostDAOImpl implements JobPostDAO {
 				try {
 					job.setActive((byte) 0);
 					hibernateTemplate.saveOrUpdate(job);
+					//get the user details to send the mail
+					getUserDetails(schedulerDTOList, job);
+					
 				} catch (Exception e) {
 					LOGGER.error("Failed to mark job as expired for job Id  "
 							+ job.getJobId());
 					LOGGER.error(e);
 				}
-				LOGGER.info("ActiveJobsJobWorker-> Marked Job as expired successfully....."
-						+ job.getJobId());
+				LOGGER.info("ActiveJobsJobWorker-> Marked Job as expired successfully....."+ job.getJobId());
 			}
 
 		} catch (DataAccessException e) {
 			LOGGER.error("Failed to retreive expired jobs  ");
 			LOGGER.error(e);
 		}
-
+		return schedulerDTOList;
+	}
+	
+	@Override
+	public List<SchedulerDTO> executeActiveJobWorker(List<JobPostDTO> jobsList) {
+		LOGGER.info("Executing -> executeActiveJobWorker()");
+		
+		List<SchedulerDTO> schedulerDTOList = new ArrayList<SchedulerDTO>();
+		
 		// Schedule Jobs
 		try {
-
+			
 			// Identify the scheduled jobs
 			List<JpJob> scheduledJobs = hibernateTemplate
 					.find(FIND_SCHEDULED_JOBS);
@@ -755,8 +822,9 @@ public class JobPostDAOImpl implements JobPostDAO {
 							job.setActive((byte) 1);
 							hibernateTemplate.saveOrUpdate(job);
 						} catch (Exception e) {
-							LOGGER.error("Failed to renew the job as Active "
-									+ job.getJobId());
+							LOGGER.error("Failed to renew the job as Active "+ job.getJobId());
+							//get the user details to send the mail
+							getUserDetails(schedulerDTOList, job);
 							LOGGER.error(e);
 						}
 						LOGGER.info("ActiveJobsJobWorker-> Renewal of job is done successfully....."
@@ -773,12 +841,33 @@ public class JobPostDAOImpl implements JobPostDAO {
 			LOGGER.error(e);
 		}
 		LOGGER.info("Executed -> executeActiveJobWorker()");
-		return false;
+		return schedulerDTOList;
+	}
+
+	/**
+	 * This method will get the user details to send the mail.
+	 * @param schedulerDTOList
+	 * @param job
+	 */
+	private void getUserDetails(List<SchedulerDTO> schedulerDTOList, JpJob job) {
+		SchedulerDTO schedulerDTO;
+		UserDTO userDTO;
+		userDTO = userDAO.getUserByUserId(facilityDAO.getfacilityUserId(job.getAdmFacility().getFacilityId()));
+		schedulerDTO = new SchedulerDTO();
+		schedulerDTO.setUserId(userDTO.getUserId());
+		schedulerDTO.setJobId(job.getJobId());
+		schedulerDTO.setFirstName(userDTO.getFirstName());
+		schedulerDTO.setLastName(userDTO.getLastName());
+		schedulerDTO.setEmailId(userDTO.getEmailId());
+		schedulerDTO.setCompanyName(job.getAdmFacility().getName());
+		schedulerDTO.setExpireDate(String.valueOf(job.getEndDt()));
+		schedulerDTOList.add(schedulerDTO);
 	}
 
 	@Override
-	public boolean executeAutoRenewalJobWorker(List<JobPostDTO> jobsList) {
+	public List<SchedulerDTO> executeAutoRenewalJobWorker(List<JobPostDTO> jobsList) {
 		LOGGER.info("Executing -> executeAutoRenewalJobWorker()");
+		List<SchedulerDTO> schedulerDTOList = new ArrayList<SchedulerDTO>();
 		// Schedule Jobs
 		try {
 
@@ -811,8 +900,8 @@ public class JobPostDAOImpl implements JobPostDAO {
 							job.setActive((byte) 1);
 							hibernateTemplate.saveOrUpdate(job);
 						} catch (Exception e) {
-							LOGGER.error("Failed to renew the job as Active "
-									+ job.getJobId());
+							LOGGER.error("Failed to renew the job as Active "+ job.getJobId());
+							getUserDetails(schedulerDTOList, job);
 							LOGGER.error(e);
 						}
 						LOGGER.info("ActiveJobsJobWorker-> Renewal of job is done successfully....."
@@ -829,7 +918,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			LOGGER.error(e);
 		}
 		LOGGER.info("Executed -> executeActiveJobWorker()");
-		return false;
+		return schedulerDTOList;
 	}
 
 	/**
@@ -1105,6 +1194,27 @@ public class JobPostDAOImpl implements JobPostDAO {
 			LOGGER.error(e);
 		}
 		return invDetailId;
+	}
+	@Override
+	public AdmFacilityJpAudit getinvDtlByJobId(int jobId) {
+		AdmFacilityJpAudit invDetail = new AdmFacilityJpAudit();
+		try {
+			Query query = hibernateTemplate
+					.getSessionFactory()
+					.getCurrentSession()
+					.createQuery(
+							"SELECT a from AdmFacilityJpAudit a where a.id.jobId=" + jobId);
+
+			List<AdmFacilityJpAudit> admFacilityJpAuditList = (List<AdmFacilityJpAudit>) query
+					.list();
+			if (null != admFacilityJpAuditList
+					&& !admFacilityJpAuditList.isEmpty()) {
+				invDetail = admFacilityJpAuditList.get(0);
+			}
+		} catch (DataAccessException e) {
+			LOGGER.error(e);
+		}
+		return invDetail;
 	}
 
 	/**

@@ -15,7 +15,6 @@ public class JobPostingsForm {
 	private String jobPostPlanName;
 	private String jobPostPlanDescr;
 	private String jobPostPlanCretitAmt;
-	private String jobPostNetSuiteId;
 	private List<AddOnForm> addOnForm;
 	private int quantity;
 	private int packageSubTotal;
@@ -43,12 +42,6 @@ public class JobPostingsForm {
 	}
 	public void setJobPostPlanCretitAmt(String jobPostPlanCretitAmt) {
 		this.jobPostPlanCretitAmt = jobPostPlanCretitAmt;
-	}
-	public String getJobPostNetSuiteId() {
-		return jobPostNetSuiteId;
-	}
-	public void setJobPostNetSuiteId(String jobPostNetSuiteId) {
-		this.jobPostNetSuiteId = jobPostNetSuiteId;
 	}
 	public List<AddOnForm> getAddOnForm() {
 		return addOnForm;

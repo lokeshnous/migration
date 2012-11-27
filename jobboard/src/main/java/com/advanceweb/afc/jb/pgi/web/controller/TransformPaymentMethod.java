@@ -167,7 +167,7 @@ public class TransformPaymentMethod {
 			List<JobPostingPlanDTO> jobPostingPlanDTOList = transformTojobPostingPlanDTOList(purchaseJobPostForm.getJobPostingsCart());
 			orderDetailsDTO.setJobPostingPlanDTOList(jobPostingPlanDTOList);
 			
-			salesItemDTOList = transformToSalesItemDTO(purchaseJobPostForm.getJobPostingsCart());
+			//In case of Job post purchase get create the sales Item using combo table 
 			
 			orderPaymentDTO.setPaidAmount(String.valueOf(purchaseJobPostForm.getGrandTotal()));
 			
@@ -249,7 +249,7 @@ public class TransformPaymentMethod {
 	 * @param jobPostingsCart
 	 * @return salesItemDTOList
 	 */
-	private List<SalesItemDTO> transformToSalesItemDTO(List<JobPostingsForm> jobPostingsCart){
+	/*private List<SalesItemDTO> transformToSalesItemDTO(List<JobPostingsForm> jobPostingsCart){
 		List<SalesItemDTO> salesItemDTOList = new ArrayList<SalesItemDTO>();
 		SalesItemDTO salesItemDTO = null;
 		for(JobPostingsForm jobPostingsForm : jobPostingsCart){
@@ -266,7 +266,7 @@ public class TransformPaymentMethod {
 			}
 		}
 		return salesItemDTOList;
-	}
+	}*/
 	
 	/**
 	 * This method will transform ResumeSearchPackageForm list to SalesItemDTO
@@ -305,7 +305,6 @@ public class TransformPaymentMethod {
 			jobPostingPlanDTO.setJobPostPlanName(jobPostingsForm.getJobPostPlanName());
 			jobPostingPlanDTO.setJobPostPlanCretitAmt(jobPostingsForm.getJobPostPlanCretitAmt());
 			jobPostingPlanDTO.setQuanity(jobPostingsForm.getQuantity());
-			jobPostingPlanDTO.setJobPostNetSuiteId(jobPostingsForm.getJobPostNetSuiteId());
 			
 			addOnDTOList = new ArrayList<AddOnDTO>();
 			for(AddOnForm addOnForm : jobPostingsForm.getAddOnForm()){
@@ -313,7 +312,6 @@ public class TransformPaymentMethod {
 				addOnDTO.setAddOnId(addOnForm.getAddOnId());
 				addOnDTO.setAddOnName(addOnForm.getAddOnName());
 				addOnDTO.setAddOnCreditAmt(addOnForm.getAddOnCreditAmt());
-				addOnDTO.setAddOnNetSuiteId(addOnForm.getAddOnNetSuiteId());
 				addOnDTOList.add(addOnDTO);
 			}
 			jobPostingPlanDTO.setAddOnDTOList(addOnDTOList);

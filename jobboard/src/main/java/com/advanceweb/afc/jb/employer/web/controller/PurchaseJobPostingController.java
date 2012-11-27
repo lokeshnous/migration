@@ -57,9 +57,6 @@ public class PurchaseJobPostingController {
 		ModelAndView model = new ModelAndView();
 		PurchaseJobPostForm purchaseJobPostForm = new PurchaseJobPostForm();
 
-		if (page != null && page.equals(MMJBCommonConstants.INVENTORY)) {
-			purchaseJobPostForm.setInventoryPage("true");
-		}
 		List<JobPostingPlanDTO> jobPostingPlanDTOList = employerJobPost
 				.getJobPostingPlans();
 
@@ -67,6 +64,7 @@ public class PurchaseJobPostingController {
 				.transformToJobPostingsFormList(jobPostingPlanDTOList);
 
 		purchaseJobPostForm.setJobPostingsForm(jobPostingsForm);
+		model.addObject("pageName", page);
 		model.addObject(MMJBCommonConstants.PURCHASE_JOB_POST_FORM, purchaseJobPostForm);
 		model.setViewName(PURCHASE_JOB_POSTINGS);
 		return model;

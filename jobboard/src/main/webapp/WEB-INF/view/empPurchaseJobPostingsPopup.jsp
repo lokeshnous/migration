@@ -1,3 +1,4 @@
+<%@ page import="com.advanceweb.afc.jb.common.util.MMJBCommonConstants" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -120,7 +121,6 @@
 										"addOnName":$(this).parent().children(1).text(),
 										"addOnDescription":"",
 										"addOnCreditAmt":$(this).parent().parent().parent().find("td").eq(1).attr("id"),
-										"addOnNetSuiteId":$(this).parent().parent().parent().find("input").last().attr("id")
 									});
 								}
 						});
@@ -131,7 +131,6 @@
 							 	"jobPostPlanName":planObj.find("td").eq(0).children(1).text(),
 							 	"jobPostPlanDescr":"",
 							 	"jobPostPlanCretitAmt":planObj.find("td").eq(1).attr("id"),
-							 	"jobPostNetSuiteId":planObj.find("input").last().attr("id"),
 							 	"addOnForm":addOnStr,
 							 	"quantity": parseInt(quantity),
 						 }); 
@@ -207,24 +206,24 @@
 									class="link_color2_selected"><span>$</span><span>${jobPosting.jobPostPlanCretitAmt}</span></span></td>
 								<td width="19%"><input type="text"
 									name="healthCareSubSplty2" readonly="readonly" class="jb_input75 marginTop0" maxlength="3"/></td>
-								<input type="hidden" id="${jobPosting.jobPostNetSuiteId}"></input>	
 							</tr>
 							</thead>
 							<tbody>
 							<c:forEach items="${jobPosting.addOnForm}" var="addOn" varStatus="status">
-							<tr id="${addOn.addOnId}">
-								<td width="32%" height="30px;" align="Left"><div
-										class="floatLeft">
-										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name="" type="checkbox"
-											value="" class="marginRight5"> <label for="checkbox">${addOn.addOnName}</label> &nbsp;&nbsp;
-									</div>
-									<div class="toolTip">
-										<span class="classic">${addOn.addOnDescription}</span>
-									</div></td>
-								<td width="7%" align="Left" id="${addOn.addOnCreditAmt}"><span>$</span><span>${addOn.addOnCreditAmt}</span></td>
-								<td width="19%"></td>
-								<input type="hidden" id="${addOn.addOnNetSuiteId}"></input>	
-							</tr>
+								<c:if test="${addOn.addOnName != 'Basic'}">
+									<tr id="${addOn.addOnId}">
+										<td width="32%" height="30px;" align="Left"><div
+												class="floatLeft">
+												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input name="" type="checkbox"
+													value="" class="marginRight5"> <label for="checkbox">${addOn.addOnName}</label> &nbsp;&nbsp;
+											</div>
+											<div class="toolTip">
+												<span class="classic">${addOn.addOnDescription}</span>
+											</div></td>
+										<td width="7%" align="Left" id="${addOn.addOnCreditAmt}"><span>$</span><span>${addOn.addOnCreditAmt}</span></td>
+										<td width="19%"></td>
+									</tr>
+								</c:if>
 							</c:forEach>
 							</tbody>
 						</table>
@@ -326,7 +325,7 @@
 					<span class="floatLeft marginTop10"><a href="<%=request.getContextPath()%>/purchaseJobPosting/proceedToCheckOut.html" id="proceedToCheckout"
 						class="btn_sm orange cursor">Proceed to Checkout</a> 		
 					<c:choose>
-						<c:when test="${purchaseJobPostForm.inventoryPage != null}">
+						<c:when test="${pageName == 'postJobPage'}">
 								<a href="<%=request.getContextPath()%>/inventory/employer/jobInventory.html" class="nyroModal btn_sm orange cursor">Cancel</a>
 						</c:when>
 						<c:otherwise>

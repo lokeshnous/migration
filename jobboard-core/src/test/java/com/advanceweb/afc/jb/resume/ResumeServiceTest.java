@@ -138,7 +138,7 @@ public class ResumeServiceTest extends ServiceTestBase {
 
 	/**
 	 * 
-	 * Retrive resume for userid=2
+	 * Retrive resume for userid = 2
 	 */
 	@Test
 	public void testRetrieveAllResumes() {
@@ -147,7 +147,7 @@ public class ResumeServiceTest extends ServiceTestBase {
 			List<ResumeDTO> resumeDTOList = resumeService.retrieveAllResumes(2);
 			assertTrue("Retrieve Resume", resumeDTOList.size() >= 0);
 			for (ResumeDTO resumeDTO : resumeDTOList) {
-				//System.out.println(resumeDTO);
+				System.out.println(resumeDTO);
 			}
 
 		} catch (Exception e) {

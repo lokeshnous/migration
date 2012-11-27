@@ -1,6 +1,5 @@
 package com.advanceweb.afc.jb.pgi.service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,12 +7,11 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.advanceweb.afc.jb.common.AddOnDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.OrderDetailsDTO;
 import com.advanceweb.afc.jb.common.OrderPaymentDTO;
-import com.advanceweb.afc.jb.common.SalesItemDTO;
 import com.advanceweb.afc.jb.common.SalesOrderDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.job.service.JobPostService;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 import com.advanceweb.jb.test.ServiceTestBase;
@@ -44,9 +42,12 @@ public class PaymentGatewayServiceTest extends ServiceTestBase{
 		
 		//Selection of job_type, addons, quantity 
 		jobPostingPlanDTOList.get(0).setQuanity(2);
-		jobPostingPlanDTOList.get(0).getAddOnDTOList().remove(0);
-		jobPostingPlanDTOList.get(0).getAddOnDTOList().remove(0);
-		jobPostingPlanDTOList.get(0).getAddOnDTOList().remove(0);
+		
+		jobPostingPlanDTOList.get(0).getAddOnDTOList().remove(3);
+		
+		//jobPostingPlanDTOList.get(0).getAddOnDTOList().remove(0);
+		//jobPostingPlanDTOList.get(0).getAddOnDTOList().remove(0);
+		//jobPostingPlanDTOList.get(0).getAddOnDTOList().remove(0);
 		
 		jobPostingPlanDTOList.remove(1);
 		//jobPostingPlanDTOList.get(1).setQuanity(3);
@@ -57,7 +58,7 @@ public class PaymentGatewayServiceTest extends ServiceTestBase{
 		int userId = 1;
 		int facilityId = 432;
 		int orderTotal = 1600;
-		int nsCustomeId = 459468;
+		int nsCustomeId = 504309;
 		
 		OrderDetailsDTO orderDetailsDTO = new OrderDetailsDTO();
 		orderDetailsDTO.setUserId(userId);
@@ -93,14 +94,16 @@ public class PaymentGatewayServiceTest extends ServiceTestBase{
 		//salesOrderDTO.setPaymentMethod("inv");
 		
 		//Add the selected Items 
-		List<SalesItemDTO> salesItemDTOList = transformToSalesItemDTO(jobPostingPlanDTOList);
-		salesOrderDTO.setSalesItemDTOList(salesItemDTOList);
+		/*List<SalesItemDTO> salesItemDTOList = transformToSalesItemDTO(jobPostingPlanDTOList);
+		salesOrderDTO.setSalesItemDTOList(salesItemDTOList);*/
 		orderDetailsDTO.setSalesOrderDTO(salesOrderDTO);
 		orderDetailsDTO.setOrderTotal(orderTotal);
+		orderDetailsDTO.setPurchaseType(MMJBCommonConstants.PURCHASE_JOB_POST);
+				
 		return orderDetailsDTO;
 	}
 
-	private List<SalesItemDTO> transformToSalesItemDTO(List<JobPostingPlanDTO> jobPostingPlanDTOList){
+	/*private List<SalesItemDTO> transformToSalesItemDTO(List<JobPostingPlanDTO> jobPostingPlanDTOList){
 		List<SalesItemDTO> salesItemDTOList = new ArrayList<SalesItemDTO>();
 		SalesItemDTO salesItemDTO = null;
 		for(JobPostingPlanDTO jobPostingPlanDTO : jobPostingPlanDTOList){
@@ -117,6 +120,6 @@ public class PaymentGatewayServiceTest extends ServiceTestBase{
 			}
 		}
 		return salesItemDTOList;
-	}
+	}*/
 	
 }

@@ -45,7 +45,7 @@
 									<th width="13%" align="center" valign="top" scope="col">Purchased</th>
 									<th width="11%" align="center" valign="top" scope="col">Available</th>
 									<c:choose>
-										<c:when test="${isAction != null}">
+										<c:when test="${pageName == 'inventoryPage'}">
 											<th width="12%" align="center" valign="top" scope="col">Action</th>
 										</c:when>
 										<c:otherwise>
@@ -61,7 +61,7 @@
 										<td align="center">${jbPostList.getQuantity()}</td>
 										<td align="center">${jbPostList.getAvailableQty()}</td>
 										<c:choose>
-											<c:when test="${isAction != null}">
+											<c:when test="${pageName == 'inventoryPage'}">
 												<td align="center">
 												<c:if test="${jbPostList.availableQty != 0}">
 												<a href="<%=request.getContextPath()%>/employer/postNewJobs.html?jobPostType=${jbPostList.invDetailId}"><img
@@ -92,7 +92,7 @@
 									<th width="13%" align="center" valign="top" scope="col">Purchased</th>
 									<th width="11%" align="center" valign="top" scope="col">Available</th>
 									<c:choose>
-										<c:when test="${isAction != null}">
+										<c:when test="${pageName == 'inventoryPage'}">
 											<th width="12%" align="center" valign="top" scope="col">Action</th>
 										</c:when>
 										<c:otherwise>
@@ -108,7 +108,7 @@
 										<td align="center">${jbSlotList.getQuantity()}</td>
 										<td align="center">${jbSlotList.getAvailableQty()}</td>
 										<c:choose>
-											<c:when test="${isAction != null}">
+											<c:when test="${pageName == 'inventoryPage'}">
 												<td align="center">
 												<c:if test="${jbSlotList.availableQty != 0}">
 												<a href="<%=request.getContextPath()%>/employer/postNewJobs.html?jobPostType=${jbSlotList.invDetailId}"><img
@@ -131,7 +131,7 @@
 					<c:if test="<%=!(session.getAttribute(MMJBCommonConstants.FACILITY_POST_EDIT)!=null)%>">
 						<security:authorize access="!hasRole('ROLE_FACILITY_POST_EDIT')">
 							<a id="purchaseJobPostings"
-								href="<%=request.getContextPath()%>/purchaseJobPosting/purchaseJobPostings.html?page=inventoryPage"
+								href="<%=request.getContextPath()%>/purchaseJobPosting/purchaseJobPostings.html?page=${pageName}"
 								class="nyroModal btn_sm orange">BUY MORE</a> 
 					</security:authorize>
 					</c:if>
