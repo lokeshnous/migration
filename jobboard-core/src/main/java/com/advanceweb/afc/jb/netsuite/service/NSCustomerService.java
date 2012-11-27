@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.netsuite.service;
 
+import java.util.List;
+
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardNetSuiteServiceException;
 
@@ -47,4 +49,14 @@ public interface NSCustomerService {
 	
 	UserDTO getNSCustomerDetails(UserDTO userDTO) throws JobBoardNetSuiteServiceException;
 	
+	/**
+	 * This method is used to get the customer purchased packages through
+	 * NetSuite.
+	 * 
+	 * @param userDTO
+	 * @return List<String>
+	 * @throws JobBoardNetSuiteServiceException
+	 */
+
+	List<String> getNSCustomerPackages(UserDTO userDTO) throws JobBoardNetSuiteServiceException;
 }
