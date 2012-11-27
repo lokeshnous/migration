@@ -493,6 +493,101 @@ public class JobsController extends AbstractController {
 		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_BYJOBTITLE);
 		return modelAndView;
 	}
+	
+	/**
+	 * Fetch the jobs by area in location using search type and facets of SOLR
+	 * and also create a next and previous links to get the set of searched job
+	 * titles to index the pages for SEO and function calls when area is separated by slash.
+	 * 
+	 * @param session
+	 * @param location
+	 * @param area
+	 * @param areasubpart
+	 * @param jobSearchResultForm
+	 * @param result
+	 * @param modelMap
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = {"/location/{location}/{area}/{areasubpart}"}, method = RequestMethod.GET)
+	public ModelAndView searchJobByLocationReg(HttpSession session,
+			@PathVariable("location") String location,
+			@PathVariable("area") String area,
+			@PathVariable("areasubpart") String areasubpart,
+			JobSearchResultForm jobSearchResultForm, BindingResult result,
+			Map<String, JSONObject> modelMap, HttpServletRequest request) {
+		// Clear the session map
+		session.removeAttribute(SearchParamDTO.SEARCH_SESSION_MAP);
+		ModelAndView modelAndView = new ModelAndView();
+		JSONObject jobSrchJsonObj = null;
+		JobSearchResultDTO jobSearchResultDTO = null;
+
+		// set the search type for SOLR facets
+		String searchName = MMJBCommonConstants.BROWSE_SEARCH;
+		jobSearchResultForm.setSearchtype(searchName);
+
+		// set the FQ parameters
+		String selectedState = location.replace("-", " ");
+		String selectedArea = area+"/"+areasubpart.replace("-", " ")
+				.replace(MMJBCommonConstants.METRO_AREA, "").trim();
+		request.setAttribute(MMJBCommonConstants.THIRD_FQ_PARAM, selectedState);
+		request.setAttribute(MMJBCommonConstants.FIFTH_FQ_PARAM, selectedArea);
+		request.setAttribute(SearchParamDTO.KEYWORDS, MMJBCommonConstants.EMPTY);
+
+		// merge the parameters
+		Map<String, String> paramMap = getParameterMap(jobSearchResultForm,
+				searchName, MMJBCommonConstants.POSTED_DT, session, request);
+
+		// set default page value
+		int page = 1;
+		// set the number of records per page
+		int recordsPerPage = MMJBCommonConstants.JOBTITLES_GRID_PAGESIZE;
+		int noOfRecords = 0;
+		try {
+			if (request.getParameter(MMJBCommonConstants.PAGE) != null) {
+				page = Integer.parseInt(request
+						.getParameter(MMJBCommonConstants.PAGE));
+			}
+			long start = (page - 1) * recordsPerPage;
+			long rows = recordsPerPage;
+			// fetch the jobs
+			jobSearchResultDTO = jobSearchService.jobSearch(
+					paramMap, start, rows);
+			noOfRecords = (int) jobSearchResultDTO.getResultCount();
+		} catch (JobBoardException e) {
+			LOGGER.debug("Error occured while getting the Job Search Result from SOLR...");
+		}
+
+		if (jobSearchResultDTO != null) {
+			// convert the results to JSON object
+			jobSrchJsonObj = searchJobToJSON(jobSearchResultDTO);
+		}
+		// set the absolute path for next and previous links to fetch the set of
+		// records
+		modelAndView.addObject(MMJBCommonConstants.JOBTITLES_NEXT_PAGE_URL,
+				request.getRequestURL());
+		if (page != 1) {
+			modelAndView.addObject(MMJBCommonConstants.JOBTITLES_PREV_PAGE_URL,
+					request.getRequestURL());
+
+		}
+		// set the number of pages
+		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+
+		modelAndView.addObject(MMJBCommonConstants.TOTAL_NO_RECORDS,
+				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
+		modelAndView.addObject(MMJBCommonConstants.SEARCH_RESULTS_LIST,
+				jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS));
+		modelAndView.addObject(MMJBCommonConstants.PAGE, page);
+		modelAndView.addObject("jobTitle", location);
+		modelAndView.addObject(JOB_SEARCH_RESULT_FORM, jobSearchResultForm);
+		modelAndView.addObject(NO_OF_PAGES, noOfPages);
+		String[] seoInfos = {selectedArea, selectedState}; 
+		// Add the SEO details for job search results page
+		addSEODetailsForJobsSearchPages(modelAndView, request, "area", seoInfos, noOfRecords);
+		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_BYJOBTITLE);
+		return modelAndView;
+	}
 
 	/**
 	 * This method is used to create parameter map and populate the required

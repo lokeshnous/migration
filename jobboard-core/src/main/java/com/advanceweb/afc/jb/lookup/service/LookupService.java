@@ -21,4 +21,12 @@ public interface LookupService {
 	
 	List<LocationDTO> locationSearch(String keywords);
 
+	/**
+	 * Get the state full name by short or alias name of state.
+	 * 
+	 * @param stateShortForm
+	 * @return
+	 */
+	String getStateFullName(String stateShortForm);
+
 }

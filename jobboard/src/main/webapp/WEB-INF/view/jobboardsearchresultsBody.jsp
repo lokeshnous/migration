@@ -137,27 +137,26 @@
 									<c:if test="${sessionMap.get('secondFQParam') != ''}">
 									<script>$("#companyPlus").click();</script>
 									</c:if> 
-
 									<div class="refineResultsSubContent cursor">
 										<ul>
 											<c:forEach items="${company}" var="displayCompany" varStatus="status" >
 											<c:choose>
 											<c:when test="${sessionMap.get('secondFQParam') != '' and  fn:startsWith(company[status.index], fn:split(sessionMap.get('secondFQParam'), '\"')[1])}">
 											<span style="font-weight:bold;"> 
+											<c:choose>
+											<c:when test="${fn:startsWith(employer , fn:split(sessionMap.get('secondFQParam'), '\"')[1])}">
+												<li>${company[status.index]}</li>
+											</c:when>
+											<c:otherwise>
 												<li><a onclick="refineByCompany('${company[status.index]}', 'true');">${company[status.index]}</a></li>
+											</c:otherwise>
+											</c:choose>
 											</span>
 											</c:when>
 											<c:otherwise>
 												<li><a onclick="refineByCompany('${company[status.index]}', 'false');">${company[status.index]}</a></li>
 											</c:otherwise>
 											</c:choose>
-											<%-- <c:if test="${fn:startsWith(company[status.index], secondFQParam) and secondFQParam != null}">
-											<span style="font-weight:bold;"> 
-											</c:if>
-												<li><a onclick="refineByCompany('${company[status.index]}');">${company[status.index]}</a></li>
-											<c:if test="${fn:startsWith(company[status.index], secondFQParam) and secondFQParam != null}">
-											</span> 
-											</c:if> --%>
 											</c:forEach>
 										</ul>
 									</div>
@@ -165,16 +164,22 @@
 									<input type="hidden" name="refined" id="refined" />
 									<span class="refineResultsItem plus" id="statePlus">State</span>
 									<c:if test="${sessionMap.get('thirdFQParam') != ''}">
-									<script>$("#statePlus").click();</script>
+									 <script>$("#statePlus").click();</script>
 									</c:if>
-
 									<div class="refineResultsSubContent cursor">
 										<ul>
 											<c:forEach items="${state}" var="displayState" varStatus="status">
 											<c:choose>
 											<c:when test="${sessionMap.get('thirdFQParam') != '' and fn:startsWith(state[status.index],fn:split(sessionMap.get('thirdFQParam'), '\"')[1])}">
 											<span style="font-weight:bold;"> 
+											<c:choose>
+											<c:when test="${fn:startsWith(browseBystate , fn:split(sessionMap.get('thirdFQParam'), '\"')[1])}">
+												<li>${state[status.index]}</li>
+											</c:when>
+											<c:otherwise>
 												<li><a onclick="refineByState('${state[status.index]}','true');">${state[status.index]}</a></li>
+											</c:otherwise>
+											</c:choose>
 											</span>
 											</c:when>
 											<c:otherwise>
@@ -182,20 +187,13 @@
 											</c:otherwise>
 											</c:choose>
 												
-												<%-- <c:if test="${fn:startsWith(state[status.index], thirdFQParam) and thirdFQParam != null}">
-												<span style="font-weight:bold;"> 
-												</c:if>
-												<li><a onclick="refineByState('${state[status.index]}');">${state[status.index]}</a></li>
-													<c:if test="${fn:startsWith(state[status.index], thirdFQParam) and thirdFQParam != null}">
-												</span> 
-												</c:if> --%>
 											</c:forEach>
 										</ul>
 									</div>
 
 									<span class="refineResultsItem plus" id="cityPlus">City</span>
-									<c:if test="${sessionMap.get('fouthFQParam') != null}">
-									<script>$("#cityPlus").click();</script>
+									<c:if test="${sessionMap.get('fouthFQParam') != ''}">
+									 <script>$("#cityPlus").click();</script>
 									</c:if>
 									<div class="refineResultsSubContent cursor">
 										<ul>
@@ -409,7 +407,15 @@
 							<div class="FormErrorDisplayText row" id="topjobActionInfo${job.JobId}" ></div>
 							
 						</div>
+						<c:if test="${(status.index + 1) % 10 == 0}">
+					<div class="ad_wrapper">
+					<%-- <div id="ad_wrapper${(status.index + 1) % 10}">ADs${(status.index + 1) % 10}</div>
+						<img src="<%=request.getContextPath()%>/resources/images/ads/banner_ad_fpo.png">
+					</div> --%>
+					</div>
+				</c:if>
 			</c:forEach>
+			
 					</div>
 				</div>
 

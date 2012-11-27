@@ -193,4 +193,35 @@ public class LocationDAOImpl implements LocationDAO {
 
 	}
 
+	/**
+	 * This method gets the State full name by short name in JPLocation table.
+	 * 
+	 * @param String
+	 *            stateShortForm
+	 * @return 
+	 */
+	@Override
+	public String getStateFullName(String stateShortForm) {
+		LOGGER.info("The short form of state is :" + stateShortForm);
+		String stateFullName = null;
+
+		Query query = hibernateTemplate
+				.getSessionFactory()
+				.getCurrentSession()
+				.createQuery(
+						"select jloc from  JpLocation jloc WHERE  jloc.state = '"
+								+ stateShortForm + "'");
+		 query.setMaxResults(1);
+		
+		List<JpLocation> jpLocationList = query.list();
+
+		if (jpLocationList != null) {
+			JpLocation jpLocation = jpLocationList.get(0);
+			stateFullName = jpLocation.getStateFullname();
+		}
+
+		LOGGER.info(" The state full name is :" + stateFullName);
+		return stateFullName;
+	}
+
 }

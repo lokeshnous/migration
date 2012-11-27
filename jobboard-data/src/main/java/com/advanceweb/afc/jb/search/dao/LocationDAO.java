@@ -41,6 +41,13 @@ public interface LocationDAO {
 	
 	List<LocationDTO> getCityStateLocationByKeyword(String keywords);
 	
+	/**
+	 * Get the state full name by short or alias name of state.
+	 * 
+	 * @param stateShortForm
+	 * @return
+	 */
+	String getStateFullName(String stateShortForm);
 	
 
 }

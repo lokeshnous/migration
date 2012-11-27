@@ -168,16 +168,16 @@ public interface PageNames {
 	/**
 	 * The browse category page for job seeker
 	 */
-	String JOBSEEKER_BROWSE_JOB_TITLES = "browse_jobtitle_jobseekers";
+	String JOBSEEKER_BROWSE_JOB_TITLES = "browse_jobtitle_jobseeker";
 	
 	/**
 	 * The browse category page for job seeker
 	 */
-	String JOBSEEKER_SITE_MAP = "sitemap_jobseekers";
+	String JOBSEEKER_SITE_MAP = "sitemap_jobseeker";
 
 	/**
 	 * The browse category page for job seeker
 	 */
-	String JOBSEEKER_BROWSE_JOBS = "browse_jobs_jobseekers";
+	String JOBSEEKER_BROWSE_JOBS = "browse_jobs_jobseeker";
 	
 }

@@ -40,4 +40,9 @@ public class LookupServiceImpl implements LookupService{
 		
 	}
 
+	@Override
+	public String getStateFullName(String stateShortForm) {
+		return locationDAO.getStateFullName(stateShortForm);
+	}
+
 }
