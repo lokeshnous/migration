@@ -5,9 +5,11 @@ import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
@@ -70,6 +72,9 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 	private static final String SCRIPT_STRING_GET_USER_DETAILS = "scriptForGetUserDetails";
 	private static final String DEPLOY_STRING_GET_USER_DETAILS = "deployForGetUserDetails";
 
+	private static final String SCRIPT_STRING_GET_CUST_PACKAGES = "scriptForGetCustomerPackages";
+	private static final String DEPLOY_STRING_GET_CUST_PACKAGES = "deployForGetCustomerPackages";
+	
 	private static final String IS_FEATURED = "custentityfeaturedemployee";
 	private static final String AMP_RECORD_TYPE = "&recordtype=";
 
@@ -93,6 +98,11 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 
 	private static final String CONTACT_ROLES_STRING = "contactroles";
 	private static final String EMAIL_STRING = "email";
+	
+	private static final String LEFT_SQ_BRKT_STRING = "[";
+	private static final String RIGHT_SQ_BRKT_STRING = "]";
+	private static final String DOUBLE_QUOTE_STRING = "\"";
+	private static final String NS_ERROR = "Failed to get a string represenation of the NetSuite response";
 
 	/**
 	 * This method is used to create a customer through NetSuite.
@@ -165,6 +175,28 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 
 	}
 
+	/**
+	 * This method is used to get the customer purchased packages through
+	 * NetSuite.
+	 * 
+	 * @param userDTO
+	 * @return List<String>
+	 * @throws JobBoardNetSuiteServiceException
+	 */
+
+	public List<String> getNSCustomerPackages(UserDTO userDTO)
+			throws JobBoardNetSuiteServiceException {
+
+		Map<String, String> queryparamMap = getCustomerPackagesQueryMap();
+		String formParameterString = formParameterForGetCustomerDetails(
+				userDTO, queryparamMap);
+		Response response = netSuiteMethod.netSuiteGet(queryparamMap,
+				formParameterString);
+
+		return getPackagesFromResponse(response);
+
+	}
+	
 	/**
 	 * This method id used to create Net suite customer object from User object.
 	 * 
@@ -289,6 +321,27 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 	}
 
 	/**
+	 * This method is used for creating net suite service url map. The values
+	 * will be read from the netSuite.properties file.
+	 * 
+	 * @returnMap<String, String>
+	 */
+
+	private Map<String, String> getCustomerPackagesQueryMap() {
+
+		Properties entries = netSuiteHelper.getNSProperties();
+		Map<String, String> queryParamMap = new HashMap<String, String>();
+		queryParamMap
+				.put(BASE_URL_STRING, entries.getProperty(BASE_URL_STRING));
+		queryParamMap.put(SCRIPT_STRING,
+				entries.getProperty(SCRIPT_STRING_GET_CUST_PACKAGES));
+		queryParamMap.put(DEPLOY_STRING,
+				entries.getProperty(DEPLOY_STRING_GET_CUST_PACKAGES));
+
+		return queryParamMap;
+	}
+
+	/**
 	 * This method is used to get the User object from the Net Suite Response
 	 * for Creating a Customer. The net suite response will be parsed and
 	 * encapsulated in the User object and return it back.
@@ -314,14 +367,12 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 				userDTO.setNsStatus(RECORD_ALREADY_EXIST_MSG);
 			} else {
 				userDTO.setNsCustomerID(Integer.parseInt(jsonResponse
-						.replaceAll("\"", " ").trim()));
+						.replaceAll(DOUBLE_QUOTE_STRING, " ").trim()));
 				userDTO.setNsStatus(TRUE_STRING);
 			}
 
 		} catch (IOException e) {
-			throw new JobBoardNetSuiteServiceException(
-					"Failed to get a string represenation of the NetSuite response"
-							+ e);
+			throw new JobBoardNetSuiteServiceException(NS_ERROR + e);
 		}
 
 		return userDTO;
@@ -355,9 +406,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 			}
 
 		} catch (IOException e) {
-			throw new JobBoardNetSuiteServiceException(
-					"Failed to get a string represenation of the NetSuite response"
-							+ e);
+			throw new JobBoardNetSuiteServiceException(NS_ERROR + e);
 		}
 
 		return userDTO;
@@ -400,14 +449,52 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 			}
 
 		} catch (IOException e) {
-			throw new JobBoardNetSuiteServiceException(
-					"Failed to get a string represenation of the NetSuite response"
-							+ e);
+			throw new JobBoardNetSuiteServiceException(NS_ERROR + e);
 		}
 
 		return userDTO;
 	}
 
+	/**
+	 * This method is used to get the Job Post Package object from the Net Suite
+	 * Response. The Net Suite response will be parsed and encapsulated in the
+	 * List of String and returned back.
+	 * 
+	 * @param Object
+	 *            of Response
+	 * @return List<String>
+	 * @throws JobBoardServiceException
+	 */
+
+	private List<String> getPackagesFromResponse(Response response)
+			throws JobBoardNetSuiteServiceException {
+		String stringResponse = null;
+		List<String> listPackages = new ArrayList<String>();
+
+		try {
+			stringResponse = IOUtils
+					.readStringFromStream((InputStream) response.getEntity());
+
+			stringResponse = stringResponse.replace(LEFT_SQ_BRKT_STRING,
+					MMJBCommonConstants.EMPTY);
+			stringResponse = stringResponse.replace(RIGHT_SQ_BRKT_STRING,
+					MMJBCommonConstants.EMPTY);
+			List<String> listResponse = new ArrayList<String>(
+					Arrays.asList(stringResponse.split(",")));
+
+			for (String pakageId : listResponse) {
+				listPackages.add(pakageId.replace(DOUBLE_QUOTE_STRING, "")
+						.trim());
+			}
+			LOGGER.debug("List of packages purchased by customer"
+					+ listPackages);
+		} catch (Exception e) {
+			throw new JobBoardNetSuiteServiceException(NS_ERROR + e);
+		}
+
+		return listPackages;
+	}
+	
 	/**
 	 * This method is used to populate USerDTO from JSON object.
 	 * 
@@ -531,7 +618,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 
 	private JSONObject getIsPerson(String jsonCustomer) {
 		JSONObject json = (JSONObject) JSONSerializer.toJSON(jsonCustomer
-				.toLowerCase());
+				.toLowerCase(Locale.ENGLISH));
 		json.put(IS_PERSION_STRING, json.getString(IS_PERSION_STRING)
 				.toUpperCase());
 		return json;
@@ -565,7 +652,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 
 	public Date convertToDate(String date) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(
-				MMJBCommonConstants.DISP_DATE_PATTERN);
+				MMJBCommonConstants.DISP_DATE_PATTERN, Locale.ENGLISH);
 		Date convertedDate = null;
 		try {
 			convertedDate = dateFormat.parse(date);
