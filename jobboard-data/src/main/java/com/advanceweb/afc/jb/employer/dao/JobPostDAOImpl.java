@@ -361,16 +361,15 @@ public class JobPostDAOImpl implements JobPostDAO {
 		boolean bDelete = false;
 		try {
 			if (null != job.getEndDt() && null != job.getStartDt()) {
-				Date startDt = new Date(job.getStartDt().getTime());
-				Date endtDt = new Date(job.getEndDt().getTime());
-				long endtDateAsTimestamp = endtDt.getTime();
-				long starttDateAsTimestamp = startDt.getTime();
-				long currentTimestamp = new Date().getTime();
-				if ((job.getActive() == 1 && endtDateAsTimestamp < currentTimestamp)
-						|| (job.getActive() == MMJBCommonConstants.INACTIVE && starttDateAsTimestamp <= currentTimestamp)) {
+				Date startDt = job.getStartDt();
+				Date endtDt = job.getEndDt();
+				Date currentDt = new Date();
+
+				if ((job.getActive() == 1 && endtDt.before(currentDt))
+						|| (job.getActive() == MMJBCommonConstants.INACTIVE && (startDt
+								.before(currentDt) || startDt.equals(currentDt)))) {
 					// System deletes the job postings which are in "inactive"
-					// or
-					// “Expired” status
+					// or “Expired” status
 					job.setDeleteDt(new Timestamp(new Date().getTime()));
 					hibernateTemplate.save(job);
 					bDelete = true;
