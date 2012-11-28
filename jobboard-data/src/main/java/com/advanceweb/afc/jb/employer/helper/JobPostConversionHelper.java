@@ -95,6 +95,12 @@ public class JobPostConversionHelper<JobPostForm> {
 		 jpJob.setActive((byte)(dto.isbActive()?1:0));
 		 jpJob.setTemplateOverride(dto.isbTemplateOverride()?1:0);
 		 
+		if (dto.getJobCountry().equals("USA")) {
+			jpJob.setIsNational((byte) 1);
+		}
+		if (dto.getJobCountry().equals("CA")) {
+			jpJob.setIsInternational((byte) 1);
+		}
 		 return jpJob;
 	 }
 	 
