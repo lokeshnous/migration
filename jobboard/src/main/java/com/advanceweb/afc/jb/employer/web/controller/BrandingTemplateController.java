@@ -39,7 +39,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.common.controller.AbstractController;
 import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
-import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
@@ -351,23 +350,28 @@ public class BrandingTemplateController extends AbstractController{
 	 */
 	public BrandingTemplateForm checkBrand(BrandingTemplateForm form,
 			int facility_id) {
-		int packageId = 1;
+		int packageId = MMJBCommonConstants.INT_SILVER;
 		BrandingTemplateForm brandingTemplateForm = form;
-
+		List<String> purchasedPackages=null;
 		// Getting the customer ID from Adm Facility table.
 		int nsCustomerID = brandingTemplateService
 				.getNSCustomerIDFromAdmFacility(facility_id);
 
-		UserDTO userDTO = brandingTemplateService
+		purchasedPackages = brandingTemplateService
 				.getBrandingInformation(nsCustomerID);
-
-		if (null != userDTO.getPackageName()) {
-			if (userDTO.getPackageName().equalsIgnoreCase("Gold")) {
-				brandingTemplateForm.setIsSilverCustomer(Boolean.FALSE);
-				packageId = MMJBCommonConstants.INT_GOLD;
-			} else if (userDTO.getPackageName().equalsIgnoreCase("Platinum")) {
+		if (null != purchasedPackages && !purchasedPackages.isEmpty()) {
+			if (purchasedPackages.contains(MMJBCommonConstants.PLATINUM_90)
+					|| purchasedPackages
+							.contains(MMJBCommonConstants.PLATINUM_180)
+					|| purchasedPackages
+							.contains(MMJBCommonConstants.PLATINUM_365)) {
 				brandingTemplateForm.setIsSilverCustomer(Boolean.FALSE);
 				packageId = MMJBCommonConstants.INT_PLATINUM;
+			} else if (purchasedPackages.contains(MMJBCommonConstants.GOLD_90)
+					|| purchasedPackages.contains(MMJBCommonConstants.GOLD_180)
+					|| purchasedPackages.contains(MMJBCommonConstants.GOLD_365)) {
+				brandingTemplateForm.setIsSilverCustomer(Boolean.FALSE);
+				packageId = MMJBCommonConstants.INT_GOLD;
 			} else {
 				brandingTemplateForm.setIsSilverCustomer(Boolean.TRUE);
 			}

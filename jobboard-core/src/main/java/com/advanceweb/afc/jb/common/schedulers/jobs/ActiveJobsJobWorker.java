@@ -15,8 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.SchedulerDTO;
-import com.advanceweb.afc.jb.common.UserDTO;
-import com.advanceweb.afc.jb.common.util.MMUtils;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.dao.JobPostDAO;
 import com.advanceweb.afc.jb.employer.service.ManageFeaturedEmployerProfile;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
@@ -32,7 +31,9 @@ public class ActiveJobsJobWorker implements JobWorker {
 
 	private static final Logger LOGGER = Logger.getLogger(ActiveJobsJobWorker.class);
 	private final static String JOB_NAME = "ACTIVE_JOBS";
-
+	private final static String Q_USERNAME = "?userName";
+	private final static String Q_JOBID = "?jobId";
+	private final static String Q_COMPANYNAME = "?companyName";
 
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
@@ -72,14 +73,26 @@ public class ActiveJobsJobWorker implements JobWorker {
 		List<JobPostDTO> jobsList = employerJobPostDAO.retreiveAllScheduledJobs();	
 		//Calling net suite to check whether the employer is featured or not 
 		//And to know, whether the employer is applicable for free job posting
-		for(JobPostDTO dto : jobsList){
-			int nsCustomerID = manageFeaturedEmployerProfile.getNSCustomerIDFromAdmFacility(dto.getFacilityId());			
-			UserDTO userDTO = manageFeaturedEmployerProfile.getNSCustomerDetails(nsCustomerID);
-			dto.setbFeatured(userDTO.isFeatured());
-			//Verify the employer is applicable for free posting or not
-			if(userDTO.isXmlFeedEnabled() && null != userDTO.getXmlFeedStartDate() && null != userDTO.getXmlFeedEndDate()){
-				dto.setXmlStartEndDateEnabled(MMUtils.compareDateRangeWithCurrentDate(userDTO.getXmlFeedStartDate(), userDTO.getXmlFeedEndDate()));
-			}
+		for (JobPostDTO dto : jobsList) {
+			int nsCustomerID = manageFeaturedEmployerProfile
+					.getNSCustomerIDFromAdmFacility(dto.getFacilityId());
+			// Get the list of valid packages purchased by customers from
+			// NetSuite
+			List<String> purchasedPackages = manageFeaturedEmployerProfile
+					.getNSCustomerPackages(nsCustomerID);
+			dto.setbFeatured(purchasedPackages
+					.contains(MMJBCommonConstants.FEATURE_30)
+					|| purchasedPackages
+							.contains(MMJBCommonConstants.FEATURE_90)
+					|| purchasedPackages
+							.contains(MMJBCommonConstants.FEATURE_180)
+					|| purchasedPackages
+							.contains(MMJBCommonConstants.FEATURE_365));
+			// Verify the employer is applicable for free posting or not
+			dto.setXmlStartEndDateEnabled(purchasedPackages
+					.contains(MMJBCommonConstants.XML_90)
+					|| purchasedPackages.contains(MMJBCommonConstants.XML_180)
+					|| purchasedPackages.contains(MMJBCommonConstants.XML_365));
 		}
 		//Executing the jobs
 		List<SchedulerDTO> schedulerDTOList = employerJobPostDAO.executeActiveJobWorker(jobsList);
@@ -109,8 +122,8 @@ public class ActiveJobsJobWorker implements JobWorker {
 			
 			//set the company name in table
 			start = mailBody.toString()
-					.indexOf("?userName");
-			end = start + "?userName".length();
+					.indexOf(Q_USERNAME);
+			end = start + Q_USERNAME.length();
 			if (start > 0 && end > 0) {
 				mailBody.replace(start, end,
 						schedulerDTO.getFirstName()+" "+schedulerDTO.getLastName());
@@ -118,8 +131,8 @@ public class ActiveJobsJobWorker implements JobWorker {
 			
 			//set the company name in table
 			start = mailBody.toString()
-					.indexOf("?jobId");
-			end = start + "?jobId".length();
+					.indexOf(Q_JOBID);
+			end = start + Q_JOBID.length();
 			if (start > 0 && end > 0) {
 				mailBody.replace(start, end,
 						String.valueOf(schedulerDTO.getJobId()));
@@ -127,8 +140,8 @@ public class ActiveJobsJobWorker implements JobWorker {
 			
 			//set the expire date in table
 			start = mailBody.toString()
-					.indexOf("?companyName");
-			end = start + "?companyName".length();
+					.indexOf(Q_COMPANYNAME);
+			end = start + Q_COMPANYNAME.length();
 			if (start > 0 && end > 0) {
 				mailBody.replace(start, end,
 						schedulerDTO.getCompanyName());
@@ -174,8 +187,8 @@ public class ActiveJobsJobWorker implements JobWorker {
 			
 			//set the company name in table
 			start = mailBody.toString()
-					.indexOf("?userName");
-			end = start + "?userName".length();
+					.indexOf(Q_USERNAME);
+			end = start + Q_USERNAME.length();
 			if (start > 0 && end > 0) {
 				mailBody.replace(start, end,
 						schedulerDTO.getFirstName()+" "+schedulerDTO.getLastName());
@@ -183,8 +196,8 @@ public class ActiveJobsJobWorker implements JobWorker {
 			
 			//set the company name in table
 			start = mailBody.toString()
-					.indexOf("?jobId");
-			end = start + "?jobId".length();
+					.indexOf(Q_JOBID);
+			end = start + Q_JOBID.length();
 			if (start > 0 && end > 0) {
 				mailBody.replace(start, end,
 						String.valueOf(schedulerDTO.getJobId()));
@@ -192,8 +205,8 @@ public class ActiveJobsJobWorker implements JobWorker {
 			
 			//set the expire date in table
 			start = mailBody.toString()
-					.indexOf("?companyName");
-			end = start + "?companyName".length();
+					.indexOf(Q_COMPANYNAME);
+			end = start + Q_COMPANYNAME.length();
 			if (start > 0 && end > 0) {
 				mailBody.replace(start, end,
 						schedulerDTO.getCompanyName());

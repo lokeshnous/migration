@@ -44,10 +44,21 @@ public interface ManageFeaturedEmployerProfile {
 	int getNSCustomerIDFromAdmFacility(int admFacilityID);
 	
 	/**
-	 * This method is used to get the net suite customer id based on
-	 * adm facility id.
+	 * This method is used to get the net suite customer purchased packages
+	 * based on adm facility id.
+	 * 
 	 * @param int admFacilityID
-	 * @return Object of UserDTO
+	 * @return List<String>
+	 */
+	
+	List<String> getNSCustomerPackages(int nsCustomerID);
+	
+	/**
+	 * This method is used to get the net suite customer details
+	 * based on adm facility id.
+	 * 
+	 * @param int admFacilityID
+	 * @return UserDTO
 	 */
 	
 	UserDTO getNSCustomerDetails(int nsCustomerID);

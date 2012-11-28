@@ -14,8 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.SchedulerDTO;
-import com.advanceweb.afc.jb.common.UserDTO;
-import com.advanceweb.afc.jb.common.util.MMUtils;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.dao.JobPostDAO;
 import com.advanceweb.afc.jb.employer.service.ManageFeaturedEmployerProfile;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
@@ -45,7 +44,7 @@ public class AutoRenewalJobWorker implements JobWorker {
 	private MMEmailService emailService;
 	
 	@Autowired
-	private ManageFeaturedEmployerProfile manageFeatureEmployerProfile;
+	private ManageFeaturedEmployerProfile manageFeaturedEmployerProfile;
 
 	@Override
 	public void executeJob() {
@@ -54,14 +53,27 @@ public class AutoRenewalJobWorker implements JobWorker {
 		List<JobPostDTO> jobsList = employerJobPostDAO.retreiveAllExpiredJobs();
 		//Calling net suite to check whether the employer is featured or not 
 		//And to know, whether the employer is applicable for free job posting
-		for(JobPostDTO dto : jobsList){
-			int nsCustomerID = manageFeatureEmployerProfile.getNSCustomerIDFromAdmFacility(dto.getFacilityId());			
-			UserDTO userDTO = manageFeatureEmployerProfile.getNSCustomerDetails(nsCustomerID);
-			dto.setbFeatured(userDTO.isFeatured());
-			//Verify the employer is applicable for free posting or not
-			if(userDTO.isXmlFeedEnabled() && null != userDTO.getXmlFeedStartDate() && null != userDTO.getXmlFeedEndDate()){
-				dto.setXmlStartEndDateEnabled(MMUtils.compareDateRangeWithCurrentDate(userDTO.getXmlFeedStartDate(), userDTO.getXmlFeedEndDate()));
-			}
+		for (JobPostDTO dto : jobsList) {
+			int nsCustomerID = manageFeaturedEmployerProfile
+					.getNSCustomerIDFromAdmFacility(dto.getFacilityId());
+			// Get the list of valid packages purchased by customers from
+			// NetSuite
+			List<String> purchasedPackages = manageFeaturedEmployerProfile
+					.getNSCustomerPackages(nsCustomerID);
+
+			dto.setbFeatured(purchasedPackages
+					.contains(MMJBCommonConstants.FEATURE_30)
+					|| purchasedPackages
+							.contains(MMJBCommonConstants.FEATURE_90)
+					|| purchasedPackages
+							.contains(MMJBCommonConstants.FEATURE_180)
+					|| purchasedPackages
+							.contains(MMJBCommonConstants.FEATURE_365));
+			// Verify the employer is applicable for free posting or not
+			dto.setXmlStartEndDateEnabled(purchasedPackages
+					.contains(MMJBCommonConstants.XML_90)
+					|| purchasedPackages.contains(MMJBCommonConstants.XML_180)
+					|| purchasedPackages.contains(MMJBCommonConstants.XML_365));
 		}
 		List<SchedulerDTO> schedulerDTOList = employerJobPostDAO.executeAutoRenewalJobWorker(jobsList);
 		//send the mails here 

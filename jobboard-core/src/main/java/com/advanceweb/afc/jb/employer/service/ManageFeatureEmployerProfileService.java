@@ -71,10 +71,23 @@ public class ManageFeatureEmployerProfileService implements
 	}
 	
 	/**
-	 * This method is used to get the net suite customer details based on
-	 * customer id.
+	 * This method is used to get the net suite customer purchased packages
+	 * based on adm facility id.
+	 * 
 	 * @param int admFacilityID
-	 * @return int nsCustomerID
+	 * @return List<String>
+	 */
+	
+	public List<String> getNSCustomerPackages(int nsCustomerID){
+		return  manageFeaturedEmployerDelegate.getNSCustomerPackages(nsCustomerID);
+	}
+
+	/**
+	 * This method is used to get the net suite customer details
+	 * based on adm facility id.
+	 * 
+	 * @param int admFacilityID
+	 * @return UserDTO
 	 */
 	
 	public UserDTO getNSCustomerDetails(int nsCustomerID){
@@ -95,8 +108,7 @@ public class ManageFeatureEmployerProfileService implements
 	 */
 	@Override
 	public Long getEmployerListCount() {
-		Long count = manageFeaturedEmployerProfileDAO.getEmployerListCount();
-		return count;
+		return manageFeaturedEmployerProfileDAO.getEmployerListCount();
 	}
 	
 

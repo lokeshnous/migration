@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -50,11 +51,12 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 	private String navigationPath;
 	@Value("${jobseekerPageExtention}")
 	private String jobseekerPageExtention;
-	@Value("${jobAppliedSubject}")
-	private String jobAppliedSubject;
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
+	
+	private static final Logger LOGGER = Logger.getLogger(LogoutManager.class);
+	
 	@Override
 	public void onLogoutSuccess(HttpServletRequest request,
 			HttpServletResponse response, Authentication authentication)
@@ -95,12 +97,12 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 									.getAttribute(MMJBCommonConstants.USER_ID),
 									loginDateStr, logoutDateStr);
 					if (null != appliedJobDTOList
-							&& appliedJobDTOList.size() > 0) {
+							&& !appliedJobDTOList.isEmpty()) {
 						sendTotalAppliedJobEmail(request, appliedJobDTOList);
 
 					}
 				} catch (JobBoardServiceException e) {
-					e.printStackTrace();
+					LOGGER.error(e);
 				}
 				}
 				if (session != null) {
@@ -156,7 +158,7 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 				merUserdto = userDAO.getUserByUserId(admSaveJob.getUserId());
 				jsToAddress[0] = new InternetAddress(merUserdto.getEmailId());
 			} catch (AddressException jbex) {
-				jbex.printStackTrace();
+				LOGGER.error(jbex);
 			}
 
 			emailDTO.setToAddress(jsToAddress);

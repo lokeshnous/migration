@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.io.File;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.regex.Matcher;
@@ -26,7 +27,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.common.controller.AbstractController;
 import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
-import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.ManageFeaturedEmployerProfile;
@@ -74,22 +74,17 @@ public class EmployerProfileManagementController extends AbstractController{
 			HttpSession session, HttpServletRequest request) {
 
 		ModelAndView model = new ModelAndView();
-		boolean isDateRange = false;
 		int admFacilityId = Integer.parseInt(session.getAttribute(MMJBCommonConstants.FACILITY_ID).toString());
 		// Getting the customer ID from Adm Facility table.
 		int nsCustomerID = manageFeaturedEmployerProfile.getNSCustomerIDFromAdmFacility(admFacilityId);
-		UserDTO userDTO = manageFeaturedEmployerProfile.getNSCustomerDetails(nsCustomerID);
-		
-		Date featuredStartDate = userDTO.getFeaturedStartDate();
-		Date featuredEndDate = userDTO.getFeaturedEndDate();
-		if(featuredStartDate != null && featuredEndDate != null){
-			isDateRange = isInDateRange(featuredStartDate, featuredEndDate);
-		}
-		LOGGER.info("Featured Start Date is "+featuredStartDate);
-		LOGGER.info("Featured End Date is "+featuredEndDate);
-		LOGGER.info("Is in Date Range=>"+isDateRange);
-		//kuserDTO.setFeatured(true);
-		if(userDTO.isFeatured() && isDateRange){
+		// Get the list of valid packages purchased by customers from NetSuite
+		List<String> purchasedPackages = manageFeaturedEmployerProfile
+				.getNSCustomerPackages(nsCustomerID);
+				
+		if (purchasedPackages.contains(MMJBCommonConstants.FEATURE_30)
+				|| purchasedPackages.contains(MMJBCommonConstants.FEATURE_90)
+				|| purchasedPackages.contains(MMJBCommonConstants.FEATURE_180)
+				|| purchasedPackages.contains(MMJBCommonConstants.FEATURE_365)) {
 			CompanyProfileDTO companyProfileDTO = manageFeaturedEmployerProfile
 					.getEmployerDetails((Integer) session
 							.getAttribute(MMJBCommonConstants.FACILITY_ID));

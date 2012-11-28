@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.employer.service;
 
+import java.util.List;
+
 import com.advanceweb.afc.jb.common.UserDTO;
 
 
@@ -27,7 +29,17 @@ public interface ManageFeaturedEmployerDelegate {
 	/**
 	 * This method is ude to get the customer details from net suite.
 	 * @param nsCustomerID
-	 * @return Object of UserDTO
+	 * @return List<String>
+	 */
+	
+	List<String> getNSCustomerPackages(int nsCustomerID);
+
+	/**
+	 * This method is used to get the net suite customer details
+	 * based on adm facility id.
+	 * 
+	 * @param int admFacilityID
+	 * @return UserDTO
 	 */
 	
 	UserDTO getNSCustomerDetails(int nsCustomerID);

@@ -32,9 +32,7 @@ import com.advanceweb.afc.jb.common.FromZipcodeDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
-import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
@@ -219,27 +217,27 @@ public class JobPostController extends AbstractController {
 	 * @param session
 	 * @param model
 	 */
-	private void getAdsForManageJobPost(HttpServletRequest request,
-			HttpSession session, ModelAndView model) {
-		String bannerString = null;
-		try {
-			ClientContext clientContext = getClientContextDetails(request,
-					session, PageNames.EMPLOYER_MANAGE_JOBPOST);
-			AdSize size = AdSize.IAB_LEADERBOARD;
-			AdPosition position = AdPosition.TOP;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject("adPageTop", bannerString);
-
-			size = AdSize.IAB_LEADERBOARD;
-			position = AdPosition.BOTTOM;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject("adPageBtm", bannerString);
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);
-		}
-	}
+//	private void getAdsForManageJobPost(HttpServletRequest request,
+//			HttpSession session, ModelAndView model) {
+//		String bannerString = null;
+//		try {
+//			ClientContext clientContext = getClientContextDetails(request,
+//					session, PageNames.EMPLOYER_MANAGE_JOBPOST);
+//			AdSize size = AdSize.IAB_LEADERBOARD;
+//			AdPosition position = AdPosition.TOP;
+//			bannerString = adService.getBanner(clientContext, size, position)
+//					.getTag();
+//			model.addObject("adPageTop", bannerString);
+//
+//			size = AdSize.IAB_LEADERBOARD;
+//			position = AdPosition.BOTTOM;
+//			bannerString = adService.getBanner(clientContext, size, position)
+//					.getTag();
+//			model.addObject("adPageBtm", bannerString);
+//		} catch (Exception e) {
+//			LOGGER.error(e.getMessage(), e);
+//		}
+//	}
 
 	/**
 	 * This method is called to save the job details
@@ -266,12 +264,14 @@ public class JobPostController extends AbstractController {
 		int nsCustomerID = manageFeaturedEmployerProfile
 				.getNSCustomerIDFromAdmFacility((Integer) session
 						.getAttribute(MMJBCommonConstants.FACILITY_ID));
+		//Get the list of valid packages purchased by customers from NetSuite
+		List<String> purchasedPackages = manageFeaturedEmployerProfile
+				.getNSCustomerPackages(nsCustomerID);
 
-		UserDTO userDTO = manageFeaturedEmployerProfile
-				.getNSCustomerDetails(nsCustomerID);
-
-		form.setXmlStartEndDateEnabled(MMUtils.compareDateRangeWithCurrentDate(
-				userDTO.getFeaturedStartDate(), userDTO.getFeaturedEndDate()));
+		form.setXmlStartEndDateEnabled(purchasedPackages
+				.contains(MMJBCommonConstants.XML_90)
+				|| purchasedPackages.contains(MMJBCommonConstants.XML_180)
+				|| purchasedPackages.contains(MMJBCommonConstants.XML_365));
 
 		// If free jobs is enabled then we should not decrease credits
 		if (form.getJobId() == 0
@@ -301,7 +301,11 @@ public class JobPostController extends AbstractController {
 		if (form.getJobId() > 0) {
 			dto.setJobId(form.getJobId());
 		}
-		dto.setbFeatured(userDTO.isFeatured());
+		dto.setbFeatured(purchasedPackages
+				.contains(MMJBCommonConstants.FEATURE_30)
+				|| purchasedPackages.contains(MMJBCommonConstants.FEATURE_90)
+				|| purchasedPackages.contains(MMJBCommonConstants.FEATURE_180)
+				|| purchasedPackages.contains(MMJBCommonConstants.FEATURE_365));
 		dto.setbActive(true);
 		dto.setFacilityId((Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID));
@@ -1094,13 +1098,13 @@ public class JobPostController extends AbstractController {
 		int nsCustomerID = manageFeaturedEmployerProfile
 				.getNSCustomerIDFromAdmFacility((Integer) session
 						.getAttribute(MMJBCommonConstants.FACILITY_ID));
-
-		UserDTO userDTO = manageFeaturedEmployerProfile
-				.getNSCustomerDetails(nsCustomerID);
-		jobPostform.setXmlStartEndDateEnabled(MMUtils
-				.compareDateRangeWithCurrentDate(
-						userDTO.getFeaturedStartDate(),
-						userDTO.getFeaturedEndDate()));
+		//Get the list of valid packages purchased by customers from NetSuite 
+		List<String> purchasedPackages = manageFeaturedEmployerProfile
+				.getNSCustomerPackages(nsCustomerID);
+		jobPostform.setXmlStartEndDateEnabled(purchasedPackages
+				.contains(MMJBCommonConstants.XML_90)
+				|| purchasedPackages.contains(MMJBCommonConstants.XML_180)
+				|| purchasedPackages.contains(MMJBCommonConstants.XML_365));
 		while (tokenize.hasMoreTokens()) {
 			jobId = Integer.valueOf(tokenize.nextToken());
 			JobPostDTO jobPostDTO = employerJobPost.retrieveJobById(jobId);

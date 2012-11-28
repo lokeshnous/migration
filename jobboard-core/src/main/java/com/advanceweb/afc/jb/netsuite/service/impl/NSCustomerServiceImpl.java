@@ -474,18 +474,19 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 		try {
 			stringResponse = IOUtils
 					.readStringFromStream((InputStream) response.getEntity());
-
-			stringResponse = stringResponse.replace(LEFT_SQ_BRKT_STRING,
-					MMJBCommonConstants.EMPTY);
-			stringResponse = stringResponse.replace(RIGHT_SQ_BRKT_STRING,
-					MMJBCommonConstants.EMPTY);
-			List<String> listResponse = new ArrayList<String>(
-					Arrays.asList(stringResponse.split(",")));
-
-			for (String pakageId : listResponse) {
-				listPackages.add(pakageId.replace(DOUBLE_QUOTE_STRING, "")
-						.trim());
+			if (stringResponse.contains(LEFT_SQ_BRKT_STRING)) {
+				stringResponse = stringResponse.replace(LEFT_SQ_BRKT_STRING,
+						MMJBCommonConstants.EMPTY);
+				stringResponse = stringResponse.replace(RIGHT_SQ_BRKT_STRING,
+						MMJBCommonConstants.EMPTY);
 			}
+				List<String> listResponse = new ArrayList<String>(
+						Arrays.asList(stringResponse.split(",")));
+
+				for (String pakageId : listResponse) {
+					listPackages.add(pakageId.replace(DOUBLE_QUOTE_STRING, "")
+							.trim());
+				}
 			LOGGER.debug("List of packages purchased by customer"
 					+ listPackages);
 		} catch (Exception e) {

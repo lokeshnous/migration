@@ -388,16 +388,17 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 	
 	
 	/**
-	 * This method checks if the user has purchased Branding Template
+	 * This method checks if the user has purchased Branding Template based on
+	 * Branding Template package present in jp_jobtype_combo table
 	 * 
 	 * @param productId
 	 * @return boolean
 	 */
 	public boolean checkPostSlots(int productId) {
-		
-		return (productId == 1 || productId == 4 || productId == 6
-				|| productId == 7 || productId == 8 || productId == 11
-				|| productId == 13 || productId == 14);
+
+		return (productId == 2 || productId == 5 || productId == 6
+				|| productId == 8 || productId == 10 || productId == 13
+				|| productId == 14 || productId == 16);
 
 	}
 }

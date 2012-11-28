@@ -1,6 +1,6 @@
 package com.advanceweb.afc.jb.employer.service.impl;
 
-import com.advanceweb.afc.jb.common.UserDTO;
+import java.util.List;
 
 public interface BrandingTemplateDelegate {
 	
@@ -8,9 +8,9 @@ public interface BrandingTemplateDelegate {
 	 * This method is used to get the net suite customer details based on
 	 * customer id.
 	 * @param int admFacilityID
-	 * @return UserDTO
+	 * @return List<String>
 	 */
-	UserDTO getCustomerDetails(int facilityId);
+	List<String> getPurchaseInfo(int facilityId);
 	
 	/**
 	 * This method is used to get the net suite customer id based on adm

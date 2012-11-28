@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.employer.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -55,8 +56,32 @@ public class ManageFeaturedEmployerDelegateImpl implements
 	}
 
 	/**
-	 * This method is used to get the net suite customer details based on
-	 * customer id.
+	 * This method is used to get the net suite customer purchased packages
+	 * based on customer id.
+	 * 
+	 * @param int admFacilityID
+	 * @return List<String>
+	 */
+
+	public List<String> getNSCustomerPackages(int nsCustomerID) {
+		List<String> listPackage = new ArrayList<String>();
+		UserDTO userDTO = new UserDTO();
+		userDTO.setEntityId(nsCustomerID);
+		userDTO.setRecordType(CUSTOMER_STRING);
+
+		try {
+			listPackage = nsCustomerService.getNSCustomerPackages(userDTO);
+		} catch (JobBoardNetSuiteServiceException jbns) {
+			LOGGER.info("Error occurred while getting the Customer details from net suite..Please contact your administrator."
+					+ jbns);
+		}
+		return listPackage;
+	}
+
+	/**
+	 * This method is used to get the net suite customer details
+	 * based on adm facility id.
+	 * 
 	 * @param int admFacilityID
 	 * @return UserDTO
 	 */
@@ -67,15 +92,12 @@ public class ManageFeaturedEmployerDelegateImpl implements
 		userDTO.setRecordType(CUSTOMER_STRING);
 
 		try {
-			
 			userDTO = nsCustomerService.getNSCustomerDetails(userDTO);
-			
 		} catch (JobBoardNetSuiteServiceException jbns) {
 			LOGGER.info("Error occurred while getting the Customer details from net suite..Please contact your administrator."
 					+ jbns);
 		}
 		return userDTO;
-
 	}
-
+	
 }

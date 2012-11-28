@@ -263,11 +263,33 @@ public interface MMJBCommonConstants {
 	String PACKAGE_STJOBPOSTING = "stJobPosting";
 	String PACKAGE_SILVER = "silver";
 
+	//For offline purchased packages
+	String GOLD_90 = "4809";
+	String GOLD_180 = "4864";
+	String GOLD_365 = "4808";
+	String PLATINUM_90 = "4811";
+	String PLATINUM_180 = "4865";
+	String PLATINUM_365 = "4810";
+	String SILVER_90 = "4813";
+	String SILVER_180 = "4866";
+	String SILVER_365 = "4812";
+	String FEATURE_30 = "4867";
+	String FEATURE_90 = "4868";
+	String FEATURE_180 = "4870";
+	String FEATURE_365 = "4869";
+	String SCRAPE_90 = "947";
+	String SCRAPE_180 = "913";
+	String SCRAPE_365 = "4871";
+	String XML_90 = "4872";
+	String XML_180 = "963";
+	String XML_365 = "976";
+	
 	// for Branding template
 	String IMAGE_TYPE_JPG = ".jpg";
 	String IMAGE_TYPE_GIF = ".gif";
 	String IMAGE_TYPE_PNG = ".png";
 	String IMAGE_TYPE_TIF = ".tif";
+	int INT_SILVER = 1;
 	int INT_GOLD = 2;
 	int INT_PLATINUM = 3;
 	String ADDITIONAL_IMAGE = "Additional Image";

@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
-import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.employer.dao.BrandingTemplateDAO;
 import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
 
@@ -131,9 +130,9 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 	 * Fetch the employer Branding information.
 	 */
 	@Override
-	public UserDTO getBrandingInformation(int nsCustomerID) {
+	public List<String> getBrandingInformation(int nsCustomerID) {
 
-		return brandingTemplateDelegate.getCustomerDetails(nsCustomerID);
+		return brandingTemplateDelegate.getPurchaseInfo(nsCustomerID);
 
 	}
 

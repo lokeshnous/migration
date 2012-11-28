@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.employer.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -47,26 +48,28 @@ public class BrandingTemplateDelegateImpl implements BrandingTemplateDelegate{
 	}
 	
 	/**
-	 * This method is used to get the net suite customer details based on
-	 * customer id.
+	 * This method is used to get the net suite customer purchased packages
+	 * based on customer id.
+	 * 
 	 * @param int admFacilityID
-	 * @return UserDTO
+	 * @return List<String>
 	 */
-	public UserDTO getCustomerDetails(int nsCustomerID) {
+	public List<String> getPurchaseInfo(int nsCustomerID) {
+		List<String> listPackage = new ArrayList<String>();
 		UserDTO userDTO = new UserDTO();
 		userDTO.setEntityId(nsCustomerID);
 		userDTO.setRecordType(CUSTOMER_STRING);
 
 		try {
-			
-			userDTO = nsCustomerService.getNSCustomerDetails(userDTO);
-			
+
+			listPackage = nsCustomerService.getNSCustomerPackages(userDTO);
+
 		} catch (JobBoardNetSuiteServiceException jbns) {
 			LOGGER.info("Error occurred while getting the Customer details from net suite..Please contact your administrator."
 					+ jbns);
 		}
-		return userDTO;
-		
+		return listPackage;
+
 	}
 	
 	
