@@ -95,8 +95,6 @@ public class PaymentGatewayController extends AbstractController{
 	private AdService adService;
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
-	@Value("${newCreditmessage}")
-	private String 	newCreditmessage;
 	@Value("${dothtmlExtention}")
 	private String dothtmlExtention;
 	@Value("${navigationPath}")
@@ -112,8 +110,6 @@ public class PaymentGatewayController extends AbstractController{
 	private FacilityService facilityService;
 	@Autowired
 	private UserDao userDAO;
-	@Value("${purchageReceipt}")
-	private String purChageReceipt;
 	
 	@RequestMapping(value = "/callPaymentMethod", method = RequestMethod.GET)
 	public ModelAndView callPaymentMethod(@Valid PaymentGatewayForm paymentGatewayForm,
@@ -674,7 +670,8 @@ public class PaymentGatewayController extends AbstractController{
 		EmailDTO emailDTO = new EmailDTO();
 		emailDTO.setToAddress(jsToAddress);
 		emailDTO.setFromAddress(advanceWebAddress);
-		emailDTO.setSubject(newCreditmessage);
+		emailDTO.setSubject(emailConfiguration.getProperty(
+				"new.credit.message").trim());
 
 		String loginPath = navigationPath.substring(2);
 		String employerloginUrl = request.getRequestURL().toString()
@@ -730,7 +727,8 @@ public class PaymentGatewayController extends AbstractController{
 								.getTransactionDate());
 		salesrcptMailBody = salesrcptMailBody.replace("?empdashboardLink",
 				employerloginUrl);
-		emailDTO.setSubject(purChageReceipt.replace("?ordernumber",
+		emailDTO.setSubject(emailConfiguration.getProperty(
+				"purchageReceipt").trim().replace("?ordernumber",
 				orderDetailsDTO.getOrderPaymentDTO().getTransactionId()));
 		receiptDetail.append(emailConfiguration.getProperty(
 				"employer.email.header").trim());

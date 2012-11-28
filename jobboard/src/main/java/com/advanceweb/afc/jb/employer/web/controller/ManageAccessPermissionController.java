@@ -83,8 +83,6 @@ public class ManageAccessPermissionController {
 
 	@Autowired
 	private UserDao userDAO;
-	@Value("${adminChangeMailSubject}")
-	private String adminChangeMailSubject;
 	@Value("${employerPageExtention}")
 	private String employerPageExtention;
 	@Autowired
@@ -387,7 +385,8 @@ public class ManageAccessPermissionController {
 		}
 		emailDTO.setToAddress(jsToAddress);
 		emailDTO.setFromAddress(advanceWebAddress);
-		emailDTO.setSubject(adminChangeMailSubject);
+		emailDTO.setSubject(emailConfiguration.getProperty(
+				"admin.change.mail.subject").trim());
 		admChangeDetail.append(emailConfiguration.getProperty(
 				"employer.email.header").trim());
 		admChangeDetail.append(emailContent);

@@ -161,7 +161,8 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 
 			emailDTO.setToAddress(jsToAddress);
 			emailDTO.setFromAddress(advanceWebAddress);
-			emailDTO.setSubject(jobAppliedSubject);
+			emailDTO.setSubject(emailConfiguration.getProperty(
+					"jobAppliedSubject").trim());
 
 			jobseekerApplyEmailBody = jobseekerApplyEmailBody.replace(
 					"?jobSeekerFirstName", merUserdto.getFirstName());

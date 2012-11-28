@@ -127,8 +127,6 @@ public class JobSeekerRegistrationController extends AbstractController {
 
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
-	@Value("${changePasswordSuccessful.subject}")
-	private String changePasswordSubject;
 	@Value("${welcomeMailMessage}")
 	private String 	welcomeMailMessage;
 	@Value("${dothtmlExtention}")
@@ -969,7 +967,8 @@ public class JobSeekerRegistrationController extends AbstractController {
 		}
 		emailDTO.setToAddress(jsToAddress);
 		emailDTO.setFromAddress(advanceWebAddress);
-		emailDTO.setSubject(changePasswordSubject);
+		emailDTO.setSubject(emailConfiguration
+				.getProperty("change.password.successful.subject").trim());
 		if (null != userRole && userRole.equals(MMJBCommonConstants.JOBSEEKER)) {
 			String jonseekerloginUrl = request.getRequestURL().toString()
 					.replace(request.getServletPath(), loginPath)

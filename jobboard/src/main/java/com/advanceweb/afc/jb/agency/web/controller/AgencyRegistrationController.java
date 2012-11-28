@@ -110,9 +110,6 @@ public class AgencyRegistrationController extends AbstractController {
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
 
-	@Value("${welcomeMailMessage}")
-	private String 	welcomeMailMessage;
-
 	@Value("${navigationPath}")
 	private String navigationPath;
 	@Value("${employerPageExtention}")
@@ -423,7 +420,8 @@ public class AgencyRegistrationController extends AbstractController {
 		EmailDTO emailDTO = new EmailDTO();
 		emailDTO.setToAddress(jsToAddress);
 		emailDTO.setFromAddress(advanceWebAddress);
-		emailDTO.setSubject(welcomeMailMessage);
+		emailDTO.setSubject(emailConfiguration.getProperty(
+				"welcome.mail.message").trim());
 		String loginPath = navigationPath.substring(2);
 		String employerWelcomeMailBody = emailConfiguration.getProperty(
 				"employer.welcome.mail.body").trim();
