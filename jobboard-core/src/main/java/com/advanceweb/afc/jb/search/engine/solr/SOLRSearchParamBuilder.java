@@ -7,8 +7,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.search.SearchParamBuilder;
 import com.advanceweb.afc.jb.search.SearchParamDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
@@ -78,6 +80,16 @@ public class SOLRSearchParamBuilder implements SearchParamBuilder {
 			resultParam.setSearchParamId(param.getSearchParamId());
 			resultParam.setSeq(param.getSeq());
 
+			result.add(resultParam);
+		}
+		String schedulerParam = inputParams.get(MMJBCommonConstants.SCHEDULER_DAY);
+		if (!StringUtils.isEmpty(schedulerParam)) {
+			SearchParamDTO resultParam = new SearchParamDTO();
+			resultParam.setParameterName("fq");
+			resultParam.setParameterValue(MMJBCommonConstants.SOLR_PARAM_FQ.replace("?day", schedulerParam));
+			// resultParam.setSearchParamId(param.getSearchParamId());
+			// resultParam.setSeq(param.getSeq());
+			
 			result.add(resultParam);
 		}
 

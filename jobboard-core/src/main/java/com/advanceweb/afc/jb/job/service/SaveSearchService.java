@@ -1,7 +1,6 @@
 package com.advanceweb.afc.jb.job.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 
@@ -107,5 +106,14 @@ public interface SaveSearchService {
 	 * @return 
 	 */	
 	public void updateSearchName(int id,String searchName);
-
+	
+	 /**
+		 * This method is used to get all saved searches .
+		 * 
+		 * @param integer userId
+		 * @param String searchName
+		 * @return 
+		 */	
+	List<SaveSearchedJobsDTO> getsavedSearches();
+	
 }

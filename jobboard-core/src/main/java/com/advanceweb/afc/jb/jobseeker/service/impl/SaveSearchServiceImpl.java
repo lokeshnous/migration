@@ -141,5 +141,13 @@ public class SaveSearchServiceImpl implements SaveSearchService {
 		// TODO Auto-generated method stub
 		saveSearchDAO.updateSearchName(id, searchName);
 	}
+
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.SaveSearchService#getsavedSearches()
+	 */
+	@Override
+	public List<SaveSearchedJobsDTO> getsavedSearches() {
+		return saveSearchDAO.getsavedSearches();
+	}
 }
 	

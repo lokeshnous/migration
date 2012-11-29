@@ -129,7 +129,6 @@ public interface MMJBCommonConstants {
 	String ASC_STR = "asc";
 	String COUNT_STR = "count";
 	String FACET_SORT = "facetSort";
-
 	// Solr Date pattern
 	String JSON_DATE_FORMAT = "MMM-dd-yyyy";
 	// For Resume
@@ -491,4 +490,19 @@ public interface MMJBCommonConstants {
 	String JOBTITLES_NEXT_PAGE_URL = "nextPageUrl";
 	String JOBTITLES_PREV_PAGE_URL = "prevPageUrl";
 	int JOB_SEARCH_MAX_AREAS = 100;
+	//Email Scheduler constants
+
+	String SCHEDULER_DAY = "30DayEmailSch";
+	String SOLR_PARAM_FQ="posted_dt:[NOW-?dayDAY TO NOW]";
+	int DAILY_SCHEDULER=3;
+	int MONTHLY_SCHEDULER=6;
+	int WEEKLY_SCHEDULER=4;
+	int BIWEEKLY_SCHEDULER=5;
+	int YEARLY_SCHEDULER=7;
+	String SCHEDULE_BIWEEKLY="15";
+	String SCHEDULE_WEEKLY="7";
+	String SCHEDULE_MONTHLY="30";
+	String SCHEDULE_YEARLY="365";
+	String SCHEDULE_DAILY="1";
+	
 }

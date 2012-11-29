@@ -53,6 +53,7 @@ public class SaveSearchConversionHelper {
 			saveSearchedJobsDTO.setUrl(admSaveSearch.getUrl());
 			saveSearchedJobsDTO.setSearchName(admSaveSearch.getSearchName());
 			saveSearchedJobsDTO.setEmailFrequency(admSaveSearch.getEmailFrequency());
+			saveSearchedJobsDTO.setUserID(admSaveSearch.getUserId());
 			
 			
 			Format formatter= new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss Z");

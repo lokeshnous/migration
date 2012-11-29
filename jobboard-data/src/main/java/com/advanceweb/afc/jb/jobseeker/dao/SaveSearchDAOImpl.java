@@ -201,5 +201,17 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 
 		hibernateTemplate.saveOrUpdate(search);
 	}
-
+	/**
+	 * This method is called to fetch Saved Job Searches
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public List<SaveSearchedJobsDTO> getsavedSearches() {
+		List<AdmSaveSearch> searchResults = hibernateTemplate
+				.find("from AdmSaveSearch e where  e.searchName <>' ' and  e.userId > 0 and e.emailFrequency <>'0' and e.createDt is not NULL and e.deleteDt is NULL order by createDt desc");
+		return saveSearchConversionHelper
+				.transformJpSaveSearchToSaveSearchedJobsDTO(searchResults);
+	}
 }

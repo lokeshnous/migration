@@ -20,6 +20,7 @@
 			<list>
 				<ref bean="activeJobsJobWorker" />
 				<ref bean="autoRenewalJobWorker" />
+				<ref bean="newJobsUpdationMailWorkerDaily"/>
 			</list>
 		</constructor-arg>
 	</bean>
@@ -50,6 +51,7 @@
 		<constructor-arg>
 			<list>
 				<ref bean="profileViewSendMailJobWorker" />
+				<ref bean="newJobsUpdationMailWorkerWeekly"/>
 			</list>
 		</constructor-arg>
 	</bean>
@@ -74,7 +76,97 @@
 		<property name="cronExp" value="${jobboard.scheduler.cronexp.profViewSendMail}">
 		</property>
 	</bean>
+	<!-- Biweekly Job List -->
+	<bean id="biweeklyJobList" class="java.util.ArrayList">
+		<constructor-arg>
+			<list>
+				<ref bean="newJobsUpdationMailWorkerBiweekly"/>
+			</list>
+		</constructor-arg>
+	</bean>
+	
+	
+	<!-- JobScheduler for BiWeekly Jobs -->
 
+	<bean id="biweeklyJobScheduler"
+		class="com.advanceweb.afc.jb.schedulers.service.impl.JobBoardSchedulerServiceImpl">
+		<property name="jobWorkers" ref="biweeklyJobList"></property>
+	</bean>
+
+	<bean id="biweeklyJobBean"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="biweeklyJobScheduler" />
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+
+	<bean id="biweeklyJobTrigger" class="com.advanceweb.afc.jb.common.schedulers.jobs.JobBoardCronTrigger">
+		<property name="jobDetail" ref="biweeklyJobBean" />
+		<property name="cronExp" value="${jobboard.scheduler.cronexp.sendMailBiweekly}">
+		</property>
+	</bean>
+ <!-- Monthly Job List -->
+	<bean id="monthlyJobList" class="java.util.ArrayList">
+		<constructor-arg>
+			<list>
+				<ref bean="newJobsUpdationMailWorkerMonthly"/>
+			</list>
+		</constructor-arg>
+	</bean>
+	
+	
+<!-- JobScheduler for Monthly Jobs -->
+
+	<bean id="monthlyJobScheduler"
+		class="com.advanceweb.afc.jb.schedulers.service.impl.JobBoardSchedulerServiceImpl">
+		<property name="jobWorkers" ref="monthlyJobList"></property>
+	</bean>
+
+	<bean id="monthlyJobBean"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="monthlyJobScheduler" />
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+
+	<bean id="monthlyJobTrigger" class="com.advanceweb.afc.jb.common.schedulers.jobs.JobBoardCronTrigger">
+		<property name="jobDetail" ref="monthlyJobBean" />
+		<property name="cronExp" value="${jobboard.scheduler.cronexp.sendMailMonthly}">
+		</property>
+	</bean>
+
+<!-- Yearly Job List -->
+	<bean id="yearlyJobList" class="java.util.ArrayList">
+		<constructor-arg>
+			<list>
+				<ref bean="newJobsUpdationMailWorkerYearly"/>
+			</list>
+		</constructor-arg>
+	</bean>
+	
+	
+<!-- JobScheduler for Yearly Jobs -->
+
+	<bean id="yearlyJobScheduler"
+		class="com.advanceweb.afc.jb.schedulers.service.impl.JobBoardSchedulerServiceImpl">
+		<property name="jobWorkers" ref="yearlyJobList"></property>
+	</bean>
+
+	<bean id="yearlyJobBean"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="yearlyJobScheduler" />
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+
+	<bean id="yearlyJobTrigger" class="com.advanceweb.afc.jb.common.schedulers.jobs.JobBoardCronTrigger">
+		<property name="jobDetail" ref="yearlyJobBean" />
+		<property name="cronExp" value="${jobboard.scheduler.cronexp.sendMailYearly}">
+		</property>
+	</bean>
 
 	<bean id="scheduler"
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
@@ -82,7 +174,9 @@
 			<list>
 				<ref bean="dailyJobTrigger" />
 				<ref bean="weeklyJobTrigger" />
-				<!-- <ref bean="monthlyJobTrigger" /> -->
+				<ref bean="biweeklyJobTrigger" />
+				<ref bean="monthlyJobTrigger" />
+				<ref bean="yearlyJobTrigger" />
 			</list>
 		</property>
 	</bean>
