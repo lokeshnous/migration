@@ -26,7 +26,7 @@ public interface JobPostDAO {
 			int userId);
 	boolean deactivateJob(int jobId, int userId);
 
-	boolean repostJob(int jobId);
+	boolean repostJob(int jobId, int extendDays);
 	List<JobPostDTO> retrieveAllJobByStatus(String jobStatus, int userId, int offset, int noOfRecords);
 	
 	List<JobPostingPlanDTO> getJobPostingPlans();
@@ -63,7 +63,7 @@ public interface JobPostDAO {
 	
 	AdmFacilityJpAudit getinvDtlByJobId(int jobId);
 	
-	public List<SchedulerDTO> retreiveActiveJobsExpireSoon();
+	List<SchedulerDTO> retreiveActiveJobsExpireSoon();
 	
-	public List<SchedulerDTO> executeExpireJobs();
+	List<SchedulerDTO> executeExpireJobs();
 }

@@ -457,7 +457,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 * @return delete status
 	 */
 	@Override
-	public boolean repostJob(int jobId) {
+	public boolean repostJob(int jobId, int extendDays) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
 		Date startDt = job.getStartDt();
 		Date endtDt = job.getEndDt();
@@ -477,13 +477,10 @@ public class JobPostDAOImpl implements JobPostDAO {
 				if ((job.getActive() == 1 && endtDt.before(currentDt))
 						|| (job.getActive() == MMJBCommonConstants.INACTIVE && (startDt.before(currentDt) || startDt.equals(currentDt)))) {
 					// Repost the inactive and expired job and extend the end
-					// date
-					// to one month
-					Calendar now = Calendar.getInstance();
-					now.setTime(job.getEndDt());
-					now.add(Calendar.DAY_OF_MONTH, 30);
+					// date to the days specified Ex: one month
+					job.setEndDt(calculateEndDt(job.getEndDt(), extendDays));
 					job.setActive(MMJBCommonConstants.ACTIVE);
-					job.setEndDt(now.getTime());
+					
 					hibernateTemplate.save(job);
 					bRepost = true;
 				} else {
@@ -497,11 +494,10 @@ public class JobPostDAOImpl implements JobPostDAO {
 								job.getAdmFacility().getFacilityId())) {
 					return false;
 				} else {
-					Calendar now = Calendar.getInstance();
-					job.setStartDt(now.getTime());
-					now.add(Calendar.DAY_OF_MONTH, 30);
+					job.setStartDt(Calendar.getInstance().getTime());
+					job.setEndDt(calculateEndDt(job.getStartDt(), extendDays));
 					job.setActive(MMJBCommonConstants.ACTIVE);
-					job.setEndDt(now.getTime());
+
 					hibernateTemplate.save(job);
 					bRepost = true;
 				}
@@ -1244,4 +1240,18 @@ public class JobPostDAOImpl implements JobPostDAO {
 		return admFacilityDTOList;
 	}
 
+	/**
+	 * This method extends the current end date by the number of extendDays
+	 * passed
+	 * 
+	 * @param currentEndDt
+	 * @param extendDays
+	 * @return Date
+	 */
+	private Date calculateEndDt(Date currentEndDt, int extendDays) {
+		Calendar now = Calendar.getInstance();
+		now.setTime(currentEndDt);
+		now.add(Calendar.DAY_OF_MONTH, extendDays);
+		return now.getTime();
+	}
 }

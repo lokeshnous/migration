@@ -51,6 +51,11 @@ public class JobPostServiceTest extends ServiceTestBase{
 	@Autowired
 	private MMEmailService emailService;
 	
+	private static final String Q_USERNAME = "?userName";
+	private static final String Q_JOBID = "?jobId";
+	private static final String Q_COMPANYNAME = "?companyName";
+	
+	
 	@Test
 	public void testPostNewJob(){
 		JobPostDTO dto = new JobPostDTO();
@@ -124,7 +129,7 @@ public class JobPostServiceTest extends ServiceTestBase{
 	@Test
 	public void testRepostJobs(){
 		
-		boolean repost = employerJobPost.repostJob(13101);
+		boolean repost = employerJobPost.repostJob(13101, 30);
 		Assert.assertTrue("Job Reposted Successfully", repost);
 	}
 	
@@ -173,8 +178,8 @@ public class JobPostServiceTest extends ServiceTestBase{
 			
 			//set the company name in table
 			start = mailBody.toString()
-					.indexOf("?userName");
-			end = start + "?userName".length();
+					.indexOf(Q_USERNAME);
+			end = start + Q_USERNAME.length();
 			if (start > 0 && end > 0) {
 				mailBody.replace(start, end,
 						schedulerDTO.getFirstName()+" "+schedulerDTO.getLastName());
@@ -182,8 +187,8 @@ public class JobPostServiceTest extends ServiceTestBase{
 			
 			//set the company name in table
 			start = mailBody.toString()
-					.indexOf("?jobId");
-			end = start + "?jobId".length();
+					.indexOf(Q_JOBID);
+			end = start + Q_JOBID.length();
 			if (start > 0 && end > 0) {
 				mailBody.replace(start, end,
 						String.valueOf(schedulerDTO.getJobId()));
@@ -191,8 +196,8 @@ public class JobPostServiceTest extends ServiceTestBase{
 			
 			//set the expire date in table
 			start = mailBody.toString()
-					.indexOf("?companyName");
-			end = start + "?companyName".length();
+					.indexOf(Q_COMPANYNAME);
+			end = start + Q_COMPANYNAME.length();
 			if (start > 0 && end > 0) {
 				mailBody.replace(start, end,
 						schedulerDTO.getCompanyName());
@@ -249,8 +254,8 @@ public class JobPostServiceTest extends ServiceTestBase{
 			
 			//set the company name in table
 			start = mailBody.toString()
-					.indexOf("?userName");
-			end = start + "?userName".length();
+					.indexOf(Q_USERNAME);
+			end = start + Q_USERNAME.length();
 			if (start > 0 && end > 0) {
 				mailBody.replace(start, end,
 						schedulerDTO.getFirstName()+" "+schedulerDTO.getLastName());
@@ -258,8 +263,8 @@ public class JobPostServiceTest extends ServiceTestBase{
 			
 			//set the company name in table
 			start = mailBody.toString()
-					.indexOf("?jobId");
-			end = start + "?jobId".length();
+					.indexOf(Q_JOBID);
+			end = start + Q_JOBID.length();
 			if (start > 0 && end > 0) {
 				mailBody.replace(start, end,
 						String.valueOf(schedulerDTO.getJobId()));
@@ -267,8 +272,8 @@ public class JobPostServiceTest extends ServiceTestBase{
 			
 			//set the expire date in table
 			start = mailBody.toString()
-					.indexOf("?companyName");
-			end = start + "?companyName".length();
+					.indexOf(Q_COMPANYNAME);
+			end = start + Q_COMPANYNAME.length();
 			if (start > 0 && end > 0) {
 				mailBody.replace(start, end,
 						schedulerDTO.getCompanyName());

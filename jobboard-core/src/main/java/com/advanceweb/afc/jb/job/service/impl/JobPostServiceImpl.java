@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
-import com.advanceweb.afc.jb.common.SchedulerDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityJpAudit;
 import com.advanceweb.afc.jb.employer.dao.JobPostDAO;
@@ -108,8 +107,8 @@ public class JobPostServiceImpl implements JobPostService {
 	}
 
 	@Override
-	public boolean repostJob(int jobId) {
-		return employerJobPostDAO.repostJob(jobId);
+	public boolean repostJob(int jobId, int extendDays) {
+		return employerJobPostDAO.repostJob(jobId, extendDays);
 	}
 
 	@Override

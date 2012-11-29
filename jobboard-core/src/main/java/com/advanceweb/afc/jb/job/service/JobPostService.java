@@ -7,7 +7,6 @@ import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityJpAudit;
-import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 
 /**
@@ -38,7 +37,7 @@ public interface JobPostService {
 
 	//boolean repostJob(int jobId, int userId);
 	
-	boolean repostJob(int jobId);
+	boolean repostJob(int jobId, int extendDays);
 
 	List<JobPostDTO> retrieveAllJobByStatus(String jobStatus, int employerId,
 			int offset, int noOfRecords);

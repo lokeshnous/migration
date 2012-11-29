@@ -84,6 +84,8 @@ public class JobPostController extends AbstractController {
 	private String deactivateMsg;
 	@Value("${deleteSuccess}")
 	private String deleteSuccessMsg;
+	@Value("${jobPostExtensionDays}")
+	private int jobPostExtensionDays;
 
 	private static final String JOB_POST_FORM = "jobPostForm";
 	private static final String POST_NEW_JOBS = "postNewJobs";
@@ -1146,7 +1148,7 @@ public class JobPostController extends AbstractController {
 			 * session .getAttribute(MMJBCommonConstants.USER_ID));
 			 */
 
-			boolean result = employerJobPost.repostJob(jobId);
+			boolean result = employerJobPost.repostJob(jobId, jobPostExtensionDays);
 
 			if (!result) {
 				model.addObject(ERROR_MESSAGE, repostFail);
