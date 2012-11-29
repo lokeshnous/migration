@@ -878,17 +878,9 @@ public class JobPostController extends AbstractController {
 		}
 
 		jobPostform.setStatusValue(jobStatus);
-		DropDownDTO dto = new DropDownDTO();
-		dto.setOptionId(MMJBCommonConstants.RELOCATE_YES);
-		dto.setOptionName(MMJBCommonConstants.RELOCATE_YES);
-		DropDownDTO downDTO = new DropDownDTO();
-		downDTO.setOptionId(MMJBCommonConstants.RELOCATE_NO);
-		downDTO.setOptionName(MMJBCommonConstants.RELOCATE_NO);
 
-		List<DropDownDTO> autoRenewList = new ArrayList<DropDownDTO>();
 		String next = request.getParameter("next");
-		autoRenewList.add(dto);
-		autoRenewList.add(downDTO);
+	
 		int page = 1;
 		int displayRecordsPerPage = 10;
 		if (null != request.getParameter("noOfPage")&& Integer.parseInt(request.getParameter("noOfPage"))>0) {
@@ -960,7 +952,7 @@ public class JobPostController extends AbstractController {
 				: jobPostform.getBeginVal()));
 		model.addObject(JOB_POST_FORM, jobPostform);
 		model.addObject(TEMPLATE_LIST, templateList);
-		model.addObject("autoRenewList", autoRenewList);
+		
 		model.addObject("jobStatusList",
 				populateDropdownsService.getJobStatusList());
 

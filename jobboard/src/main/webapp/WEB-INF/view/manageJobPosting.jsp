@@ -377,13 +377,14 @@
 									<td align="center" valign="middle">${job.views}</td>
 									<td align="center" valign="middle">${job.clicks}</td>
 									<td align="center" valign="middle">${job.applies}</td>
-									<td align="center" valign="middle"><form:select
+									<td align="center" valign="middle">
+									<form:select
 											path="jobPostDTOList[${status.index}].autoRenew"
 											id="selectAutoRenew"
 											class="jb_input3 select100 marginTopBottom0 FontSize10 width50"
 											name="select1" disabled="true">
-											<form:options items="${autoRenewList}" itemLabel="optionId"
-												itemValue="optionName" />
+											<form:option label="No" value="No" />
+											<form:option label="Yes" value="Yes" />
 										</form:select>
 									<td align="center" valign="middle"><form:select
 											path="jobPostDTOList[${status.index}].brandTemplate"
