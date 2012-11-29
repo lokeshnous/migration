@@ -239,7 +239,8 @@ public class MMEmailService implements MMEmail {
 			}
 			jobseekerNewJobEmailBody = jobseekerNewJobEmailBody
 					+ emailConfiguration.getProperty(
-							"jobseeker.new.job.matches.content1").trim().replace("?jsdashboardLink", "#");
+							"jobseeker.new.job.matches.content1").trim().replace("?jsdashboardLink", emailConfiguration.getProperty(
+									"jobseeker.dashboard.url"));
 			stringBuffer.append(emailConfiguration.getProperty(
 					"jobseeker.email.header").trim());
 			stringBuffer.append(jobseekerNewJobEmailBody);
