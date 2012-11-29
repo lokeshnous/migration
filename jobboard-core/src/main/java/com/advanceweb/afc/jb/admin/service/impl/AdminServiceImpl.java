@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.admin.dao.AdminDAO;
 import com.advanceweb.afc.jb.admin.service.AdminService;
 import com.advanceweb.afc.jb.common.AdminDTO;
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmpSearchDTO;
 import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 import com.advanceweb.afc.jb.common.ProfileDTO;
@@ -129,5 +130,16 @@ public class AdminServiceImpl implements ProfileRegistration,
 	public List<JobPostingInventoryDTO> getInventoryDetails(int userId,
 			int facilityId) {
 		return adminDAO.getInventoryDetails(userId, facilityId);
+	}
+
+	@Override
+	public List<DropDownDTO> listJobPostings() {
+	
+		return adminDAO.listJobPostings();
+	}
+
+	@Override
+	public boolean updateJobPostInventory(int facilityId, int jobTypeId, int quantity) {
+		return adminDAO.updateJobPostInventory(facilityId, jobTypeId, quantity);
 	}
 }

@@ -638,6 +638,7 @@ jobboard/src/main/webapp/WEB-INF/view/addReference.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addTestimonies.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addVideos.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/addWorkExp.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/adminAddJobPosting.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/adminEditJobPostInventory.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/adminEditJobPosting.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/adminEditJobSave.jsp -text

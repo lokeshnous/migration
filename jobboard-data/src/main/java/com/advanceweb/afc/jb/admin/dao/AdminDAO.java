@@ -3,6 +3,7 @@ package com.advanceweb.afc.jb.admin.dao;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.AdminDTO;
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmpSearchDTO;
 import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 
@@ -73,4 +74,19 @@ public interface AdminDAO {
 	 */
 	boolean saveEditFacilityGroup(EmpSearchDTO dto);
 
+	/**
+	 * This method will list all the job posting combo which can purchased online 
+	 * @param 
+	 * @return
+	 */
+	List<DropDownDTO> listJobPostings();
+	
+	/**
+	 * This method is used to update the job posting inventory of the facility by the admin 
+	 * @param facilityId
+	 * @param jobTypeId
+	 * @param quantity
+	 * @return
+	 */
+	boolean updateJobPostInventory(int facilityId, int jobTypeId, int quantity);
 }

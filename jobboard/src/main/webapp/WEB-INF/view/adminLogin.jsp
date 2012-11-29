@@ -46,7 +46,7 @@ JAVASCRIPT FILES
 		    $("#editJobPosting").displaypopup("#editJobPosting",
 					"790", "450");
 		    $(".inventory").displaypopup(".inventory",
-					"790", "360");
+					"300", "100");
 		    $(".manageFacilityGroup").displaypopup(".manageFacilityGroup",
 					"790", "360");
 		});

@@ -45,6 +45,8 @@ import com.advanceweb.common.client.ClientContext;
 @SessionAttributes("adminLoginForm")
 @Scope("session")
 public class AdminController extends AbstractController{
+	private static final String ADMIN_DASHBOARD = "adminDashboard";
+
 	private static final Logger LOGGER = Logger
 			.getLogger("AdminController.class");
 
@@ -196,6 +198,7 @@ public class AdminController extends AbstractController{
 		ModelAndView model = new ModelAndView();
 		session.removeAttribute("empList");
 		session.removeAttribute("nsId");
+		model.addObject("pageName", ADMIN_DASHBOARD);
 		model.setViewName("adminEditJobPostInventory");
 		return model;
 	}

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.admin.service.AdminService;
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmpSearchDTO;
 import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
@@ -149,73 +150,40 @@ public class AdminJobPostingInventoryController {
 					.getUserIdAndFacilityId(nsId);
 			int userId = dto1.getUserId();
 			int facilityId = dto1.getFacilityId();
-			List<JobPostingInventoryDTO> inventiryDTO = adminService
+			List<JobPostingInventoryDTO> inventiryDTOList = adminService
 					.getInventoryDetails(userId, facilityId);
 			List<JobPostingInventoryDTO> jbPostList = new ArrayList<JobPostingInventoryDTO>();
 			List<JobPostingInventoryDTO> jbSlotList = new ArrayList<JobPostingInventoryDTO>();
-//			JobPostingInventoryDTO postingInventoryDTO = new JobPostingInventoryDTO();
-			String Duration = Integer.toString(MMJBCommonConstants.PLAN_DAYS)
+			
+			JobPostingInventoryDTO dto = null;
+			
+			String duration = Integer.toString(MMJBCommonConstants.PLAN_DAYS)
 					+ " " + MMJBCommonConstants.DAYS;
-			for (int index = 0; index < inventiryDTO.size(); index++) {
-				getInventoryDetails(inventiryDTO, jbPostList, jbSlotList,
-						Duration, index);
+			for (JobPostingInventoryDTO postingInventoryDTO : inventiryDTOList) {
+				
+				dto = new JobPostingInventoryDTO();
+				
+				if (MMJBCommonConstants.STANDARD_JOB_POSTING.equalsIgnoreCase(postingInventoryDTO.getJbType())) {
+					dto.setAddon(postingInventoryDTO.getAddon());
+					dto.setDuration(duration);
+					dto.setQuantity(postingInventoryDTO.getQuantity());
+					dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
+					dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
+					jbPostList.add(dto);
+				}else if (MMJBCommonConstants.JOB_POSTING_SLOT.equalsIgnoreCase(postingInventoryDTO.getJbType())) {
+					dto.setAddon(postingInventoryDTO.getAddon());
+					dto.setDuration(duration);
+					dto.setQuantity(postingInventoryDTO.getQuantity());
+					dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
+					dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
+					jbSlotList.add(dto);
+				}
 			}
 			model.addObject("jbPostList", jbPostList);
 			model.addObject("jbSlotList", jbSlotList);
 		}
 		model.setViewName("adminEditJobPostInventory");
 		return model;
-	}
-
-	private void getInventoryDetails(List<JobPostingInventoryDTO> inventiryDTO,
-			List<JobPostingInventoryDTO> jbPostList,
-			List<JobPostingInventoryDTO> jbSlotList, String Duration, int index) {
-		JobPostingInventoryDTO postingInventoryDTO;
-		postingInventoryDTO = inventiryDTO.get(index);
-		JobPostingInventoryDTO dto = new JobPostingInventoryDTO();
-		if (postingInventoryDTO.getJbType().equalsIgnoreCase(
-				MMJBCommonConstants.STANDARD_JOB_POSTING)
-				&& postingInventoryDTO.getProductType().equals(
-						MMJBCommonConstants.JOB_TYPE_COMBO)) {
-			dto.setAddon(MMJBCommonConstants.BASIC_JOB_TYPE + "+"
-					+ postingInventoryDTO.getAddon());
-			dto.setDuration(Duration);
-			dto.setQuantity(postingInventoryDTO.getQuantity());
-			dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
-			dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
-			jbPostList.add(dto);
-		} else if (postingInventoryDTO.getJbType().equalsIgnoreCase(
-				MMJBCommonConstants.STANDARD_JOB_POSTING)
-				&& postingInventoryDTO.getProductType().equals(
-						MMJBCommonConstants.JOB_TYPE)) {
-			dto.setAddon(MMJBCommonConstants.BASIC_JOB_TYPE);
-			dto.setDuration(Duration);
-			dto.setQuantity(postingInventoryDTO.getQuantity());
-			dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
-			dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
-			jbPostList.add(dto);
-		} else if (postingInventoryDTO.getJbType().equalsIgnoreCase(
-				MMJBCommonConstants.JOB_POSTING_SLOT)
-				&& postingInventoryDTO.getProductType().equals(
-						MMJBCommonConstants.JOB_TYPE_COMBO)) {
-			dto.setAddon(MMJBCommonConstants.BASIC_JOB_TYPE + "+"
-					+ postingInventoryDTO.getAddon());
-			dto.setDuration(Duration);
-			dto.setQuantity(postingInventoryDTO.getQuantity());
-			dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
-			dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
-			jbSlotList.add(dto);
-		} else if (postingInventoryDTO.getJbType().equalsIgnoreCase(
-				MMJBCommonConstants.JOB_POSTING_SLOT)
-				&& postingInventoryDTO.getProductType().equals(
-						MMJBCommonConstants.JOB_TYPE)) {
-			dto.setAddon(MMJBCommonConstants.BASIC_JOB_TYPE);
-			dto.setDuration(Duration);
-			dto.setQuantity(postingInventoryDTO.getQuantity());
-			dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
-			dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
-			jbSlotList.add(dto);
-		}
 	}
 
 	@RequestMapping(value = "/saveAvailJobQty", method = RequestMethod.GET)
@@ -246,6 +214,41 @@ public class AdminJobPostingInventoryController {
 			saveStatusJson = true;
 		}
 		return saveStatusJson;
+	}
+	
+	@RequestMapping(value = "/addJobPosting", method = RequestMethod.GET)
+	public ModelAndView addJobPosting(@ModelAttribute("inventoryForm") InventoryForm inventoryForm,HttpSession session) {
+				
+			ModelAndView model = new ModelAndView();
+			
+			List<DropDownDTO> jobPostingList = adminService.listJobPostings();
+			model.addObject("jobPostingList", jobPostingList);
+			model.setViewName("adminAddJobPosting");
+			
+			return model;
+	}
+	
+	@RequestMapping(value = "/updateJobPostInventory", method = RequestMethod.POST)
+	public @ResponseBody
+	JSONObject updateJobPostInventory(
+			@ModelAttribute("inventoryForm") InventoryForm inventoryForm,
+			HttpSession session) {
+		JSONObject jsonObject = new JSONObject();
+		String nsCustomerId = String.valueOf(session.getAttribute(MMJBCommonConstants.NS_CUSTOMER_ID));
+		boolean status = false;
+		if (null != nsCustomerId && !nsCustomerId.isEmpty()) {
+			EmpSearchDTO empSearchDTO = adminService.getUserIdAndFacilityId(Integer.parseInt(nsCustomerId));
+			status = adminService.updateJobPostInventory(empSearchDTO.getFacilityId(),
+					inventoryForm.getJbTypeId(), inventoryForm.getQuantity());
+		}
+
+		if(status){
+			jsonObject.put("status", SUCCESS);
+		}
+		else{
+			jsonObject.put("status", "Failed to update the inventory for this empoyer");
+		}
+		return jsonObject;
 	}
 
 }

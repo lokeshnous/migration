@@ -18,14 +18,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.admin.helper.AdminConversionHelper;
 import com.advanceweb.afc.jb.common.AdminDTO;
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmpSearchDTO;
 import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
+import com.advanceweb.afc.jb.data.entities.AdmFacilityInventory;
 import com.advanceweb.afc.jb.data.entities.AdmInventoryDetail;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
+import com.advanceweb.afc.jb.data.entities.JpJobTypeCombo;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 
 @Transactional
@@ -391,5 +394,62 @@ public class AdminDAOImpl implements AdminDAO {
 			LOGGER.error("ERROR" + e);
 		}
 		return false;
+	}
+
+	@Override
+	public List<DropDownDTO> listJobPostings() {
+		
+		List<DropDownDTO> dropDownDTOList= new ArrayList<DropDownDTO>();
+		try{
+			List<JpJobTypeCombo> jobTypeComboList = hibernateTemplateCareers.find("from JpJobTypeCombo");
+			DropDownDTO dropDownDTO = null;
+			for(JpJobTypeCombo jobTypeCombo :jobTypeComboList){
+				dropDownDTO = new DropDownDTO();
+				
+				dropDownDTO.setOptionId(String.valueOf(jobTypeCombo.getComboId()));
+				dropDownDTO.setOptionName(jobTypeCombo.getAddons());
+				dropDownDTOList.add(dropDownDTO);
+			}
+		}
+		catch(Exception e){
+			LOGGER.error("ERROR :" + e);
+		}
+		return dropDownDTOList;
+	}
+
+	@Override
+	public boolean updateJobPostInventory(int facilityId, int jobTypeId,
+			int quantity) {
+		try {
+			AdmFacilityInventory admFacilityInventory = new AdmFacilityInventory();
+			admFacilityInventory.setCreateDt(new Date());
+			admFacilityInventory.setFacilityId(facilityId);
+			AdmInventoryDetail admInventoryDetail = transformToAdmInventoryDetail(
+					admFacilityInventory, jobTypeId, quantity);
+			admFacilityInventory.setAdmInventoryDetail(admInventoryDetail);
+			hibernateTemplateCareers.save(admFacilityInventory);
+		} catch (Exception e) {
+			LOGGER.error(e);
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * @param admFacilityInventory
+	 * @param jobPostingPlanDTO
+	 * @return admInventoryDetail
+	 */
+	private AdmInventoryDetail transformToAdmInventoryDetail(
+			AdmFacilityInventory admFacilityInventory, int jobTypeId,
+			int quantity) {
+		AdmInventoryDetail admInventoryDetail = new AdmInventoryDetail();
+		admInventoryDetail.setAdmFacilityInventory(admFacilityInventory);
+		admInventoryDetail.setProductId(jobTypeId);
+		admInventoryDetail.setProductType(MMJBCommonConstants.JOB_TYPE_COMBO);
+		admInventoryDetail.setOrderQty(quantity);
+		admInventoryDetail.setAvailableqty(quantity);
+
+		return admInventoryDetail;
 	}
 }

@@ -154,7 +154,7 @@ function closePopup() {
 						 var response = true;
 						 if (data.success == response) {	
 							//window.location.href = '${pageContext.request.contextPath}/admininventory/employer1/jobInventory1.html';
-							$.nmManual('${pageContext.request.contextPath}/admininventory/employer1/jobInventory1.html');							
+							$("#seachResult").click();							
 						 }else{
 							 $("#ErrorMsg").text(data.errMsg);
 							 $("#tb_save_search tbody").remove();
@@ -181,9 +181,9 @@ function closePopup() {
 		style="display: block">
 		<div class="popupHeader">
 			<h2>MANAGE / EDIT JOB POSTING INVENTORY</h2>
-			<a href="#"><img src="../resources/images/Close.png"
-				title="Close" width="19" height="19" onclick="closePopup();"
-				alt=""></a>
+			<img id="closeButton" class="nyroModalClose" src="../resources/images/Close.png"
+				title="Close" width="19" height="19"
+				alt="Close">
 		</div>
 		<div class="row">
 		<span id="ErrorMsg" class="FormErrorDisplayText01"> </span>
@@ -204,9 +204,10 @@ function closePopup() {
 				<input type="button" value="find" name="find" id="find"
 					class="btn_sm orange cursor" />
 			</div>
+			<c:if test="${pageName != 'adminDashboard'}">
 				<input type="hidden" name="nsId" />
 				<input type="hidden" name="empList" />
-
+				<c:if test="${jbPostList.size() != 0}">
 				<div class="rowEvenNewSpacing marginTop0">
 					<div class="row FontSize18 boldText">Standard Job Posting</div>
 					<table width="100%" border="0" cellspacing="0" cellpadding="0"
@@ -236,6 +237,8 @@ function closePopup() {
 					<input id="tb_save_search_total" value="${jbPostList.size()}" type="hidden">
 					
 				</div>
+				</c:if>
+				<c:if test="${jbSlotList.size() != 0}">
 				<div class="rowEvenNewSpacing marginTop20">
 					<div class="row FontSize18 boldText">Job Posting Slot</div>
 					<table width="100%" border="0" cellspacing="0" cellpadding="0"
@@ -264,12 +267,15 @@ function closePopup() {
 					</table>
 					<input id="jp_slot_save_total" value="${jbSlotList.size()}" type="hidden">
 				</div>
+				</c:if>
 				<input type="hidden" name="pageValue" value="inventoryPage" />
 				<div class="row marginTop20 paddingBottom10">
 					<a id="save" class="purchaseJobPostings btn_sm orange cursor">SAVE</a>
 					<a href="" class="nyroModalClose btn_sm orange cursor">Cancel</a>
-
+					<a href="<%=request.getContextPath()%>/admininventory/addJobPosting.html" class="nyroModal btn_sm orange cursor">Add New Job Posting</a>
 				</div>
+				</c:if>
+				<a id="seachResult" class="nyroModal" href="<%=request.getContextPath()%>/admininventory/employer1/jobInventory1.html" style="visibility: hidden;"></a>
 			</form:form>
 		</div>
 		<div class="clearfix"></div>
