@@ -207,8 +207,7 @@ public class MMEmailService implements MMEmail {
 					empName = searchDTO.getFacilityName();
 				}
 				try {
-					jsToAddress[0] = new InternetAddress(
-							"deviprasadm@nousinfo.com");
+					jsToAddress[0] = new InternetAddress(merUserdto.getEmailId());
 					emailDTO.setToAddress(jsToAddress);
 				} catch (AddressException jbex) {
 					LOGGER.error(
@@ -217,7 +216,7 @@ public class MMEmailService implements MMEmail {
 				}
 				LOGGER.info("sent email to" + merUserdto.getEmailId()
 						+ "with below details");
-				LOGGER.info("Employer Details for KeyWord:....."/* +keyWord */);
+				LOGGER.info("Employer Details for KeyWord:....."+saveSearchedJobsDTO.getKeywords());
 				LOGGER.info("Comapny Name:" + searchDTO.getCompany());
 				LOGGER.info("Job Title:" + searchDTO.getJobTitle());
 				if (null != saveSearchedJobsDTO.getKeywords()) {
@@ -240,7 +239,7 @@ public class MMEmailService implements MMEmail {
 			}
 			jobseekerNewJobEmailBody = jobseekerNewJobEmailBody
 					+ emailConfiguration.getProperty(
-							"jobseeker.new.job.matches.content1").trim();
+							"jobseeker.new.job.matches.content1").trim().replace("?jsdashboardLink", "#");
 			stringBuffer.append(emailConfiguration.getProperty(
 					"jobseeker.email.header").trim());
 			stringBuffer.append(jobseekerNewJobEmailBody);
