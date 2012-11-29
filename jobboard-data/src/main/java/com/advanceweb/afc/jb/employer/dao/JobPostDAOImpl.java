@@ -12,6 +12,7 @@ import java.util.Locale;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -62,8 +63,10 @@ public class JobPostDAOImpl implements JobPostDAO {
 	private static final String FIND_INVENTORY_DETAILS = "select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 "
 			+ "and dtl.productId=? and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) order by dtl.availableqty ";
 	private static final String FIND_INVENTORY_DETAILS_BY_INV_ID = "from AdmInventoryDetail inv  where inv.invDetailId=?)";
-	private static final String FIND_JP_JOB = "SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId=";
-	private static final String FIND_JP_JOB_COUNT = "SELECT count(a) from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId=";
+	private static final String FIND_JP_JOB = "SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId=:userId and a.deleteDt is NULL ";
+	
+	
+	
 	private static final long MILLIS_IN_DAY = 24 * 60 * 60 * 1000;
 	
 	/*private static final String FIND_ACTIVE_JOBS_EXPIRE_SOON = "select job.jobId,job.admFacility.facilityId,userFacility.facilityPK.userId," +
@@ -287,12 +290,9 @@ public class JobPostDAOImpl implements JobPostDAO {
 
 		List<JpJob> jobs = new ArrayList<JpJob>();
 		try {
-			Query query = hibernateTemplate
-					.getSessionFactory()
-					.getCurrentSession()
-					.createQuery(
-							FIND_JP_JOB
-									+ employerId + "and a.deleteDt is NULL ");
+			Query query = hibernateTemplate.getSessionFactory()
+					.getCurrentSession().createQuery(FIND_JP_JOB);
+			query.setParameter("userId", employerId);
 			query.setFirstResult(offset);
 			query.setMaxResults(noOfRecords);
 			jobs = query.list();
@@ -521,108 +521,59 @@ public class JobPostDAOImpl implements JobPostDAO {
 	public List<JobPostDTO> retrieveAllJobByStatus(String jobStatus,
 			int userId, int offset, int noOfRecords) {
 		List<JpJob> jobs = new ArrayList<JpJob>();
-		Long jobCount = 0L;
+		int jobCount = 0;
 		Query query = null;
+
+		Session session = hibernateTemplate.getSessionFactory()
+				.getCurrentSession();
 		try {
 			if (null != jobStatus
 					&& jobStatus
 							.equalsIgnoreCase(MMJBCommonConstants.POST_NEW_JOB)) {
-				// TODO Need to check the end date condition once the Package
+				// Need to check the end date condition once the Package
 				// and plan functionality finalized
-				query = hibernateTemplate
-						.getSessionFactory()
-						.getCurrentSession()
-						.createQuery(
-								FIND_JP_JOB
-										+ userId
-										+ " and a.active = 1 and(DATE_FORMAT(a.startDt, '%Y-%m-%d') <= CURRENT_DATE and DATE_FORMAT(a.endDt, '%Y-%m-%d') >= CURRENT_DATE)  and a.deleteDt is NULL");
-				jobCount = (Long) hibernateTemplate
-						.getSessionFactory()
-						.getCurrentSession()
-						.createQuery(
-								FIND_JP_JOB_COUNT
-										+ userId
-										+ " and a.active = 1 and (DATE_FORMAT(a.startDt, '%Y-%m-%d') <= CURRENT_DATE and DATE_FORMAT(a.endDt, '%Y-%m-%d') >= CURRENT_DATE)  and a.deleteDt is NULL")
-						.uniqueResult();
+				query = session
+						.createQuery(FIND_JP_JOB
+								+ " and a.active = 1 and (DATE_FORMAT(a.startDt, '%Y-%m-%d') <= CURRENT_DATE and DATE_FORMAT(a.endDt, '%Y-%m-%d') >= CURRENT_DATE)");
 
 			} else if (null != jobStatus
 					&& jobStatus
 							.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_INACTIVE)) {
-				query = hibernateTemplate
-						.getSessionFactory()
-						.getCurrentSession()
-						.createQuery(
-								FIND_JP_JOB
-										+ userId
-										+ " and (a.active = 0 and DATE_FORMAT(a.startDt, '%Y-%m-%d') <= CURRENT_DATE) and a.deleteDt is NULL");
-				jobCount = (Long) hibernateTemplate
-						.getSessionFactory()
-						.getCurrentSession()
-						.createQuery(
-								FIND_JP_JOB_COUNT
-										+ userId
-										+ " and (a.active = 0 and DATE_FORMAT(a.startDt, '%Y-%m-%d') <= CURRENT_DATE) and a.deleteDt is NULL")
-						.uniqueResult();
+				query = session
+						.createQuery(FIND_JP_JOB
+								+ " and (a.active = 0 and DATE_FORMAT(a.startDt, '%Y-%m-%d') <= CURRENT_DATE)");
+
 			} else if (null != jobStatus
 					&& jobStatus
 							.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_DRAFT)) {
-				query = hibernateTemplate
-						.getSessionFactory()
-						.getCurrentSession()
-						.createQuery(
-								FIND_JP_JOB
-										+ userId
-										+ " and (a.active = 0 and a.startDt is NULL and a.endDt is NULL) and a.deleteDt is NULL");
-				jobCount = (Long) hibernateTemplate
-						.getSessionFactory()
-						.getCurrentSession()
-						.createQuery(
-								FIND_JP_JOB_COUNT
-										+ userId
-										+ " and (a.active = 0 and a.startDt is NULL and a.endDt is NULL) and a.deleteDt is NULL")
-						.uniqueResult();
+				query = session
+						.createQuery(FIND_JP_JOB
+								+ " and (a.active = 0 and a.startDt is NULL and a.endDt is NULL)");
+
 			} else if (null != jobStatus
 					&& jobStatus
 							.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_EXPIRED)) {
-				query = hibernateTemplate
-						.getSessionFactory()
-						.getCurrentSession()
-						.createQuery(
-								FIND_JP_JOB
-										+ userId
-										+ " and (a.active = 1 and DATE_FORMAT(a.endDt, '%Y-%m-%d') < CURRENT_DATE) and a.deleteDt is NULL");
-				jobCount = (Long) hibernateTemplate
-						.getSessionFactory()
-						.getCurrentSession()
-						.createQuery(
-								FIND_JP_JOB_COUNT
-										+ userId
-										+ " and (a.active = 1 and DATE_FORMAT(a.endDt, '%Y-%m-%d') < CURRENT_DATE) and a.deleteDt is NULL")
-						.uniqueResult();
+				query = session
+						.createQuery(FIND_JP_JOB
+								+ " and (a.active = 1 and DATE_FORMAT(a.endDt, '%Y-%m-%d') < CURRENT_DATE)");
+
 			} else if (null != jobStatus
 					&& jobStatus
 							.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_SCHEDULED)) {
-				query = hibernateTemplate
-						.getSessionFactory()
-						.getCurrentSession()
-						.createQuery(
-								FIND_JP_JOB
-										+ userId
-										+ " and (a.active = 0 and DATE_FORMAT(a.startDt, '%Y-%m-%d') > CURRENT_DATE) and a.deleteDt is NULL");
-				jobCount = (Long) hibernateTemplate
-						.getSessionFactory()
-						.getCurrentSession()
-						.createQuery(
-								FIND_JP_JOB_COUNT
-										+ userId
-										+ " and (a.active = 0 and DATE_FORMAT(a.startDt, '%Y-%m-%d') > CURRENT_DATE) and a.deleteDt is NULL")
-						.uniqueResult();
-			}
+				query = session
+						.createQuery(FIND_JP_JOB
+								+ " and (a.active = 0 and DATE_FORMAT(a.startDt, '%Y-%m-%d') > CURRENT_DATE)");
 
+			}
+			query.setParameter("userId", userId);
 			query.setFirstResult(offset);
 			query.setMaxResults(noOfRecords);
 			jobs = query.list();
-			setNumberOfJobRecordsByStatus(jobCount.intValue());
+
+			if (null != jobs && !jobs.isEmpty()) {
+				jobCount = jobs.size();
+			}
+			setNumberOfJobRecordsByStatus(jobCount);
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
 		}
@@ -631,20 +582,21 @@ public class JobPostDAOImpl implements JobPostDAO {
 
 	@Override
 	public int getTotalNumberOfJobRecords(int employerId) {
+		int jobCount = 0;
 		try {
-			Long jobCount = (Long) hibernateTemplate
-					.getSessionFactory()
+			List<JpJob> jobs = new ArrayList<JpJob>();
+			Query query = hibernateTemplate.getSessionFactory()
 					.getCurrentSession()
-					.createQuery(
-							FIND_JP_JOB_COUNT
-									+ employerId + "and a.deleteDt is NULL")
-					.uniqueResult();
-			return jobCount.intValue();
+					.createQuery(FIND_JP_JOB);
+			query.setParameter("userId", employerId);
+			jobs = query.list();
+			if (null != jobs && !jobs.isEmpty()) {
+				jobCount = jobs.size();
+			}
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
-			return 0;
 		}
-
+		return jobCount;
 	}
 
 	/**
