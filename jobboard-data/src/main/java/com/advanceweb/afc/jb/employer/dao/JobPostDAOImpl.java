@@ -89,7 +89,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 	}
 
 	@Autowired
-	UserDao userDAO;
+	private UserDao userDAO;
 	
 	@Autowired
 	private FacilityDAO facilityDAO;
@@ -431,11 +431,11 @@ public class JobPostDAOImpl implements JobPostDAO {
 				// System should deactivate the job posting which are in
 				// “Active”
 				// status
-				Date startDt = new Date(job.getStartDt().getTime());
-				long startDateAsTimestamp = startDt.getTime();
-				long currentTimestamp = new Date().getTime();
-				long endtDateAsTimestamp = job.getEndDt().getTime();
-				if ((startDateAsTimestamp <= currentTimestamp && endtDateAsTimestamp > currentTimestamp)) {
+				Date startDt = job.getStartDt();
+				Date endtDt = job.getEndDt();
+				Date currentDt = new Date();
+
+				if ((startDt.before(currentDt) || startDt.equals(currentDt)) && endtDt.after(currentDt)) {
 					job.setActive(MMJBCommonConstants.INACTIVE);
 					hibernateTemplate.save(job);
 					bDeactivate = true;
@@ -459,12 +459,9 @@ public class JobPostDAOImpl implements JobPostDAO {
 	@Override
 	public boolean repostJob(int jobId) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
-		Date startDt = new Date(job.getStartDt().getTime());
-		Date endtDt = new Date(job.getEndDt().getTime());
-		long endtDateAsTimestamp = endtDt.getTime();
-		long starttDateAsTimestamp = startDt.getTime();
-		long currentTimestamp = new Date().getTime();
-
+		Date startDt = job.getStartDt();
+		Date endtDt = job.getEndDt();
+		Date currentDt = new Date();
 		boolean bRepost = false;
 		try {
 			// Check credit detail for the specified job- starts
@@ -477,8 +474,8 @@ public class JobPostDAOImpl implements JobPostDAO {
 					return false;
 				}
 				// Check credit detail for the specified job- Ends
-				if ((job.getActive() == 1 && endtDateAsTimestamp < currentTimestamp)
-						|| (job.getActive() == MMJBCommonConstants.INACTIVE && starttDateAsTimestamp <= currentTimestamp)) {
+				if ((job.getActive() == 1 && endtDt.before(currentDt))
+						|| (job.getActive() == MMJBCommonConstants.INACTIVE && (startDt.before(currentDt) || startDt.equals(currentDt)))) {
 					// Repost the inactive and expired job and extend the end
 					// date
 					// to one month
