@@ -22,6 +22,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.common.CommonUtil;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
@@ -1009,32 +1010,17 @@ public class JobPostDAOImpl implements JobPostDAO {
 		boolean isUpdate = false;
 		try {
 			JpJob mer = hibernateTemplate.get(JpJob.class, jobId);
-			Date endDateValue = null;
-			// Date startDateValue=null;
-			Date todayDate = null;
-			String enddateValue = apd.getEndDt() + " 00:00:00";
-			// String startdateValue=apd.getStartDt()+" 00:00:00";
-			endDateValue = dateConveter(enddateValue);
-			// startDateValue=dateConveter(startdateValue);
-			Calendar currentDate = Calendar.getInstance();
-			SimpleDateFormat formatter = new SimpleDateFormat(
-					"MM/dd/yyyy HH:mm:ss", Locale.US);
-			try {
-				String dateNow = formatter.format(currentDate.getTime());
-				todayDate = dateConveter(dateNow);
-			} catch (Exception e) {
-				LOGGER.info("Info data error date conversion");
-			}
-			int numberOfDays = twoDateDifferentValue(todayDate, endDateValue);
-			// int
-			// numberOfStartDate=twoDateDifferentValue(todayDate,startDateValue);
-			if (numberOfDays >= 0) {
+			
+			Date endDate = CommonUtil.convertToDate(apd.getEndDt());
+			Date currentDate = new Date();
+			
+			if (endDate.after(currentDate) || endDate.equals(currentDate)) {
 				mer.setJobStatus(MMJBCommonConstants.STATUS_ACTIVE);
 				mer.setActive((byte) 1);
-			} else if (numberOfDays < 0) {
+			} else{
 				mer.setJobStatus(MMJBCommonConstants.STATUS_EXPIRED);
 			}
-			mer.setEndDt(endDateValue);
+			mer.setEndDt(endDate);
 			hibernateTemplate.update(mer);
 			isUpdate = true;
 			LOGGER.info("Job Status Save is done by Admin");
@@ -1044,60 +1030,6 @@ public class JobPostDAOImpl implements JobPostDAO {
 		}
 		return isUpdate;
 
-	}
-
-	/**
-	 * @author kartikm
-	 * @Purpose:Date Conversion method name dateConveter that is for Converting
-	 *               from MM/dd/yyyy HH:mm:ss to yyyy-MM-dd HH:mm:ss
-	 * @Created:Sept 12, 2012
-	 * @param date
-	 * @return dateValue
-	 */
-	public Date dateConveter(String date) {
-		Date dateValue = null;
-		final String OLD_FORMAT = "MM/dd/yyyy HH:mm:ss";
-		final String NEW_FORMAT = "yyyy-MM-dd HH:mm:ss";
-		String newDateString;
-		SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT, Locale.ENGLISH);
-		try {
-			Date utilDate = sdf.parse(date);
-			sdf.applyPattern(NEW_FORMAT);
-			newDateString = sdf.format(utilDate);
-			SimpleDateFormat sdfSource = new SimpleDateFormat(NEW_FORMAT, Locale.ENGLISH);
-			dateValue = sdfSource.parse(newDateString);
-		} catch (ParseException e) {
-			LOGGER.info("Date parsing in Job save by admin wrong");
-		}
-
-		return dateValue;
-	}
-
-	/**
-	 * @author kartikm
-	 * @Purpose: Two date Different method name is twoDateDifferentValue that
-	 *           compare number of day start date and end date
-	 * @Created:Sept 12, 2012
-	 * @param todayDate
-	 * @param endDateValue
-	 * @return numberOfDays
-	 */
-	public int twoDateDifferentValue(Date todayDate, Date endDateValue) {
-		Calendar cal = Calendar.getInstance();
-		long startDay = 0;
-		long endDay = 0;
-		int numberOfDays = 0;
-		try {
-			cal.setTime(todayDate);
-			startDay = cal.getTimeInMillis() / MILLIS_IN_DAY;
-			cal.setTime(endDateValue);
-			endDay = cal.getTimeInMillis() / MILLIS_IN_DAY;
-			// Two date different value calculate
-			numberOfDays = (int) (endDay - startDay + 1);
-		} catch (Exception e) {
-			LOGGER.info("Info data error for date conversion");
-		}
-		return numberOfDays;
 	}
 
 	/**
@@ -1201,7 +1133,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 * @return Date
 	 */
 	private Date calculateEndDt(Date currentEndDt, int extendDays) {
-		Calendar now = Calendar.getInstance();
+		Calendar now = Calendar.getInstance(); 
 		now.setTime(currentEndDt);
 		now.add(Calendar.DAY_OF_MONTH, extendDays);
 		return now.getTime();
