@@ -6,6 +6,7 @@ import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
+import com.advanceweb.afc.jb.common.SchedulerDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 /**
@@ -62,4 +63,9 @@ public interface FacilityService {
 	int getFacilityParent(int facilityId)
 			throws JobBoardServiceException;
 	int getfacilityUserId(int facilityId);
+	/**
+	 * This method is to get all facility list 
+	 * @return List<SchedulerDTO>
+	 */
+	List<SchedulerDTO> getAllFacilityList();
 }

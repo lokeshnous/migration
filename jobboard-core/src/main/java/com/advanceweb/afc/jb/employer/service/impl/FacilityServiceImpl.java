@@ -10,6 +10,7 @@ import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
+import com.advanceweb.afc.jb.common.SchedulerDTO;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.employer.dao.FacilityDAO;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
@@ -107,5 +108,10 @@ public class FacilityServiceImpl implements FacilityService {
 	@Override
 	public int getfacilityUserId(int facilityId) {
 		return facilityDAO.getfacilityUserId(facilityId);
+	}
+	
+	@Override
+	public List<SchedulerDTO> getAllFacilityList() {
+		return facilityDAO.getAllFacilityList();
 	}
 }
