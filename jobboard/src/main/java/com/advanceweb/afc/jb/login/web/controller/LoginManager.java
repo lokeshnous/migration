@@ -22,12 +22,12 @@ import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
-import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
+import com.advanceweb.afc.jb.user.UserService;
 
 public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 	@Autowired
-	private LoginService loginService;
+	private UserService userService;
 
 	@Autowired
 	private FacilityService facilityService;
@@ -43,7 +43,7 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 			throws IOException, ServletException {
 		String pageValue = request.getParameter(MMJBCommonConstants.PAGE_VALUE);
 		String socialSignUp = (String) request.getAttribute("socialSignUp");
-		UserDTO user = loginService.getUser(authentication.getName());
+		UserDTO user = userService.getUser(authentication.getName());
 		HttpSession session;
 		if (authentication instanceof UsernamePasswordAuthenticationToken) {
 			session = request.getSession(false);

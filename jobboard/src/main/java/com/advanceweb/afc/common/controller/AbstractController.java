@@ -15,16 +15,16 @@ import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.jobseeker.web.controller.CheckSessionMap;
-import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.search.SearchParamDTO;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
+import com.advanceweb.afc.jb.user.UserService;
 import com.advanceweb.afc.jb.web.constants.RequestHeaderNames;
 import com.advanceweb.common.client.ClientContext;
 
 public abstract class AbstractController {
 	
 	@Autowired
-	private LoginService loginService;
+	private UserService userService;
 
 	@Autowired
 	private ProfileRegistration profileRegistration;
@@ -92,7 +92,7 @@ public abstract class AbstractController {
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
 			userId = (Integer) session
 					.getAttribute(MMJBCommonConstants.USER_ID);
-			List<UserRoleDTO> userRoleDTOs = loginService.getUserRole(userId);
+			List<UserRoleDTO> userRoleDTOs = userService.getUserRole(userId);
 			userRole = userRoleDTOs.get(0).getRoleName();
 			// TODO: Currently jobseeker is considering
 			JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration

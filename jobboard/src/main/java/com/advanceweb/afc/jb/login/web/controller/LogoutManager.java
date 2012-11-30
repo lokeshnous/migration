@@ -33,14 +33,14 @@ import com.advanceweb.afc.jb.jobseeker.service.JobSeekerJobDetailService;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
-import com.advanceweb.afc.jb.user.dao.UserDao;
+import com.advanceweb.afc.jb.user.UserService;
 
 public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 
 	@Autowired
 	private JobSeekerJobDetailService jobSeekerJobDetailService;
 	@Autowired
-	private UserDao userDAO;
+	private UserService userService;
 	@Autowired
 	private MMEmailService emailService;
 	@Value("${advanceWebAddress}")
@@ -155,7 +155,7 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 				"jobseeker.apply.email.body").trim();
 		for (AdmSaveJob admSaveJob : appliedJobDTOList) {
 			try {
-				merUserdto = userDAO.getUserByUserId(admSaveJob.getUserId());
+				merUserdto = userService.getUserByUserId(admSaveJob.getUserId());
 				jsToAddress[0] = new InternetAddress(merUserdto.getEmailId());
 			} catch (AddressException jbex) {
 				LOGGER.error(jbex);

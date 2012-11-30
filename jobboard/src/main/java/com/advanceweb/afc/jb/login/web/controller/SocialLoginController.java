@@ -37,7 +37,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.exception.JobBoardException;
-import com.advanceweb.afc.jb.login.service.LoginService;
+import com.advanceweb.afc.jb.user.UserService;
 
 /**
  * Controller for handling the service provider user login flow.
@@ -66,7 +66,7 @@ public class SocialLoginController {
 	private String postSignInUrl ;
 	private final ConnectSupport webSupport = new ConnectSupport();
 	@Autowired
-	private LoginService loginService;
+	private UserService userService;
 
 	/**
 	 * Creates a new provider sign-in controller.
@@ -241,7 +241,7 @@ public class SocialLoginController {
 			profileId = linkedin.profileOperations().getUserProfile().getId();
 		}
 		try {
-			userDTO = loginService.getUserBySocialProfileId(profileId);
+			userDTO = userService.getUserBySocialProfileId(profileId);
 		} catch (JobBoardException e) {
 			LOGGER.info("Error occurred while fetching the user based on the social profile id"+e.getMessage());
 		}
@@ -335,7 +335,7 @@ public class SocialLoginController {
 		int profileAttrId=0;
 		model.addObject("socialLoginForm", socialLoginForm);
 		model.setViewName("commonSocialLogin");
-		UserDTO user = loginService.getUser(socialLoginForm.getEmailId());
+		UserDTO user = userService.getUser(socialLoginForm.getEmailId());
 		if (user == null) {
 			return addErrorMessage(model,socialLoginForm);
 		} else if (!(socialLoginForm.getPassword().equals(user.getPassword()))) {
@@ -362,7 +362,7 @@ public class SocialLoginController {
 					profileAttrId=Integer.parseInt(MMJBCommonConstants.LINKEDIN_PROFILE_ATTR_ID);
 				}
 			try {
-				loginService.updateSocialProfileId(user.getUserId(),
+				userService.updateSocialProfileId(user.getUserId(),
 						socialLoginForm.getProfileId(),
 						profileAttrId);
 				loginSuccessManager.onAuthenticationSuccess(request, response,

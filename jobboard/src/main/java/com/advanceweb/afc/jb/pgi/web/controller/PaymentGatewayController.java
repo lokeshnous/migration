@@ -44,7 +44,7 @@ import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
-import com.advanceweb.afc.jb.user.dao.UserDao;
+import com.advanceweb.afc.jb.user.UserService;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
 import com.advanceweb.common.client.ClientContext;
@@ -109,7 +109,7 @@ public class PaymentGatewayController extends AbstractController{
 	@Autowired
 	private FacilityService facilityService;
 	@Autowired
-	private UserDao userDAO;
+	private UserService userService;
 	
 	@RequestMapping(value = "/callPaymentMethod", method = RequestMethod.GET)
 	public ModelAndView callPaymentMethod(@Valid PaymentGatewayForm paymentGatewayForm,
@@ -524,7 +524,7 @@ public class PaymentGatewayController extends AbstractController{
 			model.addObject(STATUS_CODE, MMJBCommonConstants.STATUS_CODE_200);
 			paymentGatewayForm = clearSessionFormData(session,
 					paymentGatewayForm);
-			UserDTO merUserdto = userDAO.getUserByUserId(userDTO.getUserId());
+			UserDTO merUserdto = userService.getUserByUserId(userDTO.getUserId());
 			EmployerInfoDTO facilityDetail = facilityService
 					.facilityDetails(userDTO.getUserId());
 			if (null != facilityDetail && null != merUserdto) {

@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.mail.internet.AddressException;
@@ -59,7 +58,7 @@ import com.advanceweb.afc.jb.login.web.controller.ChangePasswordForm;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
-import com.advanceweb.afc.jb.user.dao.UserDao;
+import com.advanceweb.afc.jb.user.UserService;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
 import com.advanceweb.common.client.ClientContext;
@@ -142,7 +141,7 @@ public class JobSeekerRegistrationController extends AbstractController {
 	@Autowired
 	private MMEmailService emailService;
 	@Autowired
-	private UserDao userDAO;
+	private UserService userService;
 	@Autowired
 	private FacilityService facilityService;
 	// Spring ReCaptcha
@@ -910,13 +909,13 @@ public class JobSeekerRegistrationController extends AbstractController {
 		
 		if (null != jsRegistrationDTO.getMerUserDTO()
 				&& null != jsRegistrationDTO.getMerUserDTO().getEmailId()) {
-			UserDTO userDTO = userDAO.getUser(jsRegistrationDTO
+			UserDTO userDTO = userService.getUser(jsRegistrationDTO
 					.getMerUserDTO().getEmailId());
 			EmployerInfoDTO facilityDetail =facilityService.facilityDetails(userDTO.getUserId());
 			if(null !=facilityDetail){
 			userDTO.setCompany(facilityDetail.getCustomerName());
 			}
-			List<UserRoleDTO> userRoleDTOs = userDAO.getUserRole(userDTO
+			List<UserRoleDTO> userRoleDTOs = userService.getUserRole(userDTO
 					.getUserId());
 			String userRole = userRoleDTOs.get(0).getRoleName();
 			String loginPath = navigationPath.substring(2);

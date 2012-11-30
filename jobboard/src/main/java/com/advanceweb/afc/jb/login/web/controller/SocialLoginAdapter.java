@@ -10,7 +10,7 @@ import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import com.advanceweb.afc.jb.common.UserDTO;
-import com.advanceweb.afc.jb.login.service.LoginService;
+import com.advanceweb.afc.jb.user.UserService;
 /**
 * SocialLoginAdapter that bridges between a SocialLoginController and a jobboard-specific user login service.
 * Invoked at the end of a service provider sign-in attempt to sign-in the local user account associated with the service provider user account.
@@ -21,7 +21,7 @@ public class SocialLoginAdapter implements SignInAdapter {
 	protected AuthenticationManager customAuthenticationManager;
 	
 	@Autowired
-	private LoginService loginService;
+	private UserService userService;
 /**
 * Complete a service provider login attempt by signing in the local user account with the specified id.
 * @param userId the local user id
@@ -34,7 +34,7 @@ public class SocialLoginAdapter implements SignInAdapter {
 	@Override
 	public String signIn(String localUserId, Connection<?> connection, NativeWebRequest request) {
 		String result=null;
-		UserDTO user = loginService.getUser(localUserId);
+		UserDTO user = userService.getUser(localUserId);
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
 				user.getEmailId(), user.getPassword(), null);
 		Authentication authenticatedUser = customAuthenticationManager

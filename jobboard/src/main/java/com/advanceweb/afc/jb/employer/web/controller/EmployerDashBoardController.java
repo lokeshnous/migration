@@ -60,6 +60,7 @@ import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.resume.web.controller.SearchResumeForm;
 import com.advanceweb.afc.jb.search.service.ResumeSearchService;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
+import com.advanceweb.afc.jb.user.UserService;
 import com.advanceweb.afc.jb.user.UserSubscriptionService;
 import com.advanceweb.afc.jb.user.web.controller.TransformUserubscription;
 import com.advanceweb.common.ads.AdPosition;
@@ -103,6 +104,10 @@ public class EmployerDashBoardController extends AbstractController {
 	@Autowired
 	private LoginService loginService;
 	
+	@Autowired
+	private UserService userService;
+	
+
 	private @Value("${funnelChartPath}")
 	String funnelChartPath;
 	
@@ -414,7 +419,7 @@ public class EmployerDashBoardController extends AbstractController {
 		int swAvgApplies = 0;
 		long count = 0;
 		try {
-			count = loginService.getEmployerCount();
+			count = userService.getEmployerCount();
 		} catch (JobBoardException e) {
 			LOGGER.info("Error occured while getting the Result from Database");
 		}

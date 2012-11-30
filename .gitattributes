@@ -225,6 +225,8 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/service/exception/JobBoardServ
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/ProfileRegistration.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/UserAlertService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/UserAlertServiceImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/user/UserService.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/user/UserServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/UserSubscriptionService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/user/UserSubscriptionServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/common/ads/AdPosition.java -text

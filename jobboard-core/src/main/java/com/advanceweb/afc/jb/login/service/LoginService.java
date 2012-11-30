@@ -36,52 +36,24 @@ public interface LoginService {
 	 */
 	LoginDTO getUserEmailDetails(String emailAddress);
 
-	UserDTO getUser(String email);
-
-	List<UserRoleDTO> getUserRole(int userId);
-
 	/**
-	 * This method to update the automatic generated password to DB
+	 * This method is to get all list of Dates
 	 * 
-	 * @param emailAddress
-	 * @param tempassword
+	 * @param startFrom
+	 *            ,endFrom,facilityId
+	 * @return
 	 * @throws JobBoardServiceException
 	 */
-	void saveNewPWD(String emailAddress, String tempassword)
-			throws JobBoardServiceException;
-void updateSocialProfileId(int userId,String profileId,int profileAttrId)throws JobBoardServiceException;
-UserDTO getUserBySocialProfileId(String socialProfileId)throws JobBoardServiceException;
+	List<MetricsDTO> employerMetrics(Date startFrom, Date endFrom,
+			int selEmployerId) throws JobBoardServiceException;
 
-/**
- * This method is used to get the total count of employer
- * 
- * @return
- * @throws JobBoardServiceException
- */
-long getEmployerCount() throws JobBoardServiceException;
-
-/**
- * This method is to get all list of Dates
- * 
- * @param startFrom,endFrom,facilityId
- * @return
- * @throws JobBoardServiceException
- */
-List<MetricsDTO> employerMetrics(Date startFrom, Date endFrom,int selEmployerId )throws JobBoardServiceException;
-
-
-
-
-/**
- * This method is to get active job Posting
- * 
- * @param facilityId
- * @return
- * @throws JobBoardServiceException
- */
- int getactivejobposting(int facilityId)throws JobBoardServiceException;
-
-
-
+	/**
+	 * This method is to get active job Posting
+	 * 
+	 * @param facilityId
+	 * @return
+	 * @throws JobBoardServiceException
+	 */
+	int getactivejobposting(int facilityId) throws JobBoardServiceException;
 
 }

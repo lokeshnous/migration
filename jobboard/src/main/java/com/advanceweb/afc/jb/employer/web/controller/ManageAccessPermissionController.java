@@ -30,12 +30,11 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.service.ManageAccessPermissionService;
-import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
-import com.advanceweb.afc.jb.user.dao.UserDao;
+import com.advanceweb.afc.jb.user.UserService;
 
 /**
  * 
@@ -79,10 +78,8 @@ public class ManageAccessPermissionController {
 	private MMEmailService emailService;
 
 	@Autowired
-	private LoginService loginService;
-
-	@Autowired
-	private UserDao userDAO;
+	private UserService userService;
+	
 	@Value("${employerPageExtention}")
 	private String employerPageExtention;
 	@Autowired
@@ -190,7 +187,7 @@ public class ManageAccessPermissionController {
 		UserDTO userDTO = transformEmpReg
 				.createUserDTOFromManageAccessForm(manageAccessPermissionForm);
 
-		UserDTO userDTOID = loginService.getUser(manageAccessPermissionForm
+		UserDTO userDTOID = userService.getUser(manageAccessPermissionForm
 				.getOwnerEmail());
 		if (null != userDTOID && userDTOID.getUserId() > 0) {
 			userDTO.setUserId(userDTOID.getUserId());
@@ -351,7 +348,7 @@ public class ManageAccessPermissionController {
 	 */
 	public void sendAdministratorUpdateMail(String email,
 			HttpServletRequest request, String ChangeRsn) {
-		UserDTO merUserdto = userDAO.getUser(email);
+		UserDTO merUserdto = userService.getUser(email);
 		EmployerInfoDTO facilityDetail = facilityService
 				.facilityDetails(merUserdto.getUserId());
 		StringBuffer admChangeDetail = new StringBuffer();
