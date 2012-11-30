@@ -24,6 +24,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import org.springframework.util.StringUtils;
 
+import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.CommonUtil;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
@@ -90,7 +91,7 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 				String loginDateStr = formatter.format(loginDate);
 				String logoutDateStr = formatter.format(logoutDate);
 
-				List<AdmSaveJob> appliedJobDTOList;
+				List<AppliedJobDTO> appliedJobDTOList;
 				try {
 					appliedJobDTOList = jobSeekerJobDetailService
 							.getAppliedJobsByCriteria((Integer) session
@@ -142,7 +143,7 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 	 * @param appliedJobDTOList
 	 */
 	private void sendTotalAppliedJobEmail(HttpServletRequest request,
-			List<AdmSaveJob> appliedJobDTOList) {
+			List<AppliedJobDTO> appliedJobDTOList) {
 		InternetAddress[] jsToAddress = new InternetAddress[1];
 		UserDTO merUserdto = new UserDTO();
 		StringBuffer stringBuffer = new StringBuffer();
@@ -153,7 +154,7 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 		EmailDTO emailDTO = new EmailDTO();
 		String jobseekerApplyEmailBody = emailConfiguration.getProperty(
 				"jobseeker.apply.email.body").trim();
-		for (AdmSaveJob admSaveJob : appliedJobDTOList) {
+		for (AppliedJobDTO admSaveJob : appliedJobDTOList) {
 			try {
 				merUserdto = userService.getUserByUserId(admSaveJob.getUserId());
 				jsToAddress[0] = new InternetAddress(merUserdto.getEmailId());
@@ -178,14 +179,14 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 
 			jobseekerApplyEmailBody = jobseekerApplyEmailBody
 					+ "<tr>  <td width=\"33%\" align=\"center\" valign=\"middle\" style=\"padding-top:10px; padding-bottom:10px; border:1px solid #cccccc;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\"><span style=\"color: #333333\">"
-					+ admSaveJob.getJobtitle()
+					+ admSaveJob.getJobTitle()
 					+ "</span></span>"
 					+ "</td>  <td width=\"33%\" align=\"center\" valign=\"middle\" style=\"padding-top:10px; padding-bottom:10px; border:1px solid #cccccc;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\"><span style=\"color: #333333\">"
 					+ empName
 					+ "</span></span>"
 					+ "</td>  <td width=\"33%\" align=\"center\" valign=\"middle\" style=\"padding-top:10px; padding-bottom:10px; border:1px solid #cccccc;\"><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:14px;\">"
-					+ CommonUtil.convertToReqdDateString(admSaveJob
-							.getAppliedDt()) + "</span>" + "</td></tr>";
+					+ admSaveJob
+							.getAppliedDt() + "</span>" + "</td></tr>";
 
 		}
 		jobseekerApplyEmailBody = jobseekerApplyEmailBody

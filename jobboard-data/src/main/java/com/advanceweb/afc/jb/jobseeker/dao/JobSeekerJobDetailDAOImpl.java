@@ -174,14 +174,16 @@ public class JobSeekerJobDetailDAOImpl implements JobSeekerJobDetailDAO {
 	@SuppressWarnings("unchecked")
 	@Transactional(readOnly = true)
 	@Override
-	public List<AdmSaveJob> getAppliedJobsByCriteria(int jobSeekerId,String startDate,String endDate)throws JobBoardDataException   {
+	public List<AppliedJobDTO> getAppliedJobsByCriteria(int jobSeekerId,String startDate,String endDate)throws JobBoardDataException   {
 		List<AdmSaveJob> jobList = null;
-
+		List<AppliedJobDTO> appliedJobDTOList = null;
 		try {
 			if (jobSeekerId != 0) {
 				 jobList = (List<AdmSaveJob>) hibernateTemplate
 						.find("from AdmSaveJob asj where asj.userId=? and  (asj.appliedDt > DATE_FORMAT('"+startDate+"', '%Y-%m-%d %T') and asj.appliedDt < DATE_FORMAT('"+endDate+"', '%Y-%m-%d %T')) and asj.deleteDt is NULL",
 								jobSeekerId);
+				 appliedJobDTOList = jobSeekerJobDetailConversionHelper
+							.transformToDTOForSavedJob(jobList);
 			}
 		} catch (Exception e) {
 			LOGGER.debug("Error while fetching the applied jobs of the corresponding job seeker");
@@ -190,7 +192,7 @@ public class JobSeekerJobDetailDAOImpl implements JobSeekerJobDetailDAO {
 							+ e);
 		}
 
-		return jobList;
+		return appliedJobDTOList;
 
 	}
 }

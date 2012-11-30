@@ -49,7 +49,7 @@ public interface JobSeekerJobDetailDAO {
 	 * @return
 	 * @throws JobBoardDataException
 	 */
-	List<AdmSaveJob> getAppliedJobsByCriteria(int jobSeekerId, String startDate,
+	List<AppliedJobDTO> getAppliedJobsByCriteria(int jobSeekerId, String startDate,
 			String endDate) throws JobBoardDataException;
 
 }

@@ -92,7 +92,7 @@ public class JobSeekerJobDetailServiceImpl implements JobSeekerJobDetailService 
 	 * @return
 	 * @throws JobBoardDataException
 	 */
-	public List<AdmSaveJob> getAppliedJobsByCriteria(int jobSeekerId, String startDate,
+	public List<AppliedJobDTO> getAppliedJobsByCriteria(int jobSeekerId, String startDate,
 			String endDate) throws JobBoardServiceException{
 				try {
 					return jobSeekerJobDetailDAO.getAppliedJobsByCriteria(jobSeekerId, startDate, endDate);
