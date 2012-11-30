@@ -127,8 +127,7 @@ public class JobSeekerRegistrationController extends AbstractController {
 
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
-	@Value("${welcomeMailMessage}")
-	private String 	welcomeMailMessage;
+	
 	@Value("${dothtmlExtention}")
 	private String dothtmlExtention;
 	@Value("${jobseekerPageExtention}")
@@ -151,9 +150,6 @@ public class JobSeekerRegistrationController extends AbstractController {
 	private String recaptchaResponse;
 	private String recaptchaChallenge;
 	private String remoteAddr;
-
-	private Long placeKey;
-
 	private static final String JS_CREATE_ACCOUNT = "jobSeekerCreateAccount";
 
 	private static final String REGISTER_FORM = "registerForm";
@@ -259,7 +255,6 @@ public class JobSeekerRegistrationController extends AbstractController {
 			BindingResult result, HttpServletRequest req, HttpSession session,
 			HttpServletRequest request) {
 
-		placeKey = new Random().nextLong();
 		ModelAndView model = new ModelAndView();
 
 		try {
@@ -414,13 +409,6 @@ public class JobSeekerRegistrationController extends AbstractController {
 		HashMap<String, String> hashmap = new HashMap<String, String>();
 		try {
 
-			if (((Long) session.getAttribute("LAST_PLACE_KEY")) != null
-					&& ((Long) session.getAttribute("LAST_PLACE_KEY"))
-							.equals(placeKey)) {
-				model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
-				return model;
-			}
-
 			if (null != registerForm.getListProfAttribForms()) {
 				model.setViewName("jobSeekerCreateAccountInfo");
 				// get the Ads
@@ -517,7 +505,7 @@ public class JobSeekerRegistrationController extends AbstractController {
 					userDTO.getFirstName() + " " + userDTO.getLastName());
 			session.setAttribute(MMJBCommonConstants.USER_ID, userDTO.getUserId());
 			session.setAttribute("userEmail", userDTO.getEmailId());
-			session.setAttribute(MMJBCommonConstants.LAST_PLACE_KEY, placeKey);
+			
 			// send welcome email ends
 			
 			model.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
@@ -559,7 +547,8 @@ public class JobSeekerRegistrationController extends AbstractController {
 		EmailDTO emailDTO = new EmailDTO();
 		emailDTO.setToAddress(jsToAddress);
 		emailDTO.setFromAddress(advanceWebAddress);
-		emailDTO.setSubject(welcomeMailMessage);
+		emailDTO.setSubject(emailConfiguration.getProperty("welcome.mail.message")
+				.trim());
 		String loginPath = navigationPath.substring(2);
 		String jonseekerloginUrl = request.getRequestURL().toString()
 				.replace(request.getServletPath(), loginPath)
