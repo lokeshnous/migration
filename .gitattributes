@@ -127,6 +127,7 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/NewJobs
 jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/NewJobsUpdationMailWorkerMonthly.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/NewJobsUpdationMailWorkerWeekly.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/NewJobsUpdationMailWorkerYearly.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/NoActiveJobPostingJobWorker.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/common/schedulers/jobs/ProfileViewSendMailJobWorker.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/common/util/DateUtils.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/common/util/OpenAMEUtility.java -text
