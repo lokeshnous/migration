@@ -6,6 +6,7 @@ import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
+import com.advanceweb.afc.jb.common.SchedulerDTO;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 
 /**
@@ -72,4 +73,6 @@ public interface FacilityDAO {
 	 * @throws JobBoardDataException
 	 */
 	int getfacilityUserId(int facilityId);
+	
+	List<SchedulerDTO> getAllFacilityList();
 }

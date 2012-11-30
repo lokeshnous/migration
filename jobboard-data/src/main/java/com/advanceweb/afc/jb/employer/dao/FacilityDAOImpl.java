@@ -25,12 +25,15 @@ import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
+import com.advanceweb.afc.jb.common.SchedulerDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmRole;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.employer.helper.EmpConversionHelper;
+import com.advanceweb.afc.jb.user.dao.UserDao;
 
 @Transactional
 @Repository("facilityDAO")
@@ -43,14 +46,16 @@ public class FacilityDAOImpl implements FacilityDAO {
 
 	@Autowired
 	private EmpConversionHelper conversionHelper;
-
+	
+	@Autowired
+	private UserDao userDAO;
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
 			SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
 	}
-
+	
 	/**
 	 * This method is to get the facility id and role for a particular user
 	 * 
@@ -227,5 +232,35 @@ public class FacilityDAOImpl implements FacilityDAO {
 						.find("from AdmUserFacility af where af.facilityPK.roleId=? and af.facilityPK.facilityId=?",
 								role.getRoleId(), facilityId));
 		return facility.getFacilityPK().getUserId();
+	}
+	
+	/**
+	 * This method is used to get all facility list 
+	 * @return List<SchedulerDTO>
+	 */
+	@Override
+	public List<SchedulerDTO> getAllFacilityList() {
+		List<AdmUserFacility> facility;
+		List<SchedulerDTO> schedulerDTOList=new ArrayList<SchedulerDTO>();
+		try{
+			facility=(List<AdmUserFacility>)hibernateTemplate.find("from AdmUserFacility userFacility where userFacility.facilityPK.roleId=? and userFacility.deleteDt=NULL",MMJBCommonConstants.EMPLOYER_ROLE_ID);
+		for(AdmUserFacility admUserFacility:facility){
+			if(admUserFacility.getAdmFacility().getFacilityType().equals(MMJBCommonConstants.FACILITY)|| admUserFacility.getAdmFacility().getFacilityType().equals(MMJBCommonConstants.FACILITY_GROUP)){
+				SchedulerDTO schedulerDTO=new SchedulerDTO();
+				UserDTO userDTO=userDAO.getUserByUserId(admUserFacility.getFacilityPK().getUserId());
+				if(userDTO!=null){
+					schedulerDTO.setCompanyName(admUserFacility.getAdmFacility().getName());
+					schedulerDTO.setUserId(userDTO.getUserId());
+					schedulerDTO.setFirstName(userDTO.getFirstName());
+					schedulerDTO.setLastName(userDTO.getLastName());
+					schedulerDTO.setEmailId(userDTO.getEmailId());
+					schedulerDTOList.add(schedulerDTO);
+				}
+			}
+		}
+		}catch(Exception e){
+			LOGGER.error("Exception occur while getting all facility list for scheduler job"+e.getMessage());
+		}
+		return schedulerDTOList;
 	}
 }
