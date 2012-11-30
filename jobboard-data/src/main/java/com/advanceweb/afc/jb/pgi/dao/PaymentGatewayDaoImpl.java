@@ -383,7 +383,7 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 			//if its just basic then find the combo id for basic
 			if(jobPostingPlanDTO.getAddOnDTOList().size() == 0){
 				//This value find it from db using 'Basic' String from jp_addon table
-				JpAddon jpAddOn = DataAccessUtils.uniqueResult(hibernateTemplate.find("from JpAddon where name = ?", MMJBCommonConstants.BASIC_JOB_TYPE));
+				JpAddon jpAddOn = (JpAddon)DataAccessUtils.uniqueResult(hibernateTemplate.find("from JpAddon where name = ?", MMJBCommonConstants.BASIC_JOB_TYPE));
 				inputs[jpAddOn.getAddonId()] = jpAddOn.getAddonId(); 
 			}
 			

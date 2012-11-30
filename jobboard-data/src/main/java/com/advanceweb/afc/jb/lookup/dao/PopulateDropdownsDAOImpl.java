@@ -545,7 +545,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			for (AdmInventoryDetail inv : invList) {
 				dto = new DropDownDTO();
 				
-				JpJobTypeCombo combo = DataAccessUtils.uniqueResult(hibernateTemplate
+				JpJobTypeCombo combo = (JpJobTypeCombo)DataAccessUtils.uniqueResult(hibernateTemplate
 						.find("from JpJobTypeCombo combo where combo.comboId=?",inv.getProductId()));
 				if (null != combo) {
 					dto.setOptionId(String.valueOf(inv.getInvDetailId()));
