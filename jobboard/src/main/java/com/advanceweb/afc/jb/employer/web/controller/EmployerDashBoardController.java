@@ -29,6 +29,7 @@ import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -101,6 +102,10 @@ public class EmployerDashBoardController extends AbstractController {
 
 	@Autowired
 	private LoginService loginService;
+	
+	private @Value("${funnelChartPath}")
+	String funnelChartPath;
+	
 	private static final String EMPLOYERDASHBOARDFORM = "employerDashBoardForm";
 	private static final String JBPOSTTOTALLIST = "jbPostTotalList";
 	private static final String COUNT = "count";
@@ -530,7 +535,7 @@ public class EmployerDashBoardController extends AbstractController {
 		try {
 			// FileInputStream obtains input bytes from the image file
 			InputStream inputStream = new FileInputStream(
-					"D:\\funnelchart\\chart.JPEG");
+					funnelChartPath);
 		
 
 		// Get the contents of an InputStream as a byte[].
