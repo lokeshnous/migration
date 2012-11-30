@@ -475,7 +475,6 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/user/dao/UserSubscriptionsDAO.
 jobboard-data/src/main/java/com/advanceweb/afc/jb/user/dao/UserSubscriptionsDAOImpl.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/user/helper/RegistrationConversionHelper.java -text
 jobboard-data/src/main/resources/HibernateSessionFactory.xml -text
-jobboard-data/src/main/resources/openam.properties -text
 jobboard-data/src/test/java/com/advanceweb/afc/data/AppTest.java -text
 jobboard/pom.xml -text
 jobboard/src/main/java/com/advanceweb/afc/common/controller/AbstractController.java -text
@@ -616,6 +615,7 @@ jobboard/src/main/resources/log4j.properties -text
 jobboard/src/main/resources/mailServer.properties -text
 jobboard/src/main/resources/messages_en.properties -text
 jobboard/src/main/resources/netSuite.properties -text svneol=unset#text/plain
+jobboard/src/main/resources/openam.properties -text
 jobboard/src/main/resources/openx.properties -text
 jobboard/src/main/resources/pdfGenerator.properties -text
 jobboard/src/main/resources/springSocial.properties -text

@@ -2,7 +2,6 @@ package com.advanceweb.afc.jb.common.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.net.MalformedURLException;
@@ -10,9 +9,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.security.SecureRandom;
 import java.util.HashMap;
-import java.util.Properties;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
@@ -23,24 +22,22 @@ import com.advanceweb.afc.jb.data.entities.MerUser;
 
 public class OpenAMEUtility {
 
-	private static final Logger LOGGER = Logger.getLogger("OpenAMUtility.class");
-	static Properties prop ;
-	static{
-		try{	    
-			 prop = new Properties();
-			InputStream dataProp = OpenAMEUtility.class.getResourceAsStream("/openam.properties");
-			prop.load(dataProp);
-		   }catch (Exception e) {
-				e.printStackTrace();
-			}
-	}
-	private final static String _TOKEN_URL = prop.getProperty("openAMServiceURL")+"authenticate?username="+prop.getProperty("openAM.admin.username")+"&password="+prop.getProperty("openAM.admin.password");
-	private final static String _CREATE_URL = prop.getProperty("openAMServiceURL")+"create?admin=";
-	private final static String _UPDATE_URL = prop.getProperty("openAMServiceURL")+"update?admin=";
-	private final static String _DELETE_URL = prop.getProperty("openAMServiceURL")+"delete?admin=";
-	private final static String _READ_URL = prop.getProperty("openAMServiceURL")+"read?admin=";
-	private final static String _AUTHENTICATE_URL = prop.getProperty("openAMServiceURL")+"authenticate?";
-	private final static String _LOGOUT_URL = prop.getProperty("openAMServiceURL")+"logout?subjectid=";
+	private static final Logger LOGGER = Logger.getLogger(OpenAMEUtility.class);
+	
+	private @Value("${openAMServiceURL}")
+	static String openAMServiceURL;
+	private @Value("${openAM.admin.username}")
+	static String openAMUserName;
+	private @Value("${openAM.admin.password}")
+	static String openAMPassword;
+	
+	private final static String _TOKEN_URL = openAMServiceURL+"authenticate?username="+openAMUserName+"&password="+openAMPassword;
+	private final static String _CREATE_URL = openAMServiceURL+"create?admin=";
+	private final static String _UPDATE_URL = openAMServiceURL+"update?admin=";
+	private final static String _DELETE_URL = openAMServiceURL+"delete?admin=";
+	private final static String _READ_URL = openAMServiceURL+"read?admin=";
+	private final static String _AUTHENTICATE_URL = openAMServiceURL+"authenticate?";
+	private final static String _LOGOUT_URL = openAMServiceURL+"logout?subjectid=";
 
 	
 	public static String newPassword(){

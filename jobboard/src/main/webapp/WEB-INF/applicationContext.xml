@@ -20,7 +20,7 @@
 	<context:component-scan base-package="com.advanceweb.common" />
 	
 	<context:property-placeholder
-		location="classpath:jobboard-scheduler.properties,classpath:mailServer.properties,classpath:common.properties,classpath:log4j.properties,classpath:database.properties,classpath:messages_en.properties,classpath:springSocial.properties,classpath:pdfGenerator.properties,classpath:netSuite.properties" />
+		location="classpath:jobboard-scheduler.properties,classpath:mailServer.properties,classpath:common.properties,classpath:log4j.properties,classpath:database.properties,classpath:messages_en.properties,classpath:springSocial.properties,classpath:pdfGenerator.properties,classpath:netSuite.properties,classpath:openam.properties" />
 
 	<!-- <context:property-placeholder location="classpath:common.properties,classpath:database.properties,classpath:mailServer.properties, 
 		classpath:jobboard-scheduler.properties, classpath:messages_en.properties, 
