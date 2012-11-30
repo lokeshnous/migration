@@ -3,6 +3,7 @@ package com.advanceweb.afc.jb.user.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,10 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.common.SchedulerDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
@@ -24,7 +27,8 @@ import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 @Transactional
 @Repository("userDAO")
 public class UserDaoImpl implements UserDao {
-
+	private static final Logger LOGGER = Logger
+			.getLogger(UserDaoImpl.class);
 	private HibernateTemplate hibernateTemplateTracker;
 	private HibernateTemplate hibernateTemplate;
 
@@ -224,6 +228,32 @@ public class UserDaoImpl implements UserDao {
 		}
 		return count;
 	}
-	
+	/**
+	 * This method is used to get all job seeker list 
+	 * @return List<SchedulerDTO>
+	 */
+
+	@Override
+	public List<SchedulerDTO> getAllJobSeekerList() {
+		List<AdmUserFacility> facility;
+		List<SchedulerDTO> schedulerDTOList=new ArrayList<SchedulerDTO>();
+		try{
+			facility=(List<AdmUserFacility>)hibernateTemplate.find("from AdmUserFacility userFacility where userFacility.facilityPK.roleId=? and userFacility.deleteDt=NULL",MMJBCommonConstants.JOBSEEKER_ROLE_ID);
+		for(AdmUserFacility admUserFacility:facility){
+				SchedulerDTO schedulerDTO=new SchedulerDTO();
+				UserDTO userDTO=getUserByUserId(admUserFacility.getFacilityPK().getUserId());
+				if(userDTO!=null){
+					schedulerDTO.setUserId(userDTO.getUserId());
+					schedulerDTO.setFirstName(userDTO.getFirstName());
+					schedulerDTO.setLastName(userDTO.getLastName());
+					schedulerDTO.setEmailId(userDTO.getEmailId());
+					schedulerDTOList.add(schedulerDTO);
+				}
+		}
+		}catch(Exception e){
+			LOGGER.error("Exception occur while getting all jobseeker list for scheduler job"+e.getMessage());
+		}
+		return schedulerDTOList;
+	}
 	
 }

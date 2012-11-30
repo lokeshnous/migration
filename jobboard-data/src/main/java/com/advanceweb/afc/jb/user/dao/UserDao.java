@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.user.dao;
 
 import java.util.List;
 
+import com.advanceweb.afc.jb.common.SchedulerDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
@@ -38,4 +39,6 @@ public interface UserDao {
 	UserDTO getUserBySocialProfileId(String socialProfileId)throws JobBoardDataException;
 	
 	long getEmployerCount() throws JobBoardDataException;
+	
+	public List<SchedulerDTO> getAllJobSeekerList();
 }
