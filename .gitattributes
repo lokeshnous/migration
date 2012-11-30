@@ -1,4 +1,5 @@
 * text=auto !eol
+jobboard-common/file.out -text
 jobboard-common/lib/SymJavaAPI.jar -text
 jobboard-common/pom.xml -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AccountBillingDTO.java -text
