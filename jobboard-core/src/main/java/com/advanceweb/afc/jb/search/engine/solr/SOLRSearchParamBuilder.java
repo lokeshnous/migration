@@ -126,7 +126,7 @@ public class SOLRSearchParamBuilder implements SearchParamBuilder {
 		String result = value;
 		for (String placeholder : patterns) {
 			int offset = Integer.parseInt(placeholder.substring(2));
-			LOGGER.info("SOLRSearchParamBuilder.replacePlaceholders - Replacing "
+			LOGGER.debug("SOLRSearchParamBuilder.replacePlaceholders - Replacing "
 					+ placeholder + " with " + fields[offset - 1]);
 			result = result
 					.replace(placeholder, inputs.get(fields[offset - 1]));

@@ -115,7 +115,7 @@ public abstract class AbstractSolrSearchDelegate {
 			// Convert and return the result
 			return fillSearchResult(response, clazz);
 		} else {
-			LOGGER.info("The SOLR Server " + solrServerURL
+			LOGGER.error("The SOLR Server " + solrServerURL
 					+ " is not accesible. Check the url");
 			return null;
 		}
@@ -215,7 +215,7 @@ public abstract class AbstractSolrSearchDelegate {
 		searchquery.addFacetField(SearchFacetDTO.FACET_POSTED_DATE);
 		searchquery.addFacetField(SearchFacetDTO.FACET_STATE);*/
 
-		LOGGER.info("Search query: " + searchquery);
+		LOGGER.debug("Created SOLR Search query: " + searchquery);
 		return searchquery;
 
 	}
@@ -234,7 +234,7 @@ public abstract class AbstractSolrSearchDelegate {
 
 		long resultCount = response.getResults().getNumFound();
 
-		LOGGER.info("Job Search returned " + resultCount + " records");
+		LOGGER.debug("Job Search returned " + resultCount + " records");
 
 		SearchResultDTO<T> resultDTO = new SearchResultDTO<T>();
 		resultDTO.setResultCount(resultCount);
@@ -252,7 +252,7 @@ public abstract class AbstractSolrSearchDelegate {
 			for (FacetField facetField : facetFieldList) {
 				List<SearchFacetDTO> searchFacetDTOList = new ArrayList<SearchFacetDTO>();
 				if(facetField.getValues() == null){
-					LOGGER.info(facetField.getName()+" facet not found.");
+					LOGGER.error("Facet [" +facetField.getName()+"] is not found.");
 				}else{
 					for (Count countObj : facetField.getValues()) {
 						searchFacetDTOList.add(new SearchFacetDTO(countObj.getName(),
