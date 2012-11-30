@@ -102,8 +102,6 @@ import com.advanceweb.common.client.ClientContext;
 @RequestMapping("/jobsearch")
 public class JobSearchController extends AbstractController {
 
-	
-	
 	private static final Logger LOGGER = Logger
 			.getLogger(JobSearchController.class);
 
@@ -142,7 +140,7 @@ public class JobSearchController extends AbstractController {
 
 	@Autowired
 	private CoverLetterService coverLetterService;
-	
+
 	@Autowired
 	private ClickService clickService;
 
@@ -281,10 +279,10 @@ public class JobSearchController extends AbstractController {
 	private static final String JOBS = "jobs";
 	private static final String JOBS_URL = "jobsUrl";
 	private static final String FTR_PAGE_MESSAGE = "footerpage.jobsurlmessage";
-	private static final String JOBS_URL_TITLE = "jobsUrlTitle";	
+	private static final String JOBS_URL_TITLE = "jobsUrlTitle";
 	private static final String JOB_SRCH_MATCH = "jobsearchpage.jobsearchmatchinfo";
 	private static final String Q_KEYWORD = "?keyword";
-	private static final String EMPLOYER = "employer";
+	private static final String BROWSE_BY_EMPLOYER = "browseByEmployer";
 	private static final String BROWSE_BY_STATE = "browseBystate";
 	private static final String AREA = "area";
 	private static final String RECENT_SRCH_LIST = "recentSearchList";
@@ -302,9 +300,9 @@ public class JobSearchController extends AbstractController {
 	 */
 	@RequestMapping(value = "/jobview/{jobId}/{jobtitle}")
 	public ModelAndView viewJobDetails(@PathVariable("jobId") int jobId,
-			@PathVariable(JOBTITLE) String jobTitle,
-			Map<String, Object> model, HttpServletRequest request,
-			HttpSession session, HttpServletResponse response) {
+			@PathVariable(JOBTITLE) String jobTitle, Map<String, Object> model,
+			HttpServletRequest request, HttpSession session,
+			HttpServletResponse response) {
 		ModelAndView modelView = new ModelAndView();
 
 		try {
@@ -408,25 +406,34 @@ public class JobSearchController extends AbstractController {
 	}
 
 	/**
-	 * Populate Ads for job view, premium job view and browse category pages page
+	 * Populate Ads for job view, premium job view and browse category pages
+	 * page
 	 * 
 	 * @param request
 	 * @param session
 	 * @param model
-	 * @param pageName 
+	 * @param pageName
 	 */
 	private void populateAds(HttpServletRequest request, HttpSession session,
 			ModelAndView model, String pageName) {
 		String bannerString = null;
 		try {
-
+			
+String temp =	"<script type=\"text/javascript\">"+
+	"if (!window.OX_ads) { OX_ads = []; }"+
+	"OX_ads.push({ \"auid\" : \"284879\" ,\"vars\":{\"keyword\" : \"Nursing\"}});"+
+"</script>"+
+"<script type=\"text/javascript\">"+
+	"document.write('<scr'+'ipt src=\"http://ox-d.advanceweb.com/w/1.0/jstag\"><\\/scr'+'ipt>');"+
+"</script>";
 			ClientContext clientContext = getClientContextDetails(request,
 					session, pageName);
 			AdSize size = AdSize.IAB_LEADERBOARD;
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject(ADPAGETOP, bannerString);
+			//model.addObject(ADPAGETOP, bannerString);
+			model.addObject(ADPAGETOP, temp);
 
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
@@ -441,7 +448,7 @@ public class JobSearchController extends AbstractController {
 						position).getTag();
 				model.addObject(ADPGRIGHT_TOP, bannerString);
 
-			}else if (pageName.equalsIgnoreCase(PageNames.JOB_VIEW)) {
+			} else if (pageName.equalsIgnoreCase(PageNames.JOB_VIEW)) {
 				size = AdSize.IAB_MEDIUM_RECTANGLE;
 				position = AdPosition.RIGHT_TOP;
 				bannerString = adService.getBanner(clientContext, size,
@@ -453,7 +460,7 @@ public class JobSearchController extends AbstractController {
 				bannerString = adService.getBanner(clientContext, size,
 						position).getTag();
 				model.addObject("adPageRightMiddle", bannerString);
-		}
+			}
 
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
@@ -470,51 +477,59 @@ public class JobSearchController extends AbstractController {
 	private void addSEODetailsForJobView(Map<String, Object> model,
 			HttpServletRequest request, JobDTO jobDTO) {
 
-		String metaDesc = seoConfiguration
-				.getProperty("jobviewpage.meta.description").trim();
-		String metaTitle = seoConfiguration
-				.getProperty("jobviewpage.meta.title").trim();
-		metaDesc = metaDesc.replace(JOBTITLE_REPLACE_WORD, jobDTO.getJobTitle());
-		metaTitle = metaTitle.replace(JOBTITLE_REPLACE_WORD, jobDTO.getJobTitle());
+		String metaDesc = seoConfiguration.getProperty(
+				"jobviewpage.meta.description").trim();
+		String metaTitle = seoConfiguration.getProperty(
+				"jobviewpage.meta.title").trim();
+		metaDesc = metaDesc
+				.replace(JOBTITLE_REPLACE_WORD, jobDTO.getJobTitle());
+		metaTitle = metaTitle.replace(JOBTITLE_REPLACE_WORD,
+				jobDTO.getJobTitle());
 		if (jobDTO.getCompany() == null) {
-			metaTitle = metaTitle.replace(COMPANY_NAME + ",",MMJBCommonConstants.EMPTY);
-			metaDesc = metaDesc.replace(COMPANY_NAME + ",", MMJBCommonConstants.EMPTY);
-		}else{
-			metaTitle = metaTitle.replace(COMPANY_NAME ,jobDTO.getCompany());
-			metaDesc = metaDesc.replace(COMPANY_NAME , jobDTO.getCompany());
+			metaTitle = metaTitle.replace(COMPANY_NAME + ",",
+					MMJBCommonConstants.EMPTY);
+			metaDesc = metaDesc.replace(COMPANY_NAME + ",",
+					MMJBCommonConstants.EMPTY);
+		} else {
+			metaTitle = metaTitle.replace(COMPANY_NAME, jobDTO.getCompany());
+			metaDesc = metaDesc.replace(COMPANY_NAME, jobDTO.getCompany());
 		}
 		if (jobDTO.getCity() == null) {
-			metaDesc = metaDesc.replace(CITY+",", MMJBCommonConstants.EMPTY);
-			metaTitle = metaTitle.replace(CITY+",", MMJBCommonConstants.EMPTY);
-		}else{
+			metaDesc = metaDesc.replace(CITY + ",", MMJBCommonConstants.EMPTY);
+			metaTitle = metaTitle
+					.replace(CITY + ",", MMJBCommonConstants.EMPTY);
+		} else {
 			metaDesc = metaDesc.replace(CITY, jobDTO.getCity());
 			metaTitle = metaTitle.replace(CITY, jobDTO.getCity());
 		}
 		if (jobDTO.getState() == null) {
 			metaDesc = metaDesc.replace(STATE, MMJBCommonConstants.EMPTY);
 			metaTitle = metaTitle.replace(STATE, MMJBCommonConstants.EMPTY);
-		}else{
+		} else {
 			metaDesc = metaDesc.replace(STATE, jobDTO.getState());
 			metaTitle = metaTitle.replace(STATE, jobDTO.getState());
 		}
 		if (jobDTO.getCountry() == null) {
-			metaDesc = metaDesc.replace(" in "+COUNTRY, MMJBCommonConstants.EMPTY);
-			metaTitle = metaTitle.replace(" in "+COUNTRY, MMJBCommonConstants.EMPTY);
-		}else{
+			metaDesc = metaDesc.replace(" in " + COUNTRY,
+					MMJBCommonConstants.EMPTY);
+			metaTitle = metaTitle.replace(" in " + COUNTRY,
+					MMJBCommonConstants.EMPTY);
+		} else {
 			metaDesc = metaDesc.replace(COUNTRY, jobDTO.getCountry());
 			metaTitle = metaTitle.replace(COUNTRY, jobDTO.getCountry());
 		}
-		if (jobDTO.getCompany() == null && jobDTO.getCity() == null && jobDTO.getState() != null) {
+		if (jobDTO.getCompany() == null && jobDTO.getCity() == null
+				&& jobDTO.getState() != null) {
 			metaDesc = metaDesc.replace(" in", MMJBCommonConstants.EMPTY);
 			metaTitle = metaTitle.replace(" in", MMJBCommonConstants.EMPTY);
-		} 
+		}
 		model.put("metaDesc", metaDesc);
 		model.put("metaTitle", metaTitle);
 		model.put("canonicalUrl", request.getRequestURL());
 	}
-	
+
 	/**
-	 * The method track the number of clicks done by user. 
+	 * The method track the number of clicks done by user.
 	 * 
 	 * @param response
 	 * @param request
@@ -588,9 +603,9 @@ public class JobSearchController extends AbstractController {
 					request)) {
 				return jsonObject;
 			}
-		
+
 			int userId = getUserID(session);
-			
+
 			// Validate if job is already applied
 			AppliedJobDTO appliedJobDTO = jobSearchService
 					.fetchSavedOrAppliedJob(jobDTO, userId);
@@ -645,7 +660,7 @@ public class JobSearchController extends AbstractController {
 				.getAttribute(MMJBCommonConstants.USER_NAME);
 		String userEmail = (String) session
 				.getAttribute(MMJBCommonConstants.USER_EMAIL);
-		StringBuffer mailBody= new StringBuffer();
+		StringBuffer mailBody = new StringBuffer();
 		// Send mail to Employer regarding job application
 		String loginPath = navigationPath.substring(2);
 		EmailDTO employerEmailDTO = new EmailDTO();
@@ -662,19 +677,17 @@ public class JobSearchController extends AbstractController {
 		String employerMailBody = employeJobApplicationBody.replace(
 				"?empDashboardLink", employerloginUrl);
 		employerMailBody = employerMailBody.replace("?jobseekername", userName);
-		mailBody.append(emailConfiguration
-				.getProperty("employer.email.header").trim());
-		
+		mailBody.append(emailConfiguration.getProperty("employer.email.header")
+				.trim());
+
 		if (coverLetterTxt == null) {
 			mailBody.append(employerMailBody);
 		} else {
 			coverLetterTxt = coverLetterTxt.replace("\r\n", "<br/>");
-			mailBody.append(coverLetterTxt + "<br/>"
-					+ employerMailBody);
+			mailBody.append(coverLetterTxt + "<br/>" + employerMailBody);
 		}
-		
-		mailBody.append(emailConfiguration
-				.getProperty("email.footer").trim());
+
+		mailBody.append(emailConfiguration.getProperty("email.footer").trim());
 		employerEmailDTO.setBody(mailBody.toString());
 		employerEmailDTO.setHtmlFormat(true);
 		employerEmailDTO.setAttachmentPaths(attachmentpaths);
@@ -853,7 +866,103 @@ public class JobSearchController extends AbstractController {
 	}
 
 	/**
-	 * Depending on the selection of category the method help to display the 
+	 * This method is called to search jobs by reloading the page
+	 * 
+	 * @param model
+	 * @param request
+	 * @return ModelAndView
+	 */
+	@RequestMapping(value = "/findjobs", method = RequestMethod.GET)
+	public ModelAndView findjobs(
+			Map<String, JobSearchResultForm> model,
+			@ModelAttribute("jobSearchResultForm") JobSearchResultForm jobSearchResultForm,
+			HttpSession session, HttpServletRequest request) {
+		// JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
+		ModelAndView modelAndView = new ModelAndView();
+		JSONObject jobSrchJsonObj = null;
+		// clear session attributes
+		clearSession(session);
+
+		// validate the inputs
+		JobSearchResultDTO jobSearchResultDTO = null;
+		boolean freshjobsearch = true;
+		if (request.getParameter("freshjobsearch") != null) {
+			freshjobsearch = Boolean.valueOf(request
+					.getParameter("freshjobsearch"));
+		}
+		if (freshjobsearch) {
+			// clear refine searches
+			session.getAttribute("employer");
+			session.getAttribute("browseBystate");
+
+			// get the search name
+			String searchName = getSearchName(jobSearchResultForm, session,
+					request);
+			jobSearchResultForm.setSearchtype(searchName);
+			jobSrchJsonObj = jobSearchValidator.validateJobSearch(
+					jobSearchResultForm, session);
+			/*
+			 * if (jobSrchJsonObj != null) { return jobSrchJsonObj; }
+			 */
+		}
+
+		// merge the parameters and set it in session
+		Map<String, String> paramMap = getParameterMap(jobSearchResultForm,
+				MMJBCommonConstants.POSTED_DT, session, request);
+
+		int recordsPerPage = MMJBCommonConstants.JOBSEACRH_DEFAULT_PAGE_SIZE;
+		int page = 1;
+		int noOfRecords = 0;
+		if (request.getParameter(MMJBCommonConstants.PAGE) != null) {
+			page = Integer.parseInt(request
+					.getParameter(MMJBCommonConstants.PAGE));
+		}
+		if (request.getParameter(MMJBCommonConstants.JOBSEACRH_PAGE_SIZE) != null) {
+			recordsPerPage = Integer.parseInt(request
+					.getParameter(MMJBCommonConstants.JOBSEACRH_PAGE_SIZE));
+		}
+		long start = (page - 1) * recordsPerPage;
+		long rows = recordsPerPage;
+		try {
+			// Calling the jobSearch() of Service layer from getting the object
+			// of JobSearchResultDTO
+			jobSearchResultDTO = jobSearchService.jobSearch(paramMap, start,
+					rows);
+			noOfRecords = (int) jobSearchResultDTO.getResultCount();
+			//
+			if (jobSearchResultDTO != null) {
+				// Calling the service layer for converting the
+				// JobSearchResultDTO
+				// object into JSON Object
+				jobSrchJsonObj = searchJobToJSON(jobSearchResultDTO);
+			}
+		} catch (JobBoardException e) {
+			LOGGER.debug("Error occured while getting the Job Search Result from SOLR...");
+		}
+
+		// get the current search items
+		List<HashMap<String, Object>> currentSearchList = getCurrentSearchResultsList(session);
+		session.setAttribute(MMJBCommonConstants.CURRENT_SEARCH_LIST,
+				currentSearchList);
+		// set the pagination values in session
+		setSessionForGrid(session, request, jobSearchResultDTO, page,
+				recordsPerPage, noOfRecords, jobSrchJsonObj);
+
+		// populate the ads for search results grid
+		populateAdsForSearchResults(request, session, jobSrchJsonObj,
+				recordsPerPage);
+		modelAndView.addObject("adPageCenterMiddleList",
+				jobSrchJsonObj.get("adPageCenterMiddleList"));
+
+		model.put(JOB_SEARCH_RESULT_FORM, jobSearchResultForm);
+		// get the Ads
+		getAdsForJobseekerSearch(request, session, modelAndView);
+		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
+		return modelAndView;
+	}
+
+	/**
+	 * Depending on the selection of category the method help to display the
 	 * list of job titles or locations or employers from DB .
 	 * 
 	 * @param model
@@ -868,13 +977,44 @@ public class JobSearchController extends AbstractController {
 
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
 		ModelAndView modelAndView = new ModelAndView();
+		JobSearchResultDTO jobSearchResultDTO = null;
+		JSONObject jobSrchJsonObj = null;
+		String searchName = MMJBCommonConstants.BROWSE_SEARCH;
+		jobSearchResultForm.setSearchtype(searchName);
+
+		// merge the parameters
+		Map<String, String> paramMap = getParameterMap(jobSearchResultForm,
+				MMJBCommonConstants.POSTED_DT, session, request);
+
+		int page = 1;
+		int recordsPerPage = MMJBCommonConstants.DEFAULT_PAGE_SIZE;
+
+		try {
+			long start = (page - 1) * recordsPerPage;
+			long rows = recordsPerPage;
+			// Calling the jobSearch() of Service layer from getting the object
+			// of JobSearchResultDTO
+			jobSearchResultDTO = jobSearchService.jobSearch(paramMap, start,
+					rows);
+
+		} catch (JobBoardException e) {
+			LOGGER.debug("Error occured while getting the Job Search Result from SOLR...");
+		}
+
+		if (jobSearchResultDTO != null) {
+			// Calling the service layer for converting the JobSearchResultDTO
+			// object into JSON Object
+			jobSrchJsonObj = searchJobToJSON(jobSearchResultDTO);
+		}
 		// Check for job titles category
 		if (category.equalsIgnoreCase("jobtitles")) {
 			clearSession(session);
 			try {
-				// get the job titles list from DB
-				List<JobDTO> jbsByTitleList = jobSearchService.getJobsByTitle();
-				modelAndView.addObject("jbsByTitleList", jbsByTitleList);
+				@SuppressWarnings("unchecked")
+				// get the areas list
+				List<String> jobPositionList = (List<String>) jobSrchJsonObj
+						.get(MMJBCommonConstants.JOB_POSITION);
+				modelAndView.addObject("jbsByTitleList", jobPositionList);
 				modelAndView.addObject("jobTitlePage", true);
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
@@ -884,18 +1024,21 @@ public class JobSearchController extends AbstractController {
 		if (category.equalsIgnoreCase("employers")) {
 			clearSession(session);
 			try {
-				Map<String, List<JobDTO>> emplyrsByName = new TreeMap<String, List<JobDTO>>();
-				Set<String> nameList = new HashSet<String>();	
-				// get the states list from DB
-				List<JobDTO> jbsByEmployerList = jobSearchService
-						.getJobsByEmployer();
+				Map<String, List<String>> emplyrsByName = new TreeMap<String, List<String>>();
+				Set<String> nameList = new HashSet<String>();
+
+				@SuppressWarnings("unchecked")
+				// get the areas list
+				List<String> employerList = (List<String>) jobSrchJsonObj
+						.get(MMJBCommonConstants.COMPANY);
 				// set the employers list in dictionary format
-				for (JobDTO job : jbsByEmployerList) {
-					if(job.getCompany() != null && !job.getCompany().isEmpty()){
-						String nameLetter = job.getCompany().substring(0, 1)
-								.toUpperCase();
+				for (String job : employerList) {
+					if (job != null && !job.split("\\(")[0].trim().isEmpty()) {
+						String nameLetter = job.substring(0, 1).toUpperCase();
 						if (nameList.add(nameLetter)) {
-							List<JobDTO> jobList = new ArrayList<JobDTO>();
+							// List<JobDTO> jobList = new ArrayList<JobDTO>();
+							// jobList.add(job);
+							List<String> jobList = new ArrayList<String>();
 							jobList.add(job);
 							emplyrsByName.put(nameLetter, jobList);
 						} else {
@@ -913,10 +1056,11 @@ public class JobSearchController extends AbstractController {
 		if (category.equalsIgnoreCase("locations")) {
 			clearSession(session);
 			try {
-				// get the states list from DB
-				List<JobDTO> jbsByLocationList = jobSearchService
-						.getJobsByLocation();
-				modelAndView.addObject("jbsByLocationList", jbsByLocationList);
+				@SuppressWarnings("unchecked")
+				// get the areas list
+				List<String> statesList = (List<String>) jobSrchJsonObj
+						.get(MMJBCommonConstants.STATE);
+				modelAndView.addObject("jbsByLocationList", statesList);
 				modelAndView.addObject("locationPage", true);
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
@@ -924,14 +1068,15 @@ public class JobSearchController extends AbstractController {
 		}
 		// get SEO details
 		addSEODetailsForBrowsePages(modelAndView, request, category);
-		populateAds(request, session, modelAndView, PageNames.JOBSEEKER_BROWSE_JOBS);
+		populateAds(request, session, modelAndView,
+				PageNames.JOBSEEKER_BROWSE_JOBS);
 		modelAndView.addObject(JOB_SEARCH_RESULT_FORM, jobSearchResultForm);
 		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
 		return modelAndView;
 	}
 
 	/**
-	 * Depending on the selection of location the method help to display the 
+	 * Depending on the selection of location the method help to display the
 	 * list of areas under locations from SOLR.
 	 * 
 	 * @param model
@@ -941,33 +1086,30 @@ public class JobSearchController extends AbstractController {
 	 */
 	@RequestMapping(value = "/browse/{location}/areas", method = RequestMethod.GET)
 	public ModelAndView browseJobsBySubCategory(HttpSession session,
-			HttpServletRequest request,
-			@PathVariable(LOCATION) String location
-			) {
-		
+			HttpServletRequest request, @PathVariable(LOCATION) String location) {
+
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
 		ModelAndView modelAndView = new ModelAndView();
 		JobSearchResultDTO jobSearchResultDTO = null;
 		JSONObject jobSrchJsonObj = null;
-		
-		// clear session attributes of pagination		
+
+		// clear session attributes of pagination
 		clearSession(session);
-		
+
 		// set the search type
 		String searchName = MMJBCommonConstants.BROWSE_SEARCH;
 		jobSearchResultForm.setSearchtype(searchName);
-		
+
 		// set the FQ parameters
 		String state = location.replace("-", " ");
 		request.setAttribute(MMJBCommonConstants.THIRD_FQ_PARAM, state);
 		// merge the parameters
-		Map<String, String> paramMap = getParameterMap(
-				jobSearchResultForm, MMJBCommonConstants.POSTED_DT,
-				session, request);
-		
+		Map<String, String> paramMap = getParameterMap(jobSearchResultForm,
+				MMJBCommonConstants.POSTED_DT, session, request);
+
 		int page = 1;
 		int recordsPerPage = 0;
-		
+
 		try {
 			if (request.getParameter(MMJBCommonConstants.PAGE) != null) {
 				page = Integer.parseInt(request
@@ -979,49 +1121,52 @@ public class JobSearchController extends AbstractController {
 			long rows = recordsPerPage;
 			// Calling the jobSearch() of Service layer from getting the object
 			// of JobSearchResultDTO
-			jobSearchResultDTO = jobSearchService.jobSearch(
-					paramMap, start, rows);
-			
+			jobSearchResultDTO = jobSearchService.jobSearch(paramMap, start,
+					rows);
+
 		} catch (JobBoardException e) {
 			LOGGER.debug(ERROR_SOLR);
 		}
-		
+
 		if (jobSearchResultDTO != null) {
 			// Calling the service layer for converting the JobSearchResultDTO
 			// object into JSON Object
 			jobSrchJsonObj = searchJobToJSON(jobSearchResultDTO);
 		}
-		
+
 		@SuppressWarnings(UNCHECKED)
-		//get the areas list
+		// get the areas list
 		List<String> areaList = (List<String>) jobSrchJsonObj
 				.get(MMJBCommonConstants.AREA);
-		
+
 		modelAndView.addObject("areaList", areaList);
 		modelAndView.addObject("locationPage", true);
 		modelAndView.addObject("areaPage", true);
-		String jobSearchMatchInfo = seoConfiguration
-		.getProperty("browsepage.location.areaslist.matchinfo").trim();
-		//get full location name
-		String stateFullName = lookupService.getStateFullName(state);		
-		jobSearchMatchInfo =jobSearchMatchInfo.replace(LOCNAME_REPLACE_WORD, state);
+		String jobSearchMatchInfo = seoConfiguration.getProperty(
+				"browsepage.location.areaslist.matchinfo").trim();
+		// get full location name
+		String stateFullName = lookupService.getStateFullName(state);
+		jobSearchMatchInfo = jobSearchMatchInfo.replace(LOCNAME_REPLACE_WORD,
+				state);
 		modelAndView.addObject(LOCATION, state);
-		modelAndView.addObject("locationFullname", stateFullName+ " (" +state+ ") ");
+		modelAndView.addObject("locationFullname", stateFullName + " (" + state
+				+ ") ");
 		modelAndView.addObject(JOB_SRCH_MTCH_INFO, jobSearchMatchInfo);
 		modelAndView.addObject(JOB_SEARCH_RESULT_FORM, jobSearchResultForm);
 		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
-		
+
 		// add SEO details to page
 		addSEODetailsForBrowsePages(modelAndView, request, "areas");
-		
+
 		// populate the ads
-		populateAds(request, session, modelAndView, PageNames.JOBSEEKER_BROWSE_JOBS);
+		populateAds(request, session, modelAndView,
+				PageNames.JOBSEEKER_BROWSE_JOBS);
 		return modelAndView;
 	}
 
 	/**
-	 * Fetch the jobs depending on the selection of job title by using  
-	 * search type and facets from SOLR. 
+	 * Fetch the jobs depending on the selection of job title by using search
+	 * type and facets from SOLR.
 	 * 
 	 * @param session
 	 * @param desc
@@ -1038,30 +1183,27 @@ public class JobSearchController extends AbstractController {
 		ModelAndView modelAndView = new ModelAndView();
 		JSONObject jobSrchJsonObj = null;
 		JobSearchResultDTO jobSearchResultDTO = null;
-		
+
 		// set the search type
 		String searchName = MMJBCommonConstants.BROWSE_SEARCH;
 		jobSearchResultForm.setSearchtype(searchName);
-		
-		//  set the FQ parameters
+
+		// set the FQ parameters
 		String jobTitle = desc.replace("-", " ");
 		request.setAttribute(MMJBCommonConstants.FIRST_FQ_PARAM, jobTitle);
-		
-		// create the link to get the searched jobs titles list page 
-		String jobsUrl = request
-				.getRequestURL()
-				.toString()
-				.replace(JOBSEARCH,
-						JOBS)+ "?page=1";		
-		modelAndView.addObject(JOBS_URL, jobsUrl);		
-		String jobsUrlMessage = seoConfiguration
-				.getProperty(FTR_PAGE_MESSAGE).trim();
+
+		// create the link to get the searched jobs titles list page
+		String jobsUrl = request.getRequestURL().toString()
+				.replace(JOBSEARCH, JOBS)
+				+ "?page=1";
+		modelAndView.addObject(JOBS_URL, jobsUrl);
+		String jobsUrlMessage = seoConfiguration.getProperty(FTR_PAGE_MESSAGE)
+				.trim();
 		modelAndView.addObject(JOBS_URL_TITLE, jobsUrlMessage);
-		
+
 		// merge the parameters
-		Map<String, String> paramMap = getParameterMap(
-				jobSearchResultForm, MMJBCommonConstants.POSTED_DT,
-				session, request);
+		Map<String, String> paramMap = getParameterMap(jobSearchResultForm,
+				MMJBCommonConstants.POSTED_DT, session, request);
 
 		// fetch the jobs of selected job title
 		int page = 1;
@@ -1074,8 +1216,8 @@ public class JobSearchController extends AbstractController {
 			long rows = recordsPerPage;
 			// Calling the jobSearch() of Service layer from getting the object
 			// of JobSearchResultDTO
-			jobSearchResultDTO = jobSearchService.jobSearch(
-					paramMap, start, rows);
+			jobSearchResultDTO = jobSearchService.jobSearch(paramMap, start,
+					rows);
 
 			session.setAttribute(MMJBCommonConstants.START_ROW, ((page - 1)
 					* recordsPerPage + 1));
@@ -1092,7 +1234,8 @@ public class JobSearchController extends AbstractController {
 		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 		int beginVal = 0;
 		if (null == next || next.isEmpty()) {
-			beginVal = (page / MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT) * MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT;
+			beginVal = (page / MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT)
+					* MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT;
 		} else {
 			beginVal = Integer.parseInt(next);
 			page = Integer.parseInt(next);
@@ -1111,41 +1254,43 @@ public class JobSearchController extends AbstractController {
 		jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
 				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
 		modelAndView.addObject(MMJBCommonConstants.SEARCH_RESULTS_LIST,
-				 jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS));
+				jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS));
 		modelAndView.addObject(MMJBCommonConstants.TOTAL_NO_RECORDS,
 				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
 		modelAndView.addObject(JOB_SEARCH_RESULT_FORM, jobSearchResultForm);
 		modelAndView.addObject(MMJBCommonConstants.SEARCH_TYPE, searchName);
 		modelAndView.addObject(MMJBCommonConstants.SEARCHED_JOBSCOUNT,
 				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
-		modelAndView.addObject(MMJBCommonConstants.CURRENT_SEARCH_LIST,
-				null);
+		modelAndView.addObject(MMJBCommonConstants.CURRENT_SEARCH_LIST, null);
 		modelAndView.addObject(MMJBCommonConstants.CITY,
 				jobSrchJsonObj.get(MMJBCommonConstants.CITY));
 		modelAndView.addObject(MMJBCommonConstants.STATE,
 				jobSrchJsonObj.get(MMJBCommonConstants.STATE));
 		modelAndView.addObject(MMJBCommonConstants.COMPANY,
 				jobSrchJsonObj.get(MMJBCommonConstants.COMPANY));
-		
+
 		String jobSearchMatchInfo = seoConfiguration
 				.getProperty(JOB_SRCH_MATCH).trim();
-				jobSearchMatchInfo =jobSearchMatchInfo.replace(Q_KEYWORD, jobTitle);
+		jobSearchMatchInfo = jobSearchMatchInfo.replace(Q_KEYWORD, jobTitle);
 		session.setAttribute(JOB_SRCH_MTCH_INFO, jobSearchMatchInfo);
-		
+
 		// populate the ads for search results grid
-		populateAdsForSearchResults(request, session, jobSrchJsonObj, recordsPerPage);
-		String[] seoInfos = {jobTitle}; 
+		populateAdsForSearchResults(request, session, jobSrchJsonObj,
+				recordsPerPage);
+		String[] seoInfos = { jobTitle };
 		// Add the SEO details for job search results page
-		addSEODetailsForJobsSearchPages(modelAndView, request, JOBTITLE, seoInfos, noOfRecords);
+		addSEODetailsForJobsSearchPages(modelAndView, request, JOBTITLE,
+				seoInfos, noOfRecords);
 		// populate the ads
-		populateAds(request, session, modelAndView, PageNames.JOBSEEKER_BROWSE_JOBS);
+		populateAds(request, session, modelAndView,
+				PageNames.JOBSEEKER_BROWSE_JOBS);
 		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
 		return modelAndView;
 	}
 
 	/**
-	 * Fetch the jobs depending on the selection of employer by using  
-	 * search type and facets from SOLR.
+	 * Fetch the jobs depending on the selection of employer by using search
+	 * type and facets from SOLR.
 	 * 
 	 * @param session
 	 * @param desc
@@ -1163,7 +1308,7 @@ public class JobSearchController extends AbstractController {
 		ModelAndView modelAndView = new ModelAndView();
 		JSONObject jobSrchJsonObj = null;
 		JobSearchResultDTO jobSearchResultDTO = null;
-		
+
 		String searchName = MMJBCommonConstants.BROWSE_SEARCH;
 		jobSearchResultForm.setSearchtype(searchName);
 		modelAndView.addObject(MMJBCommonConstants.SEARCH_TYPE, searchName);
@@ -1176,14 +1321,13 @@ public class JobSearchController extends AbstractController {
 		String jobsUrl = request.getRequestURL().toString()
 				.replace(JOBSEARCH, JOBS);
 		modelAndView.addObject(JOBS_URL, jobsUrl);
-		String jobsUrlMessage = seoConfiguration
-				.getProperty(FTR_PAGE_MESSAGE).trim();
+		String jobsUrlMessage = seoConfiguration.getProperty(FTR_PAGE_MESSAGE)
+				.trim();
 		modelAndView.addObject(JOBS_URL_TITLE, jobsUrlMessage);
 
 		// merge the parameters
-		Map<String, String> paramMap = getParameterMap(
-				jobSearchResultForm, MMJBCommonConstants.POSTED_DT,
-				session, request);
+		Map<String, String> paramMap = getParameterMap(jobSearchResultForm,
+				MMJBCommonConstants.POSTED_DT, session, request);
 
 		// fetch the jobs of selected employer
 		int page = 1;
@@ -1196,8 +1340,8 @@ public class JobSearchController extends AbstractController {
 			long rows = recordsPerPage;
 			// Calling the jobSearch() of Service layer from getting the object
 			// of JobSearchResultDTO
-			jobSearchResultDTO = jobSearchService.jobSearch(
-					paramMap, start, rows);
+			jobSearchResultDTO = jobSearchService.jobSearch(paramMap, start,
+					rows);
 
 			session.setAttribute(MMJBCommonConstants.START_ROW, ((page - 1)
 					* recordsPerPage + 1));
@@ -1214,7 +1358,8 @@ public class JobSearchController extends AbstractController {
 		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 		int beginVal = 0;
 		if (null == next || next.isEmpty()) {
-			beginVal = (page / MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT) * MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT;
+			beginVal = (page / MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT)
+					* MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT;
 		} else {
 			beginVal = Integer.parseInt(next);
 			page = Integer.parseInt(next);
@@ -1241,36 +1386,39 @@ public class JobSearchController extends AbstractController {
 		modelAndView.addObject(MMJBCommonConstants.SEARCH_TYPE, searchName);
 		modelAndView.addObject(MMJBCommonConstants.SEARCHED_JOBSCOUNT,
 				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
-		modelAndView.addObject(MMJBCommonConstants.CURRENT_SEARCH_LIST,
-				null);
+		modelAndView.addObject(MMJBCommonConstants.CURRENT_SEARCH_LIST, null);
 		modelAndView.addObject(MMJBCommonConstants.CITY,
 				jobSrchJsonObj.get(MMJBCommonConstants.CITY));
 		modelAndView.addObject(MMJBCommonConstants.STATE,
 				jobSrchJsonObj.get(MMJBCommonConstants.STATE));
 		modelAndView.addObject(MMJBCommonConstants.COMPANY,
 				jobSrchJsonObj.get(MMJBCommonConstants.COMPANY));
-		session.setAttribute(EMPLOYER, desc);
-		
+		// added the selected employer in session to disable the link of selected employer in refine results list
+		session.setAttribute(BROWSE_BY_EMPLOYER, employer);
+		session.removeAttribute(BROWSE_BY_STATE);
+
 		String jobSearchMatchInfo = seoConfiguration
 				.getProperty(JOB_SRCH_MATCH).trim();
-				jobSearchMatchInfo =jobSearchMatchInfo.replace(Q_KEYWORD, employer);
+		jobSearchMatchInfo = jobSearchMatchInfo.replace(Q_KEYWORD, employer);
 		session.setAttribute(JOB_SRCH_MTCH_INFO, jobSearchMatchInfo);
 
 		// populate the ads for search results grid
-		populateAdsForSearchResults(request, session, jobSrchJsonObj, recordsPerPage);
-		String[] seoInfos = {employer}; 
+		populateAdsForSearchResults(request, session, jobSrchJsonObj,
+				recordsPerPage);
+		String[] seoInfos = { employer };
 		// Add the SEO details for job search results page
-		addSEODetailsForJobsSearchPages(modelAndView, request, EMPLOYER,
-				seoInfos, noOfRecords);
+		addSEODetailsForJobsSearchPages(modelAndView, request,
+				BROWSE_BY_EMPLOYER, seoInfos, noOfRecords);
 		// populate the ads
-		populateAds(request, session, modelAndView, PageNames.JOBSEEKER_BROWSE_JOBS);
+		populateAds(request, session, modelAndView,
+				PageNames.JOBSEEKER_BROWSE_JOBS);
 		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
 		return modelAndView;
 	}
-	
+
 	/**
-	 * Fetch the jobs depending on the selection of location by using  
-	 * search type and facets from SOLR.
+	 * Fetch the jobs depending on the selection of location by using search
+	 * type and facets from SOLR.
 	 * 
 	 * @param session
 	 * @param desc
@@ -1288,58 +1436,55 @@ public class JobSearchController extends AbstractController {
 		ModelAndView modelAndView = new ModelAndView();
 		JSONObject jobSrchJsonObj = null;
 		JobSearchResultDTO jobSearchResultDTO = null;
-		
+
 		String searchName = MMJBCommonConstants.BROWSE_SEARCH;
 		jobSearchResultForm.setSearchtype(searchName);
-		
+
 		// set the FQ parameters
 		String state = desc.replace("-", " ");
 		request.setAttribute(MMJBCommonConstants.THIRD_FQ_PARAM, state);
-		
+
 		// create the link to get the searched jobs titles list page
-		String jobsUrl = request
-				.getRequestURL()
-				.toString()
-				.replace(JOBSEARCH,
-						JOBS);
+		String jobsUrl = request.getRequestURL().toString()
+				.replace(JOBSEARCH, JOBS);
 		modelAndView.addObject(JOBS_URL, jobsUrl);
-		String jobsUrlMessage = seoConfiguration
-				.getProperty(FTR_PAGE_MESSAGE).trim();
+		String jobsUrlMessage = seoConfiguration.getProperty(FTR_PAGE_MESSAGE)
+				.trim();
 		modelAndView.addObject(JOBS_URL_TITLE, jobsUrlMessage);
 		// merge the parameters
-		Map<String, String> paramMap = getParameterMap(
-				jobSearchResultForm, MMJBCommonConstants.POSTED_DT,
-				session, request);
+		Map<String, String> paramMap = getParameterMap(jobSearchResultForm,
+				MMJBCommonConstants.POSTED_DT, session, request);
 		// fetch the jobs of selected location
 		int page = 1;
 		int recordsPerPage = MMJBCommonConstants.JOBSEACRH_DEFAULT_PAGE_SIZE;
 		int noOfRecords = 0;
 		String next = request.getParameter(MMJBCommonConstants.NEXT);
-		
+
 		try {
 			long start = (page - 1) * recordsPerPage;
 			long rows = recordsPerPage;
 			// Calling the jobSearch() of Service layer from getting the object
 			// of JobSearchResultDTO
-			jobSearchResultDTO = jobSearchService.jobSearch(
-					paramMap, start, rows);
-			
+			jobSearchResultDTO = jobSearchService.jobSearch(paramMap, start,
+					rows);
+
 			session.setAttribute(MMJBCommonConstants.START_ROW, ((page - 1)
 					* recordsPerPage + 1));
 			session.setAttribute(MMJBCommonConstants.END_ROW,
 					(((page - 1) * recordsPerPage) + jobSearchResultDTO
 							.getResultList().size()));
-			
+
 			noOfRecords = (int) jobSearchResultDTO.getResultCount();
-			
+
 		} catch (JobBoardException e) {
 			LOGGER.debug(ERROR_SOLR);
 		}
-		
+
 		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 		int beginVal = 0;
 		if (null == next || next.isEmpty()) {
-			beginVal = (page / MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT) * MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT;
+			beginVal = (page / MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT)
+					* MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT;
 		} else {
 			beginVal = Integer.parseInt(next);
 			page = Integer.parseInt(next);
@@ -1349,7 +1494,7 @@ public class JobSearchController extends AbstractController {
 			// object into JSON Object
 			jobSrchJsonObj = searchJobToJSON(jobSearchResultDTO);
 		}
-		
+
 		modelAndView.addObject(MMJBCommonConstants.CURRENT_PAGE, page);
 		modelAndView.addObject(MMJBCommonConstants.BEGIN, (beginVal <= 0 ? 1
 				: beginVal));
@@ -1359,42 +1504,45 @@ public class JobSearchController extends AbstractController {
 		jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
 				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
 		modelAndView.addObject(MMJBCommonConstants.SEARCH_RESULTS_LIST,
-				 jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS));
+				jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS));
 		modelAndView.addObject(MMJBCommonConstants.TOTAL_NO_RECORDS,
 				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
 		modelAndView.addObject(JOB_SEARCH_RESULT_FORM, jobSearchResultForm);
 		modelAndView.addObject(MMJBCommonConstants.SEARCH_TYPE, searchName);
 		modelAndView.addObject(MMJBCommonConstants.SEARCHED_JOBSCOUNT,
 				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
-		modelAndView.addObject(MMJBCommonConstants.CURRENT_SEARCH_LIST,
-				null);
+		modelAndView.addObject(MMJBCommonConstants.CURRENT_SEARCH_LIST, null);
 		modelAndView.addObject(MMJBCommonConstants.CITY,
 				jobSrchJsonObj.get(MMJBCommonConstants.CITY));
 		modelAndView.addObject(MMJBCommonConstants.STATE,
 				jobSrchJsonObj.get(MMJBCommonConstants.STATE));
 		modelAndView.addObject(MMJBCommonConstants.COMPANY,
 				jobSrchJsonObj.get(MMJBCommonConstants.COMPANY));
-		
+
 		String jobSearchMatchInfo = seoConfiguration
 				.getProperty(JOB_SRCH_MATCH).trim();
-				jobSearchMatchInfo =jobSearchMatchInfo.replace(Q_KEYWORD, state);
+		jobSearchMatchInfo = jobSearchMatchInfo.replace(Q_KEYWORD, state);
 		session.setAttribute(JOB_SRCH_MTCH_INFO, jobSearchMatchInfo);
+		// added the selected state in session to disable the link of selected state in refine results list
 		session.setAttribute(BROWSE_BY_STATE, state);
-		
+		session.removeAttribute(BROWSE_BY_EMPLOYER);
+
 		// populate the ads for search results grid
-		populateAdsForSearchResults(request, session, jobSrchJsonObj, recordsPerPage);
-		String[] seoInfos = {state}; 
+		populateAdsForSearchResults(request, session, jobSrchJsonObj,
+				recordsPerPage);
+		String[] seoInfos = { state };
 		// Add the SEO details for job search results page
 		addSEODetailsForJobsSearchPages(modelAndView, request, LOCATION,
 				seoInfos, noOfRecords);
 		// populate the ads
-		populateAds(request, session, modelAndView, PageNames.JOBSEEKER_BROWSE_JOBS);
+		populateAds(request, session, modelAndView,
+				PageNames.JOBSEEKER_BROWSE_JOBS);
 		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
 		return modelAndView;
 	}
 
 	/**
-	 * Fetch the jobs depending on the selection of area in location by using  
+	 * Fetch the jobs depending on the selection of area in location by using
 	 * search type and facets from SOLR.
 	 * 
 	 * @param session
@@ -1406,7 +1554,7 @@ public class JobSearchController extends AbstractController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = {"/location/{location}/{area}"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/location/{location}/{area}" }, method = RequestMethod.GET)
 	public ModelAndView searchJobByLocationReg(HttpSession session,
 			@PathVariable(LOCATION) String location,
 			@PathVariable(AREA) String area,
@@ -1415,190 +1563,59 @@ public class JobSearchController extends AbstractController {
 		ModelAndView modelAndView = new ModelAndView();
 		JSONObject jobSrchJsonObj = null;
 		JobSearchResultDTO jobSearchResultDTO = null;
-		
+
 		String searchName = MMJBCommonConstants.BROWSE_SEARCH;
 		jobSearchResultForm.setSearchtype(searchName);
-		
+
 		// set the FQ parameters
 		String selectedLocation = location.replace("-", " ");
-		String selectedArea = area.replace("-", " ").replace(MMJBCommonConstants.METRO_AREA, "").trim();
-		request.setAttribute(MMJBCommonConstants.THIRD_FQ_PARAM, selectedLocation);
+		String selectedArea = area.replace("-", " ")
+				.replace(MMJBCommonConstants.METRO_AREA, "").trim();
+		request.setAttribute(MMJBCommonConstants.THIRD_FQ_PARAM,
+				selectedLocation);
 		request.setAttribute(MMJBCommonConstants.FIFTH_FQ_PARAM, selectedArea);
-		
+
 		// create the link to get the searched jobs titles list page
-		String jobsUrl = request
-				.getRequestURL()
-				.toString()
-				.replace(JOBSEARCH,
-						JOBS);
+		String jobsUrl = request.getRequestURL().toString()
+				.replace(JOBSEARCH, JOBS);
 		modelAndView.addObject(JOBS_URL, jobsUrl);
-		String jobsUrlMessage = seoConfiguration
-				.getProperty(FTR_PAGE_MESSAGE).trim();
+		String jobsUrlMessage = seoConfiguration.getProperty(FTR_PAGE_MESSAGE)
+				.trim();
 		modelAndView.addObject(JOBS_URL_TITLE, jobsUrlMessage);
 		// merge the parameters
-		Map<String, String> paramMap = getParameterMap(
-				jobSearchResultForm, MMJBCommonConstants.POSTED_DT,
-				session, request);
+		Map<String, String> paramMap = getParameterMap(jobSearchResultForm,
+				MMJBCommonConstants.POSTED_DT, session, request);
 		// fetch the jobs of selected area in location
 		int page = 1;
 		int recordsPerPage = MMJBCommonConstants.JOBSEACRH_DEFAULT_PAGE_SIZE;
 		int noOfRecords = 0;
 		String next = request.getParameter(MMJBCommonConstants.NEXT);
-		
+
 		try {
 			long start = (page - 1) * recordsPerPage;
 			long rows = recordsPerPage;
 			// Calling the jobSearch() of Service layer from getting the object
 			// of JobSearchResultDTO
-			jobSearchResultDTO = jobSearchService.jobSearch(
-					paramMap, start, rows);
-			
+			jobSearchResultDTO = jobSearchService.jobSearch(paramMap, start,
+					rows);
+
 			session.setAttribute(MMJBCommonConstants.START_ROW, ((page - 1)
 					* recordsPerPage + 1));
 			session.setAttribute(MMJBCommonConstants.END_ROW,
 					(((page - 1) * recordsPerPage) + jobSearchResultDTO
 							.getResultList().size()));
-			
+
 			noOfRecords = (int) jobSearchResultDTO.getResultCount();
-			
+
 		} catch (JobBoardException e) {
 			LOGGER.debug(ERROR_SOLR);
 		}
-		
+
 		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 		int beginVal = 0;
 		if (null == next || next.isEmpty()) {
-			beginVal = (page / MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT) * MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT;
-		} else {
-			beginVal = Integer.parseInt(next);
-			page = Integer.parseInt(next);
-		}
-		if (jobSearchResultDTO != null) {
-			// Calling the service layer for converting the JobSearchResultDTO
-			// object into JSON Object
-			jobSrchJsonObj = searchJobToJSON(jobSearchResultDTO);
-		}
-		modelAndView.addObject(MMJBCommonConstants.CURRENT_PAGE, page);
-		modelAndView.addObject(MMJBCommonConstants.BEGIN, (beginVal <= 0 ? 1
-				: beginVal));
-		modelAndView.addObject(MMJBCommonConstants.BEGIN_VAL, beginVal);
-		modelAndView.addObject(MMJBCommonConstants.NO_OF_PAGES, noOfPages);
-		modelAndView.addObject(MMJBCommonConstants.CURRENT_PAGE, page);
-		jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
-				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
-		modelAndView.addObject(MMJBCommonConstants.SEARCH_RESULTS_LIST,
-				 jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS));
-		modelAndView.addObject(MMJBCommonConstants.TOTAL_NO_RECORDS,
-				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
-		modelAndView.addObject(JOB_SEARCH_RESULT_FORM, jobSearchResultForm);
-		modelAndView.addObject(MMJBCommonConstants.SEARCH_TYPE, searchName);
-		modelAndView.addObject(MMJBCommonConstants.SEARCHED_JOBSCOUNT,
-				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
-		modelAndView.addObject(MMJBCommonConstants.CURRENT_SEARCH_LIST,
-				null);
-		modelAndView.addObject(MMJBCommonConstants.CITY,
-				jobSrchJsonObj.get(MMJBCommonConstants.CITY));
-		modelAndView.addObject(MMJBCommonConstants.STATE,
-				jobSrchJsonObj.get(MMJBCommonConstants.STATE));
-		modelAndView.addObject(MMJBCommonConstants.COMPANY,
-				jobSrchJsonObj.get(MMJBCommonConstants.COMPANY));
-		session.setAttribute(BROWSE_BY_STATE, selectedLocation);
-		
-		String jobSearchMatchInfo = seoConfiguration
-				.getProperty(JOB_SRCH_MATCH).trim();
-				jobSearchMatchInfo =jobSearchMatchInfo.replace(Q_KEYWORD, selectedArea+","+selectedLocation);
-		session.setAttribute(JOB_SRCH_MTCH_INFO, jobSearchMatchInfo);
-		
-		// populate the ads for search reults grid
-		populateAdsForSearchResults(request, session, jobSrchJsonObj, recordsPerPage);
-		String[] seoInfos = {selectedArea, selectedLocation}; 
-		// Add the SEO details for job search results page
-		addSEODetailsForJobsSearchPages(modelAndView, request, AREA,
-				seoInfos, noOfRecords);
-		// populate the ads
-		populateAds(request, session, modelAndView, PageNames.JOBSEEKER_BROWSE_JOBS);
-		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
-		return modelAndView;
-	}
-	
-	/**
-	 * Fetch the jobs depending on the selection of area in location by using  
-	 * search type and facets from SOLR and function calls when area is separated by slash.
-	 * 
-	 * @param session
-	 * @param location
-	 * @param area
-	 * @param areasubpart
-	 * @param jobSearchResultForm
-	 * @param result
-	 * @param modelMap
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(value = {"/location/{location}/{area}/{areasubpart}"}, method = RequestMethod.GET)
-	public ModelAndView searchJobByLocationReg(HttpSession session,
-			@PathVariable(LOCATION) String location,
-			@PathVariable(AREA) String area,
-			@PathVariable("areasubpart") String areasubpart,
-			JobSearchResultForm jobSearchResultForm, BindingResult result,
-			Map<String, JSONObject> modelMap, HttpServletRequest request) {
-		ModelAndView modelAndView = new ModelAndView();
-		JSONObject jobSrchJsonObj = null;
-		JobSearchResultDTO jobSearchResultDTO = null;
-		
-		String searchName = MMJBCommonConstants.BROWSE_SEARCH;
-		jobSearchResultForm.setSearchtype(searchName);
-		
-		// set the FQ parameters
-		String selectedLocation = location.replace("-", " ");
-		String selectedArea = area+"/"+areasubpart.replace("-", " ").replace(MMJBCommonConstants.METRO_AREA, "").trim();
-		request.setAttribute(MMJBCommonConstants.THIRD_FQ_PARAM, selectedLocation);
-		request.setAttribute(MMJBCommonConstants.FIFTH_FQ_PARAM, selectedArea);
-		
-		// create the link to get the searched jobs titles list page
-		String jobsUrl = request
-				.getRequestURL()
-				.toString()
-				.replace(JOBSEARCH,
-						JOBS);
-		modelAndView.addObject(JOBS_URL, jobsUrl);
-		String jobsUrlMessage = seoConfiguration
-				.getProperty(FTR_PAGE_MESSAGE).trim();
-		modelAndView.addObject(JOBS_URL_TITLE, jobsUrlMessage);
-		// merge the parameters
-		Map<String, String> paramMap = getParameterMap(
-				jobSearchResultForm, MMJBCommonConstants.POSTED_DT,
-				session, request);
-		// fetch the jobs of selected area in location
-		int page = 1;
-		int recordsPerPage = MMJBCommonConstants.JOBSEACRH_DEFAULT_PAGE_SIZE;
-		int noOfRecords = 0;
-		String next = request.getParameter(MMJBCommonConstants.NEXT);
-		
-		try {
-			long start = (page - 1) * recordsPerPage;
-			long rows = recordsPerPage;
-			// Calling the jobSearch() of Service layer from getting the object
-			// of JobSearchResultDTO
-			jobSearchResultDTO = jobSearchService.jobSearch(
-					paramMap, start, rows);
-			
-			session.setAttribute(MMJBCommonConstants.START_ROW, ((page - 1)
-					* recordsPerPage + 1));
-			session.setAttribute(MMJBCommonConstants.END_ROW,
-					(((page - 1) * recordsPerPage) + jobSearchResultDTO
-							.getResultList().size()));
-			
-			noOfRecords = (int) jobSearchResultDTO.getResultCount();
-			
-		} catch (JobBoardException e) {
-			LOGGER.debug(ERROR_SOLR);
-		}
-		
-		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-		int beginVal = 0;
-		if (null == next || next.isEmpty()) {
-			beginVal = (page / MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT) * MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT;
+			beginVal = (page / MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT)
+					* MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT;
 		} else {
 			beginVal = Integer.parseInt(next);
 			page = Integer.parseInt(next);
@@ -1624,29 +1641,169 @@ public class JobSearchController extends AbstractController {
 		modelAndView.addObject(MMJBCommonConstants.SEARCH_TYPE, searchName);
 		modelAndView.addObject(MMJBCommonConstants.SEARCHED_JOBSCOUNT,
 				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
-		modelAndView.addObject(MMJBCommonConstants.CURRENT_SEARCH_LIST,
-				null);
+		modelAndView.addObject(MMJBCommonConstants.CURRENT_SEARCH_LIST, null);
 		modelAndView.addObject(MMJBCommonConstants.CITY,
 				jobSrchJsonObj.get(MMJBCommonConstants.CITY));
 		modelAndView.addObject(MMJBCommonConstants.STATE,
 				jobSrchJsonObj.get(MMJBCommonConstants.STATE));
 		modelAndView.addObject(MMJBCommonConstants.COMPANY,
 				jobSrchJsonObj.get(MMJBCommonConstants.COMPANY));
+		// added the selected state in session to disable the link of selected state in refine results list
 		session.setAttribute(BROWSE_BY_STATE, selectedLocation);
-		
+		session.removeAttribute(BROWSE_BY_EMPLOYER);
+
 		String jobSearchMatchInfo = seoConfiguration
 				.getProperty(JOB_SRCH_MATCH).trim();
-		jobSearchMatchInfo =jobSearchMatchInfo.replace(Q_KEYWORD, selectedArea+","+selectedLocation);
+		jobSearchMatchInfo = jobSearchMatchInfo.replace(Q_KEYWORD, selectedArea
+				+ "," + selectedLocation);
 		session.setAttribute(JOB_SRCH_MTCH_INFO, jobSearchMatchInfo);
-		
+
 		// populate the ads for search reults grid
-		populateAdsForSearchResults(request, session, jobSrchJsonObj, recordsPerPage);
-		String[] seoInfos = {selectedArea, selectedLocation}; 
+		populateAdsForSearchResults(request, session, jobSrchJsonObj,
+				recordsPerPage);
+		String[] seoInfos = { selectedArea, selectedLocation };
 		// Add the SEO details for job search results page
-		addSEODetailsForJobsSearchPages(modelAndView, request, AREA,
-				seoInfos, noOfRecords);
+		addSEODetailsForJobsSearchPages(modelAndView, request, AREA, seoInfos,
+				noOfRecords);
 		// populate the ads
-		populateAds(request, session, modelAndView, PageNames.JOBSEEKER_BROWSE_JOBS);
+		populateAds(request, session, modelAndView,
+				PageNames.JOBSEEKER_BROWSE_JOBS);
+		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
+		return modelAndView;
+	}
+
+	/**
+	 * Fetch the jobs depending on the selection of area in location by using
+	 * search type and facets from SOLR and function calls when area is
+	 * separated by slash.
+	 * 
+	 * @param session
+	 * @param location
+	 * @param area
+	 * @param areasubpart
+	 * @param jobSearchResultForm
+	 * @param result
+	 * @param modelMap
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = { "/location/{location}/{area}/{areasubpart}" }, method = RequestMethod.GET)
+	public ModelAndView searchJobByLocationReg(HttpSession session,
+			@PathVariable(LOCATION) String location,
+			@PathVariable(AREA) String area,
+			@PathVariable("areasubpart") String areasubpart,
+			JobSearchResultForm jobSearchResultForm, BindingResult result,
+			Map<String, JSONObject> modelMap, HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView();
+		JSONObject jobSrchJsonObj = null;
+		JobSearchResultDTO jobSearchResultDTO = null;
+
+		String searchName = MMJBCommonConstants.BROWSE_SEARCH;
+		jobSearchResultForm.setSearchtype(searchName);
+
+		// set the FQ parameters
+		String selectedLocation = location.replace("-", " ");
+		String selectedArea = area
+				+ "/"
+				+ areasubpart.replace("-", " ")
+						.replace(MMJBCommonConstants.METRO_AREA, "").trim();
+		request.setAttribute(MMJBCommonConstants.THIRD_FQ_PARAM,
+				selectedLocation);
+		request.setAttribute(MMJBCommonConstants.FIFTH_FQ_PARAM, selectedArea);
+
+		// create the link to get the searched jobs titles list page
+		String jobsUrl = request.getRequestURL().toString()
+				.replace(JOBSEARCH, JOBS);
+		modelAndView.addObject(JOBS_URL, jobsUrl);
+		String jobsUrlMessage = seoConfiguration.getProperty(FTR_PAGE_MESSAGE)
+				.trim();
+		modelAndView.addObject(JOBS_URL_TITLE, jobsUrlMessage);
+		// merge the parameters
+		Map<String, String> paramMap = getParameterMap(jobSearchResultForm,
+				MMJBCommonConstants.POSTED_DT, session, request);
+		// fetch the jobs of selected area in location
+		int page = 1;
+		int recordsPerPage = MMJBCommonConstants.JOBSEACRH_DEFAULT_PAGE_SIZE;
+		int noOfRecords = 0;
+		String next = request.getParameter(MMJBCommonConstants.NEXT);
+
+		try {
+			long start = (page - 1) * recordsPerPage;
+			long rows = recordsPerPage;
+			// Calling the jobSearch() of Service layer from getting the object
+			// of JobSearchResultDTO
+			jobSearchResultDTO = jobSearchService.jobSearch(paramMap, start,
+					rows);
+
+			session.setAttribute(MMJBCommonConstants.START_ROW, ((page - 1)
+					* recordsPerPage + 1));
+			session.setAttribute(MMJBCommonConstants.END_ROW,
+					(((page - 1) * recordsPerPage) + jobSearchResultDTO
+							.getResultList().size()));
+
+			noOfRecords = (int) jobSearchResultDTO.getResultCount();
+
+		} catch (JobBoardException e) {
+			LOGGER.debug(ERROR_SOLR);
+		}
+
+		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+		int beginVal = 0;
+		if (null == next || next.isEmpty()) {
+			beginVal = (page / MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT)
+					* MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT;
+		} else {
+			beginVal = Integer.parseInt(next);
+			page = Integer.parseInt(next);
+		}
+		if (jobSearchResultDTO != null) {
+			// Calling the service layer for converting the JobSearchResultDTO
+			// object into JSON Object
+			jobSrchJsonObj = searchJobToJSON(jobSearchResultDTO);
+		}
+		modelAndView.addObject(MMJBCommonConstants.CURRENT_PAGE, page);
+		modelAndView.addObject(MMJBCommonConstants.BEGIN, (beginVal <= 0 ? 1
+				: beginVal));
+		modelAndView.addObject(MMJBCommonConstants.BEGIN_VAL, beginVal);
+		modelAndView.addObject(MMJBCommonConstants.NO_OF_PAGES, noOfPages);
+		modelAndView.addObject(MMJBCommonConstants.CURRENT_PAGE, page);
+		jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
+				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
+		modelAndView.addObject(MMJBCommonConstants.SEARCH_RESULTS_LIST,
+				jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS));
+		modelAndView.addObject(MMJBCommonConstants.TOTAL_NO_RECORDS,
+				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
+		modelAndView.addObject(JOB_SEARCH_RESULT_FORM, jobSearchResultForm);
+		modelAndView.addObject(MMJBCommonConstants.SEARCH_TYPE, searchName);
+		modelAndView.addObject(MMJBCommonConstants.SEARCHED_JOBSCOUNT,
+				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
+		modelAndView.addObject(MMJBCommonConstants.CURRENT_SEARCH_LIST, null);
+		modelAndView.addObject(MMJBCommonConstants.CITY,
+				jobSrchJsonObj.get(MMJBCommonConstants.CITY));
+		modelAndView.addObject(MMJBCommonConstants.STATE,
+				jobSrchJsonObj.get(MMJBCommonConstants.STATE));
+		modelAndView.addObject(MMJBCommonConstants.COMPANY,
+				jobSrchJsonObj.get(MMJBCommonConstants.COMPANY));
+		// added the selected state in session to disable the link of selected state in refine results list
+		session.setAttribute(BROWSE_BY_STATE, selectedLocation);
+		session.removeAttribute(BROWSE_BY_EMPLOYER);
+
+		String jobSearchMatchInfo = seoConfiguration
+				.getProperty(JOB_SRCH_MATCH).trim();
+		jobSearchMatchInfo = jobSearchMatchInfo.replace(Q_KEYWORD, selectedArea
+				+ "," + selectedLocation);
+		session.setAttribute(JOB_SRCH_MTCH_INFO, jobSearchMatchInfo);
+
+		// populate the ads for search reults grid
+		populateAdsForSearchResults(request, session, jobSrchJsonObj,
+				recordsPerPage);
+		String[] seoInfos = { selectedArea, selectedLocation };
+		// Add the SEO details for job search results page
+		addSEODetailsForJobsSearchPages(modelAndView, request, AREA, seoInfos,
+				noOfRecords);
+		// populate the ads
+		populateAds(request, session, modelAndView,
+				PageNames.JOBSEEKER_BROWSE_JOBS);
 		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
 		return modelAndView;
 	}
@@ -1691,12 +1848,12 @@ public class JobSearchController extends AbstractController {
 	 * 
 	 * @param request
 	 * @param session
-	 * @param recordsPerPage 
-	 * @param jobSrchJsonObj 
+	 * @param recordsPerPage
+	 * @param jobSrchJsonObj
 	 */
 	private void populateAdsForSearchResults(HttpServletRequest request,
 			HttpSession session, JSONObject jobSrchJsonObj, int recordsPerPage) {
-		
+
 		String bannerString = null;
 		try {
 			ClientContext clientContext = getClientContextDetails(request,
@@ -1705,25 +1862,33 @@ public class JobSearchController extends AbstractController {
 			for (int index = 0; index < (recordsPerPage / MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT); index++) {
 				AdSize size = AdSize.IAB_LEADERBOARD;
 				AdPosition position = AdPosition.CENTER_MIDDLE;
-				bannerString = adService.getBanner(clientContext, size, position)
-						.getTag();
+				bannerString = adService.getBanner(clientContext, size,
+						position).getTag();
 				adsList.add(bannerString);
 			}
-			//session.setAttribute("adPageCenterMiddleList", adsList);
+			// session.setAttribute("adPageCenterMiddleList", adsList);
 			jobSrchJsonObj.put("adPageCenterMiddleList", adsList);
-			session.setAttribute("adPageCenterMiddleList", adsList);
+			// session.setAttribute("adPageCenterMiddleList", adsList);
+			
+			String temp =	"<script type=\"text/javascript\">"+
+					"if (!window.OX_ads) { OX_ads = []; }"+
+					"OX_ads.push({ \"auid\" : \"284879\" ,\"vars\":{\"keyword\" : \"Nursing\"}});"+
+				"</script>"+
+				"<script type=\"text/javascript\">"+
+					"document.write('<scr'+'ipt src=\"http://ox-d.advanceweb.com/w/1.0/jstag\"><\\/scr'+'ipt>');"+
+				"</script>";
 			AdSize size = AdSize.IAB_LEADERBOARD;
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			jobSrchJsonObj.put(ADPAGETOP, bannerString);
+			jobSrchJsonObj.put(ADPAGETOP, temp);
 
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
 			jobSrchJsonObj.put(ADPAGEBTM, bannerString);
-			
+
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 		}
@@ -1734,7 +1899,7 @@ public class JobSearchController extends AbstractController {
 	 * 
 	 * @param jobSearchResultForm
 	 * @param session
-	 * @param request 
+	 * @param request
 	 * @return
 	 */
 	public String getSearchName(JobSearchResultForm jobSearchResultForm,
@@ -1742,20 +1907,21 @@ public class JobSearchController extends AbstractController {
 		String searchName = MMJBCommonConstants.EMPTY;
 		// Check if city state and radius field is not empty to check for
 		// LOCATION search
-			searchName = MMJBCommonConstants.KEYWORD_SEARCH;
+		searchName = MMJBCommonConstants.KEYWORD_SEARCH;
 		if ((jobSearchResultForm.getCityState() != null)
 				&& !(StringUtils.isEmpty(jobSearchResultForm.getCityState()
 						.trim()))
 				&& !StringUtils.isEmpty(jobSearchResultForm.getKeywords()
 						.trim())) {
-					searchName = MMJBCommonConstants.LOCATION_SEARCH;
-					session.setAttribute(MMJBCommonConstants.DISPLAY_RADIUS, true);
-			}
+			searchName = MMJBCommonConstants.LOCATION_SEARCH;
+			session.setAttribute(MMJBCommonConstants.DISPLAY_RADIUS, true);
+		}
 		return searchName;
 	}
 
 	/**
-	 * Method helps to set the sort order for job search results grid and toggle the order.
+	 * Method helps to set the sort order for job search results grid and toggle
+	 * the order.
 	 * 
 	 * @param session
 	 * @param request
@@ -1794,7 +1960,7 @@ public class JobSearchController extends AbstractController {
 	}
 
 	/**
-	 * List out the current search results list on the selection criteria 
+	 * List out the current search results list on the selection criteria
 	 * 
 	 * @param session
 	 */
@@ -1811,7 +1977,7 @@ public class JobSearchController extends AbstractController {
 				.get(SearchParamDTO.RADIUS).trim() : "";
 
 		int userId = getUserID(session);
-				
+
 		HashMap<String, Object> recentMap = new HashMap<String, Object>();
 		List<HashMap<String, Object>> recentSearchList = (List<HashMap<String, Object>>) session
 				.getAttribute(RECENT_SRCH_LIST);
@@ -1840,7 +2006,7 @@ public class JobSearchController extends AbstractController {
 		SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
 
 		searchedJobsDTO.setUserID(userId);
-		
+
 		searchedJobsDTO.setUrl(MMJBCommonConstants.SEARCH_TYPE
 				+ MMJBCommonConstants.EQUAL_TO
 				+ sessionMap.get(MMJBCommonConstants.SEARCH_TYPE)
@@ -1860,7 +2026,8 @@ public class JobSearchController extends AbstractController {
 
 		List<HashMap<String, Object>> latestRecentList = null;
 		if (recentSearchList.size() > 3) {
-			latestRecentList = recentSearchList.subList(recentSearchList.size()-3, recentSearchList.size());
+			latestRecentList = recentSearchList.subList(
+					recentSearchList.size() - 3, recentSearchList.size());
 		} else {
 			latestRecentList = recentSearchList;
 		}
@@ -1891,7 +2058,8 @@ public class JobSearchController extends AbstractController {
 		int userId = 0;
 
 		if ((null != session.getAttribute(MMJBCommonConstants.USER_ID))
-				&& StringUtils.isNotEmpty(session.getAttribute(MMJBCommonConstants.USER_ID).toString())) {
+				&& StringUtils.isNotEmpty(session.getAttribute(
+						MMJBCommonConstants.USER_ID).toString())) {
 
 			userId = (Integer) session
 					.getAttribute(MMJBCommonConstants.USER_ID);
@@ -1921,8 +2089,8 @@ public class JobSearchController extends AbstractController {
 					value = stringAlter.nextToken().replaceFirst("basic", " ");
 					count = 0;
 				}
-				if(!("radius").equals(key)){
-				splitURL.append(value + "     ");
+				if (!("radius").equals(key)) {
+					splitURL.append(value + "     ");
 				}
 			}
 		}
@@ -1995,7 +2163,7 @@ public class JobSearchController extends AbstractController {
 		session.removeAttribute(MMJBCommonConstants.NO_OF_PAGES);
 		session.removeAttribute(MMJBCommonConstants.CURRENT_PAGE);
 		session.removeAttribute(MMJBCommonConstants.JOBSEACRH_PAGE_SIZE);
-//		session.removeAttribute(MMJBCommonConstants.RECORDS_COUNT);
+		// session.removeAttribute(MMJBCommonConstants.RECORDS_COUNT);
 		session.removeAttribute(MMJBCommonConstants.TOTAL_NO_RECORDS);
 		session.removeAttribute(MMJBCommonConstants.START_ROW);
 		session.removeAttribute(MMJBCommonConstants.END_ROW);
@@ -2024,7 +2192,8 @@ public class JobSearchController extends AbstractController {
 	@RequestMapping(value = "/saveThisJob", method = RequestMethod.GET)
 	public @ResponseBody
 	JSONObject saveThisJob(Map<String, Object> map, HttpServletRequest request,
-			@RequestParam("id") int jobId, HttpSession session, HttpServletResponse response) {
+			@RequestParam("id") int jobId, HttpSession session,
+			HttpServletResponse response) {
 		JSONObject jsonObject = new JSONObject();
 		clickController.getclickevent(jobId,
 				MMJBCommonConstants.CLICKTYPE_CLICK, request, response);
@@ -2249,7 +2418,8 @@ public class JobSearchController extends AbstractController {
 	 */
 	@RequestMapping(value = "/sendtofriend", method = RequestMethod.GET)
 	public ModelAndView sendToFriend(SendToFriend sendtofriendmail,
-			BindingResult result, HttpServletRequest request, Model model, HttpServletResponse response) {
+			BindingResult result, HttpServletRequest request, Model model,
+			HttpServletResponse response) {
 
 		try {
 			int jobId = Integer.parseInt(request.getParameter("id"));
@@ -2390,7 +2560,7 @@ public class JobSearchController extends AbstractController {
 				 * String joburl = urlLinkFirst + MMJBCommonConstants.EMPTY +
 				 * jobUrl + MMJBCommonConstants.EMPTY + urlLinkSecond;
 				 */
-				mesg=mesg.append(emailConfiguration.getProperty(
+				mesg = mesg.append(emailConfiguration.getProperty(
 						"jobseeker.email.header").trim());
 				mesg = mesg.append("<TABLE><TR><TD>" + Subject + END_TAGS);
 				mesg = mesg.append("<TR><TD>" + bodyHead1 + "\n" + bodyHead2
@@ -2410,8 +2580,8 @@ public class JobSearchController extends AbstractController {
 				mesg = mesg.append("</TD></TR>\n\n\n");
 				mesg = mesg.append("<TR><TD>" + sendtofriendmail.getJoburl()
 						+ "</TD></TR></TABLE>");
-				mesg=mesg.append(emailConfiguration.getProperty("email.footer")
-						.trim());
+				mesg = mesg.append(emailConfiguration.getProperty(
+						"email.footer").trim());
 				bodyMesg = mesg.toString();
 				jobSeekerEmailDTO.setBody(bodyMesg);
 				jobSeekerEmailDTO.setHtmlFormat(true);
@@ -2732,9 +2902,11 @@ public class JobSearchController extends AbstractController {
 				.viewMyRecentSearches(userId);
 
 		List<SaveSearchedJobsDTO> recentSplit = new ArrayList<SaveSearchedJobsDTO>();
-       int index=0;
+		int index = 0;
 		for (SaveSearchedJobsDTO jobsDTO : recentSearch) {
-			if(index==20){break;}
+			if (index == 20) {
+				break;
+			}
 			SaveSearchedJobsDTO dto = new SaveSearchedJobsDTO(
 					jobsDTO.getSaveSearchID(), jobsDTO.getUserID(),
 					jobsDTO.getUrl(), jobsDTO.getSearchName(),
@@ -2760,7 +2932,6 @@ public class JobSearchController extends AbstractController {
 			HttpServletRequest request) {
 
 		int userId = getUserID(session);
-				
 
 		jobSearchService.removeClearAll(userId);
 		session.removeAttribute(RECENT_SRCH_LIST);
@@ -2774,7 +2945,8 @@ public class JobSearchController extends AbstractController {
 			MyRecentSearchesForm myrecentsearchform, BindingResult result) {
 
 		ModelAndView modelAndView = new ModelAndView();
-		int userId = (Integer) session.getAttribute(MMJBCommonConstants.USER_ID);
+		int userId = (Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID);
 		jobSearchService.removeClearAll(userId);
 		session.removeAttribute(RECENT_SRCH_LIST);
 		session.removeAttribute(LATEST_RECENT_LIST);
@@ -2786,8 +2958,8 @@ public class JobSearchController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/jobboardSearchResultsHitory")
-	public ModelAndView getJobboardSearchResultsHitory(HttpServletResponse response,
- HttpServletRequest request,
+	public ModelAndView getJobboardSearchResultsHitory(
+			HttpServletResponse response, HttpServletRequest request,
 			Model model, HttpSession session) {
 		ModelAndView modelAndView = new ModelAndView();
 		int userId = getUserID(session);
@@ -2795,9 +2967,11 @@ public class JobSearchController extends AbstractController {
 		if (userId != 0) {
 			List<SaveSearchedJobsDTO> recentSearch = saveSearchService
 					.viewMyRecentSearches(userId);
-			int index=0;
-			for(SaveSearchedJobsDTO dto:recentSearch){
-				if(index>2){break;}
+			int index = 0;
+			for (SaveSearchedJobsDTO dto : recentSearch) {
+				if (index > 2) {
+					break;
+				}
 				newRecentSearch.add(dto);
 				index++;
 			}
@@ -2805,17 +2979,17 @@ public class JobSearchController extends AbstractController {
 
 			for (SaveSearchedJobsDTO jobsDTO : newRecentSearch) {
 				SaveSearchedJobsDTO dto = new SaveSearchedJobsDTO();
-				String[] keyword=jobsDTO.getUrl().split(";");
-						dto.setCreatedDate(jobsDTO.getCreatedDate());
-						dto.setKeywords(keyword[1].substring(9));
-						dto.setSearchName(keyword[2].substring(10));
-						dto.setSaveSearchID(jobsDTO.getSaveSearchID());
+				String[] keyword = jobsDTO.getUrl().split(";");
+				dto.setCreatedDate(jobsDTO.getCreatedDate());
+				dto.setKeywords(keyword[1].substring(9));
+				dto.setSearchName(keyword[2].substring(10));
+				dto.setSaveSearchID(jobsDTO.getSaveSearchID());
 
 				recentSplit.add(dto);
 			}
 			session.setAttribute(LATEST_RECENT_LIST, recentSplit);
 		}
-		
+
 		modelAndView.setViewName("jobboardSearchResultsHitory");
 		return modelAndView;
 	}
@@ -2911,7 +3085,7 @@ public class JobSearchController extends AbstractController {
 		}
 		// Update Views for the list of jobs which appeared in the search
 		clickService.saveJobViews(jobDTOList);
-		
+
 		// Get the refine results along with the job count
 		fetchRefineResults(jSResultDTO.getFacetMap(), jobSrchJsonObj);
 
@@ -2936,6 +3110,10 @@ public class JobSearchController extends AbstractController {
 			JSONObject jobSrchJsonObj) {
 		final Map<String, List<SearchFacetDTO>> searchFacetDTOMap = searchFacetMap;
 
+		// Get the list of job positions along with the job count
+		List<String> jobPositionDisplayList = generateRefineResults(searchFacetDTOMap
+				.get(SearchFacetDTO.FACET_JOBPOSITION));
+
 		// Get the list of cities along with the job count
 		List<String> cityDisplayList = generateRefineResults(searchFacetDTOMap
 				.get(SearchFacetDTO.FACET_CITY));
@@ -2948,6 +3126,8 @@ public class JobSearchController extends AbstractController {
 		List<String> employerDisplayList = generateRefineResults(searchFacetDTOMap
 				.get(SearchFacetDTO.FACET_COMPANY));
 
+		jobSrchJsonObj.put(MMJBCommonConstants.JOB_POSITION,
+				jobPositionDisplayList);
 		jobSrchJsonObj.put(MMJBCommonConstants.CITY, cityDisplayList);
 		jobSrchJsonObj.put(MMJBCommonConstants.STATE, stateDisplayList);
 		jobSrchJsonObj.put(MMJBCommonConstants.COMPANY, employerDisplayList);
@@ -3027,13 +3207,14 @@ public class JobSearchController extends AbstractController {
 		}
 		return displayFacetList;
 	}
-	
+
 	/**
 	 * Add the SEO details - meta title , meta description and canonical URL for
 	 * browse category pages.
 	 * 
 	 * @param modelAndView
-	 * @param request TODO
+	 * @param request
+	 *            TODO
 	 * @param category
 	 * @param request
 	 */
@@ -3042,36 +3223,42 @@ public class JobSearchController extends AbstractController {
 
 		String metaTitle = null;
 		String metaDesc = null;
-		// set the meta title and description tags value for job titles list page.
+		// set the meta title and description tags value for job titles list
+		// page.
 		if (category.equalsIgnoreCase("jobtitles")) {
-			metaTitle = seoConfiguration
-					.getProperty("browsepage.jobtitleslist.meta.title").trim();
-			metaDesc = seoConfiguration
-					.getProperty("browsepage.jobtitleslist.meta.description").trim();
+			metaTitle = seoConfiguration.getProperty(
+					"browsepage.jobtitleslist.meta.title").trim();
+			metaDesc = seoConfiguration.getProperty(
+					"browsepage.jobtitleslist.meta.description").trim();
 		}
-		// set the meta title and description tags value for employers list page.		
+		// set the meta title and description tags value for employers list
+		// page.
 		if (category.equalsIgnoreCase("employers")) {
-			metaTitle = seoConfiguration
-					.getProperty("browsepage.employerslist.meta.title").trim();
-			metaDesc = seoConfiguration
-					.getProperty("browsepage.employerslist.meta.description").trim();
+			metaTitle = seoConfiguration.getProperty(
+					"browsepage.employerslist.meta.title").trim();
+			metaDesc = seoConfiguration.getProperty(
+					"browsepage.employerslist.meta.description").trim();
 		}
-		// set the meta title and description tags value for locations list page.		
+		// set the meta title and description tags value for locations list
+		// page.
 		if (category.equalsIgnoreCase("locations")) {
-			metaTitle = seoConfiguration
-					.getProperty("browsepage.locationslist.meta.title").trim();
-			metaDesc = seoConfiguration
-					.getProperty("browsepage.locationslist.meta.description").trim();
+			metaTitle = seoConfiguration.getProperty(
+					"browsepage.locationslist.meta.title").trim();
+			metaDesc = seoConfiguration.getProperty(
+					"browsepage.locationslist.meta.description").trim();
 		}
-		// set the meta title and description tags value for areas list page.		
+		// set the meta title and description tags value for areas list page.
 		if (category.equalsIgnoreCase("areas")) {
-			//String locationName = (String) modelAndView.getModelMap().get(LOCATION);
-			String locationFullName = (String) modelAndView.getModelMap().get("locationFullname");
-			metaTitle = seoConfiguration
-					.getProperty("browsepage.location.areaslist.meta.title").trim();
-			metaTitle = metaTitle.replace(LOCNAME_REPLACE_WORD, locationFullName);
-			metaDesc = seoConfiguration
-					.getProperty("browsepage.location.areaslist.meta.description").trim();
+			// String locationName = (String)
+			// modelAndView.getModelMap().get(LOCATION);
+			String locationFullName = (String) modelAndView.getModelMap().get(
+					"locationFullname");
+			metaTitle = seoConfiguration.getProperty(
+					"browsepage.location.areaslist.meta.title").trim();
+			metaTitle = metaTitle.replace(LOCNAME_REPLACE_WORD,
+					locationFullName);
+			metaDesc = seoConfiguration.getProperty(
+					"browsepage.location.areaslist.meta.description").trim();
 			metaDesc = metaDesc.replace(LOCNAME_REPLACE_WORD, locationFullName);
 		}
 
@@ -3079,61 +3266,69 @@ public class JobSearchController extends AbstractController {
 		modelAndView.addObject("metaTitle", metaTitle);
 		modelAndView.addObject("canonicalUrl", request.getRequestURL());
 	}
-	
+
 	/**
 	 * Add the SEO details - meta title , meta description and canonical URL for
 	 * job search results pages.
 	 * 
 	 * @param modelAndView
-	 * @param request TODO
+	 * @param request
+	 *            TODO
 	 * @param request
 	 * @param category
-	 * @param categoryDesc 
-	 * @param jobCount 
+	 * @param categoryDesc
+	 * @param jobCount
 	 */
 	private void addSEODetailsForJobsSearchPages(ModelAndView modelAndView,
-			HttpServletRequest request, String category, String[] categoryDesc, int jobCount) {
+			HttpServletRequest request, String category, String[] categoryDesc,
+			int jobCount) {
 
 		String metaTitle = null;
 		String metaDesc = null;
-		// set the meta title and description tags value for job titles list page.
+		// set the meta title and description tags value for job titles list
+		// page.
 		if (category.equalsIgnoreCase(JOBTITLE)) {
-			metaTitle = seoConfiguration
-					.getProperty("jobsearchpage.jobtitle.meta.title").trim();
-			metaTitle = metaTitle.replace(JOBTITLE_REPLACE_WORD, categoryDesc[0]);
-			metaDesc = seoConfiguration
-					.getProperty("jobsearchpage.jobtitle.meta.description").trim();
+			metaTitle = seoConfiguration.getProperty(
+					"jobsearchpage.jobtitle.meta.title").trim();
+			metaTitle = metaTitle.replace(JOBTITLE_REPLACE_WORD,
+					categoryDesc[0]);
+			metaDesc = seoConfiguration.getProperty(
+					"jobsearchpage.jobtitle.meta.description").trim();
 			metaDesc = metaDesc.replace(JOBTITLE_REPLACE_WORD, categoryDesc[0]);
 			metaDesc = metaDesc.replace(Q_JOBSCOUNT, String.valueOf(jobCount));
 		}
-		// set the meta title and description tags value for employers list page.		
-		if (category.equalsIgnoreCase(EMPLOYER)) {
-			metaTitle = seoConfiguration
-					.getProperty("jobsearchpage.employer.meta.title").trim();
+		// set the meta title and description tags value for employers list
+		// page.
+		if (category.equalsIgnoreCase(BROWSE_BY_EMPLOYER)) {
+			metaTitle = seoConfiguration.getProperty(
+					"jobsearchpage.employer.meta.title").trim();
 			metaTitle = metaTitle.replace("?employername", categoryDesc[0]);
-			metaDesc = seoConfiguration
-					.getProperty("jobsearchpage.employer.meta.description").trim();
+			metaDesc = seoConfiguration.getProperty(
+					"jobsearchpage.employer.meta.description").trim();
 			metaDesc = metaDesc.replace("?employername", categoryDesc[0]);
 			metaDesc = metaDesc.replace(Q_JOBSCOUNT, String.valueOf(jobCount));
 		}
-		// set the meta title and description tags value for locations list page.		
+		// set the meta title and description tags value for locations list
+		// page.
 		if (category.equalsIgnoreCase(LOCATION)) {
-			metaTitle = seoConfiguration
-					.getProperty("jobsearchpage.location.meta.title").trim();
-			metaTitle = metaTitle.replace(LOCNAME_REPLACE_WORD, categoryDesc[0]);
-			metaDesc = seoConfiguration
-					.getProperty("jobsearchpage.location.meta.description").trim();
+			metaTitle = seoConfiguration.getProperty(
+					"jobsearchpage.location.meta.title").trim();
+			metaTitle = metaTitle
+					.replace(LOCNAME_REPLACE_WORD, categoryDesc[0]);
+			metaDesc = seoConfiguration.getProperty(
+					"jobsearchpage.location.meta.description").trim();
 			metaDesc = metaDesc.replace(LOCNAME_REPLACE_WORD, categoryDesc[0]);
 			metaDesc = metaDesc.replace(Q_JOBSCOUNT, String.valueOf(jobCount));
 		}
-		// set the meta title and description tags value for areas list page.		
+		// set the meta title and description tags value for areas list page.
 		if (category.equalsIgnoreCase(AREA)) {
-			metaTitle = seoConfiguration
-					.getProperty("jobsearchpage.location.area.meta.title").trim();
+			metaTitle = seoConfiguration.getProperty(
+					"jobsearchpage.location.area.meta.title").trim();
 			metaTitle = metaTitle.replace("?areaname", categoryDesc[0]);
-			metaTitle = metaTitle.replace(LOCNAME_REPLACE_WORD, categoryDesc[1]);
-			metaDesc = seoConfiguration
-					.getProperty("jobsearchpage.location.area.meta.description").trim();
+			metaTitle = metaTitle
+					.replace(LOCNAME_REPLACE_WORD, categoryDesc[1]);
+			metaDesc = seoConfiguration.getProperty(
+					"jobsearchpage.location.area.meta.description").trim();
 			metaDesc = metaDesc.replace("?areaname", categoryDesc[0]);
 			metaDesc = metaDesc.replace(LOCNAME_REPLACE_WORD, categoryDesc[1]);
 			metaDesc = metaDesc.replace(Q_JOBSCOUNT, String.valueOf(jobCount));
@@ -3143,9 +3338,9 @@ public class JobSearchController extends AbstractController {
 		modelAndView.addObject("metaTitle", metaTitle);
 		modelAndView.addObject("canonicalUrl", request.getRequestURL());
 	}
-	
+
 	/**
-	 * 	 * This method is used to create parameter map and populate the required
+	 * * This method is used to create parameter map and populate the required
 	 * values into it.
 	 * 
 	 * @param jobSearchResultForm
@@ -3156,22 +3351,25 @@ public class JobSearchController extends AbstractController {
 	 */
 	@SuppressWarnings(UNCHECKED)
 	private Map<String, String> getParameterMap(
-			JobSearchResultForm jobSearchResultForm,
-			String sortByParam, HttpSession session, HttpServletRequest request) {
+			JobSearchResultForm jobSearchResultForm, String sortByParam,
+			HttpSession session, HttpServletRequest request) {
 
-		Map<String, String> sessionMap = checkSessionMap.getSearchSessionMap(session);
+		Map<String, String> sessionMap = checkSessionMap
+				.getSearchSessionMap(session);
 
 		Map<String, String> paramMap = new HashMap<String, String>();
-		
-		//saving the previous job search keywords in session to populate ads 
+
+		// saving the previous job search keywords in session to populate ads
 		if (sessionMap.get(SearchParamDTO.KEYWORDS) != null) {
-					session.setAttribute(MMJBCommonConstants.PREV_JOB_SEARCH_KEYWORDS,
-							sessionMap.get(SearchParamDTO.KEYWORDS));
+			session.setAttribute(MMJBCommonConstants.PREV_JOB_SEARCH_KEYWORDS,
+					sessionMap.get(SearchParamDTO.KEYWORDS));
 		}
-		// for  fresh job search parameter is not assigned and pagination purpose it is false value
+		// for fresh job search parameter is not assigned and pagination purpose
+		// it is false value
 		boolean freshjobsearch = true;
-		if(request.getParameter(FRESH_JOB_SRCH) != null){
-			freshjobsearch = Boolean.valueOf(request.getParameter(FRESH_JOB_SRCH));
+		if (request.getParameter(FRESH_JOB_SRCH) != null) {
+			freshjobsearch = Boolean.valueOf(request
+					.getParameter(FRESH_JOB_SRCH));
 		}
 		if (freshjobsearch) {
 			LOGGER.info("The fresh job search is started.");
@@ -3234,28 +3432,30 @@ public class JobSearchController extends AbstractController {
 			Map<String, String> fqParamMap = getFQMap(firstFQParam,
 					secondFQParam, thirdFQParam, fouthFQParam, fifthFQParam,
 					sortOrder, facetSort);
-			String jobSearchMatchInfo = seoConfiguration
-					.getProperty(JOB_SRCH_MATCH).trim();
-			if(jobSearchResultForm.getKeywords() != null){
+			String jobSearchMatchInfo = seoConfiguration.getProperty(
+					JOB_SRCH_MATCH).trim();
+			if (jobSearchResultForm.getKeywords() != null) {
 				paramMap.put(SearchParamDTO.KEYWORDS, jobSearchResultForm
 						.getKeywords().trim());
-				jobSearchMatchInfo =jobSearchMatchInfo.replace(Q_KEYWORD, jobSearchResultForm
-						.getKeywords().trim());
-			}else{
+				jobSearchMatchInfo = jobSearchMatchInfo.replace(Q_KEYWORD,
+						jobSearchResultForm.getKeywords().trim());
+			} else {
 				paramMap.put(SearchParamDTO.KEYWORDS, MMJBCommonConstants.EMPTY);
-				jobSearchMatchInfo =jobSearchMatchInfo.replace(Q_KEYWORD, MMJBCommonConstants.EMPTY);
+				jobSearchMatchInfo = jobSearchMatchInfo.replace(Q_KEYWORD,
+						MMJBCommonConstants.EMPTY);
 			}
 			session.setAttribute(JOB_SRCH_MTCH_INFO, jobSearchMatchInfo);
-			if(jobSearchResultForm.getCityState() != null){
+			if (jobSearchResultForm.getCityState() != null) {
 				paramMap.put(SearchParamDTO.CITY_STATE, jobSearchResultForm
 						.getCityState().trim());
-			}else{
-				paramMap.put(SearchParamDTO.CITY_STATE, MMJBCommonConstants.EMPTY);
+			} else {
+				paramMap.put(SearchParamDTO.CITY_STATE,
+						MMJBCommonConstants.EMPTY);
 			}
-			if(jobSearchResultForm.getRadius() != null){
+			if (jobSearchResultForm.getRadius() != null) {
 				paramMap.put(SearchParamDTO.RADIUS, jobSearchResultForm
 						.getRadius().trim());
-			}else{
+			} else {
 				paramMap.put(SearchParamDTO.RADIUS, MMJBCommonConstants.EMPTY);
 			}
 			paramMap.put(SearchParamDTO.REFINED,
@@ -3263,7 +3463,8 @@ public class JobSearchController extends AbstractController {
 			// }
 			paramMap.put(SearchParamDTO.SESSION_ID, sessionId.trim());
 			// set the search name
-			paramMap.put(SearchParamDTO.SEARCH_NAME, jobSearchResultForm.getSearchtype().trim());
+			paramMap.put(SearchParamDTO.SEARCH_NAME, jobSearchResultForm
+					.getSearchtype().trim());
 
 			// For testing. Remove it while committing
 			paramMap.put(MMJBCommonConstants.SORT_PARAM, sortByParam);
@@ -3281,21 +3482,20 @@ public class JobSearchController extends AbstractController {
 					fqParamMap.get(MMJBCommonConstants.SORT_ORDER));
 			paramMap.put(MMJBCommonConstants.FACET_SORT,
 					fqParamMap.get(MMJBCommonConstants.FACET_SORT));
-		}else {
+		} else {
 			LOGGER.info("Loading the search parameters from session");
 			paramMap = (HashMap<String, String>) session
 					.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP);
 			// set the sort order for search results
 			String sortOrder = setSortOrder(session, request);
-			paramMap.put(MMJBCommonConstants.SORT_ORDER,sortOrder);
-			
+			paramMap.put(MMJBCommonConstants.SORT_ORDER, sortOrder);
+
 			// display the radius list if location search is enabled
 			if (paramMap.get(SearchParamDTO.SEARCH_NAME).equalsIgnoreCase(
 					MMJBCommonConstants.LOCATION_SEARCH)) {
-				session.setAttribute(MMJBCommonConstants.DISPLAY_RADIUS,
-						true);
+				session.setAttribute(MMJBCommonConstants.DISPLAY_RADIUS, true);
 			}
-			
+
 			// Parameter value setting if its refined search
 			if (jobSearchResultForm.isRefined()) {
 				setRefineParams(jobSearchResultForm, request, paramMap);
@@ -3307,7 +3507,7 @@ public class JobSearchController extends AbstractController {
 	}
 
 	/**
-	 * Load the refine result parameters to paramMap. 
+	 * Load the refine result parameters to paramMap.
 	 * 
 	 * @param jobSearchResultForm
 	 * @param request
@@ -3319,68 +3519,80 @@ public class JobSearchController extends AbstractController {
 				String.valueOf(jobSearchResultForm.isRefined()));
 		String fQParamName = request.getParameter("refineKey");
 		String fQParamVal = request.getParameter("refineVal");
-		
-		if (fQParamName
-				.equalsIgnoreCase(MMJBCommonConstants.FIRST_FQ_PARAM)) {
-			if(fQParamVal.isEmpty()){
-				paramMap.put(MMJBCommonConstants.FIRST_FQ_PARAM,MMJBCommonConstants.EMPTY);
-			}else{
+
+		if (fQParamName.equalsIgnoreCase(MMJBCommonConstants.FIRST_FQ_PARAM)) {
+			if (fQParamVal.isEmpty()) {
 				paramMap.put(MMJBCommonConstants.FIRST_FQ_PARAM,
-						MMJBCommonConstants.FQ_REFINE_KEYWORD +MMJBCommonConstants.FQ_JOB_POSITION+ fQParamVal
-						+"\"");
+						MMJBCommonConstants.EMPTY);
+			} else {
+				paramMap.put(MMJBCommonConstants.FIRST_FQ_PARAM,
+						MMJBCommonConstants.FQ_REFINE_KEYWORD
+								+ MMJBCommonConstants.FQ_JOB_POSITION
+								+ fQParamVal + "\"");
 			}
 		} else if (fQParamName
 				.equalsIgnoreCase(MMJBCommonConstants.SECOND_FQ_PARAM)) {
-			if(fQParamVal.isEmpty()){
-				paramMap.put(MMJBCommonConstants.SECOND_FQ_PARAM,MMJBCommonConstants.EMPTY);
-			}else{
+			if (fQParamVal.isEmpty()) {
 				paramMap.put(MMJBCommonConstants.SECOND_FQ_PARAM,
-						MMJBCommonConstants.FQ_REFINE_KEYWORD +MMJBCommonConstants.FQ_COMPANY+ fQParamVal+"\"");
+						MMJBCommonConstants.EMPTY);
+			} else {
+				paramMap.put(MMJBCommonConstants.SECOND_FQ_PARAM,
+						MMJBCommonConstants.FQ_REFINE_KEYWORD
+								+ MMJBCommonConstants.FQ_COMPANY + fQParamVal
+								+ "\"");
 			}
-			
+
 		} else if (fQParamName
 				.equalsIgnoreCase(MMJBCommonConstants.THIRD_FQ_PARAM)) {
-			
-			if(fQParamVal.isEmpty()){
-				paramMap.put(MMJBCommonConstants.THIRD_FQ_PARAM,MMJBCommonConstants.EMPTY);
-			}else{
+
+			if (fQParamVal.isEmpty()) {
 				paramMap.put(MMJBCommonConstants.THIRD_FQ_PARAM,
-						MMJBCommonConstants.FQ_REFINE_KEYWORD +MMJBCommonConstants.FQ_STATE+ fQParamVal+"\"");
+						MMJBCommonConstants.EMPTY);
+			} else {
+				paramMap.put(MMJBCommonConstants.THIRD_FQ_PARAM,
+						MMJBCommonConstants.FQ_REFINE_KEYWORD
+								+ MMJBCommonConstants.FQ_STATE + fQParamVal
+								+ "\"");
 			}
-			
+
 		} else if (fQParamName
 				.equalsIgnoreCase(MMJBCommonConstants.FOURTH_FQ_PARAM)) {
-			if(fQParamVal.isEmpty()){
-				paramMap.put(MMJBCommonConstants.FOURTH_FQ_PARAM,MMJBCommonConstants.EMPTY);
-			}else{
+			if (fQParamVal.isEmpty()) {
 				paramMap.put(MMJBCommonConstants.FOURTH_FQ_PARAM,
-						MMJBCommonConstants.FQ_REFINE_KEYWORD +MMJBCommonConstants.FQ_CITY+ fQParamVal+"\"");
+						MMJBCommonConstants.EMPTY);
+			} else {
+				paramMap.put(MMJBCommonConstants.FOURTH_FQ_PARAM,
+						MMJBCommonConstants.FQ_REFINE_KEYWORD
+								+ MMJBCommonConstants.FQ_CITY + fQParamVal
+								+ "\"");
 			}
-			
+
 		} else if (fQParamName
 				.equalsIgnoreCase(MMJBCommonConstants.FIFTH_FQ_PARAM)) {
-			if(fQParamVal.isEmpty()){
-				paramMap.put(MMJBCommonConstants.FIFTH_FQ_PARAM,MMJBCommonConstants.EMPTY);
-			}else{
+			if (fQParamVal.isEmpty()) {
 				paramMap.put(MMJBCommonConstants.FIFTH_FQ_PARAM,
-						MMJBCommonConstants.FQ_REFINE_KEYWORD +MMJBCommonConstants.FQ_AREA+ fQParamVal+"\"");
-			}					
+						MMJBCommonConstants.EMPTY);
+			} else {
+				paramMap.put(MMJBCommonConstants.FIFTH_FQ_PARAM,
+						MMJBCommonConstants.FQ_REFINE_KEYWORD
+								+ MMJBCommonConstants.FQ_AREA + fQParamVal
+								+ "\"");
+			}
 		} else if (fQParamName
 				.equalsIgnoreCase(MMJBCommonConstants.REFINERADIUS)) {
-			
-			if(fQParamVal.isEmpty()){
+
+			if (fQParamVal.isEmpty()) {
 				paramMap.put(SearchParamDTO.RADIUS, String.valueOf(0));
-				paramMap.put(MMJBCommonConstants.REFINERADIUS, String.valueOf(0));
-			}else{
-				paramMap.put(SearchParamDTO.RADIUS, fQParamVal);
 				paramMap.put(MMJBCommonConstants.REFINERADIUS,
-						fQParamVal);
-			}					
+						String.valueOf(0));
+			} else {
+				paramMap.put(SearchParamDTO.RADIUS, fQParamVal);
+				paramMap.put(MMJBCommonConstants.REFINERADIUS, fQParamVal);
+			}
 		}
 	}
-	
-	
-		/**
+
+	/**
 	 * This method will be used for doing Job search and Return a JSON Object
 	 * which will later be parsed at the UI end and all the results will be
 	 * displayed
@@ -3397,33 +3609,35 @@ public class JobSearchController extends AbstractController {
 			JobSearchResultForm jobSearchResultForm, BindingResult result,
 			Map<String, JSONObject> modelMap, HttpServletRequest request) {
 		JSONObject jobSrchJsonObj = null;
-		// clear session attributes		
+		// clear session attributes
 		clearSession(session);
-		
+
 		// validate the inputs
 		JobSearchResultDTO jobSearchResultDTO = null;
 		boolean freshjobsearch = true;
-		if(request.getParameter(FRESH_JOB_SRCH) != null){
-			freshjobsearch = Boolean.valueOf(request.getParameter(FRESH_JOB_SRCH));
+		if (request.getParameter(FRESH_JOB_SRCH) != null) {
+			freshjobsearch = Boolean.valueOf(request
+					.getParameter(FRESH_JOB_SRCH));
 		}
 		if (freshjobsearch) {
-			// clear refine searches
-			session.getAttribute(EMPLOYER);
+			// clear sessions of selected employer and state for keyword search
+			session.getAttribute(BROWSE_BY_EMPLOYER);
 			session.getAttribute(BROWSE_BY_STATE);
-			
+
 			// get the search name
-			String searchName = getSearchName(jobSearchResultForm, session, request);
-			jobSearchResultForm.setSearchtype(searchName);		
+			String searchName = getSearchName(jobSearchResultForm, session,
+					request);
+			jobSearchResultForm.setSearchtype(searchName);
 			jobSrchJsonObj = jobSearchValidator.validateJobSearch(
 					jobSearchResultForm, session);
 			if (jobSrchJsonObj != null) {
 				return jobSrchJsonObj;
 			}
 		}
-		
+
 		// merge the parameters and set it in session
 		Map<String, String> paramMap = getParameterMap(jobSearchResultForm,
-					MMJBCommonConstants.POSTED_DT, session, request);		
+				MMJBCommonConstants.POSTED_DT, session, request);
 
 		int recordsPerPage = MMJBCommonConstants.JOBSEACRH_DEFAULT_PAGE_SIZE;
 		int page = 1;
@@ -3435,43 +3649,43 @@ public class JobSearchController extends AbstractController {
 		if (request.getParameter(MMJBCommonConstants.JOBSEACRH_PAGE_SIZE) != null) {
 			recordsPerPage = Integer.parseInt(request
 					.getParameter(MMJBCommonConstants.JOBSEACRH_PAGE_SIZE));
-		}		
+		}
 		long start = (page - 1) * recordsPerPage;
 		long rows = recordsPerPage;
-		try {			
+		try {
 			// Calling the jobSearch() of Service layer from getting the object
 			// of JobSearchResultDTO
-			jobSearchResultDTO = jobSearchService.jobSearch(paramMap, start, rows);
+			jobSearchResultDTO = jobSearchService.jobSearch(paramMap, start,
+					rows);
 			noOfRecords = (int) jobSearchResultDTO.getResultCount();
-			// 
+			//
 			if (jobSearchResultDTO != null) {
-				// Calling the service layer for converting the JobSearchResultDTO
+				// Calling the service layer for converting the
+				// JobSearchResultDTO
 				// object into JSON Object
 				jobSrchJsonObj = searchJobToJSON(jobSearchResultDTO);
 			}
 		} catch (JobBoardException e) {
 			LOGGER.debug(ERROR_SOLR);
 		}
-		
+
 		// get the current search items
 		List<HashMap<String, Object>> currentSearchList = getCurrentSearchResultsList(session);
 		session.setAttribute(MMJBCommonConstants.CURRENT_SEARCH_LIST,
 				currentSearchList);
 		// set the pagination values in session
 		setSessionForGrid(session, request, jobSearchResultDTO, page,
-				recordsPerPage, noOfRecords,jobSrchJsonObj);
+				recordsPerPage, noOfRecords, jobSrchJsonObj);
 
 		// populate the ads for search results grid
-		populateAdsForSearchResults(request, session, jobSrchJsonObj, recordsPerPage);
-		
-		
+		populateAdsForSearchResults(request, session, jobSrchJsonObj,
+				recordsPerPage);
+
 		return jobSrchJsonObj;
 	}
 
-
-
-  	/**
-  	 * Help to set the pagination values, refined result data in session
+	/**
+	 * Help to set the pagination values, refined result data in session
 	 * 
 	 * @param session
 	 * @param request
@@ -3479,21 +3693,23 @@ public class JobSearchController extends AbstractController {
 	 * @param page
 	 * @param recordsPerPage
 	 * @param noOfRecords
-  	 * @param jobSrchJsonObj 
+	 * @param jobSrchJsonObj
 	 */
 	private void setSessionForGrid(HttpSession session,
 			HttpServletRequest request, JobSearchResultDTO jobSearchResultDTO,
-			int page, int recordsPerPage, int noOfRecords, JSONObject jobSrchJsonObj) {
+			int page, int recordsPerPage, int noOfRecords,
+			JSONObject jobSrchJsonObj) {
 		String next = request.getParameter(MMJBCommonConstants.NEXT);
 		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 		int beginVal = 0;
 		if (null == next || next.isEmpty()) {
-			beginVal = (page / MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT) * MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT;
+			beginVal = (page / MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT)
+					* MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT;
 		} else {
 			beginVal = Integer.parseInt(next);
-			//page = Integer.parseInt(next);
+			// page = Integer.parseInt(next);
 		}
-		
+
 		session.setAttribute(MMJBCommonConstants.START_ROW, ((page - 1)
 				* recordsPerPage + 1));
 		session.setAttribute(MMJBCommonConstants.END_ROW,

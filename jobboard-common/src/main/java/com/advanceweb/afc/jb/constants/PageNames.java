@@ -180,4 +180,9 @@ public interface PageNames {
 	 */
 	String JOBSEEKER_BROWSE_JOBS = "browse_jobs_jobseeker";
 	
+	/**
+	 * The job search results page for job seeker
+	 */
+	String JOBSEEKER_JOBSEARCH_RESULTS = "jobsearch_results_jobseeker";
+	
 }

@@ -141,33 +141,6 @@ public class JobSearchServiceImpl implements JobSearchService {
 		return jobSearchDAO.getRecentJobsPostedByEmployer(facilityID, jobID);
 	}
 
-	/**
-	 * This method is used to get the browse jobs by title
-	 * 
-	 * @return List<JobDTO> object
-	 */
-	public List<JobDTO> getJobsByTitle() {
-		return jobSearchDAO.getJobsByTitle();
-	}
-
-	/**
-	 * This method is used to get the browse jobs list by Employer
-	 * 
-	 * @return
-	 */
-	public List<JobDTO> getJobsByEmployer() {
-		return jobSearchDAO.getJobsByEmployer();
-	}
-
-	/**
-	 * This method is used to get the browse jobs list by location
-	 * 
-	 * @return
-	 */
-	public List<JobDTO> getJobsByLocation() {
-		return jobSearchDAO.getJobsByLocation();
-	}
-	
 	@Override
 	public void removeClearAll(int userId) {
 		// TODO Auto-generated method stub

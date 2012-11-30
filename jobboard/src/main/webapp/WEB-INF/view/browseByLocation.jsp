@@ -13,8 +13,8 @@
              <ul>
 	            <c:forEach items="${jbsByLocationList}" var="locationList" begin="0" end="${jbsByLocationList.size()}" step="4">
 	             	 <li><a class="link_color2_basic"
-	             	 href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/browse/${locationList.state}/areas.html"
-	             	 >${locationList.state} ( ${locationList.count} )</a></li>
+	             	 href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/browse/${fn:replace(fn:trim(fn:split(locationList, '\\(')[0]),' ', '-')}/areas.html"
+	             	 >${locationList}</a></li>
 	             </c:forEach>
 	         </ul>
      		 </div>
@@ -22,8 +22,8 @@
      		 <ul>
 	            <c:forEach items="${jbsByLocationList}" var="locationList" begin="1" end="${jbsByLocationList.size()}" step="4">
 	             	<li><a class="link_color2_basic"
-	             	href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/browse/${locationList.state}/areas.html" 
-					>${locationList.state} ( ${locationList.count} )</a></li>
+	             	href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/browse/${fn:replace(fn:trim(fn:split(locationList, '\\(')[0]),' ', '-')}/areas.html" 
+					>${locationList}</a></li>
 	             </c:forEach>
 	             </ul>
      		 </div>
@@ -31,8 +31,8 @@
      		 <ul>
 	            <c:forEach items="${jbsByLocationList}" var="locationList" begin="2" end="${jbsByLocationList.size()}" step="4">
 	             <li><a class="link_color2_basic" 
-	             href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/browse/${locationList.state}/areas.html"
-	             >${locationList.state} ( ${locationList.count} )</a></li>
+	             href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/browse/${fn:replace(fn:trim(fn:split(locationList, '\\(')[0]),' ', '-')}/areas.html"
+	             >${locationList}</a></li>
 	             </c:forEach>
 	             </ul>
      		 </div>
@@ -40,8 +40,8 @@
      		 <ul>
 	            <c:forEach items="${jbsByLocationList}" var="locationList" begin="3" end="${jbsByLocationList.size()}" step="4">
 	             	<li><a class="link_color2_basic"
-	             	 href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/browse/${locationList.state}/areas.html"
-	             	 >${locationList.state} ( ${locationList.count} )</a></li>
+	             	 href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/browse/${fn:replace(fn:trim(fn:split(locationList, '\\(')[0]),' ', '-')}/areas.html"
+	             	 >${locationList}</a></li>
 	             </c:forEach>
 	             </ul>
      		 </div>
@@ -49,8 +49,8 @@
      		 <ul>
 	            <c:forEach items="${jbsByLocationList}" var="locationList" begin="4" end="${jbsByLocationList.size()}" step="4">
 	             	<li><a class="link_color2_basic" 
-	             	href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/browse/${locationList.state}/areas.html"
-	             	>${locationList.state} ( ${locationList.count} )</a></li>
+	             	href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/browse/${fn:replace(fn:trim(fn:split(locationList, '\\(')[0]),' ', '-')}/areas.html"
+	             	>${locationList}</a></li>
 	             </c:forEach>
 	             </ul>
      		 </div>

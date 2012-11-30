@@ -11,9 +11,8 @@
 			<c:forEach items="${jbsByTitleList}" var="titleList" begin="0"
 				end="${jbsByTitleList.size()}" step="4">
 				<li><a
-					href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/jobtitle/${fn:replace(fn:trim(titleList.jobTitle),' ', '-')}.html"
-					class="link_color2_basic cursor">${titleList.jobTitle} (
-						${titleList.count} )</a></li>
+					href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/jobtitle/${fn:replace(fn:trim(fn:split(titleList, '\\(')[0]),' ', '-')}.html"
+					class="link_color2_basic cursor">${titleList}</a></li>
 			</c:forEach>
 		</ul>
      		 </div>
@@ -21,9 +20,8 @@
      		 <ul>
 	            <c:forEach items="${jbsByTitleList}" var="titleList" begin="1" end="${jbsByTitleList.size()}" step="4">
 	             	<li><a
-					href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/jobtitle/${fn:replace(fn:trim(titleList.jobTitle),' ', '-')}.html"
-					class="link_color2_basic cursor">${titleList.jobTitle} (
-						${titleList.count} )</a></li>
+					href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/jobtitle/${fn:replace(fn:trim(fn:split(titleList, '\\(')[0]),' ', '-')}.html"
+					class="link_color2_basic cursor">${titleList}</a></li>
 	             </c:forEach>
 	             </ul>
      		 </div>
@@ -31,9 +29,8 @@
      		 <ul>
 	            <c:forEach items="${jbsByTitleList}" var="titleList" begin="2" end="${jbsByTitleList.size()}" step="4">
 	             <li><a
-					href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/jobtitle/${fn:replace(fn:trim(titleList.jobTitle),' ', '-')}.html"
-					class="link_color2_basic cursor">${titleList.jobTitle} (
-						${titleList.count} )</a></li>
+					href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/jobtitle/${fn:replace(fn:trim(fn:split(titleList, '\\(')[0]),' ', '-')}.html"
+					class="link_color2_basic cursor">${titleList}</a></li>
 	             </c:forEach>
 	             </ul>
      		 </div>
@@ -41,9 +38,8 @@
      		 <ul>
 	            <c:forEach items="${jbsByTitleList}" var="titleList" begin="3" end="${jbsByTitleList.size()}" step="4">
 	             	<li><a
-					href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/jobtitle/${fn:replace(fn:trim(titleList.jobTitle),' ', '-')}.html"
-					class="link_color2_basic cursor">${titleList.jobTitle} (
-						${titleList.count} )</a></li>
+					href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/jobtitle/${fn:replace(fn:trim(fn:split(titleList, '\\(')[0]),' ', '-')}.html"
+					class="link_color2_basic cursor">${titleList}</a></li>
 	             </c:forEach>
 	             </ul>
      		 </div>

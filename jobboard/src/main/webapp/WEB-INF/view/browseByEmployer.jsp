@@ -29,9 +29,8 @@
 					<c:forEach items="${jobByEmployer.value}" var="emplyrsName"
 						varStatus="emplyrsStatus">
 						<li><a 
-						href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/employer/${fn:replace(fn:trim(emplyrsName.company),' ', '-')}.html"
-							class="link_color2_basic cursor">${emplyrsName.company}
-								(${emplyrsName.count})</a></li>
+						href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/employer/${fn:replace(fn:trim(fn:split(emplyrsName, '\\(')[0]),' ', '-')}.html"
+							class="link_color2_basic cursor">${emplyrsName}</a></li>
 					</c:forEach>
 				</ul>
 			</c:forEach>
@@ -47,9 +46,8 @@
 					<c:forEach items="${jobByEmployer.value}" var="emplyrsName"
 						varStatus="emplyrsStatus">
 						<li><a
-						href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/employer/${fn:replace(fn:trim(emplyrsName.company),' ', '-')}.html" 
-							class="link_color2_basic cursor">${emplyrsName.company}
-								(${emplyrsName.count})</a></li>
+						href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/employer/${fn:replace(fn:trim(fn:split(emplyrsName, '\\(')[0]),' ', '-')}.html" 
+							class="link_color2_basic cursor">${emplyrsName}</a></li>
 					</c:forEach>
 				</ul>
 			</c:forEach>
@@ -63,9 +61,8 @@
 					<c:forEach items="${jobByEmployer.value}" var="emplyrsName"
 						varStatus="emplyrsStatus">
 						<li><a 
-						href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/employer/${fn:replace(fn:trim(emplyrsName.company),' ', '-')}.html"
-							class="link_color2_basic cursor">${emplyrsName.company}
-								(${emplyrsName.count})</a></li>
+						href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/employer/${fn:replace(fn:trim(fn:split(emplyrsName, '\\(')[0]),' ', '-')}.html"
+							class="link_color2_basic cursor">${emplyrsName}</a></li>
 					</c:forEach>
 				</ul>
 			</c:forEach>

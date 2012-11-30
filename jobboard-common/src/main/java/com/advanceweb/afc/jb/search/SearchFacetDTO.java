@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class SearchFacetDTO implements Serializable {
 
+	public static final String FACET_JOBPOSITION = "jobposition";
 	public static final String FACET_CITY = "city";
 	public static final String FACET_STATE = "state";
 	public static final String FACET_COMPANY = "company";

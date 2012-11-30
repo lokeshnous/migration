@@ -1,15 +1,12 @@
 package com.advanceweb.afc.jb.job.dao;
 
-import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
@@ -262,86 +259,6 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 		return totalNoOfActiveJobs;
 	}
 
-	/**
-	 * This method is used to get the browse jobs by title
-	 * 
-	 * @return List<jobDTO> object
-	 */
-	@Override
-	public List<JobDTO> getJobsByTitle() {
-		List<JobDTO> jobDTOs = new ArrayList<JobDTO>();
-		List<JpJob> jpJbList = new ArrayList<JpJob>();
-		try {
-			jpJbList = hibernateTemplate
-					.find("SELECT distinct j.jobtitle,count(j.jobtitle)  from JpJob j where j.active=1 group by j.jobtitle");
-			Iterator<?> iterator = jpJbList.iterator();
-			while (iterator.hasNext()) {
-				JobDTO dto = new JobDTO();
-				Object[] row = (Object[]) iterator.next();
-				Long count = (Long) row[1];
-				dto.setJobTitle((String) row[0]);
-				dto.setCount(count.intValue());
-				jobDTOs.add(dto);
-			}
-		} catch (HibernateException e) {
-			LOGGER.info("Error occured while getting the job title list from Database"
-					+ e);
-		}
-		return jobDTOs;
-	}
-
-	/**
-	 * This method is used to get the browse jobs list by Employer
-	 * 
-	 * @return List of employerDTOs
-	 */
-	public List<JobDTO> getJobsByEmployer() {
-		List<JobDTO> employerDTOs = new ArrayList<JobDTO>();
-		List<JpJob> jpJbList = new ArrayList<JpJob>();
-		try {
-			jpJbList = hibernateTemplate
-					.find("SELECT distinct j.facility,count(j.facility)  from JpJob j where j.active=1 and j.facility <>' ' group by j.facility");
-			Iterator<?> iterator = jpJbList.iterator();
-			while (iterator.hasNext()) {
-				JobDTO dto = new JobDTO();
-				Object[] row = (Object[]) iterator.next();
-				Long count = (Long) row[1];
-				dto.setCompany((String) row[0]);
-				dto.setCount(count.intValue());
-				employerDTOs.add(dto);
-			}
-		} catch (HibernateException e) {
-			LOGGER.info("Error occured while getting the job employers list from Database"
-					+ e);
-		}
-		return employerDTOs;
-	}
-
-	/**
-	 * This method is used to get the browse jobs list by location
-	 * 
-	 * @return
-	 */
-	@Transactional(readOnly = true)
-	public List<JobDTO> getJobsByLocation() {
-		Query getLocationData = hibernateTemplate.getSessionFactory()
-				.getCurrentSession()
-				.createSQLQuery(" { call GetLocationData() }");
-		List<?> locationDeatils = getLocationData.list();
-		Iterator<?> iterator = locationDeatils.iterator();
-		List<JobDTO> locationDTOs = new ArrayList<JobDTO>();
-		while (iterator.hasNext()) {
-			JobDTO dto = new JobDTO();
-			Object[] row = (Object[]) iterator.next();
-			BigInteger count = (BigInteger) row[1];
-			dto.setState((String) row[0]);
-			dto.setCount(count.intValue());
-			locationDTOs.add(dto);
-		}
-		return locationDTOs;
-	}
-	
-	
 	/**
 	 * This method is used to remove the data in database
 	 * 

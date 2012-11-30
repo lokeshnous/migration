@@ -36,6 +36,7 @@
 				<%-- <form method=""> --%>
 				<%--  <form:form method="GET" action="findJobSearch.html" commandName="jobSearchResultForm">  --%>
 				<form:form method="" action="" commandName="jobSearchResultForm" id="jobSearchResultHeaderFormId">
+				<%-- <form:form method="GET" action="../jobsearch/findjobs.html" commandName="jobSearchResultForm" id="jobSearchResultHeaderFormId"> --%>
 					<div class="search_form">
 					<c:choose>
 						<c:when test="${isHomePage}">
@@ -91,17 +92,12 @@
 						<form:hidden path="autoload" id="autoload" />
 
 						<div class="clearfix"></div>
-						<!-- <a href="#" class="btn_sm orange jb_search_submit">Find Jobs</a> -->
 						<div class="FormErrorDisplayText" id="findSearchInfo"></div>
 						<div class="rowEvenNewSpacing">
-							<!-- onclick="findJobs();" -->
 							<input type="button" id="submitval" 
 								value="Find Jobs" class="orange jb_search_submit cursor" />
-							<!-- <input type="submit" id= "submit" value="Find Jobs" class="orange jb_search_submit" /> -->
-							<%-- </form:form>     --%>
+							<!-- <input type="submit" id= "submit" value="Find Jobs" class="orange jb_search_submit" />  -->
 
-							<!-- 	<a href="../jobsearch/advanceSearch.html">Advanced Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
-								onclick="postYourResume();" class="cursor">Post Your Resume</a> -->
 							<a title="Coming Soon" href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/advanceSearch.html">Advanced
 								Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
 								onclick="postYourResume();" class="cursor">Post Your Resume</a>

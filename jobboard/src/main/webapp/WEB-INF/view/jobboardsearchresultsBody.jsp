@@ -21,7 +21,7 @@
 		    </c:choose>			
 		</c:when> 		
 		<c:otherwise>
-			<form:form method="POST" action="" commandName="jobSearchResultForm" id="jobSearchResultBodyFormId">
+			<form:form method="POST" action="" commandName="jobSearchResultForm" id="jobSearchResultBodyFormId"> 
 					
 					<div class="row">
 
@@ -133,10 +133,10 @@
 										</ul>
 									</div>
 									</c:if>
-									<span class="refineResultsItem plus" id="companyPlus">Employer</span>
 									<c:if test="${sessionMap.get('secondFQParam') != ''}">
 									<script>$("#companyPlus").click();</script>
 									</c:if> 
+									<span class="refineResultsItem plus" id="companyPlus">Employer</span>
 									<div class="refineResultsSubContent cursor">
 										<ul>
 											<c:forEach items="${company}" var="displayCompany" varStatus="status" >
@@ -144,7 +144,7 @@
 											<c:when test="${sessionMap.get('secondFQParam') != '' and  fn:startsWith(company[status.index], fn:split(sessionMap.get('secondFQParam'), '\"')[1])}">
 											<span style="font-weight:bold;"> 
 											<c:choose>
-											<c:when test="${fn:startsWith(employer , fn:split(sessionMap.get('secondFQParam'), '\"')[1])}">
+											<c:when test="${fn:startsWith(browseByEmployer , fn:split(sessionMap.get('secondFQParam'), '\"')[1])}">
 												<li>${company[status.index]}</li>
 											</c:when>
 											<c:otherwise>
@@ -162,10 +162,10 @@
 									</div>
 									
 									<input type="hidden" name="refined" id="refined" />
-									<span class="refineResultsItem plus" id="statePlus">State</span>
 									<c:if test="${sessionMap.get('thirdFQParam') != ''}">
 									 <script>$("#statePlus").click();</script>
 									</c:if>
+									<span class="refineResultsItem plus" id="statePlus">State</span>
 									<div class="refineResultsSubContent cursor">
 										<ul>
 											<c:forEach items="${state}" var="displayState" varStatus="status">
@@ -409,7 +409,8 @@
 						</div>
 						<c:if test="${(status.index + 1) % 10 == 0}">
 					<div class="ad_wrapper">
-					<%-- <div id="ad_wrapper${(status.index + 1) % 10}">ADs${(status.index + 1) % 10}</div>
+					<%-- ${adPageCenterMiddleList[((status.index + 1) / 10 -1)] }
+					<div id="ad_wrapper${(status.index + 1) % 10}">ADs${(status.index + 1) % 10}</div>
 						<img src="<%=request.getContextPath()%>/resources/images/ads/banner_ad_fpo.png">
 					</div> --%>
 					</div>

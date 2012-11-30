@@ -113,6 +113,11 @@ public class HomeController extends AbstractController{
 	@RequestMapping(value = "/advanceweb", method = RequestMethod.GET)
 	public String gethtmlContents(HttpServletRequest request, Model model,
 			HttpSession session, @ModelAttribute JobSearchResultForm jobSearchResultForm) {
+		
+//		WebSitemapGenerator wsg = new WebSitemapGenerator("http://www.example.com", myDir);
+//		wsg.addUrl("http://www.example.com/index.html"); // repeat multiple times
+//		wsg.write();
+		
 		model.addAttribute("viewhtml", true);
 		try {
 
@@ -514,7 +519,7 @@ public class HomeController extends AbstractController{
 	 */
 	@RequestMapping(value = "/searchByCompany", method = RequestMethod.GET)
 	public @ResponseBody
-	JSONObject searchByCompany(HttpServletRequest request,
+	JSONObject searchByCompany(HttpServletRequest request,Model model, 
 			HttpServletResponse response, HttpSession session,
 			@RequestParam("keywords") String keywords) {
 
@@ -534,6 +539,8 @@ public class HomeController extends AbstractController{
 
 		jsonObject.put(MMJBCommonConstants.SEARCH_TYPE,
 				MMJBCommonConstants.BASIC_SEARCH_TYPE);
+		// Populate the ads
+		populateAds(request, session, model, PageNames.JOBSEEKER_JOBSEARCH_RESULTS);
 		return jsonObject;
 	}
 

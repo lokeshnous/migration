@@ -103,27 +103,6 @@ public interface JobSearchService {
 	List<JobPostDTO> getRecentJobsPostedByEmployer(long facilityID, long jobID);
 
 	/**
-	 * This method is used to get the browse jobs by title
-	 * 
-	 * @return List<JobDTO> object
-	 */
-	List<JobDTO> getJobsByTitle();
-
-	/**
-	 * This method is used to get the browse jobs list by Employer
-	 * 
-	 * @return
-	 */
-	List<JobDTO> getJobsByEmployer();
-
-	/**
-	 * This method is used to get the browse jobs list by location
-	 * 
-	 * @return
-	 */
-	List<JobDTO> getJobsByLocation();
-	
-	/**
 	 * This method is used to remove the data in database
 	 * 
 	 * @return
