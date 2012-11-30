@@ -92,11 +92,17 @@ public class ClientContext {
 
 	/**
 	 * The location of the user. This is mostly the location of the user
-	 * provided in the profile. This could also be an application specific input
-	 * like Preferred Location received from the user
+	 * provided in the profile.
 	 */
 	public static final String USER_LOCATION = "user.location";
 
+	/**
+	 * The location preferred by the user. This can be a location selected by
+	 * the user globally within the application, or a location entered as a
+	 * search criteria by the use.
+	 */
+	public static final String USER_SELECTED_LOCATION = "user.selected.location";
+	
 	/**
 	 * The procession of the user. This should be one of the selection made from
 	 * the organizational taxonomy
