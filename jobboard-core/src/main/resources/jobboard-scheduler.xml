@@ -162,7 +162,11 @@
 		<property name="concurrent" value="false" />
 	</bean>
 
-
+   <bean id="yearlyJobTrigger" class="com.advanceweb.afc.jb.common.schedulers.jobs.JobBoardCronTrigger">
+		<property name="jobDetail" ref="yearlyJobBean" />
+		<property name="cronExp" value="${jobboard.scheduler.cronexp.sendMailYearly}">
+		</property>
+	</bean>
 
 	<bean id="scheduler"
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
