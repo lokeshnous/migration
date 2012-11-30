@@ -48,6 +48,7 @@ import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
+import com.advanceweb.afc.jb.common.util.AVScannerHelper;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
@@ -500,13 +501,35 @@ public class ResumeController extends AbstractController{
 						resumeDTO.setFilePath(filePath);
 						resumeDTO.setUserId((Integer) session
 								.getAttribute(MMJBCommonConstants.USER_ID));
-						resumeDTO = resumeService.createResumeUpload(resumeDTO);
-
-						File dest = new File(resumeDTO.getFilePath());
-						file.transferTo(dest);
+						String tempDirectoryFilePath = createDirectoryFilePath(resumeDTO);
+						
+						File virusChkFiledest = new File(tempDirectoryFilePath);
+						file.transferTo(virusChkFiledest);
+						
+						boolean virusFound = scanFileForVirus(virusChkFiledest.getPath(), virusChkFiledest.getName()); 
+						
+						if (virusFound) {
+							LOGGER.info("Virus Found In File "+resumeDTO.getFileName()+" Uploaded By !"+resumeDTO.getUserId() );
+							//delete the temporary storage location in the server which was used
+							//for file uploading and virus scanning purposes 
+							virusChkFiledest.delete();
+							
+							//alert the user that the uploaded document contains virus and reject the resume
+							
+							model.setViewName("redirect:/jobSeekerResume/createResumePopUp.html?resumeType=Upload Existing Resume");
+						} else {
+							LOGGER.info("No Virus Found In File "+resumeDTO.getFileName()+" Uploaded By !"+resumeDTO.getUserId() );
+							//virusChkFiledest.delete();
+							resumeDTO = resumeService.createResumeUpload(resumeDTO);
+							File dest = new File(resumeDTO.getFilePath());
+							virusChkFiledest.renameTo(dest);
+						}
+						
+						
+						
 				}
-			} catch (Exception e) {
-				LOGGER.error(e);
+			} catch (Exception jbex) {
+				LOGGER.error("Error Occured While Uploading the File"+jbex);
 			}
 
 			model.setViewName(JS_REDIRECT_URL);
@@ -514,6 +537,33 @@ public class ResumeController extends AbstractController{
 		return model;
 	}
 
+	/**
+	 * Construct the destination directory file path where the uploaded file would be stored
+	 * in the server 
+	 * @param resumeDTO
+	 * @return
+	 */
+	private String createDirectoryFilePath(ResumeDTO resumeDTO) {
+		String newUploadedPath = resumeDTO.getFilePath()
+				+ resumeDTO.getUploadResumeId() + "_"
+				+ resumeDTO.getFileName();
+
+		return newUploadedPath;
+	}
+
+	/**
+	 * Scan the file for virus
+	 * @param uploadedFile File that is uploaded
+	 * @param uploadFileName name of the file being uploaded 
+	 * @return boolean "true" if the file is virus free, "false" informing that the file
+	 *  is not clean and might contain virus thus we do not proceed to upload the file
+	 */
+	private boolean scanFileForVirus(String uploadFilePath, String uploadFileName) {
+		boolean virusFound = false;
+		AVScannerHelper avScanHelper = new AVScannerHelper();
+		virusFound = avScanHelper.scanFile(uploadFilePath, uploadFileName);
+		return virusFound;
+	}
 	/**
 	 * This method is called to update resume of type upload. 
 	 * @param createResume

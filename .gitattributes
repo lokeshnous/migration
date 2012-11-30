@@ -1,4 +1,5 @@
 * text=auto !eol
+jobboard-common/lib/SymJavaAPI.jar -text
 jobboard-common/pom.xml -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AccountBillingDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AccountProfileDTO.java -text
@@ -88,6 +89,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/VeteranStatusDTO.java
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/VideoDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/WorkExpDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/XmlResumeParser.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/AVScannerHelper.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/JsonUtil.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/MMJBCommonConstants.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/MMUtils.java -text

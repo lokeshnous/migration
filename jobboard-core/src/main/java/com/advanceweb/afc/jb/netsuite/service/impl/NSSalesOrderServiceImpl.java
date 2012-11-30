@@ -61,7 +61,8 @@ public class NSSalesOrderServiceImpl implements NSSalesOrderService{
 		LOGGER.info("Json for Customer=>"+jsonCustomer.toLowerCase(Locale.US));
 		
 		Map<String, String> queryparamMap = createQueryMap();
-		
+		// As the netsuite service  takes all parameters only in lower case,
+		// converting the whole json string to lower case
 		Response response = netSuiteMethod.netSuitePost(queryparamMap, jsonCustomer.toLowerCase());
 		
 		return getJSONFromResponse(response);
