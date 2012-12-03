@@ -8,7 +8,7 @@ public class JobSearchResultForm {
 	private String cityState;
 	private String radius;
 	private String searchtype;
-	private String saveSearchName;
+	private String searchName;
 	private boolean autoload;
 	private boolean refined;
 	
@@ -71,14 +71,6 @@ public class JobSearchResultForm {
 		this.keywords = keywords;
 	}
 
-	public String getSaveSearchName() {
-		return saveSearchName;
-	}
-
-	public void setSaveSearchName(String saveSearchName) {
-		this.saveSearchName = saveSearchName;
-	}
-
 	public boolean isRefined() {
 		return refined;
 	}
@@ -93,6 +85,14 @@ public class JobSearchResultForm {
 
 	public void setJobPosition(String jobPosition) {
 		this.jobPosition = jobPosition;
+	}
+
+	public String getSearchName() {
+		return searchName;
+	}
+
+	public void setSearchName(String searchName) {
+		this.searchName = searchName;
 	}
 
 }

@@ -112,8 +112,8 @@ public class JobSearchValidator {
 //			String searchtype =((HashMap<String, String>) session
 //					.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP))
 //					.get(MMJBCommonConstants.SEARCH_TYPE);
-			String searchtype = jobSearchResultForm.getSearchtype();	
-			if(searchtype.equalsIgnoreCase(MMJBCommonConstants.KEYWORD_SEARCH))
+			String searchName = jobSearchResultForm.getSearchName();	
+			if(searchName.equalsIgnoreCase(MMJBCommonConstants.KEYWORD_SEARCH))
 				if (StringUtils.isEmpty(jobSearchResultForm.getKeywords().trim())) {
 					jsonObject = new JSONObject();
 					jsonObject.put(ajaxMsg, jbSearchValKeyword);

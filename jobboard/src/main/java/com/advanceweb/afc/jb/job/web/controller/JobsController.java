@@ -90,7 +90,8 @@ public class JobsController extends AbstractController {
 
 		// Set the search type for SOLR facets
 		String searchName = MMJBCommonConstants.KEYWORD_SEARCH;
-		jobSearchResultForm.setSearchtype(searchName);
+		jobSearchResultForm.setSearchName(searchName);
+		jobSearchResultForm.setSearchtype(MMJBCommonConstants.BASIC_SEARCH_TYPE);
 
 		// set the keyword as * to get all jobs
 		request.setAttribute(SearchParamDTO.KEYWORDS, "*");
@@ -171,7 +172,8 @@ public class JobsController extends AbstractController {
 
 		// set the search type for SOLR facets
 		String searchName = MMJBCommonConstants.BROWSE_SEARCH;
-		jobSearchResultForm.setSearchtype(searchName);
+		jobSearchResultForm.setSearchName(searchName);
+		jobSearchResultForm.setSearchtype(MMJBCommonConstants.BASIC_SEARCH_TYPE);
 
 		// set the FQ parameters
 		String jobTitle = desc.replace("-", " ");
@@ -256,7 +258,8 @@ public class JobsController extends AbstractController {
 
 		// set the search type for SOLR facets
 		String searchName = MMJBCommonConstants.BROWSE_SEARCH;
-		jobSearchResultForm.setSearchtype(searchName);
+		jobSearchResultForm.setSearchName(searchName);
+		jobSearchResultForm.setSearchtype(MMJBCommonConstants.BASIC_SEARCH_TYPE);
 
 		// set the FQ parameters
 		String employerName = desc.replace("-", " ");
@@ -342,7 +345,8 @@ public class JobsController extends AbstractController {
 
 		// set the search type for SOLR facets
 		String searchName = MMJBCommonConstants.BROWSE_SEARCH;
-		jobSearchResultForm.setSearchtype(searchName);
+		jobSearchResultForm.setSearchName(searchName);
+		jobSearchResultForm.setSearchtype(MMJBCommonConstants.BASIC_SEARCH_TYPE);
 
 		// set the FQ parameters
 		String selectedSate = desc.replace("-", " ");
@@ -429,7 +433,8 @@ public class JobsController extends AbstractController {
 
 		// set the search type for SOLR facets
 		String searchName = MMJBCommonConstants.BROWSE_SEARCH;
-		jobSearchResultForm.setSearchtype(searchName);
+		jobSearchResultForm.setSearchName(searchName);
+		jobSearchResultForm.setSearchtype(MMJBCommonConstants.BASIC_SEARCH_TYPE);
 
 		// set the FQ parameters
 		String selectedState = location.replace("-", " ");
@@ -524,7 +529,8 @@ public class JobsController extends AbstractController {
 
 		// set the search type for SOLR facets
 		String searchName = MMJBCommonConstants.BROWSE_SEARCH;
-		jobSearchResultForm.setSearchtype(searchName);
+		jobSearchResultForm.setSearchName(searchName);
+		jobSearchResultForm.setSearchtype(MMJBCommonConstants.BASIC_SEARCH_TYPE);
 
 		// set the FQ parameters
 		String selectedState = location.replace("-", " ");
@@ -622,6 +628,7 @@ public class JobsController extends AbstractController {
 
 			sessionMap.put(MMJBCommonConstants.SEARCH_TYPE, jobSearchResultForm
 					.getSearchtype().trim());
+			
 			session.setAttribute(SearchParamDTO.SEARCH_SESSION_MAP, sessionMap);
 		}
 

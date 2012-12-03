@@ -419,21 +419,22 @@ public class JobSearchController extends AbstractController {
 		String bannerString = null;
 		try {
 			
-String temp =	"<script type=\"text/javascript\">"+
-	"if (!window.OX_ads) { OX_ads = []; }"+
-	"OX_ads.push({ \"auid\" : \"284879\" ,\"vars\":{\"keyword\" : \"Nursing\"}});"+
-"</script>"+
-"<script type=\"text/javascript\">"+
-	"document.write('<scr'+'ipt src=\"http://ox-d.advanceweb.com/w/1.0/jstag\"><\\/scr'+'ipt>');"+
-"</script>";
+//String temp =	"<script type=\"text/javascript\">"+
+//	"if (!window.OX_ads) { OX_ads = []; }"+
+//	"OX_ads.push({ \"auid\" : \"284879\" ,\"vars\":{\"keyword\" : \"Nursing\"}});"+
+//"</script>"+
+//"<script type=\"text/javascript\">"+
+//
+//	"document.write('<scr'+'ipt src=\"http://ox-d.advanceweb.com/w/1.0/jstag\"><\\/scr'+'ipt>');"+
+//"</script>";
 			ClientContext clientContext = getClientContextDetails(request,
 					session, pageName);
 			AdSize size = AdSize.IAB_LEADERBOARD;
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			//model.addObject(ADPAGETOP, bannerString);
-			model.addObject(ADPAGETOP, temp);
+			model.addObject(ADPAGETOP, bannerString);
+//			model.addObject(ADPAGETOP, temp);
 
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
@@ -839,8 +840,9 @@ String temp =	"<script type=\"text/javascript\">"+
 			cityState = sessionMap.get(SearchParamDTO.CITY_STATE);
 			radius = sessionMap.get(SearchParamDTO.RADIUS);
 			saveSearchName = sessionMap
-					.get(MMJBCommonConstants.SAVE_SEARCH_NAME);
-			jobSearchResultForm.setSaveSearchName(saveSearchName);
+					.get(SearchParamDTO.SEARCH_NAME);
+//			jobSearchResultForm.setSaveSearchName(saveSearchName);
+			jobSearchResultForm.setSearchName(saveSearchName);
 			jobSearchResultForm.setSearchtype(searchType);
 			jobSearchResultForm.setKeywords(keywords);
 			jobSearchResultForm.setCityState(cityState);
@@ -898,7 +900,9 @@ String temp =	"<script type=\"text/javascript\">"+
 			// get the search name
 			String searchName = getSearchName(jobSearchResultForm, session,
 					request);
-			jobSearchResultForm.setSearchtype(searchName);
+			jobSearchResultForm.setSearchName(searchName);
+			jobSearchResultForm.setSearchtype(MMJBCommonConstants.BASIC_SEARCH_TYPE);
+			
 			jobSrchJsonObj = jobSearchValidator.validateJobSearch(
 					jobSearchResultForm, session);
 			/*
@@ -980,14 +984,15 @@ String temp =	"<script type=\"text/javascript\">"+
 		JobSearchResultDTO jobSearchResultDTO = null;
 		JSONObject jobSrchJsonObj = null;
 		String searchName = MMJBCommonConstants.BROWSE_SEARCH;
-		jobSearchResultForm.setSearchtype(searchName);
+		jobSearchResultForm.setSearchName(searchName);
+		jobSearchResultForm.setSearchtype(MMJBCommonConstants.BASIC_SEARCH_TYPE);
 
 		// merge the parameters
 		Map<String, String> paramMap = getParameterMap(jobSearchResultForm,
 				MMJBCommonConstants.POSTED_DT, session, request);
 
 		int page = 1;
-		int recordsPerPage = MMJBCommonConstants.DEFAULT_PAGE_SIZE;
+		int recordsPerPage = 0;
 
 		try {
 			long start = (page - 1) * recordsPerPage;
@@ -1098,8 +1103,9 @@ String temp =	"<script type=\"text/javascript\">"+
 
 		// set the search type
 		String searchName = MMJBCommonConstants.BROWSE_SEARCH;
-		jobSearchResultForm.setSearchtype(searchName);
-
+		jobSearchResultForm.setSearchName(searchName);
+		jobSearchResultForm.setSearchtype(MMJBCommonConstants.BASIC_SEARCH_TYPE);
+		
 		// set the FQ parameters
 		String state = location.replace("-", " ");
 		request.setAttribute(MMJBCommonConstants.THIRD_FQ_PARAM, state);
@@ -1186,7 +1192,8 @@ String temp =	"<script type=\"text/javascript\">"+
 
 		// set the search type
 		String searchName = MMJBCommonConstants.BROWSE_SEARCH;
-		jobSearchResultForm.setSearchtype(searchName);
+		jobSearchResultForm.setSearchName(searchName);
+		jobSearchResultForm.setSearchtype(MMJBCommonConstants.BASIC_SEARCH_TYPE);
 
 		// set the FQ parameters
 		String jobTitle = desc.replace("-", " ");
@@ -1310,7 +1317,9 @@ String temp =	"<script type=\"text/javascript\">"+
 		JobSearchResultDTO jobSearchResultDTO = null;
 
 		String searchName = MMJBCommonConstants.BROWSE_SEARCH;
-		jobSearchResultForm.setSearchtype(searchName);
+		jobSearchResultForm.setSearchName(searchName);
+		jobSearchResultForm.setSearchtype(MMJBCommonConstants.BASIC_SEARCH_TYPE);
+		
 		modelAndView.addObject(MMJBCommonConstants.SEARCH_TYPE, searchName);
 
 		// set the FQ parameters
@@ -1438,7 +1447,8 @@ String temp =	"<script type=\"text/javascript\">"+
 		JobSearchResultDTO jobSearchResultDTO = null;
 
 		String searchName = MMJBCommonConstants.BROWSE_SEARCH;
-		jobSearchResultForm.setSearchtype(searchName);
+		jobSearchResultForm.setSearchName(searchName);
+		jobSearchResultForm.setSearchtype(MMJBCommonConstants.BASIC_SEARCH_TYPE);
 
 		// set the FQ parameters
 		String state = desc.replace("-", " ");
@@ -1565,7 +1575,8 @@ String temp =	"<script type=\"text/javascript\">"+
 		JobSearchResultDTO jobSearchResultDTO = null;
 
 		String searchName = MMJBCommonConstants.BROWSE_SEARCH;
-		jobSearchResultForm.setSearchtype(searchName);
+		jobSearchResultForm.setSearchName(searchName);
+		jobSearchResultForm.setSearchtype(MMJBCommonConstants.BASIC_SEARCH_TYPE);
 
 		// set the FQ parameters
 		String selectedLocation = location.replace("-", " ");
@@ -1699,7 +1710,8 @@ String temp =	"<script type=\"text/javascript\">"+
 		JobSearchResultDTO jobSearchResultDTO = null;
 
 		String searchName = MMJBCommonConstants.BROWSE_SEARCH;
-		jobSearchResultForm.setSearchtype(searchName);
+		jobSearchResultForm.setSearchName(searchName);
+		jobSearchResultForm.setSearchtype(MMJBCommonConstants.BASIC_SEARCH_TYPE);
 
 		// set the FQ parameters
 		String selectedLocation = location.replace("-", " ");
@@ -2135,7 +2147,9 @@ String temp =	"<script type=\"text/javascript\">"+
 				currentSearchList.add(map);
 			}
 			String radius = sessionMap.get(SearchParamDTO.RADIUS).trim();
-			if (!radius.equalsIgnoreCase(MMJBCommonConstants.ZERO)) {
+			if (!sessionMap.get(SearchParamDTO.SEARCH_NAME).equalsIgnoreCase(
+					MMJBCommonConstants.LOCATION_SEARCH)
+					&& !radius.equalsIgnoreCase(MMJBCommonConstants.ZERO)) {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put(MMJBCommonConstants.HASHMAP_KEY, SearchParamDTO.RADIUS);
 				map.put(MMJBCommonConstants.HASHMAP_VALUE, radius
@@ -2172,12 +2186,11 @@ String temp =	"<script type=\"text/javascript\">"+
 		session.removeAttribute(MMJBCommonConstants.DISPLAY_RADIUS);
 		session.removeAttribute(MMJBCommonConstants.SEARCHED_JOBSCOUNT);
 
-		// Added for Browse By job title, By Employer And By Location task
+		// Remove the category pages enabling variables from session
 		session.removeAttribute("jobTitlePage");
 		session.removeAttribute("employerPage");
 		session.removeAttribute("locationPage");
 		session.removeAttribute("list");
-		// session.removeAttribute("locationPage");
 		session.removeAttribute("areaPage");
 
 	}
@@ -3464,6 +3477,8 @@ String temp =	"<script type=\"text/javascript\">"+
 			paramMap.put(SearchParamDTO.SESSION_ID, sessionId.trim());
 			// set the search name
 			paramMap.put(SearchParamDTO.SEARCH_NAME, jobSearchResultForm
+					.getSearchName().trim());
+			paramMap.put(MMJBCommonConstants.SEARCH_TYPE, jobSearchResultForm
 					.getSearchtype().trim());
 
 			// For testing. Remove it while committing
@@ -3482,6 +3497,17 @@ String temp =	"<script type=\"text/javascript\">"+
 					fqParamMap.get(MMJBCommonConstants.SORT_ORDER));
 			paramMap.put(MMJBCommonConstants.FACET_SORT,
 					fqParamMap.get(MMJBCommonConstants.FACET_SORT));
+			// Check for search name in session map for save search functionality 
+			if(session
+					.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP) != null){
+				String saveSearchId = ((Map<String, String>) session
+						.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP))
+						.get(MMJBCommonConstants.SAVE_SEARCH_ID);
+				if (saveSearchId != null) {
+					paramMap.put(MMJBCommonConstants.SAVE_SEARCH_ID,
+							saveSearchId);
+				}
+			}
 		} else {
 			LOGGER.info("Loading the search parameters from session");
 			paramMap = (HashMap<String, String>) session
@@ -3627,7 +3653,9 @@ String temp =	"<script type=\"text/javascript\">"+
 			// get the search name
 			String searchName = getSearchName(jobSearchResultForm, session,
 					request);
-			jobSearchResultForm.setSearchtype(searchName);
+			jobSearchResultForm.setSearchName(searchName);
+			jobSearchResultForm.setSearchtype(MMJBCommonConstants.BASIC_SEARCH_TYPE);
+			
 			jobSrchJsonObj = jobSearchValidator.validateJobSearch(
 					jobSearchResultForm, session);
 			if (jobSrchJsonObj != null) {

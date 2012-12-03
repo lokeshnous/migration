@@ -189,12 +189,10 @@ public class SaveSearchController {
 							&& sessionMap
 									.get(MMJBCommonConstants.SEARCH_TYPE)
 									.equals(MMJBCommonConstants.BASIC_SEARCH_TYPE) && sessionMap
-							.get(MMJBCommonConstants.SAVE_SEARCH_NAME) != null)) {
+							.get(MMJBCommonConstants.SAVE_SEARCH_ID) != null)) {
 
 				SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
 
-				searchedJobsDTO.setSearchName(sessionMap
-						.get(MMJBCommonConstants.SAVE_SEARCH_NAME));
 				searchedJobsDTO.setSaveSearchID(Integer.parseInt(sessionMap
 						.get(MMJBCommonConstants.SAVE_SEARCH_ID)));
 				searchedJobsDTO.setUrl(MMJBCommonConstants.SEARCH_TYPE
@@ -237,7 +235,7 @@ public class SaveSearchController {
 			}
 
 		} catch (Exception e) {
-			LOGGER.info("Save this search ERROR");
+			LOGGER.error("Save this search ERROR on save search :", e);
 		}
 		return jsonObject;
 	}
@@ -423,7 +421,7 @@ public class SaveSearchController {
 			sessionMap.put(MMJBCommonConstants.SEARCH_TYPE,
 					urlMap.get(MMJBCommonConstants.SEARCH_TYPE));
 			sessionMap
-					.put(MMJBCommonConstants.SAVE_SEARCH_NAME, saveSearchName);
+					.put(SearchParamDTO.SEARCH_NAME, saveSearchName);
 			sessionMap.put(SearchParamDTO.KEYWORDS,
 					urlMap.get(SearchParamDTO.KEYWORDS));
 			sessionMap.put(SearchParamDTO.CITY_STATE,

@@ -48,6 +48,7 @@ public abstract class AbstractController {
 		String currentSearch = null;
 		String previousSearch = null;
 		String clientLocation = null;
+		String userSelectedLocation = null;
 		Map<String, String> sessionMap = checkSessionMap
 				.getSearchSessionMap(session);
 
@@ -83,6 +84,20 @@ public abstract class AbstractController {
 		clientContext.setProperty(ClientContext.USER_PREVIOUS_SEARCH,
 				previousSearch);
 		clientContext.setProperty(ClientContext.CLIENT_LOCATION, clientLocation);
+		
+		// load the location when jobs are searched by categories
+		if (sessionMap.get(SearchParamDTO.SEARCH_NAME) != null
+				&& sessionMap.get(SearchParamDTO.SEARCH_NAME).equalsIgnoreCase(
+						MMJBCommonConstants.BROWSE_SEARCH)) {
+			if (!sessionMap.get(MMJBCommonConstants.THIRD_FQ_PARAM).isEmpty()) {
+				userSelectedLocation = sessionMap
+						.get(MMJBCommonConstants.THIRD_FQ_PARAM)
+						.replace(MMJBCommonConstants.FQ_STATE, "")
+						.replace("\"", "");
+			}
+		}
+		clientContext.setProperty(ClientContext.USER_SELECTED_LOCATION, userSelectedLocation);
+		
 		// Check for login User details
 		int userId = 0;
 		String userLocation = null;

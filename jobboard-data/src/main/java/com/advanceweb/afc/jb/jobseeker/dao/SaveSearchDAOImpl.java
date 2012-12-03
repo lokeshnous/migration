@@ -171,10 +171,7 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 				saveSearchedJobsDTO.getSaveSearchID());
 		search.setUrl(saveSearchedJobsDTO.getUrl());
 		search.setModifyDt(new Date());
-		search.setSearchName(saveSearchedJobsDTO.getSearchName());
-		search.setUserId(saveSearchedJobsDTO.getUserID());
-		search.setSaveSearchId(saveSearchedJobsDTO.getSaveSearchID());
-		hibernateTemplate.saveOrUpdate(search);
+		hibernateTemplate.merge(search);
 		return true;
 	}
 

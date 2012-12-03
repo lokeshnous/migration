@@ -232,7 +232,7 @@ public class HomeController extends AbstractController{
 
 		} catch (Exception e) {
 			LOGGER.error("Error occurred while getting the html content for Ads"
-					+ e);
+					, e);
 		}
 	}
 	

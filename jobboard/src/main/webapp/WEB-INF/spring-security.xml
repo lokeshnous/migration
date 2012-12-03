@@ -25,8 +25,8 @@
 			access="permitAll" />
 		<security:intercept-url pattern="/jobSeeker/jobSeekerDashBoard.html"
 			access="hasRole('ROLE_JOB_SEEKER')" />
-		<security:intercept-url pattern="/savedSearches/**"
-			access="hasRole('ROLE_JOB_SEEKER')" />
+		<!-- <security:intercept-url pattern="/savedSearches/**"
+			access="hasRole('ROLE_JOB_SEEKER')" /> -->
 		<security:intercept-url pattern="/subscriptions/**"
 			access="permitAll" />
 		<security:intercept-url pattern="/jobSeekerJobDetail/**"
