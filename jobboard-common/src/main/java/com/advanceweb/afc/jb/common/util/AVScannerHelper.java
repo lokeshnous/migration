@@ -1,4 +1,5 @@
-package com.advanceweb.afc.jb.common.util;
+	// after POM file modification we need to Uncomment  the below code
+/*package com.advanceweb.afc.jb.common.util;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,11 +14,11 @@ import com.symantec.scanengine.api.ScanEngine;
 import com.symantec.scanengine.api.ScanEngine.ScanEngineInfo;
 import com.symantec.scanengine.api.ScanException;
 import com.symantec.scanengine.api.StreamScanRequest;
-/**
+*//**
  * Class to scan file for virus while uploading 
  * @author deviprasadm
  *
- */
+ *//*
 public class AVScannerHelper {
 	private static final Logger LOGGER = Logger
 			.getLogger(AVScannerHelper.class);
@@ -25,26 +26,26 @@ public class AVScannerHelper {
 	String antivirusIp;
 	private @Value("${semantic.antivirus.port}")
 	int pord;
-	/**
+	*//**
 	 * Virus Scanning poicy
-	 */
+	 *//*
 	private Policy scPolicy = Policy.SCAN;
 	
-	/**
+	*//**
 	 * Method to chaeck the uploaded file for virus
 	 * @param uploadedFilePath
 	 * @param fileName
 	 * @return
-	 */
+	 *//*
 	public  boolean scanFile(String uploadedFilePath, String fileName) {
 		Vector<ScanEngineInfo> scanEnginesForScanning = new Vector<ScanEngineInfo>();
 		LOGGER.info("Uploaded file Path : "+ uploadedFilePath);
 		
 		//TEST ONLY --DELETE
-		/*if (uploadedFilePath == null) {
+		if (uploadedFilePath == null) {
 			uploadedFilePath = "c:\\temp\\ResumeTemp.docx";
 			fileName = "ResumeTemp.docx";
-		}*/
+		}
 		
 		ScanEngine.ScanEngineInfo scanEngTobeUsed = new ScanEngine.ScanEngineInfo("192.168.31.230",1344);
         scanEnginesForScanning.add(scanEngTobeUsed);
@@ -98,7 +99,7 @@ public class AVScannerHelper {
 	}
 	
 	
-/*	private void printResult (Result result) {
+	private void printResult (Result result) {
 		
 		 LOGGER.info("----------------------------------------------------------------------");
 	        LOGGER.info("Scanning file ........................................................");
@@ -138,10 +139,11 @@ public class AVScannerHelper {
             LOGGER.info("Symantec Protection Engine Port	: "+ conTry[x].getErrString());
         }
 	
-	}*/
-	/*public static void main (String args[]) {
+	}
+	public static void main (String args[]) {
 		
 		new AVScannerHelper().scanFile("C:\\temp\\ResumeTemp.docx","ResumeTemp.docx");
-	}*/
+	}
 	
 }
+*/

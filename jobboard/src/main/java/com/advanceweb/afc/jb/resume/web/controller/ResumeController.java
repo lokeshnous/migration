@@ -48,7 +48,6 @@ import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
-import com.advanceweb.afc.jb.common.util.AVScannerHelper;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
@@ -505,8 +504,10 @@ public class ResumeController extends AbstractController{
 						
 						File virusChkFiledest = new File(tempDirectoryFilePath);
 						file.transferTo(virusChkFiledest);
-						
-						boolean virusFound = scanFileForVirus(virusChkFiledest.getPath(), virusChkFiledest.getName()); 
+						resumeDTO = resumeService.createResumeUpload(resumeDTO);
+						File dest = new File(resumeDTO.getFilePath());
+						// after POM file modification we need to Uncomment  the below code
+						/*boolean virusFound = scanFileForVirus(virusChkFiledest.getPath(), virusChkFiledest.getName()); 
 						
 						if (virusFound) {
 							LOGGER.info("Virus Found In File "+resumeDTO.getFileName()+" Uploaded By !"+resumeDTO.getUserId() );
@@ -521,9 +522,9 @@ public class ResumeController extends AbstractController{
 							LOGGER.info("No Virus Found In File "+resumeDTO.getFileName()+" Uploaded By !"+resumeDTO.getUserId() );
 							//virusChkFiledest.delete();
 							resumeDTO = resumeService.createResumeUpload(resumeDTO);
-							File dest = new File(resumeDTO.getFilePath());
-							virusChkFiledest.renameTo(dest);
-						}
+							File dest = new File(resumeDTO.getFilePath());*/
+							//virusChkFiledest.renameTo(dest);
+						/*}*/
 						
 						
 						
@@ -558,12 +559,12 @@ public class ResumeController extends AbstractController{
 	 * @return boolean "true" if the file is virus free, "false" informing that the file
 	 *  is not clean and might contain virus thus we do not proceed to upload the file
 	 */
-	private boolean scanFileForVirus(String uploadFilePath, String uploadFileName) {
+	/*private boolean scanFileForVirus(String uploadFilePath, String uploadFileName) {
 		boolean virusFound = false;
 		AVScannerHelper avScanHelper = new AVScannerHelper();
 		virusFound = avScanHelper.scanFile(uploadFilePath, uploadFileName);
 		return virusFound;
-	}
+	}*/
 	/**
 	 * This method is called to update resume of type upload. 
 	 * @param createResume
