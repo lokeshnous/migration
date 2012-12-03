@@ -30,6 +30,7 @@ import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.LoginDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
+import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
@@ -350,7 +351,12 @@ public class LoginFormController extends AbstractController{
 				SecureRandom random = new SecureRandom();
 				formDTO.setPassword(new BigInteger(130, random).toString(32).substring(0, 12));
 				// update the newly generated password in the DB and send the same to the user 
-				userService.saveNewPWD(emailAddress, formDTO.getPassword());
+				try {
+					userService.saveNewPWD(emailAddress, formDTO.getPassword());
+				} catch (JobBoardException jbex) {
+					LOGGER.info("Exception while saving temporary password "
+							+ jbex);
+				}
 				mailBody.append(emailConfiguration
 						.getProperty("employer.email.header").trim());
 				String forgotPwdMailBody = jobseekerForgotPwdBody.replace(
