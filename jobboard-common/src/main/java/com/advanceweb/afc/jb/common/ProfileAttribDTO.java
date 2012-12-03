@@ -15,7 +15,7 @@ public class ProfileAttribDTO {
 	private String strLabelValue;
 	private String strProfileAttribId;
 	private String strAttribType;
-	private int bRequired;
+	private int required;
 	private List<DropDownDTO> dropdown;
 	
 	public String getStrLabelName() {
@@ -48,11 +48,11 @@ public class ProfileAttribDTO {
 	public void setDropdown(List<DropDownDTO> dropdown) {
 		this.dropdown = dropdown;
 	}
-	public int getbRequired() {
-		return bRequired;
+	public int getRequired() {
+		return required;
 	}
-	public void setbRequired(int bRequired) {
-		this.bRequired = bRequired;
+	public void setRequired(int required) {
+		this.required = required;
 	}
 
 }

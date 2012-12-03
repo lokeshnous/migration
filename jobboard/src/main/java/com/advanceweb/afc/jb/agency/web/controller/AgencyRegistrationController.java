@@ -322,7 +322,7 @@ public class AgencyRegistrationController extends AbstractController {
 					.getListProfAttribForms()) {
 
 				// Checking validation for input text box
-				if (form.getbRequired() != 0
+				if (form.getRequired() != 0
 						&& StringUtils.isEmpty(form.getStrLabelValue())
 						&& !MMJBCommonConstants.EMAIL_ADDRESS.equals(form
 								.getStrLabelName())) {
@@ -331,7 +331,7 @@ public class AgencyRegistrationController extends AbstractController {
 				}
 
 				// Checking validation for dropdowns & checkboxes etc
-				if (form.getbRequired() != 0
+				if (form.getRequired() != 0
 						&& MMJBCommonConstants.ZERO.equals(form
 								.getStrLabelValue())
 						&& (MMJBCommonConstants.DROP_DOWN.equals(form

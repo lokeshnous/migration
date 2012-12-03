@@ -89,7 +89,7 @@ public class TransformAgencyRegistration {
 				form.setStrLabelName(dto.getStrLabelName());
 				form.setStrLabelValue(dto.getStrLabelValue());
 				form.setStrProfileAttribId(dto.getStrProfileAttribId());
-				form.setbRequired(dto.getbRequired());
+				form.setRequired(dto.getRequired());
 				if(null != userDTO){
 					if(form.getStrLabelName().equals(MMJBCommonConstants.FIRST_NAME)){
 						form.setStrLabelValue(userDTO.getFirstName());

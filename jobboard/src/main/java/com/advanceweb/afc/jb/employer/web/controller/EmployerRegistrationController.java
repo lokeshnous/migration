@@ -433,7 +433,7 @@ public class EmployerRegistrationController extends AbstractController{
 		for (EmployerProfileAttribForm form : empRegForm
 				.getListProfAttribForms()) {
 			// Checking validation for input text box
-			if (form.getbRequired() != 0
+			if (form.getRequired() != 0
 					&& StringUtils.isEmpty(form.getStrLabelValue())
 					&& !MMJBCommonConstants.EMAIL_ADDRESS.equals(form
 							.getStrLabelName())) {
@@ -441,7 +441,7 @@ public class EmployerRegistrationController extends AbstractController{
 				return false;
 			}
 			// Checking validation for dropdowns & checkboxes etc
-			if (form.getbRequired() != 0
+			if (form.getRequired() != 0
 					&& MMJBCommonConstants.ZERO.equals(form.getStrLabelValue())
 					&& (MMJBCommonConstants.DROP_DOWN.equals(form
 							.getStrAttribType()) || MMJBCommonConstants.CHECK_BOX

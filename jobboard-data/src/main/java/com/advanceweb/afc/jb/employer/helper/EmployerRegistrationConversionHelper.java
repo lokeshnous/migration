@@ -408,7 +408,7 @@ public class EmployerRegistrationConversionHelper {
 					dto.setStrLabelName(entity.getName());
 					dto.setStrProfileAttribId(String.valueOf(entity
 							.getProfileAttribId()));
-					dto.setbRequired((labels.contains(dto.getStrLabelName()) ? 1
+					dto.setRequired((labels.contains(dto.getStrLabelName()) ? 1
 							: 0));
 					if (dto.getStrAttribType().equals(
 							MMJBCommonConstants.DROP_DOWN)

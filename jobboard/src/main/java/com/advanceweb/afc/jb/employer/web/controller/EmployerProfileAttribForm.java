@@ -15,7 +15,7 @@ public class EmployerProfileAttribForm {
 	private String strProfileAttribId;
 	private String strAttribType;
 	private String[] subs;
-	private int bRequired;
+	private int required;
 	private List<DropDownDTO> dropdown;
 
 	public String getStrLabelName() {
@@ -58,12 +58,12 @@ public class EmployerProfileAttribForm {
 		this.dropdown = dropdown;
 	}
 
-	public int getbRequired() {
-		return bRequired;
+	public int getRequired() {
+		return required;
 	}
 
-	public void setbRequired(int bRequired) {
-		this.bRequired = bRequired;
+	public void setRequired(int required) {
+		this.required = required;
 	}
 
 	public String[] getSubs() {

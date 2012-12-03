@@ -271,7 +271,7 @@ public class RegistrationConversionHelper {
 					dto.setStrLabelName(entity.getName());
 					dto.setStrProfileAttribId(String.valueOf(entity
 							.getProfileAttribId()));
-					dto.setbRequired((labels.contains(dto.getStrLabelName()) ? 1
+					dto.setRequired((labels.contains(dto.getStrLabelName()) ? 1
 							: 0));
 					if (MMJBCommonConstants.DROP_DOWN.equals(dto
 							.getStrAttribType())

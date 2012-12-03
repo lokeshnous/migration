@@ -94,7 +94,7 @@ public class TransformEmployerRegistration {
 				form.setStrLabelName(dto.getStrLabelName());
 				form.setStrLabelValue(dto.getStrLabelValue());
 				form.setStrProfileAttribId(dto.getStrProfileAttribId());
-				form.setbRequired(dto.getbRequired());
+				form.setRequired(dto.getRequired());
 				if (null != userDTO) {
 					setValuesToForm(userDTO, form);
 					/*if (form.getStrLabelName().equals(

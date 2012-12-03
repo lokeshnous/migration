@@ -435,7 +435,7 @@ public class JobSeekerRegistrationController extends AbstractController {
 						hashmap.put(form.getStrLabelName(),
 								form.getStrLabelValue());
 						// Checking validation for input text box
-						if (form.getbRequired() != 0
+						if (form.getRequired() != 0
 								&& StringUtils.isEmpty(form.getStrLabelValue())
 								&& !MMJBCommonConstants.EMAIL_ADDRESS
 										.equals(form.getStrLabelName())) {
@@ -444,7 +444,7 @@ public class JobSeekerRegistrationController extends AbstractController {
 						}
 					}
 					// Checking validation for dropdowns & checkboxes etc
-					if (form.getbRequired() != 0
+					if (form.getRequired() != 0
 							&& MMJBCommonConstants.ZERO.equals(form
 									.getStrLabelValue())
 							&& (MMJBCommonConstants.DROP_DOWN.equals(form
@@ -693,13 +693,13 @@ public class JobSeekerRegistrationController extends AbstractController {
 					hm.put(form.getStrLabelName(), form.getStrLabelValue());
 
 					// Checking validation for input text box
-					if (form.getbRequired() != 0
+					if (form.getRequired() != 0
 							&& StringUtils.isEmpty(form.getStrLabelValue())) {
 						return "Please fill the required fields";
 					}
 
 					// Checking validation for dropdowns & checkboxes etc
-					if (form.getbRequired() != 0
+					if (form.getRequired() != 0
 							&& !MMJBCommonConstants.LABEL_SUSBSCRIPTION
 									.equals(form.getStrLabelName())
 							&& MMJBCommonConstants.ZERO.equals(form
