@@ -872,7 +872,7 @@ function validateNumber(event) {
 											can be created by clicking on the related link when you
 											return to your dashboard.</span>
 									</div>
-
+									<c:if test="${displayOverride == true}">
 									<div class="floatLeft width210">
 										<span class="required marginRight10"> <form:checkbox
 												path="bTemplateOverride" onchange="populateTemplates()"
@@ -882,6 +882,7 @@ function validateNumber(event) {
 											<p>Override Package Template</p>
 										</div>
 									</div>
+									</c:if>
 								</div>
 
 								<div class="clearfix"></div>
