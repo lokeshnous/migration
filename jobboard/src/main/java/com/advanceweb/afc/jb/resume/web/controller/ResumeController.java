@@ -784,10 +784,6 @@ public class ResumeController extends AbstractController{
 		resumeService.createResumeBuilder(resumeDTO);
 		getTotalNotNullField(createResume);
 		model.setViewName(JS_REDIRECT_URL);
-		//createResume is a session variable & we have make it null once the resume is saved, 
-		//otherwise if we go to create new resume screen we will get the session data displayed in the 
-		//create resume screen . So have to reassign the new object to session variable 
-		createResume = new CreateResume();
 		return model;
 
 	}
