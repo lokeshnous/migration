@@ -87,7 +87,7 @@ public class MMEmailService implements MMEmail {
 			}
 			mailSender.send(message);
 			LOGGER.info("Mail has been sent.");
-		} catch (MessagingException e) {
+		} catch (Exception e) {
 			LOGGER.error("sendEmail Exception : "+e);
 			//throw new MailParseException(e);
 		}
