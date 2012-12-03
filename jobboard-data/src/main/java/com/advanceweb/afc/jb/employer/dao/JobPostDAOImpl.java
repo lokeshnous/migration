@@ -1,7 +1,6 @@
 package com.advanceweb.afc.jb.employer.dao;
 
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -465,45 +464,33 @@ public class JobPostDAOImpl implements JobPostDAO {
 		Date currentDt = new Date();
 		boolean bRepost = false;
 		try {
-			// Check credit detail for the specified job- starts
-			if (null != job.getEndDt() && null != job.getStartDt()) {
-				// Check credit detail for the specified job- starts
-				if (MMJBCommonConstants.POST_NEW_JOB.equals(job.getJobStatus())
-						&& !validateAndDecreaseAvailableCredits(
-								Integer.valueOf(job.getJpJobType().getName()),
-								job.getAdmFacility().getFacilityId())) {
-					return false;
-				}
-				// Check credit detail for the specified job- Ends
-				if ((job.getActive() == 1 && endtDt.before(currentDt))
-						|| (job.getActive() == MMJBCommonConstants.INACTIVE && (startDt.before(currentDt) || startDt.equals(currentDt)))) {
-					// Repost the inactive and expired job and extend the end
-					// date to the days specified Ex: one month
-					job.setEndDt(calculateEndDt(job.getEndDt(), extendDays));
-					job.setActive(MMJBCommonConstants.ACTIVE);
-					
-					hibernateTemplate.save(job);
-					bRepost = true;
-				} else {
-					bRepost = false;
-				}
-			} else if (job.getActive() == MMJBCommonConstants.INACTIVE) {
-				// Check credit detail for the specified job- starts
-				if (MMJBCommonConstants.POST_NEW_JOB.equals(job.getJobStatus())
-						&& !validateAndDecreaseAvailableCredits(
-								Integer.valueOf(job.getJpJobType().getName()),
-								job.getAdmFacility().getFacilityId())) {
-					return false;
-				} else {
-					job.setStartDt(Calendar.getInstance().getTime());
-					job.setEndDt(calculateEndDt(job.getStartDt(), extendDays));
-					job.setActive(MMJBCommonConstants.ACTIVE);
 
-					hibernateTemplate.save(job);
-					bRepost = true;
+			job.setActive(MMJBCommonConstants.ACTIVE);
+			
+			if (null != startDt
+					&& (job.getActive() == MMJBCommonConstants.INACTIVE
+							&& (startDt.before(currentDt)) || (startDt
+								.equals(currentDt)))) {
+				bRepost=true;
+				// if User has reposted a
+				// inactive job no need to deduct any credit and the start date
+				// and end date will remain same
+			} else if (job.getActive() == MMJBCommonConstants.ACTIVE
+					&& endtDt.before(currentDt)) {
+				// if User has reposted a
+				// Expired Job deduct the credit and change the start date to
+				// current date
+				// and end date to current date + 30days
+				if (!validateAndDecreaseAvailableCredits(Integer.valueOf(job
+						.getJpJobType().getName()), job.getAdmFacility()
+						.getFacilityId())) {
+					return false;
 				}
-				// Check credit detail for the specified job- Ends
+				job.setStartDt(Calendar.getInstance().getTime());
+				job.setEndDt(calculateEndDt(job.getStartDt(), extendDays));
+				bRepost=true;
 			}
+
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
 		}

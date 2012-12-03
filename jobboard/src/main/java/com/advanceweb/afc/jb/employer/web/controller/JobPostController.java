@@ -91,7 +91,7 @@ public class JobPostController extends AbstractController {
 	private static final String POST_NEW_JOBS = "postNewJobs";
 	private static final String SAVE_NEW_JOB = "/saveNewJob";
 	private static final String ERROR_MESSAGE = "errorMessage";
-	private static final String FORWORD_MANAGE_JOBPOST = "forward:/employer/manageJobPost.html";
+	private static final String FORWORD_MANAGE_JOBPOST = "redirect:/employer/manageJobPost.html";
 	private static final String UPDATE_JOBS = "/updateJobs";
 	private static final String USER_ID = "userId";
 	private static final String TEMPLATE_LIST = "templateList";
@@ -1124,7 +1124,7 @@ public class JobPostController extends AbstractController {
 								(Integer) session
 										.getAttribute(MMJBCommonConstants.FACILITY_ID));
 
-				if (!bValidCredits) {
+				if (!bValidCredits && jobPostDTO.getJobStatus() != MMJBCommonConstants.POST_JOB_INACTIVE) {
 					model = populateDropdowns(model, session);
 					model.setViewName(FORWORD_MANAGE_JOBPOST);
 					model.addObject(ERROR_MESSAGE,

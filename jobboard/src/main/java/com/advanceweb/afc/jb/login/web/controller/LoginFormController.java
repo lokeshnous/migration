@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.login.web.controller;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.Map;
 import java.util.Properties;
 
@@ -31,6 +33,7 @@ import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
+import com.advanceweb.afc.jb.user.UserService;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
 import com.advanceweb.common.client.ClientContext;
@@ -93,6 +96,9 @@ public class LoginFormController extends AbstractController{
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
+	@Autowired
+	private UserService userService;
+	
 	/**
 	 * This controller called to redirect to particular page from where login
 	 * attempt happened, displayed error message depending on the login attempt
@@ -339,6 +345,12 @@ public class LoginFormController extends AbstractController{
 				// String forgotPwdMailBody =
 				// jobseekerForgotPwdBody.replace("?temporarypassword",
 				// tempassword);
+				
+				// code to generate Random password 
+				SecureRandom random = new SecureRandom();
+				formDTO.setPassword(new BigInteger(130, random).toString(32).substring(0, 12));
+				// update the newly generated password in the DB and send the same to the user 
+				userService.saveNewPWD(emailAddress, formDTO.getPassword());
 				mailBody.append(emailConfiguration
 						.getProperty("employer.email.header").trim());
 				String forgotPwdMailBody = jobseekerForgotPwdBody.replace(
