@@ -28,6 +28,7 @@ import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.FromZipcodeDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.LocationDTO;
@@ -175,6 +176,7 @@ public class JobPostController extends AbstractController {
 		model.addObject(COMPANY_LIST, companyList);
 		// Populating Dropdowns
 
+		model.addObject("displayOverride",displayOverride(facilityId));
 		model.addObject(JOB_POST_FORM, jobPostForm);
 		model.setViewName(POST_NEW_JOBS);
 		// Ads for job Post page
@@ -210,6 +212,22 @@ public class JobPostController extends AbstractController {
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 		}
+	}
+
+	/**
+	 * This method decides if Override Package Template must be displayed or not
+	 * 
+	 * @param facilityId
+	 * @return boolean
+	 */
+	private boolean displayOverride(int facilityId) {
+
+		FacilityDTO facility = facilityService
+				.getFacilityByFacilityId(facilityId);
+
+		return !(null != facility.getFacilityType() && facility.getFacilityType().equalsIgnoreCase(
+				MMJBCommonConstants.FACILITY)
+				&& 0 == facility.getFacilityParentId());
 	}
 
 	/**
@@ -489,6 +507,7 @@ public class JobPostController extends AbstractController {
 		model.addObject("jbPostingTypeList", jbPostingTypeList);
 		model.addObject(COMPANY_LIST, companyList);
 		// Populating Dropdowns
+		model.addObject("displayOverride",displayOverride(facilityId));
 
 		return model;
 	}
@@ -735,6 +754,7 @@ public class JobPostController extends AbstractController {
 		model.addObject("zipCodeList", zipCodeList);
 		model.addObject("jbPostingTypeList", jbPostingTypeList);
 		model.addObject(COMPANY_LIST, companyList);
+		model.addObject("displayOverride",displayOverride(employerInfoDTO.getFacilityId()));
 		return jbPostingTypeList;
 	}
 
