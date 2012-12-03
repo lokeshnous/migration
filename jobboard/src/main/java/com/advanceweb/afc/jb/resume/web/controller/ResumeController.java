@@ -303,12 +303,12 @@ public class ResumeController extends AbstractController{
 	 * @return 
 	 */
 	@RequestMapping(value = "/updateResumePopup", method = RequestMethod.POST)
-	public ModelAndView updateResumePopup(CreateResume createResumed,
+	public ModelAndView updateResumePopup(CreateResume resumeForm,
 			HttpSession session, HttpServletRequest request) {
 		/**
-		 *  Introduced a new variable "createResumed" to resolve PMD issue. 
+		 *  Introduced a new variable "resumeForm" to resolve PMD issue. 
 		 */
-		CreateResume createResume =createResumed; 
+		CreateResume createResume = resumeForm; 
 		ModelAndView model = new ModelAndView();
 
 		ResumeDTO resumeDTO = transCreateResume
@@ -724,12 +724,9 @@ public class ResumeController extends AbstractController{
 	 * @return
 	 */
 	@RequestMapping(value = "/saveResumeBuilder", method = RequestMethod.POST, params = "Save")
-	public ModelAndView saveResumeBuilder(CreateResume createResumed,
+	public ModelAndView saveResumeBuilder(CreateResume createResume,
 			HttpSession session, HttpServletRequest request) {
-		/**
-		 *  Introduced a new variable "createResumed" to resolve PMD issue. 
-		 */
-		CreateResume createResume =createResumed;
+	
 		if("0".equals(createResume.getUploadResumeId())){
 			createResume.setUploadResumeId(null);
 		}
@@ -1055,20 +1052,19 @@ public class ResumeController extends AbstractController{
 	 * 3.Work Experience 4.Education 5.Certifiation 6.Skills 7.Awards
 	 * 8.Memberships 9.Other Details 10.References
 	 * 
-	 * @param createResume
+	 * @param resumeForm
 	 * @param result
 	 * @param session 
-	 * @param
 	 * @return
 	 */
 	@RequestMapping(value = "/viewResumeBuilder", method = RequestMethod.POST)
-	public ModelAndView viewResumeBuilder(CreateResume createResumed,
+	public ModelAndView viewResumeBuilder(CreateResume resumeForm,
 			BindingResult result, @RequestParam(RESUME_ID) int resumeId,
 			HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		/**
-		 *  Introduced a new variable "createResumed" to resolve PMD issue. 
+		 *  Introduced a new variable "resumeForm" to resolve PMD issue. 
 		 */
-		CreateResume createResume =createResumed; 
+		CreateResume createResume = resumeForm; 
 		ModelAndView model = new ModelAndView();
 		ResumeDTO resumeDTO = resumeService.editResume(resumeId);
 		createResume = transCreateResume.transformCreateResumeForm(resumeDTO);
