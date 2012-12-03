@@ -252,7 +252,7 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 	@Override
 	public boolean checkTemplateName(int facilityId, String templateName) {
 		List<JpTemplate> listTemplate = hibernateTemplateCareer.find(
-				"from JpTemplate jpt where jpt.admFacility.facilityId=?",
+				"from JpTemplate jpt where jpt.admFacility.facilityId=? and deleteDt is NULL",
 				facilityId);
 
 		if (null != listTemplate && !listTemplate.isEmpty()) {
