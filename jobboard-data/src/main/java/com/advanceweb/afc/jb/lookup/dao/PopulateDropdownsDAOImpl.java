@@ -714,12 +714,15 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
 			facilityId = Integer.parseInt(company);
 
-			List<Object> admFacilityList = hibernateTemplate
-					.find("select fac.templateId from  AdmFacility fac WHERE fac.facilityId=?",
-							facilityId);
+			List<AdmFacility> admFacilityList = hibernateTemplate.find(
+					"from AdmFacility adm where adm.facilityId=?", facilityId);
 
 			if (admFacilityList != null && !admFacilityList.isEmpty()) {
-				templateId = (Integer) admFacilityList.get(0);
+				AdmFacility facility = admFacilityList.get(0);
+				templateId = facility.getTemplateId();
+				if (0 == templateId && 0 == facility.getFacilityParentId()) {
+					return populateBrandingTemplateDropdown(facilityId, 0);
+				}
 			}
 
 			List<Object> jpTemplateList = hibernateTemplate
@@ -753,7 +756,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 							+ city
 							+ "' ORDER BY  jloc.postcode ASC");
 
-			if (jpLocationList != null && jpLocationList.size() != 0) {
+			if (jpLocationList != null && !jpLocationList.isEmpty()) {
 				return (String) jpLocationList.get(0);
 			}
 
@@ -849,7 +852,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		try {
 			List<AdmSubscription> subsList = hibernateTemplate.find(
 					FIND_USER_SUBSCRIPTIONS, "FACILITY");
-			Map<String, String> facilityMap = new HashMap<String, String>();
+//			Map<String, String> facilityMap = new HashMap<String, String>();
 			return dropdownHelper.convertAdmSubscriptionToDropDownDTO(subsList);
 		} catch (DataAccessException e) {
 			LOGGER.error("Error occurred while getting data for subscriptions"
