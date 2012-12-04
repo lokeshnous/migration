@@ -364,6 +364,17 @@ var options = {
 
 					<div class="dashboardPanalcontent marginTop5">
 						<h2 class="noTopBorder">Profile Management</h2>
+													<c:if
+							test="<%=(session.getAttribute(\"adminLogin\")!=null )%>">
+						<div class="lableTextDashBoard">
+									<p>
+										<a
+											href="<%=request.getContextPath()%>/employerRegistration/viewEmpAccountProfile.html"
+											id="accountSettingpopUp">Account Settings</a>
+									</p>
+								</div>
+								</c:if>
+						
 						<c:if
 							test="<%=!(session.getAttribute(MMJBCommonConstants.FACILITY_POST_EDIT)!=null )%>">
 							<c:if
