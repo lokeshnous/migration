@@ -129,7 +129,7 @@ public class HomeController extends AbstractController{
 				model.addAttribute("healthcarenew", htmlhealthcontent);
 			} else {
 				model.addAttribute("healthcarenew",
-						"<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>");
+						"<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />");
 			}
 
 			if (new File(basedirectorypath + directory + careertoolfilename)
