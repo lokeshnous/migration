@@ -421,6 +421,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 						userId);
 				mer.setFirstName(apd.getFirstName());
 				mer.setLastName(apd.getLastName());
+				mer.setEmail(apd.getEmail());
 				hibernateTemplateTracker.update(mer);
 
 				// update admfacilitycontact
@@ -530,14 +531,13 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	 * @return
 	 */
 
-	public FacilityDTO getNSCustomerIDFromAdmFacility(String email) {
+	public FacilityDTO getNSCustomerIDFromAdmFacility(int userId) {
 
 		FacilityDTO admFacilityDTO = new FacilityDTO();
 		try {
 
 			List<AdmFacility> admFacilityList = hibernateTemplateCareers
-					.find(" from  AdmFacility WHERE  email='" + email + "'");
-
+					.find("select b from AdmFacility b,AdmUserFacility c where b.facilityId= c.id.facilityId and c.id.userId=?",userId);
 			if (admFacilityList != null) {
 				admFacilityDTO.setNsCustomerID(admFacilityList.get(0)
 						.getNsCustomerID());

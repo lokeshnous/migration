@@ -98,8 +98,7 @@ public interface EmployerRegistrationDAO {
 	 * @return
 	 */
 	
-	FacilityDTO getNSCustomerIDFromAdmFacility(String name);
-	
+	FacilityDTO getNSCustomerIDFromAdmFacility(int id);
 	
 
 }
