@@ -52,7 +52,22 @@ function validateNumber(event) {
 				$('#zipCode').val('');
 				$('#countryDpId').val('');
 			});
+		$("#zipCode").change(function(){
+			$('#cityAutoPopulation').val("");
+			$('#stateDpId').val("");
+			$('#countryDpId').val("");
+		});
 		
+		$("#cityAutoPopulation").change(function(){
+			$('#zipCode').val("");
+			$('#stateDpId').val("");
+			$('#countryDpId').val("");
+		});
+		$("#countryDpId").change(function(){
+			$('#zipCode').val("");
+			$('#stateDpId').val("");
+			$('#cityAutoPopulation').val("");
+		});
 		//Auto complete on selecting city
 		$("#cityAutoPopulation").autocomplete({
 			source: '${pageContext.request.contextPath}/employer/getCityList.html',
