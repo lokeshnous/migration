@@ -159,7 +159,7 @@
 														class="link_color2_selected">$</span>${cartItem.packageSubTotal}</td>
 													<td width="19%"><input name="healthCareSubSplty2"
 														type="text"
-														class="jb_input75 marginTop0 mar"
+														class="jb_input4 marginTop0 mar"
 														value="${cartItem.quantity}" maxlength="3"/>
 													<c:if test="${paymentGatewayForm.purchaseJobPostForm.jobPostingsCart.size() > 1}">
 														<a href="<%=request.getContextPath()%>/pgiController/removeCartItem.html?cartItemIndex=<%=i++%>"
@@ -199,10 +199,10 @@
 												<tr id="<%=i%>">
 													<td width="32%" height="30px;" align="Left">
 													${cartItem.packageName}</td>
-													<td width="20%" align="Left"><span>$</span>${cartItem.priceAmt}</td>
+													<td width="21%" align="Left"><span>$</span>${cartItem.priceAmt}</td>
 													<td width="18%"><input name="healthCareSubSplty2"
 														type="text"
-														class="jb_input75 marginTop0 mar"
+														class="jb_input4 marginTop0 mar"
 														value="${cartItem.quantity}" maxlength="3"/></td>
 													<td width="20%" align="Left"><span
 														class="link_color2_selected">$</span>${cartItem.packageTotal}</td>
