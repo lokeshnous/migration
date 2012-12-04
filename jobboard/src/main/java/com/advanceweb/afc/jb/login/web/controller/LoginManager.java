@@ -56,6 +56,7 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 						MMJBCommonConstants.ROLE_MERION_ADMIN))) {
 			session.setAttribute(MMJBCommonConstants.FACILITY_FULL_ACCESS,
 					MMJBCommonConstants.FACILITY_FULL_ACCESS);
+			session.setAttribute("adminLogin", "adminLogin");
 			String cookieName = MMJBCommonConstants.SPRING_SECURITY_REMEMBER_ME_COOKIE;
 			Cookie cookie = new Cookie(cookieName, null);
 			cookie.setMaxAge(0);
