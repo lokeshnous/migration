@@ -11,16 +11,20 @@ import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.SchedulerDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.employer.dao.FacilityDAO;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
+import com.advanceweb.afc.jb.user.dao.UserDao;
 
 @Service("facilityService")
 public class FacilityServiceImpl implements FacilityService {
 
 	@Autowired
 	private FacilityDAO facilityDAO;
+	@Autowired
+	private UserDao userDao;
 
 	/**
 	 * This method is to get the facilityId for logged in user
@@ -113,5 +117,9 @@ public class FacilityServiceImpl implements FacilityService {
 	@Override
 	public List<SchedulerDTO> getAllFacilityList() {
 		return facilityDAO.getAllFacilityList();
+	}
+	@Override
+	public UserDTO getUser(String email) {
+		return userDao.getUser(email);
 	}
 }
