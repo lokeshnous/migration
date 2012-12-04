@@ -70,7 +70,7 @@
 									<c:if test="${displayRadius}">
 									<span class="refineResultsItem plus" id="radiusPlus">Radius</span>
 									<c:if test="${sessionMap.get('refineRadius') != '0'}">
-									<script>$("#radiusPlus").click();</script>
+									<script type="text/javascript">$("#radiusPlus").click();</script>
 									</c:if>
 
 									<div class="refineResultsSubContent cursor">
@@ -134,7 +134,7 @@
 									</div>
 									</c:if>
 									<c:if test="${sessionMap.get('secondFQParam') != ''}">
-									<script>$("#companyPlus").click();</script>
+									<script type="text/javascript">$("#companyPlus").click();</script>
 									</c:if> 
 									<span class="refineResultsItem plus" id="companyPlus">Employer</span>
 									<div class="refineResultsSubContent cursor">
@@ -163,7 +163,7 @@
 									
 									<input type="hidden" name="refined" id="refined" />
 									<c:if test="${sessionMap.get('thirdFQParam') != ''}">
-									 <script>$("#statePlus").click();</script>
+									 <script type="text/javascript">$("#statePlus").click();</script>
 									</c:if>
 									<span class="refineResultsItem plus" id="statePlus">State</span>
 									<div class="refineResultsSubContent cursor">
@@ -193,7 +193,7 @@
 
 									<span class="refineResultsItem plus" id="cityPlus">City</span>
 									<c:if test="${sessionMap.get('fouthFQParam') != ''}">
-									 <script>$("#cityPlus").click();</script>
+									 <script type="text/javascript">$("#cityPlus").click();</script>
 									</c:if>
 									<div class="refineResultsSubContent cursor">
 										<ul>
