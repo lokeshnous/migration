@@ -160,9 +160,13 @@
 													<td width="19%"><input name="healthCareSubSplty2"
 														type="text"
 														class="jb_input75 marginTop0 mar"
-														value="${cartItem.quantity}" /><a
-														href="<%=request.getContextPath()%>/pgiController/removeCartItem.html?cartItemIndex=<%=i++%>"
-														class="marginLeft20">Remove</a></td>
+														value="${cartItem.quantity}" maxlength="3"/>
+													<c:if test="${paymentGatewayForm.purchaseJobPostForm.jobPostingsCart.size() > 1}">
+														<a href="<%=request.getContextPath()%>/pgiController/removeCartItem.html?cartItemIndex=<%=i++%>"
+														class="marginLeft20">Remove</a>
+													</c:if>
+													
+													</td>
 												</tr>
 											</table>
 										</div>
@@ -199,12 +203,16 @@
 													<td width="18%"><input name="healthCareSubSplty2"
 														type="text"
 														class="jb_input75 marginTop0 mar"
-														value="${cartItem.quantity}" /></td>
+														value="${cartItem.quantity}" maxlength="3"/></td>
 													<td width="20%" align="Left"><span
 														class="link_color2_selected">$</span>${cartItem.packageTotal}</td>
-													<td width="10%"><a
+													<td width="10%">
+													<c:if test="${paymentGatewayForm.purchaseResumeSearchForm.resumeSearchPackageCart.size() > 1}">
+													<a
 														href="<%=request.getContextPath()%>/pgiController/removeCartItem.html?cartItemIndex=<%=i++%>"
-														class="marginLeft20">Remove</a></td>
+														class="marginLeft20">Remove</a>
+													</c:if>	
+														</td>
 												</tr>
 											</table>
 										</div>
