@@ -70,6 +70,10 @@ function copyAccToBillingAddr(obj) {
 	jQuery(document).ready(function() {
 		$("#phone").inputmask("mask", {"mask": "(999) 999-9999"});
 		$("#phone2").inputmask("mask", {"mask": "(999) 999-9999"});
+		if ($("#adminLogin").val() == 'true') {
+			$("#emailId").attr('readonly', false);
+		}
+
 		$.nmFilters({
     	    custom: {
     	        afterShowCont: function(nm) {
@@ -156,6 +160,7 @@ function copyAccToBillingAddr(obj) {
 					<div class="EvenNewSpacing marginLeft20">
 						<h3>Account Profile</h3>
 					</div>
+					<form:hidden path="adminLogin"/>
 					<div class="rowEvenNewSpacing">
 					<span class="lableText3"> </span>
 					<div id="errmsg" class="FormErrorDisplayText"></div>
@@ -219,7 +224,7 @@ function copyAccToBillingAddr(obj) {
 							E-Mail:
 						</span>
 						<!-- readonly="true" -->
-						<form:input path="email" name="email" class="job_seeker_password" readonly="true"  retype="text"/>
+						<form:input path="email" id="emailId" name="email" class="job_seeker_password" readonly="true"  retype="text"/>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">

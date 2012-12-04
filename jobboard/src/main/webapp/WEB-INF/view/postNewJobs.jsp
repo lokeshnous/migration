@@ -480,6 +480,11 @@ function validateNumber(event) {
 							
 						jQuery(".megamenu").megamenu();
 						$('#jobOwner').focus();
+						
+						
+						if ($("#adminLogin").val() == 'true') {
+							$("#jobTitleId").attr("disabled", false);
+						}
 					});
 	
 			function cancelProcess() {
@@ -529,6 +534,7 @@ function validateNumber(event) {
 				<form:hidden path="activeOrInactive"/>
 				<form:hidden path="enableJobTitle"/>
 				<form:hidden path="jobStatus"/>
+				<form:hidden path="adminLogin"/>
 				<div class="main">
 					<jsp:include page="../templates/templates_header.jsp"></jsp:include>
 					<div class="clearfix"></div>
