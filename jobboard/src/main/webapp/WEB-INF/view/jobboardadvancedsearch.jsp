@@ -2,27 +2,27 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>ADVANCE Heathcare Jobs</title>
-<meta name="robots" content="noindex, follow">
+<meta name="robots" content="noindex, follow" />
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
 	});
 </script>
-<script type="text/javascript" src="../resources/js/expandCollapse.js"></script>
+<script language="javascript" type="text/javascript" src="../resources/js/expandCollapse.js"></script>
 <!-- JAVASCRIPT FILES -->
-<script type="text/javascript" src="../resources/js/slider.js"></script>
-<link href="../resources/css/jquery-ui.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" language="javascript" src="/media/js/jquery.js"></script>
-<script src="../resources/js/jquery.dataTables.nightly.js"></script>
-<script src="../resources/js/searchResultsdatatable.js"></script>
+<script language="javascript" type="text/javascript" src="../resources/js/slider.js"></script>
+<link href="../resources/css/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript" src="/media/js/jquery.js"></script>
+<script language="javascript" type="text/javascript" src="../resources/js/jquery.dataTables.nightly.js"></script>
+<script language="javascript" type="text/javascript" src="../resources/js/searchResultsdatatable.js"></script>
 
-<script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
+<script language="javascript" type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 </head>
 
 <body class="job_board">
@@ -118,7 +118,7 @@
 								<!--these div classes were switched from lableText to radioLableText-->
 								<div class="floatLeft">
 									<div class="radioLableText">
-										<input name="chkbNationalAds" type="checkbox" value="">
+										<input name="chkbNationalAds" type="checkbox" value="" />
 									</div>
 									<div class="radioLableText">
 										<label for="chkbNationalAds">Include National Ads</label>&nbsp;&nbsp;&nbsp;
@@ -127,7 +127,7 @@
 								<div class="clearfix"></div>
 								<div class="floatLeft">
 									<div class="radioLableText">
-										<input name="chkbInternationalAds" type="checkbox" value="">
+										<input name="chkbInternationalAds" type="checkbox" value="" />
 									</div>
 									<div class="radioLableText">
 										<label for="chkbNationalAds">Include International Ads</label>
@@ -196,7 +196,7 @@
 
 								<div class="row">
 									<div class="lableText2">
-										<input type="radio" name="radio" id="ZipCode" value="ZipCode">
+										<input type="radio" name="radio" id="ZipCode" value="ZipCode" />
 										<label for="ZipCode">By Zip Code:</label>
 									</div>
 									<div class="input_grp3">
@@ -217,7 +217,7 @@
 								<div class="row">
 									<div class="lableText2">
 										<input type="radio" name="radio" id="StateProvince"
-											value="StateProvince"> <label for="StateProvince">By
+											value="StateProvince"> <label for="StateProvince" />By
 											State / Province:</label>
 									</div>
 									<div class="input_grp3">
@@ -231,7 +231,7 @@
 								</div>
 								<div class="row">
 									<div class="lableText2">
-										<input type="radio" name="radio" id="Country" value="Country">
+										<input type="radio" name="radio" id="Country" value="Country" />
 										<label for="country"> By Country</label>
 									</div>
 									<div class="input_grp3">
@@ -244,7 +244,7 @@
 								<div class="row">
 									<div class="lableText2">
 										<input type="radio" name="radio" id="metroArea"
-											value="metroArea"> <label for="ZipCode">By
+											value="metroArea" /> <label for="ZipCode">By
 											Metro Area:</label>
 									</div>
 									<div class="input_grp3">
@@ -334,14 +334,14 @@
 								<div class="row">
 									<div class="lableText2">Sorted by:</div>
 									<div class="lableText">
-										<input name="relevance" type="radio" value="">
+										<input name="relevance" type="radio" value="" />
 									</div>
 									<div class="lableText">
 										<label for="relevance">Relevance</label>
 									</div>
 									<div class="lableText">&nbsp;&nbsp;</div>
 									<div class="lableText">
-										<input name="date" type="radio" value="">
+										<input name="date" type="radio" value="" />
 									</div>
 									<div class="lableText">
 										<label for="date">Date</label>
