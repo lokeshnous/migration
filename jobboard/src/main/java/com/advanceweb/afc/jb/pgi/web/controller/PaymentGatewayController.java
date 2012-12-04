@@ -760,10 +760,10 @@ public class PaymentGatewayController extends AbstractController{
 				"<b>Order summary :</b>"
 						+ "<br> Package Name(s):"
 						+ packageName
-						+ "<br> Total Payment:"
-						+ paymentType
+						+ "<br> Total Payment: $"
+						+ orderDetailsDTO.getOrderPaymentDTO().getPaidAmount()
 						+ "<br> Payment Method:"
-						+ orderDetailsDTO.getOrderPaymentDTO().getMethod()
+						+ paymentType
 						+ "<br> Payment Date:"
 						+ orderDetailsDTO.getOrderPaymentDTO()
 								.getTransactionDate());
