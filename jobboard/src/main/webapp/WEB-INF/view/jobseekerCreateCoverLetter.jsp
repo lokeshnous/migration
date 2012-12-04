@@ -89,7 +89,7 @@
 								id="coverletterText"
 									onKeyDown="limitText(this.form.coverletterText,this.form.countdownCoverLetter,5000);"
 									onKeyUp="limitText(this.form.coverletterText,this.form.countdownCoverLetter,5000);"/>
-									<div class="required2" style="float:right; margin-right:23px;">(Required)</div>
+									<div class="required2" style="float:right; margin-right:21px;">(Required)</div>
 									</div>
 									
 								<div class="rowEvenNewSpacing magrin_top0">
