@@ -129,18 +129,27 @@ function validateNumber(event) {
 			}
 		});	
  		
-		$("#zipCode").change(function(){
-			$('#cityAutoPopulation').val("");
-			$('#stateDpId').val("");
-			$('#countryDpId').val("");
+		$("#stateDpId").change( function(){
+			$('#cityAutoPopulation').val('');
+			$('#zipCode').val('');
+			$('#countryDpId').val('');
 		});
-		
-		$("#cityAutoPopulation").change(function(){
-			$('#zipCode').val("");
-			$('#stateDpId').val("");
-			$('#countryDpId').val("");
-		});
- 		
+	$("#zipCode").change(function(){
+		$('#cityAutoPopulation').val("");
+		$('#stateDpId').val("");
+		$('#countryDpId').val("");
+	});
+	
+	$("#cityAutoPopulation").change(function(){
+		$('#zipCode').val("");
+		$('#stateDpId').val("");
+		$('#countryDpId').val("");
+	});
+	$("#countryDpId").change(function(){
+		$('#zipCode').val("");
+		$('#stateDpId').val("");
+		$('#cityAutoPopulation').val("");
+	});
 		jQuery(".megamenu").megamenu();
 	});
 </script>
