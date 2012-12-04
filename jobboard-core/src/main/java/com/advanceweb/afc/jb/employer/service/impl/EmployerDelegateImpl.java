@@ -152,8 +152,9 @@ public class EmployerDelegateImpl implements EmployerDelegate {
 			throws JobBoardServiceException {
 		boolean isUpdate = false;
 
+		
 		FacilityDTO admFacilityDTO = employerRegistrationDAO
-				.getNSCustomerIDFromAdmFacility(accountProfDTO.getEmail());
+				.getNSCustomerIDFromAdmFacility(userId);
 
 		UserDTO userDTO = createUserDTOFromAccountProfileDTO(accountProfDTO,
 				admFacilityDTO.getNsCustomerID());
@@ -200,7 +201,7 @@ public class EmployerDelegateImpl implements EmployerDelegate {
 		userDTO.setCountry(accountProfDTO.getCountry());
 		userDTO.setCompany(accountProfDTO.getCompanyName());
 		userDTO.setPrimaryPhone(accountProfDTO.getPhone());
-
+		userDTO.setEmailId(accountProfDTO.getEmail());
 		return userDTO;
 	}
 
