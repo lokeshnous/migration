@@ -428,6 +428,8 @@ public class AgencyRegistrationController extends AbstractController {
 		String employerloginUrl = request.getRequestURL().toString()
 				.replace(request.getServletPath(), loginPath)
 				+ dothtmlExtention + employerPageExtention;
+		employerWelcomeMailBody = employerWelcomeMailBody.replace("?userName",
+				userDTO.getFirstName());
 		employerWelcomeMailBody = employerWelcomeMailBody.replace("?user_name",
 				userDTO.getFirstName());
 		employerWelcomeMailBody = employerWelcomeMailBody.replace(

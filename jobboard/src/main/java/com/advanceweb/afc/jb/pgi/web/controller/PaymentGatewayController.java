@@ -742,6 +742,7 @@ public class PaymentGatewayController extends AbstractController{
 					jbex);
 		}
 		String packageName="";
+		String paymentType="Credit Card";
 		if(null!=orderDetailsDTO.getJobPostingPlanDTOList()){
 			for(JobPostingPlanDTO postingPlanDTO:orderDetailsDTO.getJobPostingPlanDTOList()){
 				if(!packageName.isEmpty()){
@@ -750,12 +751,17 @@ public class PaymentGatewayController extends AbstractController{
 				packageName=packageName+postingPlanDTO.getJobPostPlanName();
 			}
 		}
+		if (null != userDTO.getSalesOrderDTO().getPaymentMethod()
+				&& MMJBCommonConstants.INVOICE.equals(userDTO
+						.getSalesOrderDTO().getPaymentMethod())) {
+			paymentType="Invoice";
+		}
 		salesrcptMailBody = salesrcptMailBody.replace("?ordersum",
 				"<b>Order summary :</b>"
 						+ "<br> Package Name(s):"
 						+ packageName
 						+ "<br> Total Payment:"
-						+ orderDetailsDTO.getOrderPaymentDTO().getPaidAmount()
+						+ paymentType
 						+ "<br> Payment Method:"
 						+ orderDetailsDTO.getOrderPaymentDTO().getMethod()
 						+ "<br> Payment Date:"
