@@ -7,6 +7,7 @@ import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.SchedulerDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 /**
@@ -68,4 +69,5 @@ public interface FacilityService {
 	 * @return List<SchedulerDTO>
 	 */
 	List<SchedulerDTO> getAllFacilityList();
+	UserDTO getUser(String email);
 }
