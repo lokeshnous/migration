@@ -3,7 +3,7 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 
-<script>
+<script language="javascript" type="text/javascript" >
 	$(document).ready(function() {
 
 		$("#seeallpopup").attr("href", "../jobsearch/seeallsearch.html");
@@ -50,8 +50,7 @@
 						</h2>
 						</c:otherwise>
 						</c:choose>
-						<form:input path="keywords" maxlength="60" id="keywords"
-							cssClass="jb_input1" />
+						<form:input path="keywords" maxlength="60" id="keywords" cssClass="jb_input1" />
 						<div class="toolTipBefore">
 							<label for="keywords">Job Title, Keywords, Job ID,
 								Company Name </label>
@@ -139,8 +138,8 @@
             
             <form:hidden path="start" id="start"/>
             <form:hidden path="rows" id="rows"/>
-            <input value="<%=request.getContextPath()%>" type="hidden" id="contextPath">
-            <form:hidden path="searchtype" id="searchtype" value= "basic"/>
+            <input value="<%=request.getContextPath()%>" type="hidden" id="contextPath" />
+            <form:hidden path="searchtype" id="searchtype" />
             <!-- <input type="hidden" id="searchtype" value="basic"></input>
             </div> -->
 				</form:form>
