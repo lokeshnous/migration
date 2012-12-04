@@ -22,6 +22,7 @@
 				<ref bean="autoRenewalJobWorker" />
 				<ref bean="noActiveJobPostingJobWorker"/>
 				<ref bean="newJobsUpdationMailWorkerDaily"/>
+				<ref bean="jobPostExpireSoon"/>
 			</list>
 		</constructor-arg>
 	</bean>
