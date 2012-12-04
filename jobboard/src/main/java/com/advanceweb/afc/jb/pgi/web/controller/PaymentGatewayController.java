@@ -42,8 +42,10 @@ import com.advanceweb.afc.jb.employer.web.controller.ResumeSearchPackageForm;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
+import com.advanceweb.afc.jb.netsuite.service.NSCustomerService;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
+import com.advanceweb.afc.jb.service.exception.JobBoardNetSuiteServiceException;
 import com.advanceweb.afc.jb.user.UserService;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
@@ -110,7 +112,9 @@ public class PaymentGatewayController extends AbstractController{
 	private FacilityService facilityService;
 	@Autowired
 	private UserService userService;
-	
+	@Autowired
+	private NSCustomerService nsCustomerService;
+	private static final String CUSTOMER_STRING = "customer"; 
 	@RequestMapping(value = "/callPaymentMethod", method = RequestMethod.GET)
 	public ModelAndView callPaymentMethod(@Valid PaymentGatewayForm paymentGatewayForm,
 			HttpSession session,@RequestParam(value = "purchaseType", required = false ) String purchaseType, HttpServletRequest request) {
@@ -716,8 +720,40 @@ public class PaymentGatewayController extends AbstractController{
 		salesrcptMailBody = salesrcptMailBody.replace("?userName", userName);
 		salesrcptMailBody = salesrcptMailBody.replace("?companyName",
 				comapnyName);
+		UserDTO userDTO = new UserDTO();
+		userDTO.setEntityId(orderDetailsDTO.getNsCustomeId());
+		userDTO.setRecordType(CUSTOMER_STRING);
+		try {
+			userDTO = nsCustomerService.getNSCustomerDetails(userDTO);
+		} catch (JobBoardNetSuiteServiceException jbns) {
+			LOGGER.info("Error occurred while getting the Customer details from net suite..Please contact your administrator."
+					+ jbns);
+		}
+		InternetAddress[] jsCcAddress = new InternetAddress[1];
+
+		try {
+			if(null != userDTO && null!=userDTO.getEmailId()){
+				jsCcAddress[0] = new InternetAddress(userDTO.getEmailId());
+				emailDTO.setCcAddress(jsCcAddress);
+			}
+		} catch (AddressException jbex) {
+			LOGGER.error(
+					"Error occured while geting InternetAddress reference",
+					jbex);
+		}
+		String packageName="";
+		if(null!=orderDetailsDTO.getJobPostingPlanDTOList()){
+			for(JobPostingPlanDTO postingPlanDTO:orderDetailsDTO.getJobPostingPlanDTOList()){
+				if(!packageName.isEmpty()){
+					packageName=packageName+"/";
+				}
+				packageName=packageName+postingPlanDTO.getJobPostPlanName();
+			}
+		}
 		salesrcptMailBody = salesrcptMailBody.replace("?ordersum",
 				"<b>Order summary :</b>"
+						+ "<br> Package Name(s):"
+						+ packageName
 						+ "<br> Total Payment:"
 						+ orderDetailsDTO.getOrderPaymentDTO().getPaidAmount()
 						+ "<br> Payment Method:"
