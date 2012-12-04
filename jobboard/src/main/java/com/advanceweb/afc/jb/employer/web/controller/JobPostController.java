@@ -526,7 +526,9 @@ public class JobPostController extends AbstractController {
 			@RequestParam("jobId") int jobId) {
 		JobPostForm jobPostForm = jobPostFormP;
 		ModelAndView model = new ModelAndView();
-
+		if(session.getAttribute("adminLogin")!=null ){
+			jobPostFormP.setAdminLogin(true);
+		}
 		String readOnly = request.getParameter("readOnly");
 		String jobStatus = request.getParameter("jobStatus");
 		jobPostForm.setJobStatus(jobStatus);

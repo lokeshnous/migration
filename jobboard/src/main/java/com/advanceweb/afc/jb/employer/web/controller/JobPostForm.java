@@ -67,8 +67,16 @@ public class JobPostForm {
     private String autoRenewVal;*/
     
 	private boolean xmlStartEndDateEnabled;
+    private boolean adminLogin;
     
-    
+	public boolean isAdminLogin() {
+		return adminLogin;
+	}
+
+	public void setAdminLogin(boolean adminLogin) {
+		this.adminLogin = adminLogin;
+	}
+
 	public int getJobId() {
 		return jobId;
 	}

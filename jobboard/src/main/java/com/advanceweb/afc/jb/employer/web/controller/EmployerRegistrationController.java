@@ -167,6 +167,8 @@ public class EmployerRegistrationController extends AbstractController{
 	private String accountEmail;
 	@Value("${account_Street}")
 	private String accountStreet;
+	@Value("${emailInUse}")
+	private String emailInUse;
 
 	// Spring ReCaptcha
 
@@ -542,6 +544,11 @@ public class EmployerRegistrationController extends AbstractController{
 		boolean isUpdated = false;
 
 		try {
+			if(employeeAccountForm.isAdminLogin()){
+				if(facilityService.getUser(employeeAccountForm.getEmail())!=null){
+					return emailInUse;
+				}
+			}
 			int userId = (Integer) session.getAttribute("userId");
 			AdmFacilityContactDTO listProfAttribForms = empRegService
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.PRIMARY);
@@ -728,7 +735,9 @@ public class EmployerRegistrationController extends AbstractController{
 			employeeBillingForm.setBillingAddressForm(new BillingAddressForm());
 
 			int userId = (Integer) session.getAttribute("userId");
-
+			if(session.getAttribute("adminLogin")!=null ){
+				employeeAccountForm.setAdminLogin(true);
+			}
 			List<CountryDTO> countryList = populateDropdownsService
 					.getCountryList();
 

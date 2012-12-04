@@ -23,6 +23,15 @@ public class EmployeeAccountForm {
 	private String country;
 	private String zipCode;
 	private String phone;
+	private boolean adminLogin;
+	
+	
+	public boolean isAdminLogin() {
+		return adminLogin;
+	}
+	public void setAdminLogin(boolean adminLogin) {
+		this.adminLogin = adminLogin;
+	}
 
 	/**
 	 * @return the billingAddressForm

@@ -19,7 +19,6 @@ public class EmployerAccountProfileForm {
 	private String phone;
 	private String profileType;
 	
-	
 	public String getContactName() {
 		return contactName;
 	}
