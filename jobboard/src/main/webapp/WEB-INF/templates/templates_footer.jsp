@@ -44,10 +44,10 @@
 			<ul>
 				<li><a href="#">ADVANCE Healthcare Jobs</a></li>
 				<li><a href="#">Subscribe</a></li>
-				<li><img src="../resources/images/tranBg.png" class="foot_icon emailFooter email " /><a href="#">Sign Up for Enewsletter</a></li>
-				<li><img src="../resources/images/tranBg.png" class="foot_icon fbook" /><a href="#">Connect on Facebook</a></li>
-				<li><img src="../resources/images/tranBg.png" class="foot_icon linkedIn" /><a href="#">Connect on LinkedIn</a></li>
-				<li><img src="../resources/images/tranBg.png" class="foot_icon twitter" /><a href="#">Connect on Twitter</a></li>
+				<li><img src="../resources/images/tranBg.png" alt="trans" class="foot_icon emailFooter email" /><a href="#">Sign Up for Enewsletter</a></li>
+				<li><img src="../resources/images/tranBg.png" alt="trans" class="foot_icon fbook" /><a href="#">Connect on Facebook</a></li>
+				<li><img src="../resources/images/tranBg.png" alt="trans" class="foot_icon linkedIn" /><a href="#">Connect on LinkedIn</a></li>
+				<li><img src="../resources/images/tranBg.png" alt="trans" class="foot_icon twitter" /><a href="#">Connect on Twitter</a></li>
 				<li><a href="#">Download the Mobile App</a></li>
 				<li><a href="#">Order Promotional Items</a></li>
 			</ul>
@@ -87,5 +87,6 @@
 		<br class="clearfix" />
 		<p class="copyright">&copy; 2012 Merion Matters 2900 Horizon Drive
 			King of Prussia PA 19406 800-355-5627</p>
+	</div>
 	</div>
 	<!-- footer_wrapper -->

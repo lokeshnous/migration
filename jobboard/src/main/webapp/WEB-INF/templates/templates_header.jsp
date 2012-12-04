@@ -29,7 +29,7 @@
 						<span class="boldText">${msg.jsWelcomeMsg}<%=(String) session.getAttribute("userName")%>
 							${msg.commonExclamationMark}
 
-						</span><br>
+						</span><br />
 						<div class="floatRight">
 							<span class="floatLeft"> <a href="<%=request.getContextPath()%>/logout.html">${msg.commonLogOut}</a>
 
@@ -47,12 +47,12 @@
 					<!-- loginHeader -->
 
 					<div class="headerLoginSectionColumns" style="display: none">
-						<span class="boldText">${msg.commonEmployer}</span><br> <a
+						<span class="boldText">${msg.commonEmployer}</span><br /> <a
 							href="">${msg.commonLogIn}</a>${msg.commonVerticalBar}<a href="">${msg.commonPostJobs}</a>
 					</div>
 					<!-- loginHeader -->
 					<div class="headerLoginSectionColumns" style="display: none">
-						<span class="boldText">${msg.commonAdAgency}</span><br> <a
+						<span class="boldText">${msg.commonAdAgency}</span><br /> <a
 							href="">${msg.commonLogIn}</a>${msg.commonVerticalBar}<a href="">${msg.commonPostJobs}</a>
 					</div>
 					<!-- loginHeader -->
@@ -64,7 +64,7 @@
 						<span class="boldText">${msg.jsWelcomeMsg}<%=(String) session.getAttribute("userName")%>
 							${msg.commonExclamationMark}
 
-						</span><br>
+						</span><br />
 						<div class="floatRight">
 							<span class="floatLeft"> <a href="<%=request.getContextPath()%>/logout.html">${msg.commonLogOut}</a>
 								${msg.commonVerticalBar}<a href="<%=request.getContextPath()%>/employer/employerDashBoard.html">${msg.commonDashboard}</a>
@@ -75,12 +75,12 @@
 					<!-- loginHeader -->
 
 					<div class="headerLoginSectionColumns" style="display: none">
-						<span class="boldText">${msg.commonEmployer}</span><br> <a
+						<span class="boldText">${msg.commonEmployer}</span><br/> <a
 							href="">${msg.commonLogIn}</a>${msg.commonVerticalBar}<a href="">${msg.commonPostJobs}</a>
 					</div>
 					<!-- loginHeader -->
 					<div class="headerLoginSectionColumns" style="display: none">
-						<span class="boldText">${msg.commonAdAgency}</span><br> <a
+						<span class="boldText">${msg.commonAdAgency}</span><br /> <a
 							href="">${msg.commonLogIn}</a>${msg.commonVerticalBar}<a href="">${msg.commonPostJobs}</a>
 					</div>
 					<!-- loginHeader -->
@@ -93,7 +93,7 @@
 						<span class="boldText">${msg.jsWelcomeMsg}<%=(String) session.getAttribute("userName")%>
 							${msg.commonExclamationMark}
 
-						</span><br>
+						</span><br />
 						<div class="floatRight">
 							<span class="floatLeft"> <a href="<%=request.getContextPath()%>/logout.html">${msg.commonLogOut}</a>
 								${msg.commonVerticalBar}<a href="<%=request.getContextPath()%>/agency/agencyDashboard.html">${msg.commonDashboard}</a>
@@ -103,12 +103,12 @@
 					<!-- loginHeader -->
 
 					<div class="headerLoginSectionColumns" style="display: none">
-						<span class="boldText">${msg.commonEmployer}</span><br> <a
+						<span class="boldText">${msg.commonEmployer}</span><br /> <a
 							href="">${msg.commonLogIn}</a>${msg.commonVerticalBar}<a href="">${msg.commonPostJobs}</a>
 					</div>
 					<!-- loginHeader -->
 					<div class="headerLoginSectionColumns" style="display: none">
-						<span class="boldText">${msg.commonAdAgency}</span><br> <a
+						<span class="boldText">${msg.commonAdAgency}</span><br /> <a
 							href="">${msg.commonLogIn}</a>${msg.commonVerticalBar}<a href="">${msg.commonPostJobs}</a>
 					</div>
 					<!-- loginHeader -->
@@ -118,24 +118,24 @@
 			<security:authorize
 				access="!hasRole('ROLE_JOB_SEEKER') and !hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP') and !hasRole('ROLE_FACILITY_SYSTEM')">
 				<div class="headerLoginSectionColumns width205">
-					<span class="boldText">Job Seeker:</span><br>
+					<span class="boldText">Job Seeker:</span><br />
 					<div class="PopUpToolTip">
 						<a href="#" rel="nofollow,noindex">Why <strong>advance</strong>?
 						</a> <span class="classic01">
 							<p class="FontWeight marginBottom10">When you sign up,
 								ADVANCE gives you:</p>
-							<div class="FontWeight FontSize12 OrangeDot FontBlack">
+							<p class="FontWeight FontSize12 OrangeDot FontBlack">
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Access to thousands of
-								healthcare job opportunities</div>
-							<div class="FontWeight FontSize12 OrangeDot FontBlack">
+								healthcare job opportunities</p>
+							<p class="FontWeight FontSize12 OrangeDot FontBlack">
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The best healthcare content
-								you can get anywhere</div>
-							<div class="FontWeight FontSize12 OrangeDot FontBlack">
+								you can get anywhere</p>
+							<p class="FontWeight FontSize12 OrangeDot FontBlack">
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hours of informative and
-								entertaining multimedia</div>
-							<div class="FontWeight FontSize12 OrangeDot FontBlack">
+								entertaining multimedia</p>
+							<p class="FontWeight FontSize12 OrangeDot FontBlack">
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The latest news, articles,
-								product reviews and much more!</div>
+								product reviews and much more!</p>
 							<p class=" marginTop10">And it's all FREE!</p>
 						</span>
 					</div>
@@ -149,11 +149,11 @@
 					</div>
 				</div>
 				<div class="headerLoginSectionColumns">
-					<span class="boldText">Employer:</span><br> <a href="<%=request.getContextPath()%>/commonLogin/login.html?page=employer">Login</a>
+					<span class="boldText">Employer:</span><br /> <a href="<%=request.getContextPath()%>/commonLogin/login.html?page=employer">Login</a>
 					| <a href="<%=request.getContextPath()%>/employerRegistration/employerregistration.html">Post Jobs</a>
 				</div>
 				<div class="headerLoginSectionColumns">
-					<span class="boldText">Ad Agency:</span><br> <a href="<%=request.getContextPath()%>/commonLogin/login.html?page=agency">Login</a>
+					<span class="boldText">Ad Agency:</span><br /> <a href="<%=request.getContextPath()%>/commonLogin/login.html?page=agency">Login</a>
 					| <a href="<%=request.getContextPath()%>/agencyRegistration/agencyregistration.html">Post Jobs</a>
 				</div>
 
