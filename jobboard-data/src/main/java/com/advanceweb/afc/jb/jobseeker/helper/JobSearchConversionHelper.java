@@ -118,6 +118,7 @@ public class JobSearchConversionHelper {
 		int hideCity = 1;
 		int hideState = 1;
 		int hideCountry = 1;
+		int hidePosCode = 1;
 		JpLocation jpLocation = null;
 		try{
 			List<JpJobLocation> jobLocations = entity.getJpJobLocations();
@@ -126,6 +127,7 @@ public class JobSearchConversionHelper {
 			hideCity = jobJobLocation.getHideCity();
 			hideState = jobJobLocation.getHideState();
 			hideCountry = jobJobLocation.getHideCountry();
+			hidePosCode= jobJobLocation.getHidePostcode();
 		}catch (Exception e) {
 			LOGGER.info("Locations not found for Job Id :"+jobDTO.getJobId());
 		}
@@ -138,6 +140,9 @@ public class JobSearchConversionHelper {
 		}
 		if (hideCountry != 1) {
 			jobDTO.setCountry(jpLocation.getCountry());
+		}
+		if (hidePosCode != 1) {
+			jobDTO.setPostCode(jpLocation.getPostcode());
 		}
 	}
 

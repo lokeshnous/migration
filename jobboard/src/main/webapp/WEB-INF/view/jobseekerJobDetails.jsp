@@ -91,6 +91,9 @@
 									<c:if test="${not empty jobDetail.country}">
 										<span class="specs">Country:</span>&nbsp;&nbsp;${jobDetail.country}&nbsp;&nbsp;|&nbsp;&nbsp;
 					</c:if>
+									<c:if test="${not empty jobDetail.postCode}">
+										<span class="specs">Zip Code:</span>&nbsp;&nbsp;${jobDetail.postCode}&nbsp;&nbsp;|&nbsp;&nbsp;
+					</c:if>
 									<span class="specs">Job ID Number:</span>&nbsp;&nbsp;${jobDetail.jobId}
 								</p>
 							</div>

@@ -386,7 +386,12 @@
                     <p>${jobDetail.country}</p>
                   </div>
                   </c:if>
-                  
+                  <c:if test="${not empty jobDetail.postCode}" >
+                  <div class="row marginTop5">
+                    <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>Zip Code :</strong></h1>
+                    <p>${jobDetail.postCode}</p>
+                  </div>
+                  </c:if>
                           <div class="row marginTop5">
                     <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>JOB ID NUMBER :</strong></h1>
                     <p>${jobDetail.jobId}</p>
