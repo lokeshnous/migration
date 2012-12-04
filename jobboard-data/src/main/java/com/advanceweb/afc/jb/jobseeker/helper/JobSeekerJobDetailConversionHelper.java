@@ -82,6 +82,7 @@ public class JobSeekerJobDetailConversionHelper {
 				appliedJobDTO.setJpJob(jobPostConversionHelper
 						.transformToJpJobDTO(job.getJpJob()));
 				appliedJobDTO.setAppliedDt(String.valueOf(job.getAppliedDt()));
+				appliedJobDTO.setUserId(job.getUserId());
 				appliedJobDTOList.add(appliedJobDTO);
 			}
 
