@@ -25,18 +25,11 @@ public interface SaveSearchService {
 	 * This method is called to display Saved Searches
 	 * 
 	 * @param userId
+	 * @param isRecentSearch
 	 * @return
 	 */
-	List<SaveSearchedJobsDTO> viewMySavedSearches(int userId);
+	List<SaveSearchedJobsDTO> viewMySavedSearches(int userId, boolean isRecentSearch);
 
-	/**
-	 * This method is called to view the particular Saved Searches
-	 * 
-	 * @param userId
-	 * @return
-	 */
-	List<SaveSearchedJobsDTO> viewMySavedSearchRecord(int userId,
-			String searchName);
 
 	/**
 	 * This method is called to edit the Saved Searches
@@ -88,16 +81,6 @@ public interface SaveSearchService {
 
 	boolean updateSearchDetails(SaveSearchedJobsDTO saveSearchedJobsDTO);
 	
-	
-	
-	/**
-	 * This method is used to fetching info particluar user.
-	 * 
-	 * @param integer userId
-	 * @return 
-	 */
-   public List<SaveSearchedJobsDTO> viewMyRecentSearches(int userId);
-   
    /**
 	 * This method is used to updated the search name .
 	 * 
@@ -107,13 +90,10 @@ public interface SaveSearchService {
 	 */	
 	public void updateSearchName(int id,String searchName);
 	
-	 /**
-		 * This method is used to get all saved searches .
-		 * 
-		 * @param integer userId
-		 * @param String searchName
-		 * @return 
-		 */	
+	/**
+	 * This method is used to get all saved searches .
+	 *  
+	 * @return
+	 */
 	List<SaveSearchedJobsDTO> getsavedSearches();
-	
 }

@@ -26,7 +26,7 @@ public class SaveSearchServiceTest extends ServiceTestBase {
 		try {
 			int userId = 1;
 			List<SaveSearchedJobsDTO> searchedJobsDTOs = saveSearchService
-					.viewMySavedSearches(userId);
+					.viewMySavedSearches(userId, false);
 			assertTrue("View My Saved Searches", searchedJobsDTOs.size() >= 0);
 
 		} catch (Exception e) {

@@ -16,10 +16,7 @@ public interface SaveSearchDAO {
 	// To Save the searched job details
 	void saveSearchedJObs(SaveSearchedJobsDTO saveSearchedJobsDTO);
 
-	List<SaveSearchedJobsDTO> viewMySavedSearches(int userId);
-
-	List<SaveSearchedJobsDTO> viewMySavedSearchRecord(int userId,
-			String searchName);
+	List<SaveSearchedJobsDTO> viewMySavedSearches(int userId, boolean isRecentSearch);
 
 	boolean deleteSavedSearch(int saveSearchId);
 
@@ -40,9 +37,6 @@ public interface SaveSearchDAO {
 
 	boolean updateSearchDetails(SaveSearchedJobsDTO saveSearchedJobsDTO);
 	
-	
-
-	List<SaveSearchedJobsDTO> viewMyRecentSearches(int userId);
 	public void updateSearchName(int id, String searchName);
 
 	List<SaveSearchedJobsDTO> getsavedSearches();

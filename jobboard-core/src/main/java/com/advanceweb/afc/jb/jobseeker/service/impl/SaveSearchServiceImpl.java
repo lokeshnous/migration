@@ -34,20 +34,8 @@ public class SaveSearchServiceImpl implements SaveSearchService {
 	 * @return
 	 */
 	@Override
-	public List<SaveSearchedJobsDTO> viewMySavedSearches(int userId) {
-		return saveSearchDAO.viewMySavedSearches(userId);
-	}
-
-	/**
-	 * This method is called to fetch selected save serach record
-	 * 
-	 * @param userId
-	 * @return
-	 */
-	@Override
-	public List<SaveSearchedJobsDTO> viewMySavedSearchRecord(int userId,
-			String searchName) {
-		return saveSearchDAO.viewMySavedSearchRecord(userId, searchName);
+	public List<SaveSearchedJobsDTO> viewMySavedSearches(int userId, boolean isRecentSearch) {
+		return saveSearchDAO.viewMySavedSearches(userId, isRecentSearch);
 	}
 
 	/**
@@ -117,17 +105,6 @@ public class SaveSearchServiceImpl implements SaveSearchService {
 		return saveSearchDAO.updateSearchDetails(saveSearchedJobsDTO);
 	}
 
-	
-	/**
-	 * This method is used to fetching data form admssavesearch table.
-	 * 
-	 * @param integer userId
-	 * @return 
-	 */
-	@Override
-	public List<SaveSearchedJobsDTO> viewMyRecentSearches(int userId) {
-		return saveSearchDAO.viewMyRecentSearches(userId);
-	}
 	/**
 	 * This method is used to update the search name.
 	 * 

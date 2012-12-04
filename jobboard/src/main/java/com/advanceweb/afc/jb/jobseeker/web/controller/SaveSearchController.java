@@ -87,7 +87,7 @@ public class SaveSearchController {
 				.getAttribute(MMJBCommonConstants.USER_ID);
 
 		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
-				.viewMySavedSearches(userId);
+				.viewMySavedSearches(userId, false);
 		int savedSearchCount = saveSearchedJobsDTOList.size();
 		if (savedSearchCount == Integer.parseInt(savedSearchsLimit)) {
 			saveSearchService.deleteFirstSearch(userId);
@@ -210,8 +210,8 @@ public class SaveSearchController {
 						+ MMJBCommonConstants.EQUAL_TO
 						+ sessionMap.get(SearchParamDTO.RADIUS));
 
-				searchedJobsDTO.setUserID((Integer) session
-						.getAttribute(MMJBCommonConstants.USER_ID));
+//				searchedJobsDTO.setUserID((Integer) session
+//						.getAttribute(MMJBCommonConstants.USER_ID));
 
 				saveSearchService.updateSearchDetails(searchedJobsDTO);
 
@@ -344,7 +344,7 @@ public class SaveSearchController {
 		saveSearchForm.setUserID(userId);
 		if (saveSearchForm.getUserID() != 0) {
 			List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
-					.viewMySavedSearches(saveSearchForm.getUserID());
+					.viewMySavedSearches(saveSearchForm.getUserID(), false);
 			List<DropDownDTO> notifyMeList = populateDropdownsService
 					.populateDropdown("NotifyMe");
 			saveSearchForm.setSaveSearchedJobsDTOList(saveSearchedJobsDTOList);
@@ -354,26 +354,6 @@ public class SaveSearchController {
 		model.addObject(saveSearchForm);
 		model.setViewName("jobseekersavedsearchespopup");
 		return model;
-	}
-
-	/**
-	 * This method is called to display Saved Job Searches
-	 * 
-	 * @param form
-	 * @param result
-	 * @return
-	 */
-	@RequestMapping(value = "/viewMySavedSearchRecord", method = RequestMethod.GET)
-	public String viewMySavedSearchRecord(
-			@ModelAttribute(SAVE_SEARCH_FORM) SaveSearchForm saveSearchForm,
-			BindingResult result) {
-
-		// List<SaveSearchedJobsDTO> saveSearchedJobsDTOList =
-		saveSearchService.viewMySavedSearchRecord(saveSearchForm.getUserID(),
-				saveSearchForm.getSearchName());
-
-		return "viewMySavedSearches";
-
 	}
 
 	/**

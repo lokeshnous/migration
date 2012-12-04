@@ -19,7 +19,7 @@
 
 						$
 								.ajax({
-									url : "${pageContext.request.contextPath}/jobsearch/seeallclear.html",
+									url : "${pageContext.request.contextPath}/jobsearch/clearallsearches.html",
 									success : function(data) {
 										//alert("All recent search has been cleared!");
 										parent.$.nmTop().close();
@@ -47,7 +47,7 @@
 				<c:forEach items="${recentSplit}" var="item">
 					<div class="rowPadding borderBottomDotted" id="searchdata">
 						<li>${item.createdDate.toLocaleString()}, Search by: <span class="jb"><a
-								href=""></a>${item.recentURL}</span> <input
+								href="#" onclick="performCurrentSearch(${item.recentURL})">${item.recentURL}</a></span> <input
 							type="button" value="Save This Search" class="white floatRight"
 							id="SaveThisSearch" onclick="saveRecentSearch(${item.saveSearchID});"/>
 						</li>

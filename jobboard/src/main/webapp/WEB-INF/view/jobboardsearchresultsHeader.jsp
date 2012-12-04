@@ -20,7 +20,7 @@
 
 						$
 								.ajax({
-									url : "${pageContext.request.contextPath}/jobsearch/clearalllist.html",
+									url : "${pageContext.request.contextPath}/jobsearch/clearlatestsearches.html",
 									success : function(data) {
 
 									},
@@ -122,7 +122,7 @@
 						<div>MY RECENT SEARCHES:</div>
 						<a class="cursor" id="clearMe" onclick="clearAll();">Clear All</a> | <a
 							href="#nogo" id="seeallpopup">See All</a>
-						<div id="jobboardSearchResultsHitoryId"></div>
+						<div id="jobboardSearchesHistoryId"></div>
 
 						<!-- search_info_box1 -->
 					</security:authorize>

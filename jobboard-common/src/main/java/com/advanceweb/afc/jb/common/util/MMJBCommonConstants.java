@@ -505,4 +505,9 @@ public interface MMJBCommonConstants {
 	String SCHEDULE_YEARLY="365";
 	String SCHEDULE_DAILY="1";
 	
+	// variables to populate the ads
+	String ADPAGETOP = "adPageTop";
+	String ADPAGEBTM = "adPageBottom";
+	String ADPGRIGHT_TOP = "adPageRightTop";
+	String ADPGRIGHT_MIDDLE = "adPageRightMiddle";
 }

@@ -705,7 +705,7 @@ jobboard/src/main/webapp/WEB-INF/view/jobSeekerLogin.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobSeekerManageExitWright.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobSeekerSendResumePopUp.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobSeekerViewCount.jsp -text
-jobboard/src/main/webapp/WEB-INF/view/jobboardSearchResultsHitory.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/jobboardSearchesHistory.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobboardadvancedsearch.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobboardemployerdashboardcontent.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/jobboardsearchresults.jsp -text

@@ -78,10 +78,10 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 			}
 		} catch (HibernateException e) {
 			// logger call
-			LOGGER.info("viewJobDetails ERROR");
+			LOGGER.error("HibernateException Exception on geting job details", e);
 		} catch (Exception ex) {
 			// logger call
-			LOGGER.info("ex-ERROR " + ex);
+			LOGGER.error("Exception on geting job details", ex);
 		}
 		return jobDetail;
 	}
@@ -122,11 +122,11 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 			}
 
 		} catch (HibernateException e) {
-			LOGGER.info("HibernateException occurred while getting recent jobs posted by the Employer"
-					+ e);
+			LOGGER.error("HibernateException occurred while getting recent jobs posted by the Employer"
+					, e);
 		} catch (Exception ex) {
-			LOGGER.info("Error occurred while getting recent jobs posted by the Employer "
-					+ ex);
+			LOGGER.error("Error occurred while getting recent jobs posted by the Employer " ,
+					 ex);
 		}
 		return srchJobList;
 	}
@@ -150,10 +150,10 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 			}
 		} catch (HibernateException e) {
 			// logger call
-			LOGGER.info("ERROR");
+			LOGGER.error("HibernateException Exception while fetching Saved or applied job ", e);
 		} catch (Exception ex) {
 			// logger call
-			LOGGER.info("ex-ERROR");
+			LOGGER.error("Exception while fetching Saved or applied job ", ex);
 		}
 		AppliedJobDTO appliedJobDTO = null;
 		if (jobDetail != null && !jobDetail.isEmpty()) {
@@ -178,7 +178,7 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 		} catch (HibernateException e) {
 			status = false;
 			// logger call
-			LOGGER.info("ERROR");
+			LOGGER.error("Exception while Saving job ", e);
 		}
 		return status;
 	}
@@ -201,7 +201,7 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 		} catch (HibernateException e) {
 			status = false;
 			// logger call
-			LOGGER.info("ERROR");
+			LOGGER.error("Exception while updating job :", e);
 		}
 		return status;
 	}

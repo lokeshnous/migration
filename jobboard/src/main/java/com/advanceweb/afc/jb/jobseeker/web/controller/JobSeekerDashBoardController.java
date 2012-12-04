@@ -121,7 +121,7 @@ public class JobSeekerDashBoardController extends AbstractController {
 		int savedJobsCount = 0;
 		int appliedJobsCount = 0;
 		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
-				.viewMySavedSearches(nUserId);
+				.viewMySavedSearches(nUserId, false);
 		savedSearchCount = saveSearchedJobsDTOList.size();
 		form.setSavedSearchCount(savedSearchCount);
 		try {

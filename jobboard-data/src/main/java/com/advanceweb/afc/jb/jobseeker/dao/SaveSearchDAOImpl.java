@@ -49,27 +49,18 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 	 * @return
 	 */
 	@Override
-	public List<SaveSearchedJobsDTO> viewMySavedSearches(int userId) {
-		List<AdmSaveSearch> searchResults = hibernateTemplate
+	public List<SaveSearchedJobsDTO> viewMySavedSearches(int userId,
+			boolean isRecentSearch) {
 
-				.find("from AdmSaveSearch e where e.userId=? and e.searchName <>' ' and e.searchName is not null and e.createDt is not NULL and e.deleteDt is NULL",
+		String searchName = " e.searchName <>' ' ";
+		if (isRecentSearch) {
+			searchName = " e.searchName = '' ";
+		}
+		List<AdmSaveSearch> searchResults = hibernateTemplate
+				.find("from AdmSaveSearch e where e.userId=? and "
+						+ searchName
+						+ " and e.searchName is not null and e.createDt is not NULL and e.deleteDt is NULL order by e.createDt asc",
 						userId);
-		return saveSearchConversionHelper
-				.transformJpSaveSearchToSaveSearchedJobsDTO(searchResults);
-	}
-
-	/**
-	 * This method is called to fetch Saved Job Searches
-	 * 
-	 * @param userId
-	 * @return
-	 */
-	@Override
-	public List<SaveSearchedJobsDTO> viewMySavedSearchRecord(int userId,
-			String searchName) {
-		List<AdmSaveSearch> searchResults = hibernateTemplate
-				.find("from AdmSaveSearch e where e.userId = " + userId
-						+ " and e.searchName = " + searchName);
 		return saveSearchConversionHelper
 				.transformJpSaveSearchToSaveSearchedJobsDTO(searchResults);
 	}
@@ -173,21 +164,6 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 		search.setModifyDt(new Date());
 		hibernateTemplate.merge(search);
 		return true;
-	}
-
-	/**
-	 * This method is called to fetch Saved Job Searches
-	 * 
-	 * @param userId
-	 * @return
-	 */
-	@Override
-	public List<SaveSearchedJobsDTO> viewMyRecentSearches(int userId) {
-		List<AdmSaveSearch> searchResults = hibernateTemplate
-				.find("from AdmSaveSearch e where e.userId=? and e.searchName =' ' and e.createDt is not NULL and e.deleteDt is NULL order by createDt desc",
-						userId);
-		return saveSearchConversionHelper
-				.transformJpSaveSearchToSaveSearchedJobsDTO(searchResults);
 	}
 
 	@Override

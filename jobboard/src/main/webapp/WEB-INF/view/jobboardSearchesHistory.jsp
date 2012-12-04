@@ -41,7 +41,7 @@
 							
 							<c:forEach items="${latestRecentList}" var="item" >
 							 <div class="rowPadding borderBottomDotted">
-							    ${item.createdDate.toLocaleString()}<br> Search by: <a href="#"	id="${item.saveSearchID}" onclick="performCurrentSearch(this.id);"						
+							    ${item.createdDate.toLocaleString()}<br> Search by: <a href="#"	id="${item.saveSearchID}"					
 									 class="newWindow">${item.keywords} / ${item.searchName}</a>
 							   
 							   </div>
