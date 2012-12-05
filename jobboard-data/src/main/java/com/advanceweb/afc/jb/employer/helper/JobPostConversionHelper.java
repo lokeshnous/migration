@@ -192,6 +192,7 @@ public class JobPostConversionHelper<JobPostForm> {
 
 				}
 				jobPostDTO.setFacilityId(job.getAdmFacility().getFacilityId());
+				jobPostDTO.setbTemplateOverride(job.getTemplateOverride()==1?true:false);
 				jobPostDTOList.add(jobPostDTO);
 			}
 		}

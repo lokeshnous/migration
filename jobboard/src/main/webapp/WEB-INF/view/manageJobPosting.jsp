@@ -344,14 +344,16 @@
 								<th width="8%" align="center" valign="middle" class="FontSize11 cursor"><strong>Company<br />
 										Name
 								</strong></th>
-								<th width="5%" align="center" valign="middle" class="FontSize11 cursor"><strong>Views</strong></th>
+								<th width="3%" align="center" valign="middle" class="FontSize11 cursor"><strong>Views</strong></th>
 								<th width="4%" align="center" valign="middle" class="FontSize11 cursor"><strong>Clicks</strong></th>
-								<th width="5%" align="center" valign="middle" class="FontSize11 cursor"><strong>Applies</strong></th>
+								<th width="3%" align="center" valign="middle" class="FontSize11 cursor"><strong>Applies</strong></th>
 								<th width="7%" align="center" valign="middle" class="FontSize11 cursor"><strong>Auto<br />
 										Renew
 								</strong></th>
 								<th width="11%" align="center" valign="middle" class="FontSize11 cursor"><strong>Job<br />
 										Template
+								</strong></th>
+								<th width="5%" align="center" valign="middle" class="FontSize11 cursor"><strong>Override
 								</strong></th>
 								<th width="9%" align="center" valign="middle" class="FontSize11 cursor"><strong>Actions</strong></th>
 							</tr>
@@ -395,6 +397,12 @@
 											<form:options items="${templateList}" itemLabel="optionName"
 												itemValue="optionId" />
 										</form:select></td>
+										<c:if test="${job.bTemplateOverride eq true}">
+										<td align="center" valign="middle">Yes</td>
+										</c:if>
+										<c:if test="${job.bTemplateOverride eq false}">
+										<td align="center" valign="middle">No</td>
+										</c:if>
 									<td align="center" valign="middle"><div
 											class="row width80 SearchIcons">
 											<a title="edit"
