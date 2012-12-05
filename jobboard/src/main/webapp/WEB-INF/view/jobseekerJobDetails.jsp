@@ -106,9 +106,9 @@
 									<div class="ShareText">|&nbsp;&nbsp;Share:&nbsp;</div>
 									
 									
-									 <a name="fb_share" class="fbook" href="http://www.facebook.com/sharer.php?u=${basePath}/jobsearch/viewJobDetails/${jobDetail.jobId}/${jobDetail.jobTitle}.html" target="_blank"></a>
-									 <a href="https://www.linkedin.com/cws/share?url=${basePath}/jobsearch/viewJobDetails/${jobDetail.jobId}/${jobDetail.jobTitle}.html" target="_blank"><div class="linkedIn"></div></a>
-									 <a href="https://twitter.com/share?url=${basePath}/jobsearch/viewJobDetails/${jobDetail.jobId}/${jobDetail.jobTitle}.html" class="twitter" data-url="${basePath}/jobsearch/viewJobDetails/${jobDetail.jobId}/${jobDetail.jobTitle}.html" data-count="none" target="_blank"></a>
+									 <a name="fb_share" class="fbook" href="http://www.facebook.com/sharer.php?u=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${jobDetail.jobTitle}.html" target="_blank"></a>
+									 <a href="https://www.linkedin.com/cws/share?url=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${jobDetail.jobTitle}.html" target="_blank"><div class="linkedIn"></div></a>
+									 <a href="https://twitter.com/share?url=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${jobDetail.jobTitle}.html" class="twitter" data-url="${basePath}/jobsearch/jobview/${jobDetail.jobId}/${jobDetail.jobTitle}.html" data-count="none" target="_blank"></a>
 									 
 									 
 									<div class="ShareText">|&nbsp;&nbsp;Print:&nbsp;</div>
@@ -144,9 +144,9 @@
 													class="email cursor"></div></a>
 											<div class="ShareText">|&nbsp;&nbsp;Share:&nbsp;</div>
 											
-											<a name="fb_share" class="fbook" href="http://www.facebook.com/sharer.php?u=${basePath}/jobsearch/viewJobDetails/${jobDetail.jobId}/${jobDetail.jobTitle}.html" target="_blank"></a>
-									 		<a href="https://www.linkedin.com/cws/share?url=${basePath}/jobsearch/viewJobDetails/${jobDetail.jobId}/${jobDetail.jobTitle}.html" target="_blank"><div class="linkedIn"></div></a>
-									 		<a href="https://twitter.com/share" class="twitter" data-url="${basePath}/jobsearch/viewJobDetails/${jobDetail.jobId}/${jobDetail.jobTitle}.html" data-count="none" target="_blank"></a>
+											<a name="fb_share" class="fbook" href="http://www.facebook.com/sharer.php?u=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${jobDetail.jobTitle}.html" target="_blank"></a>
+									 		<a href="https://www.linkedin.com/cws/share?url=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${jobDetail.jobTitle}.html" target="_blank"><div class="linkedIn"></div></a>
+									 		<a href="https://twitter.com/share" class="twitter" data-url="${basePath}/jobsearch/jobview/${jobDetail.jobId}/${jobDetail.jobTitle}.html" data-count="none" target="_blank"></a>
 									 		
 													
 											<div class="ShareText">|&nbsp;&nbsp;Print:&nbsp;</div>

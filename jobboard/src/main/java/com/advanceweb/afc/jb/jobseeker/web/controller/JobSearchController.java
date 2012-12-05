@@ -382,6 +382,7 @@ public class JobSearchController extends AbstractController {
 		}
 
 		if (MMJBCommonConstants.ZERO_INT == jobDTO.getTemplateId()) {
+			modelView.addObject("basePath",request.getRequestURL().toString().replace(request.getServletPath(), ""));
 			modelView.setViewName("jobseekerJobDetails");
 			// get the Ads
 			populateAds(request, session, modelView, PageNames.JOB_VIEW);
@@ -2525,6 +2526,7 @@ public class JobSearchController extends AbstractController {
 			HttpServletResponse response, HttpServletRequest request,
 			Model model) {
 		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("basePath",request.getRequestURL().toString().replace(request.getServletPath(), ""));
 		modelAndView.setViewName("jobboardsearchresultsBody");
 		return modelAndView;
 	}
