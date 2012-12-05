@@ -265,12 +265,11 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 	 * @return
 	 */
 	@Override
-	public void removeClearAll(int userId) {
-		// TODO Auto-generated method stub
+	public void clearRecentSearches(int userId) {
 
-		List<AdmSaveSearch> admserach = hibernateTemplate.find(" from AdmSaveSearch where userId =? and searchName = ''",userId);
+		List<AdmSaveSearch> admsearches = hibernateTemplate.find(" from AdmSaveSearch where userId =? and searchName = ''",userId);
 
-		hibernateTemplate.deleteAll(admserach);
+		hibernateTemplate.deleteAll(admsearches);
 
 	}
 	

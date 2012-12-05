@@ -23,8 +23,8 @@ public class SaveSearchServiceImpl implements SaveSearchService {
 	@Autowired
 	private SaveSearchDAO saveSearchDAO;
 
-	public void saveSearchedJobs(SaveSearchedJobsDTO saveSearchedJobsDTO) {
-		saveSearchDAO.saveSearchedJObs(saveSearchedJobsDTO);
+	public SaveSearchedJobsDTO saveSearchedJobs(SaveSearchedJobsDTO saveSearchedJobsDTO) {
+		return saveSearchDAO.saveSearchedJObs(saveSearchedJobsDTO);
 	}
 
 	/**

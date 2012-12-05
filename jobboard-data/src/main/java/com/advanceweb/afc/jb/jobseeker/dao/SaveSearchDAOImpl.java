@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.jobseeker.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -35,11 +36,19 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 	}
 
 	// To Save the save searched job details to DB
-	public void saveSearchedJObs(SaveSearchedJobsDTO saveSearchedJobsDTO) {
+	public SaveSearchedJobsDTO saveSearchedJObs(SaveSearchedJobsDTO saveSearchedJobsDTO) {
 		// Transforming the saveSearchedJobsDTO to Save Search Entity
 		AdmSaveSearch searchResults = saveSearchConversionHelper
 				.transformSaveSearch(saveSearchedJobsDTO);
-		hibernateTemplate.saveOrUpdate(searchResults);
+		
+		hibernateTemplate.save(searchResults);
+		
+		List<AdmSaveSearch> admSaveSearchs = new ArrayList<AdmSaveSearch>();
+		admSaveSearchs.add(searchResults);
+		
+		List<SaveSearchedJobsDTO> searchedJobsDTOs = saveSearchConversionHelper
+				.transformJpSaveSearchToSaveSearchedJobsDTO(admSaveSearchs);
+		 return searchedJobsDTOs.get(0);
 	}
 
 	/**
@@ -59,7 +68,7 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 		List<AdmSaveSearch> searchResults = hibernateTemplate
 				.find("from AdmSaveSearch e where e.userId=? and "
 						+ searchName
-						+ " and e.searchName is not null and e.createDt is not NULL and e.deleteDt is NULL order by e.createDt asc",
+						+ " and e.searchName is not null and e.createDt is not NULL and e.deleteDt is NULL order by e.createDt desc",
 						userId);
 		return saveSearchConversionHelper
 				.transformJpSaveSearchToSaveSearchedJobsDTO(searchResults);

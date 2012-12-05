@@ -14,7 +14,7 @@ import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 public interface SaveSearchDAO {
 
 	// To Save the searched job details
-	void saveSearchedJObs(SaveSearchedJobsDTO saveSearchedJobsDTO);
+	SaveSearchedJobsDTO saveSearchedJObs(SaveSearchedJobsDTO saveSearchedJobsDTO);
 
 	List<SaveSearchedJobsDTO> viewMySavedSearches(int userId, boolean isRecentSearch);
 

@@ -1,36 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
+<script language="javascript" type="text/javascript" >
+	$(document).ready(function() {
+		$(".seeallpopup").displaypopup(".seeallpopup", "790", "370");
+	});
+</script>
 
- <script>
-	
-	 function performCurrentSearch(searchJobId){
-			$.ajax({url: "${pageContext.request.contextPath}/savedSearches/editSavedSearch.html?searchId="+searchJobId+"&performSearch=performSearch",
-				success: function(data){ 
-					$.each(data, function(key, val) {
-						 if (key == "searchtype" && val == "basic") {
-							parent.window.location.href = '${pageContext.request.contextPath}/jobsearch/findJobPage.html';
-							parent.$.nmTop().close();
-						}
-						
-					}); 
-					
-				},
-				error: function(response) {
-					alert("Server Error : "+response.status);
-				},
-				complete: function() {
-					
-				}
-			}); 
-		}
-	</script>
-<body>
+<c:choose>
+	<c:when test="${empty latestRecentList}">
+		Clear All | 
+		See All
+	</c:when>
+	<c:otherwise>
+		<a class="cursor" id="clearLatestSearches" onclick="clearRecentSearches();">Clear All</a> | 
+		<a  class="nyroModal seeallpopup" href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/viewrecentsearches.html" id="seeallpopup">See All</a>
+	</c:otherwise>
+</c:choose>
+
 <div class="search_info_box1" id="latestRecentListId">
 							<div class="rowPadding borderBottomDotted" id="aaa">
 								
@@ -42,7 +28,7 @@
 							<c:forEach items="${latestRecentList}" var="item" >
 							 <div class="rowPadding borderBottomDotted">
 							    ${item.createdDate.toLocaleString()}<br> Search by: <a href="#"	id="${item.saveSearchID}"					
-									 class="newWindow">${item.keywords} / ${item.searchName}</a>
+									onclick="loadRecentSearch(${item.saveSearchID})" class="newWindow">${item.recentURL}</a>
 							   
 							   </div>
 									
@@ -51,5 +37,3 @@
 								</div>
 						</div>
 						</div>
-</body>
-</html>

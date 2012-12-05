@@ -3,40 +3,14 @@
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 
-<script language="javascript" type="text/javascript" >
-	$(document).ready(function() {
-
-		$("#seeallpopup").attr("href", "../jobsearch/seeallsearch.html");
-		$("#seeallpopup").displaypopup("#seeallpopup", "790", "370");
-		$('#submitval').click(function() {
-			parent.right_frame.location.reload();
-		});
-	});
-
-	
-	$("#clearMe")
-			.click(
-					function() {
-
-						$
-								.ajax({
-									url : "${pageContext.request.contextPath}/jobsearch/clearlatestsearches.html",
-									success : function(data) {
-
-									},
-								});
-
-					});
-</script>
-
 	<div class="mainTwo">
 		<div class="row">
 			<div class="job_search_main job_search_main_height"
 				style="margin-right: 10px;">
 				<%-- <form method=""> --%>
-				<%--  <form:form method="GET" action="findJobSearch.html" commandName="jobSearchResultForm">  --%>
-				<form:form method="" action="" commandName="jobSearchResultForm" id="jobSearchResultHeaderFormId">
-				<%-- <form:form method="GET" action="../jobsearch/findjobs.html" commandName="jobSearchResultForm" id="jobSearchResultHeaderFormId"> --%>
+				 <%-- <form:form method="GET" action="findJobSearch.html" commandName="jobSearchResultForm">   --%>
+				<%-- <form:form method="" action="" commandName="jobSearchResultForm" id="jobSearchResultHeaderFormId"> --%>
+				<form:form method="POST" action="../jobsearch/findjobs.html" commandName="jobSearchResultForm" id="jobSearchResultHeaderFormId"> 
 					<div class="search_form">
 					<c:choose>
 						<c:when test="${isHomePage}">
@@ -93,9 +67,9 @@
 						<div class="clearfix"></div>
 						<div class="FormErrorDisplayText" id="findSearchInfo"></div>
 						<div class="rowEvenNewSpacing">
-							<input type="button" id="submitval" 
-								value="Find Jobs" class="orange jb_search_submit cursor" />
-							<!-- <input type="submit" id= "submit" value="Find Jobs" class="orange jb_search_submit" />  -->
+							<!-- <input type="button" id="submitval" 
+								value="Find Jobs" class="orange jb_search_submit cursor" /> -->
+							<input type="submit" id= "submit" value="Find Jobs" class="orange jb_search_submit" />  
 
 							<a title="Coming Soon" href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/advanceSearch.html">Advanced
 								Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
@@ -120,8 +94,6 @@
 					<!-- search_info_box1 -->
 					<security:authorize access="hasRole('ROLE_JOB_SEEKER')">
 						<div>MY RECENT SEARCHES:</div>
-						<a class="cursor" id="clearMe" onclick="clearAll();">Clear All</a> | <a
-							href="#nogo" id="seeallpopup">See All</a>
 						<div id="jobboardSearchesHistoryId"></div>
 
 						<!-- search_info_box1 -->

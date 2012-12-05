@@ -253,13 +253,49 @@ jQuery(document).ready(function() {
 								//alert("JSON Data: " +  val);
 							}
 						});	
-						$.each(data, function(key, val) {
+						//$.each(data, function(key, val) {
 							
 							// print if any validation messages
-							if (key == "AjaxMSG") {
-								$('#findSearchInfo').html(val);
-							}
-						});	
+							//if (key == "AjaxMSG") {
+								$('#findSearchInfo').html(data.AjaxMSG);
+								//return false;
+							//}
+						//});	
+						
+						//$('#ad_page_top').append(data.adPageTop);
+						//console.log(data.adPageTop);
+						//OX_ads.push(data.adPageTop);
+						//$.each(data.adPageTop, function(key, val) {
+							// print if any validation messages
+							//if (key == "adPageTop") {
+								//document.getElementById("ad_page_top").innerHTML=val;
+								
+								//$('#ad_page_top').html('');
+								//alert(val);
+								//$('#ad_page_top').html("<script type=\"text/javascript\"> document.write('<script src=\"http://ox-d.advanceweb.com/w/1.0/jstag\"></script>'); </script> ");
+								/*$('#ad_page_top').writeCapture().html("<script type=\"text/javascript\"> document.write('\<script src=\"http://ox-d.advanceweb.com/w/1.0/jstag\" \>\<\script>ppasd'); </script> ");*/
+								//$('#ad_page_top').writeCapture().html("<script type=\"text/javascript\"> document.write('\<script src=\"http://ox-d.advanceweb.com/w/1.0/jstag\" \>\<\script>ppasd'); </script> ");
+								//$.writeCapture.write(document.getElementById('ad_page_top'),"<script >alert('hi');</script>");
+								//debugger;
+								//$('#ad_page_top').text(val);
+								//$('#ad_page_top').writeCapture().html(val);
+								
+								//$('#ad_page_top').writeCapture().html(val);
+								//var pp = "<script>document.write('<script src="+"http://ox-d.advanceweb.com/w/1.0/jstag"+"></script>');</script>";
+								//alert(pp);
+								//$('#ad_page_top').writeCapture().html(val);
+								//$('#ad_page_top').writeCapture().html($('#ad_page_top').html());
+//								$('#ad_page_top').writeCapture().html('<script type="text/javascript">'+
+//										'document.write('+'<script src="http://ox-d.advanceweb.com/w/1.0/jstag"></script>'+');'+
+//								'</script>');
+//								$('#ad_page_top').writeCapture().html('<script type="text/javascript">if (!window.OX_ads) { OX_ads = []; }'+
+//										'OX_ads.push({ "auid" : "284880" ,"vars":{"keyword" : "Nursing"}});'+
+//								'</script>');
+								//$.writeCapture.write(document.getElementById('ad_page_top'),val);
+								//$.writeCapture.autoAsync();
+								//postscribe('#ad_page_top', val);
+							//}
+						//});
 					processPaginationReq("20");
 					//$("#TotalRecord").text(data["TotalNoRecords"]);
 					});
@@ -269,7 +305,7 @@ jQuery(document).ready(function() {
 					$(".otherContent").attr("style","display: none");
 					$(".searchContent").attr("style","display: block");
 					
-					return true;
+					return false;
 				 
 			}
 			
@@ -331,6 +367,7 @@ jQuery(document).ready(function() {
 				function applyFilter() {
 					var pageSize = $("#noOfPage").val();
 					isSorting = false;
+					refined= false;
 					var navUrl =  $("#contextPath").val()+"/jobsearch/searchJob.html?pageSize="+ pageSize +"&isSorting="+isSorting
 					+"&freshjobsearch=false"+"&refined="+refined;
 					var formData= $("#jobSearchResultFormId").serialize()+$("#jobSearchResultHeaderFormId").serialize();
@@ -342,8 +379,9 @@ jQuery(document).ready(function() {
 				function applyLowerFilter() {
 					var pageSize = $("#noOfPageLower").val();
 					isSorting = false;
+					refined= false;
 					var navUrl =  $("#contextPath").val()+"/jobsearch/searchJob.html?pageSize="+ pageSize +"&isSorting="+isSorting
-					+"&freshjobsearch=false";
+					+"&freshjobsearch=false"+"&refined="+refined;
 					var formData= $("#jobSearchResultFormId").serialize()+$("#jobSearchResultHeaderFormId").serialize();
 					$.getJSON(navUrl, formData, function(data) {
 						processPaginationReq(pageSize);
@@ -412,11 +450,11 @@ jQuery(document).ready(function() {
 				
 				function getHistory(){
 					$.ajax({
-						url : $("#contextPath").val()+'/jobsearch/jobboardSearchResultsHitory.html',
+						url : $("#contextPath").val()+'/jobsearch/jobboardSearchesHistory.html',
 						data : ({}),
 						
 						success : function(data) {
-							$("#jobboardSearchResultsHitoryId").html(data);
+							$("#jobboardSearchesHistoryId").html(data);
 						},
 						error : function(data) {
 						},
@@ -456,7 +494,7 @@ jQuery(document).ready(function() {
 						}
 					}
 					);
-					
+					getHistory();
 				};
 
 				function saveThisSearch() {
@@ -764,8 +802,8 @@ jQuery(document).ready(function() {
 				
 				}
 				
-				function clearAll(jobTitle){
-					$.ajax({url: "../jobsearch/clearalllist.html",
+				function clearRecentSearches(){
+					$.ajax({url: $("#contextPath").val()+"/jobsearch/clearrecentsearches.html",
 							success: function(data){ 
 								
 								getHistory();
@@ -778,3 +816,22 @@ jQuery(document).ready(function() {
 							}
 						});
 				    }
+				
+				 function loadRecentSearch(searchJobId){
+						$.ajax({url: $("#contextPath").val()+"/savedSearches/editSavedSearch.html?searchId="+searchJobId+"&performSearch=performSearch",
+							success: function(data){ 
+								$.each(data, function(key, val) {
+									 if (key == "searchtype" && val == "basic") {
+										parent.window.location.href = $("#contextPath").val()+'/jobsearch/findJobPage.html';
+										parent.$.nmTop().close();
+									}									
+								}); 								
+							},
+							error: function(response) {
+								alert("Server Error : "+response.status);
+							},
+							complete: function() {
+								// noting to do now
+							}
+						}); 
+					}

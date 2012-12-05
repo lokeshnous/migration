@@ -103,11 +103,11 @@ public interface JobSearchService {
 	List<JobPostDTO> getRecentJobsPostedByEmployer(long facilityID, long jobID);
 
 	/**
-	 * This method is used to remove the data in database
+	 * This method is used to clear the recent searches of user
 	 * 
-	 * @return
+	 * @param userId
 	 */
-	 public void removeClearAll(int userId);
+	 void clearRecentSearches(int userId);
 	 /**
 		 * This method is used to check existing session in application
 		 * 

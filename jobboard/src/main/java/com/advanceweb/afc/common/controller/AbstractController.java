@@ -77,7 +77,7 @@ public abstract class AbstractController {
 		}
 		if (sessionMap.get(SearchParamDTO.CITY_STATE) != null
 				&& !sessionMap.get(SearchParamDTO.CITY_STATE).isEmpty()) {
-			clientLocation = sessionMap.get(SearchParamDTO.CITY_STATE);
+			userSelectedLocation = sessionMap.get(SearchParamDTO.CITY_STATE);
 		}
 		clientContext.setProperty(ClientContext.USER_CURRENT_SEARCH,
 				currentSearch);

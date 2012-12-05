@@ -5,28 +5,40 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<title>Insert title here</title>
+<title>ADVANCE Heathcare Jobs</title>
 <script type="text/javascript">
-	function cancelProcess() {
-		parent.$.nmTop().close();
-		//location.reload();
+
+	function loadRecentSearch(searchJobId){
+		$.ajax({url: "${pageContext.request.contextPath}/savedSearches/editSavedSearch.html?searchId="+searchJobId+"&performSearch=performSearch",
+			success: function(data){ 
+				$.each(data, function(key, val) {
+					 if (key == "searchtype" && val == "basic") {
+						parent.window.location.href = '${pageContext.request.contextPath}/jobsearch/findJobPage.html';
+						parent.$.nmTop().close();
+					}
+					
+				}); 
+				
+			},
+			error: function(response) {
+				alert("Server Error : "+response.status);
+			},
+			complete: function() {
+				
+			}
+		}); 
 	}
-
 	 
-	$("#Clear")
-			.click(
-					function() {
-
-						$
-								.ajax({
-									url : "${pageContext.request.contextPath}/jobsearch/clearallsearches.html",
-									success : function(data) {
-										//alert("All recent search has been cleared!");
-										parent.$.nmTop().close();
-										window.location.reload();
-									},
-								});
-					});
+	$("#Clear").click(function() {
+		$.ajax({
+			url : "${pageContext.request.contextPath}/jobsearch/clearrecentsearches.html",
+			success : function(data) {
+			//alert("All recent search has been cleared!");
+			parent.$.nmTop().close();
+			window.location.reload();
+			},
+			});
+		});
 </script>
 </head>
 <body class="job_board">
@@ -41,13 +53,12 @@
 		</div>
 		<div id="recentId">
 			<ul>
-
 				<!--  <li> -->
 				<!--  <a href="" ></a>Clear All&nbsp;&nbsp;|&nbsp;&nbsp;<a href="" ></a>See All </li>-->
-				<c:forEach items="${recentSplit}" var="item">
+				<c:forEach items="${recentSearchList}" var="item">
 					<div class="rowPadding borderBottomDotted" id="searchdata">
 						<li>${item.createdDate.toLocaleString()}, Search by: <span class="jb"><a
-								href="#" onclick="performCurrentSearch(${item.recentURL})">${item.recentURL}</a></span> <input
+								href="#" onclick="loadRecentSearch(${item.saveSearchID})">${item.recentURL}</a></span> <input
 							type="button" value="Save This Search" class="white floatRight"
 							id="SaveThisSearch" onclick="saveRecentSearch(${item.saveSearchID});"/>
 						</li>
@@ -57,17 +68,10 @@
 
 			</ul>
 		</div>
-
-
-
 		<div class="popUpButtonRow" align="left">
 			<input type="button" value="Clear All" class="orange" id="Clear" />
-		    <input type="button" value="Cancel" onclick="cancelProcess();" class="orange" name="Cancel" />
-
+		    <input type="button" value="Cancel" class="orange" name="Cancel" />
 		</div>
-
-
-
 	</div>
 	</div>
 </body>

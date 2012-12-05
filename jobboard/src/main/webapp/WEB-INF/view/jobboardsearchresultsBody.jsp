@@ -407,14 +407,14 @@
 							<div class="FormErrorDisplayText row" id="topjobActionInfo${job.JobId}" ></div>
 							
 						</div>
-						<c:if test="${(status.index + 1) % 10 == 0}">
-					<div class="ad_wrapper">
+						<%-- <c:if test="${(status.index + 1) % 10 == 0}"> --%>
+					<!-- <div class="ad_wrapper"> -->
 					<%-- ${adPageCenterMiddleList[((status.index + 1) / 10 -1)] }
 					<div id="ad_wrapper${(status.index + 1) % 10}">ADs${(status.index + 1) % 10}</div>
 						<img src="<%=request.getContextPath()%>/resources/images/ads/banner_ad_fpo.png">
 					</div> --%>
-					</div>
-				</c:if>
+					<!-- </div> -->
+				<%-- </c:if> --%>
 			</c:forEach>
 			
 					</div>

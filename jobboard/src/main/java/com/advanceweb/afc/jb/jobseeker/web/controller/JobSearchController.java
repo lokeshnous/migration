@@ -865,7 +865,7 @@ public class JobSearchController extends AbstractController {
 	 * @param request
 	 * @return ModelAndView
 	 */
-	@RequestMapping(value = "/findjobs", method = RequestMethod.GET)
+	@RequestMapping(value = "/findjobs", method = RequestMethod.POST)
 	public ModelAndView findjobs(
 			Map<String, JobSearchResultForm> model,
 			@ModelAttribute("jobSearchResultForm") JobSearchResultForm jobSearchResultForm,
@@ -1956,105 +1956,6 @@ public class JobSearchController extends AbstractController {
 	}
 
 	/**
-	 * The method helps to save the search results criteria in DB on every keyword search
-	 * and display the recent searches list
-	 * 
-	 * @param session
-	 */
-	@SuppressWarnings("unchecked")
-	private void recentSearch(HttpSession session) {
-
-		HashMap<String, String> sessionMap = (HashMap<String, String>) session
-				.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP);
-
-//		String keyWords = sessionMap.get(SearchParamDTO.KEYWORDS).trim();
-//		String city = (null != sessionMap.get(SearchParamDTO.CITY_STATE)) ? sessionMap
-//				.get(SearchParamDTO.CITY_STATE).trim() : "";
-//		String radius = (null != sessionMap.get(SearchParamDTO.RADIUS)) ? sessionMap
-//				.get(SearchParamDTO.RADIUS).trim() : "";
-
-		// get the user Id from session
-		int userId = getUserID(session);
-
-		SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
-		searchedJobsDTO.setUserID(userId);
-		searchedJobsDTO.setUrl(MMJBCommonConstants.SEARCH_TYPE
-				+ MMJBCommonConstants.EQUAL_TO
-				+ sessionMap.get(MMJBCommonConstants.SEARCH_TYPE)
-				+ MMJBCommonConstants.SEMICOLON + SearchParamDTO.KEYWORDS
-				+ MMJBCommonConstants.EQUAL_TO
-				+ sessionMap.get(SearchParamDTO.KEYWORDS)
-				+ MMJBCommonConstants.SEMICOLON + SearchParamDTO.CITY_STATE
-				+ MMJBCommonConstants.EQUAL_TO
-				+ sessionMap.get(SearchParamDTO.CITY_STATE)
-				+ MMJBCommonConstants.SEMICOLON + SearchParamDTO.RADIUS
-				+ MMJBCommonConstants.EQUAL_TO
-				+ sessionMap.get(SearchParamDTO.RADIUS));
-		searchedJobsDTO.setSearchName(MMJBCommonConstants.EMPTY);
-		searchedJobsDTO.setCreatedDate(MMUtils.getCurrentDateAndTime());		
-		
-		int recentSearchesCount = 0;
-		List<SaveSearchedJobsDTO> savedSearchesDTOList = saveSearchService
-				.viewMySavedSearches(userId, true);
-		if (null != savedSearchesDTOList) {
-			recentSearchesCount = savedSearchesDTOList.size();
-		}
-		// If the searches are exceeding the limit then delete the old search
-		if (recentSearchesCount >= Integer.parseInt(recentSearchsLimit)) {
-			int saveSearchId = savedSearchesDTOList.get(0).getSaveSearchID();
-			saveSearchService.deleteSavedSearch(saveSearchId);
-		}
-		//save the search criteria
-		saveSearchService.saveSearchedJobs(searchedJobsDTO);
-		
-		/*HashMap<String, Object> recentMap = new HashMap<String, Object>();
-		List<HashMap<String, Object>> recentSearchList = (List<HashMap<String, Object>>) session
-				.getAttribute(RECENT_SRCH_LIST);
-
-		if (recentSearchList == null) {
-			recentSearchList = new ArrayList<HashMap<String, Object>>();
-		}
-
-		if (!keyWords.isEmpty()) {
-			recentMap.put(SearchParamDTO.KEYWORDS,
-					sessionMap.get(SearchParamDTO.KEYWORDS).trim());
-		}
-
-		if (!city.isEmpty()) {
-			recentMap.put(SearchParamDTO.CITY_STATE, city);
-		}
-
-		if (!radius.equalsIgnoreCase(MMJBCommonConstants.ZERO)) {
-			recentMap.put(SearchParamDTO.RADIUS, radius);
-		}
-
-		recentMap.put("recDate", new Date().toLocaleString());
-		recentSearchList.add(recentMap);
-
-		List<HashMap<String, Object>> latestRecentList = null;
-		if (recentSearchList.size() > 3) {
-			latestRecentList = recentSearchList.subList(
-					recentSearchList.size() - 3, recentSearchList.size());
-		} else {
-			latestRecentList = recentSearchList;
-		}*/
-
-		/*if (userId > 0) {
-			List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
-					.viewMySavedSearches(userId);
-
-			int savedSearchCount = saveSearchedJobsDTOList.size();
-			if (savedSearchCount == Integer.parseInt(recentSearchsLimit)) {
-				saveSearchService.deleteFirstSearch(userId);
-			}
-		}*/
-
-//		session.setAttribute(RECENT_SRCH_LIST, savedSearchesDTOList);
-		session.setAttribute(LATEST_RECENT_LIST, savedSearchesDTOList.subList(
-				savedSearchesDTOList.size() - 3, savedSearchesDTOList.size()));
-	}
-
-	/**
 	 * Method to return User id.
 	 * 
 	 * @param session
@@ -2076,36 +1977,9 @@ public class JobSearchController extends AbstractController {
 		return userId;
 	}
 
-	private String getSplitURL(String urlData) {
-
-		StringBuffer splitURL = new StringBuffer();
-		StringTokenizer stringNew = new StringTokenizer(urlData, ";");
-
-		while (stringNew.hasMoreElements()) {
-
-			String stringObject = (String) stringNew.nextElement();
-			StringTokenizer stringAlter = new StringTokenizer(stringObject, "=");
-			String key = null, value = "";
-			int count = 0;
-
-			while (stringAlter.hasMoreElements()) {
-				if (count == 0) {
-					key = stringAlter.nextToken();
-					count = 1;
-				} else {
-					value = stringAlter.nextToken().replaceFirst("basic", " ");
-					count = 0;
-				}
-				if (!("radius").equals(key)) {
-					splitURL.append(value + "     ");
-				}
-			}
-		}
-		return splitURL.toString();
-	}
-
 	/**
-	 * Load the current search results list
+	 * The method helps to get the current search results list which contains list of keywords separated 
+	 * by space, city and radius so user can delete the items and perform the search
 	 * 
 	 * @param session
 	 * @return
@@ -2897,52 +2771,83 @@ public class JobSearchController extends AbstractController {
 		}
 		return listVideoURL;
 	}
-
+	
 	/**
-	 * The method helps to show all recent searches of user
+	 * The method helps to save the search results criteria in DB on every keyword search
+	 * and display the recent searches list
 	 * 
 	 * @param session
-	 * @param myrecentsearchform
+	 */
+	@SuppressWarnings("unchecked")
+	private void recentSearch(HttpSession session) {
+
+		HashMap<String, String> sessionMap = (HashMap<String, String>) session
+				.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP);
+		session.removeAttribute(LATEST_RECENT_LIST);
+		// get the user Id from session
+		int userId = getUserID(session);
+
+		SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
+		searchedJobsDTO.setUserID(userId);
+		searchedJobsDTO.setUrl(MMJBCommonConstants.SEARCH_TYPE
+				+ MMJBCommonConstants.EQUAL_TO
+				+ sessionMap.get(MMJBCommonConstants.SEARCH_TYPE)
+				+ MMJBCommonConstants.SEMICOLON + SearchParamDTO.KEYWORDS
+				+ MMJBCommonConstants.EQUAL_TO
+				+ sessionMap.get(SearchParamDTO.KEYWORDS)
+				+ MMJBCommonConstants.SEMICOLON + SearchParamDTO.CITY_STATE
+				+ MMJBCommonConstants.EQUAL_TO
+				+ sessionMap.get(SearchParamDTO.CITY_STATE)
+				+ MMJBCommonConstants.SEMICOLON + SearchParamDTO.RADIUS
+				+ MMJBCommonConstants.EQUAL_TO
+				+ sessionMap.get(SearchParamDTO.RADIUS));
+		searchedJobsDTO.setSearchName(MMJBCommonConstants.EMPTY);
+		searchedJobsDTO.setCreatedDate(MMUtils.getCurrentDateAndTime());		
+		
+		List<SaveSearchedJobsDTO> recentSearches = saveSearchService
+				.viewMySavedSearches(userId, true);
+		
+		// If the searches are exceeding the limit then delete the old search
+		if (recentSearches.size() >= Integer.parseInt(recentSearchsLimit)) {
+			int saveSearchId = recentSearches.get(0).getSaveSearchID();
+			saveSearchService.deleteSavedSearch(saveSearchId);
+		}
+		
+		// save the search criteria
+		SaveSearchedJobsDTO currentSearch = saveSearchService
+				.saveSearchedJobs(searchedJobsDTO);
+
+		recentSearches.add(currentSearch);
+		// get the latest searches and check for latest searches limit
+		List<SaveSearchedJobsDTO> latestSearches = recentSearches;
+		if (recentSearches.size() > MMJBCommonConstants.LATEST_SEARCHES_LIMIT) {
+			latestSearches = recentSearches.subList(recentSearches.size()
+					- MMJBCommonConstants.LATEST_SEARCHES_LIMIT,
+					recentSearches.size());
+		}
+		session.setAttribute(LATEST_RECENT_LIST, latestSearches);
+	}
+
+	/**
+	 * The method helps to view all recent searches of user
+	 * 
+	 * @param session
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(value = "/seeallsearch", method = RequestMethod.GET)
-	public ModelAndView seeallsearch(HttpSession session,
-			MyRecentSearchesForm myrecentsearchform, BindingResult result) {
+	@RequestMapping(value = "/viewrecentsearches", method = RequestMethod.GET)
+	public ModelAndView viewRecentsearches(HttpSession session, HttpServletRequest request) {
 
 		ModelAndView modelAndView = new ModelAndView();
-
+		// get the userId from session
 		int userId = getUserID(session);
-
-//		List<SaveSearchedJobsDTO> recentSearches = saveSearchService
-//				.viewMyRecentSearches(userId);
-		List<SaveSearchedJobsDTO> recentSearches = saveSearchService
-		.viewMySavedSearches(userId, true);
-
-		List<SaveSearchedJobsDTO> recentSplit = new ArrayList<SaveSearchedJobsDTO>();
-//		int index = 0;
-		for (SaveSearchedJobsDTO searchedJobsDTO : recentSearches) {
-//			if (index == 20) {
-//				break;
-//			}
-			SaveSearchedJobsDTO dto = new SaveSearchedJobsDTO(
-					searchedJobsDTO.getSaveSearchID(), searchedJobsDTO.getUserID(),
-					searchedJobsDTO.getUrl(), searchedJobsDTO.getSearchName(),
-					searchedJobsDTO.getEmailFrequency(), searchedJobsDTO.getCreatedDate(),
-					searchedJobsDTO.getModifyDate(), searchedJobsDTO.getDeletedDate(),
-					getSplitURL(searchedJobsDTO.getUrl()));
-
-			recentSplit.add(dto);
-//			index++;
+		if(userId > 0){
+			List<SaveSearchedJobsDTO> recentSearches = saveSearchService
+					.viewMySavedSearches(userId, true);
+			
+			session.setAttribute(RECENT_SRCH_LIST, recentSearches);
 		}
-		
-//		List<SaveSearchedJobsDTO> savedSearchesDTOList = saveSearchService
-//				.viewMySavedSearches(userId, true);
-//		
-//		session.setAttribute(RECENT_SRCH_LIST, savedSearchesDTOList);
-		modelAndView.addObject("recentSplit", recentSplit);
-		modelAndView.addObject("myrecentsearchform", myrecentsearchform);
-		modelAndView.setViewName("myrecentsearches");
+		modelAndView.setViewName("myrecentsearchespopup");
 
 		return modelAndView;
 	}
@@ -2951,49 +2856,22 @@ public class JobSearchController extends AbstractController {
 	 * The method helps to clear the latest recent searches 
 	 * 
 	 * @param session
-	 * @param myrecentsearchform
 	 * @param result
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/clearlatestsearches", method = RequestMethod.GET)
+	@RequestMapping(value = "/clearrecentsearches", method = RequestMethod.GET)
 	public @ResponseBody
-	String clearalllist(HttpSession session,
-			MyRecentSearchesForm myrecentsearchform, BindingResult result,
+	String clearLatestSearches(HttpSession session, 
 			HttpServletRequest request) {
-
+		// get the userId from session
 		int userId = getUserID(session);
 
-		jobSearchService.removeClearAll(userId);
-		session.removeAttribute(RECENT_SRCH_LIST);
+		// clear the recent searches
+		jobSearchService.clearRecentSearches(userId);
 		session.removeAttribute(LATEST_RECENT_LIST);
 
 		return "success";
-	}
-
-	/**
-	 * The method helps to clear the searches of user 
-	 * 
-	 * @param session
-	 * @param myrecentsearchform
-	 * @param result
-	 * @return
-	 */
-	@RequestMapping(value = "/clearallsearches", method = RequestMethod.GET)
-	public ModelAndView seeallclear(HttpSession session,
-			MyRecentSearchesForm myrecentsearchform, BindingResult result) {
-
-		ModelAndView modelAndView = new ModelAndView();
-		int userId = (Integer) session
-				.getAttribute(MMJBCommonConstants.USER_ID);
-		jobSearchService.removeClearAll(userId);
-		session.removeAttribute(RECENT_SRCH_LIST);
-		session.removeAttribute(LATEST_RECENT_LIST);
-
-		modelAndView.addObject("myrecentsearchform", myrecentsearchform);
-		modelAndView.setViewName("myrecentsearches");
-
-		return modelAndView;
 	}
 
 	/**
@@ -3007,38 +2885,30 @@ public class JobSearchController extends AbstractController {
 	 * @return
 	 */
 	@RequestMapping(value = "/jobboardSearchesHistory")
-	public ModelAndView getJobboardSearchesHistory(
+	public ModelAndView getJobboardSearchesHistoryPage(
 			HttpServletResponse response, HttpServletRequest request,
 			Model model, HttpSession session) {
+		LOGGER.info("Get the latest searches of user ");
+		
 		ModelAndView modelAndView = new ModelAndView();
+		session.removeAttribute(LATEST_RECENT_LIST);
+		// get the UserId from session
 		int userId = getUserID(session);
-		List<SaveSearchedJobsDTO> newRecentSearch = new ArrayList<SaveSearchedJobsDTO>();
+
 		if (userId != 0) {
-			List<SaveSearchedJobsDTO> recentSearch = saveSearchService
+
+			// get the recent searches of user
+			List<SaveSearchedJobsDTO> recentSearches = saveSearchService
 					.viewMySavedSearches(userId, true);
-//					saveSearchService
-//					.viewMyRecentSearches(userId);
-			int index = 0;
-			for (SaveSearchedJobsDTO dto : recentSearch) {
-				if (index > 2) {
-					break;
-				}
-				newRecentSearch.add(dto);
-				index++;
+			
+			// get the latest searches and check for latest searches limit
+			List<SaveSearchedJobsDTO> latestSearches = recentSearches;
+			if(recentSearches.size() > MMJBCommonConstants.LATEST_SEARCHES_LIMIT){
+				latestSearches = recentSearches.subList(
+						recentSearches.size() - MMJBCommonConstants.LATEST_SEARCHES_LIMIT, recentSearches.size());
 			}
-			List<SaveSearchedJobsDTO> recentSplit = new ArrayList<SaveSearchedJobsDTO>();
 
-			for (SaveSearchedJobsDTO jobsDTO : newRecentSearch) {
-				SaveSearchedJobsDTO dto = new SaveSearchedJobsDTO();
-				String[] keyword = jobsDTO.getUrl().split(";");
-				dto.setCreatedDate(jobsDTO.getCreatedDate());
-				dto.setKeywords(keyword[1].substring(9));
-				dto.setSearchName(keyword[2].substring(10));
-				dto.setSaveSearchID(jobsDTO.getSaveSearchID());
-
-				recentSplit.add(dto);
-			}
-			session.setAttribute(LATEST_RECENT_LIST, recentSplit);
+			session.setAttribute(LATEST_RECENT_LIST, latestSearches);
 		}
 
 		modelAndView.setViewName("jobboardSearchesHistory");

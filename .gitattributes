@@ -558,7 +558,6 @@ jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobseekerA
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/JobseekerCoverLetterController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/ManageJobSeekerController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/ManageJobSeekerForm.java -text
-jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/MyRecentSearchesForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/ResCoverLetterForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/ResumeSearchValidator.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/SaveSearchController.java -text
@@ -743,7 +742,7 @@ jobboard/src/main/webapp/WEB-INF/view/manageJobSeekers.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/manageResumePopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/managefacility.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/metricsDetails.jsp -text
-jobboard/src/main/webapp/WEB-INF/view/myrecentsearches.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/myrecentsearchespopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/postNewJobs.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/printCoverLetter.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/registrationsuccess.jsp -text

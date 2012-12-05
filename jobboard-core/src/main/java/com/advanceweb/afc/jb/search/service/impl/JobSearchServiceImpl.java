@@ -141,10 +141,12 @@ public class JobSearchServiceImpl implements JobSearchService {
 		return jobSearchDAO.getRecentJobsPostedByEmployer(facilityID, jobID);
 	}
 
+	/**
+	 * This method is used to clear the recent searches of user
+	 */
 	@Override
-	public void removeClearAll(int userId) {
-		// TODO Auto-generated method stub
-		jobSearchDAO.removeClearAll(userId);
+	public void clearRecentSearches(int userId) {
+		jobSearchDAO.clearRecentSearches(userId);
 	}
 
 	@Override

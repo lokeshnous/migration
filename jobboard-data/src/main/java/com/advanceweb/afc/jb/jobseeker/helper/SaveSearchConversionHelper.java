@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.springframework.stereotype.Repository;
 
@@ -61,10 +62,39 @@ public class SaveSearchConversionHelper {
 			if(admSaveSearch.getModifyDt() != null){
 				saveSearchedJobsDTO.setModifyDate(CommonUtil.convertSQLDateToStdDateString(admSaveSearch.getModifyDt().toString()));
 			}
-			saveSearchedJobsDTO.setDeletedDate(admSaveSearch.getDeleteDt());		
+			saveSearchedJobsDTO.setDeletedDate(admSaveSearch.getDeleteDt());	
+			saveSearchedJobsDTO.setRecentURL(getSplitURL(admSaveSearch.getUrl()));
 			searchedJobsDTOList.add(saveSearchedJobsDTO);
 		}
 		return searchedJobsDTOList;
+	}
+	
+	private String getSplitURL(String urlData) {
+
+		StringBuffer splitURL = new StringBuffer();
+		StringTokenizer stringNew = new StringTokenizer(urlData, ";");
+
+		while (stringNew.hasMoreElements()) {
+
+			String stringObject = (String) stringNew.nextElement();
+			StringTokenizer stringAlter = new StringTokenizer(stringObject, "=");
+			String key = null, value = "";
+			int count = 0;
+
+			while (stringAlter.hasMoreElements()) {
+				if (count == 0) {
+					key = stringAlter.nextToken();
+					count = 1;
+				} else {
+					value = stringAlter.nextToken().replaceFirst("basic", " ");
+					count = 0;
+				}
+				if (!("radius").equals(key)) {
+					splitURL.append(value + "     ");
+				}
+			}
+		}
+		return splitURL.toString();
 	}
 
 }

@@ -186,6 +186,9 @@ public interface MMJBCommonConstants {
 	String BASIC_SEARCH_TYPE_RESUME = "resume";
 	String SAVE_SEARCH_NAME = "saveSearchName";
 
+	// latest searches count
+	int LATEST_SEARCHES_LIMIT = 3;
+	
 	// For User Roles
 	String MERION_ADMIN = "merion_admin";
 	String JOBSEEKER = "jobseeker";

@@ -87,7 +87,7 @@ public interface JobSearchDAO {
 	 * 
 	 * @return
 	 */
-	public void removeClearAll(int userId);
+	public void clearRecentSearches(int userId);
 	/**
 	 * This method is used to check existing session in application
 	 * 

@@ -297,7 +297,7 @@ public class SaveSearchController {
 			}
 
 		} catch (Exception e) {
-			LOGGER.info("Save this search ERROR");
+			LOGGER.error("Save this search ERROR", e);
 		}
 		return jsonObject;
 	}

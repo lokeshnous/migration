@@ -19,7 +19,7 @@ public interface SaveSearchService {
 	 * @param userId
 	 * @return
 	 */
-	void saveSearchedJobs(SaveSearchedJobsDTO saveSearchedJobsDTO);
+	SaveSearchedJobsDTO saveSearchedJobs(SaveSearchedJobsDTO saveSearchedJobsDTO);
 
 	/**
 	 * This method is called to display Saved Searches
