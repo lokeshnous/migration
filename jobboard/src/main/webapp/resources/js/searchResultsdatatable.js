@@ -396,6 +396,14 @@ jQuery(document).ready(function() {
 					var formData= $("#jobSearchResultFormId").serialize()+$("#jobSearchResultHeaderFormId").serialize();
 					$.getJSON(navUrl, formData, function(data) {
 						processPaginationReq(pageSize);
+						// code to paste ads
+						/*var count = 0 ;
+							$.each(data.adPageCenterMiddleList, function(key, val) {
+								var id = '#ad_wrapper'+count;
+								alert(id);
+								$(id).html(val);
+								count = count+1;
+						});*/	
 					});
 					
 				}
