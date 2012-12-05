@@ -17,7 +17,10 @@
 
                 jQuery(document).ready(
 
-                function() {                    
+                function() {
+
+	                	var existingLength = $('#companyOverview').val().length;
+						$('#counterTextID').val(1000 - existingLength);
 
                         $("#brandingpreview").displaypopup("#brandingpreview","770","360");
      
@@ -109,6 +112,18 @@
 <script type="text/javascript"
 	src="../resources/js/jquery.colorPicker.js"></script>
 
+<script type="text/javascript">
+	function limitText(limitField, limitCount, limitNum) {
+
+		if (limitField.value.length > limitNum) {
+			limitField.value = limitField.value.substring(0, limitNum);
+		} else {
+			limitCount.value = limitNum - limitField.value.length;
+		}
+
+	}
+</script>
+
 </head>
 
 <body class="job_board">
@@ -145,10 +160,17 @@
 							<div class="lableTextCoverletter marginTop10 width150">
 								Company Overview:</div>
 							<div class="input_grp5 ">
-								<form:textarea path="companyOverview" id="Body Text:"
+								<form:textarea path="companyOverview" id="companyOverview"
 									class="textareaBoxCResume Height256" rows="5" cols="45"
-									name="Body Text:" />
+									name="Body Text:" onKeyDown="limitText(this.form.companyOverview,this.form.countdownCoverLetter,1000);"
+									onKeyUp="limitText(this.form.companyOverview,this.form.countdownCoverLetter,1000);"/>
 							</div>
+
+								<span class="lableText3"> <input readonly
+									type="text" class="input2000_width" name="countdownCoverLetter"
+									size="3" value="1000" id="counterTextID">characters
+									remaining.
+								</span>
 						</div>
 						<div class="row marginTop15">
 							<div class="lableTextCoverletter width150">Company Logo:</div>
