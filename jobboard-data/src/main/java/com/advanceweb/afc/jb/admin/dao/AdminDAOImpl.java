@@ -46,8 +46,8 @@ public class AdminDAOImpl implements AdminDAO {
 	private static final String FACILITY_ID = "from AdmUserFacility auf where auf.facilityPK.userId =?";
 	private static final String VALIDATE_ADMIN = "from MerUser e where e.email=? and e.password=?";
 	private static final String VALIDATE_ADM_USERID = "from AdmFacility af where af.adminUserId =?";
-	private static final String GET_ADM_FACILITY_BY_NS_ID = "from AdmFacility af1 where af1.nsCustomerID =? and af1.facilityType in ('FACILITY','FACILITY_GROUP') and af1.deleteDt is NOT NULL";
-	private static final String GET_NS_ID_BY_COMPNAME = "from AdmFacility af1 where af1.name =? and af1.facilityType in ('FACILITY','FACILITY_GROUP') and af1.deleteDt is NOT NULL";
+	private static final String GET_ADM_FACILITY_BY_NS_ID = "from AdmFacility af1 where af1.nsCustomerID =? and af1.facilityType in ('FACILITY','FACILITY_GROUP') and af1.deleteDt is NULL";
+	private static final String GET_NS_ID_BY_COMPNAME = "from AdmFacility af1 where af1.name =? and af1.facilityType in ('FACILITY','FACILITY_GROUP') and af1.deleteDt is NULL";
 	private static final String GET_USERID_BY_FAC_ID = "from AdmUserFacility auf1 where auf1.facilityPK.facilityId=?";
 	private static final String GET_FACILITY_CONTACT_BY_FAC_ID = "from AdmFacilityContact ac where ac.admFacility.facilityId = ? and ac.contactType='PRIMARY'";
 
