@@ -279,7 +279,7 @@ jobboard-core/src/test/resources/applicationContext-test.xml -text
 jobboard-core/src/test/resources/import/OpenX-JB2[!!-~]Mapping.xlsx -text
 jobboard-core/src/test/resources/log4j.properties -text
 jobboard-core/src/test/resources/templates/openx/ad_tag.tpl -text
-jobboard-core/src/test/resources/templates/openx/ad_tag.vtl -text
+jobboard-core/src/test/resources/templates/openx/test.vtl -text
 jobboard-data/pom.xml -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/admin/dao/AdminDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/admin/dao/AdminDAOImpl.java -text

@@ -28,7 +28,7 @@
 		<constructor-arg type="java.lang.String" value="/templates/openx/ad_tag.tpl" />
 	</bean>
 	<bean id="velocityTestTemplate" class="com.advanceweb.common.template.VelocityTemplate">
-		<constructor-arg type="java.lang.String" value="/templates/openx/ad_tag.vtl" />
+		<constructor-arg type="java.lang.String" value="/templates/openx/test.vtl" />
 	</bean>
 	<!-- 
 	<bean id="keywordIndexService" class="com.advanceweb.common.index.KeywordIndexServiceImpl" />
