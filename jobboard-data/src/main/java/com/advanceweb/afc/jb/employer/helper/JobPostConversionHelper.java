@@ -94,6 +94,8 @@ public class JobPostConversionHelper<JobPostForm> {
 		 jpJob.setAdmFacility(admFacility);
 		 jpJob.setActive((byte)(dto.isbActive()?1:0));
 		 jpJob.setTemplateOverride(dto.isbTemplateOverride()?1:0);
+		 jpJob.setFeatured(dto.isbFeatured()?(byte)1:0);
+		 
 		 
 		if (dto.getJobCountry().equals("USA")) {
 			jpJob.setIsNational((byte) 1);
