@@ -45,7 +45,6 @@ import com.advanceweb.afc.jb.mail.service.MMEmailService;
 import com.advanceweb.afc.jb.netsuite.service.NSCustomerService;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
-import com.advanceweb.afc.jb.service.exception.JobBoardNetSuiteServiceException;
 import com.advanceweb.afc.jb.user.UserService;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
@@ -720,27 +719,10 @@ public class PaymentGatewayController extends AbstractController{
 		salesrcptMailBody = salesrcptMailBody.replace("?userName", userName);
 		salesrcptMailBody = salesrcptMailBody.replace("?companyName",
 				comapnyName);
-		UserDTO userDTO = new UserDTO();
-		userDTO.setEntityId(orderDetailsDTO.getNsCustomeId());
-		userDTO.setRecordType(CUSTOMER_STRING);
-		try {
-			userDTO = nsCustomerService.getNSCustomerDetails(userDTO);
-		} catch (JobBoardNetSuiteServiceException jbns) {
-			LOGGER.info("Error occurred while getting the Customer details from net suite..Please contact your administrator."
-					+ jbns);
-		}
-		InternetAddress[] jsCcAddress = new InternetAddress[1];
+		
+		
 
-		try {
-			if(null != userDTO && null!=userDTO.getEmailId()){
-				jsCcAddress[0] = new InternetAddress(userDTO.getEmailId());
-				emailDTO.setCcAddress(jsCcAddress);
-			}
-		} catch (AddressException jbex) {
-			LOGGER.error(
-					"Error occured while geting InternetAddress reference",
-					jbex);
-		}
+		
 		String packageName="";
 		String paymentType="Credit Card";
 		if(null!=orderDetailsDTO.getJobPostingPlanDTOList()){
@@ -751,9 +733,8 @@ public class PaymentGatewayController extends AbstractController{
 				packageName=packageName+postingPlanDTO.getJobPostPlanName();
 			}
 		}
-		if (null != userDTO.getSalesOrderDTO().getPaymentMethod()
-				&& MMJBCommonConstants.INVOICE.equals(userDTO
-						.getSalesOrderDTO().getPaymentMethod())) {
+		if (null != orderDetailsDTO.getOrderPaymentDTO().getMethod()
+				&& MMJBCommonConstants.INVOICE.equals(orderDetailsDTO.getOrderPaymentDTO().getMethod())) {
 			paymentType="Invoice";
 		}
 		salesrcptMailBody = salesrcptMailBody.replace("?ordersum",
