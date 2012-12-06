@@ -27,6 +27,9 @@ import com.advanceweb.afc.jb.data.entities.AdmUserRolePK;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.entities.MerUserProfile;
 import com.advanceweb.afc.jb.data.entities.MerUserProfilePK;
+import com.advanceweb.afc.jb.data.entities.WebMembership;
+import com.advanceweb.afc.jb.data.entities.WebMembershipEmail;
+import com.advanceweb.afc.jb.data.entities.WebMembershipInfo;
 import com.advanceweb.afc.jb.employer.helper.EmployerRegistrationConversionHelper;
 import com.mysql.jdbc.StringUtils;
 
@@ -44,6 +47,8 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 	private HibernateTemplate hibernateTemplateTracker;
 
 	private HibernateTemplate hibernateTemplateCareers;
+	
+	private HibernateTemplate hibernateTemplateAdvancePass;
 	@Autowired
 	private EmployerRegistrationConversionHelper empHelper;
 	
@@ -55,10 +60,12 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
-			SessionFactory sessionFactory) {
+			SessionFactory sessionFactory,
+			SessionFactory sessionFactoryAdvancePass) {
 		this.hibernateTemplateTracker = new HibernateTemplate(
 				sessionFactoryMerionTracker);
 		this.hibernateTemplateCareers = new HibernateTemplate(sessionFactory);
+		this.hibernateTemplateAdvancePass = new HibernateTemplate(sessionFactoryAdvancePass);
 
 	}
 
@@ -74,10 +81,12 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 					merUser.setUserId(empDTO.getMerUserDTO().getUserId());
 					// saving employer credentials
 					hibernateTemplateTracker.saveOrUpdate(merUser);
+					
 				} else {
 					if (null != merUser) {
 						// saving employer credentials
-						hibernateTemplateTracker.saveOrUpdate(merUser);
+						hibernateTemplateTracker.saveOrUpdate(merUser);						
+						saveAdvancePassDetails(facilityIdP, merUser);
 					}
 					// saving the employer profile
 					List<MerUserProfile> merUserProfilesList = hibernateTemplateTracker
@@ -124,6 +133,35 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 			LOGGER.error(e);
 		}
 		return null;
+	}
+
+	/**
+	 * Method to insert required Data Into Advance Pass
+	 * @param facilityIdP
+	 * @param merUser
+	 */
+	private void saveAdvancePassDetails(int facilityIdP, MerUser merUser) {
+		AdmFacility facilityP = (AdmFacility) hibernateTemplateCareers.find(
+				FIND_ADM_FACILITY, facilityIdP).get(0);
+		List<AdmFacilityContact> admFacilityContact= facilityP.getAdmFacilityContacts();
+		Timestamp timestamp=new Timestamp(new Date().getTime());
+		WebMembership webMembership=new WebMembership();
+		WebMembershipEmail membershipEmail=new WebMembershipEmail();
+		WebMembershipInfo membershipInfo=new WebMembershipInfo();
+		webMembership.setPassword(merUser.getPassword());
+		webMembership.setWebMembershipLevelID(2);
+		webMembership.setCreateDate(timestamp);
+		membershipEmail.setEmail(merUser.getEmail());
+		membershipEmail.setCreateDate(timestamp);
+		membershipInfo.setFirstName(merUser.getFirstName());
+		membershipInfo.setLastName(merUser.getLastName());
+		membershipInfo.setCreateDate(timestamp);
+		if(null !=admFacilityContact){
+			membershipInfo.setZipCode(admFacilityContact.get(0).getPostcode());
+		}
+		hibernateTemplateAdvancePass.saveOrUpdate(webMembership);
+		hibernateTemplateAdvancePass.saveOrUpdate(membershipInfo);
+		hibernateTemplateAdvancePass.saveOrUpdate(membershipEmail);
 	}
 
 	/**

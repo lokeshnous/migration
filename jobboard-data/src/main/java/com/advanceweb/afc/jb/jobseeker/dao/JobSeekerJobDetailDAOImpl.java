@@ -178,6 +178,7 @@ public class JobSeekerJobDetailDAOImpl implements JobSeekerJobDetailDAO {
 		List<AdmSaveJob> jobList = null;
 		List<AppliedJobDTO> appliedJobDTOList = null;
 		try {
+			LOGGER.info("Login Date Time: "+startDate+"  LogOut Date Time : "+endDate);
 			if (jobSeekerId != 0) {
 				 jobList = (List<AdmSaveJob>) hibernateTemplate
 						.find("from AdmSaveJob asj where asj.userId=? and  (asj.appliedDt > DATE_FORMAT('"+startDate+"', '%Y-%m-%d %T') and asj.appliedDt < DATE_FORMAT('"+endDate+"', '%Y-%m-%d %T')) and asj.deleteDt is NULL",

@@ -91,5 +91,11 @@
 			<version>3.12.1.GA</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			 <groupId>com.microsoft.sqlserver</groupId>
+			  <artifactId>sqljdbc4</artifactId>
+			  <version>4.0</version>
+  		</dependency>
+		
 	</dependencies>
 </project>

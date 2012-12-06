@@ -413,6 +413,9 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstSessionEvent.
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstSessionEventInfo.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstSessionEventInfoPK.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstSessioninfo.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/WebMembership.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/WebMembershipEmail.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/WebMembershipInfo.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/exception/JobBoardDataException.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/AgencyRegistrationDAO.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/employer/dao/AgencyRegistrationDAOImpl.java -text
