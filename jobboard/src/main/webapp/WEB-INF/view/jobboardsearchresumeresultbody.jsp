@@ -181,7 +181,14 @@
 										<td align="left" style="word-wrap: break-word;" valign="bottom">&nbsp;</td>
 										<td align="left" valign="bottom"><input type="checkbox"
 											name="checkbox2"  value="${job['UploadResumeId']}" class="marginRight5">
-											<label for="checkbox2" ><a href="../employerSearchResume/viewResume.html?resumeId=${job['UploadResumeId']}" >${job["DesiredJobTitle"]}</a></label></td>
+											<label for="checkbox2" >
+												<c:if test="${isResumePackageActive}">
+													<a href="../employerSearchResume/viewResume.html?resumeId=${job['UploadResumeId']}" >${job["DesiredJobTitle"]}</a>
+												</c:if>
+												<c:if test="${!(isResumePackageActive)}">
+													<a href="#" onclick="openPopUpToPurchase();">${job["DesiredJobTitle"]}</a>
+												</c:if>
+											</label></td>
 										<td align="left" style=" padding-right:2px;text-wrap:none; overflow:hidden;" valign="bottom">${job["ApplicantName"]}</td>
 										<td align="left" valign="bottom">${job["Location"]}</td>
 										<td align="center">${job["Experience"]}</td>
