@@ -145,7 +145,34 @@ function validateNumber(event) {
 				$('#stateDpId').val("");
 				$('#countryDpId').val("");
 			});
-
+			
+			
+			$("#waitmsg").hide();
+		     
+			var countryVal = $('.countryDpId').val();
+		     
+		    if($(":checkbox").is(':checked')){
+		     	$("#waitmsg").show();
+		    }
+		    if (countryVal == "USA") {
+		    	var flag = false;
+		    	
+		    	if($(":checkbox:first").is(":checked")){
+		    		flag = true;
+		    	}
+          		var checks = ["2","3","4"];
+          		$(":checkbox").val(checks).filter(":checked").attr("disabled",true);
+          		$(":checkbox").val(checks).filter(":checked").attr("checked",false);
+          		
+	          	if(flag){
+	          		$("#waitmsg").show();
+	          		$(":checkbox:first").attr("checked",true);
+		    	}
+		    	else{
+		    		$("#waitmsg").hide();
+		    	}
+          	}
+		    
 		});
 		   
 		</script>
@@ -156,20 +183,6 @@ function validateNumber(event) {
 		</script>
 		
 		<script type="text/javascript">
-		jQuery(document).ready(function(){
-			$("#waitmsg").hide();
-		     var countryVal = $('.countryDpId').val();
-		     if($(":checkbox").is(':checked')){
-		     $("#waitmsg").show();
-		     }
-		    if (countryVal == "USA") {           		
-          		 var checks = ["2","3","4"];
-          		 $(":checkbox").val(checks).filter(":checked").attr("disabled",true);
-          		$(":checkbox").val(checks).filter(":checked").attr("checked",false);
-          		$("#waitmsg").hide();                 	
-          	}
-
-		});
 		    function modifyMsg(id){
 				/* var checkIt = $(id).is(':checked');
 				if(checkIt){
