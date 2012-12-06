@@ -1,6 +1,13 @@
 package com.advanceweb.common.ads;
 
 public class Banner {
+	
+	// The following tag type are the same as that of OpenX API
+	public static final int TAG_TYPE_JAVASCRIPT = 1;
+	public static final int TAG_TYPE_IFRAME = 3;
+	public static final int TAG_TYPE_IMAGE = 4;
+	
+	
 	private AdSize size;
 	private String tagType;
 	private String tag;

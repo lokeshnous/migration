@@ -1,0 +1,6 @@
+<iframe id="50bf58b99304b" name="50bf58b99304b" src="http://ox-d.advanceweb.com/w/1.0/afr?auid=$auid&cb=INSERT_RANDOM_NUMBER_HERE&c.keyword=Nursing" frameborder="0" scrolling="no" width="$size.width" height="$size.height"></iframe>
+
+#if($vars)
+	#set ($separator="")
+	#foreach($var in $vars.entrySet())$separator$var.key=$esc.url($var.value)#set($separator="&")#end
+#end

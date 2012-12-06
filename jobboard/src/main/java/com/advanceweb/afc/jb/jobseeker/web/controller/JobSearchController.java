@@ -924,9 +924,9 @@ public class JobSearchController extends AbstractController {
 			// of JobSearchResultDTO
 			jobSearchResultDTO = jobSearchService.jobSearch(paramMap, start,
 					rows);
-			noOfRecords = (int) jobSearchResultDTO.getResultCount();
 			//
 			if (jobSearchResultDTO != null) {
+				noOfRecords = (int) jobSearchResultDTO.getResultCount();
 				// Calling the service layer for converting the
 				// JobSearchResultDTO
 				// object into JSON Object
@@ -1885,6 +1885,18 @@ public class JobSearchController extends AbstractController {
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
 			jobSrchJsonObj.put(ADPAGEBTM, bannerString);
+			
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.RIGHT_TOP;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			jobSrchJsonObj.put(ADPGRIGHT_TOP, bannerString);
+			
+			size = AdSize.IAB_MEDIUM_RECTANGLE;
+			position = AdPosition.RIGHT_MIDDLE;
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
+			jobSrchJsonObj.put("adPageRightMiddle", bannerString);
 
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);

@@ -19,7 +19,7 @@
 	<build>
 		<testResources>
 			<testResource>
-				<directory>${basedir}/../jobboard/src/main/resources</directory>
+				<directory>${basedir}/../jobboard/src/main/resources</directory>				
 			</testResource>
 			<testResource>
 				<directory>${basedir}/src/test/resources</directory>
@@ -161,6 +161,11 @@
 			<artifactId>velocity</artifactId>
 			<version>1.7</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity-tools</artifactId>
+			<version>2.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -189,6 +194,10 @@
 			<artifactId>lucene-core</artifactId>
 			<version>3.6.0</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-spatial</artifactId>
+			<version>3.6.0</version>
+		</dependency>
 	</dependencies>
 </project>

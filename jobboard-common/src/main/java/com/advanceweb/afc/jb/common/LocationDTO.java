@@ -1,6 +1,5 @@
 package com.advanceweb.afc.jb.common;
 
-
 /**
  * @Author : Reetesh RN
  * @Version: 1.0
@@ -8,20 +7,34 @@ package com.advanceweb.afc.jb.common;
  * @Purpose: This class is the DTO for the attributes of the jp_location table.
  */
 public class LocationDTO {
-	
-	
+
+	private int id;
+
 	private String city;
-	
+
 	private String state;
-	
+
 	private String postcode;
-	
-	private float latitude;
-	
-	private float longitude;
-	
+
+	private Float latitude;
+
+	private Float longitude;
+
 	private String country;
-	
+
+	private String area;
+
+	private String cityAlias;
+
+	private String stateFullname;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getCity() {
 		return city;
@@ -47,19 +60,19 @@ public class LocationDTO {
 		this.postcode = postcode;
 	}
 
-	public float getLatitude() {
+	public Float getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(float latitude) {
+	public void setLatitude(Float latitude) {
 		this.latitude = latitude;
 	}
 
-	public float getLongitude() {
+	public Float getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(float longitude) {
+	public void setLongitude(Float longitude) {
 		this.longitude = longitude;
 	}
 
@@ -71,5 +84,28 @@ public class LocationDTO {
 		this.country = country;
 	}
 
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
+	}
+
+	public String getCityAlias() {
+		return cityAlias;
+	}
+
+	public void setCityAlias(String cityAlias) {
+		this.cityAlias = cityAlias;
+	}
+
+	public String getStateFullName() {
+		return stateFullname;
+	}
+
+	public void setStateFullName(String stateFullname) {
+		this.stateFullname = stateFullname;
+	}
 
 }

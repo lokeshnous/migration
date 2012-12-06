@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.advt.openx;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -12,12 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.advanceweb.afc.jb.advt.service.impl.AdServiceDelegate;
+import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
 import com.advanceweb.common.ads.Banner;
 import com.advanceweb.common.client.ClientContext;
 import com.advanceweb.common.index.service.KeywordIndexService;
+import com.advanceweb.common.index.service.LocationIndexService;
 import com.advanceweb.common.template.AdvanceTemplate;
 
 /**
@@ -56,13 +59,22 @@ public class OpenxAdServiceDelegate implements AdServiceDelegate {
 	private Properties openxProperties;
 
 	@Autowired
-	private AdvanceTemplate adTagTemplate;
+	private AdvanceTemplate jsAdTemplate;
 
+	@Autowired
+	private AdvanceTemplate iframeAdTemplate;
+	
+	@Autowired
+	private AdvanceTemplate imageAdTemplate;
+	
 	@Autowired
 	private AdvanceTemplate defaultAdTemplate;
 
 	@Autowired
 	private KeywordIndexService keywordIndexService;
+
+	@Autowired
+	private LocationIndexService locationIndexService;
 
 	/**
 	 * This method retrieves the ad for the parameters given by the user.
@@ -90,7 +102,8 @@ public class OpenxAdServiceDelegate implements AdServiceDelegate {
 		params.put("size", size);
 
 		Map<String, Object> vars = new HashMap<String, Object>();
-		vars.put("keyword", getKeyword(context));
+		vars.put("keyword", getKeyword(context));		
+		vars.putAll(getLocationParameters(context));
 		params.put("vars", vars);
 
 		String auid = openxProperties.getProperty(getAuidKey(size));
@@ -99,10 +112,13 @@ public class OpenxAdServiceDelegate implements AdServiceDelegate {
 			banner.setTag(defaultAdTemplate.process(params));
 		} else {
 			params.put("auid", auid);
-			banner.setTag(adTagTemplate.process(params));
+			banner.setTag(imageAdTemplate.process(params));
 		}
 		LOGGER.debug("Received ad tag " + banner.getTag());
 
+		//banner.setTag("<div><a href=\"http://ox-d.advanceweb.com/w/1.0/rc?cs=50bf58b99304b&cb=INSERT_RANDOM_NUMBER_HERE&c.keyword=Nursing\"><img src=\"http://ox-d.advanceweb.com/w/1.0/ai?auid=284880&cs=50bf58b99304b&cb=INSERT_RANDOM_NUMBER_HERE&c.keyword=Nursing\" border=\"0\" alt=\"\"></a></div>");
+
+		
 		return banner;
 	}
 
@@ -122,11 +138,20 @@ public class OpenxAdServiceDelegate implements AdServiceDelegate {
 	}
 
 	/**
+	 * Select the keyword from the taxonomy that has the best match to the
+	 * context string. The matching is done in the following order
+	 * <ol>
+	 * <li>Current search by the user</li>
+	 * <li>Previous search by the user</li>
+	 * <li>The profession of the logged in user</li>
+	 * <li>The role of the logged in user</li>
+	 * </ol>
 	 * 
 	 * @param context
 	 *            The context passed from the client. This is used to determine
 	 *            the keywords to match
-	 * @return
+	 * @return The keyword in the taxonomy that has the best match to the
+	 *         context keyword
 	 */
 	private String getKeyword(ClientContext context) {
 		String keyword = null;
@@ -161,5 +186,55 @@ public class OpenxAdServiceDelegate implements AdServiceDelegate {
 
 		return keyword;
 
+	}
+
+	private Map<String, String> getLocationParameters(ClientContext context) {
+		Map<String, String> params = new HashMap<String, String>();
+
+		String[] locationString = {
+				context.getProperty(ClientContext.USER_SELECTED_LOCATION),
+				context.getProperty(ClientContext.USER_LOCATION),
+				context.getProperty(ClientContext.CLIENT_LOCATION) };
+
+		for (String locationName : locationString) {			
+			if(locationName == null) {
+				continue;
+			}
+
+			// Resolve city and state names
+			String[] cityState = locationName.split(",");
+			boolean hasCity = cityState.length > 1;
+
+			String city, state;
+			if (hasCity) {
+				city = cityState[0];
+				state = cityState[1];
+			} else {
+				city = null;
+				state = cityState[0];
+			}
+
+			// The location is expected to be of the form City,state. If no
+			// comma is present, it is assumed to be a state.
+			try {
+				List<LocationDTO> locationList = locationIndexService
+						.findMatchingLocation(city, state);
+				if (!locationList.isEmpty()) {
+					LocationDTO location = locationList.get(0);
+					if (hasCity) {
+						params.put("city", location.getCityAlias());
+						params.put("state", location.getStateFullName());
+					} else {
+						params.put("state", location.getStateFullName());
+					}
+					LOGGER.debug("Created location specific tags for " + locationName);
+					break;
+				}
+			} catch (JobBoardServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return params;
 	}
 }

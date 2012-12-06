@@ -39,9 +39,9 @@ public class JpLocation implements Serializable {
 	@Column(name="create_dt")
 	private Timestamp createDt;
 
-	private float latitude;
+	private Float latitude;
 
-	private float longitude;
+	private Float longitude;
 
 	private String postcode;
 
@@ -104,19 +104,19 @@ public class JpLocation implements Serializable {
 		this.createDt = createDt;
 	}
 
-	public float getLatitude() {
+	public Float getLatitude() {
 		return this.latitude;
 	}
 
-	public void setLatitude(float latitude) {
+	public void setLatitude(Float latitude) {
 		this.latitude = latitude;
 	}
 
-	public float getLongitude() {
+	public Float getLongitude() {
 		return this.longitude;
 	}
 
-	public void setLongitude(float longitude) {
+	public void setLongitude(Float longitude) {
 		this.longitude = longitude;
 	}
 

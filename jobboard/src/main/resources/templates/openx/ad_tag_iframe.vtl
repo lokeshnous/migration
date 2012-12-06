@@ -1,20 +1,4 @@
-
-<script type="text/javascript">
-	if (!window.OX_ads) { OX_ads = []; }
-#if($vars)
-	#set ($separator="")
-	OX_ads.push({ "auid" : "$auid" ,"vars":{#foreach($var in $vars.entrySet())$separator"$var.key":"$var.value"#set($separator=",")#end}});
-##// Push the ad	
-##OX_ads.push({ "auid" : "$auid" ,"vars":{"keyword" : "$vars.get("keyword")"}});
-
-#else
-	OX_ads.push({ "auid" : "$auid"});	
-#end
-</script>
-<script type="text/javascript">
-$esc.url("hello <there>")
-	document.write('<scr'+'ipt src="$url/w/1.0/jstag"><\/scr'+'ipt>');
-</script>
+<!--/* OpenX IFrame tag */-->
 
 #if($vars)
 	#set ($separator="")

@@ -18,7 +18,7 @@ public class KeywordIndexServiceTest extends ServiceTestBase {
 	@Autowired
 	private KeywordIndexService keywordIndexService;
 
-	private String[] testData = {""};
+	private String[] testData = {"Nurse"};
 
 	@Test
 	public void findMatchesTest() {

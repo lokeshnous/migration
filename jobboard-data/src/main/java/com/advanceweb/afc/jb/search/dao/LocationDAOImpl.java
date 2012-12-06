@@ -198,7 +198,7 @@ public class LocationDAOImpl implements LocationDAO {
 	 * 
 	 * @param String
 	 *            stateShortForm
-	 * @return 
+	 * @return
 	 */
 	@Override
 	public String getStateFullName(String stateShortForm) {
@@ -211,8 +211,8 @@ public class LocationDAOImpl implements LocationDAO {
 				.createQuery(
 						"select jloc from  JpLocation jloc WHERE  jloc.state = '"
 								+ stateShortForm + "'");
-		 query.setMaxResults(1);
-		
+		query.setMaxResults(1);
+
 		List<JpLocation> jpLocationList = query.list();
 
 		if (jpLocationList != null) {
@@ -222,6 +222,32 @@ public class LocationDAOImpl implements LocationDAO {
 
 		LOGGER.info(" The state full name is :" + stateFullName);
 		return stateFullName;
+	}
+
+	@Override
+	public List<LocationDTO> findAll() {
+		List<JpLocation> entityList = hibernateTemplate
+				.loadAll(JpLocation.class);
+		List<LocationDTO> dtoList = new ArrayList<LocationDTO>();
+		for (JpLocation entity : entityList) {
+			dtoList.add(convertLocationEntity(entity));
+		}
+		return dtoList;
+	}
+
+	private LocationDTO convertLocationEntity(JpLocation entity) {
+		LocationDTO dto = new LocationDTO();
+		dto.setArea(entity.getArea());
+		dto.setId(entity.getLocationId());
+		dto.setCity(entity.getCity());
+		dto.setCityAlias(entity.getCityAlias());
+		dto.setCountry(entity.getCountry());
+		dto.setLatitude(entity.getLatitude());
+		dto.setLongitude(entity.getLongitude());
+		dto.setPostcode(entity.getPostcode());
+		dto.setState(entity.getState());
+		dto.setStateFullName(entity.getStateFullname());
+		return dto;
 	}
 
 }

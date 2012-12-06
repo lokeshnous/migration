@@ -1,4 +1,4 @@
-package com.advanceweb.common.index.lucene;
+package com.advanceweb.common.index.service.impl;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,9 +18,10 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
-import com.advanceweb.common.index.KeywordIndexer;
+import com.advanceweb.common.index.lucene.LuceneIndex;
+import com.advanceweb.common.index.lucene.LuceneIndexer;
 
-public class ExcelKeywordIndexer implements KeywordIndexer {
+public class ExcelKeywordIndexer implements LuceneIndexer {
 
 	private static final Logger LOGGER = Logger
 			.getLogger(ExcelKeywordIndexer.class);
@@ -85,10 +86,10 @@ public class ExcelKeywordIndexer implements KeywordIndexer {
 	private Document createDocument(List<String> keywords) {
 		Document document = new Document();
 		String name = keywords.get(0);
-		document.add(new Field(LuceneKeywordIndex.FIELD_KEYWORD, name, Field.Store.YES,
+		document.add(new Field(LuceneIndex.FIELD_KEYWORD, name, Field.Store.YES,
 				Field.Index.ANALYZED));
 		for (String kw : keywords) {
-			document.add(new Field(LuceneKeywordIndex.FIELD_RELATED, kw, Field.Store.YES,
+			document.add(new Field(LuceneIndex.FIELD_RELATED, kw, Field.Store.YES,
 					Field.Index.ANALYZED));
 		}
 		return document;

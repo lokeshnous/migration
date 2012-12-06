@@ -104,8 +104,16 @@
 
 	<util:properties id="openxConfiguration" location="classpath:openx.properties" />
 
-	<bean id="adTagTemplate" class="com.advanceweb.common.template.VelocityTemplate">
-		<constructor-arg type="java.lang.String" value="/templates/openx/ad_tag.vtl" />
+	<bean id="jsAdTemplate" class="com.advanceweb.common.template.VelocityTemplate">
+		<constructor-arg type="java.lang.String" value="/templates/openx/ad_tag_js.vtl" />
+	</bean>
+
+	<bean id="iframeAdTemplate" class="com.advanceweb.common.template.VelocityTemplate">
+		<constructor-arg type="java.lang.String" value="/templates/openx/ad_tag_iframe.vtl" />
+	</bean>
+
+	<bean id="imageAdTemplate" class="com.advanceweb.common.template.VelocityTemplate">
+		<constructor-arg type="java.lang.String" value="/templates/openx/ad_tag_image.vtl" />
 	</bean>
 
 	<bean id="defaultAdTemplate" class="com.advanceweb.common.template.VelocityTemplate">
@@ -115,7 +123,29 @@
 
 	<bean id="adServiceDelegate" class="com.advanceweb.afc.jb.advt.openx.OpenxAdServiceDelegate" />
 
-	<bean id="keywordIndexer" class="com.advanceweb.common.index.lucene.ExcelKeywordIndexer">
+	<bean id="keywordIndexer"
+		class="com.advanceweb.common.index.service.impl.ExcelKeywordIndexer">
 		<constructor-arg type="java.lang.String" value="/import/OpenX-JB2 Mapping.xlsx" />
+	</bean>
+
+	<bean id="keywordQueryBuilder"
+		class="com.advanceweb.common.index.service.impl.KeywordQueryBuilder" />
+
+	<bean id="keywordIndex" class="com.advanceweb.common.index.lucene.LuceneIndex">
+		<constructor-arg ref="keywordIndexer" />
+		<constructor-arg ref="keywordQueryBuilder" />
+		<constructor-arg type="java.lang.String" value="${user.home}/jobboard/index/keyword"/>
+	</bean>
+
+	<bean id="locationIndexer"
+		class="com.advanceweb.common.index.service.impl.LocationIndexer" />
+
+	<bean id="locationQueryBuilder"
+		class="com.advanceweb.common.index.service.impl.LocationQueryBuilder" />
+		
+	<bean id="locationIndex" class="com.advanceweb.common.index.lucene.LuceneIndex">
+		<constructor-arg ref="locationIndexer" />
+		<constructor-arg ref="locationQueryBuilder" />
+		<constructor-arg type="java.lang.String" value="${user.home}/jobboard/index/location"/>
 	</bean>
 </beans>

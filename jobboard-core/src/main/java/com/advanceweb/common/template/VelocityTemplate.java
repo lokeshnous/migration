@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.tools.generic.EscapeTool;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -24,10 +25,10 @@ public class VelocityTemplate implements AdvanceTemplate {
 	@Autowired
 	private VelocityEngine velocityEngine;
 
-	private String templateString;
+	private String templateFile;
 
 	public VelocityTemplate(String templateFile) {
-		templateString = templateFile;
+		this.templateFile = templateFile;
 	}
 
 	/**
@@ -36,17 +37,22 @@ public class VelocityTemplate implements AdvanceTemplate {
 	 * 
 	 * @param params
 	 *            Map containing the parameters to be replaced at the
-	 *            placeholders.
+	 *            Placeholder.
 	 * @return The merged string
 	 */
 	@Override
 	public String process(Map<String, Object> params) {
-		VelocityContext vc = new VelocityContext(params);
-		StringWriter writer = new StringWriter();
+		VelocityContext context = new VelocityContext(params);
+		
+		// Add the escape VelocityTool
+		context.put("esc", new EscapeTool());
 
 		// Use a template
-		Template templ = velocityEngine.getTemplate(templateString);
-		templ.merge(vc, writer);
+		Template templ = velocityEngine.getTemplate(templateFile);
+
+		// Merge the template
+		StringWriter writer = new StringWriter();
+		templ.merge(context, writer);
 
 		return writer.toString();
 	}

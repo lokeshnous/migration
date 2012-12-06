@@ -6,8 +6,8 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 public interface KeywordIndexService {
 
-	String findBestMatch(String search) throws JobBoardServiceException;
+	String findBestMatch(String pattern) throws JobBoardServiceException;
 
-	List<String> findMatches(String search) throws JobBoardServiceException;
+	List<String> findMatches(String pattern) throws JobBoardServiceException;
 
 }

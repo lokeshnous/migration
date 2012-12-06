@@ -1,11 +1,15 @@
 package com.advanceweb.common.index.lucene;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.CorruptIndexException;
@@ -13,47 +17,64 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanClause.Occur;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.LockObtainFailedException;
 import org.apache.lucene.store.RAMDirectory;
+import org.apache.lucene.store.SimpleFSDirectory;
 import org.apache.lucene.util.Version;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
-import com.advanceweb.common.index.KeywordIndexer;
 
-@Component
-public class LuceneKeywordIndex {
-	private static final Logger LOGGER = Logger
-			.getLogger(LuceneKeywordIndex.class);
-	
+public class LuceneIndex {
+	private static final Logger LOGGER = Logger.getLogger(LuceneIndex.class);
+
 	public static final String FIELD_KEYWORD = "keyword";
 	public static final String FIELD_RELATED = "related";
 
 	private static final Version LUCENE_VERSION = Version.LUCENE_36;
 
-	private static final float KEYWORD_FIELD_BOOST = 1.25F;
-	
-	@Autowired				
-	private KeywordIndexer keywordIndexer;
-	
+	private LuceneIndexer indexer;
+
+	private LuceneQueryBuilder queryBuilder;
+
 	private Directory indexDirectory;
 
-	public LuceneKeywordIndex() {
-		indexDirectory = new RAMDirectory();
+	public LuceneIndex(LuceneIndexer indexer, LuceneQueryBuilder queryBuilder,
+			String indexPath) {
+		this.indexer = indexer;
+		this.queryBuilder = queryBuilder;
+
+		try {
+			indexDirectory = new SimpleFSDirectory(new File(indexPath));
+		} catch (IOException ex) {
+			LOGGER.error("Error opening lucene index dirctory" + indexPath, ex);
+			LOGGER.warn("The initialization of index directory failed. Switching to RamDirectory");
+			indexDirectory = new RAMDirectory();
+		}
+
+		try {
+			if (!IndexReader.indexExists(indexDirectory)) {
+				LOGGER.warn("The Lucene index in " + indexPath
+						+ " is missing or corrupt. Attempting to reindex");
+				reindex();
+				LOGGER.info("Reindex completed successfully");
+			}
+		} catch (IOException ex) {
+			LOGGER.error("Error verifying lucene index dirctory" + indexPath,
+					ex);
+			LOGGER.warn("The initialization of index directory failed. Switching to RamDirectory");
+			indexDirectory = new RAMDirectory();
+			reindex();
+		}
 	}
 
-	@PostConstruct
-	private void init() {
-		LOGGER.trace("LuceneKeywordIndex init:");
+	private void reindex() {
+		LOGGER.trace("LuceneIndex init:");
 
 		StandardAnalyzer analyzer = new StandardAnalyzer(LUCENE_VERSION);
 		IndexWriterConfig config = new IndexWriterConfig(LUCENE_VERSION,
@@ -61,7 +82,7 @@ public class LuceneKeywordIndex {
 		config.setOpenMode(OpenMode.CREATE);
 		try {
 			IndexWriter indexWriter = new IndexWriter(indexDirectory, config);
-			keywordIndexer.index(indexWriter);
+			indexer.index(indexWriter);
 			indexWriter.commit();
 		} catch (CorruptIndexException ex) {
 			LOGGER.error("Error creating index writer", ex);
@@ -74,23 +95,14 @@ public class LuceneKeywordIndex {
 		}
 	}
 
-	public List<LuceneResult> search(String queryString)
+	public List<LuceneResult> search(Map<String, String> params)
 			throws JobBoardServiceException {
-
-		LOGGER.debug("searching for " + queryString);
 
 		List<LuceneResult> result = new ArrayList<LuceneResult>();
 		IndexSearcher searcher = null;
 		try {
+			Query query = queryBuilder.buildQuery(params);
 
-			BooleanQuery query = new BooleanQuery();
-			for (String str : queryString.toLowerCase().split(" ")) {
-				FuzzyQuery nameQuery = new FuzzyQuery(new Term(FIELD_KEYWORD, str));
-				nameQuery.setBoost(KEYWORD_FIELD_BOOST);
-				query.add(nameQuery, Occur.SHOULD);
-				query.add(new FuzzyQuery(new Term(FIELD_RELATED, str)), Occur.SHOULD);
-			}
-			
 			IndexReader reader = IndexReader.open(indexDirectory);
 			searcher = new IndexSearcher(reader);
 
