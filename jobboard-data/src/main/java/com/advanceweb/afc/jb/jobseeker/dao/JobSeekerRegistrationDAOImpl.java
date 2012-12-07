@@ -1,5 +1,7 @@
 package com.advanceweb.afc.jb.jobseeker.dao;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -28,6 +30,9 @@ import com.advanceweb.afc.jb.data.entities.MerLocation;
 import com.advanceweb.afc.jb.data.entities.MerProfileAttrib;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.entities.MerUserProfile;
+import com.advanceweb.afc.jb.data.entities.WebMembership;
+import com.advanceweb.afc.jb.data.entities.WebMembershipEmail;
+import com.advanceweb.afc.jb.data.entities.WebMembershipInfo;
 import com.advanceweb.afc.jb.user.helper.RegistrationConversionHelper;
 import com.mysql.jdbc.StringUtils;
 
@@ -46,18 +51,25 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	private RegistrationConversionHelper registrationConversionHelper;
 	private HibernateTemplate hibernateTemplate;
 	private HibernateTemplate hibernateTemplateCareers;
+	private HibernateTemplate hibernateTemplateAdvancePass;
 	private static final String VERIFY_EMAIL = "from MerUser e where e.email = ?";
 	private static final String REGISTRATION_ATTRIBS = "from MerProfileAttrib prof";
 	private static final String FIND_JOBSEEKER_ROLE_ID="from AdmRole role where role.name=?";
 	private static final String FIND_JOBSEEKER_SUBSCRIPTIONS="from AdmSubscription sub where sub.subscriptionType=?";
-	private static final String FIND_JOBSEEKER_PROFILE="from MerUserProfile prof where prof.id.userId=?";
-	
+	private static final String FIND_JOBSEEKER_PROFILE = "from MerUserProfile prof where prof.id.userId=?";
+
 	@Autowired
-	public void setHibernateTemplate(final SessionFactory sessionFactoryMerionTracker, SessionFactory sessionFactory) {
-		this.hibernateTemplate = new HibernateTemplate(sessionFactoryMerionTracker);
+	public void setHibernateTemplate(
+			final SessionFactory sessionFactoryMerionTracker,
+			SessionFactory sessionFactory,
+			SessionFactory sessionFactoryAdvancePass) {
+		this.hibernateTemplate = new HibernateTemplate(
+				sessionFactoryMerionTracker);
 		this.hibernateTemplateCareers = new HibernateTemplate(sessionFactory);
+
+		this.hibernateTemplateAdvancePass = new HibernateTemplate(
+				sessionFactoryAdvancePass);
 	}
-	
 
 	/**
 	 * This method is called to save Job seeker registration information into
@@ -96,7 +108,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 				userRole.setRolePK(admUserRolePK);
 				hibernateTemplateCareers.saveOrUpdate(userRole);
 			}
-			
+			saveAdvancePassDetails(jsDTO);
 			return registrationConversionHelper.transformMerUserToUserDTO(merUser);
 			
 		} catch (HibernateException e) {
@@ -296,5 +308,46 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 		
 		return false;
 	}
+	/**
+	 * Method to insert required Data Into Advance Pass
+	 * @param facilityIdP
+	 * @param merUser
+	 */
+	private void saveAdvancePassDetails(JobSeekerRegistrationDTO jsDTO) {
+		UserDTO merUser = jsDTO.getMerUserDTO();
+		Timestamp timestamp = new Timestamp(new Date().getTime());
+		WebMembership webMembership = new WebMembership();
+		WebMembershipEmail membershipEmail = new WebMembershipEmail();
+		WebMembershipInfo membershipInfo = new WebMembershipInfo();
+		membershipInfo.setFirstName(merUser.getFirstName());
+		membershipInfo.setLastName(merUser.getLastName());
+		membershipInfo.setCreateDate(timestamp);
+		membershipInfo.setZipCode(merUser.getZipCode());
+		if (null != merUser.getCountry()
+				&& (merUser.getCountry().equalsIgnoreCase(
+						MMJBCommonConstants.COUNTRY_USA) || merUser
+						.getCountry().equalsIgnoreCase("US"))) {
+			membershipInfo.setCountryId(MMJBCommonConstants.COUNTRY_USA_VAL);
+		} else if (null != merUser.getCountry()
+				&& (merUser.getCountry()
+						.equalsIgnoreCase(MMJBCommonConstants.COUNTRY_CA))) {
+			membershipInfo.setCountryId(MMJBCommonConstants.COUNTRY_CA_VAL);
+		}
 
+		hibernateTemplateAdvancePass.saveOrUpdate(membershipInfo);
+		// setting data into webmemberwhip table
+		webMembership.setWebMembershipInfoID(membershipInfo
+				.getWebMembershipInfoID());
+		webMembership.setPassword(merUser.getPassword());
+		webMembership.setWebMembershipLevelID(2);
+		webMembership.setCreateDate(timestamp);
+		hibernateTemplateAdvancePass.saveOrUpdate(webMembership);
+		// setting data into webmemberwhipemail table
+		membershipEmail.setWebMembershipID(webMembership.getWebMembershipID());
+		membershipEmail.setEmail(merUser.getEmailId());
+		membershipEmail.setCreateDate(timestamp);
+
+		hibernateTemplateAdvancePass.saveOrUpdate(membershipEmail);
+
+	}
 }

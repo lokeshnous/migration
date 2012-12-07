@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.employer.dao;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +36,9 @@ import com.advanceweb.afc.jb.data.entities.MerLocation;
 import com.advanceweb.afc.jb.data.entities.MerProfileAttrib;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.entities.MerUserProfile;
+import com.advanceweb.afc.jb.data.entities.WebMembership;
+import com.advanceweb.afc.jb.data.entities.WebMembershipEmail;
+import com.advanceweb.afc.jb.data.entities.WebMembershipInfo;
 import com.advanceweb.afc.jb.employer.helper.EmployerRegistrationConversionHelper;
 import com.advanceweb.afc.jb.user.helper.RegistrationConversionHelper;
 import com.mysql.jdbc.StringUtils;
@@ -59,6 +63,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	private HibernateTemplate hibernateTemplateTracker;
 
 	private HibernateTemplate hibernateTemplateCareers;
+	private HibernateTemplate hibernateTemplateAdvancePass;
 
 	@Autowired
 	private EmployerRegistrationConversionHelper empHelper;
@@ -69,10 +74,14 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
-			SessionFactory sessionFactory) {
+			SessionFactory sessionFactory,
+			SessionFactory sessionFactoryAdvancePass) {
 		this.hibernateTemplateTracker = new HibernateTemplate(
 				sessionFactoryMerionTracker);
 		this.hibernateTemplateCareers = new HibernateTemplate(sessionFactory);
+		this.hibernateTemplateAdvancePass = new HibernateTemplate(
+				sessionFactoryAdvancePass);
+
 	}
 
 	/**
@@ -173,6 +182,8 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 				// saving the data in the adm_user_facility
 				setUserFacility(facility, merUser.getUserId(), roleId);
 			}
+
+			saveAdvancePassDetails(facility.getFacilityId(),merUser);
 			return empHelper.transformMerUserToUserDTO(merUser);
 
 		} catch (DataAccessException e) {
@@ -549,6 +560,51 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 		}
 		return admFacilityDTO;
 
+	}
+
+	/**
+	 * Method to insert required Data Into Advance Pass
+	 * 
+	 * @param facilityIdP
+	 * @param merUser
+	 */
+	private void saveAdvancePassDetails(int facilityIdP, MerUser merUser) {
+		AdmFacility facility = (AdmFacility) hibernateTemplateCareers.get(
+				AdmFacility.class, facilityIdP);
+		Timestamp timestamp = new Timestamp(new Date().getTime());
+		WebMembership webMembership = new WebMembership();
+		WebMembershipEmail membershipEmail = new WebMembershipEmail();
+		// setting data into webmemberwhipinfo table
+		WebMembershipInfo membershipInfo = new WebMembershipInfo();
+		membershipInfo.setFirstName(merUser.getFirstName());
+		membershipInfo.setLastName(merUser.getLastName());
+		membershipInfo.setCreateDate(timestamp);
+		membershipInfo.setZipCode(facility.getPostcode());
+		if (null != facility.getCountry()
+				&& (facility.getCountry().equalsIgnoreCase(
+						MMJBCommonConstants.COUNTRY_USA) || facility
+						.getCountry().equals("US"))) {
+			membershipInfo.setCountryId(MMJBCommonConstants.COUNTRY_USA_VAL);
+		} else if (null != facility.getCountry()
+				&& (facility.getCountry()
+						.equalsIgnoreCase(MMJBCommonConstants.COUNTRY_CA))) {
+			membershipInfo.setCountryId(MMJBCommonConstants.COUNTRY_CA_VAL);
+		}
+
+		hibernateTemplateAdvancePass.saveOrUpdate(membershipInfo);
+		// setting data into webmemberwhip table
+		webMembership.setWebMembershipInfoID(membershipInfo
+				.getWebMembershipInfoID());
+		webMembership.setPassword(merUser.getPassword());
+		webMembership.setWebMembershipLevelID(2);
+		webMembership.setCreateDate(timestamp);
+		hibernateTemplateAdvancePass.saveOrUpdate(webMembership);
+		// setting data into webmemberwhipemail table
+		membershipEmail.setWebMembershipID(webMembership.getWebMembershipID());
+		membershipEmail.setEmail(merUser.getEmail());
+		membershipEmail.setCreateDate(timestamp);
+
+		hibernateTemplateAdvancePass.saveOrUpdate(membershipEmail);
 	}
 
 }

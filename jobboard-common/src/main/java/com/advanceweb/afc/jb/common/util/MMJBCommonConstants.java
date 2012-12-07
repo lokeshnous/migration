@@ -513,4 +513,8 @@ public interface MMJBCommonConstants {
 	String ADPAGEBTM = "adPageBottom";
 	String ADPGRIGHT_TOP = "adPageRightTop";
 	String ADPGRIGHT_MIDDLE = "adPageRightMiddle";
+	String COUNTRY_USA = "USA";
+	String COUNTRY_CA = "CA";
+	int COUNTRY_USA_VAL = 182;
+	int COUNTRY_CA_VAL = 32;
 }

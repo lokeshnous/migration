@@ -141,27 +141,43 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 	 * @param merUser
 	 */
 	private void saveAdvancePassDetails(int facilityIdP, MerUser merUser) {
-		AdmFacility facilityP = (AdmFacility) hibernateTemplateCareers.find(
+		AdmFacility facility = (AdmFacility) hibernateTemplateCareers.find(
 				FIND_ADM_FACILITY, facilityIdP).get(0);
-		List<AdmFacilityContact> admFacilityContact= facilityP.getAdmFacilityContacts();
-		Timestamp timestamp=new Timestamp(new Date().getTime());
-		WebMembership webMembership=new WebMembership();
-		WebMembershipEmail membershipEmail=new WebMembershipEmail();
-		WebMembershipInfo membershipInfo=new WebMembershipInfo();
-		webMembership.setPassword(merUser.getPassword());
-		webMembership.setWebMembershipLevelID(2);
-		webMembership.setCreateDate(timestamp);
-		membershipEmail.setEmail(merUser.getEmail());
-		membershipEmail.setCreateDate(timestamp);
+		Timestamp timestamp = new Timestamp(new Date().getTime());
+		WebMembership webMembership = new WebMembership();
+		WebMembershipEmail membershipEmail = new WebMembershipEmail();
+		// setting data into webmemberwhipinfo table
+		WebMembershipInfo membershipInfo = new WebMembershipInfo();
 		membershipInfo.setFirstName(merUser.getFirstName());
 		membershipInfo.setLastName(merUser.getLastName());
 		membershipInfo.setCreateDate(timestamp);
-		if(null !=admFacilityContact){
-			membershipInfo.setZipCode(admFacilityContact.get(0).getPostcode());
+		membershipInfo.setZipCode(facility.getPostcode());
+		if (null != facility.getCountry()
+				&& (facility.getCountry().equalsIgnoreCase(
+						MMJBCommonConstants.COUNTRY_USA) || facility
+						.getCountry().equals("US"))) {
+			membershipInfo.setCountryId(MMJBCommonConstants.COUNTRY_USA_VAL);
+		} else if (null != facility.getCountry()
+				&& (facility.getCountry()
+						.equalsIgnoreCase(MMJBCommonConstants.COUNTRY_CA))) {
+			membershipInfo.setCountryId(MMJBCommonConstants.COUNTRY_CA_VAL);
 		}
-		hibernateTemplateAdvancePass.saveOrUpdate(webMembership);
+
 		hibernateTemplateAdvancePass.saveOrUpdate(membershipInfo);
+		// setting data into webmemberwhip table
+		webMembership.setWebMembershipInfoID(membershipInfo
+				.getWebMembershipInfoID());
+		webMembership.setPassword(merUser.getPassword());
+		webMembership.setWebMembershipLevelID(2);
+		webMembership.setCreateDate(timestamp);
+		hibernateTemplateAdvancePass.saveOrUpdate(webMembership);
+		// setting data into webmemberwhipemail table
+		membershipEmail.setWebMembershipID(webMembership.getWebMembershipID());
+		membershipEmail.setEmail(merUser.getEmail());
+		membershipEmail.setCreateDate(timestamp);
+
 		hibernateTemplateAdvancePass.saveOrUpdate(membershipEmail);
+
 	}
 
 	/**
