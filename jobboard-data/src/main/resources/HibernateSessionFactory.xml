@@ -31,7 +31,13 @@
 		<property name="username" value="${meriontracker.jdbc.username}" />
 		<property name="password" value="${meriontracker.jdbc.password}" />
 	</bean>
-	
+	<bean id="dataSourceAdvancePass"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${db.jdbc.sqlServer.driverClassName}" />
+		<property name="url" value="${advancepass.jdbc.sqlServer.url}" />
+		<property name="username" value="${advancepass.jdbc.sqlServer.username}" />
+		<property name="password" value="${advancepass.jdbc.sqlServer.password}" />
+	</bean>
 	<bean id="sessionFactoryMerionTracker"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="dataSourceMerionTracker" />
@@ -174,7 +180,34 @@
 		</property>
 	</bean>
 
+	
+	
+	<bean id="sessionFactoryAdvancePass"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSourceAdvancePass" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${db.hibernate.sqlServer.dialect}</prop>
+				 <prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+		 <property name="annotatedClasses">
+			<list>
+					<value>com.advanceweb.afc.jb.data.entities.WebMembership</value>
+					<value>com.advanceweb.afc.jb.data.entities.WebMembershipEmail</value>
+					<value>com.advanceweb.afc.jb.data.entities.WebMembershipInfo</value>
+					
+			</list>
+		</property>
+	</bean>
+
 	<tx:annotation-driven />
+
+	<bean id="transactionManagerAdvancePass"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactoryAdvancePass" />
+	</bean>
+	
 
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
