@@ -507,9 +507,9 @@ public class ResumeController extends AbstractController{
 						File virusChkFiledest = new File(tempDirectoryFilePath);
 						file.transferTo(virusChkFiledest);
 						resumeDTO = resumeService.createResumeUpload(resumeDTO);
-						File dest = new File(resumeDTO.getFilePath());
 						// after POM file modification we need to Uncomment  the below code
-						/*boolean virusFound = scanFileForVirus(virusChkFiledest.getPath(), virusChkFiledest.getName()); 
+						/*File dest = new File(resumeDTO.getFilePath());
+						boolean virusFound = scanFileForVirus(virusChkFiledest.getPath(), virusChkFiledest.getName()); 
 						
 						if (virusFound) {
 							LOGGER.info("Virus Found In File "+resumeDTO.getFileName()+" Uploaded By !"+resumeDTO.getUserId() );
@@ -1164,8 +1164,8 @@ public class ResumeController extends AbstractController{
 						&& !certForm.getDateOfReceipt().equals("")){
 					count = count + 1L;
 				}
-				if (null !=certForm.getInstituteName()
-						&& !certForm.getInstituteName().equals("")){
+				if (null !=certForm.getCertifyingAuthority()
+						&& !certForm.getCertifyingAuthority().equals("")){
 					count = count + 1L;
 				}
 				if (null !=certForm.getSummary()
@@ -1185,10 +1185,10 @@ public class ResumeController extends AbstractController{
 					count = count + 1L;
 				}
 				if (null != refForm.getJobTitle()
-						&& refForm.getJobTitle().equals("")){
+						&& !refForm.getJobTitle().equals("")){
 					count = count + 1L;
 				}
-				if (refForm.getName() != null && refForm.getName().equals("")){
+				if (refForm.getName() != null && !refForm.getName().equals("")){
 					count = count + 1L;
 				}
 				break;
@@ -1201,7 +1201,7 @@ public class ResumeController extends AbstractController{
 					count = count + 1L;
 				}
 				if (null !=eduForm.getDegreeLvl()
-						&& !eduForm.getDegreeLvl().equals("")){
+						&& !eduForm.getDegreeLvl().equals("0")){
 					count = count + 1L;
 				}
 				if (null !=eduForm.getDegrees()
@@ -1217,10 +1217,6 @@ public class ResumeController extends AbstractController{
 				}
 				if (null != eduForm.getInstituteName()
 						&& !eduForm.getInstituteName().equals("")){
-					count = count + 1L;
-				}
-				if (null !=eduForm.getLanguage()
-						&& !eduForm.getLanguage().equals("")){
 					count = count + 1L;
 				}
 				if (null != eduForm.getStartDate()
@@ -1245,14 +1241,14 @@ public class ResumeController extends AbstractController{
 				count = count + 1L;
 			}
 			if (null !=cntInfoForm.getCountry()
-					&& !cntInfoForm.getCountry().equals("")){
+					&& !cntInfoForm.getCountry().equals("0")){
 				count = count + 1L;
 			}
 			if (null !=cntInfoForm.getPhoneNo()
 					&& !cntInfoForm.getPhoneNo().equals("")){
 				count = count + 1L;
 			}
-			if (null !=cntInfoForm.getState() && !cntInfoForm.getState().equals("")){
+			if (null !=cntInfoForm.getState() && !cntInfoForm.getState().equals("0")){
 				count = count + 1L;
 			}
 			if (null != cntInfoForm.getPostalCode()
@@ -1260,7 +1256,7 @@ public class ResumeController extends AbstractController{
 				count = count + 1L;
 			}
 			if (null !=cntInfoForm.getFirstName()
-					&& !cntInfoForm.getMiddleName().equals("")){
+					&& !cntInfoForm.getFirstName().equals("")){
 				count = count + 1L;
 			}
 			if (null !=cntInfoForm.getMiddleName()
@@ -1268,7 +1264,7 @@ public class ResumeController extends AbstractController{
 				count = count + 1L;
 			}
 			if (null !=cntInfoForm.getLastName()
-					&& !cntInfoForm.getMiddleName().equals("")){
+					&& !cntInfoForm.getLastName().equals("")){
 				count = count + 1L;
 			}
 
@@ -1281,7 +1277,7 @@ public class ResumeController extends AbstractController{
 					count = count + 1L;
 				}
 				if (null !=wrkExpForm.getCurrentCareerLvl()
-						&& !wrkExpForm.getCurrentCareerLvl().equals("")){
+						&& !wrkExpForm.getCurrentCareerLvl().equals("0")){
 					count = count + 1L;
 				}
 				if (null !=wrkExpForm.getDescription()
@@ -1293,7 +1289,7 @@ public class ResumeController extends AbstractController{
 					count = count + 1L;
 				}
 				if (null !=wrkExpForm.getEmploymentType()
-						&& !wrkExpForm.getEmploymentType().equals("")){
+						&& !wrkExpForm.getEmploymentType().equals("0")){
 					count = count + 1L;
 				}
 				if (null != wrkExpForm.getEndDate() 
@@ -1322,7 +1318,7 @@ public class ResumeController extends AbstractController{
 		}
 		if (null != createResume.getListLangForm()) {
 			for (LanguageForm langForm : createResume.getListLangForm()) {
-				if (null !=langForm.getExpLvl() && !langForm.getExpLvl().equals("")){
+				if (null !=langForm.getExpLvl() && !langForm.getExpLvl().equals("0")){
 					count = count + 1L;
 				}
 				if (null !=langForm.getLanguage()
@@ -1338,10 +1334,6 @@ public class ResumeController extends AbstractController{
 					.getListPhoneDtlForm()) {
 				if (null !=phnDtlForm.getPhoneNumber()
 						&& !phnDtlForm.getPhoneNumber().equals("")){
-					count = count + 1L;
-				}
-				if (null !=phnDtlForm.getPhoneType()
-						&& !phnDtlForm.getPhoneType().equals("")){
 					count = count + 1L;
 				}
 				break;
@@ -1371,7 +1363,7 @@ public class ResumeController extends AbstractController{
 			count = count + 1L;
 
 		}
-		createResume.setTotalProgress((long) Math.round(count * 2.08));
+		createResume.setTotalProgress((long) Math.round(count * 2.32));
 
 	}
 
