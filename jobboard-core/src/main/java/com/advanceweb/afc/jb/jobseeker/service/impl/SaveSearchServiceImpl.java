@@ -126,5 +126,13 @@ public class SaveSearchServiceImpl implements SaveSearchService {
 	public List<SaveSearchedJobsDTO> getsavedSearches() {
 		return saveSearchDAO.getsavedSearches();
 	}
+
+	/**
+	 * This method is used to save the recent search in user dash board.
+	 */
+	@Override
+	public void saveRecentSearch(int saveSearchId, String saveSearchName) {
+		saveSearchDAO.saveRecentSearch(saveSearchId, saveSearchName);
+	}
 }
 	

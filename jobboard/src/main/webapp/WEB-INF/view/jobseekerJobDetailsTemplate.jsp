@@ -502,7 +502,7 @@
                 <!-- content_wrapper -->
 
                 <div class="ad_wrapper">
-					${adPageBtm}
+					${adPageBottom}
                 </div><!-- ad_wrapper -->
 
  </div><!-- main -->

@@ -510,9 +510,10 @@ public interface MMJBCommonConstants {
 	
 	// variables to populate the ads
 	String ADPAGETOP = "adPageTop";
-	String ADPAGEBTM = "adPageBottom";
+	String ADPAGEBOTTOM = "adPageBottom";
 	String ADPGRIGHT_TOP = "adPageRightTop";
 	String ADPGRIGHT_MIDDLE = "adPageRightMiddle";
+	String ADPGCENTER_MIDDLE_LIST = "adPageCenterMiddleList";
 	String COUNTRY_USA = "USA";
 	String COUNTRY_CA = "CA";
 	int COUNTRY_USA_VAL = 182;

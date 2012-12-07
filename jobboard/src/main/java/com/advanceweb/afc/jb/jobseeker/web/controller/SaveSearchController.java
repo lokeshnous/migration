@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,7 +52,9 @@ public class SaveSearchController {
 	private String navigationPath;
 
 	private static final String LOGGED_NAV_PATH = "LoggedInNavigationPath";
-	private static final String SAVE_SEARCH_FORM = "SaveSearchForm";
+	private static final String SAVE_SEARCH_FORM = "saveSearchForm";
+	private static final String RECENT_SRCH_LIST = "recentSearchList";
+	
 	@Autowired
 	private SaveSearchService saveSearchService;
 
@@ -210,8 +213,8 @@ public class SaveSearchController {
 						+ MMJBCommonConstants.EQUAL_TO
 						+ sessionMap.get(SearchParamDTO.RADIUS));
 
-//				searchedJobsDTO.setUserID((Integer) session
-//						.getAttribute(MMJBCommonConstants.USER_ID));
+				// searchedJobsDTO.setUserID((Integer) session
+				// .getAttribute(MMJBCommonConstants.USER_ID));
 
 				saveSearchService.updateSearchDetails(searchedJobsDTO);
 
@@ -241,61 +244,68 @@ public class SaveSearchController {
 	}
 
 	/**
-	 * This method is used to navigate the save this search pages to Login page
-	 * or pop up page depending upon whether the user is a ananymous user or
-	 * registered user.
+	 * This method helps to display the popup to save the selected recent search
 	 * 
 	 * @param saveSearchForm
 	 * @param model
 	 * @param session
 	 * @return JSonObject
 	 */
-
-	@RequestMapping(value = "/saveRecentSearch", method = RequestMethod.GET)
+	@RequestMapping(value = "/displaysavesearchpopup", method = RequestMethod.GET)
 	public @ResponseBody
-	JSONObject saveRecentSearch(@Valid SaveSearchForm saveSearchForm,
-			Map<String, SaveSearchForm> model, HttpSession session,
-			@RequestParam("keywords") String keywords,
-			@RequestParam("savesearchid") String saveSearchID) {
+	JSONObject displaySaveSearchPopup(@Valid SaveSearchForm saveSearchForm,
+			Model model, HttpSession session,
+			@RequestParam("savesearchid") int saveSearchID) {
 
 		JSONObject jsonObject = new JSONObject();
 		try {
+			session.setAttribute("recentSearchId", saveSearchID);
+			saveSearchForm.setSaveSearchId(saveSearchID);
+			model.addAttribute(SAVE_SEARCH_FORM, saveSearchForm);
+			jsonObject.put("NavigationPath",
+					"../savedSearches/displaySaveThisSearchPopup");
+		} catch (Exception e) {
+			LOGGER.error("display the Save This SearchPopup on recent search page :", e);
+		}
+		return jsonObject;
+	}
 
-			Map<String, String> sessionMap = checkSessionMap
-					.getSearchSessionMap(session);
-
-			// Check for job seeker login
-			if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
-				model.put(SAVE_SEARCH_FORM, new SaveSearchForm());
-				jsonObject.put(LOGGED_NAV_PATH,
-						"../savedSearches/anonymousSaveThisSearchPopUp");
-			} else if ((sessionMap
-					.get(MMJBCommonConstants.PERFORM_SAVED_SEARCH) == null)
-					&& (sessionMap.get(MMJBCommonConstants.SEARCH_TYPE) != null
-							&& sessionMap
-									.get(MMJBCommonConstants.SEARCH_TYPE)
-									.equals(MMJBCommonConstants.BASIC_SEARCH_TYPE) && sessionMap
-							.get(MMJBCommonConstants.SAVE_SEARCH_NAME) != null)) {
-
-				session.removeAttribute(sessionMap
-						.remove(MMJBCommonConstants.SAVE_SEARCH_NAME));
-				session.removeAttribute(sessionMap
-						.remove(MMJBCommonConstants.SEARCH_TYPE));
-
-				jsonObject.put("NavigationPath",
-						"../jobSeeker/jobSeekerDashBoard");
-
-			} else {
-				if (keywords != null && keywords != MMJBCommonConstants.EMPTY) {
-					model.put(SAVE_SEARCH_FORM, new SaveSearchForm());
-					jsonObject.put(LOGGED_NAV_PATH,
-							"../savedSearches/displaySaveThisSearchPopup");
-				} else {
-					jsonObject.put("failure", saveThisSearchErrMsg);
-				}
-
+	/**
+	 * This method helps to save the recent search in my recent search page
+	 * 
+	 * @param saveSearchForm
+	 * @param model
+	 * @param session
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/saveRecentSearch", method = RequestMethod.GET)
+	public @ResponseBody
+	JSONObject saveRecentSearch(Model model, HttpSession session, HttpServletRequest request) {
+		JSONObject jsonObject = new JSONObject();
+		try {
+			int saveSearchId = Integer.parseInt(session.getAttribute("recentSearchId").toString());
+			String saveSearchName = request.getParameter("searchName");
+			
+			if (saveSearchName == MMJBCommonConstants.EMPTY) {
+				jsonObject.put("EmptySearchName", "EmptySearchName");
+				return jsonObject;
 			}
+			boolean isSrchNameExist = saveSearchService.validateSearchName(
+					saveSearchName, getUserID(session));
 
+			if (isSrchNameExist) {
+				jsonObject
+						.put("DuplicateSearchName", "DuplicateSearchName");
+				return jsonObject;
+				
+			} 
+			session.removeAttribute("recentSearchId");
+
+			saveSearchService.saveRecentSearch(saveSearchId, saveSearchName);
+
+			jsonObject.put("NavigationPath",
+					"../savedSearches/viewrecentsearches");
 		} catch (Exception e) {
 			LOGGER.error("Save this search ERROR", e);
 		}
@@ -339,15 +349,13 @@ public class SaveSearchController {
 			@ModelAttribute(SAVE_SEARCH_FORM) SaveSearchForm saveSearchForm,
 			BindingResult result, HttpSession session) {
 		ModelAndView model = new ModelAndView();
-		int userId = (Integer) session
-				.getAttribute(MMJBCommonConstants.USER_ID);
-		saveSearchForm.setUserID(userId);
-		if (saveSearchForm.getUserID() != 0) {
+		int userId = getUserID(session);
+		if (userId != 0) {
 			List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
-					.viewMySavedSearches(saveSearchForm.getUserID(), false);
+					.viewMySavedSearches(userId, false);
 			List<DropDownDTO> notifyMeList = populateDropdownsService
 					.populateDropdown("NotifyMe");
-			saveSearchForm.setSaveSearchedJobsDTOList(saveSearchedJobsDTOList);
+			// saveSearchForm.setSaveSearchedJobsDTOList(saveSearchedJobsDTOList);
 			model.addObject("notifyMeList", notifyMeList);
 			model.addObject("saveSearchedJobsDTOList", saveSearchedJobsDTOList);
 		}
@@ -400,8 +408,7 @@ public class SaveSearchController {
 
 			sessionMap.put(MMJBCommonConstants.SEARCH_TYPE,
 					urlMap.get(MMJBCommonConstants.SEARCH_TYPE));
-			sessionMap
-					.put(SearchParamDTO.SEARCH_NAME, saveSearchName);
+			sessionMap.put(SearchParamDTO.SEARCH_NAME, saveSearchName);
 			sessionMap.put(SearchParamDTO.KEYWORDS,
 					urlMap.get(SearchParamDTO.KEYWORDS));
 			sessionMap.put(SearchParamDTO.CITY_STATE,
@@ -528,6 +535,53 @@ public class SaveSearchController {
 		model.setViewName("jobseekersavethissearchpopup");
 		return model;
 
+	}
+
+	/**
+	 * Method to return User id.
+	 * 
+	 * @param session
+	 * @return
+	 */
+	private Integer getUserID(HttpSession session) {
+
+		int userId = 0;
+
+		if ((null != session.getAttribute(MMJBCommonConstants.USER_ID))
+				&& StringUtils.isNotEmpty(session.getAttribute(
+						MMJBCommonConstants.USER_ID).toString())) {
+
+			userId = (Integer) session
+					.getAttribute(MMJBCommonConstants.USER_ID);
+
+		}
+
+		return userId;
+	}
+	
+	/**
+	 * The method helps to view all recent searches of user
+	 * 
+	 * @param session
+	 * @param result
+	 * @return
+	 */
+	@RequestMapping(value = "/viewrecentsearches", method = RequestMethod.GET)
+	public ModelAndView viewRecentsearches(HttpSession session, HttpServletRequest request) {
+
+		ModelAndView modelAndView = new ModelAndView();
+		session.removeAttribute("recentSearchId");
+		// get the userId from session
+		int userId = getUserID(session);
+		if(userId > 0){
+			List<SaveSearchedJobsDTO> recentSearches = saveSearchService
+					.viewMySavedSearches(userId, true);
+			
+			session.setAttribute(RECENT_SRCH_LIST, recentSearches);
+		}
+		modelAndView.setViewName("myrecentsearchespopup");
+
+		return modelAndView;
 	}
 
 }

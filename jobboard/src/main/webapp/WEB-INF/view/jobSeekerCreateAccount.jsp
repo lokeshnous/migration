@@ -133,7 +133,7 @@
         <!-- Step 2 -->
         
         <div class="ad_col_right"> 
-        ${adPageRightTop}
+       <div id="adPageRightTop"> ${adPageRightTop} </div>
         <br class="clearfix" />
                 </div>
       </div>

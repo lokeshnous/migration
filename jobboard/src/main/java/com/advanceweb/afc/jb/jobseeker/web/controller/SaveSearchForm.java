@@ -1,9 +1,6 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import java.util.Date;
-import java.util.List;
-
-import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 
 /**
  * 
@@ -14,7 +11,7 @@ import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 
 public class SaveSearchForm {
 
-	private int userID;
+	private int saveSearchId;
 	private String url;
 	private String searchName;
 	private String emailFrequency;
@@ -22,25 +19,7 @@ public class SaveSearchForm {
 	private String modifyDate;
 	private Date deletedDate;
 	private String notifyMe;
-	private List<SaveSearchedJobsDTO> saveSearchedJobsDTOList;
-	private String keywords;
-	private String clearAllPage;
-
-	/**
-	 * @return the userID
-	 */
-	public int getUserID() {
-		return userID;
-	}
-
-	/**
-	 * @param userID
-	 *            the userID to set
-	 */
-	public void setUserID(int userID) {
-		this.userID = userID;
-	}
-
+	
 	/**
 	 * @return the url
 	 */
@@ -146,36 +125,12 @@ public class SaveSearchForm {
 		this.notifyMe = notifyMe;
 	}
 
-	public List<SaveSearchedJobsDTO> getSaveSearchedJobsDTOList() {
-		return saveSearchedJobsDTOList;
+	public int getSaveSearchId() {
+		return saveSearchId;
 	}
 
-	public void setSaveSearchedJobsDTOList(
-			List<SaveSearchedJobsDTO> saveSearchedJobsDTOList) {
-		this.saveSearchedJobsDTOList = saveSearchedJobsDTOList;
-	}
-
-	/**
-	 * @return the keywords
-	 */
-	public String getKeywords() {
-		return keywords;
-	}
-
-	/**
-	 * @param keywords
-	 *            the keywords to set
-	 */
-	public void setKeywords(String keywords) {
-		this.keywords = keywords;
-	}
-
-	public String getClearAllPage() {
-		return clearAllPage;
-	}
-
-	public void setClearAllPage(String clearAllPage) {
-		this.clearAllPage = clearAllPage;
+	public void setSaveSearchId(int saveSearchId) {
+		this.saveSearchId = saveSearchId;
 	}
 
 }

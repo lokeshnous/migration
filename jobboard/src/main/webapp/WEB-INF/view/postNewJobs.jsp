@@ -979,7 +979,7 @@ function validateNumber(event) {
 				<!-- content_wrapper -->
 				<div class="ad_wrapper">
 					<span class="input_grp5 "> </span>
-						${adPageBtm}
+						${adPageBottom}
 				</div>
 				<!-- ad_wrapper -->
 

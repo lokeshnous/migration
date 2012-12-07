@@ -196,4 +196,14 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 		return saveSearchConversionHelper
 				.transformJpSaveSearchToSaveSearchedJobsDTO(searchResults);
 	}
+
+	/**
+	 * This method is used to save the recent search in user dash board.
+	 */
+	@Override
+	public void saveRecentSearch(int saveSearchId, String saveSearchName) {
+		AdmSaveSearch admSaveSearch=hibernateTemplate.get(AdmSaveSearch.class, saveSearchId);
+		admSaveSearch.setSearchName(saveSearchName);
+		hibernateTemplate.saveOrUpdate(admSaveSearch);
+	}
 }

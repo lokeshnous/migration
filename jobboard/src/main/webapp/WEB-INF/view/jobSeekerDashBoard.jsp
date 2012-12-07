@@ -72,7 +72,7 @@ jQuery(document).ready(
 				</div>
 				<div class="otherContent">
 				<div class="ad_col_right">
-				${adPageRightMiddle}
+				<div id="adPageRightMiddle"> ${adPageRightMiddle} </div>
 					<div class="follow_us">
 						<h2>Follow Us</h2>
 						<p>Stay connected to the latest jobs.</p>
@@ -338,7 +338,7 @@ jQuery(document).ready(
 				<br class="clearfix" />
 				
 				<div class="ad_wrapper">
-					${adPageBtm}
+					${adPageBottom}
 				</div>
 				
 			</div>

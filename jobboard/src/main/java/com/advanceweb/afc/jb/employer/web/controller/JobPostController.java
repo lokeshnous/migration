@@ -202,13 +202,13 @@ public class JobPostController extends AbstractController {
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageTop", bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGETOP, bannerString);
 
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageBtm", bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGEBOTTOM, bannerString);
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 		}
@@ -229,35 +229,6 @@ public class JobPostController extends AbstractController {
 				MMJBCommonConstants.FACILITY)
 				&& 0 == facility.getFacilityParentId());
 	}
-
-	/**
-	 * Get Ads for manage job Post page
-	 * 
-	 * @param request
-	 * @param session
-	 * @param model
-	 */
-//	private void getAdsForManageJobPost(HttpServletRequest request,
-//			HttpSession session, ModelAndView model) {
-//		String bannerString = null;
-//		try {
-//			ClientContext clientContext = getClientContextDetails(request,
-//					session, PageNames.EMPLOYER_MANAGE_JOBPOST);
-//			AdSize size = AdSize.IAB_LEADERBOARD;
-//			AdPosition position = AdPosition.TOP;
-//			bannerString = adService.getBanner(clientContext, size, position)
-//					.getTag();
-//			model.addObject("adPageTop", bannerString);
-//
-//			size = AdSize.IAB_LEADERBOARD;
-//			position = AdPosition.BOTTOM;
-//			bannerString = adService.getBanner(clientContext, size, position)
-//					.getTag();
-//			model.addObject("adPageBtm", bannerString);
-//		} catch (Exception e) {
-//			LOGGER.error(e.getMessage(), e);
-//		}
-//	}
 
 	/**
 	 * This method is called to save the job details

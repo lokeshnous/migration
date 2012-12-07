@@ -180,12 +180,19 @@ public class AgencyRegistrationController extends AbstractController {
 		model.addObject("countryList", countryList);
 		model.addObject("stateList", stateList);
 
-		getAds(request, session, model);
+		populateAds(request, session, model);
 		model.setViewName(AGENCYREG);
 		return model;
 	}
-
-	private void getAds(HttpServletRequest request, HttpSession session,
+	
+	/**
+	 * The method helps to populate the ads for the page
+	 * 
+	 * @param request
+	 * @param session
+	 * @param model
+	 */
+	private void populateAds(HttpServletRequest request, HttpSession session,
 			ModelAndView model) {
 		// Add the Ads
 		String bannerString = null;
@@ -196,25 +203,25 @@ public class AgencyRegistrationController extends AbstractController {
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageTop", bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGETOP, bannerString);
 
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
 			position = AdPosition.RIGHT_TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageRightTop", bannerString);
+			model.addObject(MMJBCommonConstants.ADPGRIGHT_TOP, bannerString);
 
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
 			position = AdPosition.RIGHT_MIDDLE;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageRightMiddle", bannerString);
+			model.addObject(MMJBCommonConstants.ADPGRIGHT_MIDDLE, bannerString);
 
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageBottom", bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGEBOTTOM, bannerString);
 		} catch (Exception e) {
 			LOGGER.error("Error occurred while getting the html content for Ads"
 					+ e);
@@ -240,7 +247,7 @@ public class AgencyRegistrationController extends AbstractController {
 			HttpSession session, HttpServletRequest req, BindingResult result) {
 		ModelAndView model = new ModelAndView();
 
-		getAds(req, session, model);
+		populateAds(req, session, model);
 
 		if (null != agencyRegistrationForm.getListProfAttribForms()) {
 			model.setViewName(AGENCYREG);

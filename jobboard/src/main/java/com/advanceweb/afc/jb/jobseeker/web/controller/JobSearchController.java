@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.StringTokenizer;
 import java.util.TreeMap;
 
 import javax.annotation.Resource;
@@ -259,14 +258,11 @@ public class JobSearchController extends AbstractController {
 	private static final String IS_SORTING = "isSorting";
 	private static final String CURRENT_URL = "currentUrl";
 	private static final String END_TAGS = "</TD></TR>\n";
-	private static final String ADPAGETOP = "adPageTop";
-	private static final String ADPAGEBTM = "adPageBtm";
 	private static final String COMPANY_NAME = "?companyName";
 	private static final String CITY = "?city";
 	private static final String COUNTRY = "?country";
 	private static final String STATE = "?state";
 	private static final String JOBTITLE = "jobtitle";
-	private static final String ADPGRIGHT_TOP = "adPageRightTop";
 	private static final String UNCHECKED = "unchecked";
 	private static final String ERROR_SOLR = "Error occured while getting the Job Search Result from SOLR...";
 	private static final String JOBBOARD_SEARCHRESULTS_PAGE = "jobboardsearchresults";
@@ -285,7 +281,6 @@ public class JobSearchController extends AbstractController {
 	private static final String BROWSE_BY_EMPLOYER = "browseByEmployer";
 	private static final String BROWSE_BY_STATE = "browseBystate";
 	private static final String AREA = "area";
-	private static final String RECENT_SRCH_LIST = "recentSearchList";
 	private static final String LATEST_RECENT_LIST = "latestRecentList";
 	private static final String Q_JOBSCOUNT = "?jobscount";
 	private static final String FRESH_JOB_SRCH = "freshjobsearch";
@@ -426,33 +421,40 @@ public class JobSearchController extends AbstractController {
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject(ADPAGETOP, bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGETOP, bannerString);
 
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageBtm", bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGEBOTTOM, bannerString);
 
 			if (pageName.equalsIgnoreCase(PageNames.JOBSEEKER_BROWSE_JOBS)) {
 				size = AdSize.IAB_MEDIUM_RECTANGLE;
 				position = AdPosition.RIGHT_TOP;
 				bannerString = adService.getBanner(clientContext, size,
 						position).getTag();
-				model.addObject(ADPGRIGHT_TOP, bannerString);
+				model.addObject(MMJBCommonConstants.ADPGRIGHT_TOP, bannerString);
 
 			} else if (pageName.equalsIgnoreCase(PageNames.JOB_VIEW)) {
 				size = AdSize.IAB_MEDIUM_RECTANGLE;
 				position = AdPosition.RIGHT_TOP;
 				bannerString = adService.getBanner(clientContext, size,
 						position).getTag();
-				model.addObject(ADPGRIGHT_TOP, bannerString);
+				model.addObject(MMJBCommonConstants.ADPGRIGHT_TOP, bannerString);
 
 				size = AdSize.IAB_MEDIUM_RECTANGLE;
 				position = AdPosition.RIGHT_MIDDLE;
 				bannerString = adService.getBanner(clientContext, size,
 						position).getTag();
-				model.addObject("adPageRightMiddle", bannerString);
+				model.addObject(MMJBCommonConstants.ADPGRIGHT_MIDDLE, bannerString);
+			}else if (pageName.equalsIgnoreCase(PageNames.JOBSEEKER_ADVC_JOB_SEARCH)) {
+				size = AdSize.IAB_MEDIUM_RECTANGLE;
+				position = AdPosition.RIGHT_MIDDLE;
+				bannerString = adService.getBanner(clientContext, size,
+						position).getTag();
+				model.addObject(MMJBCommonConstants.ADPGRIGHT_MIDDLE,
+						bannerString);
 			}
 
 		} catch (Exception e) {
@@ -598,6 +600,22 @@ public class JobSearchController extends AbstractController {
 			}
 
 			int userId = getUserID(session);
+			int savedJobsCount = 0;
+			try {
+				List<AppliedJobDTO> appliedJobDTOList = jobSeekerJobDetailService
+						.getAppliedJobs((Integer) session
+								.getAttribute(MMJBCommonConstants.USER_ID));
+				if (null != appliedJobDTOList) {
+					savedJobsCount = appliedJobDTOList.size();
+				}
+				if (savedJobsCount >= Integer.parseInt(saveJobsLimit)) {
+					int oldJobId = appliedJobDTOList.get(0).getSaveJobId();
+					jobSeekerJobDetailService.updateAppliedSavedJobs(oldJobId);
+				}
+			} catch (JobBoardException e) {
+				LOGGER.error("Error occured while getting the saved job of curresponding  user or while updating the particular job details"
+						, e);
+			}
 
 			// Validate if job is already applied
 			AppliedJobDTO appliedJobDTO = jobSearchService
@@ -721,7 +739,7 @@ public class JobSearchController extends AbstractController {
 	/**
 	 * Save or Update the applied job
 	 * 
-	 * @param form
+	 * @param jobId
 	 * @param userId
 	 * @param jobDTO
 	 * @param appliedJobDTO
@@ -854,7 +872,7 @@ public class JobSearchController extends AbstractController {
 
 		model.put(JOB_SEARCH_RESULT_FORM, jobSearchResultForm);
 		// get the Ads
-		getAdsForJobseekerSearch(request, session, modelAndView);
+		populateAds(request, session, modelAndView, PageNames.JOBSEEKER_JOB_SEARCH);
 		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
 		return modelAndView;
 	}
@@ -945,14 +963,14 @@ public class JobSearchController extends AbstractController {
 				recordsPerPage, noOfRecords, jobSrchJsonObj);
 
 		// populate the ads for search results grid
-		populateAdsForSearchResults(request, session, jobSrchJsonObj,
+		populateAds(request, session, jobSrchJsonObj,
 				recordsPerPage);
-		modelAndView.addObject("adPageCenterMiddleList",
-				jobSrchJsonObj.get("adPageCenterMiddleList"));
+		modelAndView.addObject(MMJBCommonConstants.ADPGCENTER_MIDDLE_LIST,
+				jobSrchJsonObj.get(MMJBCommonConstants.ADPGCENTER_MIDDLE_LIST));
 
 		model.put(JOB_SEARCH_RESULT_FORM, jobSearchResultForm);
 		// get the Ads
-		getAdsForJobseekerSearch(request, session, modelAndView);
+		populateAds(request, session, modelAndView, PageNames.JOBSEEKER_JOB_SEARCH);
 		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
 		return modelAndView;
 	}
@@ -1274,7 +1292,7 @@ public class JobSearchController extends AbstractController {
 		session.setAttribute(JOB_SRCH_MTCH_INFO, jobSearchMatchInfo);
 
 		// populate the ads for search results grid
-		populateAdsForSearchResults(request, session, jobSrchJsonObj,
+		populateAds(request, session, jobSrchJsonObj,
 				recordsPerPage);
 		String[] seoInfos = { jobTitle };
 		// Add the SEO details for job search results page
@@ -1404,7 +1422,7 @@ public class JobSearchController extends AbstractController {
 		session.setAttribute(JOB_SRCH_MTCH_INFO, jobSearchMatchInfo);
 
 		// populate the ads for search results grid
-		populateAdsForSearchResults(request, session, jobSrchJsonObj,
+		populateAds(request, session, jobSrchJsonObj,
 				recordsPerPage);
 		String[] seoInfos = { employer };
 		// Add the SEO details for job search results page
@@ -1530,7 +1548,7 @@ public class JobSearchController extends AbstractController {
 		session.removeAttribute(BROWSE_BY_EMPLOYER);
 
 		// populate the ads for search results grid
-		populateAdsForSearchResults(request, session, jobSrchJsonObj,
+		populateAds(request, session, jobSrchJsonObj,
 				recordsPerPage);
 		String[] seoInfos = { state };
 		// Add the SEO details for job search results page
@@ -1662,7 +1680,7 @@ public class JobSearchController extends AbstractController {
 		session.setAttribute(JOB_SRCH_MTCH_INFO, jobSearchMatchInfo);
 
 		// populate the ads for search reults grid
-		populateAdsForSearchResults(request, session, jobSrchJsonObj,
+		populateAds(request, session, jobSrchJsonObj,
 				recordsPerPage);
 		String[] seoInfos = { selectedArea, selectedLocation };
 		// Add the SEO details for job search results page
@@ -1799,7 +1817,7 @@ public class JobSearchController extends AbstractController {
 		session.setAttribute(JOB_SRCH_MTCH_INFO, jobSearchMatchInfo);
 
 		// populate the ads for search reults grid
-		populateAdsForSearchResults(request, session, jobSrchJsonObj,
+		populateAds(request, session, jobSrchJsonObj,
 				recordsPerPage);
 		String[] seoInfos = { selectedArea, selectedLocation };
 		// Add the SEO details for job search results page
@@ -1813,49 +1831,14 @@ public class JobSearchController extends AbstractController {
 	}
 
 	/**
-	 * Get Ads for job search results page
-	 * 
-	 * @param request
-	 * @param session
-	 * @param model
-	 */
-	private void getAdsForJobseekerSearch(HttpServletRequest request,
-			HttpSession session, ModelAndView model) {
-		String bannerString = null;
-		try {
-			ClientContext clientContext = getClientContextDetails(request,
-					session, PageNames.JOBSEEKER_JOB_SEARCH);
-			AdSize size = AdSize.IAB_LEADERBOARD;
-			AdPosition position = AdPosition.TOP;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject(ADPAGETOP, bannerString);
-
-			size = AdSize.IAB_MEDIUM_RECTANGLE;
-			position = AdPosition.RIGHT_TOP;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject(ADPGRIGHT_TOP, bannerString);
-
-			size = AdSize.IAB_LEADERBOARD;
-			position = AdPosition.BOTTOM;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject(ADPAGEBTM, bannerString);
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);
-		}
-	}
-
-	/**
-	 * Get Ads for job search results page
+	 * populate Ads for job search results page
 	 * 
 	 * @param request
 	 * @param session
 	 * @param recordsPerPage
 	 * @param jobSrchJsonObj
 	 */
-	private void populateAdsForSearchResults(HttpServletRequest request,
+	private void populateAds(HttpServletRequest request,
 			HttpSession session, JSONObject jobSrchJsonObj, int recordsPerPage) {
 
 		String bannerString = null;
@@ -1871,32 +1854,31 @@ public class JobSearchController extends AbstractController {
 				adsList.add(bannerString);
 			}
 			// session.setAttribute("adPageCenterMiddleList", adsList);
-			jobSrchJsonObj.put("adPageCenterMiddleList", adsList);
-			// session.setAttribute("adPageCenterMiddleList", adsList);
+			jobSrchJsonObj.put(MMJBCommonConstants.ADPGCENTER_MIDDLE_LIST, adsList);
 			
 			AdSize size = AdSize.IAB_LEADERBOARD;
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			jobSrchJsonObj.put(ADPAGETOP, bannerString);
+			jobSrchJsonObj.put(MMJBCommonConstants.ADPAGETOP, bannerString);
 
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			jobSrchJsonObj.put(ADPAGEBTM, bannerString);
+			jobSrchJsonObj.put(MMJBCommonConstants.ADPAGEBOTTOM, bannerString);
 			
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
 			position = AdPosition.RIGHT_TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			jobSrchJsonObj.put(ADPGRIGHT_TOP, bannerString);
+			jobSrchJsonObj.put(MMJBCommonConstants.ADPGRIGHT_TOP, bannerString);
 			
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
 			position = AdPosition.RIGHT_MIDDLE;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			jobSrchJsonObj.put("adPageRightMiddle", bannerString);
+			jobSrchJsonObj.put(MMJBCommonConstants.ADPGRIGHT_MIDDLE, bannerString);
 
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
@@ -2252,50 +2234,9 @@ public class JobSearchController extends AbstractController {
 
 		model.setViewName("jobboardadvancedsearch");
 		// get the Ads
-		getAdsForAdvcSearch(request, session, model);
+		populateAds(request, session, model, PageNames.JOBSEEKER_ADVC_JOB_SEARCH);
 		clearSession(session);
 		return model;
-	}
-
-	/**
-	 * Get Ads for advance search results page
-	 * 
-	 * @param request
-	 * @param session
-	 * @param model
-	 */
-	private void getAdsForAdvcSearch(HttpServletRequest request,
-			HttpSession session, ModelAndView model) {
-		String bannerString = null;
-		try {
-			ClientContext clientContext = getClientContextDetails(request,
-					session, PageNames.JOBSEEKER_ADVC_JOB_SEARCH);
-			AdSize size = AdSize.IAB_LEADERBOARD;
-			AdPosition position = AdPosition.TOP;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject(ADPAGETOP, bannerString);
-
-			size = AdSize.IAB_MEDIUM_RECTANGLE;
-			position = AdPosition.RIGHT_TOP;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject(ADPGRIGHT_TOP, bannerString);
-
-			size = AdSize.IAB_MEDIUM_RECTANGLE;
-			position = AdPosition.RIGHT_MIDDLE;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject("adPageRightMiddle", bannerString);
-
-			size = AdSize.IAB_LEADERBOARD;
-			position = AdPosition.BOTTOM;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject(ADPAGEBTM, bannerString);
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);
-		}
 	}
 
 	/**
@@ -2822,8 +2763,8 @@ public class JobSearchController extends AbstractController {
 				.viewMySavedSearches(userId, true);
 		
 		// If the searches are exceeding the limit then delete the old search
-		if (recentSearches.size() >= Integer.parseInt(recentSearchsLimit)) {
-			int saveSearchId = recentSearches.get(0).getSaveSearchID();
+		if (recentSearches.size() == Integer.parseInt(recentSearchsLimit)) {
+			int saveSearchId = recentSearches.get(recentSearches.size()-1).getSaveSearchID();
 			saveSearchService.deleteSavedSearch(saveSearchId);
 		}
 		
@@ -2835,35 +2776,9 @@ public class JobSearchController extends AbstractController {
 		// get the latest searches and check for latest searches limit
 		List<SaveSearchedJobsDTO> latestSearches = recentSearches;
 		if (recentSearches.size() > MMJBCommonConstants.LATEST_SEARCHES_LIMIT) {
-			latestSearches = recentSearches.subList(recentSearches.size()
-					- MMJBCommonConstants.LATEST_SEARCHES_LIMIT,
-					recentSearches.size());
+			latestSearches = recentSearches.subList(0 , MMJBCommonConstants.LATEST_SEARCHES_LIMIT);
 		}
 		session.setAttribute(LATEST_RECENT_LIST, latestSearches);
-	}
-
-	/**
-	 * The method helps to view all recent searches of user
-	 * 
-	 * @param session
-	 * @param result
-	 * @return
-	 */
-	@RequestMapping(value = "/viewrecentsearches", method = RequestMethod.GET)
-	public ModelAndView viewRecentsearches(HttpSession session, HttpServletRequest request) {
-
-		ModelAndView modelAndView = new ModelAndView();
-		// get the userId from session
-		int userId = getUserID(session);
-		if(userId > 0){
-			List<SaveSearchedJobsDTO> recentSearches = saveSearchService
-					.viewMySavedSearches(userId, true);
-			
-			session.setAttribute(RECENT_SRCH_LIST, recentSearches);
-		}
-		modelAndView.setViewName("myrecentsearchespopup");
-
-		return modelAndView;
 	}
 
 	/**
@@ -2918,8 +2833,7 @@ public class JobSearchController extends AbstractController {
 			// get the latest searches and check for latest searches limit
 			List<SaveSearchedJobsDTO> latestSearches = recentSearches;
 			if(recentSearches.size() > MMJBCommonConstants.LATEST_SEARCHES_LIMIT){
-				latestSearches = recentSearches.subList(
-						recentSearches.size() - MMJBCommonConstants.LATEST_SEARCHES_LIMIT, recentSearches.size());
+				latestSearches = recentSearches.subList(0 , MMJBCommonConstants.LATEST_SEARCHES_LIMIT);
 			}
 
 			session.setAttribute(LATEST_RECENT_LIST, latestSearches);
@@ -3629,7 +3543,7 @@ public class JobSearchController extends AbstractController {
 				recordsPerPage, noOfRecords, jobSrchJsonObj);
 
 		// populate the ads for search results grid
-		populateAdsForSearchResults(request, session, jobSrchJsonObj,
+		populateAds(request, session, jobSrchJsonObj,
 				recordsPerPage);
 		
 		// save the search results to DB to set the list of recent searches by

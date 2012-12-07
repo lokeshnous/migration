@@ -21,10 +21,11 @@
 <script language="javascript" type="text/javascript" src="../resources/js/searchResultsdatatable.js"></script>
 <script language="javascript" type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 
+  <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script> 
 </head>
 
 <body class="job_board">
-	<div class="ad_page_top">${adPageTop}</div>
+<div class="ad_page_top">${adPageTop}</div>
 	<div class="main_wrapper_outside">
 		<div class="main_wrapper_inside">
 			<div class="main">
@@ -36,7 +37,7 @@
 				</div>
 				<div class="otherContent ">
 					<div class="ad_col_right">
-						${adPageRightMiddle}
+						<div id="adPageRightMiddle"> ${adPageRightMiddle} </div>
 						<div class="follow_us">
 							<h2>Follow Us</h2>
 							<p>Stay connected to the latest jobs.</p>
@@ -86,7 +87,7 @@
 				</div>
 				<br class="clearfix" />
 
-				<div class="ad_wrapper">${adPageBtm}</div>
+				<div class="ad_wrapper">${adPageBottom}</div>
 
 
 			</div>

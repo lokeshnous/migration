@@ -147,7 +147,7 @@ public class BrandingTemplateController extends AbstractController{
 				.getAttribute(MMJBCommonConstants.USER_ID);
 		brandingTemplate.setEmployerId(user_id);
 
-		getAds(session, request, model);
+		populateAds(session, request, model);
 				
 		//Check if the user has exceeded the branding template limit
 		status = brandingTemplateService.checkTemplateLimit(facilityId);
@@ -277,7 +277,7 @@ public class BrandingTemplateController extends AbstractController{
 			}
 			model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 			model.addObject(STR_ERRORMESSAGE, null);
-			getAds(session, request, model);
+			populateAds(session, request, model);
 			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 			return model;
 		}
@@ -292,7 +292,7 @@ public class BrandingTemplateController extends AbstractController{
 		if (!status) {
 			result.rejectValue(STR_LOGOFILEDATA, STR_NOTEMPTY,
 					"An error occured while saving the file");
-			getAds(session, request, model);
+			populateAds(session, request, model);
 			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 			return model;
 		}
@@ -710,7 +710,7 @@ public class BrandingTemplateController extends AbstractController{
 		brandingTemplateForm.setImageSizeLimit(imageSizeLimit);
 		brandingTemplateForm.setVideoSizeLimit(videoSizeLimit);
 		
-		getAds(session, request, model);
+		populateAds(session, request, model);
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 		model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 		// Dummy list created to have a non zero List
@@ -753,7 +753,7 @@ public class BrandingTemplateController extends AbstractController{
 			model.setViewName(STR_EMPDASHBOARD);
 
 		} else {
-			getAds(session, request, model);
+			populateAds(session, request, model);
 			model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 		}
@@ -929,7 +929,7 @@ public class BrandingTemplateController extends AbstractController{
 		brandingTemplateForm.setVideoSizeLimit(videoSizeLimit);
 		brandingTemplateForm.setEditMode(true);
 		
-		getAds(session, request, model);
+		populateAds(session, request, model);
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 		model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 		return model;
@@ -972,7 +972,7 @@ public class BrandingTemplateController extends AbstractController{
 
 		if (result.hasErrors()) {
 			model.setViewName("editBrandingTemplate");
-			getAds(session, request, model);
+			populateAds(session, request, model);
 			return model;
 		}
 
@@ -982,7 +982,7 @@ public class BrandingTemplateController extends AbstractController{
 			result.rejectValue(STR_LOGOFILEDATA, STR_NOTEMPTY,
 					"An error occured while saving the file");
 			model.setViewName("editBrandingTemplate");
-			getAds(session, request, model);
+			populateAds(session, request, model);
 			return model;
 		}
 
@@ -1158,13 +1158,13 @@ public class BrandingTemplateController extends AbstractController{
 	}
 	
 	/**
-	 * This method displays the ads 
+	 * The method helps to populate the ads for the page 
 	 * 
 	 * @param session
 	 * @param request
 	 * @param model
 	 */
-	private void getAds(HttpSession session, HttpServletRequest request,
+	private void populateAds(HttpSession session, HttpServletRequest request,
 			ModelAndView model) {
 		// Add the Ads 
 		String bannerString = null;
@@ -1175,25 +1175,25 @@ public class BrandingTemplateController extends AbstractController{
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService
 					.getBanner(clientContext, size, position).getTag();
-			model.addObject("adPageTop", bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGETOP, bannerString);
 			
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
 			position = AdPosition.RIGHT_TOP;
 			bannerString = adService
 					.getBanner(clientContext, size, position).getTag();
-			model.addObject("adPageRightTop", bannerString);
+			model.addObject(MMJBCommonConstants.ADPGRIGHT_TOP, bannerString);
 			
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
 			position = AdPosition.RIGHT_MIDDLE;
 			bannerString = adService
 					.getBanner(clientContext, size, position).getTag();
-			model.addObject("adPageRightMiddle", bannerString);
+			model.addObject(MMJBCommonConstants.ADPGRIGHT_MIDDLE, bannerString);
 
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService
 					.getBanner(clientContext, size, position).getTag();
-			model.addObject("adPageBottom", bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGEBOTTOM, bannerString);
 		} catch (Exception e) {
 			LOGGER.error("Error occurred while getting the html content for Ads"
 					, e);

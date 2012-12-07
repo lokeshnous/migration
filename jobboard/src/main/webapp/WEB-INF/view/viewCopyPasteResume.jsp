@@ -80,7 +80,7 @@
 			<!--Start:MidContant-->
 			<div class="clearfix"></div>
 			<!-- content_wrapper -->
-			<div class="ad_wrapper">${adPageBtm}</div>
+			<div class="ad_wrapper">${adPageBottom}</div>
 			<!-- ad_wrapper -->
 
 		</div>

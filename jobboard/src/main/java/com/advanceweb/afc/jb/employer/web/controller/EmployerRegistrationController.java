@@ -408,14 +408,14 @@ public class EmployerRegistrationController extends AbstractController{
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageTop", bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGETOP, bannerString);
 
 			
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageBtm", bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGEBOTTOM, bannerString);
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);		}
 	}

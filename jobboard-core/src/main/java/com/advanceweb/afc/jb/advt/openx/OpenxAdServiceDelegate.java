@@ -112,7 +112,7 @@ public class OpenxAdServiceDelegate implements AdServiceDelegate {
 			banner.setTag(defaultAdTemplate.process(params));
 		} else {
 			params.put("auid", auid);
-			banner.setTag(imageAdTemplate.process(params));
+			banner.setTag(iframeAdTemplate.process(params));
 		}
 		LOGGER.debug("Received ad tag " + banner.getTag());
 

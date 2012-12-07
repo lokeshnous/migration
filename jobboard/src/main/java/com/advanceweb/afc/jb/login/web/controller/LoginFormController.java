@@ -135,94 +135,29 @@ public class LoginFormController extends AbstractController{
 		if (page.equals(MMJBCommonConstants.JOB_SEEKER)) {
 			pageValue = "jobSeekerLogin";
 			// get the Ads
-			getAdsForJobseekerLogin(request, session, model);
+			populateAds(request, session, model, PageNames.JOBSEEKER_LOGIN);
 		} else if (page.equals(MMJBCommonConstants.EMPLOYER)) {
 			pageValue = "employerLogin";
 			// get the Ads
-			getAdsForEmployerLogin(request, session, model);
+			populateAds(request, session, model, PageNames.EMPLOYER_LOGIN);
 		} else {
 			pageValue = "agencyLogin";
 			// get the Ads
-			getAdsForAgencyLogin(request, session, model);
+			populateAds(request, session, model, PageNames.AGENCY_LOGIN);
 		}
 		return pageValue;
 	}
 	
 	/**
-	 * Get Ads for job seeker login page
+	 * populate Ads for agency login page
 	 * 
 	 * @param request
 	 * @param session
 	 * @param model
+	 * @param pageName 
 	 */
-	private void getAdsForJobseekerLogin (HttpServletRequest request,
-			HttpSession session, ModelMap model) {
-		String bannerString = null;
-		try {
-			ClientContext clientContext = getClientContextDetails(request,
-					session, PageNames.JOBSEEKER_LOGIN);
-			AdSize size = AdSize.IAB_LEADERBOARD;
-			AdPosition position = AdPosition.TOP;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addAttribute("adPageTop", bannerString);
-			
-			size = AdSize.IAB_MEDIUM_RECTANGLE;
-			position = AdPosition.RIGHT_TOP;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addAttribute("adPageRightTop", bannerString);
-			
-			size = AdSize.IAB_LEADERBOARD;
-			position = AdPosition.BOTTOM;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addAttribute("adPageBtm", bannerString);
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);		}
-	}
-	/**
-	 * Get Ads for employer login page
-	 * 
-	 * @param request
-	 * @param session
-	 * @param model
-	 */
-	private void getAdsForEmployerLogin (HttpServletRequest request,
-			HttpSession session, ModelMap model) {
-		String bannerString = null;
-		try {
-			ClientContext clientContext = getClientContextDetails(request,
-					session, PageNames.EMPLOYER_LOGIN);
-			AdSize size = AdSize.IAB_LEADERBOARD;
-			AdPosition position = AdPosition.TOP;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addAttribute("adPageTop", bannerString);
-			
-			size = AdSize.IAB_MEDIUM_RECTANGLE;
-			position = AdPosition.RIGHT_TOP;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addAttribute("adPageRightTop", bannerString);
-			
-			size = AdSize.IAB_LEADERBOARD;
-			position = AdPosition.BOTTOM;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addAttribute("adPageBtm", bannerString);
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);		}
-	}
-	/**
-	 * Get Ads for agency login page
-	 * 
-	 * @param request
-	 * @param session
-	 * @param model
-	 */
-	private void getAdsForAgencyLogin (HttpServletRequest request,
-			HttpSession session, ModelMap model) {
+	private void populateAds (HttpServletRequest request,
+			HttpSession session, ModelMap model, String pageName) {
 		String bannerString = null;
 		try {
 			ClientContext clientContext = getClientContextDetails(request,
@@ -231,19 +166,19 @@ public class LoginFormController extends AbstractController{
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addAttribute("adPageTop", bannerString);
+			model.addAttribute(MMJBCommonConstants.ADPAGETOP, bannerString);
 			
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
 			position = AdPosition.RIGHT_TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addAttribute("adPageRightTop", bannerString);
+			model.addAttribute(MMJBCommonConstants.ADPGRIGHT_TOP, bannerString);
 			
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addAttribute("adPageBtm", bannerString);
+			model.addAttribute(MMJBCommonConstants.ADPAGEBOTTOM, bannerString);
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);		}
 	}

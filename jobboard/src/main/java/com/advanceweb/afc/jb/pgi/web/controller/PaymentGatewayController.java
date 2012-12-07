@@ -74,8 +74,6 @@ public class PaymentGatewayController extends AbstractController{
 	private static final String BILLING_INFO_FORM = "gatewayBillingInfo";
 	private static final String GATEWAY_PAYMENT_FORM = "gatewayPaymentMethod";
 	private static final String PAYMENT_GATEWAY_FORM = "paymentGatewayForm";
-	private static final String ADPAGETOP = "adPageTop";
-	private static final String ADPAGEBTM = "adPageBtm";
 	
 	@Autowired
 	private PaymentGatewayService paymentGatewayService;
@@ -142,19 +140,20 @@ public class PaymentGatewayController extends AbstractController{
 		}
 		model.setViewName(GATEWAY_PAYMENT_FORM);
 		// get the Ads
-		getAdsForPaymentMethod (request, session, model);
+		populateAds (request, session, model, PageNames.EMPLOYER_PG_METHOD);
 		return model;
 	}
 	
 	/**
-	 * Get Ads for payment method page
+	 * populate Ads for payment method page
 	 * 
 	 * @param request
 	 * @param session
 	 * @param model
+	 * @param pageName 
 	 */
-	private void getAdsForPaymentMethod (HttpServletRequest request,
-			HttpSession session, ModelAndView model) {
+	private void populateAds (HttpServletRequest request,
+			HttpSession session, ModelAndView model, String pageName) {
 		String bannerString = null;
 		try {
 			ClientContext clientContext = getClientContextDetails(request,
@@ -163,14 +162,14 @@ public class PaymentGatewayController extends AbstractController{
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject(ADPAGETOP, bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGETOP, bannerString);
 
 			
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject(ADPAGEBTM, bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGEBOTTOM, bannerString);
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);		}
 	}
@@ -185,7 +184,7 @@ public class PaymentGatewayController extends AbstractController{
 		
 		model.setViewName(GATEWAY_PAYMENT_FORM);
 		// get the Ads
-		getAdsForPaymentMethod (request, session, model);
+		populateAds (request, session, model, PageNames.EMPLOYER_PG_METHOD);
 		return model;
 	}
 
@@ -237,39 +236,9 @@ public class PaymentGatewayController extends AbstractController{
 		model.addObject(PAYMENT_GATEWAY_FORM, paymentGatewayForm);
 		model.setViewName(BILLING_INFO_FORM);
 		// get the Ads
-		getAdsForBillingInfo (request, session, model);
+		populateAds (request, session, model, PageNames.EMPLOYER_PG_BILLING);
 		return model;
 	}
-	
-	/**
-	 * Get Ads for payment method billing page
-	 * 
-	 * @param request
-	 * @param session
-	 * @param model
-	 */
-	private void getAdsForBillingInfo (HttpServletRequest request,
-			HttpSession session, ModelAndView model) {
-		String bannerString = null;
-		try {
-			ClientContext clientContext = getClientContextDetails(request,
-					session, PageNames.EMPLOYER_PG_BILLING);
-			AdSize size = AdSize.IAB_LEADERBOARD;
-			AdPosition position = AdPosition.TOP;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject(ADPAGETOP, bannerString);
-
-			
-			size = AdSize.IAB_LEADERBOARD;
-			position = AdPosition.BOTTOM;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject(ADPAGEBTM, bannerString);
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);		}
-	}
-
 	
 	@RequestMapping(value = "/paymentBillingInfoBack", method = RequestMethod.GET)
 	public ModelAndView paymentBillingInfoBack(@Valid PaymentGatewayForm paymentGatewayForm,
@@ -292,7 +261,7 @@ public class PaymentGatewayController extends AbstractController{
 		model.addObject(PAYMENT_GATEWAY_FORM, paymentGatewayForm);
 		model.setViewName(BILLING_INFO_FORM);
 		// get the Ads
-		getAdsForBillingInfo (request, session, model);
+		populateAds (request, session, model, PageNames.EMPLOYER_PG_BILLING);
 		return model;
 	}
 	
@@ -304,39 +273,9 @@ public class PaymentGatewayController extends AbstractController{
 		model.addObject(PAYMENT_GATEWAY_FORM, paymentGatewayForm);
 		model.setViewName(CONFIRM_ORDER_FORM);
 		// get the Ads
-		getAdsForConfirmOrder (request, session, model);
+		populateAds(request, session, model, PageNames.EMPLOYER_PG_CONFIRMORDER);
 		return model;
 	}
-	
-	/**
-	 * Get Ads for payment method confirmation order page
-	 * 
-	 * @param request
-	 * @param session
-	 * @param model
-	 */
-	private void getAdsForConfirmOrder (HttpServletRequest request,
-			HttpSession session, ModelAndView model) {
-		String bannerString = null;
-		try {
-			ClientContext clientContext = getClientContextDetails(request,
-					session, PageNames.EMPLOYER_PG_CONFIRMORDER);
-			AdSize size = AdSize.IAB_LEADERBOARD;
-			AdPosition position = AdPosition.TOP;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject(ADPAGETOP, bannerString);
-
-			
-			size = AdSize.IAB_LEADERBOARD;
-			position = AdPosition.BOTTOM;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject(ADPAGEBTM, bannerString);
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);		}
-	}
-
 	
 	@RequestMapping(value = "/confirmOrder", method = RequestMethod.POST)
 	public ModelAndView confirmOrder(@Valid PaymentGatewayForm paymentGatewayForm,
@@ -351,7 +290,7 @@ public class PaymentGatewayController extends AbstractController{
 			
 			model.setViewName(BILLING_INFO_FORM);
 			// get the Ads
-			getAdsForBillingInfo (request, session, model);
+			populateAds(request, session, model, PageNames.EMPLOYER_PG_BILLING);
 			return model;
 		}
 		
@@ -598,40 +537,10 @@ public class PaymentGatewayController extends AbstractController{
 		model.addObject(PAYMENT_GATEWAY_FORM, paymentGatewayForm);
 		model.setViewName(THANK_YOU_FORM);
 		// get the Ads
-		getAdsForPGConclusion(request, session, model);
+		populateAds(request, session, model, PageNames.EMPLOYER_PG_CONCLUSION);
 
 		return model;
 	}
-	
-	/**
-	 * Get Ads for payment method conclusion page
-	 * 
-	 * @param request
-	 * @param session
-	 * @param model
-	 */
-	private void getAdsForPGConclusion (HttpServletRequest request,
-			HttpSession session, ModelAndView model) {
-		String bannerString = null;
-		try {
-			ClientContext clientContext = getClientContextDetails(request,
-					session, PageNames.EMPLOYER_PG_CONCLUSION);
-			AdSize size = AdSize.IAB_LEADERBOARD;
-			AdPosition position = AdPosition.TOP;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject(ADPAGETOP, bannerString);
-
-			
-			size = AdSize.IAB_LEADERBOARD;
-			position = AdPosition.BOTTOM;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject(ADPAGEBTM, bannerString);
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);		}
-	}
-
 	
 	/**
 	 * @param session

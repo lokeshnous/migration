@@ -77,7 +77,7 @@ public class EditFacilityGroupController extends AbstractController{
 		ModelAndView model = new ModelAndView();
 		boolean isHealthSys = false;
 		
-		getAds(session, request, model);
+		populateAds(session, request, model);
 		
 		if(session.getAttribute("isHealthSys")!=null){
 			isHealthSys =(Boolean) session.getAttribute("isHealthSys");
@@ -100,13 +100,13 @@ public class EditFacilityGroupController extends AbstractController{
 	}
 
 	/**
-	 * This method displays the ads 
+	 * The method helps to populate the ads for the page 
 	 * 
 	 * @param session
 	 * @param request
 	 * @param model
 	 */
-	private void getAds(HttpSession session, HttpServletRequest request,
+	private void populateAds(HttpSession session, HttpServletRequest request,
 			ModelAndView model) {
 		// Add the Ads 
 		String bannerString = null;
@@ -117,25 +117,25 @@ public class EditFacilityGroupController extends AbstractController{
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService
 					.getBanner(clientContext, size, position).getTag();
-			model.addObject("adPageTop", bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGETOP, bannerString);
 			
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
 			position = AdPosition.RIGHT_TOP;
 			bannerString = adService
 					.getBanner(clientContext, size, position).getTag();
-			model.addObject("adPageRightTop", bannerString);
+			model.addObject(MMJBCommonConstants.ADPGRIGHT_TOP, bannerString);
 			
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
 			position = AdPosition.RIGHT_MIDDLE;
 			bannerString = adService
 					.getBanner(clientContext, size, position).getTag();
-			model.addObject("adPageRightMiddle", bannerString);
+			model.addObject(MMJBCommonConstants.ADPGRIGHT_MIDDLE, bannerString);
 
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService
 					.getBanner(clientContext, size, position).getTag();
-			model.addObject("adPageBottom", bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGEBOTTOM, bannerString);
 		} catch (Exception e) {
 			LOGGER.error("Error occurred while getting the html content for Ads"
 					, e);

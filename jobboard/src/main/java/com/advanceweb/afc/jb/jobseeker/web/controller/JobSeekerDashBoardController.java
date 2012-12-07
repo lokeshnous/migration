@@ -151,7 +151,7 @@ public class JobSeekerDashBoardController extends AbstractController {
 		model.addObject("jobSeekerDashBoardForm", form);
 		model.setViewName("jobSeekerDashBoard");
 		// get the Ads
-		getAdsForJobseekerDashboard(request, session, model);
+		populateAds(request, session, model);
 
 		/** Getting the value from the session **/
 
@@ -193,13 +193,13 @@ public class JobSeekerDashBoardController extends AbstractController {
 	}
 
 	/**
-	 * Get Ads for job seeker dashboard page
+	 * Populate the Ads for job seeker dashboard page
 	 * 
 	 * @param request
 	 * @param session
 	 * @param model
 	 */
-	private void getAdsForJobseekerDashboard(HttpServletRequest request,
+	private void populateAds(HttpServletRequest request,
 			HttpSession session, ModelAndView model) {
 		String bannerString = null;
 		try {
@@ -209,25 +209,25 @@ public class JobSeekerDashBoardController extends AbstractController {
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageTop", bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGETOP, bannerString);
 
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
 			position = AdPosition.RIGHT_TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageRightTop", bannerString);
+			model.addObject(MMJBCommonConstants.ADPGRIGHT_TOP, bannerString);
 
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
 			position = AdPosition.RIGHT_MIDDLE;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageRightMiddle", bannerString);
+			model.addObject(MMJBCommonConstants.ADPGRIGHT_MIDDLE, bannerString);
 
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageBtm", bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGEBOTTOM, bannerString);
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 		}

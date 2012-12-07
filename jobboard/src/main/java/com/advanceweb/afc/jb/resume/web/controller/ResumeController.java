@@ -392,7 +392,7 @@ public class ResumeController extends AbstractController{
 			resumeDTO.getContactInfoDTO();
 			model.addObject(CREATE_RESUME, createResume);
 			// Ads for resume page
-			getAdsForResumePage(request, session, model);
+			populateAds(request, session, model);
 			model.setViewName(CREATE_RES_BUILDER);
 		}
 
@@ -710,7 +710,7 @@ public class ResumeController extends AbstractController{
 		// DropDowns end
 		model.addObject(CREATE_RESUME, createResume);
 		// Ads for resume page
-		getAdsForResumePage(request, session, model);
+		populateAds(request, session, model);
 		model.setViewName(CREATE_RES_BUILDER);
 		return model;
 	}
@@ -744,7 +744,7 @@ public class ResumeController extends AbstractController{
 			model.addObject(CREATE_RESUME, createResume);
 			model.addObject("errorMessage", errorMessage);
 			// Ads for resume page
-			getAdsForResumePage(request, session, model);
+			populateAds(request, session, model);
 			model.setViewName(CREATE_RES_BUILDER);
 			return model;
 		}
@@ -808,7 +808,7 @@ public class ResumeController extends AbstractController{
 		model.addObject(CREATE_RESUME, createResume);
 		model = populateDropdowns(model);
 		// Ads for resume page
-		getAdsForResumePage(request, session, model);
+		populateAds(request, session, model);
 		model.setViewName(CREATE_RES_BUILDER);
 		return model;
 
@@ -1113,19 +1113,19 @@ public class ResumeController extends AbstractController{
 			model.setViewName("viewCopyPasteResume");
 		}
 		// Ads for resume page
-		getAdsForResumePage(request, session, model);
+		populateAds(request, session, model);
 		return model;
 
 	}
 
 	/**
-	 * Get Ads for Resume view page
+	 * populate Ads for Resume view page
 	 * 
 	 * @param request
 	 * @param session
 	 * @param model
 	 */
-	private void getAdsForResumePage(HttpServletRequest request,
+	private void populateAds(HttpServletRequest request,
 			HttpSession session, ModelAndView model) {
 		String bannerString = null;
 		try {
@@ -1135,13 +1135,13 @@ public class ResumeController extends AbstractController{
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageTop", bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGETOP, bannerString);
 
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageBtm", bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGEBOTTOM, bannerString);
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 		}

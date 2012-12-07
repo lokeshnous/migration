@@ -207,26 +207,26 @@ public class HomeController extends AbstractController{
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService
 					.getBanner(clientContext, size, position).getTag();
-			model.addAttribute("adPageTop", bannerString);
+			model.addAttribute(MMJBCommonConstants.ADPAGETOP, bannerString);
 			
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService
 					.getBanner(clientContext, size, position).getTag();
-			model.addAttribute("adPageBtm", bannerString);
+			model.addAttribute(MMJBCommonConstants.ADPAGEBOTTOM, bannerString);
 			
 			if(pageName.equalsIgnoreCase(PageNames.HOME)){
 				size = AdSize.IAB_MEDIUM_RECTANGLE;
 				position = AdPosition.RIGHT_TOP;
 				bannerString = adService
 						.getBanner(clientContext, size, position).getTag();
-				model.addAttribute("adPageRightTop", bannerString);
+				model.addAttribute(MMJBCommonConstants.ADPGRIGHT_TOP, bannerString);
 				
 				size = AdSize.IAB_MEDIUM_RECTANGLE;
 				position = AdPosition.RIGHT_MIDDLE;
 				bannerString = adService
 						.getBanner(clientContext, size, position).getTag();
-				model.addAttribute("adPageRightMiddle", bannerString);
+				model.addAttribute(MMJBCommonConstants.ADPGRIGHT_MIDDLE, bannerString);
 			}
 
 

@@ -13,7 +13,7 @@
 	</c:when>
 	<c:otherwise>
 		<a class="cursor" id="clearLatestSearches" onclick="clearRecentSearches();">Clear All</a> | 
-		<a  class="nyroModal seeallpopup" href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/viewrecentsearches.html" id="seeallpopup">See All</a>
+		<a  class="nyroModal seeallpopup" href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/savedSearches/viewrecentsearches.html" id="seeallpopup">See All</a>
 	</c:otherwise>
 </c:choose>
 

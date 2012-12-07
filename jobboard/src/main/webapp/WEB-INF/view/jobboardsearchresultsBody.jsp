@@ -407,11 +407,11 @@
 							<div class="FormErrorDisplayText row" id="topjobActionInfo${job.JobId}" ></div>
 							
 						</div>
-				<%-- <c:if test="${(status.index + 1) % 10 == 0}"> 
-					<div class="ad_wrapper" id="ad_wrapper${(status.index + 1) % 10}">
-						${adPageCenterMiddleList[((status.index + 1) / 10 -1)] }
-					</div> 					
-				</c:if> --%>
+				 <c:if test="${(status.index + 1) % 10 == 0}"> 
+					<div class="ad_wrapper" id="ad_wrapper${fn:split((status.index + 1) / 10, '.')[0]}">
+						${adPageCenterMiddleList[fn:split(((status.index + 1) / 10)-1, '.')[0]] }
+					</div>  					
+				</c:if>
 			</c:forEach>
 			
 					</div>

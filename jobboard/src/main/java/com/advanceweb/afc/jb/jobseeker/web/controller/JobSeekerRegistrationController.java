@@ -199,41 +199,50 @@ public class JobSeekerRegistrationController extends AbstractController {
 		model.setViewName(JS_CREATE_ACCOUNT);
 		model.addObject(REGISTER_FORM, registerForm);
 		// get the Ads
-		getAdsForjobSeekerCreateAcc(request, session, model);
+		populateAds(request, session, model, PageNames.JOBSEEKER_REGISTRATION);
 		return model;
 
 	}
 
 	/**
-	 * Get Ads for job seeker create account page
+	 * populate Ads for job seeker create account page
 	 * 
 	 * @param request
 	 * @param session
 	 * @param model
+	 * @param pageName 
 	 */
-	private void getAdsForjobSeekerCreateAcc(HttpServletRequest request,
-			HttpSession session, ModelAndView model) {
+	private void populateAds(HttpServletRequest request,
+			HttpSession session, ModelAndView model, String pageName) {
 		String bannerString = null;
 		try {
 			ClientContext clientContext = getClientContextDetails(request,
-					session, PageNames.JOBSEEKER_REGISTRATION);
+					session, pageName);
 			AdSize size = AdSize.IAB_LEADERBOARD;
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageTop", bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGETOP, bannerString);
 
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
 			position = AdPosition.RIGHT_TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageRightTop", bannerString);
+			model.addObject(MMJBCommonConstants.ADPGRIGHT_TOP, bannerString);
 
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageBtm", bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGEBOTTOM, bannerString);
+			
+			if(pageName.equalsIgnoreCase(PageNames.JOBSEEKER_REGISTRATION_INFO)){
+				size = AdSize.IAB_MEDIUM_RECTANGLE;
+				position = AdPosition.RIGHT_MIDDLE;
+				bannerString = adService.getBanner(clientContext, size, position)
+						.getTag();
+				model.addObject(MMJBCommonConstants.ADPGRIGHT_MIDDLE, bannerString);
+			}
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 		}
@@ -332,7 +341,7 @@ public class JobSeekerRegistrationController extends AbstractController {
 			}
 			model.setViewName("jobSeekerCreateAccountInfo");
 			// get the Ads
-			getAdsForjobSeekerCreateAccInfo(request, session, model);
+			populateAds(request, session, model, PageNames.JOBSEEKER_REGISTRATION_INFO);
 			model.addObject(REGISTER_FORM, registerForm);
 			model.addObject(MMJBCommonConstants.FOLLOWUP_LINK_FACEBOOK,
 					followuplinkfacebook);
@@ -348,47 +357,6 @@ public class JobSeekerRegistrationController extends AbstractController {
 		}
 		return model;
 
-	}
-
-	/**
-	 * Get Ads for job seeker create account info page
-	 * 
-	 * @param request
-	 * @param session
-	 * @param model
-	 */
-	private void getAdsForjobSeekerCreateAccInfo(HttpServletRequest request,
-			HttpSession session, ModelAndView model) {
-		String bannerString = null;
-		try {
-			ClientContext clientContext = getClientContextDetails(request,
-					session, PageNames.JOBSEEKER_REGISTRATION_INFO);
-			AdSize size = AdSize.IAB_LEADERBOARD;
-			AdPosition position = AdPosition.TOP;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject("adPageTop", bannerString);
-
-			size = AdSize.IAB_MEDIUM_RECTANGLE;
-			position = AdPosition.RIGHT_TOP;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject("adPageRightTop", bannerString);
-
-			size = AdSize.IAB_MEDIUM_RECTANGLE;
-			position = AdPosition.RIGHT_MIDDLE;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject("adPageRightMiddle", bannerString);
-
-			size = AdSize.IAB_LEADERBOARD;
-			position = AdPosition.BOTTOM;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject("adPageBtm", bannerString);
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);
-		}
 	}
 
 	/**
@@ -411,7 +379,7 @@ public class JobSeekerRegistrationController extends AbstractController {
 			if (null != registerForm.getListProfAttribForms()) {
 				model.setViewName("jobSeekerCreateAccountInfo");
 				// get the Ads
-				getAdsForjobSeekerCreateAccInfo(request, session, model);
+				populateAds(request, session, model, PageNames.JOBSEEKER_REGISTRATION_INFO);
 				for (JobSeekerProfileAttribForm form : registerForm
 						.getListProfAttribForms()) {
 

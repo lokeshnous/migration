@@ -9,8 +9,8 @@
 				style="margin-right: 10px;">
 				<%-- <form method=""> --%>
 				 <%-- <form:form method="GET" action="findJobSearch.html" commandName="jobSearchResultForm">   --%>
-				<%-- <form:form method="" action="" commandName="jobSearchResultForm" id="jobSearchResultHeaderFormId"> --%>
-				<form:form method="POST" action="../jobsearch/findjobs.html" commandName="jobSearchResultForm" id="jobSearchResultHeaderFormId"> 
+				<form:form method="" action="" commandName="jobSearchResultForm" id="jobSearchResultHeaderFormId"> 
+				<%-- <form:form method="POST" action="../jobsearch/findjobs.html" commandName="jobSearchResultForm" id="jobSearchResultHeaderFormId"> --%> 
 					<div class="search_form">
 					<c:choose>
 						<c:when test="${isHomePage}">
@@ -67,9 +67,9 @@
 						<div class="clearfix"></div>
 						<div class="FormErrorDisplayText" id="findSearchInfo"></div>
 						<div class="rowEvenNewSpacing">
-							<!-- <input type="button" id="submitval" 
-								value="Find Jobs" class="orange jb_search_submit cursor" /> -->
-							<input type="submit" id= "submit" value="Find Jobs" class="orange jb_search_submit" />  
+							<input type="button" id="submitval" 
+								value="Find Jobs" class="orange jb_search_submit cursor" />
+							<!-- <input type="submit" id= "submit" value="Find Jobs" class="orange jb_search_submit" /> -->  
 
 							<a title="Coming Soon" href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/advanceSearch.html">Advanced
 								Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
@@ -117,7 +117,9 @@
 				</form:form>
 				<%-- </form> --%>
 			</div>
-			<div class="ad_col_right">${adPageRightTop }</div>
+			<div class="ad_col_right">
+			<div id="adPageRightTop"> ${adPageRightTop} </div>
+			</div>
 		</div>
 
 

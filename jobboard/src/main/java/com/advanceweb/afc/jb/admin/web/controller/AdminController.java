@@ -28,6 +28,7 @@ import com.advanceweb.afc.jb.admin.service.AdminService;
 import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.AdminDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.web.controller.JobPostForm;
 import com.advanceweb.afc.jb.job.service.JobPostService;
@@ -77,19 +78,19 @@ public class AdminController extends AbstractController{
 		ModelAndView model = new ModelAndView();
 		AdminLoginForm adminLoginForm = new AdminLoginForm();
 		model.addObject(adminLoginForm);
-		getAds(request, session, model);
+		populateAds(request, session, model);
 		model.setViewName("adminLogin");
 		return model;
 	}
 
 	/**
-	 * This method displays the ads 
+	 * The method helps to populate the ads for the page 
 	 * 
 	 * @param session
 	 * @param request
 	 * @param model
 	 */
-	private void getAds(HttpServletRequest request, HttpSession session,
+	private void populateAds(HttpServletRequest request, HttpSession session,
 			ModelAndView model) {
 		// Add the Ads 
 		String bannerString = null;
@@ -100,25 +101,25 @@ public class AdminController extends AbstractController{
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService
 					.getBanner(clientContext, size, position).getTag();
-			model.addObject("adPageTop", bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGETOP, bannerString);
 			
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
 			position = AdPosition.RIGHT_TOP;
 			bannerString = adService
 					.getBanner(clientContext, size, position).getTag();
-			model.addObject("adPageRightTop", bannerString);
+			model.addObject(MMJBCommonConstants.ADPGRIGHT_TOP, bannerString);
 			
 			size = AdSize.IAB_MEDIUM_RECTANGLE;
 			position = AdPosition.RIGHT_MIDDLE;
 			bannerString = adService
 					.getBanner(clientContext, size, position).getTag();
-			model.addObject("adPageRightMiddle", bannerString);
+			model.addObject(MMJBCommonConstants.ADPGRIGHT_MIDDLE, bannerString);
 
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService
 					.getBanner(clientContext, size, position).getTag();
-			model.addObject("adPageBottom", bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGEBOTTOM, bannerString);
 		} catch (Exception e) {
 			LOGGER.error("Error occurred while getting the html content for Ads"
 					, e);

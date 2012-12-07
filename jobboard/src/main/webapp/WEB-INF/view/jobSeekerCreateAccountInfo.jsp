@@ -472,8 +472,8 @@ function validateNumber(event) {
 					<!-- Step 2 -->
 
 					<div class="ad_col_right">
-						${adPageRightTop } 
-						${adPageRightMiddle }
+						<div id="adPageRightTop"> ${adPageRightTop} </div>
+						<div id="adPageRightMiddle"> ${adPageRightMiddle} </div>
 
 						<div class="follow_us">
 							<h2>Follow Us</h2>

@@ -202,7 +202,7 @@ public class EmployerDashBoardController extends AbstractController {
 	}
 
 	/**
-	 * Populate the Ads for employer dashboard page
+	 * The method helps to populate the ads for the page
 	 * 
 	 * @param request
 	 * @param session
@@ -218,13 +218,13 @@ public class EmployerDashBoardController extends AbstractController {
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageTop", bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGETOP, bannerString);
 
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			model.addObject("adPageBtm", bannerString);
+			model.addObject(MMJBCommonConstants.ADPAGEBOTTOM, bannerString);
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 		}

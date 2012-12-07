@@ -34,7 +34,9 @@
 			<div class="main">
 				<jsp:include page="../templates/templates_header.jsp"></jsp:include>
 				<div class="ad_col_right">
-					${adPageRightTop} ${adPageRightMiddle } <br class="clearfix" />
+					<div id="adPageRightTop"> ${adPageRightTop} </div>
+					<div id="adPageRightMiddle"> ${adPageRightMiddle} </div>
+					 <br class="clearfix" />
 
 				</div>
 				<!-- ad_col_right -->

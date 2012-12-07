@@ -157,7 +157,7 @@ jQuery(document).ready(function() {
 														$('#findSearchInfo').html(val);
 													}
 												});
-												processPaginationReq("20");
+												processPaginationReq(data, "20");
 												
 											});
 											return true;
@@ -296,7 +296,7 @@ jQuery(document).ready(function() {
 								//postscribe('#ad_page_top', val);
 							//}
 						//});
-					processPaginationReq("20");
+								processPaginationReq(data, "20");
 					//$("#TotalRecord").text(data["TotalNoRecords"]);
 					});
 					$("#selectedCompany").val("");
@@ -360,7 +360,7 @@ jQuery(document).ready(function() {
 					+"&freshjobsearch=false"+"&refined="+refined;
 					var formData= $("#jobSearchResultFormId").serialize()+$("#jobSearchResultHeaderFormId").serialize();
 					$.getJSON(navUrl,formData, function(data) {
-						processPaginationReq(pageSize);
+						processPaginationReq(data, pageSize);
 					});
 				}
 				
@@ -372,7 +372,7 @@ jQuery(document).ready(function() {
 					+"&freshjobsearch=false"+"&refined="+refined;
 					var formData= $("#jobSearchResultFormId").serialize()+$("#jobSearchResultHeaderFormId").serialize();
 					$.getJSON(navUrl, formData, function(data) {
-						processPaginationReq(pageSize);
+						processPaginationReq(data, pageSize);
 					});
 				}
 				
@@ -384,7 +384,7 @@ jQuery(document).ready(function() {
 					+"&freshjobsearch=false"+"&refined="+refined;
 					var formData= $("#jobSearchResultFormId").serialize()+$("#jobSearchResultHeaderFormId").serialize();
 					$.getJSON(navUrl, formData, function(data) {
-						processPaginationReq(pageSize);
+						processPaginationReq(data, pageSize);
 					});
 				}
 				
@@ -395,15 +395,7 @@ jQuery(document).ready(function() {
 					+"&isSorting="+isSorting+"&freshjobsearch=false"+"&next="+begin+"&refined="+refined;
 					var formData= $("#jobSearchResultFormId").serialize()+$("#jobSearchResultHeaderFormId").serialize();
 					$.getJSON(navUrl, formData, function(data) {
-						processPaginationReq(pageSize);
-						// code to paste ads
-						/*var count = 0 ;
-							$.each(data.adPageCenterMiddleList, function(key, val) {
-								var id = '#ad_wrapper'+count;
-								alert(id);
-								$(id).html(val);
-								count = count+1;
-						});*/	
+						processPaginationReq(data, pageSize);
 					});
 					
 				}
@@ -416,7 +408,7 @@ jQuery(document).ready(function() {
 					var navUrl =  $("#contextPath").val()+"/jobsearch/searchJob.html?pageSize="+ pageSize+ "&page="+page+"&fastforward="+fastforward+"&isSorting="+isSorting
 					+"&freshjobsearch=false"+"&next="+page+"&refined="+refined;
 					$.getJSON(navUrl, formData, function(data) {
-						processPaginationReq(pageSize);
+						processPaginationReq(data, pageSize);
 					});
 					
 				}
@@ -429,30 +421,76 @@ jQuery(document).ready(function() {
 					var navUrl =  $("#contextPath").val()+"/jobsearch/searchJob.html?pageSize="+ pageSize+ "&page="+page+"&fastforward="+fastforward+"&isSorting="+isSorting
 					+"&freshjobsearch=false"+"&next="+page+"&refined="+refined;
 					$.getJSON(navUrl, formData, function(data) {
-						processPaginationReq(pageSize);
+						processPaginationReq(data, pageSize);
 					});
 					
 				}
 				
-				function processPaginationReq(pageSize){
+				function processPaginationReq(data, pageSize){
 					$.ajaxSetup({ cache: false });
 					$.ajax({
 						url : $("#contextPath").val()+'/jobsearch/jobboardsearchresultsBody.html',
-						data : ({}),
+						pgdata : ({}),
 						
-						success : function(data) {
-						$("#tableContent").html(data);
+						success : function(pgdata) {
+						$("#tableContent").html(pgdata);
 						$("#noOfPage").val(pageSize);
 						$("#noOfPageLower").val(pageSize);
 						},
-						error : function(data) {
+						error : function(pgdata) {
 						},
-						complete : function(data) {
+						complete : function(pgdata) {
 							// do nothing for now.
 						}
 					}
 					);
 					getHistory();
+					// code to paste ads
+					var count = 1 ;
+					// populate the ads for grid
+					if(data.adPageCenterMiddleList != 'undefined'){
+					$.each(data.adPageCenterMiddleList, function(key, val) {
+							var id = '#ad_wrapper'+count;
+							//$(id).html(val);
+							window.setTimeout(function() { 
+								renderAd(val, id); 
+								}, 100);
+
+//							setTimeout(renderAd,100,val, id);
+							//document.getElementById(id).innerHTML="pramoda";
+							count = count+1;
+					});
+					}
+					// populate the ads for leader banner
+					if(data.adPageTop != 'undefined'){
+					window.setTimeout(function() { 
+						renderAd(data.adPageTop, ".ad_page_top"); 
+						}, 100);
+					}
+					// populate the ads for bottom banner
+					if(data.adPageBottom != 'undefined'){
+					window.setTimeout(function() { 
+						renderAd(data.adPageBottom, ".ad_wrapper"); 
+						}, 100);
+					}
+					// populate the ads for bottom banner
+					if(data.adPageRightTop != 'undefined'){
+					window.setTimeout(function() { 
+						renderAd(data.adPageRightTop, "#adPageRightTop"); 
+						}, 100);
+					}
+					// populate the ads for bottom banner
+					if(data.adPageRightMiddle != 'undefined'){
+					window.setTimeout(function() { 
+						renderAd(data.adPageRightMiddle, "#adPageRightMiddle"); 
+						}, 100);
+					}
+					//setTimeout(renderAd,100,data.adPagerighttop, ".ad_wrapper");	
+					//setTimeout(renderAd,100,data.adPagerightBtm, ".ad_wrapper");	
+				}
+				
+				function renderAd(val, id){
+					$(id).html(val).submit();
 				}
 
 				
@@ -507,35 +545,6 @@ jQuery(document).ready(function() {
 
 				function saveThisSearch() {
 					$.ajax({url : $("#contextPath").val()+"/savedSearches/saveThisSearch.html?keywords="+keywords,
-						success: function(data){ 
-							$.each(data, function(key, val) {
-								if (key == "NavigationPath") {
-									window.location.href = val+ '.html';
-								}
-								
-								if (key == "LoggedInNavigationPath") {
-									$.nmManual(val + '.html');
-								}
-							}); 
-						    if(data.success != null){
-						    }
-						    if(data.failure != null){
-						    	$("#errorMsg").html("Please enter the required parameters.");
-						    }
-						},
-						error: function(response) {
-							alert("Server Error : "+response.status);
-						},
-						complete: function() {
-							
-						}
-					
-					});
-				} 
-				
-				function saveRecentSearch(savesearchid) {
-				
-					$.ajax({url : "../savedSearches/saveRecentSearch.html?keywords="+keywords+"&savesearchid="+savesearchid,
 						success: function(data){ 
 							$.each(data, function(key, val) {
 								if (key == "NavigationPath") {
@@ -677,7 +686,7 @@ jQuery(document).ready(function() {
 										$('#findSearchInfo').html(val);
 									}
 								});	
-							processPaginationReq("20");
+							processPaginationReq(data, "20");
 							});
 						},
 						error: function(response) {
@@ -800,7 +809,7 @@ jQuery(document).ready(function() {
 								$('#findSearchInfo').html(val);
 							}
 						});										
-						processPaginationReq("20");
+						processPaginationReq(data, "20");
 						$("#TotalRecord").text(data["TotalNoRecords"]);
 					});
 					$(".otherContent").attr("style","display: none");

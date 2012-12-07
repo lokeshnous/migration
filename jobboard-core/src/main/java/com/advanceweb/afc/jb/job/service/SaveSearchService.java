@@ -96,4 +96,12 @@ public interface SaveSearchService {
 	 * @return
 	 */
 	List<SaveSearchedJobsDTO> getsavedSearches();
+
+	/**
+	 * This method is used to save the recent search in user dash board.
+	 * 
+	 * @param saveSearchId
+	 * @param saveSearchName
+	 */
+	void saveRecentSearch(int saveSearchId, String saveSearchName);
 }

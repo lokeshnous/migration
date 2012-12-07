@@ -407,7 +407,7 @@ public class SearchResumeController extends AbstractController {
 		model.put(STR_SRCH_RES_FORM, searchResumeForm);
 		// removeSession(session);
 
-		getAds(session, request, modelView);
+		populateAds(session, request, modelView, PageNames.EMP_ADV_RESUME_SEARCH);
 
 		modelView.setViewName("advanceresumesearch");
 		return modelView;
@@ -419,38 +419,44 @@ public class SearchResumeController extends AbstractController {
 	 * 
 	 * @param session
 	 * @param request
+	 * @param pageName 
 	 * @param model
 	 */
-	private void getAds(HttpSession session, HttpServletRequest request,
-			ModelAndView modelView) {
+	private void populateAds(HttpSession session, HttpServletRequest request,
+			ModelAndView modelView, String pageName) {
 		// Add the Ads
 		String bannerString = null;
 		try {
 			ClientContext clientContext = getClientContextDetails(request,
-					session, PageNames.EMP_ADV_RESUME_SEARCH);
+					session, pageName);
 			AdSize size = AdSize.IAB_LEADERBOARD;
 			AdPosition position = AdPosition.TOP;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			modelView.addObject("adPageTop", bannerString);
-
-			size = AdSize.IAB_MEDIUM_RECTANGLE;
-			position = AdPosition.RIGHT_TOP;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			modelView.addObject("adPageRightTop", bannerString);
-
-			size = AdSize.IAB_MEDIUM_RECTANGLE;
-			position = AdPosition.RIGHT_MIDDLE;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			modelView.addObject("adPageRightMiddle", bannerString);
+			modelView.addObject(MMJBCommonConstants.ADPAGETOP, bannerString);
 
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
-			modelView.addObject("adPageBottom", bannerString);
+			modelView.addObject(MMJBCommonConstants.ADPAGEBOTTOM, bannerString);
+			
+			if (pageName.equalsIgnoreCase(PageNames.EMP_ADV_RESUME_SEARCH)) {
+				size = AdSize.IAB_MEDIUM_RECTANGLE;
+				position = AdPosition.RIGHT_TOP;
+				bannerString = adService.getBanner(clientContext, size,
+						position).getTag();
+				modelView.addObject(MMJBCommonConstants.ADPGRIGHT_TOP,
+						bannerString);
+
+				size = AdSize.IAB_MEDIUM_RECTANGLE;
+				position = AdPosition.RIGHT_MIDDLE;
+				bannerString = adService.getBanner(clientContext, size,
+						position).getTag();
+				modelView.addObject(MMJBCommonConstants.ADPGRIGHT_MIDDLE,
+						bannerString);
+			}
+			
 		} catch (Exception e) {
 			LOGGER.error(
 					"Error occurred while getting the html content for Ads", e);
@@ -848,37 +854,8 @@ public class SearchResumeController extends AbstractController {
 		modelAndView.addObject("employerDashBoardForm", employerDashBoardForm);
 		modelAndView.setViewName("employerDashboard");
 		// get the Ads
-		getAdsForEmployerDashboard(request, session, modelAndView);
+		populateAds(session, request, modelAndView, PageNames.EMPLOYER_DASHBOARD);
 		return modelAndView;
-	}
-
-	/**
-	 * Get Ads for employer dashboard page
-	 * 
-	 * @param request
-	 * @param session
-	 * @param model
-	 */
-	private void getAdsForEmployerDashboard(HttpServletRequest request,
-			HttpSession session, ModelAndView model) {
-		String bannerString = null;
-		try {
-			ClientContext clientContext = getClientContextDetails(request,
-					session, PageNames.EMPLOYER_DASHBOARD);
-			AdSize size = AdSize.IAB_LEADERBOARD;
-			AdPosition position = AdPosition.TOP;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject("adPageTop", bannerString);
-
-			size = AdSize.IAB_LEADERBOARD;
-			position = AdPosition.BOTTOM;
-			bannerString = adService.getBanner(clientContext, size, position)
-					.getTag();
-			model.addObject("adPageBtm", bannerString);
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);
-		}
 	}
 
 	/**

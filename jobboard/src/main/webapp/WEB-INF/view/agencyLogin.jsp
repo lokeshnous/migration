@@ -35,9 +35,9 @@
 				<div class="ad_col_right">
                     ${adPageRightTop}
 
-		    <br class="clearfix" />
 
                 </div><!-- ad_col_right -->
+		    <br class="clearfix" />
 
                 <div class="content_wrapper">
 
