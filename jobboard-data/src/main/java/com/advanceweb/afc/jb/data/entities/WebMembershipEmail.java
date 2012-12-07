@@ -26,7 +26,7 @@ public class WebMembershipEmail implements Serializable {
 	private int webMembershipEmailID;
 
 	@Column(name="WebMembershipID")
-	private String webMembershipID;
+	private int webMembershipID;
 
 	@Column(name="Email")
 	private String email;
@@ -83,7 +83,7 @@ public class WebMembershipEmail implements Serializable {
 	/**
 	 * @return the webMembershipID
 	 */
-	public String getWebMembershipID() {
+	public int getWebMembershipID() {
 		return webMembershipID;
 	}
 
@@ -92,7 +92,7 @@ public class WebMembershipEmail implements Serializable {
 	/**
 	 * @param webMembershipID the webMembershipID to set
 	 */
-	public void setWebMembershipID(String webMembershipID) {
+	public void setWebMembershipID(int webMembershipID) {
 		this.webMembershipID = webMembershipID;
 	}
 
