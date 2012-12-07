@@ -13,6 +13,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -270,6 +271,14 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 		try {
 			MerUser merUser = empHelper.transformMerUserDTOToMerUser(empDTO,
 					null);
+			
+			WebMembershipEmail webMembershipEmail = (WebMembershipEmail)DataAccessUtils.uniqueResult(hibernateTemplateAdvancePass.find("from WebMembershipEmail where email = ?", merUser.getEmail()));
+			WebMembership membership = hibernateTemplateAdvancePass.get(WebMembership.class, webMembershipEmail.getWebMembershipID());
+			
+			if(null != merUser && null != membership){
+				membership.setPassword(merUser.getPassword());
+			}
+			
 			// OpenAM User Update password
 			// Added by Santhosh Gampa on 4th Sep 2012
 
@@ -279,6 +288,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 			// OpenAM code ends
 
 			hibernateTemplateTracker.saveOrUpdate(merUser);
+			hibernateTemplateAdvancePass.saveOrUpdate(membership);
 			return true;
 		} catch (DataAccessException e) {
 			LOGGER.error(e);

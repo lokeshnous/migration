@@ -12,6 +12,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -182,16 +183,22 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 		try {
 			if (dto.getMerUserDTO() != null) {
 				MerUser user = hibernateTemplate.get(MerUser.class, dto.getMerUserDTO().getUserId());
-				if(null != user){
+				WebMembershipEmail webMembershipEmail = (WebMembershipEmail)DataAccessUtils.uniqueResult(hibernateTemplateAdvancePass.find("from WebMembershipEmail where email = ?", user.getEmail()));
+				WebMembership membership = hibernateTemplateAdvancePass.get(WebMembership.class, webMembershipEmail.getWebMembershipID());
+				if(null != user && null != membership){
 					user.setPassword(dto.getMerUserDTO().getPassword());
+					membership.setPassword(user.getPassword());
 				}
-				hibernateTemplate.saveOrUpdate(user);				
+				hibernateTemplate.saveOrUpdate(user);
+				hibernateTemplateAdvancePass.saveOrUpdate(membership);
+				return true;
 			}
 		} catch (HibernateException e) {
 			LOGGER.error(e);
+		}catch (Exception e) {
+			LOGGER.error("Failed to change the password : "+e);
 		}
-		
-		return true;
+		return false;
 	}
 
 	@Override

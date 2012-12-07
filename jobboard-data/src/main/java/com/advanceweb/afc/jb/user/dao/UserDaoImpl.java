@@ -22,8 +22,11 @@ import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.entities.MerUserProfile;
 import com.advanceweb.afc.jb.data.entities.MerUserProfilePK;
+import com.advanceweb.afc.jb.data.entities.WebMembership;
+import com.advanceweb.afc.jb.data.entities.WebMembershipEmail;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 
+@SuppressWarnings("unchecked")
 @Transactional
 @Repository("userDAO")
 public class UserDaoImpl implements UserDao {
@@ -31,14 +34,18 @@ public class UserDaoImpl implements UserDao {
 			.getLogger(UserDaoImpl.class);
 	private HibernateTemplate hibernateTemplateTracker;
 	private HibernateTemplate hibernateTemplate;
+	private HibernateTemplate hibernateTemplateAdvancePass;
 
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
-			SessionFactory sessionFactory) {
+			SessionFactory sessionFactory, SessionFactory sessionFactoryAdvancePass) {
 		this.hibernateTemplateTracker = new HibernateTemplate(
 				sessionFactoryMerionTracker);
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
+		
+		this.hibernateTemplateAdvancePass = new HibernateTemplate(
+				sessionFactoryAdvancePass);
 	}
 
 	@Override
@@ -161,8 +168,14 @@ public class UserDaoImpl implements UserDao {
 		try {
 			MerUser search = (MerUser) hibernateTemplateTracker.find(
 					"from MerUser e where e.email=?", email).get(0);
+			
+			WebMembershipEmail webMembershipEmail = (WebMembershipEmail)DataAccessUtils.uniqueResult(hibernateTemplateAdvancePass.find("from WebMembershipEmail where email = ?", search.getEmail()));
+			WebMembership membership = hibernateTemplateAdvancePass.get(WebMembership.class, webMembershipEmail.getWebMembershipID());
 			search.setPassword(tempassword);
+			membership.setPassword(tempassword);
+			
 			hibernateTemplateTracker.saveOrUpdate(search);
+			hibernateTemplateAdvancePass.saveOrUpdate(membership);
 		} catch (HibernateException e) {
 			throw new JobBoardDataException(
 					"Error occured while updating generated password to merUser table"
