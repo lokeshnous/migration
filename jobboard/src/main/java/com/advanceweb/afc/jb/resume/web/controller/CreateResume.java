@@ -7,6 +7,7 @@ package com.advanceweb.afc.jb.resume.web.controller;
  * @Version 1.0
  * @Since 2nd July, 2012
  */
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -31,6 +32,7 @@ public class CreateResume {
 	private CommonsMultipartFile fileData;
 	
 	//Creating Resume
+	private String availableDate;
 	private String objective;
 	private String skills;
 	private int builderSkillsId;
@@ -245,5 +247,10 @@ public class CreateResume {
 	public void setbHideBackButton(boolean bHideBackButton) {
 		this.bHideBackButton = bHideBackButton;
 	}
-	
+	public String getAvailableDate() {
+		return availableDate;
+	}
+	public void setAvailableDate(String availableDate) {
+		this.availableDate = availableDate;
+	}
 }

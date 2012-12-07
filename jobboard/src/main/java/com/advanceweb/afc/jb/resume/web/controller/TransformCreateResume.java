@@ -505,6 +505,7 @@ public class TransformCreateResume {
 
 		CreateResume createResume = new CreateResume();
 		if (null != resumeDTO) {
+			createResume.setAvailableDate(resumeDTO.getAvailableDate());
 			createResume.setAwards(resumeDTO.getAwards());
 			createResume.setBuilderResumeId(resumeDTO.getBuilderResumeId());
 			createResume.setDesiredEmploymentType(resumeDTO

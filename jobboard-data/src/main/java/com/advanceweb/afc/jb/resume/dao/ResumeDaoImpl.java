@@ -345,6 +345,9 @@ public class ResumeDaoImpl implements ResumeDao {
 		} catch (HibernateException e) {
 			LOGGER.info("Error in create Resume Builder", e);
 		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 

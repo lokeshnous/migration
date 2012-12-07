@@ -31,6 +31,7 @@ public class ResumeDTO extends ProfileDTO implements Serializable{
 	private String filePath;
 	private String fileName;
 	private String isPublished;
+	private String availableDate;
 	private String updateDt;
 	private int builderSkillsId;
 	private int folderResumeId;
@@ -462,6 +463,16 @@ public class ResumeDTO extends ProfileDTO implements Serializable{
 
 	public void setBuilderSkillsId(int builderSkillsId) {
 		this.builderSkillsId = builderSkillsId;
+	}
+
+
+	public String getAvailableDate() {
+		return availableDate;
+	}
+
+
+	public void setAvailableDate(String availableDate) {
+		this.availableDate = availableDate;
 	}
 	
 }

@@ -54,6 +54,8 @@ public class ResumeConversionHelper {
 		resumeDTO.setResumeType(resume.getResumeType());
 		resumeDTO.setResumeVisibility(String.valueOf(resume.getActive()));
 		resumeDTO.setIsPublished(String.valueOf(resume.getIsPublished()));
+		resumeDTO.setAvailableDate(CommonUtil.convertSQLDateTimeToStdDateTime(
+				resume.getCreateDt().toString()));
 		if (resume.getUpdateDt() != null) {
 			resumeDTO.setUpdateDt(CommonUtil
 					.convertSQLDateTimeToStdDateTime(resume.getUpdateDt()

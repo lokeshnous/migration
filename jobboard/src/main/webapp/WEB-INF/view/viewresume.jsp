@@ -72,7 +72,7 @@
 
             <div class="clearfix"></div>
             <span>
-                    <p class="marginTop3">Available 08/01/2012</p>
+                    <p class="marginTop3">Available ${createResume.availableDate}</p>
                     </span> </div>
                   <div class="IconsArea">
                   <a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}">
