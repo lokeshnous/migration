@@ -67,7 +67,6 @@ public class JobPostDAOImpl implements JobPostDAO {
 	
 	
 	
-	private static final long MILLIS_IN_DAY = 24 * 60 * 60 * 1000;
 	
 	/*private static final String FIND_ACTIVE_JOBS_EXPIRE_SOON = "select job.jobId,job.admFacility.facilityId,userFacility.facilityPK.userId," +
 			"facility.name,job.endDt as expiteDate from JpJob job INNER JOIN AdmUserFacility userFacility INNER JOIN AdmFacility facility " +
@@ -188,8 +187,9 @@ public class JobPostDAOImpl implements JobPostDAO {
 					Integer.valueOf(dto.getBrandTemplate()));
 
 			JpJobType jobType = getJobTypeDetails(dto);
-			AdmFacility admFacility = hibernateTemplate.load(AdmFacility.class,
+			AdmFacility admFacility = hibernateTemplate.get(AdmFacility.class,
 					Integer.valueOf(dto.getFacilityId()));
+			
 
 			JpJob jpJob = jobPostConversionHelper.transformJobDtoToJpJob(dto,
 					template, admFacility);

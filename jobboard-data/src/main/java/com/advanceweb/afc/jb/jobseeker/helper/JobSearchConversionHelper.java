@@ -64,8 +64,8 @@ public class JobSearchConversionHelper {
 			jobDTO.setCompany(admFacility.getName());
 			jobDTO.setFacilityId(admFacility.getFacilityId());
 			int blindAd = entity.getBlindAd();
-			if (blindAd == 1) {
-				jobDTO.setCompanyNameDisp(admFacility.getNameDisplay());
+			if (blindAd == 0) {
+				jobDTO.setCompanyNameDisp(entity.getFacility());
 			}
 
 			transformJpLocationtojobDTO(entity, jobDTO);

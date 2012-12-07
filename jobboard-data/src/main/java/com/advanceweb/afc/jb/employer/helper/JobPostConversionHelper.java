@@ -50,7 +50,13 @@ public class JobPostConversionHelper<JobPostForm> {
 		 jpJob.setName(dto.getCompanyName());
 		 jpJob.setAccountNum(dto.getCustomerNo());
 		 jpJob.setJobNumber(dto.getJobNumber());
-		 jpJob.setFacility(dto.getDisCompanyName());
+		 
+		 if(dto.isbHideCompName()){
+			 jpJob.setFacility(MMJBCommonConstants.EMPTY);
+		 }else{
+			 jpJob.setFacility(dto.getDisCompanyName().isEmpty()?admFacility.getName():dto.getDisCompanyName());
+		 }
+		 
 		 jpJob.setAdminUserId(Integer.valueOf(dto.getJobOwner()));
 		 jpJob.setBlindAd(dto.isbHideCompName()?1:0);
 		 
