@@ -15,7 +15,6 @@
 <script type="text/javascript">
 function saveRecentSearch(searchJobId){
 	var searchName = $.trim($("#searchTitleName").val());
-	alert(searchName);
 	$.ajax({url: "${pageContext.request.contextPath}/savedSearches/saveRecentSearch.html?searchName="+searchName+"&searchJobId"+searchJobId,
 		success: function(data){ 
 			$.each(data, function(key, val) {
@@ -119,6 +118,7 @@ function closePopup() {
 		<div class="popUpContainerWrapper">
 			<form:form action="" method="GET" commandName="saveSearchForm">
 				<c:if test="${recentSearchId != '0'}">
+				<br/>
 				<b>Access saved search criterias using "My saved searches" in dashboard</b>
 				</c:if>
 				<span class="lableText3 width505 TextAlignL">Search Title</span>

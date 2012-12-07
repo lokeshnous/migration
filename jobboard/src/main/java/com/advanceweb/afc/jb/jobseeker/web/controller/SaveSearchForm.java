@@ -1,6 +1,9 @@
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import java.util.Date;
+import java.util.List;
+
+import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 
 /**
  * 
@@ -15,6 +18,7 @@ public class SaveSearchForm {
 	private String url;
 	private String searchName;
 	private String emailFrequency;
+	private List<SaveSearchedJobsDTO> saveSearchedJobsDTOList;
 	private Date createdDate;
 	private String modifyDate;
 	private Date deletedDate;
@@ -131,6 +135,15 @@ public class SaveSearchForm {
 
 	public void setSaveSearchId(int saveSearchId) {
 		this.saveSearchId = saveSearchId;
+	}
+
+	public List<SaveSearchedJobsDTO> getSaveSearchedJobsDTOList() {
+		return saveSearchedJobsDTOList;
+	}
+
+	public void setSaveSearchedJobsDTOList(
+			List<SaveSearchedJobsDTO> saveSearchedJobsDTOList) {
+		this.saveSearchedJobsDTOList = saveSearchedJobsDTOList;
 	}
 
 }

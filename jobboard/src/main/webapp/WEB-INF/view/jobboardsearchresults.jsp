@@ -59,7 +59,7 @@ type="text/css">
 				<br class="clearfix" />
 				
 				<div class="ad_wrapper">
-					${adPageBtm }
+					${adPageBottom }
 				</div>
 			
 				

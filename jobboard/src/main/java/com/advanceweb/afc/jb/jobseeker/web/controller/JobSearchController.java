@@ -2011,9 +2011,8 @@ public class JobSearchController extends AbstractController {
 				currentSearchList.add(map);
 			}
 			String radius = sessionMap.get(SearchParamDTO.RADIUS).trim();
-			if (!sessionMap.get(SearchParamDTO.SEARCH_NAME).equalsIgnoreCase(
-					MMJBCommonConstants.LOCATION_SEARCH)
-					&& !radius.equalsIgnoreCase(MMJBCommonConstants.ZERO)) {
+			// TODO: validate for refine radius search
+			if (!radius.equalsIgnoreCase(MMJBCommonConstants.ZERO)) {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put(MMJBCommonConstants.HASHMAP_KEY, SearchParamDTO.RADIUS);
 				map.put(MMJBCommonConstants.HASHMAP_VALUE, radius

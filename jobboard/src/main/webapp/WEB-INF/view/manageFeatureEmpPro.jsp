@@ -238,7 +238,7 @@
 
 				<div class="clearfix"></div>
 				<div class="ad_wrapper">
-					${adPageBtm }
+					${adPageBottom }
 				</div>
 
 			</div>

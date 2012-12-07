@@ -355,7 +355,7 @@ public class SaveSearchController {
 					.viewMySavedSearches(userId, false);
 			List<DropDownDTO> notifyMeList = populateDropdownsService
 					.populateDropdown("NotifyMe");
-			// saveSearchForm.setSaveSearchedJobsDTOList(saveSearchedJobsDTOList);
+			saveSearchForm.setSaveSearchedJobsDTOList(saveSearchedJobsDTOList);
 			model.addObject("notifyMeList", notifyMeList);
 			model.addObject("saveSearchedJobsDTOList", saveSearchedJobsDTOList);
 		}

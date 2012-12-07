@@ -434,7 +434,7 @@
 				</div>
 				<BR class="clearfix">
 				<div class="ad_wrapper">
-					${adPageBtm }
+					${adPageBottom }
                 </div><!-- ad_wrapper -->
 			</div>
 			<!-- main -->

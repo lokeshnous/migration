@@ -68,10 +68,11 @@
 								<div class="refineResults">
 
 									<c:if test="${displayRadius}">
-									<span class="refineResultsItem plus" id="radiusPlus">Radius</span>
 									<c:if test="${sessionMap.get('refineRadius') != '0'}">
 									<script type="text/javascript">$("#radiusPlus").click();</script>
 									</c:if>
+									
+									<span class="refineResultsItem plus" id="radiusPlus">Radius</span>
 
 									<div class="refineResultsSubContent cursor">
 										<ul>

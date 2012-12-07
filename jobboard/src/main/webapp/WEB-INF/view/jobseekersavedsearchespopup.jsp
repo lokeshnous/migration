@@ -210,12 +210,11 @@ var id = searchJobId.replace("viewSavedSearch", "");
 									 class="newWindow" >${saveSearchdtoList.getSearchName()}</a></td>
 								<td align="center">${saveSearchdtoList.getModifyDate()}</td>
 								
-								<td align="center">						
-										
-								    <form:select class="jb_input3 select100"									
+								<td align="center">					
+								 <form:select class="jb_input3 select100"									
 										path="saveSearchedJobsDTOList[${status.index}].emailFrequency" items="${notifyMeList}"
 										itemValue="optionId" itemLabel="optionName">																				
-								    </form:select>							    										
+								    </form:select>	 						    										
 								</td>
 								
 								<td align="center">

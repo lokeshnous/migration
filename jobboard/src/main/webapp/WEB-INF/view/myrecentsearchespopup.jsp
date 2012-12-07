@@ -29,7 +29,6 @@
 	}
 	
 	function displaysavesearchpopup(savesearchid) {
-		alert("savesearchid"+savesearchid);
 		$.ajax({url : "../savedSearches/displaysavesearchpopup.html?savesearchid="+savesearchid,
 			success: function(data){ 
 				$.each(data, function(key, val) {
