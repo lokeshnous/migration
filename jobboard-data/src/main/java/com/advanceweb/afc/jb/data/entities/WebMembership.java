@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,7 +45,7 @@ public class WebMembership implements Serializable {
 	private boolean activated;
 
 	@Column(name="CreateDate")
-	private Timestamp createDate;
+	private Date createDate;
 
 	@Column(name="WebMembershipLevelID")
 	private int webMembershipLevelID;
@@ -71,11 +72,11 @@ public class WebMembership implements Serializable {
 	@Column(name="ModifyWebUserId")
 	private int modifyWebUserId;
 	@Column(name="ModifyDate")
-	private Timestamp modifyDate;
+	private Date modifyDate;
 	@Column(name="DeleteWebUserId")
 	private int deleteWebUserId;
 	@Column(name="DeleteDate")
-	private int deleteDate;
+	private Date deleteDate;
 	@Column(name="ShopSalt")
 	private String ShopSalt;
 	@Column(name="ShopEncryptPassword")
@@ -180,20 +181,6 @@ public class WebMembership implements Serializable {
 		 */
 		public void setActivated(boolean activated) {
 			this.activated = activated;
-		}
-
-		/**
-		 * @return the createDate
-		 */
-		public Timestamp getCreateDate() {
-			return createDate;
-		}
-
-		/**
-		 * @param createDate the createDate to set
-		 */
-		public void setCreateDate(Timestamp createDate) {
-			this.createDate = createDate;
 		}
 
 		/**
@@ -337,20 +324,6 @@ public class WebMembership implements Serializable {
 		}
 
 		/**
-		 * @return the modifyDate
-		 */
-		public Timestamp getModifyDate() {
-			return modifyDate;
-		}
-
-		/**
-		 * @param modifyDate the modifyDate to set
-		 */
-		public void setModifyDate(Timestamp modifyDate) {
-			this.modifyDate = modifyDate;
-		}
-
-		/**
 		 * @return the deleteWebUserId
 		 */
 		public int getDeleteWebUserId() {
@@ -362,20 +335,6 @@ public class WebMembership implements Serializable {
 		 */
 		public void setDeleteWebUserId(int deleteWebUserId) {
 			this.deleteWebUserId = deleteWebUserId;
-		}
-
-		/**
-		 * @return the deleteDate
-		 */
-		public int getDeleteDate() {
-			return deleteDate;
-		}
-
-		/**
-		 * @param deleteDate the deleteDate to set
-		 */
-		public void setDeleteDate(int deleteDate) {
-			this.deleteDate = deleteDate;
 		}
 
 		/**
@@ -406,6 +365,28 @@ public class WebMembership implements Serializable {
 			this.shopEncryptPassword = shopEncryptPassword;
 		}
 
-	
+		public Date getCreateDate() {
+			return createDate;
+		}
+
+		public void setCreateDate(Date createDate) {
+			this.createDate = createDate;
+		}
+
+		public Date getModifyDate() {
+			return modifyDate;
+		}
+
+		public void setModifyDate(Date modifyDate) {
+			this.modifyDate = modifyDate;
+		}
+
+		public Date getDeleteDate() {
+			return deleteDate;
+		}
+
+		public void setDeleteDate(Date deleteDate) {
+			this.deleteDate = deleteDate;
+		}
 
 }

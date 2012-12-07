@@ -1,7 +1,7 @@
 package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +32,7 @@ public class WebMembershipEmail implements Serializable {
 	private String email;
 
 	@Column(name="CreateDate")
-	private Timestamp createDate;
+	private Date createDate;
 
 	@Column(name="PrimaryEmail")
 	private boolean primaryEmail;
@@ -40,13 +40,13 @@ public class WebMembershipEmail implements Serializable {
 	private int welcomeEMailHistoryID;
 	
 	@Column(name="DeleteDate")
-	private Timestamp deleteDate;
+	private Date deleteDate;
 
 	@Column(name="EmailStatusID")
 	private int emailStatusID;
 
 	@Column(name="ModifyDate")
-	private Timestamp modifyDate;
+	private Date modifyDate;
 	
 	@Column(name="CreateWebUserId")
 	private int createWebUserId;
@@ -114,26 +114,6 @@ public class WebMembershipEmail implements Serializable {
 		this.email = email;
 	}
 
-
-
-	/**
-	 * @return the createDate
-	 */
-	public Timestamp getCreateDate() {
-		return createDate;
-	}
-
-
-
-	/**
-	 * @param createDate the createDate to set
-	 */
-	public void setCreateDate(Timestamp createDate) {
-		this.createDate = createDate;
-	}
-
-
-
 	/**
 	 * @return the primaryEmail
 	 */
@@ -168,26 +148,6 @@ public class WebMembershipEmail implements Serializable {
 		this.welcomeEMailHistoryID = welcomeEMailHistoryID;
 	}
 
-
-
-	/**
-	 * @return the deleteDate
-	 */
-	public Timestamp getDeleteDate() {
-		return deleteDate;
-	}
-
-
-
-	/**
-	 * @param deleteDate the deleteDate to set
-	 */
-	public void setDeleteDate(Timestamp deleteDate) {
-		this.deleteDate = deleteDate;
-	}
-
-
-
 	/**
 	 * @return the emailStatusID
 	 */
@@ -203,26 +163,6 @@ public class WebMembershipEmail implements Serializable {
 	public void setEmailStatusID(int emailStatusID) {
 		this.emailStatusID = emailStatusID;
 	}
-
-
-
-	/**
-	 * @return the modifyDate
-	 */
-	public Timestamp getModifyDate() {
-		return modifyDate;
-	}
-
-
-
-	/**
-	 * @param modifyDate the modifyDate to set
-	 */
-	public void setModifyDate(Timestamp modifyDate) {
-		this.modifyDate = modifyDate;
-	}
-
-
 
 	/**
 	 * @return the createWebUserId
@@ -285,6 +225,40 @@ public class WebMembershipEmail implements Serializable {
 		return serialVersionUID;
 	}
 
-	
+
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+
+
+	public Date getDeleteDate() {
+		return deleteDate;
+	}
+
+
+
+	public void setDeleteDate(Date deleteDate) {
+		this.deleteDate = deleteDate;
+	}
+
+
+
+	public Date getModifyDate() {
+		return modifyDate;
+	}
+
+
+
+	public void setModifyDate(Date modifyDate) {
+		this.modifyDate = modifyDate;
+	}
 
 }

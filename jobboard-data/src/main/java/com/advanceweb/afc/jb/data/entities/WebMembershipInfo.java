@@ -1,7 +1,7 @@
 package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,13 +32,13 @@ public class WebMembershipInfo implements Serializable {
 	private int countryId;
 
 	@Column(name="CreateDate")
-	private Timestamp createDate;
+	private Date createDate;
 
 	@Column(name="CreateWebUserId")
 	private int createWebUserId;
 
 	@Column(name="DeleteDate")
-	private Timestamp deleteDate;
+	private Date deleteDate;
 
 	@Column(name="DeleteWebUserId")
 	private int deleteWebUserId;
@@ -50,7 +50,7 @@ public class WebMembershipInfo implements Serializable {
 	private String lastName;
 
 	@Column(name="ModifyDate")
-	private Timestamp modifyDate;
+	private Date modifyDate;
 
 	@Column(name="ModifyWebUserId")
 	private int modifyWebUserId;
@@ -85,28 +85,12 @@ public class WebMembershipInfo implements Serializable {
 		this.countryId = countryId;
 	}
 
-	public Timestamp getCreateDate() {
-		return this.createDate;
-	}
-
-	public void setCreateDate(Timestamp createDate) {
-		this.createDate = createDate;
-	}
-
 	public int getCreateWebUserId() {
 		return this.createWebUserId;
 	}
 
 	public void setCreateWebUserId(int createWebUserId) {
 		this.createWebUserId = createWebUserId;
-	}
-
-	public Timestamp getDeleteDate() {
-		return this.deleteDate;
-	}
-
-	public void setDeleteDate(Timestamp deleteDate) {
-		this.deleteDate = deleteDate;
 	}
 
 	public int getDeleteWebUserId() {
@@ -133,14 +117,6 @@ public class WebMembershipInfo implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public Timestamp getModifyDate() {
-		return this.modifyDate;
-	}
-
-	public void setModifyDate(Timestamp modifyDate) {
-		this.modifyDate = modifyDate;
-	}
-
 	public int getModifyWebUserId() {
 		return this.modifyWebUserId;
 	}
@@ -157,4 +133,28 @@ public class WebMembershipInfo implements Serializable {
 		this.zipCode = zipCode;
 	}
 
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public Date getDeleteDate() {
+		return deleteDate;
+	}
+
+	public void setDeleteDate(Date deleteDate) {
+		this.deleteDate = deleteDate;
+	}
+
+	public Date getModifyDate() {
+		return modifyDate;
+	}
+
+	public void setModifyDate(Date modifyDate) {
+		this.modifyDate = modifyDate;
+	}
+	
 }
