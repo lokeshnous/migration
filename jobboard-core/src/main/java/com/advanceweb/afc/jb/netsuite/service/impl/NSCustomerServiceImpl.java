@@ -510,38 +510,6 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 
 		userDTO.setInvoiceEnabled(Boolean.parseBoolean(jsonObject.get(
 				IS_INVOICE_ENABLED).toString()));
-
-		userDTO.setFeatured(Boolean.parseBoolean(jsonObject.get(IS_FEATURED)
-				.toString()));
-
-		if (jsonObject.has(FEATURED_START_DATE_STRING)) {
-			userDTO.setFeaturedStartDate(convertToDate(jsonObject.get(
-					FEATURED_START_DATE_STRING).toString()));
-			LOGGER.info("FEATURED START DATE IS=>"
-					+ jsonObject.get(FEATURED_START_DATE_STRING));
-		}
-		if (jsonObject.has(FEATURED_END_DATE_STRING)) {
-			userDTO.setFeaturedEndDate(convertToDate(jsonObject.get(
-					FEATURED_END_DATE_STRING).toString()));
-			LOGGER.info("FEATURED END DATE IS=>"
-					+ jsonObject.get(FEATURED_END_DATE_STRING));
-		}
-
-		userDTO.setXmlFeedEnabled(Boolean.parseBoolean(jsonObject.get(
-				IS_XML_FEED_ENABLED).toString()));
-		if (jsonObject.has(XMLFEED_START_DATE_STRING)) {
-			userDTO.setXmlFeedStartDate(convertToDate(jsonObject.get(
-					XMLFEED_START_DATE_STRING).toString()));
-			LOGGER.info("XMLFEED START DATE IS=>"
-					+ jsonObject.get(XMLFEED_START_DATE_STRING));
-		}
-		if (jsonObject.has(XMLFEED_END_DATE_STRING)) {
-			userDTO.setXmlFeedEndDate(convertToDate(jsonObject.get(
-					XMLFEED_END_DATE_STRING).toString()));
-			LOGGER.info("XMLFEED END DATE IS=>"
-					+ jsonObject.get(XMLFEED_END_DATE_STRING));
-		}
-
 		try {
 			setPackageTypeInUserDTO(userDTO, jsonObject);
 			List<String> emailList = setContactEmailList(jsonObject);
