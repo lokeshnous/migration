@@ -507,9 +507,10 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 	private UserDTO populateUserDTO(UserDTO userDTO,
 			org.codehaus.jettison.json.JSONObject jsonObject)
 			throws JSONException {
-
+		if(jsonObject.has(IS_INVOICE_ENABLED)){
 		userDTO.setInvoiceEnabled(Boolean.parseBoolean(jsonObject.get(
 				IS_INVOICE_ENABLED).toString()));
+		}
 		try {
 			setPackageTypeInUserDTO(userDTO, jsonObject);
 			List<String> emailList = setContactEmailList(jsonObject);
