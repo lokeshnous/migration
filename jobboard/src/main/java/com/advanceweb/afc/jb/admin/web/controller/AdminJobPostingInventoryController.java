@@ -64,7 +64,7 @@ public class AdminJobPostingInventoryController {
 			session.setAttribute("nsId", netSuiteId);
 			if (StringUtils.isEmpty(empList) && StringUtils.isEmpty(netSuiteId)) {
 				status = false;
-				jsonObject.put(ERR_MSG, "Please enter any one data to find");
+				jsonObject.put(ERR_MSG, "Please enter Company name or NetSuite ID");
 				jsonObject.put(SUCCESS, status);
 				return jsonObject;
 			}
