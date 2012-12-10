@@ -39,7 +39,14 @@ jQuery(document).ready(function() {
 			}
 			$.ajax({url: "${pageContext.request.contextPath}/admin/manageEditJobSearch.html?advJobId="+advJobId,
 				success: function(data){ 
-				 	loadTable();
+					if(data.record =='no record'){
+						$("#ErrorMsg").text("No result found");
+						loadTable();
+				    }
+				 	
+				 	else{
+				 		loadTable();
+				 	}
 				},
 				error: function(response) {
 					alert("Server Error : "+response.status);
@@ -176,7 +183,7 @@ function loadTable(){
 			<img id="closeCheckOut" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose cursor" alt="Close"/>
 		</div>
 		<div class="row">
-		<span id="ErrorMsg" class="FormErrorDisplayText01"> </span>
+		<span class="lableText3"></span><span id="ErrorMsg" class="FormErrorDisplayText01"> </span>
 		</div>
 		<div class="popUpContainerWrapper">
 		

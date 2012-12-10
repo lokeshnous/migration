@@ -242,7 +242,10 @@ public class AdminController extends AbstractController{
 			int advSearchId = Integer.parseInt(advJobId);
 			postedJobList = employerJobPost
 					.retrieveAllJobPostByADvSearch(advSearchId);
-			if(postedJobList.get(0).getEndDt() !=null){
+			if(postedJobList.isEmpty()){
+				jsonObject.put("record","no record");
+			}
+			if(!postedJobList.isEmpty() && postedJobList.get(0).getEndDt() !=null){
 			session.setAttribute("postedJobList", postedJobList);
 			}
 
