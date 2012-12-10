@@ -61,6 +61,10 @@ public class BrandingTemplateValidation {
 	private BrandingTemplateService brandingTemplateService;
 	
 	private static final String STR_NOTEMPTY = "NotEmpty";
+	
+	private static final String MAIN_IMAGE_FILE = "mainImageFileData";
+	
+	private static final String LOGO_FILE = "logoFileData";
 
 	public boolean supports(Class<?> form) {
 		return BrandingTemplateValidation.class.isAssignableFrom(form);
@@ -83,19 +87,20 @@ public class BrandingTemplateValidation {
 			long imageSize = brandingTemplateForm.getMainImageFileData()
 					.getSize();
 
-			if (imageSize == 0
-					|| imageSize > (imageSizeLimit * MMJBCommonConstants.KILO_BYTE)) {
-				errors.rejectValue("mainImageFileData", STR_NOTEMPTY,
-						empBrandMainImageSize);
-			}
 			if (!(fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_JPG)
 					|| fileExtension
 							.contains(MMJBCommonConstants.IMAGE_TYPE_GIF)
 					|| fileExtension
 							.contains(MMJBCommonConstants.IMAGE_TYPE_PNG) || fileExtension
 						.contains(MMJBCommonConstants.IMAGE_TYPE_TIF))) {
-				errors.rejectValue("mainImageFileData", STR_NOTEMPTY,
+				errors.rejectValue(MAIN_IMAGE_FILE, STR_NOTEMPTY,
 						empBrandMainImage);
+			}
+			
+			if (imageSize == 0
+					|| imageSize > (imageSizeLimit * MMJBCommonConstants.KILO_BYTE) && !errors.hasFieldErrors(MAIN_IMAGE_FILE)) {
+				errors.rejectValue(MAIN_IMAGE_FILE, STR_NOTEMPTY,
+						empBrandMainImageSize);
 			}
 		}
 	}
@@ -117,19 +122,19 @@ public class BrandingTemplateValidation {
 			fileExtension = fileExtension.toLowerCase(Locale.ENGLISH);
 			long imageSize = brandingTemplateForm.getLogoFileData().getSize();
 
-			if (imageSize == 0
-					|| imageSize > (imageSizeLimit * MMJBCommonConstants.KILO_BYTE)) {
-				errors.rejectValue("logoFileData", STR_NOTEMPTY,
-						empBrandLogoSize);
-			}
-
 			if (!(fileExtension.contains(MMJBCommonConstants.IMAGE_TYPE_JPG)
 					|| fileExtension
 							.contains(MMJBCommonConstants.IMAGE_TYPE_GIF)
 					|| fileExtension
 							.contains(MMJBCommonConstants.IMAGE_TYPE_PNG) || fileExtension
 						.contains(MMJBCommonConstants.IMAGE_TYPE_TIF))) {
-				errors.rejectValue("logoFileData", STR_NOTEMPTY, empBrandLogo);
+				errors.rejectValue(LOGO_FILE, STR_NOTEMPTY, empBrandLogo);
+			}
+			
+			if (imageSize == 0
+					|| imageSize > (imageSizeLimit * MMJBCommonConstants.KILO_BYTE) && !errors.hasFieldErrors(LOGO_FILE)) {
+				errors.rejectValue(LOGO_FILE, STR_NOTEMPTY,
+						empBrandLogoSize);
 			}
 		}
 	}
@@ -270,12 +275,12 @@ public class BrandingTemplateValidation {
 
 		if (null == brandingTemplateForm.getLogoPath()
 				|| brandingTemplateForm.getLogoPath().isEmpty()) {
-			errors.rejectValue("logoFileData", STR_NOTEMPTY, empBrandLogo);
+			errors.rejectValue(LOGO_FILE, STR_NOTEMPTY, empBrandLogo);
 		}
 
 		if (null == brandingTemplateForm.getMainImagePath()
 				|| brandingTemplateForm.getMainImagePath().isEmpty()) {
-			errors.rejectValue("mainImageFileData", STR_NOTEMPTY,
+			errors.rejectValue(MAIN_IMAGE_FILE, STR_NOTEMPTY,
 					empBrandMainImage);
 		}
 

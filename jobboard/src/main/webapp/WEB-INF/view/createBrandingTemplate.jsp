@@ -309,7 +309,7 @@
 										<form:input path="listAddImages[${status.index}].addImageFileData" name="textfield4" type="file" id="textfield4" class="job_seeker_login_email fileType" size="20" />
 									</span>	
 									<label class="MultimediaLabel">
-									<c:if test="${brandingTemplateForm.listAddImages[status.index].chosenAddImage != null}">
+									<c:if test="${brandingTemplateForm.listAddImages[status.index].chosenAddImage != null and errorMessage==null}">
 										You uploaded <Strong>${brandingTemplateForm.listAddImages[status.index].chosenAddImage}</Strong> as your Additional Image, you can upload a different Additional Image.
 									</c:if>
 									</label>
@@ -348,7 +348,7 @@
 										<form:input path="listVideos[${status.index}].videoFileData" name="textfield4" type="file" id="textfield4" class="job_seeker_login_email fileType" size="20" />
 									</span>
 									<label class="MultimediaLabel">
-									<c:if test="${brandingTemplateForm.listVideos[status.index].chosenVideo != null}">
+									<c:if test="${brandingTemplateForm.listVideos[status.index].chosenVideo != null and errorMessage==null}">
 										You uploaded <Strong>${brandingTemplateForm.listVideos[status.index].chosenVideo}</Strong> as your Video, you can upload a different Video.
 									</c:if>
 									</label>	
