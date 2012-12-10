@@ -1,6 +1,5 @@
 * text=auto !eol
 jobboard-common/file.out -text
-jobboard-common/lib/SymJavaAPI.jar -text
 jobboard-common/pom.xml -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AccountBillingDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AccountProfileDTO.java -text
@@ -492,6 +491,9 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/user/dao/UserSubscriptionsDAOI
 jobboard-data/src/main/java/com/advanceweb/afc/jb/user/helper/RegistrationConversionHelper.java -text
 jobboard-data/src/main/resources/HibernateSessionFactory.xml -text
 jobboard-data/src/test/java/com/advanceweb/afc/data/AppTest.java -text
+jobboard-jars/pom.xml -text
+jobboard-jars/src/lib/SymJavaAPI.jar -text
+jobboard-jars/src/lib/sqljdbc4.jar -text
 jobboard/pom.xml -text
 jobboard/src/main/java/com/advanceweb/afc/common/controller/AbstractController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/admin/web/controller/AdminController.java -text

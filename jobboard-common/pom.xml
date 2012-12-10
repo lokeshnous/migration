@@ -69,6 +69,12 @@
 			<artifactId>itext</artifactId>
 			<version>2.1.7</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.symantec</groupId>
+			<artifactId>scanengine</artifactId>
+			<version>7.0.0.8</version>
+		</dependency>
 
 	</dependencies>
 	<name>Job Board Common components</name>

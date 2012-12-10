@@ -12,6 +12,7 @@
 
     <modules>
         <module>advanceweb-parent</module>
+	<module>jobboard-jars</module>
         <module>jobboard-common</module>
         <module>jobboard-data</module>
         <module>jobboard-core</module>
