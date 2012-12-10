@@ -225,44 +225,34 @@ public class JobPostConversionHelper<JobPostForm> {
 				MMJBCommonConstants.DISP_DATE_PATTERN, Locale.US);
 		if (null != job.getStartDt()) {
 			jobPostDTO.setStartDt(formatter.format(job.getStartDt()));
-			long millisInDay = 60 * 60 * 24 * 1000;
-			Date startDt = new Date(job.getStartDt().getTime());
-			//Start date with out time
-			long startDate = startDt.getTime();
-			long startDateAsTimestamp = (startDate / millisInDay) * millisInDay;
-			//current date with out time
-			long dateOnly = new Date().getTime();
-			long currentTimestamp = (dateOnly / millisInDay) * millisInDay;
-
-			if (job.getActive() == 0 && startDateAsTimestamp > currentTimestamp) {
+			Calendar startDate = Calendar.getInstance();
+			startDate.setTime(job.getStartDt());
+			Calendar currentDate = Calendar.getInstance();
+			if (job.getActive() == 0 && startDate.after(currentDate)) {
 				jobPostDTO.setJobStatus(MMJBCommonConstants.POST_JOB_SCHEDULED);
 			} else if (null != job.getEndDt()) {
 				jobPostDTO.setEndDt(formatter.format(job.getEndDt()));
-				//End date with out time
-				Date endtDt = new Date(job.getEndDt().getTime());
-				long endDate = endtDt.getTime();
-				long endtDateAsTimestamp = (endDate / millisInDay)
-						* millisInDay;
+				// End date with out time
+				Calendar endDt = Calendar.getInstance();
+				endDt.setTime(job.getEndDt());
 
-				if (job.getActive() == 1
-						&& endtDateAsTimestamp < currentTimestamp) {
+				if (job.getActive() == 1 && endDt.before(currentDate)) {
 					jobPostDTO
 							.setJobStatus(MMJBCommonConstants.POST_JOB_EXPIRED);
 				}
 
 			}
-			if (startDateAsTimestamp <= currentTimestamp) {
+			if (startDate.compareTo(currentDate) <= 0) {
 				if (null == job.getEndDt()) {
 					Calendar now = Calendar.getInstance();
 					now.setTime(job.getStartDt());
 					now.add(Calendar.DAY_OF_MONTH, 30);
 					job.setEndDt(now.getTime());
 				}
-				jobPostDTO.setEndDt(formatter.format(job.getEndDt()));
-				long endtDateAsTimestamp = job.getEndDt().getTime();
+				Calendar endDt = Calendar.getInstance();
+				endDt.setTime(job.getEndDt());
 
-				if (job.getActive() == 1
-						&& endtDateAsTimestamp >= currentTimestamp) {
+				if (job.getActive() == 1 && endDt.compareTo(currentDate) >= 0) {
 					jobPostDTO.setJobStatus(MMJBCommonConstants.POST_NEW_JOB);
 				}
 			}

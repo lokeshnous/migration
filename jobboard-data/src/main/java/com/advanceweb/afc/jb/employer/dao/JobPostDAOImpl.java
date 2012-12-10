@@ -464,25 +464,25 @@ public class JobPostDAOImpl implements JobPostDAO {
 		Date currentDt = new Date();
 		boolean bRepost = false;
 		try {
-
-			job.setActive(MMJBCommonConstants.ACTIVE);
-			
+						
 			if (null != startDt
 					&& (job.getActive() == MMJBCommonConstants.INACTIVE
 							&& (startDt.before(currentDt)) || (startDt
 								.equals(currentDt)))) {
+				job.setActive(MMJBCommonConstants.ACTIVE);
 				bRepost=true;
 				// if User has reposted a
 				// inactive job no need to deduct any credit and the start date
 				// and end date will remain same
 			} else if (job.getActive() == MMJBCommonConstants.ACTIVE
 					&& endtDt.before(currentDt)) {
+				job.setActive(MMJBCommonConstants.ACTIVE);
 				// if User has reposted a
 				// Expired Job deduct the credit and change the start date to
 				// current date
 				// and end date to current date + 30days
 				if (!validateAndDecreaseAvailableCredits(Integer.valueOf(job
-						.getJpJobType().getName()), job.getAdmFacility()
+						.getJpJobType().getJobTypeId()), job.getAdmFacility()
 						.getFacilityId())) {
 					return false;
 				}
@@ -490,7 +490,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 				job.setEndDt(calculateEndDt(job.getStartDt(), extendDays));
 				bRepost=true;
 			}
-
+			hibernateTemplate.save(job);
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
 		}

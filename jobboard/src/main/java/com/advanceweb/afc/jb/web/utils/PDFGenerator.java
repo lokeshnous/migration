@@ -262,7 +262,7 @@ public class PDFGenerator {
 					.getListRefDTO());
 			if (null != referencesPara) {
 				Paragraph languageHeadingPara = generateParagraph(
-						"Personal References", paragraphFontName,
+						"References", paragraphFontName,
 						sectionHeadingFontSize, Font.BOLD, Color.BLACK);
 				document.add(Chunk.NEWLINE);
 				document.add(languageHeadingPara);
@@ -554,9 +554,9 @@ public class PDFGenerator {
 				certificationTable.addCell(certificationDTO
 						.getCertifyingAuthority());
 
-				certificationTable.addCell(new Paragraph("Institution Name",
+				/*certificationTable.addCell(new Paragraph("Institution Name",
 						getLabelFontFactory()));
-				certificationTable.addCell(certificationDTO.getInstituteName());
+				certificationTable.addCell(certificationDTO.getInstituteName());*/
 
 				certificationTable.addCell(new Paragraph("Received Date",
 						getLabelFontFactory()));
@@ -634,7 +634,9 @@ public class PDFGenerator {
 						.addCell(getHeadPdfCell(
 								educationDTO.getInstituteName(),
 								getLabelFontFactory()));*/
-
+				educationTable.addCell(new Paragraph("Institution Name",
+						getLabelFontFactory()));
+				educationTable.addCell(educationDTO.getInstituteName());
 				educationTable.addCell(new Paragraph("Degree Level",
 						getLabelFontFactory()));
 				educationTable.addCell(educationDTO.getDegreeLvl());
@@ -725,7 +727,7 @@ public class PDFGenerator {
 				workExpTable.addCell(getHeadPdfCell(workExpDTO.getJobTitle(),
 						getLabelFontFactory()));
 
-				workExpTable.addCell(new Paragraph("Employer Name",
+				workExpTable.addCell(new Paragraph("Company Name",
 						getLabelFontFactory()));
 				workExpTable.addCell(workExpDTO.getEmployerName());
 

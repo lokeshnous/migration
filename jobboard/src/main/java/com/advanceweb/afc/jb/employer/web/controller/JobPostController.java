@@ -81,6 +81,8 @@ public class JobPostController extends AbstractController {
 	private String deleteFailErrMsg;
 	@Value("${repostFail}")
 	private String repostFail;
+	@Value("${repostSuccess}")
+	private String repostSuccess;	
 	@Value("${deactivationFail}")
 	private String deactivateMsg;
 	@Value("${deleteSuccess}")
@@ -92,7 +94,8 @@ public class JobPostController extends AbstractController {
 	private static final String POST_NEW_JOBS = "postNewJobs";
 	private static final String SAVE_NEW_JOB = "/saveNewJob";
 	private static final String ERROR_MESSAGE = "errorMessage";
-	private static final String FORWORD_MANAGE_JOBPOST = "redirect:/employer/manageJobPost.html";
+	private static final String FORWORD_MANAGE_JOBPOST = "forward:/employer/manageJobPost.html";
+	private static final String REDIRECT_MANAGE_JOBPOST = "redirect:/employer/manageJobPost.html";
 	private static final String UPDATE_JOBS = "/updateJobs";
 	private static final String USER_ID = "userId";
 	private static final String TEMPLATE_LIST = "templateList";
@@ -303,7 +306,11 @@ public class JobPostController extends AbstractController {
 		dto.setUserId((Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID));
 		employerJobPost.savePostJob(dto);
-		model.setViewName(FORWORD_MANAGE_JOBPOST);
+		if (form.isActiveOrInactive()) {
+			model.setViewName(REDIRECT_MANAGE_JOBPOST);
+		} else {
+			model.setViewName(FORWORD_MANAGE_JOBPOST);
+		}
 		return model;
 	}
 
@@ -924,7 +931,7 @@ public class JobPostController extends AbstractController {
 			jobPostform.setJobPostDTOList(postedJobList);
 			for (JobPostDTO jobPostDTO : postedJobList) {
 				for (DropDownDTO dropDownDTO : companyList) {
-					if (jobPostDTO.getCompanyName().equalsIgnoreCase(
+					if (null!=jobPostDTO.getCompanyName() && jobPostDTO.getCompanyName().equalsIgnoreCase(
 							dropDownDTO.getOptionId())) {
 						jobPostDTO.setCompanyName(dropDownDTO.getOptionName());
 					}
@@ -1137,6 +1144,8 @@ public class JobPostController extends AbstractController {
 
 			if (!result) {
 				model.addObject(ERROR_MESSAGE, repostFail);
+			}else{
+				model.addObject(ERROR_MESSAGE, repostSuccess);
 			}
 
 		}

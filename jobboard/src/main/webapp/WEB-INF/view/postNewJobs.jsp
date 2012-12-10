@@ -488,7 +488,11 @@ function validateNumber(event) {
 					});
 	
 			function cancelProcess() {
+				if ($("#jobId").val() > 0) {
+					window.location.href = '${pageContext.request.contextPath}/employer/manageJobPost.html';
+				}else{
 				window.location.href = '${pageContext.request.contextPath}/employer/employerDashBoard.html';
+				}
 			}
 </script>
 
@@ -704,7 +708,7 @@ function validateNumber(event) {
 									<span class="required lableText6-span"> <form:radiobutton
 											path="applMethod" class="marginLeft30" value="ApplyToURL"
 											id="applyToURLId" />
-									</span><span class="lableText6">Apply-to URL</span>
+									</span><span class="lableText6">Apply-to URL:</span>
 									<form:input path="applyUrl"
 										class="job_seeker_password textBox350" id="applyToURLTSId"
 										readonly="readonly" />
@@ -716,7 +720,7 @@ function validateNumber(event) {
 									<span class="required lableText6-span"> <form:radiobutton
 											path="applMethod" class="marginLeft30" value="ApplyToATS"
 											id="applyToATSId" />
-									</span><span class="lableText6">Apply-to ATS</span>
+									</span><span class="lableText6">Apply-to ATS :</span>
 									<form:input path="atsUrl"
 										class="job_seeker_password textBox350" id="applyToATSIPId"
 										readonly="readonly" />
@@ -831,7 +835,7 @@ function validateNumber(event) {
 									</div>
 								</div>
 								<div class="rowEvenNewSpacing">
-									<span class="lableText3">Job Description</span>
+									<span class="lableText3">Job Description :</span>
 									<div class="input_grp6">
 										<form:textarea path="jobDesc"
 											class="textareaBoxCResume width450" rows="3" cols="45" />

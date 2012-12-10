@@ -112,8 +112,8 @@ public class AgencyRegistrationController extends AbstractController {
 
 	@Value("${navigationPath}")
 	private String navigationPath;
-	@Value("${employerPageExtention}")
-	private String employerPageExtention;
+	@Value("${agencyPageExtention}")
+	private String agencyPageExtention;
 	@Autowired
 	private MMEmailService emailService;
 
@@ -430,15 +430,16 @@ public class AgencyRegistrationController extends AbstractController {
 		emailDTO.setSubject(emailConfiguration.getProperty(
 				"welcome.mail.message").trim());
 		String loginPath = navigationPath.substring(2);
+		String userName=userDTO.getFirstName()+" " + userDTO.getLastName();
 		String employerWelcomeMailBody = emailConfiguration.getProperty(
 				"employer.welcome.mail.body").trim();
 		String employerloginUrl = request.getRequestURL().toString()
 				.replace(request.getServletPath(), loginPath)
-				+ dothtmlExtention + employerPageExtention;
+				+ dothtmlExtention + agencyPageExtention;
 		employerWelcomeMailBody = employerWelcomeMailBody.replace("?userName",
 				userDTO.getFirstName());
 		employerWelcomeMailBody = employerWelcomeMailBody.replace("?user_name",
-				userDTO.getFirstName());
+				userName);
 		employerWelcomeMailBody = employerWelcomeMailBody.replace(
 				"?company_name", userDTO.getCompany());
 		employerWelcomeMailBody = employerWelcomeMailBody.replace(

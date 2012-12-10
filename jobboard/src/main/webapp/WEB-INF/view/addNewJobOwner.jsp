@@ -29,13 +29,13 @@
 						
 						if (ownerName.length <= 0
 							&& ownerEmail .length <= 0){
-							$("#jobOwnerErrorMsg").html("<span>Please enter required fields.</span>");
+							$("#jobOwnerErrorMsg").html("<span>Please enter the required fields.</span>");
 						
 						}else if($('#ownerName').val().split(' ').length < 2) {		
 							$("#jobOwnerErrorMsg").html("<span>Name field should contain both first and last name.</span>");
 							
 						}else if(!email_regex.test(ownerEmail)){
-							$("#jobOwnerErrorMsg").html("<span>Please enter correct email address.</span>");	
+							$("#jobOwnerErrorMsg").html("<span>Please enter the correct email address.</span>");	
 						
 						}else {		
 							$("#jobOwnerErrorMsg").html("<span>Processing...</span>");
@@ -47,7 +47,7 @@
 										$("#jobOwnerErrorMsg").html("<span>"+data.failure+"</span>");	
 									}else{
 										$("#jobOwnerErrorMsg").html("<span>"+data.success+"</span>");
-										alert("New Job Owner Added successfully!")
+										alert("New job owner added successfully!")
 									  	$("#manageAccPerm").click();
 									}
 								}					

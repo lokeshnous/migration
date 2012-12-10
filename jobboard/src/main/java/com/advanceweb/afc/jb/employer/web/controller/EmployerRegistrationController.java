@@ -362,6 +362,7 @@ public class EmployerRegistrationController extends AbstractController{
 		EmailDTO emailDTO = new EmailDTO();
 		emailDTO.setToAddress(jsToAddress);
 		emailDTO.setFromAddress(advanceWebAddress);
+		String userName=userDTO.getFirstName()+" " + userDTO.getLastName();
 		emailDTO.setSubject(emailConfiguration.getProperty(
 				"welcome.mail.message").trim());
 		String loginPath = navigationPath.substring(2);
@@ -371,7 +372,7 @@ public class EmployerRegistrationController extends AbstractController{
 				.replace(request.getServletPath(), loginPath)
 				+ dothtmlExtention + employerPageExtention;
 		employerWelcomeMailBody = employerWelcomeMailBody.replace("?user_name",
-				userDTO.getFirstName());
+				userName);
 		employerWelcomeMailBody = employerWelcomeMailBody.replace("?userName",
 				userDTO.getFirstName());
 		employerWelcomeMailBody = employerWelcomeMailBody.replace(
