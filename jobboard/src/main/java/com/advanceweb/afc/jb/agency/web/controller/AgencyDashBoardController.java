@@ -167,7 +167,8 @@ public class AgencyDashBoardController extends AbstractController {
 	private String accountEmail;
 	@Value("${account_Street}")
 	private String accountStreet;
-
+	@Value("${emailInUse}")
+	private String emailInUse;
 	@RequestMapping("/agencyDashboard")
 	public ModelAndView displayDashBoard(HttpSession session,
 			HttpServletRequest request) {
@@ -223,6 +224,11 @@ public class AgencyDashBoardController extends AbstractController {
 			BindingResult result, HttpSession session) {
 		boolean isUpdated = false;
 		try {
+			if(employeeAccountForm.isAdminLogin()){
+				if(facilityService.getUser(employeeAccountForm.getEmail())!=null){
+					return emailInUse;
+				}
+			}
 			int userId = (Integer) session.getAttribute("userId");
 			AdmFacilityContactDTO listProfAttribForms = empRegService
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.PRIMARY);
