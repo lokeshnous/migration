@@ -97,7 +97,31 @@
 			}
 		});	
 		
+		$("#stateDpId").change( function(){
+			$('#cityAutoPopulation').val('');
+			$('#zipCode').val('');
+			$('#countryDpId').val('');
+		});
+	$("#zipCode").change(function(){
+		$('#cityAutoPopulation').val("");
+		$('#stateDpId').val("");
+		$('#countryDpId').val("");
 	});
+
+	$("#cityAutoPopulation").change(function(){
+		$('#zipCode').val("");
+		$('#stateDpId').val("");
+		$('#countryDpId').val("");
+	});
+	$("#countryDpId").change(function(){
+		$('#zipCode').val("");
+		$('#stateDpId').val("");
+		$('#cityAutoPopulation').val("");
+	});
+		
+	});
+	
+	
 </script>
 <script type="text/javascript">
 	function cancelProcess() {
