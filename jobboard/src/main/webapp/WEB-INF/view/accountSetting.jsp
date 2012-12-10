@@ -46,7 +46,7 @@ function copyAccToBillingAddr(obj) {
            		$("#state2").val($("#state").val());
            		$("#country2").val($("#country").val());
            		$("#zipCode2").val($("#zipCode").val());
-           		$("#email2").val($("#email").val());
+           		$("#email2").val($("#emailId").val());
            		$("#phone2").val($("#phone").val());
            	}
            	if(!isSelected)
