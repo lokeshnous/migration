@@ -273,7 +273,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 					null);
 			
 			WebMembershipEmail webMembershipEmail = (WebMembershipEmail)DataAccessUtils.uniqueResult(hibernateTemplateAdvancePass.find("from WebMembershipEmail where email = ?", merUser.getEmail()));
-			WebMembership membership = hibernateTemplateAdvancePass.get(WebMembership.class, webMembershipEmail.getWebMembershipID());
+			WebMembership membership = hibernateTemplateAdvancePass.get(WebMembership.class, webMembershipEmail.getWebMembership().getWebMembershipID());
 			
 			if(null != merUser && null != membership){
 				membership.setPassword(merUser.getPassword());
@@ -603,14 +603,13 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 
 		hibernateTemplateAdvancePass.saveOrUpdate(membershipInfo);
 		// setting data into webmemberwhip table
-		webMembership.setWebMembershipInfoID(membershipInfo
-				.getWebMembershipInfoID());
+		webMembership.setWebMembershipInfo(membershipInfo);
 		webMembership.setPassword(merUser.getPassword());
 		webMembership.setWebMembershipLevelID(2);
 		webMembership.setCreateDate(timestamp);
 		hibernateTemplateAdvancePass.saveOrUpdate(webMembership);
 		// setting data into webmemberwhipemail table
-		membershipEmail.setWebMembershipID(webMembership.getWebMembershipID());
+		membershipEmail.setWebMembership(webMembership);
 		membershipEmail.setEmail(merUser.getEmail());
 		membershipEmail.setCreateDate(timestamp);
 

@@ -169,7 +169,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 				if (merUserProfiles != null) {
 					hibernateTemplate.saveOrUpdateAll(merUserProfiles);
 				}
-				
+				//updateAdvancePassDetails(jsDTO);
 		} catch (HibernateException e) {
 			LOGGER.error(e);
 		}
@@ -184,7 +184,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 			if (dto.getMerUserDTO() != null) {
 				MerUser user = hibernateTemplate.get(MerUser.class, dto.getMerUserDTO().getUserId());
 				WebMembershipEmail webMembershipEmail = (WebMembershipEmail)DataAccessUtils.uniqueResult(hibernateTemplateAdvancePass.find("from WebMembershipEmail where email = ?", user.getEmail()));
-				WebMembership membership = hibernateTemplateAdvancePass.get(WebMembership.class, webMembershipEmail.getWebMembershipID());
+				WebMembership membership = hibernateTemplateAdvancePass.get(WebMembership.class, webMembershipEmail.getWebMembership().getWebMembershipID());
 				if(null != user && null != membership){
 					user.setPassword(dto.getMerUserDTO().getPassword());
 					membership.setPassword(user.getPassword());
@@ -343,18 +343,63 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 
 		hibernateTemplateAdvancePass.saveOrUpdate(membershipInfo);
 		// setting data into webmemberwhip table
-		webMembership.setWebMembershipInfoID(membershipInfo
-				.getWebMembershipInfoID());
+		webMembership.setWebMembershipInfo(membershipInfo);
 		webMembership.setPassword(merUser.getPassword());
 		webMembership.setWebMembershipLevelID(2);
 		webMembership.setCreateDate(timestamp);
 		hibernateTemplateAdvancePass.saveOrUpdate(webMembership);
 		// setting data into webmemberwhipemail table
-		membershipEmail.setWebMembershipID(webMembership.getWebMembershipID());
+		membershipEmail.setWebMembership(webMembership);
 		membershipEmail.setEmail(merUser.getEmailId());
 		membershipEmail.setCreateDate(timestamp);
 
 		hibernateTemplateAdvancePass.saveOrUpdate(membershipEmail);
 
 	}
+	
+	/**
+	 * Method to update required Data Into Advance Pass
+	 * 
+	 * @param facilityIdP
+	 * @param merUser
+	 */
+	private void updateAdvancePassDetails(JobSeekerRegistrationDTO jsDTO) {
+		UserDTO merUser = jsDTO.getMerUserDTO();
+		Timestamp timestamp = new Timestamp(new Date().getTime());
+		WebMembership webMembership = new WebMembership();
+		WebMembershipEmail membershipEmail = new WebMembershipEmail();
+		WebMembershipInfo membershipInfo = new WebMembershipInfo();
+		membershipInfo.setFirstName(merUser.getFirstName());
+		membershipInfo.setLastName(merUser.getLastName());
+		membershipInfo.setCreateDate(timestamp);
+		membershipInfo.setZipCode(merUser.getZipCode());
+		if (null != merUser.getCountry()
+				&& (merUser.getCountry().equalsIgnoreCase(
+						MMJBCommonConstants.COUNTRY_USA) || merUser
+						.getCountry().equalsIgnoreCase("US"))) {
+			membershipInfo.setCountryId(MMJBCommonConstants.COUNTRY_USA_VAL);
+		} else if (null != merUser.getCountry()
+				&& (merUser.getCountry()
+						.equalsIgnoreCase(MMJBCommonConstants.COUNTRY_CA))) {
+			membershipInfo.setCountryId(MMJBCommonConstants.COUNTRY_CA_VAL);
+		}
+
+		hibernateTemplateAdvancePass.saveOrUpdate(membershipInfo);
+		// setting data into webmemberwhip table
+//		webMembership.setWebMembershipInfoID(membershipInfo
+//				.getWebMembershipInfoID());
+		webMembership.setPassword(merUser.getPassword());
+		webMembership.setWebMembershipLevelID(2);
+		webMembership.setCreateDate(timestamp);
+		hibernateTemplateAdvancePass.saveOrUpdate(webMembership);
+		// setting data into webmemberwhipemail table
+//		membershipEmail.setWebMembershipID(webMembership.getWebMembershipID());
+		membershipEmail.setEmail(merUser.getEmailId());
+		membershipEmail.setCreateDate(timestamp);
+
+		hibernateTemplateAdvancePass.saveOrUpdate(membershipEmail);
+
+	}
+	
+	
 }

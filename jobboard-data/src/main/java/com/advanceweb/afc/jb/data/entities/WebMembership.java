@@ -1,14 +1,16 @@
 package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -23,7 +25,7 @@ public class WebMembership implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="WebMembershipID ")
+	@Column(name="WebMembershipID")
 	private int webMembershipID;
 
 	@Column(name="Password")
@@ -38,9 +40,16 @@ public class WebMembership implements Serializable {
 	@Column(name="SubRequestID")
 	private int subRequestID;
 
-	@Column(name="WebMembershipInfoID")
-	private int WebMembershipInfoID;
-
+//	@Column(name="WebMembershipInfoID")
+//	private int WebMembershipInfoID;
+	
+	@OneToOne(fetch=FetchType.LAZY, mappedBy="webMembership")
+	private WebMembershipEmail webMembershipEmail;
+	
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="WebMembershipInfoID")
+	private WebMembershipInfo webMembershipInfo;
+	
 	@Column(name="Activated")
 	private boolean activated;
 
@@ -78,12 +87,10 @@ public class WebMembership implements Serializable {
 	@Column(name="DeleteDate")
 	private Date deleteDate;
 	@Column(name="ShopSalt")
-	private String ShopSalt;
+	private String shopSalt;
 	@Column(name="ShopEncryptPassword")
 	private String shopEncryptPassword;
 	
-	    public WebMembership() {
-    }
 
 		/**
 		 * @return the webMembershipID
@@ -97,6 +104,20 @@ public class WebMembership implements Serializable {
 		 */
 		public void setWebMembershipID(int webMembershipID) {
 			this.webMembershipID = webMembershipID;
+		}
+
+		/**
+		 * @return the webMembershipInfo
+		 */
+		public WebMembershipInfo getWebMembershipInfo() {
+			return webMembershipInfo;
+		}
+
+		/**
+		 * @param webMembershipInfo the webMembershipInfo to set
+		 */
+		public void setWebMembershipInfo(WebMembershipInfo webMembershipInfo) {
+			this.webMembershipInfo = webMembershipInfo;
 		}
 
 		/**
@@ -155,18 +176,19 @@ public class WebMembership implements Serializable {
 			this.subRequestID = subRequestID;
 		}
 
+
 		/**
-		 * @return the webMembershipInfoID
+		 * @return the webMembershipEmail
 		 */
-		public int getWebMembershipInfoID() {
-			return WebMembershipInfoID;
+		public WebMembershipEmail getWebMembershipEmail() {
+			return webMembershipEmail;
 		}
 
 		/**
-		 * @param webMembershipInfoID the webMembershipInfoID to set
+		 * @param webMembershipEmail the webMembershipEmail to set
 		 */
-		public void setWebMembershipInfoID(int webMembershipInfoID) {
-			WebMembershipInfoID = webMembershipInfoID;
+		public void setWebMembershipEmail(WebMembershipEmail webMembershipEmail) {
+			this.webMembershipEmail = webMembershipEmail;
 		}
 
 		/**
@@ -341,14 +363,14 @@ public class WebMembership implements Serializable {
 		 * @return the shopSalt
 		 */
 		public String getShopSalt() {
-			return ShopSalt;
+			return shopSalt;
 		}
 
 		/**
 		 * @param shopSalt the shopSalt to set
 		 */
 		public void setShopSalt(String shopSalt) {
-			ShopSalt = shopSalt;
+			this.shopSalt = shopSalt;
 		}
 
 		/**

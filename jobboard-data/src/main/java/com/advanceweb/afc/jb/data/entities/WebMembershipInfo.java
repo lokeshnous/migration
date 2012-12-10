@@ -5,9 +5,11 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -58,8 +60,9 @@ public class WebMembershipInfo implements Serializable {
 	@Column(name="ZipCode")
 	private String zipCode;
 
-    public WebMembershipInfo() {
-    }
+	@OneToOne(fetch=FetchType.LAZY, mappedBy="webMembershipInfo")
+	private WebMembership webMembership;
+	
 
 	public int getWebMembershipInfoID() {
 		return this.webMembershipInfoID;
@@ -155,6 +158,14 @@ public class WebMembershipInfo implements Serializable {
 
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
+	}
+
+	public WebMembership getWebMembership() {
+		return webMembership;
+	}
+
+	public void setWebMembership(WebMembership webMembership) {
+		this.webMembership = webMembership;
 	}
 	
 }

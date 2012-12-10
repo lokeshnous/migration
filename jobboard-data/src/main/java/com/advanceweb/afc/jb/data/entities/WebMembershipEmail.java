@@ -5,9 +5,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -25,8 +28,12 @@ public class WebMembershipEmail implements Serializable {
 	@Column(name="WebMembershipEmailID")
 	private int webMembershipEmailID;
 
-	@Column(name="WebMembershipID")
-	private int webMembershipID;
+//	@Column(name="WebMembershipID")
+//	private int webMembershipID;
+//	
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="WebMembershipID")
+	private WebMembership webMembership;
 
 	@Column(name="Email")
 	private String email;
@@ -57,10 +64,6 @@ public class WebMembershipEmail implements Serializable {
 
 	
 
-    public WebMembershipEmail() {
-    }
-
-
 
 	/**
 	 * @return the webMembershipEmailID
@@ -80,20 +83,21 @@ public class WebMembershipEmail implements Serializable {
 
 
 
+
 	/**
-	 * @return the webMembershipID
+	 * @return the webMembership
 	 */
-	public int getWebMembershipID() {
-		return webMembershipID;
+	public WebMembership getWebMembership() {
+		return webMembership;
 	}
 
 
 
 	/**
-	 * @param webMembershipID the webMembershipID to set
+	 * @param webMembership the webMembership to set
 	 */
-	public void setWebMembershipID(int webMembershipID) {
-		this.webMembershipID = webMembershipID;
+	public void setWebMembership(WebMembership webMembership) {
+		this.webMembership = webMembership;
 	}
 
 

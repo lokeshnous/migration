@@ -170,7 +170,7 @@ public class UserDaoImpl implements UserDao {
 					"from MerUser e where e.email=?", email).get(0);
 			
 			WebMembershipEmail webMembershipEmail = (WebMembershipEmail)DataAccessUtils.uniqueResult(hibernateTemplateAdvancePass.find("from WebMembershipEmail where email = ?", search.getEmail()));
-			WebMembership membership = hibernateTemplateAdvancePass.get(WebMembership.class, webMembershipEmail.getWebMembershipID());
+			WebMembership membership = hibernateTemplateAdvancePass.get(WebMembership.class, webMembershipEmail.getWebMembership().getWebMembershipID());
 			search.setPassword(tempassword);
 			membership.setPassword(tempassword);
 			

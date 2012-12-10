@@ -165,14 +165,13 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 
 		hibernateTemplateAdvancePass.saveOrUpdate(membershipInfo);
 		// setting data into webmemberwhip table
-		webMembership.setWebMembershipInfoID(membershipInfo
-				.getWebMembershipInfoID());
+		webMembership.setWebMembershipInfo(membershipInfo);
 		webMembership.setPassword(merUser.getPassword());
 		webMembership.setWebMembershipLevelID(2);
 		webMembership.setCreateDate(timestamp);
 		hibernateTemplateAdvancePass.saveOrUpdate(webMembership);
 		// setting data into webmemberwhipemail table
-		membershipEmail.setWebMembershipID(webMembership.getWebMembershipID());
+		membershipEmail.setWebMembership(webMembership);
 		membershipEmail.setEmail(merUser.getEmail());
 		membershipEmail.setCreateDate(timestamp);
 
