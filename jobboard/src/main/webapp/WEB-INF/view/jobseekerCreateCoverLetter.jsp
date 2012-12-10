@@ -66,12 +66,17 @@
 						<a href="#"><img width="19" height="19" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close" title="Close"/></a>
 					</div>
 					<div class="popUpContainerWrapper">
-					<div class="rowEvenNewSpacing">
-								<span class="lableText3"> </span>
-									<div id="errmsg" class="FormErrorDisplayText"></div>
-							</div>	
 					<div class="row ">
+					<!-- <div class="rowEvenNewSpacing">
+								<span class="lableText3"> </span>
+								<div id="errmsg" class="FormErrorDisplayText"></div>
+							</div> -->
+					
 						<div class="rowEvenNewSpacing">
+						<div class="rowEvenNewSpacing">
+								<span class="lableText7"> </span>
+								<div id="errmsg" class="FormErrorDisplayText"></div>
+							</div>
 								<span class="lableText7">
 								Cover Letter Name:
 								</span>
