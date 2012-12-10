@@ -546,7 +546,8 @@ public class EmployerRegistrationController extends AbstractController{
 
 		try {
 			if(employeeAccountForm.isAdminLogin()){
-				if(facilityService.getUser(employeeAccountForm.getEmail())!=null){
+				UserDTO userDto=facilityService.getUser(employeeAccountForm.getEmail());
+				if(userDto!=null && !userDto.getEmailId().equals(employeeAccountForm.getEmail())){
 					return emailInUse;
 				}
 			}

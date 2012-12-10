@@ -442,7 +442,9 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 						userId);
 				mer.setFirstName(apd.getFirstName());
 				mer.setLastName(apd.getLastName());
+				if(apd.getEmail()!=null){
 				mer.setEmail(apd.getEmail());
+				}
 				hibernateTemplateTracker.update(mer);
 
 				// update admfacilitycontact
@@ -457,7 +459,9 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 				facility.setState(apd.getState());
 				facility.setPostcode(apd.getZipCode());
 				facility.setCountry(apd.getCountry());
+				if(apd.getEmail()!=null){
 				facility.setEmail(apd.getEmail());
+				}
 				facility.setPhone(apd.getPhone());
 				hibernateTemplateCareers.update(facility);
 				isUpdate = true;

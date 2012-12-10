@@ -194,7 +194,9 @@ public class TransformEmployerRegistration {
 		dto.setState(form.getState());
 		dto.setStreet(form.getStreetAddress());
 		dto.setCountry(form.getCountry());
+		if(form.isAdminLogin()){
 		dto.setEmail(form.getEmail());
+		}
 		dto.setZipCode(form.getZipCode());
 		dto.setPhone(form.getPhone());
 		dto.setCity(form.getCityOrTown());
