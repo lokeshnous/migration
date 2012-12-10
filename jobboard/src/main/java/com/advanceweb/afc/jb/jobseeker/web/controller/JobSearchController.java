@@ -391,8 +391,14 @@ public class JobSearchController extends AbstractController {
 					.getNewsFromXML();
 			List<NewsDTO> newsDTOList = newsMap.get(PLATINUM_LIST);
 
+			if (newsDTOList.size() > 5) {
+				List<NewsDTO> modNewsDTOList = newsDTOList.subList(0, 5);
+				model.put("newsDTOList", modNewsDTOList);
+			} else {
+				model.put("newsDTOList", newsDTOList);
+			}
+			
 			List<String> videoList = setVideoURL(jobDTO, request);
-			model.put("newsDTOList", newsDTOList);
 			model.put("jobDTOList", jobPostDTOList);
 			model.put("videoList", videoList);
 			modelView.setViewName("jobseekerJobDetailsTemplate");
@@ -401,6 +407,28 @@ public class JobSearchController extends AbstractController {
 		}
 	}
 
+	
+	/**
+	 * This method retrieves all the news related to Platinum customers
+	 * 
+	 * @return modelView
+	 */
+	@RequestMapping(value = "/getPlatinumNewsList")
+	public ModelAndView getPlatinumNewsList(HttpServletRequest request, HttpSession session)
+	{
+		ModelAndView modelView = new ModelAndView();
+		
+		Map<String, List<NewsDTO>> newsMap = employerNewsFeedService
+				.getNewsFromXML();
+		List<NewsDTO> newsDTOList = newsMap.get(PLATINUM_LIST);
+		modelView.addObject("newsDTOList", newsDTOList);
+		modelView.setViewName("newsList");
+		// get the Ads
+		populateAds(request, session, modelView, PageNames.PREMIUM_JOB_VIEW);
+
+		return modelView;
+	}
+	
 	/**
 	 * Populate Ads for job view, premium job view and browse category pages
 	 * page

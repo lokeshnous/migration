@@ -407,7 +407,7 @@
                             </div>
                     <c:forEach items="${jobDTOList}" var="jobDTO">   
 	                    <div class="BlueBoxCont"><a href="#" class="TextColorA02Link" onclick="viewJobDetails(${jobDTO.jobId},'${jobDTO.jobTitle}')">
-	                      <h3> class="TextColor02">${jobDTO.jobTitle}</h3>
+	                      <h3 class="TextColor02">${jobDTO.jobTitle}</h3>
 	                      </a></div>
                     </c:forEach> 
                  </div>
@@ -416,7 +416,7 @@
                  
 	             <div class="row marginTop15">
 	             <div class="LeftBoxLink" style="border-top: 5px solid ${jobDetail.getColor().substring(4)};">
-                    <div class="BlueBoxContA"> <a href="#" class="UnderLineNone">
+                    <div class="BlueBoxContA"> <a href="<%= request.getContextPath() %>/jobsearch/getPlatinumNewsList.html" target="_blank" class="UnderLineNone">
                       <h2 class="more_link noTopBottomBorder more_link02">News From This Employer<span>More</span></h2>
                       </a> </div>
                        <c:forEach items="${newsDTOList}" var="newsDTO">   
