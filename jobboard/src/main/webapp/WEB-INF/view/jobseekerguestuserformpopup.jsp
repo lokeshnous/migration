@@ -25,6 +25,7 @@
 												var file = $("#filePath").val();
 												$("form").attr("action","${pageContext.request.contextPath}/anonymoususerjobapply/saveAnonymousUserJobapply.html");
 												$("#applyJobForm").submit();
+												alert("Job applied successfully!");	
 											}
 										});
 					});
