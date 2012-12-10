@@ -214,7 +214,19 @@
 				<!-- END css_subContainer --></li>
 			<!-- END css_main_menu_item -->
 
-			<li class="css_main_menu_item"><a href="#">Job Search</a>
+			<li class="css_main_menu_item">
+			<security:authorize
+				access="!hasRole('ROLE_JOB_SEEKER') and !hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP') and !hasRole('ROLE_FACILITY_SYSTEM')" >
+				<a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html">Job Search</a>
+				</security:authorize>
+			<security:authorize
+				access="hasRole('ROLE_JOB_SEEKER')">
+				<a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html">Job Search</a>
+				</security:authorize>
+			<security:authorize
+				access="hasRole('ROLE_FACILITY') or hasRole('ROLE_FACILITY_GROUP') or hasRole('ROLE_FACILITY_SYSTEM')">
+				<a href="#">Job Search</a>
+				</security:authorize>
 				<ul class="css_subContainer">
 					<div class="css_column">
 						<li><a href="http://health-care-jobs.advanceweb.com/">Quick
