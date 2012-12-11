@@ -96,6 +96,91 @@ function copyAccToBillingAddr(obj) {
  		//$('[id^=zipCode]').keypress(validateNumber);
  		//$('[id^=zipCode2]').keypress(validateNumber); 		
 		jQuery(".megamenu").megamenu();
+		
+		$("#cityOrTown").autocomplete({
+			source: '${pageContext.request.contextPath}/employer/getCityList.html',
+			width:500,
+			select: function(event, ui) {
+				$("#cityOrTown").val(ui.item.value);				
+				$.ajax({
+				url: '${pageContext.request.contextPath}/employer/getState.html?city='+$("#cityOrTown").val(),
+				success : function(data) {
+					$('#state').val(data);
+
+					$.ajax({
+					url: '${pageContext.request.contextPath}/employer/getPostalCode.html?city='+$("#cityOrTown").val()+'&state='+$("#state").val(),
+					success : function(data) {
+						$('#zipCode').val(data);
+					},
+					});						
+						$.ajax({
+						url: '${pageContext.request.contextPath}/employer/getCountry.html?city='+$("#cityOrTown").val()+'&state='+$("#state").val()+'&postalCode='+$("#zipCode").val(),
+						success : function(country) {
+							//alert(country);
+							$('#country').val(country);
+							if (country == "USA" || country == "US") {           		
+			            		 var checks = ["2","3","4"];
+			            		 $(":checkbox").val(checks).filter(":checked").attr("disabled",true);
+			            		 $(":checkbox").val(checks).filter(":checked").attr("checked",false); 
+			            		 $("#waitmsg").hide();
+			            	}else{
+			            		var checks = ["1","2","3","4"];
+			           		    $(":checkbox").val(checks).filter(":checked").attr("disabled",false);  
+			           		    $(":checkbox").val(checks).filter(":checked").attr("checked",false); 
+			            	} 
+						},
+					}); 
+				},error : function(data) {
+				},
+				complete : function(data) {
+				}
+				});
+			}
+		}); 
+		
+		//Auto complete on selecting zipcode			
+		$("#zipCode").autocomplete({
+			source: '${pageContext.request.contextPath}/employer/getPostalCodeAutoPopulation.html',
+			select: function(event, ui) {
+				$("#zipCode").val(ui.item.value);	
+				$('#cityOrTown').val("");
+				$('#state').val("");
+				$.ajax({
+					url: '${pageContext.request.contextPath}/employer/getLocations.html?zipCode='+$("#zipCode").val(),
+					success : function(data) {
+						$('#state').val(data.state);
+						$('#country').val(data.country);
+						$("#cityOrTown").val(data.city);
+					},error : function(data) {
+					},
+					complete : function(data) {
+					}
+				});		
+			}
+		});	
+			
+		$("#state").change( function(){
+			$('#cityOrTown').val('');
+			$('#zipCode').val('');
+			$('#country').val('');
+		});
+	$("#zipCode").change(function(){
+		$('#cityOrTown').val("");
+		$('#state').val("");
+		$('#country').val("");
+	});
+
+	$("#cityOrTown").change(function(){
+		$('#zipCode').val("");
+		$('#state').val("");
+		$('#country').val("");
+	});
+	$("#country").change(function(){
+		$('#zipCode').val("");
+		$('#state').val("");
+		$('#cityOrTown').val("");
+	});
+
 	});
 </script>
 
