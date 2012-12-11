@@ -41,7 +41,7 @@ function validateNumber(event) {
 </script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-		
+		$("#enterTooltip").hide();
 		$("#phone").inputmask("mask", {"mask": "(999) 999-9999"});
 		
 		if($("#MyProfession :selected").text() == "Others"){
@@ -53,8 +53,12 @@ function validateNumber(event) {
 		$('#MyProfession').change(function() {
 			 if($("#MyProfession :selected").text() == "Others"){
 		         $("#otherProfession").show();
+		         $("#enterTooltip").show();
+		         $("#selectTooltip").hide();
 		    }else{
 		    	$("#otherProfession").hide();
+		    	$("#selectTooltip").show();
+		    	$("#enterTooltip").hide();
 		    }
 		});
 
@@ -290,8 +294,12 @@ function validateNumber(event) {
 											itemLabel="optionName" />
 								</form:select>
 								<form:input path="otherProfession" class="job_seeker_password textBox150"/>
-								<div class="toolTip01 marginTop5 marginLeft5">
+								<div class="toolTip01 marginTop5 marginLeft5" id="enterTooltip">
 									<span class="classic">Enter the general field in which you
+										work. Example: Respiratory Therapy</span>
+								</div>
+								<div class="toolTip01 marginTop5 marginLeft5" id="selectTooltip">
+									<span class="classic">Select the general field in which you
 										work. Example: Respiratory Therapy</span>
 								</div>
 								<span class="required">(Required)</span>

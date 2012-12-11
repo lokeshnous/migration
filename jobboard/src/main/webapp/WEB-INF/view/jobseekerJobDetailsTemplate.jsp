@@ -20,12 +20,11 @@
 		<script  src="<%=request.getContextPath()%>/resources/js/widgets.js"></script>
   
   <jsp:include page="common/include.jsp" />
+  <script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/slider.js"></script>
 		<script type="text/javascript">
 		    jQuery(document).ready(function(){
 		    	jQuery(".megamenu").megamenu();
 		    	popUpIds();
-		    	window.onload = function() {
-				};
 		});
 		    
 		    function popUpIds()

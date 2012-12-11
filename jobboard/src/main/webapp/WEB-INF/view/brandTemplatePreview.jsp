@@ -10,6 +10,10 @@
 		<title>ADVANCE Heathcare Jobs</title>
 
 <jsp:include page="common/include.jsp" />
+<script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/slider.js"></script>
+<script type='text/javascript' src="../resources/js/silverlight.js"></script>
+<script type='text/javascript' src="../resources/js/wmvplayer.js"></script>
+
 		<script type="text/javascript">
 		    jQuery(document).ready(function(){
 		    popUpIds();
@@ -216,8 +220,7 @@
 									&nbsp;
 									<div id="mediaspacePath" style="display: none;">${brandingTemplateForm.listVideos[status.index].mediaPath}</div> 
 									<div id="mediaspace"></div> 
-									<script type='text/javascript' src="../resources/js/silverlight.js"></script>
-									<script type='text/javascript' src="../resources/js/wmvplayer.js"></script>
+									
 									<script type="text/javascript">
 										var cnt = document.getElementById("mediaspace");
 										var src = '../resources/MediaFiles/wmvplayer.xaml';
@@ -232,12 +235,11 @@
 									</script> 
 									</div>
 									
-									<%-- <div class="floatLeft width285 marginLeft10 marginRight10">
+									<div class="floatLeft width285 marginLeft10 marginRight10">
 									&nbsp;
 									<div id="mediaspacePath2" style="display: none;">${brandingTemplateForm.listVideos[status.index+1].mediaPath}</div> 
 									<div id="mediaspace2"></div> 
-									<script type='text/javascript' src="../resources/js/silverlight.js"></script>
-									<script type='text/javascript' src="../resources/js/wmvplayer.js"></script>
+									
 									<script type="text/javascript">
 										var cnt2 = document.getElementById("mediaspace2");
 										var src2 = '../resources/MediaFiles/wmvplayer.xaml';
@@ -256,8 +258,7 @@
 									&nbsp;
 									<div id="mediaspacePath3" style="display: none;">${brandingTemplateForm.listVideos[status.index+2].mediaPath}</div> 
 									<div id="mediaspace3"></div> 
-									<script type='text/javascript' src="../resources/js/silverlight.js"></script>
-									<script type='text/javascript' src="../resources/js/wmvplayer.js"></script>
+									
 									<script type="text/javascript">
 										var cnt = document.getElementById("mediaspace3");
 										var src = '../resources/MediaFiles/wmvplayer.xaml';
@@ -270,7 +271,7 @@
 										};
 										var ply = new jeroenwijering.Player(cnt,src,cfg);
 									</script> 
-									</div> --%>
+									</div>
 									
 									</div>
 								</c:forEach>
