@@ -251,7 +251,7 @@ function validateNumber(event) {
 						<div class="searchResultsItem MarginBottom10">
 							<ul class="resumeBuilderTab closed">
 								<li class="resumeBuilderColumn">
-									<div class="sectionHeaderCreateResume">
+									<div class="sectionHeaderCreateResume cursor">
 										<div class="floatLeft">
 
 											<h2 class="noBorder">Contact
@@ -401,7 +401,7 @@ function validateNumber(event) {
 							<ul class="resumeBuilderTab closed">
 
 								<li class="resumeBuilderColumn">
-									<div class="sectionHeaderCreateResume">
+									<div class="sectionHeaderCreateResume cursor">
 										<div class="floatLeft">
 											<h2 class="noBorder">Objective</h2>
 										</div>
@@ -430,7 +430,7 @@ function validateNumber(event) {
 							<ul class="resumeBuilderTab closed">
 
 								<li class="resumeBuilderColumn">
-									<div class="sectionHeaderCreateResume">
+									<div class="sectionHeaderCreateResume cursor">
 										<div class="floatLeft">
 											<h2 class="noBorder">Work
 												Experience</h2>
@@ -575,7 +575,7 @@ function validateNumber(event) {
 							<ul class="resumeBuilderTab closed">
 
 								<li class="resumeBuilderColumn">
-									<div class="sectionHeaderCreateResume">
+									<div class="sectionHeaderCreateResume cursor">
 										<div class="floatLeft">
 											<h2 class="noBorder">Education</h2>
 										</div>
@@ -677,7 +677,7 @@ function validateNumber(event) {
 						<div class="searchResultsItem">
 							<ul class="resumeBuilderTab closed">
 								<li class="resumeBuilderColumn">
-									<div class="sectionHeaderCreateResume">
+									<div class="sectionHeaderCreateResume cursor">
 										<div class="floatLeft">
 
 											<h2 class="noBorder">Certification</h2>
@@ -739,7 +739,7 @@ function validateNumber(event) {
 						<div class="searchResultsItem">
 							<ul class="resumeBuilderTab closed">
 								<li class="resumeBuilderColumn">
-									<div class="sectionHeaderCreateResume">
+									<div class="sectionHeaderCreateResume cursor">
 										<div class="floatLeft">
 											<h2 class="noBorder">Skills</h2>
 										</div>
@@ -776,7 +776,7 @@ function validateNumber(event) {
 						<div class="searchResultsItem">
 							<ul class="resumeBuilderTab closed">
 								<li class="resumeBuilderColumn">
-									<div class="sectionHeaderCreateResume">
+									<div class="sectionHeaderCreateResume  cursor">
 
 										<div class="floatLeft">
 											<h2 class="noBorder">Languages</h2>
@@ -827,7 +827,7 @@ function validateNumber(event) {
 						<div class="searchResultsItem">
 							<ul class="resumeBuilderTab closed">
 								<li class="resumeBuilderColumn">
-									<div class="sectionHeaderCreateResume">
+									<div class="sectionHeaderCreateResume cursor">
 										<div class="floatLeft">
 											<h2 class="noBorder">Awards</h2>
 
@@ -859,7 +859,7 @@ function validateNumber(event) {
 							<ul class="resumeBuilderTab closed">
 
 								<li class="resumeBuilderColumn">
-									<div class="sectionHeaderCreateResume">
+									<div class="sectionHeaderCreateResume cursor">
 										<div class="floatLeft">
 											<h2 class="noBorder">Memberships</h2>
 										</div>
@@ -888,7 +888,7 @@ function validateNumber(event) {
 						<div class="searchResultsItem">
 							<ul class="resumeBuilderTab closed">
 								<li class="resumeBuilderColumn">
-									<div class="sectionHeaderCreateResume">
+									<div class="sectionHeaderCreateResume cursor">
 
 										<div class="floatLeft">
 											<h2 class="noBorder">Other</h2>
@@ -921,7 +921,7 @@ function validateNumber(event) {
 						<div class="searchResultsItem MarginBottom10">
 							<ul class="resumeBuilderTab closed">
 								<li class="resumeBuilderColumn">
-									<div class="sectionHeaderCreateResume">
+									<div class="sectionHeaderCreateResume cursor">
 										<div class="floatLeft">
 											<h2 class="noBorder">References</h2>
 										</div>
@@ -990,9 +990,9 @@ function validateNumber(event) {
 					</div>
 					<div class="clearfix"></div>
 					<br /> <span class="marginBottom10 FloatLeft"> 
-					<input type="button" value="Save" name="Save" class="orange"  id="saveResBuilderBtId"/>
-					<input type="submit" value="Preview" name="Preview" class="orange" />
-					<input type="button" value="Cancel" class="orange" name="Cancel" onclick="cancelProcess()" />
+					<input type="button" value="Save" name="Save" class="orange cursor"  id="saveResBuilderBtId"/>
+					<input type="submit" value="Preview" name="Preview" class="orange cursor" />
+					<input type="button" value="Cancel" class="orange cursor" name="Cancel" onclick="cancelProcess()" />
 					<%-- <a href="<%=request.getContextPath()%>jobSeeker/jobSeekerDashBoard.html" class="orange cancelacount">Cancel</a> --%>
 					<input type="submit" value="Save" name="Save" class="orange"  id="saveResBuilderHdBtId" style="visibility: hidden;"/>  
 					</span>
