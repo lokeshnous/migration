@@ -121,7 +121,7 @@
 					<span class="boldText">Job Seeker:</span><br />
 					<div class="PopUpToolTip">
 						<a href="#" rel="nofollow,noindex">Why <strong>advance</strong>?
-						</a> <span class="classic01">
+						</a> <div class="classic01">
 							<p class="FontWeight marginBottom10">When you sign up,
 								ADVANCE gives you:</p>
 							<p class="FontWeight FontSize12 OrangeDot FontBlack">
@@ -137,7 +137,7 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The latest news, articles,
 								product reviews and much more!</p>
 							<p class=" marginTop10">And it's all FREE!</p>
-						</span>
+						</div>
 					</div>
 					<div class="floatleft">
 					

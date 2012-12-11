@@ -355,7 +355,7 @@ var options = {
 			</h1>
 		</div>
 		<div class="MidContent_Wrapper FloatLeft">
-			<div class="dashboardColumns">
+			<div class="dashboardColumns newempdbsub">
 				<div class="dashboardPanal">
 					<div class="profile">
 						<img src="../resources/images/tranBg.png" width="30" height="30"
@@ -558,9 +558,8 @@ var options = {
 
 			</div>
 			<!--Right-->
-			<div class="dBEmpRightColumns BorderLeft">
+			<div class="dBEmpRightColumns BorderLeft newempdb"> 
 				<div class="dashboardPanal">
-					<div>
 						<div class="activity">
 							<img src="../resources/images/tranBg.png" width="30" height="30">
 						</div>
@@ -640,7 +639,7 @@ var options = {
 							</form:form>
 							<!--T-->
 							<div class="rowBox">
-								<div class="rowBox Padding0 AutoWidth AutoHeight">
+								<div class="rowBox Padding0 AutoWidth AutoHeight with269">
 									<div class="EDBoxMinW">
 										<div class="EDBox02">
 											<div class="row borderBottomDotted Height25">
@@ -664,11 +663,10 @@ var options = {
 											
 											
 								</div>
-								 <div id="container" style="height: 250px; width: 290px"></div>
+								 <div id="container" style="height: 250px;"></div>
 							</div>
 
 						</div>
-					</div>
 					<div class=" rowBox Padding0">
 						<div class="innerColumn marginRight10">
 							<div class="dashboardPanal ">
