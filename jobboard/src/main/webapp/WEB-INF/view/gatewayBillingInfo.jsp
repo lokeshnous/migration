@@ -483,9 +483,9 @@
 
 						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Purchase Order Number:</span>
-							<form:input path="invoiceForm.purchaseOrderNo" type="text"
-								name="PO_number" id="PO_number"
-								class="job_seeker_password textBox350 " />
+							<form:input path="invoiceForm.purchaseOrderNo" type="text" 
+								name="PO_number" id="PO_number" maxlength="10" size="12"
+								class="job_seeker_password tinyTextBox " />
 							<span class="required">(Required)</span>
 						</div>
 						<div class="validationMsg">

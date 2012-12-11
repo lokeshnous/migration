@@ -364,7 +364,7 @@ public interface MMJBCommonConstants {
 	int STATUS_CODE_503 = 503;
 
 	String SUCCESS_200 = "The RESTlet web service request was executed successfully.";
-	String BAD_REQUEST_400 = "Invalid credit card information or billing address.";
+	String BAD_REQUEST_400 = "Invalid credit card / invoice information or billing address.";
 	String UNAUTHORIZED_401 = "This is not a valid NetSuite login session for the RESTlet calls.";
 	String FORBIDDEN_403 = "RESTlet request sent to invalid domain, meaning a domain other than https://rest.netsuite.com.";
 	String NOT_FOUND_404 = "A RESTlet script is not defined in the RESTlet request.";

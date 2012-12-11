@@ -44,7 +44,8 @@ public class ResumeValidator {
 				.getContactInfoForm());
 		if (!StringUtils.isEmpty(validationMessage))
 			{return validationMessage;}
-		validationMessage = validatePhoneNumbers(createResume);
+		//As per FRD 2.5, if user has entered all valied contact info no need to validate other tabs
+		/*validationMessage = validatePhoneNumbers(createResume);
 		if (!StringUtils.isEmpty(validationMessage))
 			{return validationMessage;}
 		validationMessage = validateCertifications(createResume
@@ -58,7 +59,7 @@ public class ResumeValidator {
 				.getListWorkExpForm());
 		if (!StringUtils.isEmpty(validationMessage))
 			{return validationMessage;}
-		validationMessage = validateReferences(createResume.getListRefForm());
+		validationMessage = validateReferences(createResume.getListRefForm());*/
 
 		return validationMessage;
 	}

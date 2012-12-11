@@ -87,6 +87,7 @@
 			});
 		    
 		    $("#addToCart").click(function() {
+		    	$(".AddToCartfloatRight").hide();
 				var count = 0; 
 				$("#resSearchPackageTab input[type='radio']").each(function(){
 					if($(this).is(':checked')){
@@ -94,6 +95,7 @@
 						var quantity = $(this).parent().parent().find("td").eq(2).children(0).val();
 						
 						if(isNaN(quantity) || quantity <= 0 || isPositiveInt(quantity)){
+							$(".AddToCartfloatRight").show();
 							alert("Please enter quantity in numerics ( > 0)");
 							return;
 						}
@@ -111,6 +113,7 @@
 									}	
 								},
 								error: function(response) {
+									$(".AddToCartfloatRight").show();
 									alert("Server Error : "+response.status);
 								}
 							});
@@ -118,6 +121,7 @@
 					}
 				});
 				if(count == 0){
+					$(".AddToCartfloatRight").show();
 					alert("Please select any one of the package to Add To Cart");
 				}
 			});
