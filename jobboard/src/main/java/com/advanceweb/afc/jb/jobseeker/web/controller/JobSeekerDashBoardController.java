@@ -99,7 +99,12 @@ public class JobSeekerDashBoardController extends AbstractController {
 
 		ModelAndView model = new ModelAndView();
 		JobSeekerDashBoardForm form = new JobSeekerDashBoardForm();
-
+		if (null != session.getAttribute("uploadStatus")) {
+			boolean status = (Boolean) session.getAttribute("uploadStatus");
+			request.setAttribute("uploadStatus", status);
+			session.removeAttribute("uploadStatus");
+			LOGGER.info("UPLOAD Status : " + status);
+		}
 		// Retrieve Current subscriptions of the user
 		int nUserId = (Integer) session.getAttribute("userId");
 		List<DropDownDTO> listSubscriptions = populateDropdownsService

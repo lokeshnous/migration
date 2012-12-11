@@ -24,6 +24,11 @@
 	<script type="text/javascript">
 jQuery(document).ready(
 		function() {
+			var uploadStatus = <%= request.getAttribute("uploadStatus")%>
+			if(uploadStatus){
+				alert("Resume uploaded successfully")
+			}
+			
 			//jQuery(".megamenu").megamenu();
 			$("#viewappliedjob").displaypopup("#viewappliedjob", "790", "350");
 			$("#viewsavedjob").displaypopup("#viewsavedjob", "790", "350");

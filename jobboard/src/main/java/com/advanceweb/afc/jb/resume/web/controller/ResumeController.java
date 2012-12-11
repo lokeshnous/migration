@@ -534,7 +534,7 @@ public class ResumeController extends AbstractController{
 			} catch (Exception jbex) {
 				LOGGER.error("Error Occured While Uploading the File"+jbex);
 			}
-
+			session.setAttribute("uploadStatus", true);
 			model.setViewName(JS_REDIRECT_URL);
 		}
 		return model;
