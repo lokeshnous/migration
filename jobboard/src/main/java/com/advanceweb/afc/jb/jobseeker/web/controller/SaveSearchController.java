@@ -102,6 +102,7 @@ public class SaveSearchController {
 
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
 			jsonObject.put("NavigationPath", navigationPath);
+			
 		} else {
 			// int userId = (Integer) session
 			// .getAttribute(MMJBCommonConstants.USER_ID);
@@ -151,7 +152,11 @@ public class SaveSearchController {
 						jsonObject.put(MMJBCommonConstants.RETAIN_SEARCH, true);
 					}
 					jsonObject.put(LOGGED_NAV_PATH, "");
+					jsonObject
+					.put("success","success");
 				}
+				
+				
 			}
 
 		}

@@ -76,10 +76,14 @@ function closePopup() {
 						if(key == "DuplicateSearchName"){
 							$("#ErrorMsg").text("${msg.DuplicateSearchName}");
 						}
+						
+						if(key == "success"){
+							alert("Search saved successfully!");
+							if(data.retainSaveSearch != 'undefined'){
+								window.location.reload();
+						    }
+						}
 					}); 
-				    if(data.retainSaveSearch != 'undefined'){
-						window.location.reload();
-				    }
 				},
 				
 				error: function(response) {
