@@ -218,7 +218,7 @@ public class JobApplicationController {
 			jobseekerMailBody = jobseekerMailBody
 					.replace("to ?companyname", "");
 		} else {
-			jobseekerMailSub = jobAppSub.replace("?companyname",
+			jobseekerMailBody = jobseekerMailBody.replace("?companyname",
 					jobDTO.getCompanyNameDisp());
 		}
 		mailBody.append(emailConfiguration.getProperty("employer.email.header")

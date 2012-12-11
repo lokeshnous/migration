@@ -109,6 +109,8 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 				userRole.setRolePK(admUserRolePK);
 				hibernateTemplateCareers.saveOrUpdate(userRole);
 			}
+			UserDTO userDTO=registrationConversionHelper.transformMerUserToUserDTO(merUser);
+			jsDTO.setMerUserDTO(userDTO);
 			saveAdvancePassDetails(jsDTO);
 			return registrationConversionHelper.transformMerUserToUserDTO(merUser);
 			

@@ -759,8 +759,16 @@ public class JobSearchController extends AbstractController {
 			jobseekerMailBody = jobseekerMailBody.replace("?companyname",
 					jobDTO.getCompanyNameDisp());
 		}
+		StringBuffer stringBuffer = new StringBuffer();
+		
 		jobSeekerEmailDTO.setSubject(jobseekerMailSub);
-		jobSeekerEmailDTO.setBody(jobseekerMailBody);
+		
+		stringBuffer.append(emailConfiguration.getProperty(
+				"jobseeker.email.header").trim());
+		stringBuffer.append(jobseekerMailBody);
+		stringBuffer.append(emailConfiguration.getProperty("email.footer")
+				.trim());
+		jobSeekerEmailDTO.setBody(stringBuffer.toString());
 		jobSeekerEmailDTO.setHtmlFormat(true);
 		emailService.sendEmail(jobSeekerEmailDTO);
 		LOGGER.info("Mail sent to jobseeker");
