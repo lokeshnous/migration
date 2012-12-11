@@ -82,10 +82,10 @@
 									<td>${facility.templateName}</td>
 									<td align="center"><a href="<%=request.getContextPath()%>/facility/editFacility.html?facilityId=${facility.facilityId}" class="nyroModal"><img
 									src="../resources/images/Edit.png" width="20" height="20"
-									alt=""></a>&nbsp;<a href="#">
+									alt="" title="Edit"></a>&nbsp;<a href="#">
 									<img
 									src="../resources/images/Delete.png" width="20" height="20"
-									alt="delete"></a></td>
+									alt="delete" title="Delete"></a></td>
 								</tr>
 							</c:forEach>
 						
