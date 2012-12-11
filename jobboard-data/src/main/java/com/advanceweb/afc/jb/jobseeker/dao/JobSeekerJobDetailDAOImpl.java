@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
+import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.ResPublishResumeStat;
 import com.advanceweb.afc.jb.data.entities.ResUploadResume;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
@@ -56,7 +58,6 @@ public class JobSeekerJobDetailDAOImpl implements JobSeekerJobDetailDAO {
 			hibernateTemplate.saveOrUpdate(job);
 			result= true;
 		} catch (Exception e) {
-			// TODO: handle exception
 			LOGGER.debug("Error while updating the delete date of the corresponding applied or saved job");
 			throw new JobBoardDataException(
 					"Error while updating the delete date of the corresponding applied or saved job"
@@ -82,9 +83,14 @@ public class JobSeekerJobDetailDAOImpl implements JobSeekerJobDetailDAO {
 		try {
 			if (jobSeekerId != 0) {
 				appliedJobDTOList = new ArrayList<AppliedJobDTO>();
-				List<AdmSaveJob> jobList = (List<AdmSaveJob>) hibernateTemplate
-						.find("from AdmSaveJob asj where asj.userId=? and asj.appliedDt is not NULL and asj.deleteDt is NULL",
-								jobSeekerId);
+				List<AdmSaveJob> jobList = new ArrayList<AdmSaveJob>();
+				Query query = hibernateTemplate.getSessionFactory()
+						.getCurrentSession()
+						.createQuery("from AdmSaveJob asj where asj.userId=:userId and asj.appliedDt is not NULL and asj.deleteDt is NULL order by asj.saveJobId desc");
+				query.setParameter("userId", jobSeekerId);
+				query.setFirstResult(0);
+				query.setMaxResults(30);
+				jobList = query.list();
 				appliedJobDTOList = jobSeekerJobDetailConversionHelper
 						.transformToApplidJobDTO(jobList);
 			}
@@ -116,11 +122,16 @@ public class JobSeekerJobDetailDAOImpl implements JobSeekerJobDetailDAO {
 		try {
 			if (jobSeekerId != 0) {
 				appliedJobDTOList = new ArrayList<AppliedJobDTO>();
-				List<AdmSaveJob> jobList = (List<AdmSaveJob>) hibernateTemplate
-						.find("from AdmSaveJob asj where asj.userId=? and asj.appliedDt is NULL and asj.deleteDt is NULL",
-								jobSeekerId);
+				List<AdmSaveJob> jobs = new ArrayList<AdmSaveJob>();
+				Query query = hibernateTemplate.getSessionFactory()
+						.getCurrentSession()
+						.createQuery("from AdmSaveJob asj where asj.userId=:userId and asj.appliedDt is NULL and asj.deleteDt is NULL order by asj.saveJobId desc");
+				query.setParameter("userId", jobSeekerId);
+				query.setFirstResult(0);
+				query.setMaxResults(30);
+				jobs = query.list();
 				appliedJobDTOList = jobSeekerJobDetailConversionHelper
-						.transformToDTOForSavedJob(jobList);
+						.transformToDTOForSavedJob(jobs);
 
 			}
 		} catch (HibernateException e) {
