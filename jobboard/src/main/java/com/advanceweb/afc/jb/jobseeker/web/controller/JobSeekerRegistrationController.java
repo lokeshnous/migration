@@ -651,7 +651,8 @@ public class JobSeekerRegistrationController extends AbstractController {
 		 * Added by Santhosh Gampa for OpenAM integration
 		 */
 		HashMap<String, String> hm = new HashMap<String, String>();
-
+		if(registerForm.getOtherProfession()=="")
+		{return "Please fill the required fields";}
 		try {
 
 			if (null != registerForm.getListProfAttribForms()) {
@@ -685,6 +686,11 @@ public class JobSeekerRegistrationController extends AbstractController {
 									.validateMobileNumberPattern(form
 											.getStrLabelValue())) {
 						return jobseekerRegPhoneMsg;
+					}
+					if (MMJBCommonConstants.PROFESSION_OTHERS.equals(form
+							.getStrLabelName())
+							&& !StringUtils.isEmpty(form.getStrLabelValue())) {
+						return "Please enter";
 					}
 
 					// validation mobile number
