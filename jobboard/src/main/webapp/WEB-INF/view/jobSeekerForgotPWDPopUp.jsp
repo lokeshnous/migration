@@ -30,7 +30,10 @@
 			$("#waitmsg").show();
 			$('body').css('cursor','wait');  */ 
 
-			
+			if(email==""){
+				$("#emailmsg").html("Please enter an Email address");
+				}
+			else{
 			$.ajax({url:"jobSeekerForgotPWDPopUp.html?email="+email,
 				type:"POST",
 				success: function(data) {
@@ -50,6 +53,8 @@
 					}
 				 },
 			});
+			
+		}
 		});
 		
 	
