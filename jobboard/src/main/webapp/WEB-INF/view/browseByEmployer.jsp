@@ -10,10 +10,19 @@
 		</div>
 		<div class="NameSelectonArea">
 			<ul>
-				<li><c:forEach items="${jbsByEmployerList}" var="jobByEmployer"
+				<li><c:forEach items="${employerFirstList}" var="jobByEmployer"
 						varStatus="status">
-						<a href="#" id="status">${jobByEmployer.key}</a>
-					</c:forEach></li>
+						<a class="cursor" onclick="selectEmployerBlock(this.id, '${jobByEmployer.key}', ${employerFirstList.size()+employerSecList.size()+employerThirdList.size()})" id="empKey${status.index}">${jobByEmployer.key}</a>
+					</c:forEach>
+					<c:forEach items="${employerSecList}" var="jobByEmployer"
+							varStatus="status">
+							<a class="cursor" onclick="selectEmployerBlock(this.id, '${jobByEmployer.key}', ${employerFirstList.size()+employerSecList.size()+employerThirdList.size()})" id="empKey${status.index+employerFirstList.size()}">${jobByEmployer.key}</a>
+						</c:forEach>
+					<c:forEach items="${employerThirdList}" var="jobByEmployer"
+							varStatus="status">
+							<a class="cursor" onclick="selectEmployerBlock(this.id, '${jobByEmployer.key}', ${employerFirstList.size()+employerSecList.size()+employerThirdList.size()})" id="empKey${status.index+employerFirstList.size()+employerSecList.size()}">${jobByEmployer.key}</a>
+						</c:forEach>					
+				</li>
 			</ul>
 		</div>
 	</div>
@@ -24,7 +33,8 @@
 			<c:forEach items="${employerFirstList}" var="jobByEmployer"
 				varStatus="status" begin="0" end="${employerFirstList.size()}"
 				>
-				<div class="NameOrderNormal">${jobByEmployer.key}</div>
+				<div class="NameOrderNormal"  key="${jobByEmployer.key}"
+				id="empBlockKey${status.index}">${jobByEmployer.key}</div>
 				<ul class="MarginBottom10">
 					<c:forEach items="${jobByEmployer.value}" var="emplyrsName"
 						varStatus="emplyrsStatus">
@@ -41,7 +51,9 @@
 			<c:forEach items="${employerSecList}" var="jobByEmployer"
 				varStatus="status" begin="0" end="${employerSecList.size()}"
 				>
-				<div class="NameOrderNormal">${jobByEmployer.key}</div>
+				<div class="NameOrderNormal"  key="${jobByEmployer.key}"
+				id="empBlockKey${status.index+employerFirstList.size()}"
+				>${jobByEmployer.key}</div>
 				<ul class="MarginBottom10">
 					<c:forEach items="${jobByEmployer.value}" var="emplyrsName"
 						varStatus="emplyrsStatus">
@@ -56,7 +68,9 @@
 			<c:forEach items="${employerThirdList}" var="jobByEmployer"
 				varStatus="status" begin="0" end="${employerThirdList.size()}"
 				>
-				<div class="NameOrderNormal">${jobByEmployer.key}</div>
+				<div class="NameOrderNormal" key="${jobByEmployer.key}"
+				id="empBlockKey${status.index+employerFirstList.size()+employerSecList.size()}"
+				>${jobByEmployer.key}</div>
 				<ul class="MarginBottom10">
 					<c:forEach items="${jobByEmployer.value}" var="emplyrsName"
 						varStatus="emplyrsStatus">

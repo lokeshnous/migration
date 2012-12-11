@@ -66,9 +66,8 @@
 								<h3>Refine Results</h3>
 
 								<div class="refineResults">
-
 									<c:if test="${displayRadius}">
-									<c:if test="${sessionMap.get('refineRadius') != '0'}">
+									<c:if test="${sessionMap.get('refineRadius') != '0' && (not empty sessionMap.get('refineRadius'))}">
 									<script type="text/javascript">$("#radiusPlus").click();</script>
 									</c:if>
 									

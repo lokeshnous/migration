@@ -4,7 +4,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 	<div class="header_wrapper">
 	<c:choose>
-	<c:when test="${homePage}">
+	<c:when test="${isHomePage}">
 		<h1 class="logo">
 		<a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/advanceweb.html" title="Advance Healthcare Jobs">
 		<img src="<%=request.getContextPath() %>/resources/images/tranBg.png" alt="Advance Healthcare Jobs" width="397px" height="70px"/>
@@ -13,9 +13,12 @@
 	</c:when>
 	<c:otherwise>
 		<h3 class="logo">
+		<security:authorize 
+		access="!hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP') and !hasRole('ROLE_FACILITY_SYSTEM')">
 		<a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/advanceweb.html" title="Advance Healthcare Jobs">
 		<img src="<%=request.getContextPath() %>/resources/images/tranBg.png" alt="Advance Healthcare Jobs" width="397px" height="70px"/>
 		</a>
+		</security:authorize>
 		</h3> 
 	</c:otherwise>
 	</c:choose>

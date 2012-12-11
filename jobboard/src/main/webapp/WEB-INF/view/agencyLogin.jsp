@@ -34,10 +34,8 @@
 <jsp:include page="../templates/templates_header.jsp"></jsp:include>
 				<div class="ad_col_right">
                     ${adPageRightTop}
-
-
-                </div><!-- ad_col_right -->
 		    <br class="clearfix" />
+                </div><!-- ad_col_right -->
 
                 <div class="content_wrapper">
 

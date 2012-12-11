@@ -2649,6 +2649,7 @@ GradientType
 	color: #fe9400 !important;
 	/*text-decoration: underline !important;*/
 }
+.NameSelected {text-decoration: underline !important;}
 
 .NameOrderNormal,.NameOrderSelected {
 	width: 290px;

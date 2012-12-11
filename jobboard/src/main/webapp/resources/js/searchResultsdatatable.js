@@ -854,3 +854,31 @@ jQuery(document).ready(function() {
 							}
 						}); 
 					}
+				 
+				 // select the employers block on selecting alphabets 
+					function selectEmployerBlock(id, letter, size){
+						// clear classes of links
+						for ( var i = 0; i <= size; i++) {
+							$("#empKey"+i).removeClass('NameSelected');
+						}						
+						$("#"+id).addClass('NameSelected');	
+						// clear classes of blocks
+						var blockLetter = '';
+						var blockId = '';
+						for ( var i = 0; i < size; i++) {
+							$("#empBlockKey"+i).removeClass('NameOrderSelected');
+							blockLetter = $("#empBlockKey"+i).attr('key');
+							if(blockLetter == letter){
+								blockId = "#empBlockKey"+i;
+							}
+						}
+						$(blockId).addClass('NameOrderSelected');	
+						
+					}
+					
+					/*$('.NameSelectonArea ul li a').click(function () {
+						alert("asd");
+					    $('.NameSelectonArea ul li a').removeClass('NameSelected');
+					    $(this).addClass('NameSelected');
+					});*/
+						 

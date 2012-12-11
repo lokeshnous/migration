@@ -392,7 +392,7 @@ function validateNumber(event) {
 
 							<div class="clearfix"></div>
 						</div>
-						<div class="rowEvenNewSpacing marginTop25 paddingBottom30">
+						<div class="rowEvenNewSpacing marginTop25 marginBottom10">
 							<span> <!-- <a
 							id="save" href="#" class="btn_sm orange">Save &amp; Continue</a> -->
 								<input type="submit"

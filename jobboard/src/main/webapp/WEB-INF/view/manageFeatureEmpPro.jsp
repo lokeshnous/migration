@@ -13,7 +13,7 @@
 <script src="../resources/js/jquery.validate.js"></script>
 
 <script src="../resources/js/jquery.dataTables.nightly.js"></script>
-<script src="../resources/js/searchResultsdatatable.js"></script>
+<!-- <script src="../resources/js/searchResultsdatatable.js"></script> -->
 
 
 <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
