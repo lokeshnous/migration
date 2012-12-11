@@ -639,7 +639,7 @@ public class JobSearchController extends AbstractController {
 					savedJobsCount = appliedJobDTOList.size();
 				}
 				if (savedJobsCount >= Integer.parseInt(saveJobsLimit)) {
-					int oldJobId = appliedJobDTOList.get(0).getSaveJobId();
+					int oldJobId = appliedJobDTOList.get(appliedJobDTOList.size()-1).getSaveJobId();
 					jobSeekerJobDetailService.updateAppliedSavedJobs(oldJobId);
 				}
 			} catch (JobBoardException e) {
@@ -2166,7 +2166,7 @@ public class JobSearchController extends AbstractController {
 				savedJobsCount = savedJobDTOList.size();
 			}
 			if (savedJobsCount >= Integer.parseInt(saveJobsLimit)) {
-				int oldJobId = savedJobDTOList.get(0).getSaveJobId();
+				int oldJobId = savedJobDTOList.get(savedJobDTOList.size()-1).getSaveJobId();
 				jobSeekerJobDetailService.updateAppliedSavedJobs(oldJobId);
 			}
 		} catch (JobBoardException e) {
