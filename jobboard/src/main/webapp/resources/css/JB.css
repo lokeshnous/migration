@@ -4235,3 +4235,12 @@ h2.option2 span {color: #FE9400;
 .newempdb{width:65% !important; float:right; margin-left:17px;}
 .newempdbsub{margin-right:0px !important; width:32% !important;}
 .with269{width:269px !important;}
+
+.charactersRemaining  {
+    line-height: 16px;
+    padding-top: 126px !important;
+    float: left;
+    padding: 0px 15px 0 0;
+    text-align: right;
+    width: 160px;
+}

@@ -393,7 +393,7 @@ public class JobSearchController extends AbstractController {
 					.getNewsFromXML();
 			List<NewsDTO> newsDTOList = newsMap.get(PLATINUM_LIST);
 
-			if (newsDTOList.size() > 5) {
+			if (null != newsDTOList && newsDTOList.size() > 5) {
 				List<NewsDTO> modNewsDTOList = newsDTOList.subList(0, 5);
 				model.put("newsDTOList", modNewsDTOList);
 			} else {

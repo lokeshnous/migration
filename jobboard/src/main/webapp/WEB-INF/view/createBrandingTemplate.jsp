@@ -166,7 +166,7 @@
 									onKeyUp="limitText(this.form.companyOverview,this.form.countdownCoverLetter,1000);"/>
 							</div>
 
-								<span class="lableText3"> <input readonly
+								<span class="charactersRemaining"> <input readonly
 									type="text" class="input2000_width" name="countdownCoverLetter"
 									size="3" value="1000" id="counterTextID">characters
 									remaining.

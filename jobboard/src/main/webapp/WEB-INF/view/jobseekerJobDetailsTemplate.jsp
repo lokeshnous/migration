@@ -232,9 +232,9 @@
 	                    
 	                     <div class="featured_emp_slider" id="test"  >
 	                     	<!--Photo Area  -->
-							<div id="slider1PrevBtn" ></div>
+							<div id="slider2PrevBtn" ></div>
 							<!-- Photo -->
-							<div id="slider1">
+							<div id="slider2">
 							<c:forEach var="companyProfileDTO"
 									items="${videoList}" varStatus="status" step="1">
 									
@@ -263,7 +263,7 @@
 									</div>
 								</c:forEach>
 								</div>
-							<div id="slider1NextBtn"></div>	
+							<div id="slider2NextBtn"></div>	
 						</div> 
 	                   </div>	
 	               </div>
@@ -272,9 +272,9 @@
 	               	<div class="row">
 	                     <div class="featured_emp_slider" id="test"  >
 	                     	<!--  -->
-							<div id="slider1PrevBtn" ></div>
+							<div id="slider3PrevBtn" ></div>
 								<!-- Testimonials -->
-								<div id="slider1">
+								<div id="slider3">
 								<c:forEach var="companyProfileDTO"
 									items="${jobDetail.listTestimony}" varStatus="status" step="4">
 									<div class="slider1Frames">
@@ -307,7 +307,7 @@
 								</div>
 								
 							
-							<div id="slider1NextBtn"></div>	
+							<div id="slider3NextBtn"></div>	
 								
 							
 								
