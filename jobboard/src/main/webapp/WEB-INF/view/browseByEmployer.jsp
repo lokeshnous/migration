@@ -21,9 +21,9 @@
 		value="browseByEmployer" />
 	<div class="marginTop10">
 		<div class="LocationNameArea LocationBorderRight threecolumn">
-			<c:forEach items="${jbsByEmployerList}" var="jobByEmployer"
-				varStatus="status" begin="0" end="${jbsByEmployerList.size()}"
-				step="3">
+			<c:forEach items="${employerFirstList}" var="jobByEmployer"
+				varStatus="status" begin="0" end="${employerFirstList.size()}"
+				>
 				<div class="NameOrderNormal">${jobByEmployer.key}</div>
 				<ul class="MarginBottom10">
 					<c:forEach items="${jobByEmployer.value}" var="emplyrsName"
@@ -38,9 +38,9 @@
 
 		<div
 			class="LocationNameArea LocationBorderRight LocationPaddingLeft threecolumn ">
-			<c:forEach items="${jbsByEmployerList}" var="jobByEmployer"
-				varStatus="status" begin="1" end="${jbsByEmployerList.size()}"
-				step="3">
+			<c:forEach items="${employerSecList}" var="jobByEmployer"
+				varStatus="status" begin="0" end="${employerSecList.size()}"
+				>
 				<div class="NameOrderNormal">${jobByEmployer.key}</div>
 				<ul class="MarginBottom10">
 					<c:forEach items="${jobByEmployer.value}" var="emplyrsName"
@@ -51,11 +51,11 @@
 					</c:forEach>
 				</ul>
 			</c:forEach>
-		</div>
+		</div> 
 		<div class="LocationNameArea LocationPaddingLeft threecolumn ">
-			<c:forEach items="${jbsByEmployerList}" var="jobByEmployer"
-				varStatus="status" begin="2" end="${jbsByEmployerList.size()}"
-				step="3">
+			<c:forEach items="${employerThirdList}" var="jobByEmployer"
+				varStatus="status" begin="0" end="${employerThirdList.size()}"
+				>
 				<div class="NameOrderNormal">${jobByEmployer.key}</div>
 				<ul class="MarginBottom10">
 					<c:forEach items="${jobByEmployer.value}" var="emplyrsName"

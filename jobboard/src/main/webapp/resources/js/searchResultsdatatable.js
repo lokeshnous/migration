@@ -12,6 +12,7 @@ jQuery(document).ready(function() {
 			});
 
 
+
 			function sendToFrd(jobId,jobtitle) {	
 				var currentUrl = window.location.pathname;
 				$.nmManual($("#contextPath").val()+'/jobsearch/sendtofriend.html?id='+jobId+'&jobtitle='+jobtitle+'&currentUrl='+currentUrl);
@@ -124,6 +125,26 @@ jQuery(document).ready(function() {
 									$("#errorMsg").html("");
 									$('#findSearchInfo').html("");									
 									searchJobs();									
+								});
+								
+								// Function to search jobs after clicking the enter button 
+								$(function () {
+									  $("#keywords").keypress(function (event) {
+										if(event.which == 13){
+											$("#errorMsg").html("");
+											$('#findSearchInfo').html("");									
+											searchJobs();
+										}
+									  });
+									});
+								$(function () {
+									$("#cityState").keypress(function (event) {
+										if(event.which == 13){
+											$("#errorMsg").html("");
+											$('#findSearchInfo').html("");									
+											searchJobs();
+										}
+									});
 								});
 								
 								$("#submitvalAdv").click(
@@ -542,7 +563,6 @@ jQuery(document).ready(function() {
 					);
 					getHistory();
 				};
-
 				function saveThisSearch() {
 					$.ajax({url : $("#contextPath").val()+"/savedSearches/saveThisSearch.html?keywords="+keywords,
 						success: function(data){ 
@@ -642,24 +662,6 @@ jQuery(document).ready(function() {
 				});
 				}
 	
-				function getSearchByCompany(compName){
-				$.ajax({url: "../healthcarejobs/searchByCompany.html?keywords="+compName,
-						success: function(data){ 
-							$.each(data, function(key, val) {
-								 if (key == "searchtype" && val == "basic") {									
-									 parent.window.location.href = '../jobsearch/findJobPage.html';
-								}								
-							}); 						
-						},
-						error: function(response) {
-							alert("Server Error : "+response.status);
-						},
-						complete: function() {
-							
-						}
-					});
-			    }
-				
 				function deleteCurrentSearch(key, value) {
 					var navUrl =  $("#contextPath").val()+"/jobsearch/deleteCurrentSearch.html?key="+key+"&value="+value;
 					$.ajax({url: navUrl,

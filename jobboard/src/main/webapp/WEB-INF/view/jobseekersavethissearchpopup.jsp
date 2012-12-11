@@ -43,10 +43,6 @@ function saveRecentSearch(searchJobId){
 function closePopup() {
 	//parent.window.location.reload();
 	
-<%if(null != session.getAttribute(MMJBCommonConstants.RETAIN_SEARCH))
-{
-	session.removeAttribute(MMJBCommonConstants.RETAIN_SEARCH);
-}%>
 	parent.$.nmTop().close();
 	
 }
@@ -81,9 +77,8 @@ function closePopup() {
 							$("#ErrorMsg").text("${msg.DuplicateSearchName}");
 						}
 					}); 
-				    if(data.success != null){
-				    }
-				    if(data.failure != null){
+				    if(data.retainSaveSearch != 'undefined'){
+						window.location.reload();
 				    }
 				},
 				
@@ -111,13 +106,13 @@ function closePopup() {
 		style="display: block">
 		<div class="popupHeader">
 			<h2>SAVE SEARCHES</h2>
-			<a href="#"><img src="../resources/images/Close.png" width="19" height="19" title="Close"
-				onclick="closePopup();" alt=""></a>
+			<a href="#" class="nyroModalClose"><img src="<%= request.getContextPath() %>/resources/images/Close.png" width="19" height="19" title="Close"
+				alt=""></a>
 		</div>
 
 		<div class="popUpContainerWrapper">
 			<form:form action="" method="GET" commandName="saveSearchForm">
-				<c:if test="${recentSearchId != '0'}">
+				<c:if test="${not empty recentSearchId}">
 				<br/>
 				<b>Access saved search criterias using "My saved searches" in dashboard</b>
 				</c:if>
@@ -128,7 +123,7 @@ function closePopup() {
 				<span id="ErrorMsg" class="FormErrorDisplayText"></span>
 				<div class="popUpButtonRow">
 				<c:choose>
-				<c:when test="${recentSearchId != '0'}">
+				<c:when test="${not empty recentSearchId}">
   				<input type="button" id="saveRecentId" onclick="saveRecentSearch(${recentSearchId})" class="orange cursor" value="Save"/>
   				<a class="orange btn_sm cursor nyroModal" href="<%=request.getContextPath()%>/savedSearches/viewrecentsearches.html" id="cancelRecentId">CANCEL</a>
 				</c:when>					

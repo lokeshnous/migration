@@ -90,13 +90,13 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 	}
 
 	/**
-	 * This method is called to edit a Saved Job Search
+	 * This method is called to fetch the saved search by search Id 
 	 * 
 	 * @param saveSearchId
 	 * @return
 	 */
 	@Override
-	public List<SaveSearchedJobsDTO> editSavedSearch(int saveSearchId) {
+	public List<SaveSearchedJobsDTO> getSavedSearch(int saveSearchId) {
 		List<AdmSaveSearch> searchResults = hibernateTemplate.find(
 				"from AdmSaveSearch where saveSearchId=? ", saveSearchId);
 		return saveSearchConversionHelper

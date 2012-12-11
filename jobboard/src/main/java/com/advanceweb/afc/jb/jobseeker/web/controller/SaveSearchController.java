@@ -148,6 +148,7 @@ public class SaveSearchController {
 					if (null != session
 							.getAttribute(MMJBCommonConstants.RETAIN_SEARCH)) {
 						session.removeAttribute(MMJBCommonConstants.RETAIN_SEARCH);
+						jsonObject.put(MMJBCommonConstants.RETAIN_SEARCH, true);
 					}
 					jsonObject.put(LOGGED_NAV_PATH, "");
 				}
@@ -173,7 +174,7 @@ public class SaveSearchController {
 	public @ResponseBody
 	JSONObject saveThisSearch(@Valid SaveSearchForm saveSearchForm,
 			Map<String, SaveSearchForm> model, HttpSession session,
-			@RequestParam("keywords") String keywords) {
+			@RequestParam("keywords") String keywords, HttpServletRequest request) {
 
 		JSONObject jsonObject = new JSONObject();
 		try {
@@ -185,7 +186,7 @@ public class SaveSearchController {
 			if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
 				model.put(SAVE_SEARCH_FORM, new SaveSearchForm());
 				jsonObject.put(LOGGED_NAV_PATH,
-						"../savedSearches/anonymousSaveThisSearchPopUp");
+						request.getContextPath()+"/savedSearches/anonymousSaveThisSearchPopUp");
 			} else if ((sessionMap
 					.get(MMJBCommonConstants.PERFORM_SAVED_SEARCH) == null)
 					&& (sessionMap.get(MMJBCommonConstants.SEARCH_TYPE) != null
@@ -224,13 +225,13 @@ public class SaveSearchController {
 						.remove(MMJBCommonConstants.SEARCH_TYPE));
 
 				jsonObject.put("NavigationPath",
-						"../jobSeeker/jobSeekerDashBoard");
+						request.getContextPath()+"/jobSeeker/jobSeekerDashBoard");
 
 			} else {
 				if (keywords != null && keywords != MMJBCommonConstants.EMPTY) {
 					model.put(SAVE_SEARCH_FORM, new SaveSearchForm());
 					jsonObject.put(LOGGED_NAV_PATH,
-							"../savedSearches/displaySaveThisSearchPopup");
+							request.getContextPath()+"/savedSearches/displaySaveThisSearchPopup");
 				} else {
 					jsonObject.put("failure", saveThisSearchErrMsg);
 				}
@@ -399,7 +400,7 @@ public class SaveSearchController {
 		}
 
 		List<SaveSearchedJobsDTO> saveSrchJobsDTOList = saveSearchService
-				.editSavedSearch(searchId);
+				.getSavedSearch(searchId);
 
 		if (!saveSrchJobsDTOList.isEmpty()) {
 			String urlString = saveSrchJobsDTOList.get(0).getUrl();

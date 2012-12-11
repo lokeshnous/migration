@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
@@ -1074,22 +1076,61 @@ public class JobSearchController extends AbstractController {
 				// get the areas list
 				List<String> employerList = (List<String>) jobSrchJsonObj
 						.get(MMJBCommonConstants.COMPANY);
+				int totalEmployers = 0;
 				// set the employers list in dictionary format
 				for (String job : employerList) {
 					if (job != null && !job.split("\\(")[0].trim().isEmpty()) {
 						String nameLetter = job.substring(0, 1).toUpperCase();
 						if (nameList.add(nameLetter)) {
-							// List<JobDTO> jobList = new ArrayList<JobDTO>();
-							// jobList.add(job);
 							List<String> jobList = new ArrayList<String>();
 							jobList.add(job);
 							emplyrsByName.put(nameLetter, jobList);
 						} else {
 							emplyrsByName.get(nameLetter).add(job);
 						}
+						totalEmployers++;
 					}
 				}
-				modelAndView.addObject("jbsByEmployerList", emplyrsByName);
+				int totalKeyCount = emplyrsByName.keySet().size();
+				int rowsCount = (int) Math.ceil((totalEmployers + totalKeyCount) / 3);
+				Map<Integer, TreeMap<String, List<String>>> list = new TreeMap<Integer, TreeMap<String, List<String>>>();
+				Iterator<Entry<String, List<String>>> keyIt = emplyrsByName
+						.entrySet().iterator();
+				int i = 0, j = 1;
+				TreeMap<String, List<String>> sets = null;
+				boolean isNewList = true;
+				while (keyIt.hasNext()) {
+					Entry<String, List<String>> entry = (Entry<String, List<String>>) keyIt
+							.next();
+					if (i < (rowsCount * j)) {
+						if (isNewList) {
+							sets = new TreeMap<String, List<String>>();
+						}
+						isNewList = false;
+						sets.put(entry.getKey(), entry.getValue());
+						list.put(j, sets);
+					} else {
+						j++;
+						isNewList = true;
+					}
+					i++;
+					i = entry.getValue().size() + i;
+				}
+				TreeMap<String, List<String>> employerFirstList = null;
+				TreeMap<String, List<String>> employerSecList = null;
+				TreeMap<String, List<String>> employerThirdList = null;
+				if(!list.isEmpty() && list.get(1) != null){
+					employerFirstList = list.get(1);
+				}
+				if(!list.isEmpty() && list.get(2) != null){
+					employerSecList = list.get(2);
+				}
+				if(!list.isEmpty() && list.get(3) != null){
+					employerThirdList = list.get(3);
+				}
+				modelAndView.addObject("employerFirstList", employerFirstList);
+				modelAndView.addObject("employerSecList", employerSecList);
+				modelAndView.addObject("employerThirdList", employerThirdList);
 				modelAndView.addObject("employerPage", true);
 			} catch (Exception e) {
 				LOGGER.error(e.getMessage(), e);
@@ -3366,9 +3407,15 @@ public class JobSearchController extends AbstractController {
 				String saveSearchId = ((Map<String, String>) session
 						.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP))
 						.get(MMJBCommonConstants.SAVE_SEARCH_ID);
+				
+				String performSearch = ((Map<String, String>) session
+						.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP))
+						.get(MMJBCommonConstants.PERFORM_SAVED_SEARCH);
 				if (saveSearchId != null) {
 					paramMap.put(MMJBCommonConstants.SAVE_SEARCH_ID,
 							saveSearchId);
+					paramMap.put(MMJBCommonConstants.PERFORM_SAVED_SEARCH,
+							performSearch);
 				}
 			}
 		} else {
@@ -3636,5 +3683,5 @@ public class JobSearchController extends AbstractController {
 		session.setAttribute(MMJBCommonConstants.SEARCHED_JOBSCOUNT,
 				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
 	}
-
+	
 }

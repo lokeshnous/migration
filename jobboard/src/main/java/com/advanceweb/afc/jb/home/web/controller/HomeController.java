@@ -9,7 +9,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import javax.annotation.Resource;
@@ -45,8 +44,6 @@ import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.ManageFeaturedEmployerProfile;
 import com.advanceweb.afc.jb.employer.web.controller.EmployerProfileManagementForm;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
-import com.advanceweb.afc.jb.jobseeker.web.controller.CheckSessionMap;
-import com.advanceweb.afc.jb.search.SearchParamDTO;
 import com.advanceweb.afc.jb.search.service.JobSearchService;
 import com.advanceweb.afc.jb.web.utils.CopyUtil;
 import com.advanceweb.afc.jb.web.utils.ReadFile;
@@ -93,9 +90,6 @@ public class HomeController extends AbstractController{
 
 	@Value("${followuplinklinkedin}")
 	private String followuplinklinkedin;
-
-	@Autowired
-	private CheckSessionMap checkSessionMap;
 
 	@Autowired
 	private ManageFeaturedEmployerProfile manageFeatureEmployerProfile;
@@ -505,43 +499,6 @@ public class HomeController extends AbstractController{
 			LOGGER.error(e);
 		}
 		return String.valueOf(totalNoOfActiveJobs);
-	}
-
-	/**
-	 * This method is called to get the search results by company name for
-	 * featured employer
-	 * 
-	 * @param request
-	 * @param response
-	 * @param session
-	 * @param keywords
-	 * @return
-	 */
-	@RequestMapping(value = "/searchByCompany", method = RequestMethod.GET)
-	public @ResponseBody
-	JSONObject searchByCompany(HttpServletRequest request,Model model, 
-			HttpServletResponse response, HttpSession session,
-			@RequestParam("keywords") String keywords) {
-
-		JSONObject jsonObject = new JSONObject();
-
-		Map<String, String> sessionMap = checkSessionMap
-				.getSearchSessionMap(session);
-
-		sessionMap.put(MMJBCommonConstants.SEARCH_TYPE,
-				MMJBCommonConstants.BASIC_SEARCH_TYPE);
-		sessionMap.put(SearchParamDTO.KEYWORDS, keywords);
-		sessionMap.put(SearchParamDTO.CITY_STATE, MMJBCommonConstants.EMPTY);
-		sessionMap.put(SearchParamDTO.RADIUS, MMJBCommonConstants.ZERO);
-		sessionMap.put(MMJBCommonConstants.AUTOLOAD, String.valueOf(true));
-
-		session.setAttribute(SearchParamDTO.SEARCH_SESSION_MAP, sessionMap);
-
-		jsonObject.put(MMJBCommonConstants.SEARCH_TYPE,
-				MMJBCommonConstants.BASIC_SEARCH_TYPE);
-		// Populate the ads
-		populateAds(request, session, model, PageNames.JOBSEEKER_JOBSEARCH_RESULTS);
-		return jsonObject;
 	}
 
 	/**

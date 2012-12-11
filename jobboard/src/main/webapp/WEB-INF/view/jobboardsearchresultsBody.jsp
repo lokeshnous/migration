@@ -210,36 +210,10 @@
 											</c:otherwise>
 											</c:choose>
 											
-											<%-- <c:if test="${fn:startsWith(city[status.index], fouthFQParam) and fouthFQParam != null}">
-											<span style="font-weight:bold;">  
-											</c:if>
-											<li><a onclick="refineByCity('${city[status.index]}');">${city[status.index]}</a></li>
-											<c:if test="${fn:startsWith(city[status.index], fouthFQParam) and fouthFQParam != null}">
-											</span>
-											</c:if> --%>
 										</c:forEach>
 										</ul>
 									</div>
 								</div>
-							<%-- <input type="text" name="selectedRadius" id="selectedRadius" value="${refineRadius}"/>
-							<input type="text" name="selectedJobtitle" id="selectedJobtitle" value="${firstFQParam}"/>
-							<input type="text" name="selectedCompany" id="selectedCompany" value="${secondFQParam}" />
-							<input type="text" name="selectedState" id="selectedState" value="${thirdFQParam}" />
-							<input type="text" name="selectedCity" id="selectedCity" value="${fouthFQParam}" />
-							<input type="text" name="selectedArea" id="selectedArea" value="${fifthFQParam}" /> --%>
-							<%-- <div id="selectedRadius" style="display: none">${refineRadius}</div>
-							<div id="selectedJobtitle" style="display: none">${firstFQParam}</div>
-							<div id="selectedCompany"  style="display: none">${secondFQParam}</div>
-							<div id="selectedState" style="display: none">${thirdFQParam}</div>
-							<div id="selectedCity"  style="display: none">${fouthFQParam}</div>
-							<div id="selectedArea"  style="display: none">${fifthFQParam}</div>   --%>
-							
-							<%-- <div id="selectedRadius" >${refineRadius}</div>
-							<div id="selectedJobtitle" >${firstFQParam}</div>
-							<div id="selectedCompany" >${secondFQParam}</div>
-							<div id="selectedState" >${thirdFQParam}</div>
-							<div id="selectedCity" >${fouthFQParam}</div>
-							<div id="selectedArea" >${fifthFQParam}</div>  --%>
 							</div>
 
 
@@ -261,8 +235,6 @@
 					<option value="40">40</option>
 					<option value="50">50</option>
 				</select>						
-			<%-- <form:select path="${filterVal}" itemValue="optionId" 
-								itemLabel="optionName" items="${filterVals}"></form:select>  --%> 
 						</span><span class="ShareText">per page</span>
 		</div>
 
@@ -391,12 +363,6 @@
 												class="email cursor"></span></a></span>
 								</div>
 
-								<!-- <div class="searchResultsSubContentShare">
-									<span class="marginTop3 floatLeft"> Send to
-										Friend:&nbsp;</span><span><a href=""><img
-											src="../resources/images/email.png"></a></span>
-								</div> -->
-
 								<div class="ShareSearch" >
 								
 								<a name="fb_share" class="fbook" href="http://www.facebook.com/sharer.php?u=${basePath}/jobsearch/jobview/${job.JobId}/${job.JobTitle}.html" target="_blank"></a>
@@ -423,13 +389,8 @@
 
 		<div class="searchResultsNavigationColumn1 SearchPerPage">
 			<span class="ShareText">Results viewable:</span> <span
-				class="Padding0"> <%-- <form:select path="noOfPageLower"
-							name="results" class="jb_input4 margin0">
-								<form:option value="20">20</form:option>
-								<form:option value="30">30</form:option>
-								<form:option value="40">40</form:option>
-								<form:option value="50">50</form:option>
-						</form:select> --%> <select name="results" id="noOfPageLower"
+				class="Padding0">
+			 <select name="results" id="noOfPageLower"
 				class="jb_input4 margin0" onchange="applyLowerFilter();">
 					<option value="20">20</option>
 					<option value="30">30</option>

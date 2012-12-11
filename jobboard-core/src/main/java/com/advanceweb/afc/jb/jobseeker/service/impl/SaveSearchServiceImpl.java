@@ -39,14 +39,14 @@ public class SaveSearchServiceImpl implements SaveSearchService {
 	}
 
 	/**
-	 * This method is called to edit a Saved Job Search
+	 * This method is called to fetch the saved search by search Id 
 	 * 
 	 * @param saveSearchId
 	 * @return
 	 */
 	@Override
-	public List<SaveSearchedJobsDTO> editSavedSearch(int saveSearchId) {
-		return saveSearchDAO.editSavedSearch(saveSearchId);
+	public List<SaveSearchedJobsDTO> getSavedSearch(int saveSearchId) {
+		return saveSearchDAO.getSavedSearch(saveSearchId);
 	}
 
 	/**

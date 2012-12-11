@@ -30,28 +30,30 @@
 										});
 					});
 	function validate() {
-		var userName = $("#userName").val();
-		var userEmail = $("#userEmail").val();
+		var userName = $.trim($("#userName").val());
+		var userEmail = $.trim($("#userEmail").val());
 		var file = $("#filePath").val();
 		var x = userEmail.indexOf('@');
 		var y = userEmail.lastIndexOf('.');
 		var result = true;
 		if (userName.length == 0) {
-			$("#userNameError").text("Please enter the name");
+			$("#userNameError").text("Please enter a name");
 			result = false;
 		} else {
 			$("#userNameError").text("");
 		}
-		if (x == -1 || y == -1 || (x + 2) >= y) {
+		$("#userEmailError").text("");
+		if(userEmail == ''){
+			$("#userEmailError").text("Please enter an Email address");
+			result = false;
+		}else if (x == -1 || y == -1 || (x + 2) >= y) {
 			$("#userEmailError")
 					.text("Please enter the correct Email address");
 			result = false;
-		} else {
-			$("#userEmailError").text("");
-		}
+		} 
 		if (!file.toLowerCase().match(/(\.doc|\.pdf|\.docx)$/)) {
 			$("#filePathError").text(
-					"Please choose the appropriate file format");
+					"Please choose an appropriate file format");
 			result = false;
 		} else {
 			$("#filePathError").text("");

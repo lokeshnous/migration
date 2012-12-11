@@ -20,7 +20,13 @@ public interface SaveSearchDAO {
 
 	boolean deleteSavedSearch(int saveSearchId);
 
-	List<SaveSearchedJobsDTO> editSavedSearch(int saveSearchId);
+	/**
+	 * This method is called to fetch the saved search by search Id 
+	 * 
+	 * @param saveSearchId
+	 * @return
+	 */
+	List<SaveSearchedJobsDTO> getSavedSearch(int saveSearchId);
 
 	boolean saveModifiedData(List<SaveSearchedJobsDTO> searchedJobsDTOs);
 
