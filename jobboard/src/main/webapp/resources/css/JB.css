@@ -1981,6 +1981,10 @@ select {
 	margin: 0 3px 0 0;
 }
 
+input[type="radio"] {
+	margin: 0 3px 0 0;
+}
+
 .sectionHeader {
 	width: 100%;
 	height: 15px;
@@ -4219,7 +4223,7 @@ Border:1px solid #ccc;padding: 25px;}
 	list-style:disc;
 }
 h2.option2 {
-    font-size: 26px;
+    font-Fsize: 26px;
     font-weight: normal;
     border:none;
     padding:0;
