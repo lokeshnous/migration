@@ -29,7 +29,7 @@
 
 	<error-page>
 		<exception-type>java.lang.Exception</exception-type>
-		<location>/healthcarejobs/advanceweb.html</location>
+		<location>/healthcarejobs/errorPage.html</location>
 	</error-page>
 
 

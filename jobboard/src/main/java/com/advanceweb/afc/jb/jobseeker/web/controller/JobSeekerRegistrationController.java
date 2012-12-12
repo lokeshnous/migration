@@ -651,8 +651,8 @@ public class JobSeekerRegistrationController extends AbstractController {
 		 * Added by Santhosh Gampa for OpenAM integration
 		 */
 		HashMap<String, String> hm = new HashMap<String, String>();
-		if(registerForm.getOtherProfession()=="")
-		{return "Please fill the required fields";}
+		/*if(registerForm.getOtherProfession().isEmpty() && null == registerForm.getMyProfession())
+		{return "Please fill the required fields";}*/
 		try {
 
 			if (null != registerForm.getListProfAttribForms()) {

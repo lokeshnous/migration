@@ -568,6 +568,7 @@ jQuery(document).ready(function() {
 						success: function(data){ 
 							$.each(data, function(key, val) {
 								if (key == "NavigationPath") {
+									alert("Search saved successfully!");
 									window.location.href = val+ '.html';
 								}
 								
@@ -585,7 +586,6 @@ jQuery(document).ready(function() {
 							alert("Server Error : "+response.status);
 						},
 						complete: function() {
-							
 						}
 					
 					});

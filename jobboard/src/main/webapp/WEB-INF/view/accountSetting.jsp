@@ -350,7 +350,7 @@ $('#cityOrTown2').val("");
 						<span class="lableText3">
 							Company:
 						</span>
-						<form:input path="company" name="company" class="job_seeker_password" type="text"/>
+						<form:input path="company" name="company" class="job_seeker_password" readonly="true" type="text"/>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">

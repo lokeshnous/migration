@@ -64,8 +64,15 @@ function validateNumber(event) {
 
 
 		
- 		$('#save').click(function(){			
- 			
+ 		$('#save').click(function(){
+ 			var validate=true;
+ 			if($("#MyProfession :selected").text() == "Others"){
+ 		      if($("#otherProfession").val().length == 0){
+ 		    	 validate=false;
+ 		    	 $("#errmsg").html("Please fill the required fields");
+ 		      }
+ 		    }
+ 			if(validate){
 			$.ajax({url:"${pageContext.request.contextPath}/jobseekerregistration/updateJobSeekerProfile.html",
 				data:$('#editProfileSettingsId').serialize(),
 				type:"POST",
@@ -81,6 +88,7 @@ function validateNumber(event) {
 					}
 				 },
 			});
+ 		    }
 		}); 
  		//$('[id^=zipCode]').keypress(validateNumber);
  		
