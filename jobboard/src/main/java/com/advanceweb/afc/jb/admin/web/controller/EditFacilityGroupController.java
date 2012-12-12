@@ -5,11 +5,14 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONObject;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.common.controller.AbstractController;
@@ -65,15 +68,18 @@ public class EditFacilityGroupController extends AbstractController{
 		model.addObject("adminForm", adminForm);
 		model.addObject("isHealthLable", "Health System");
 		model.addObject("facilityList", dto);
+		model.addObject("result","result");
 		model.setViewName("manageFacilityGroup");
 		return model;
 
 	}
 
 	@RequestMapping(value = "/saveEditedFacilty")
-	public ModelAndView saveEditedFacilty(
-			@ModelAttribute("adminForm") AdminForm adminForm,
+	public@ResponseBody
+	JSONObject saveEditedFacilty(AdminForm adminForm,
 			HttpSession session, HttpServletRequest request) {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("success", "success");
 		ModelAndView model = new ModelAndView();
 		boolean isHealthSys = false;
 		
@@ -83,19 +89,24 @@ public class EditFacilityGroupController extends AbstractController{
 			isHealthSys =(Boolean) session.getAttribute("isHealthSys");
 		}
 		if(isHealthSys == adminForm.isHealthSystem()){
-			model.setViewName("adminLogin");
-			return model;
+			jsonObject.put("success", "success");
+			return jsonObject;
 		}
 		EmpSearchDTO dto = new EmpSearchDTO();
 		if(!adminForm.getCompName().isEmpty()){
 			int nsId =(Integer) session.getAttribute(MMJBCommonConstants.NS_CUSTOMER_ID);
 			adminForm.setNsId(String.valueOf(nsId));
 		}
+		try{
 		dto = transformAdminImpersonation.convertFormToDTO(adminForm);
 		adminService.saveEditFacilityGroup(dto);
 		LOGGER.info("Data saved successfully");
+		}catch(Exception e){
+			LOGGER.info("Exception while saving the edited facility from Admin functionality :"+e.getMessage());
+			jsonObject.remove("success");
+		}
 		model.setViewName("adminLogin");
-		return model;
+		return jsonObject;
 
 	}
 

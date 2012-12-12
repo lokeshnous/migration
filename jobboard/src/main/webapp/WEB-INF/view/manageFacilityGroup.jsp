@@ -52,7 +52,7 @@ function validateFacility() {
 	var compName = $.trim($("#empList").val());
 	var netsuiteId= $.trim($("#nsId").val()); 
 	if(compName == "" && netsuiteId == ""){
-		$("#ErrorMsg").text("Please enter any one data to find");
+		$("#ErrorMsg").text("Please enter Company name or NetSuite ID");
 		valid = false;
 	}
 	//alert(valid);
@@ -86,12 +86,21 @@ function validateFacility() {
 		}
 		
 		$("#save").click(function(event){
+			var compName = $.trim($("#empList").val());
+			var netsuiteId= $.trim($("#nsId").val());
+			if(compName == "" && netsuiteId == ""){
+				$("#ErrorMsg").text("Please enter Company name or NetSuite ID");
+			}
+			else{
 			$.ajax({url: "${pageContext.request.contextPath}/impersonationForFacility/saveEditedFacilty.html",
+				data:$('#form').serialize(),
+				type:"POST",
 				success: function(data){ 
 				    if(data.success != null){
 				    	alert("Data saved successfully!");
 				    	parent.$.nmTop().close();
 				    }
+				   
 				    if(data.failure != null){
 				    }
 				},
@@ -101,7 +110,9 @@ function validateFacility() {
 				complete: function() {
 				}
 			}); 
+		}
 		}); 
+		
 		$("#find").click(function(event){	
 			empList = $.trim($("#empList").val());
 			nsId = $.trim($("#nsId").val()); 
@@ -111,7 +122,7 @@ function validateFacility() {
 						 var val = true;
 						 if (data.success == val) {	
 							//window.location.href = '${pageContext.request.contextPath}/admininventory/employer1/jobInventory1.html';
-							$.nmManual('${pageContext.request.contextPath}/impersonationForFacility/jobSearchBycompanyName.html');							
+							$.nmManual('${pageContext.request.contextPath}/impersonationForFacility/jobSearchBycompanyName.html');	
 						 }else{
 							 $("#ErrorMsg").text(data.errMsg);
 							 $("#facilityListId").html('');
@@ -146,7 +157,7 @@ function validateFacility() {
 		</div>
 		<div class="popUpContainerWrapper">
 			<form:form method="GET" action="../impersonationForFacility/saveEditedFacilty.html"
-				commandName="adminForm">
+				commandName="adminForm" id="form">
 
 			<div class="row">
 				<span class="splLableText">Company Name: </span>
@@ -157,14 +168,16 @@ function validateFacility() {
 				<span class="lableText7">Net Suite ID Number:</span>
 				<form:input path="nsId" id="nsId" name="nsId" class="job_seeker_Resume onlyNum"
 					value="${nsId}" />&nbsp;&nbsp;
-
+ 				<c:if test="${result != 'result'}">
 				<input type="button" value="find" name="find" id="find"
 					class="btn_sm orange cursor" />
+				</c:if>
 			</div>
+			<c:if test="${pageName != 'adminDashboard'}">
 			<div class="rowEvenNewSpacing" >
 				<span class="splLableText">Company Name:</span>
 				<div id="facilityListId" class="splLableText" >
-				<div class="floatLeft">
+				<div class="row" style="text-align: left">
 				<c:forEach items="${facilityList}" var="item">
 					${item.companyName}<br/>
 				</c:forEach>
@@ -176,10 +189,12 @@ function validateFacility() {
 			</div>
 				<input type="hidden" name="pageValue" value="inventoryPage" />
 				<div class="row marginTop20 paddingBottom10">
-					<input type="submit" value="SAVE" class="purchaseJobPostings btn_sm orange cursor" onclick="return validateFacility();">
+					<input type="button" id="save" value="SAVE" class="purchaseJobPostings btn_sm orange cursor" >
 					<input type="button" id="cancelbutton" class="orange cursor" value="Cancel" onclick="parent.$.nmTop().close();" />
 				</div>
+				</c:if>
 			</form:form>
+			
 		</div>
 		<div class="clearfix"></div>
 	</div>

@@ -217,6 +217,7 @@ public class AdminController extends AbstractController{
 		ModelAndView model = new ModelAndView();
 		session.removeAttribute("empList");
 		session.removeAttribute("nsId");
+		model.addObject("pageName", ADMIN_DASHBOARD);
 		model.setViewName("manageFacilityGroup");
 		return model;
 	}
