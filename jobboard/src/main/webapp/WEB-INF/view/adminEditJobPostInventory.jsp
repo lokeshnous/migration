@@ -29,24 +29,13 @@
 	<!-- <script type="text/javascript" src="jquery-1.3.2.min.js"></script>
 	<script type="text/javascript" src="jquery.autocomplete.min.js"></script>-->
 	<script type="text/javascript">
-function validateNumber(event) {
-    var keyval = window.event ? event.keyCode : event.which;
-
-    if (event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 46
-     || event.keyCode == 37 || event.keyCode == 39) {
-        return true;
-    }
-    else if ( keyval < 48 || keyval > 57 ) {
-        return false;
-    }
-    else return true;
-};
 /* function cancelProcess() {
 	parent.$.nmTop().close();
 } */
 function closePopup() {
 	parent.window.location.reload();
 }
+
 </script>
 
 	<script type="text/javascript">
@@ -58,51 +47,67 @@ function closePopup() {
 		
 		function validateTable() {
 			var count = $("#tb_save_search_total").val();
-			var valid = true;
+			var valid = false;
 			if(count == null || count == ""){
-				valid = false;
 				return valid;
 			}
 			for(var i=1;i<=count;i++){
 				//alert($("#tb_save_search_"+i).val());
 				var val = $.trim($("#tb_save_search_"+i).val());
-				if(val==''){
+				if(isNaN(val) || val ==0 ){
 					valid = false;
 					break;
 				}
-				//valid = true;
-			}			
+				valid = true;
+			}		
 			return valid;
 		}
 		function validateTable1() {
-			var count = $("#jp_slot_save_total").val();
-			var valid = true;
-			if(count == null || count == ""){
-				valid = false;
+			var countTb = $("#jp_slot_save_total").val();
+			var validTb = false;
+			if(countTb == null || countTb == ""){
 				return valid;
 			}
-			for(var i=1;i<=count;i++){
+			for(var i=1;i<=countTb;i++){
 				//alert($("#tb_save_search_"+i).val());
-				var val = $.trim($("#jp_slot_save_"+i).val());
-				if(val==''){
-					valid = false;
+				var valTb = $.trim($("#jp_slot_save_"+i).val());
+				if(isNaN(valTb) || valTb ==0){
+					validTb = false;
 					break;
 				}
-				//valid = true;
+				validTb = true;
 			}			
 		
-			return valid;
+			return validTb;
 		}
 		
+		$('#jobPostingsDiv input').keydown(function(event) {
+		     if(event.shiftKey && ((event.keyCode >=48 && event.keyCode <=57) 
+		             || (event.keyCode >=186 &&  event.keyCode <=222))){
+		        // Ensure that it is a number and stop the Special chars
+		         event.preventDefault();
+		     }
+		     else if ((event.shiftKey || event.ctrlKey) && (event.keyCode > 34 && event.keyCode < 40)){     
+		          // let it happen, don't do anything
+		     }      
+		     else{
+		        // Allow only backspace , delete, numbers               
+		        if (event.keyCode == 9 || event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 39 ||event.keyCode == 37 
+		                || (event.keyCode >=48 && event.keyCode <=57)) {
+		            // let it happen, don't do anything
+		        }
+		        else {
+		           // Ensure that it is a number and stop the key press
+		                event.preventDefault();                   
+		        }
+		     }
+		});
 		
 		$("#save").click(function(event){
 			$("#ErrorMsg").text("");
-			if(!validateTable()){
-				$("#ErrorMsg").text("Please enter the data!");
-				return false;
-			}
-			if(!validateTable1()){
-				$("#ErrorMsg").text("Please enter the data!");
+			
+			if(!validateTable() || !validateTable1()){
+				$("#ErrorMsg").text("Please enter the the available quantity > 0");
 				return false;
 			}
 			var stringObj;
@@ -204,6 +209,7 @@ function closePopup() {
 				<input type="button" value="find" name="find" id="find"
 					class="btn_sm orange cursor" />
 			</div>
+			<div id="jobPostingsDiv">
 			<c:if test="${pageName != 'adminDashboard'}">
 				<input type="hidden" name="nsId" />
 				<input type="hidden" name="empList" />
@@ -228,8 +234,8 @@ function closePopup() {
 									<td align="center">${jbPostList.getQuantity()}</td>
 									<td align="center">
 									
-									<input id="tb_save_search_${rowCount.index+1}" class="job_seeker_Resume onlyNum"
-									maxlength="8"	type="text" value="${jbPostList.getAvailableQty()}" /></td>
+									<input id="tb_save_search_${rowCount.index+1}" class="jb_input4 onlyNum"
+									maxlength="3"	type="text" value="${jbPostList.getAvailableQty()}" /></td>
 								</tr>
 							</c:forEach>							
 						</tbody>						
@@ -259,7 +265,7 @@ function closePopup() {
 									<td align="center">${jbSlotList.getQuantity()}</td>
 									<td align="center">
 									<input id="jp_slot_save_${rowCount.index+1}"
-									 class="job_seeker_Resume onlyNum" maxlength="8"
+									 class="jb_input4 onlyNum" maxlength="3"
 										type="text" value="${jbSlotList.getAvailableQty()}" /></td>
 								</tr>
 							</c:forEach>
@@ -268,9 +274,12 @@ function closePopup() {
 					<input id="jp_slot_save_total" value="${jbSlotList.size()}" type="hidden">
 				</div>
 				</c:if>
+				</div>
 				<input type="hidden" name="pageValue" value="inventoryPage" />
 				<div class="row marginTop20 paddingBottom10">
+				<c:if test="${jbPostList.size() != 0 || jbSlotList.size() != 0 }">
 					<a id="save" class="purchaseJobPostings btn_sm orange cursor">SAVE</a>
+				</c:if>	
 					<a href="" class="nyroModalClose btn_sm orange cursor">Cancel</a>
 					<a href="<%=request.getContextPath()%>/admininventory/addJobPosting.html" class="nyroModal btn_sm orange cursor">Add New Job Posting</a>
 				</div>
