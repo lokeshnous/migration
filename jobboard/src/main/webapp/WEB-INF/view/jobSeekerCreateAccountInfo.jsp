@@ -145,7 +145,17 @@ function validateNumber(event) {
 				$('#stateDpId').val("");
 				$('#countryDpId').val("");
 			});
+			$("#countryDpId").change(function(){
+				$('#zipCode').val("");
+				$('#stateDpId').val("");
+				$('#cityAutoPopulation').val("");
+			});
 			
+			$("#stateDpId").change( function(){
+				$('#cityAutoPopulation').val('');
+				$('#zipCode').val('');
+				$('#countryDpId').val('');
+			});
 			
 			$("#waitmsg").hide();
 		     
