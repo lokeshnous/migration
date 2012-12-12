@@ -181,6 +181,92 @@ function copyAccToBillingAddr(obj) {
 		$('#cityOrTown').val("");
 	});
 
+	
+	$("#cityOrTown2").autocomplete({
+		source: '${pageContext.request.contextPath}/employer/getCityList.html',
+		width:500,
+		select: function(event, ui) {
+			$("#cityOrTown2").val(ui.item.value);				
+			$.ajax({
+			url: '${pageContext.request.contextPath}/employer/getState.html?city='+$("#cityOrTown2").val(),
+			success : function(data) {
+				$('#state2').val(data);
+
+				$.ajax({
+				url: '${pageContext.request.contextPath}/employer/getPostalCode.html?city='+$("#cityOrTown2").val()+'&state='+$("#state2").val(),
+				success : function(data) {
+					$('#zipCode2').val(data);
+				},
+				});						
+					$.ajax({
+					url: '${pageContext.request.contextPath}/employer/getCountry.html?city='+$("#cityOrTown2").val()+'&state='+$("#state2").val()+'&postalCode='+$("#zipCode2").val(),
+					success : function(country) {
+						//alert(country);
+						$('#country2').val(country);
+						if (country == "USA" || country == "US") {           		
+		            		 var checks = ["2","3","4"];
+		            		 $(":checkbox").val(checks).filter(":checked").attr("disabled",true);
+		            		 $(":checkbox").val(checks).filter(":checked").attr("checked",false); 
+		            		 $("#waitmsg").hide();
+		            	}else{
+		            		var checks = ["1","2","3","4"];
+		           		    $(":checkbox").val(checks).filter(":checked").attr("disabled",false);  
+		           		    $(":checkbox").val(checks).filter(":checked").attr("checked",false); 
+		            	} 
+					},
+				}); 
+			},error : function(data) {
+			},
+			complete : function(data) {
+			}
+			});
+		}
+	}); 
+	
+	//Auto complete on selecting zipcode			
+	$("#zipCode2").autocomplete({
+		source: '${pageContext.request.contextPath}/employer/getPostalCodeAutoPopulation.html',
+		select: function(event, ui) {
+			$("#zipCode2").val(ui.item.value);	
+			$('#cityOrTown2').val("");
+			$('#state2').val("");
+			$.ajax({
+				url: '${pageContext.request.contextPath}/employer/getLocations.html?zipCode='+$("#zipCode2").val(),
+				success : function(data) {
+					$('#state2').val(data.state);
+					$('#country2').val(data.country);
+					$("#cityOrTown2").val(data.city);
+				},error : function(data) {
+				},
+				complete : function(data) {
+				}
+			});		
+		}
+	});	
+		
+	$("#state2").change( function(){
+		$('#cityOrTown2').val('');
+		$('#zipCode2').val('');
+		$('#country2').val('');
+	});
+$("#zipCode2").change(function(){
+	$('#cityOrTown2').val("");
+	$('#state2').val("");
+	$('#country2').val("");
+});
+
+$("#cityOrTown2").change(function(){
+	$('#zipCode2').val("");
+	$('#state2').val("");
+	$('#country2').val("");
+});
+$("#country2").change(function(){
+	$('#zipCode2').val("");
+	$('#state2').val("");
+	$('#cityOrTown2').val("");
+});
+	
+	
 	});
 </script>
 
