@@ -131,19 +131,15 @@ public class JobSearchConversionHelper {
 		}catch (Exception e) {
 			LOGGER.info("Locations not found for Job Id :"+jobDTO.getJobId());
 		}
-
-		if (hideCity != 1) {
-			jobDTO.setCity(jpLocation.getCity());
-		}
-		if (hideState != 1) {
-			jobDTO.setState(jpLocation.getStateFullname());
-		}
-		if (hideCountry != 1) {
-			jobDTO.setCountry(jpLocation.getCountry());
-		}
-		if (hidePosCode != 1) {
-			jobDTO.setPostCode(jpLocation.getPostcode());
-		}
+		jobDTO.setCity(jpLocation.getCity());
+		jobDTO.setState(jpLocation.getState());
+		jobDTO.setCountry(jpLocation.getCountry());
+		jobDTO.setPostCode(jpLocation.getPostcode());
+		
+		jobDTO.setHideCity(hideCity);
+		jobDTO.setHideState(hideState);
+		jobDTO.setHideCountry(hideCountry);
+		jobDTO.setHidePostcode(hidePosCode);
 	}
 
 	/**

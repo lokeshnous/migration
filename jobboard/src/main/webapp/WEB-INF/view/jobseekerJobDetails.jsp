@@ -84,16 +84,16 @@
 						<div class="jobDetailsIntro">
 							<div class="jobDetailsIntroReview">
 								<p>
-									<c:if test="${not empty jobDetail.city}">
+									<c:if test="${jobDetail.hideCity == 0}">
 										<span class="specs">City:</span>&nbsp;&nbsp;${jobDetail.city}&nbsp;&nbsp;|&nbsp;&nbsp;
 					</c:if>
-									<c:if test="${not empty jobDetail.state}">
+									<c:if test="${jobDetail.hideState == 0}">
 										<span class="specs">State:</span>&nbsp;&nbsp;${jobDetail.state}&nbsp;&nbsp;|&nbsp;&nbsp;
 					</c:if>
-									<c:if test="${not empty jobDetail.country}">
+									<c:if test="${jobDetail.hideCountry == 0}">
 										<span class="specs">Country:</span>&nbsp;&nbsp;${jobDetail.country}&nbsp;&nbsp;|&nbsp;&nbsp;
 					</c:if>
-									<c:if test="${not empty jobDetail.postCode}">
+									<c:if test="${jobDetail.hidePostcode == 0}">
 										<span class="specs">Zip Code:</span>&nbsp;&nbsp;${jobDetail.postCode}&nbsp;&nbsp;|&nbsp;&nbsp;
 					</c:if>
 									<span class="specs">Job ID Number:</span>&nbsp;&nbsp;${jobDetail.jobId}

@@ -136,14 +136,14 @@
 								<span class="lableText3"> </span>
 								<div id="errmsg" class="FormErrorDisplayText"></div>
 							</div>
-							<span class="lableText3"> Cover Letter Name: </span>
+							<span class="lableText7"> Cover Letter Name: </span>
 							<form:input path="name" name="name" id="name"
 								class="jb_input2Coverletter" type="text" />
 							<div class="required2">(Required)</div>
 						</div>
 				
 						<div class="rowEvenNewSpacing">
-							<span class="lableText7" style="margin-top: 8px;"> Body
+							<span class="lableText7"> Body
 								Text: </span>
 							<form:textarea path="coverletterText" name="coverletterText"
 								class="textareaBoxCResume textareaBoxCResumeTemplate"
@@ -163,7 +163,7 @@
 							</p>
 						</div>
 						<div class="rowEvenNewSpacing">
-							<span class="lableText3"> Cover Letter Visibility: </span> <span
+							<span class="lableText7"> Cover Letter Visibility: </span> <span
 								class="required"> <label class="greyLabel"> <form:radiobutton
 										name="RadioGroup10" id="RadioGroup10" value="1" path="active"
 										label="Public" />

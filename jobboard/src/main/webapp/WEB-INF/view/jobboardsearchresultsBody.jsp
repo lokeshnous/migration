@@ -310,10 +310,11 @@
 
 									<li class="searchResultsColumn2"><a class="clickableLink">${job.Company}</a></li>
 
-									<li class="searchResultsColumn3"><c:if
-											test="${!(job.HideCity == 1 || job.HideState == 1 || job.HideCountry == 1)}">
+									<li class="searchResultsColumn3">
+									<%-- <c:if
+											test="${!(job.HideCity == 1 || job.HideState == 1 || job.HideCountry == 1)}"> --%>
 							${job.City}
-							</c:if></li>
+							<%-- </c:if> --%></li>
 
 									<li class="searchResultsColumn4">${job.PostedDate}</li>
 								</ul>

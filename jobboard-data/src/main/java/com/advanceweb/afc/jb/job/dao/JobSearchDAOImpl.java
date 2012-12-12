@@ -72,9 +72,8 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 			if (jobId != 0) {
 				JpJob jpJob = (JpJob) hibernateTemplate.get(JpJob.class,
 						(int) jobId);
-				JobDTO jobDTO = jobSearchConversionHelper
+				jobDetail = jobSearchConversionHelper
 						.transformJpJobToJobDTO(jpJob);
-				jobDetail = jobDTO;
 			}
 		} catch (HibernateException e) {
 			// logger call

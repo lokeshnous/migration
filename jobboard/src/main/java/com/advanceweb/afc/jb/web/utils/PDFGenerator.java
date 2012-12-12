@@ -102,7 +102,45 @@ public class PDFGenerator {
 			logException(ioException, "Uable to create PDF document");
 		}
 	}
-
+	
+	/**
+	 * Produce the Resume in PDF format and save the file in temporary folder 
+	 * and return the file. 
+	 * 
+	 * @param resumeDTO
+	 *            the retrieved Resume from the data store
+	 * @return file
+	 */
+	public File generateAndSaveAsPdf(ResumeDTO resumeDTO) {
+		
+		Document document = new Document(PageSize.A4, 36, 36, 36, 36);
+		File newFile = null;
+		try {
+			File temp = File.createTempFile(resumeDTO.getResumeName(),
+					".pdf");
+			newFile = new File(temp.getParent() + "\\"
+					+ resumeDTO.getResumeName()
+					+ ".pdf");
+			// Rename
+			newFile.deleteOnExit();
+			if (temp.renameTo(newFile)) {
+				LOGGER.info("File has been renamed.");
+			}
+			temp.deleteOnExit();
+			
+			FileOutputStream fileOut = new FileOutputStream(newFile);
+			PdfWriter.getInstance(document, fileOut);
+			document.open();
+			generatePDFResume(document, resumeDTO);
+			document.close();
+		} catch (DocumentException documentException) {
+			logException(documentException, "Uable to create PDF document");
+		} catch (IOException ioException) {
+			logException(ioException, "Uable to create PDF document");
+		}
+		return newFile;
+	}
+	
 	/**
 	 * Produce the Resume in PDF format and display to the user to print
 	 * 
@@ -121,7 +159,7 @@ public class PDFGenerator {
 		response.setContentType("application/pdf");
 		Document document = new Document(PageSize.A4, 36, 36, 36, 36);
 		try {
-
+			
 			PdfWriter.getInstance(document, response.getOutputStream());
 			document.open();
 			generatePDFResume(document, resumeDTO);

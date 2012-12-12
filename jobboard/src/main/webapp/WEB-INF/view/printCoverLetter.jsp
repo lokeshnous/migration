@@ -26,11 +26,11 @@ function prepareForm()
 		<div class="main_wrapper_outside">
 			<div class="main_wrapper_inside">
 				<div class="main">
-					<div class="popupHeader">
+					<div >
 						<h2>
-							CREATE NEW COVER LETTER 
+							COVER LETTER 
 						</h2>
-						<a href="#"><img width="19" height="19" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close" title="Close"/></a>
+						<%-- <a href="#"><img width="19" height="19" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close" title="Close"/></a> --%>
 					</div>
 					
 					<div class="row ">
@@ -41,22 +41,24 @@ function prepareForm()
 							<div class="lableTextCoverletter">
 								Cover Letter Name:
 							</div>
-							<div class="input_grp5 ">
-								<div class="floatLeft">								
-								<form:input path="name" name="name" id="name" class="jb_input2Coverletter" type="text" readonly="true"/>						
+							<div class="input_grp5 marginTop5">
+								<div class="floatLeft">	
+								${resCoverLetterForm.name}							
+								<%-- <form:input path="name" name="name" id="name" class="jb_input2Coverletter" type="text" readonly="true"/> --%>						
 								</div>
 								
 							</div>
 						</div>
 						<div id="errmsg" class="FormErrorDisplayText"></div>
 						<div class="row marginTop15">
-							<div class="lableTextCoverletter marginTop10">
+							<div class="lableTextCoverletter">
 								Body Text:
 							</div>
 							
-							<div class="input_grp5 ">
-								<form:textarea path="coverletterText" name="coverletterText"  class="textareaBoxCResume" resize="none"  rows="5" cols="45"
-								id="coverletterText" readonly="true"/>
+							<div class="input_grp5 marginTop5">
+							${resCoverLetterForm.coverletterText}
+								<%-- <form:textarea path="coverletterText" name="coverletterText"  class="textareaBoxCResume" resize="none"  rows="5" cols="45"
+								id="coverletterText" readonly="true"/> --%>
 							</div>
 							
 						</div>						

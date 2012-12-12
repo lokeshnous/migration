@@ -109,7 +109,7 @@
 								</p>
 							</div>						
 						<div class="rowEvenNewSpacing">
-								<span class="lableText3">
+								<span class="lableText7">
 								Cover Letter Visibility:
 								</span>
 								<span class="required">								

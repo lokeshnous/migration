@@ -365,27 +365,27 @@
                         
                 <div class="row marginTop20">
                           <h3 class="TextColorA01 FontSize18">Name of Facility</h3>
-                  <c:if test="${not empty jobDetail.city}" >        
+                  <c:if test="${jobDetail.hideCity == 0}" >        
                   <div class="row marginTop5">
                     <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>CITY :</strong></h1>
                     <p>${jobDetail.city}</p>
                   </div>
                   </c:if>     
                          
-                  <c:if test="${not empty jobDetail.state}" >        
+                  <c:if test="${jobDetail.hideState == 0}" >        
                   <div class="row marginTop5">
                     <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>STATE :</strong></h1>
                     <p>${jobDetail.state}</p>
                   </div>
                   </c:if>
                   
-                  <c:if test="${not empty jobDetail.country}" >
+                  <c:if test="${jobDetail.hideCountry == 0}" >
                   <div class="row marginTop5">
                     <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>COUNTRY :</strong></h1>
                     <p>${jobDetail.country}</p>
                   </div>
                   </c:if>
-                  <c:if test="${not empty jobDetail.postCode}" >
+                  <c:if test="${jobDetail.hidePostcode == 0}" >
                   <div class="row marginTop5">
                     <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>Zip Code :</strong></h1>
                     <p>${jobDetail.postCode}</p>

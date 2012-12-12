@@ -86,6 +86,7 @@ import com.advanceweb.afc.jb.search.JobSearchResultDTO;
 import com.advanceweb.afc.jb.search.SearchFacetDTO;
 import com.advanceweb.afc.jb.search.SearchParamDTO;
 import com.advanceweb.afc.jb.search.service.JobSearchService;
+import com.advanceweb.afc.jb.web.utils.PDFGenerator;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
 import com.advanceweb.common.client.ClientContext;
@@ -117,7 +118,10 @@ public class JobSearchController extends AbstractController {
 
 	@Autowired
 	private AdService adService;
-
+	
+	@Autowired
+	private PDFGenerator pdfGenerator;
+	
 	@Autowired
 	private LookupService lookupService;
 
@@ -819,10 +823,13 @@ public class JobSearchController extends AbstractController {
 					.fetchPublicResumeByUserId(userId);
 			if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER
 					.equalsIgnoreCase(resumeDTO.getResumeType())) {
-				// TODO: Need to clarify
-				LOGGER.info("Resume type : resume type builder");
+				LOGGER.info("Resume type : ADVANCE Resume Builder");
+				File newFile = pdfGenerator.generateAndSaveAsPdf(resumeDTO);
+				resumeDTO.setFilePath(newFile.getAbsolutePath());
+				
 			} else if (MMJBCommonConstants.RESUME_TYPE_COPY_PASTE
 					.equalsIgnoreCase(resumeDTO.getResumeType())) {
+				LOGGER.info("Resume type : Copy and Paste");
 				try {
 					// Create temp file.
 					File temp = File.createTempFile(resumeDTO.getResumeName(),
@@ -849,7 +856,7 @@ public class JobSearchController extends AbstractController {
 			} else if (MMJBCommonConstants.RESUME_TYPE_UPLOAD
 					.equalsIgnoreCase(resumeDTO.getResumeType())) {
 				// TODO: Need to clarify
-				LOGGER.info("Resume type : resume type upload");
+				LOGGER.info("Resume type :Upload Existing Resume");
 			}
 			if (resumeDTO.getFilePath() != null) {
 				attachmentpaths = new ArrayList<String>();
@@ -2939,15 +2946,18 @@ public class JobSearchController extends AbstractController {
 					MMUtils.isNull(jobDTO.getCompany()));
 			jobSrchJson.put(MMJBCommonConstants.JOB_TITLE,
 					MMUtils.isNull(jobDTO.getJobTitle()));
-			String location = null;
-			if (jobDTO.getCity() != null && jobDTO.getState() != null) {
-				location = jobDTO.getCity() + MMJBCommonConstants.COMMA
-						+ jobDTO.getState();
-			} else if (jobDTO.getCity() != null && jobDTO.getState() == null) {
-				location = jobDTO.getCity();
+			StringBuffer location = new StringBuffer();
+			if (jobDTO.getHideCity() == 0) {
+				location.append(jobDTO.getCity());
+				if(jobDTO.getHideState() == 0){
+					location.append(MMJBCommonConstants.COMMA);
+				}
+			}			
+			if (jobDTO.getHideState() == 0) {
+				location.append(jobDTO.getState());
 			}
 			jobSrchJson.put(MMJBCommonConstants.CAP_CITY,
-					MMUtils.isNull(location));
+					MMUtils.isNull(location.toString()));
 			jobSrchJson.put(MMJBCommonConstants.POSTED_DATE,
 					MMUtils.convertToReqdDateString(jobDTO.getPostedDate()));
 			jobSrchJson.put(MMJBCommonConstants.APPLY_ONLINE,

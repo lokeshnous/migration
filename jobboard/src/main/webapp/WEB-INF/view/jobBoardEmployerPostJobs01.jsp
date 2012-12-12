@@ -77,7 +77,7 @@
 							<div class="PlayDemo marginTop15">
 								<a
 									href="https://www.google.co.in/url?url=http://www.youtube.com/watch%3Fv%3Du5O5JKV7H5A&rct=j&sa=X&ei=9Zo7UL-fDMHtrAfh1oCIBQ&ved=0CEIQuAIwBQ&q=flowers+vide&usg=AFQjCNEik81RAbq6ffmdq3EprRgPio6tRg&cad=rja"
-									target="_blank" tclass="TextColor01 PlayDemo">Video Demo</a>
+									target="_blank" class="TextColor01 PlayDemo">Video Demo</a>
 							</div>
 						</div>
 						<!--2-->
