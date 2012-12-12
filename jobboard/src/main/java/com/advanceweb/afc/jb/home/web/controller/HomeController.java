@@ -577,5 +577,17 @@ public class HomeController extends AbstractController{
 		populateAds(request, session, model, PageNames.JOBSEEKER_SITE_MAP);
 		return modelAndView;
 	}
-
+	/**
+	 * Method which will redirect the request to error page
+	 * @param request
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/errorPage", method = RequestMethod.GET)
+	public String getErrorPageContents(HttpServletRequest request, Model model,
+			HttpSession session) {
+		model.addAttribute("isHomePage", true);
+		return "defaultErrorPage";
+	}
 }
