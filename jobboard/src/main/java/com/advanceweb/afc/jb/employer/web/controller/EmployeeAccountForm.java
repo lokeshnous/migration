@@ -24,6 +24,7 @@ public class EmployeeAccountForm {
 	private String zipCode;
 	private String phone;
 	private boolean adminLogin;
+	private boolean readOnly;
 	
 	
 	public boolean isAdminLogin() {
@@ -211,6 +212,18 @@ public class EmployeeAccountForm {
 	 */
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	/**
+	 * @return the readOnly
+	 */
+	public boolean isReadOnly() {
+		return readOnly;
+	}
+	/**
+	 * @param readOnly the readOnly to set
+	 */
+	public void setReadOnly(boolean readOnly) {
+		this.readOnly = readOnly;
 	}
 
 }

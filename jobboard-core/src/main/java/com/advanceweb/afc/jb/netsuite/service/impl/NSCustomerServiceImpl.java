@@ -520,11 +520,8 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 					+ e);
 		}
 
-		LOGGER.info("IS_FEATURED===>" + jsonObject.get(IS_FEATURED));
 		LOGGER.info("IS_INVOICE_ENABLED===>"
 				+ jsonObject.get(IS_INVOICE_ENABLED));
-		LOGGER.info("IS_XML_FEED_ENABLED===>"
-				+ jsonObject.get(IS_XML_FEED_ENABLED));
 
 		return userDTO;
 	}

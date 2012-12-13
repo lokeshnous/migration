@@ -61,6 +61,7 @@ import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
@@ -82,6 +83,7 @@ import com.advanceweb.afc.jb.security.DatabaseAuthenticationManager;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 import com.advanceweb.afc.jb.user.UserSubscriptionService;
+import com.advanceweb.afc.jb.user.dao.UserDao;
 import com.advanceweb.afc.jb.user.web.controller.TransformUserubscription;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
@@ -169,6 +171,8 @@ public class AgencyDashBoardController extends AbstractController {
 	private String accountStreet;
 	@Value("${emailInUse}")
 	private String emailInUse;
+	@Autowired
+	private UserDao userDAO;
 	@RequestMapping("/agencyDashboard")
 	public ModelAndView displayDashBoard(HttpSession session,
 			HttpServletRequest request) {
@@ -416,7 +420,17 @@ public class AgencyDashBoardController extends AbstractController {
 			employeeBillingForm.setBillingAddressForm(new BillingAddressForm());
 
 			int userId = (Integer) session.getAttribute("userId");
-
+			// Post/Edit Only users: should NOT be able to change Account Settings
+			List<UserRoleDTO> roleList = userDAO.getUserRole(userId);
+			if (null != roleList) {
+				for (UserRoleDTO userRole : roleList) {
+					if (null != userRole.getRoleName()
+							&& userRole.getRoleName().equals(
+									MMJBCommonConstants.FACILITY_POST_EDIT)) {
+						employeeAccountForm.setReadOnly(true);
+					}
+				}
+			}
 			List<CountryDTO> countryList = populateDropdownsService
 					.getCountryList();
 

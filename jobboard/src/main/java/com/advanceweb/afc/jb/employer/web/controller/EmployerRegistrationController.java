@@ -51,6 +51,7 @@ import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.EmloyerRegistartionService;
@@ -62,6 +63,7 @@ import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 import com.advanceweb.afc.jb.pgi.web.controller.BillingAddressForm;
 import com.advanceweb.afc.jb.pgi.web.controller.TransformPaymentMethod;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
+import com.advanceweb.afc.jb.user.dao.UserDao;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
 import com.advanceweb.common.client.ClientContext;
@@ -169,7 +171,8 @@ public class EmployerRegistrationController extends AbstractController{
 	private String accountStreet;
 	@Value("${emailInUse}")
 	private String emailInUse;
-
+	@Autowired
+	private UserDao userDAO;
 	// Spring ReCaptcha
 
 	private String recaptchaResponse;
@@ -737,6 +740,17 @@ public class EmployerRegistrationController extends AbstractController{
 			employeeBillingForm.setBillingAddressForm(new BillingAddressForm());
 
 			int userId = (Integer) session.getAttribute("userId");
+			// Post/Edit Only users: should NOT be able to change Account Settings
+						List<UserRoleDTO> roleList = userDAO.getUserRole(userId);
+						if (null != roleList) {
+							for (UserRoleDTO userRole : roleList) {
+								if (null != userRole.getRoleName()
+										&& userRole.getRoleName().equals(
+												MMJBCommonConstants.FACILITY_POST_EDIT)) {
+									employeeAccountForm.setReadOnly(true);
+								}
+							}
+						}
 			if(session.getAttribute("adminLogin")!=null ){
 				employeeAccountForm.setAdminLogin(true);
 			}

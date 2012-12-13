@@ -719,10 +719,10 @@ function validateNumber(event) {
 											<div class="input_grp5 ">
 
 												<form:textarea path="listCertForm[${status.index}].summary" id="Certslimitedtextarea${status.index}"
-													onKeyDown="limitText(this.form.Certslimitedtextarea${status.index},this.form.countdownCerts${status.index},2000);"
-													onKeyUp="limitText(this.form.Certslimitedtextarea${status.index},this.form.countdownCerts${status.index},2000);"
+													onKeyDown="limitText(this.form.Certslimitedtextarea${status.index},this.form.countdownCerts${status.index},1000);"
+													onKeyUp="limitText(this.form.Certslimitedtextarea${status.index},this.form.countdownCerts${status.index},1000);"
 													class="textareaBoxCResume" rows="3" cols="45" />
-												<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdownCerts${status.index}" size="3" value="2000">characters remaining.<p>
+												<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdownCerts${status.index}" size="3" value="1000">characters remaining.<p>
 											</div>
 										</div>
 									</div>
