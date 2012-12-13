@@ -31,6 +31,10 @@
 		            $("#promoMediaErrMsg").text('Please select an appropriate video file');
 				}
 			}
+			 if(parseInt(sizeInKB) > 10800){
+				 $("#promoMediaErrMsg").text('File size should not exceed more than 10.8MB.');
+				 hasError = false;
+			 }
 			if($('#textfield5').val()!=''){
 					var ext = $('#textfield5').val().split('.').pop().toLowerCase();
 					if($.inArray(ext, ['gif','png','jpg','tif']) == -1) {
@@ -59,6 +63,10 @@
 			alert(error);
 			cancelProcess();
 		}
+		var sizeInKB = 0;
+	$('#textfield4').bind('change', function() {
+	  sizeInKB = Math.round(parseInt(this.files[0].size)/1024);
+	});
 	});
 </script>
 
@@ -207,7 +215,7 @@
 						<div class="lableTextCoverletterSize">Logo:</div>
 						<div class="input_grp5 ">
 							<div class="floatLeft">
-								<form:input path="logoUrl" name="textfield4" type="file"
+								<form:input path="logoUrl" name="textfield5" type="file"
 									id="textfield5" size="20" 
 									class="job_seeker_login_email fileType" />
 							</div>

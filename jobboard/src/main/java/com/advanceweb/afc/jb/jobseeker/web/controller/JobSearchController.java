@@ -853,10 +853,6 @@ public class JobSearchController extends AbstractController {
 				} catch (IOException e) {
 					LOGGER.info("Copy Paste resume error");
 				}
-			} else if (MMJBCommonConstants.RESUME_TYPE_UPLOAD
-					.equalsIgnoreCase(resumeDTO.getResumeType())) {
-				// TODO: Need to clarify
-				LOGGER.info("Resume type :Upload Existing Resume");
 			}
 			if (resumeDTO.getFilePath() != null) {
 				attachmentpaths = new ArrayList<String>();
