@@ -31,7 +31,7 @@
 	<script type="text/javascript">
 jQuery(document).ready(function() {
 		$("#SearchJob").click(function(event){		
-			var advJobId = $("#advJobId").val().trim();
+			var advJobId = $.trim($("#advJobId").val());
 			$("#ErrorMsg").text("");
 			if(advJobId == ''){
 				$("#ErrorMsg").text("Please enter an Adv Job Id!");
