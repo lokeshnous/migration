@@ -228,15 +228,19 @@ public class JobPostConversionHelper<JobPostForm> {
 			Calendar startDate = Calendar.getInstance();
 			startDate.setTime(job.getStartDt());
 			Calendar currentDate = Calendar.getInstance();
+			Calendar endDt = Calendar.getInstance();
 			if (job.getActive() == 0 && startDate.after(currentDate)) {
 				jobPostDTO.setJobStatus(MMJBCommonConstants.POST_JOB_SCHEDULED);
 			} else if (null != job.getEndDt()) {
 				jobPostDTO.setEndDt(formatter.format(job.getEndDt()));
 				// End date with out time
-				Calendar endDt = Calendar.getInstance();
 				endDt.setTime(job.getEndDt());
+				endDt.add(Calendar.HOUR, 24);
+				endDt.add(Calendar.MINUTE, 59);
+				endDt.add(Calendar.SECOND, 59);
 
-				if (job.getActive() == 1 && endDt.before(currentDate)) {
+				if (job.getActive() == 1
+						&& endDt.getTime().before(currentDate.getTime())) {
 					jobPostDTO
 							.setJobStatus(MMJBCommonConstants.POST_JOB_EXPIRED);
 				}
@@ -249,10 +253,9 @@ public class JobPostConversionHelper<JobPostForm> {
 					now.add(Calendar.DAY_OF_MONTH, 30);
 					job.setEndDt(now.getTime());
 				}
-				Calendar endDt = Calendar.getInstance();
-				endDt.setTime(job.getEndDt());
 
-				if (job.getActive() == 1 && endDt.compareTo(currentDate) >= 0) {
+				if (job.getActive() == 1
+						&& endDt.getTime().compareTo(currentDate.getTime()) >= 0) {
 					jobPostDTO.setJobStatus(MMJBCommonConstants.POST_NEW_JOB);
 				}
 			}

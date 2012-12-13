@@ -19,7 +19,7 @@ public interface JobPostDAO {
 	
 	EmployerInfoDTO getEmployerInfo(int userId, String roleName);
 	boolean savePostJob(JobPostDTO dto) ;
-	List<JobPostDTO> retrieveAllJobPost(int employerId, int offset, int noOfRecords);
+	List<JobPostDTO> retrieveAllJobPost(int employerId, int offset, int noOfRecords,String sortBy);
 	JobPostDTO retrieveJobById(int jobId);
 	boolean deleteJob(int jobId , int userId);
 	boolean updateManageJob(boolean autoRenew, int brandTemplate, int jobId,

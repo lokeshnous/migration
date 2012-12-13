@@ -24,7 +24,7 @@ public interface JobPostService {
 	boolean savePostJob(JobPostDTO dto);
 
 	List<JobPostDTO> retrieveAllJobPost(int employerId, int offset,
-			int noOfRecords);
+			int noOfRecords,String sortBy);
 
 	JobPostDTO retrieveJobById(int jobId);
 

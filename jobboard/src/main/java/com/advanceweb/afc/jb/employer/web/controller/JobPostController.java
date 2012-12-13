@@ -858,6 +858,15 @@ public class JobPostController extends AbstractController {
 		ModelAndView model = new ModelAndView();
 		List<DropDownDTO> templateList = new ArrayList<DropDownDTO>();
 		List<JobPostDTO> postedJobList = new ArrayList<JobPostDTO>();
+		String sortBy=null;
+		if(jobPostform.isSortAsc()){
+		 sortBy="Order By "+jobPostform.getSortBy()+ "  asc " ;
+		 jobPostform.setSortAsc(false);
+		}else{
+			 sortBy="Order By "+jobPostform.getSortBy()+ "  desc " ;
+			 jobPostform.setSortAsc(true);
+		}
+		
 		int userId = 0;
 		int facilityId = 0;
 		if (null != session.getAttribute(MMJBCommonConstants.USER_ID)) {
@@ -880,7 +889,7 @@ public class JobPostController extends AbstractController {
 		jobPostform.setStatusValue(jobStatus);
 
 		String next = request.getParameter("next");
-	
+	    
 		int page = 1;
 		int displayRecordsPerPage = 10;
 		if (null != request.getParameter("noOfPage")&& Integer.parseInt(request.getParameter("noOfPage"))>0) {
@@ -900,7 +909,7 @@ public class JobPostController extends AbstractController {
 
 				recordsPerPage = displayRecordsPerPage;
 				postedJobList = employerJobPost.retrieveAllJobPost(userId,
-						(page - 1) * recordsPerPage, recordsPerPage);
+						(page - 1) * recordsPerPage, recordsPerPage, sortBy);
 
 				noOfRecords = employerJobPost
 						.getTotalNumberOfJobRecords(userId);

@@ -43,7 +43,7 @@
 						 noOfPageValue=$("#noOfPage").val();
 						 $("#noOfPageId").val(noOfPageValue);
 						 $("#noOfPageLowerId").val(noOfPageValue);
-						  $("#tb_manage_job").tablesorter(); 
+						 $("#tb_manage_job").tablesorter(); 
 						$('#deactivated').click(function() {
 							var val = [];
 							$(':checkbox:checked').each(function(i) {
@@ -176,6 +176,7 @@
 						$('#noOfPageId').change(
 								function() {
 									val = $(this).val();
+									$('#noOfPageId').val(val);
 									$('#noOfPageLowerId').val(val);
 									$("form").attr(
 											"action",
@@ -187,13 +188,127 @@
 								function() {
 									val = $(this).val();
 									$('#noOfPageId').val(val);
+									$('#noOfPageLowerId').val(val);
 									$("form").attr(
 											"action",
 											"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
 													+ val);
 									$("form").submit();
 								});
+						$('#avdJobIdTab').click( function(){
+							
+							$('#sortBy').val('a.jobNumber');
+							val = $('#noOfPageId').val();
+							$("form").attr(
+									"action",
+									"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+											+ val);
+							$("form").submit();
+						});
+						$('#jobIdTab').click( function(){
+							
+							$('#sortBy').val('a.jobId');
+							val = $('#noOfPageId').val();
+							$("form").attr(
+									"action",
+									"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+											+ val);
+							$("form").submit();
+						});
+							$('#jobTitleTab').click( function(){
+							
+							$('#sortBy').val('a.jobtitle');
+							val = $('#noOfPageId').val();
+							$("form").attr(
+									"action",
+									"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+											+ val);
+							$("form").submit();
+						});
+							/* $('#jobLocationTab').click( function(){
+								
+								$('#sortBy').val('jobId');
+								val = $('#noOfPageId').val();
+								$("form").attr(
+										"action",
+										"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+												+ val);
+								$("form").submit();
+							}); */
+							$('#jobStatusTab').click( function(){
+								
+								$('#sortBy').val('a.jobStatus');
+								val = $('#noOfPageId').val();
+								$("form").attr(
+										"action",
+										"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+												+ val);
+								$("form").submit();
+							});
+							$('#jobStartDateTab').click( function(){
+								
+								$('#sortBy').val('a.startDt');
+								val = $('#noOfPageId').val();
+								alert(val);
+								$("form").attr(
+										"action",
+										"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+												+ val);
+								$("form").submit();
+							});
+							$('#jobEndDateTab').click( function(){
+								
+								$('#sortBy').val('a.endDt');
+								val = $('#noOfPageId').val();
+								$("form").attr(
+										"action",
+										"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+												+ val);
+								$("form").submit();
+							});
+							$('#jobCompanyTab').click( function(){
+								
+								$('#sortBy').val('a.name');
+								val = $('#noOfPageId').val();
+								$("form").attr(
+										"action",
+										"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+												+ val);
+								$("form").submit();
+							});
+						$('#jobViewTab').click( function(){
+								
+								$('#sortBy').val('a.jpJobStat.views');
+								val = $('#noOfPageId').val();
+								alert(val);
+								$("form").attr(
+										"action",
+										"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+												+ val);
+								$("form").submit();
+							});
+						$('#jobClicksTab').click( function(){
+							
+							$('#sortBy').val('a.jpJobStat.clicks');
+							val = $('#noOfPageId').val();
+							$("form").attr(
+									"action",
+									"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+											+ val);
+							$("form").submit();
+						});
+					$('#jobAppliesTab').click( function(){
+							
+							$('#sortBy').val('a.jpJobStat.applies');
+							val = $('#noOfPageId').val();
+							$("form").attr(
+									"action",
+									"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+											+ val);
+							$("form").submit();
+						});
 					});
+	
 </script>
 
 <script src="../resources/js/jquery.dataTables.nightly.js"></script>
@@ -205,6 +320,8 @@
 	<form:form action="updateJobs.html" commandName="jobPostForm">
 	<form:hidden path="beginVal"/>
 	<form:hidden path="noOfPage" />
+	<form:hidden path="sortAsc" />
+	<form:hidden path="sortBy" />
 		<div class="ad_page_top">
 			${adPageTop }
 		</div>
@@ -325,28 +442,28 @@
 							<thead>
 							<tr class="LightGrayBG Height35">
 								<th width="2%" align="center" valign="middle" class="">&nbsp;</th>
-								<th width="5%" align="center" valign="middle" class="FontSize11 cursor">Adv Job
+								<th width="5%" align="center" valign="middle" id="avdJobIdTab" class="FontSize11 cursor">Adv Job
 										ID</th>
-								<th width="4%" align="center" valign="middle" class="FontSize11 cursor">Job
+								<th width="4%" align="center" valign="middle" id="jobIdTab" class="FontSize11 cursor">Job
 										ID</th>
-								<th width="12%" align="center" valign="middle" class="FontSize11 cursor"><strong>Job
+								<th width="12%" align="center" valign="middle" id="jobTitleTab" class="FontSize11 cursor"><strong>Job
 										Title</strong></th>
-								<th width="10%" align="center" valign="middle" class="FontSize11 cursor"><strong>Location</strong></th>
-								<th width="6%" align="center" valign="middle" class="FontSize11 cursor"><strong>Job<br />
+								<th width="10%" align="center" valign="middle" id="jobLocationTab" class="FontSize11 cursor"><strong>Location</strong></th>
+								<th width="6%" align="center" valign="middle" id="jobStatusTab" class="FontSize11 cursor"><strong>Job<br />
 										Status
 								</strong></th>
-								<th width="7%" align="center" valign="middle" class="FontSize11 cursor"><strong>Start<br />
+								<th width="7%" align="center" valign="middle" id="jobStartDateTab" class="FontSize11 cursor"><strong>Start<br />
 										Date
 								</strong></th>
-								<th width="5%" align="center" valign="middle" class="FontSize11 cursor"><strong>End<br />
+								<th width="5%" align="center" valign="middle" id="jobEndDateTab" class="FontSize11 cursor"><strong>End<br />
 										Date
 								</strong></th>								
-								<th width="8%" align="center" valign="middle" class="FontSize11 cursor"><strong>Company<br />
+								<th width="8%" align="center" valign="middle" id="jobCompanyTab" class="FontSize11 cursor"><strong>Company<br />
 										Name
 								</strong></th>
-								<th width="3%" align="center" valign="middle" class="FontSize11 cursor"><strong>Views</strong></th>
-								<th width="4%" align="center" valign="middle" class="FontSize11 cursor"><strong>Clicks</strong></th>
-								<th width="3%" align="center" valign="middle" class="FontSize11 cursor"><strong>Applies</strong></th>
+								<th width="3%" align="center" valign="middle" id="jobViewTab" class="FontSize11 cursor"><strong>Views</strong></th>
+								<th width="4%" align="center" valign="middle" id="jobClicksTab" class="FontSize11 cursor"><strong>Clicks</strong></th>
+								<th width="3%" align="center" valign="middle" id="jobAppliesTab" class="FontSize11 cursor"><strong>Applies</strong></th>
 								<th width="7%" align="center" valign="middle" class="FontSize11 cursor"><strong>Auto<br />
 										Renew
 								</strong></th>

@@ -64,6 +64,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			+ "and dtl.productId=? and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) order by dtl.availableqty ";
 	private static final String FIND_INVENTORY_DETAILS_BY_INV_ID = "from AdmInventoryDetail inv  where inv.invDetailId=?)";
 	private static final String FIND_JP_JOB = "SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId=:userId and a.deleteDt is NULL ";
+	private static final String FIND_JP_JOBS = "SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId=:userId and a.deleteDt is NULL ORDER BY a.jobId DESC ";
 	
 	
 	
@@ -286,12 +287,12 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 */
 	@Override
 	public List<JobPostDTO> retrieveAllJobPost(int employerId, int offset,
-			int noOfRecords) {
+			int noOfRecords,String sortBy) {
 
 		List<JpJob> jobs = new ArrayList<JpJob>();
 		try {
 			Query query = hibernateTemplate.getSessionFactory()
-					.getCurrentSession().createQuery(FIND_JP_JOB);
+					.getCurrentSession().createQuery(FIND_JP_JOB + sortBy);
 			query.setParameter("userId", employerId);
 			query.setFirstResult(offset);
 			query.setMaxResults(noOfRecords);

@@ -68,7 +68,8 @@ public class JobPostForm {
     
 	private boolean xmlStartEndDateEnabled;
     private boolean adminLogin;
-    
+    private boolean sortAsc=true;
+    private String sortBy="a.jobId";
 	public boolean isAdminLogin() {
 		return adminLogin;
 	}
@@ -440,6 +441,34 @@ public class JobPostForm {
 
 	public void setEnableJobTitle(boolean enableJobTitle) {
 		this.enableJobTitle = enableJobTitle;
+	}
+
+	/**
+	 * @return the sortAsc
+	 */
+	public boolean isSortAsc() {
+		return sortAsc;
+	}
+
+	/**
+	 * @param sortAsc the sortAsc to set
+	 */
+	public void setSortAsc(boolean sortAsc) {
+		this.sortAsc = sortAsc;
+	}
+
+	/**
+	 * @return the sortBy
+	 */
+	public String getSortBy() {
+		return sortBy;
+	}
+
+	/**
+	 * @param sortBy the sortBy to set
+	 */
+	public void setSortBy(String sortBy) {
+		this.sortBy = sortBy;
 	}
 
 }

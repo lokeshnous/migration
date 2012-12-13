@@ -80,8 +80,8 @@ public class JobPostServiceImpl implements JobPostService {
 	 * @param : employerId
 	 */
 	@Override
-	public List<JobPostDTO> retrieveAllJobPost(int employerId, int offset, int noOfRecords) {
-		return employerJobPostDAO.retrieveAllJobPost(employerId,offset,noOfRecords);
+	public List<JobPostDTO> retrieveAllJobPost(int employerId, int offset, int noOfRecords,String sortBy) {
+		return employerJobPostDAO.retrieveAllJobPost(employerId,offset,noOfRecords,sortBy);
 	}
 	
 	@Override
