@@ -307,6 +307,7 @@ var options = {
 					error : function(data) {
 					}
 				});
+		$("#postTypeToolTip").attr("title",$("#selEmployer :selected").text());
 	}
 	
 	function getActiveAndAvailJbPosting(selEmployerId) {
@@ -339,6 +340,11 @@ var options = {
 		$("#endDate").datepicker({
 			dateFormat : "dd/mm/yy"
 		}).val();
+	});
+	jQuery(document).ready(
+			function() {
+	/* showing Metrics type tooltip */
+	$("#postTypeToolTip").attr("title",$("#selEmployer :selected").text());
 	});
 	
 	
@@ -571,11 +577,14 @@ var options = {
 									<thead>
 										<tr class="borderTopNone">
 											<th width="46%" align="left" scope="col"><h2
-													class="HeadTopBottomBorder">Metrics</h2> <form:select
-													class="jb_input3" path="selEmployer" items="${downDTOs}"
-													itemValue="optionId" itemLabel="optionName"
-													onchange="changeMetrics();">
-												</form:select></th>
+													class="HeadTopBottomBorder">Metrics</h2> 
+													<div id="postTypeToolTip" title="">
+												<form:select class="jb_input3"
+													path="selEmployer" items="${downDTOs}" itemValue="optionId"
+													itemLabel="optionName" onchange="changeMetrics();">
+												</form:select>
+											</div>
+												</th>
 											<th width="18%" align="center" scope="col"
 												class="BorderLeftWhite"><div class="EDPrice">VIEWS</div></th>
 											<th width="18%" align="center" scope="col"
