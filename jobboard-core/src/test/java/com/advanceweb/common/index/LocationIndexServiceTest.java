@@ -1,8 +1,5 @@
 package com.advanceweb.common.index;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,37 +28,35 @@ public class LocationIndexServiceTest extends ServiceTestBase {
 		// REGINA SOUTHWEST, SK 50.4896,-104.669
 
 		try {
-			System.out.println("Searching for location");
+			LOGGER.debug("Searching for location");
 			for (LocationDTO result : locationService.findLocation(50.4364,
 					-104.544, 2.00)) {
-				System.out.println(result.getCity());
+				LOGGER.debug(result.getCity());
 			}
-		} catch (JobBoardServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (JobBoardServiceException ex) {
+			LOGGER.error("Error in findMatchingStateTest", ex);
 		}
 	}
 
 	@Test
 	public void findMatchingStateTest() {
 		String city = null, state = null;
-		//  city = "SASKATOON NORTHWEST";
-		//  city = "SASKATOON NORTHWEST";
-//		city = "YABUCOA";
+		// city = "SASKATOON NORTHWEST";
+		// city = "SASKATOON NORTHWEST";
+		// city = "YABUCOA";
 		city = "NYACK";
-		state="NY";
+		state = "NY";
 
-//		 state = "Puerto";
-		//  state ="Puerto Rico";
+		// state = "Puerto";
+		// state ="Puerto Rico";
 		try {
-			System.out.println("Searching for matching city / state");
+			LOGGER.debug("Searching for matching city / state");
 			for (LocationDTO result : locationService.findMatchingLocation(
 					city, state)) {
 				System.out.println(result.getCity() + "\t" + result.getState());
 			}
-		} catch (JobBoardServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (JobBoardServiceException ex) {
+			LOGGER.error("Error in findMatchingStateTest", ex);
 		}
 	}
 }

@@ -2,14 +2,10 @@ package com.advanceweb.common.index.lucene;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
-
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.CorruptIndexException;
@@ -26,7 +22,6 @@ import org.apache.lucene.store.LockObtainFailedException;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.store.SimpleFSDirectory;
 import org.apache.lucene.util.Version;
-import org.springframework.stereotype.Component;
 
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
@@ -99,15 +94,15 @@ public class LuceneIndex {
 			throws JobBoardServiceException {
 
 		List<LuceneResult> result = new ArrayList<LuceneResult>();
-		IndexSearcher searcher = null;
+
 		try {
 			Query query = queryBuilder.buildQuery(params);
 
 			IndexReader reader = IndexReader.open(indexDirectory);
-			searcher = new IndexSearcher(reader);
-
 			TopScoreDocCollector collector = TopScoreDocCollector.create(
 					reader.numDocs(), true);
+
+			IndexSearcher searcher = new IndexSearcher(reader);
 			searcher.search(query, collector);
 			ScoreDoc[] scoreDocs = collector.topDocs().scoreDocs;
 
@@ -115,17 +110,12 @@ public class LuceneIndex {
 				result.add(new LuceneResult(searcher.doc(sDoc.doc), sDoc.score));
 			}
 
+			searcher.close();
+			reader.close();
+
 		} catch (IOException ex) {
 			LOGGER.error("Error querying Lucene index", ex);
 			throw new JobBoardServiceException("Error querying lucene index");
-		} finally {
-			if (searcher != null) {
-				try {
-					searcher.close();
-				} catch (IOException ex) {
-					LOGGER.error("Error closing Index Searcher", ex);
-				}
-			}
 		}
 		return result;
 	}
