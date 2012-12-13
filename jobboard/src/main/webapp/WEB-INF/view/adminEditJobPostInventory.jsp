@@ -66,7 +66,7 @@ function closePopup() {
 			var countTb = $("#jp_slot_save_total").val();
 			var validTb = false;
 			if(countTb == null || countTb == ""){
-				return valid;
+				return validTb;
 			}
 			for(var i=1;i<=countTb;i++){
 				//alert($("#tb_save_search_"+i).val());
