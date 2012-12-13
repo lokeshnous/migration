@@ -627,9 +627,11 @@ public class JobSearchController extends AbstractController {
 			if (jobDTO.getEmail() == null) {
 				jobDTO.setEmail(jobApplyTypeDTO.getApplyLink());
 			}
-			if (!jobSearchValidator.isLoggedIn(map, jobId,
-					jobDTO.getJobTitle(), currentUrl, session, jsonObject,
+			if (!jobSearchValidator.isLoggedIn(jobId,
+					jobDTO.getJobTitle(), currentUrl, session,
 					request)) {
+				jsonObject.put(ajaxNavigationPath, request.getContextPath()
+						+ "/jobsearch/jobseekerApplyJobPopUp"+dothtmlExtention);
 				return jsonObject;
 			}
 
@@ -949,7 +951,7 @@ public class JobSearchController extends AbstractController {
 			session.getAttribute("browseBystate");
 
 			// get the search name
-			String searchName = getSearchName(jobSearchResultForm, session,
+			String searchName = getSearchNameForSearch(jobSearchResultForm, session,
 					request);
 			jobSearchResultForm.setSearchName(searchName);
 			jobSearchResultForm.setSearchtype(MMJBCommonConstants.BASIC_SEARCH_TYPE);
@@ -1966,14 +1968,14 @@ public class JobSearchController extends AbstractController {
 	}
 
 	/**
-	 * Get the search name by search Parameter
+	 * Get the search name for job search
 	 * 
 	 * @param jobSearchResultForm
 	 * @param session
 	 * @param request
 	 * @return
 	 */
-	public String getSearchName(JobSearchResultForm jobSearchResultForm,
+	public String getSearchNameForSearch(JobSearchResultForm jobSearchResultForm,
 			HttpSession session, HttpServletRequest request) {
 		String searchName = MMJBCommonConstants.EMPTY;
 		// Check if city state and radius field is not empty to check for
@@ -2149,17 +2151,24 @@ public class JobSearchController extends AbstractController {
 	public @ResponseBody
 	JSONObject saveThisJob(Map<String, Object> map, HttpServletRequest request,
 			@RequestParam("id") int jobId, HttpSession session,
+			@RequestParam(CURRENT_URL) String currentUrl,
 			HttpServletResponse response) {
 		JSONObject jsonObject = new JSONObject();
 		clickController.getclickevent(jobId,
 				MMJBCommonConstants.CLICKTYPE_CLICK, request, response);
+		
+		// Get the Job details
+		JobDTO jobDTO = jobSearchService.viewJobDetails(jobId);
 
 		// Check for job seeker login ,open popup if not logged in.
-		if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
+		if (!jobSearchValidator.isLoggedIn(jobId,
+				jobDTO.getJobTitle(), currentUrl, session,
+				request)) {
 			jsonObject.put(ajaxNavigationPath, request.getContextPath()
 					+ "/jobsearch/jobseekersaveThisJobPopUp");
 			return jsonObject;
 		}
+		
 		int userId = getUserID(session);
 		int savedJobsCount = 0;
 		try {
@@ -2176,9 +2185,6 @@ public class JobSearchController extends AbstractController {
 			LOGGER.error("Error occured while getting the saved job of curresponding  user or while updating the particular job details"
 					, e);
 		}
-
-		// Get the Job details
-		JobDTO jobDTO = jobSearchService.viewJobDetails(jobId);
 
 		// Validate if job is already applied
 		AppliedJobDTO appliedJobDTO = jobSearchService.fetchSavedOrAppliedJob(
@@ -3576,7 +3582,7 @@ public class JobSearchController extends AbstractController {
 			session.getAttribute(BROWSE_BY_STATE);
 
 			// get the search name
-			String searchName = getSearchName(jobSearchResultForm, session,
+			String searchName = getSearchNameForSearch(jobSearchResultForm, session,
 					request);
 			jobSearchResultForm.setSearchName(searchName);
 			jobSearchResultForm.setSearchtype(MMJBCommonConstants.BASIC_SEARCH_TYPE);

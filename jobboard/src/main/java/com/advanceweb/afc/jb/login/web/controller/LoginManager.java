@@ -209,14 +209,11 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 			HttpServletResponse response, HttpSession session)
 			throws IOException, ServletException {
 		if (profileRegistration.validateProfileAttributes(user.getUserId())) {
-
 			/**
 			 * if the user already registered
 			 */
-			if (session.getAttribute("jobId") == null) {
-				sendRedirect(request, response,
-						"/jobSeeker/jobSeekerDashBoard.html");
-			} else {
+			if (session.getAttribute("isRedirect") != null
+					&& ((Boolean) session.getAttribute("isRedirect"))) {
 				String jobTitle = (String) session.getAttribute("jobTitle");
 				jobTitle = jobTitle.replace(" ", "-").toLowerCase();
 				sendRedirect(
@@ -225,8 +222,10 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 						"/jobsearch/jobview/"
 								+ session.getAttribute("jobId")+
 								"/"+jobTitle+dothtmlExtention);
+			}else{
+				sendRedirect(request, response,
+						"/jobSeeker/jobSeekerDashBoard.html");
 			}
-
 		} else {
 			/**
 			 * if the logged in user is new

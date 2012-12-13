@@ -80,15 +80,12 @@ public class JobSearchValidator {
 	 * @param jsonObject
 	 * @param request 
 	 */
-	public boolean isLoggedIn(Map<String, Object> map, int jobId,String jobTitle,
-			String currentUrl, HttpSession session, JSONObject jsonObject,
+	public boolean isLoggedIn(int jobId,String jobTitle,
+			String currentUrl, HttpSession session,
 			HttpServletRequest request) {
 		boolean status = true;
 		// Check for job seeker login
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
-			//map.put("loginForm", new LoginForm());
-			jsonObject.put(ajaxNavigationPath, request.getContextPath()
-					+ "/jobsearch/jobseekerApplyJobPopUp"+dothtmlExtention);
 			session.setAttribute("jobId", jobId);
 			session.setAttribute("jobTitle", jobTitle);
 			session.setAttribute(CURRENT_URL, currentUrl);

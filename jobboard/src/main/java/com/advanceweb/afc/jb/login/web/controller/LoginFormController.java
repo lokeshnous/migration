@@ -121,6 +121,7 @@ public class LoginFormController extends AbstractController{
 			@RequestParam(value = "error", required = false) boolean error,
 			@RequestParam(value = "page", required = false) String page,
 			@RequestParam(value = "socalLogin", required = false) boolean socalLogin,
+			@RequestParam(value = "isRedirect", required = false) boolean isRedirect,
 			ModelMap model, HttpServletRequest request, HttpSession session) {
 		if (error) {
 			if (socalLogin) {
@@ -134,6 +135,9 @@ public class LoginFormController extends AbstractController{
 		String pageValue = "";
 		if (page.equals(MMJBCommonConstants.JOB_SEEKER)) {
 			pageValue = "jobSeekerLogin";
+			if(isRedirect == true){
+				session.setAttribute("isRedirect", isRedirect);
+			}
 			// get the Ads
 			populateAds(request, session, model, PageNames.JOBSEEKER_LOGIN);
 		} else if (page.equals(MMJBCommonConstants.EMPLOYER)) {

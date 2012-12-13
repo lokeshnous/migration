@@ -2818,7 +2818,7 @@ input.job_seeker_Resume {
 }
 /* New Style end */
 .JobDetailHeaderLeft {
-	width: 73%;
+	width: 100%;
 	height: auto;
 	float: left;
 	padding-top: 4px;
@@ -2827,7 +2827,7 @@ input.job_seeker_Resume {
 .JobDetailHeaderRight{
 	width: 26%;
 	min-height: 50px;
-	float: left;
+	float: none;
 	padding-top: 6px;
 }
 .JobDetailHeaderRightView{
