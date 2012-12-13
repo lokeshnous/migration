@@ -120,13 +120,33 @@ public class JobPostController extends AbstractController {
 		List<DropDownDTO> empTypeList = populateDropdownsService
 				.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
 
+		// Should be used while posting the job
+		// Calling net suite to check whether the employer is featured or not
+		// And to know, whether the employer is applicable for free job posting
+		int nsCustomerID = manageFeaturedEmployerProfile
+				.getNSCustomerIDFromAdmFacility((Integer) session
+						.getAttribute(MMJBCommonConstants.FACILITY_ID));
+		// Get the list of valid packages purchased by customers from NetSuite
+		List<String> purchasedPackages = manageFeaturedEmployerProfile
+				.getNSCustomerPackages(nsCustomerID);
+		
 		// Template List will be populated later based on facility and job
 		// posting package type is selected
 		templateList = new ArrayList<DropDownDTO>();
 		List<DropDownDTO> jbPostingTypeList = populateDropdownsService
 				.populateJobPostingTypeDropdowns(employerInfoDTO
 						.getFacilityId());
-
+		
+		List<DropDownDTO> removeJbPostingList = new ArrayList<DropDownDTO>();
+		//remove the packages which are purchased offline & expired
+		for(DropDownDTO dropDownDTO : jbPostingTypeList){
+			if(!purchasedPackages.contains(dropDownDTO.getNetSuiteId())){
+				removeJbPostingList.add(dropDownDTO);
+			}
+		}
+		
+		jbPostingTypeList.removeAll(removeJbPostingList);
+		
 		// redirecting from job post inventory to post new job screen
 		if (!StringUtils.isEmpty(jobPostType)) {
 			List<DropDownDTO> jobPostTypeCombo = populateDropdownsService
@@ -261,7 +281,10 @@ public class JobPostController extends AbstractController {
 		//Get the list of valid packages purchased by customers from NetSuite
 		List<String> purchasedPackages = manageFeaturedEmployerProfile
 				.getNSCustomerPackages(nsCustomerID);
-
+		
+		// Check if job type selected is purchased offline, If so then find the inventory id from which the quantity needs 
+		// to be deducted. Otherwise skip it.
+		
 		form.setXmlStartEndDateEnabled(purchasedPackages
 				.contains(MMJBCommonConstants.XML_90)
 				|| purchasedPackages.contains(MMJBCommonConstants.XML_180)

@@ -550,6 +550,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 				if (null != combo) {
 					dto.setOptionId(String.valueOf(inv.getInvDetailId()));
 					dto.setOptionName(combo.getAddons());
+					dto.setNetSuiteId(String.valueOf(combo.getNetSuiteId()));
 					jbPostings.add(dto);
 				}
 			}

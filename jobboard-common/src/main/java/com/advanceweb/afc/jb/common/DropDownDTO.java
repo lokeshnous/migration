@@ -9,6 +9,7 @@ public class DropDownDTO {
 	
 	private String optionId;
 	private String optionName;
+	private String netSuiteId;
 	
 	public String getOptionId() {
 		return optionId;
@@ -22,7 +23,11 @@ public class DropDownDTO {
 	public void setOptionName(String optionName) {
 		this.optionName = optionName;
 	}
-	
-	
+	public String getNetSuiteId() {
+		return netSuiteId;
+	}
+	public void setNetSuiteId(String netSuiteId) {
+		this.netSuiteId = netSuiteId;
+	}
 	
 }

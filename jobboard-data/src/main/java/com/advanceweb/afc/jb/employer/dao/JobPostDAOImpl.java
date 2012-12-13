@@ -62,6 +62,8 @@ public class JobPostDAOImpl implements JobPostDAO {
 	private static final String FIND_SCHEDULED_JOBS = "from JpJob job where date_format(job.startDt, '%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') and job.active='0'";
 	private static final String FIND_INVENTORY_DETAILS = "select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 "
 			+ "and dtl.productId=? and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) order by dtl.availableqty ";
+	private static final String FIND_INVENTORY_DETAILS_OFFLINE = "select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 and inv.orderId = 0 "
+			+ "and dtl.productId=? and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) order by dtl.availableqty ";
 	private static final String FIND_INVENTORY_DETAILS_BY_INV_ID = "from AdmInventoryDetail inv  where inv.invDetailId=?)";
 	private static final String FIND_JP_JOB = "SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId=:userId and a.deleteDt is NULL ";
 	private static final String FIND_JP_JOBS = "SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId=:userId and a.deleteDt is NULL ORDER BY a.jobId DESC ";
@@ -878,8 +880,16 @@ public class JobPostDAOImpl implements JobPostDAO {
 			if (!invDtlList.isEmpty()) {
 				AdmInventoryDetail invDtl = invDtlList.get(0);
 				Object[] inputs = { invDtl.getProductId(), facilityId };
-				List<AdmInventoryDetail> invDtls = hibernateTemplate.find(
-						FIND_INVENTORY_DETAILS, inputs);
+				
+				//check if the job type purchased is offline. If so then use order id = 0
+				List<AdmInventoryDetail> invDtls = null; 
+						
+				invDtls = hibernateTemplate.find(FIND_INVENTORY_DETAILS_OFFLINE, inputs);
+				
+				if(invDtls.isEmpty()){
+					invDtls = hibernateTemplate.find(FIND_INVENTORY_DETAILS, inputs);
+				}
+				
 				if (!invDtls.isEmpty()) {
 					try {
 						// Deducting available quantity
