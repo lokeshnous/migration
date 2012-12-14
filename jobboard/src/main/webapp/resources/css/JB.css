@@ -111,6 +111,16 @@ a:hover,a:hover h2.more_link span,.left_sidebar a:hover,a.link_color3_emphasized
 	{
 	text-decoration: underline;
 }
+.more_link a{
+	color:#6B7B84;
+}
+
+.more_link span a{
+	color:#6B7B84;
+}
+.more_link span a:hover{
+	color:#FE9400;
+}
 
 a.link_color2_emphasized:hover,a h2:hover {
 	color: #374147; /* Dark Gray */
@@ -259,7 +269,7 @@ a.white:hover {
 	width: 103px;
 }
 
-.toolTip span,.toolTip01 span {
+.toolTip div,.toolTip01 span {
 	margin-left: -999em;
 	position: absolute;
 }
@@ -269,7 +279,7 @@ a.white:hover {
 	position: absolute;
 }
 
-.toolTip:hover span,.toolTip01:hover span {
+.toolTip:hover div,.toolTip01:hover span {
 	border-radius: 4px 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
@@ -806,6 +816,11 @@ p.search_message span {
 
 .facebook_link {
 	background-position: -12px -17px;
+}
+
+.facebook_link, .twitter_link, .youTube_link, .linkedIn_link  {
+text-decoration:none;
+	color:#6B7B84;
 }
 
 .twitter_link {
@@ -4249,3 +4264,160 @@ h2.option2 span {color: #FE9400;
     text-align: right;
     width: 160px;
 }
+
+
+/* --- Navigation New --- */
+
+#menu {
+	list-style:none;
+	background-color: #A6A6A6;
+	background-image: linear-gradient(bottom, #6E7374 0%, #A6A6A6 73%);
+	background-image: -o-linear-gradient(bottom, #6E7374 0%, #A6A6A6 73%);
+	background-image: -moz-linear-gradient(bottom, #6E7374 0%, #A6A6A6 73%);
+	background-image: -webkit-linear-gradient(bottom, #6E7374 0%, #A6A6A6 73%);
+	background-image: -ms-linear-gradient(bottom, #6E7374 0%, #A6A6A6 73%);
+    border-radius: 4px 4px 4px 4px;
+    color: #FFFFFF;
+    font-family: Helvetica, sans-serif;
+    font-size: 11px;
+    height: 31px;
+    margin: 10px auto;
+    text-align: center;
+    width: 935px;
+	padding: 0px 0px 0px 25px;
+}
+
+#menu li {
+	float: left;
+display: block;
+text-align: center;
+position: relative;
+padding: 4px 10px 4px 9px;
+margin-right: 20px;
+border: none;
+height: 26px;
+}
+
+#menu li:hover {
+	border: 1px solid #777;
+padding: 4px 9px 4px 9px;
+background: #606566;
+border: 1px solid white;
+border-top: none;
+
+}
+
+#menu li a {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:14px; 
+	color: #EEEEEE;
+	display:block;
+	outline:0;
+	text-decoration:none;
+	padding-top: 3px;
+}
+
+#menu li:hover a {
+	color:#fff;
+}
+#menu li .drop {
+}
+#menu li:hover .drop {
+}
+
+.dropdown_1column, 
+.dropdown_2columns, 
+.dropdown_3columns, 
+.dropdown_4columns,
+.dropdown_5columns {
+	margin:4px auto;
+	float:left;
+	position:absolute;
+	left:-999em; /* Hides the drop down */
+	text-align:left;
+	padding:10px 5px 10px 5px;
+	border:1px solid white;
+	border-top:none;
+	background:#606566;
+	z-index:9999;
+}
+
+.dropdown_1column {width: 140px;}
+.dropdown_2columns {width: 160px;}
+.dropdown_3columns {width: 420px;}
+.dropdown_4columns {width: 620px;}
+.dropdown_5columns {width: 700px;}
+
+#menu li:hover .dropdown_1column, 
+#menu li:hover .dropdown_2columns, 
+#menu li:hover .dropdown_3columns,
+#menu li:hover .dropdown_4columns,
+#menu li:hover .dropdown_5columns {
+	left: -1px;
+top: 29px;
+}
+
+.col_1,
+.col_2,
+.col_3,
+.col_4,
+.col_5 {
+	display:inline;
+	float: left;
+	position: relative;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.col_1 {width: auto; margin: 0px 17px 0px 6px;}
+.col_2 {width:270px;}
+.col_3 {width:410px;}
+.col_4 {width:550px;}
+.col_5 {width:690px;}
+
+#menu h2 {
+	font-size:21px;
+	font-weight:400;
+	letter-spacing:-1px;
+	margin:7px 0 14px 0;
+	padding-bottom:14px;
+	border-bottom:1px solid #666666;
+}
+#menu h3 {
+	font-size:14px;
+	margin:7px 0 14px 0;
+	padding-bottom:7px;
+	border-bottom:1px solid #888888;
+}
+
+#menu li:hover div a {
+	font-size:11px;
+	color:#fff;
+}
+#menu li:hover div a:hover {
+	color:#fff;
+	text-decoration:underline;
+}
+
+#menu li ul {
+	list-style:none;
+	padding:0;
+	margin:0px;
+}
+#menu li ul li {
+	font-size:11px;
+	line-height:22px;
+	position:relative;
+	padding:0;
+	margin:0;
+	float:none;
+	text-align:left;
+	width:auto;
+}
+#menu li ul li:hover {
+	background:none;
+	border:none;
+	padding:0;
+	margin:0;
+}
+
+/* --- Navigation New Ends --- */

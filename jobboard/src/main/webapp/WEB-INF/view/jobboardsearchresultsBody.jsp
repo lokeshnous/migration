@@ -77,9 +77,7 @@
 										<ul>
 											<c:choose>
 												<c:when test="${sessionMap.get('refineRadius')== '5'}">
-												<span style="font-weight:bold;"> 
-													<li><a onclick="refineByRadius('5', 'true')" >5 Miles</a></li>
-												</span>
+													<li><a onclick="refineByRadius('5', 'true')" style="font-weight:bold;color: #FE9400;">5 Miles</a></li>
 												</c:when>
 												<c:otherwise>
 													<li><a onclick="refineByRadius('5', 'false')" >5 Miles</a></li>
@@ -88,9 +86,7 @@
 											
 											<c:choose>
 												<c:when test="${sessionMap.get('refineRadius')== '10'}">
-												<span style="font-weight:bold;"> 
-													<li><a onclick="refineByRadius('10', 'true')" >10 Miles</a></li>
-												</span>
+													<li><a onclick="refineByRadius('10', 'true')" style="font-weight:bold;color: #FE9400;">10 Miles</a></li>
 												</c:when>
 												<c:otherwise>
 													<li><a onclick="refineByRadius('10', 'false')" >10 Miles</a></li>
@@ -99,9 +95,7 @@
 											
 											<c:choose>
 												<c:when test="${sessionMap.get('refineRadius')== '25'}">
-												<span style="font-weight:bold;"> 
-													<li><a onclick="refineByRadius('25', 'true')" >25 Miles</a></li>
-												</span>
+													<li><a onclick="refineByRadius('25', 'true')" style="font-weight:bold;color: #FE9400;">25 Miles</a></li>
 												</c:when>
 												<c:otherwise>
 													<li><a onclick="refineByRadius('25', 'false')" >25 Miles</a></li>
@@ -110,9 +104,7 @@
 											
 											<c:choose>
 												<c:when test="${sessionMap.get('refineRadius')== '50'}">
-												<span style="font-weight:bold;"> 
-													<li><a onclick="refineByRadius('50', 'true')" >50 Miles</a></li>
-												</span>
+													<li><a onclick="refineByRadius('50', 'true')" style="font-weight:bold;color: #FE9400;">50 Miles</a></li>
 												</c:when>
 												<c:otherwise>
 													<li><a onclick="refineByRadius('50', 'false')" >50 Miles</a></li>
@@ -121,15 +113,12 @@
 											
 											<c:choose>
 												<c:when test="${sessionMap.get('refineRadius')== '100'}">
-												<span style="font-weight:bold;"> 
-													<li><a onclick="refineByRadius('100', 'true')" >100 Miles</a></li>
-												</span>
+													<li><a onclick="refineByRadius('100', 'true')" style="font-weight:bold;color: #FE9400;">100 Miles</a></li>
 												</c:when>
 												<c:otherwise>
 													<li><a onclick="refineByRadius('100', 'false')" >100 Miles</a></li>
 												</c:otherwise>
 											</c:choose>
-											
 										</ul>
 									</div>
 									</c:if>
@@ -444,7 +433,7 @@
 
 					</div> 
 					</form:form>
-					<input value="false" type="hidden" id="isSortGrid">
+					<input value="false" type="hidden" id="isSortGrid" />
 					</c:otherwise>
 		</c:choose>
 		<div class="clearfix"></div>

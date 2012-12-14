@@ -41,40 +41,34 @@
 						<div class="follow_us">
 							<h2>Follow Us</h2>
 							<p>Stay connected to the latest jobs.</p>
-							<a href="${followuplinkfacebook}" target="_blank"><span
-								class="social facebook_link">Facebook</span></a> <a
-								href="${followuplinktwitter}" target="_blank"><span
-								class="social twitter_link">Twitter</span></a> <a
-								href="${followuplinkyoutube}" target="_blank"><span
-								class="social youTube_link">YouTube</span></a> <a
-								href="${followuplinklinkedin}" target="_blank"><span
-								class="last social linkedIn_link">LinkedIn</span></a>
+							<a href="${followuplinkfacebook}" target="_blank"><span class="social facebook_link">Facebook</span></a> 
+							<a href="${followuplinktwitter}" target="_blank"><span class="social twitter_link">Twitter</span></a> 
+							<a href="${followuplinkyoutube}" target="_blank"><span class="social youTube_link">YouTube</span></a>
+							<a href="${followuplinklinkedin}" target="_blank"><span class="last social linkedIn_link">LinkedIn</span></a>
 						</div>
 						<br class="clearfix" />
 					</div>
 					<!-- ad_col_right -->
 					<div class="content_columns">
 						<div class="column1">
-							<a href="">
 								<h2 class="more_link">
-									Career Tools<span>More</span>
+								<a href="">
+									Career Tools</a><span><a href="">More</a></span>
 								</h2>
-							</a> ${careerstoolresource}
+							 ${careerstoolresource}
 						</div>
 						<!-- column1 -->
 
 						<div class="column2">
-							<a href="featuredemployers.html">
 								<h2 class="more_link">
-									Featured Employers<span>More</span>
+								<a href="featuredemployers.html">
+									Featured Employers</a><span><a href="featuredemployers.html">More</a></span>
 								</h2>
-							</a>
 							<div class="featured_emp_slider" id="slider1FramesId"></div>
 							<!-- featured_emp_slider -->
 
-							<a href="" target="_blank">
-								<h2 class="more_link Bgnone">Healthcare News</h2>
-							</a> ${healthcarenew}
+								<h2 class="more_link Bgnone"><a href="" target="_blank">Healthcare News</a></h2>
+							 ${healthcarenew}
 
 						</div>
 						<!-- column2-->

@@ -30,9 +30,9 @@
 								Company Name </label>
 						</div>
 						<div class="toolTip">
-							<span class="classic"><p>Type in your search criteria
+							<div class="classic"><p>Type in your search criteria
 									here. Include any group of terms related to your desired
-									position. Click on 'Advanced Search' below for more options.</p></span>
+									position. Click on 'Advanced Search' below for more options.</p></div>
 						</div>
 						<br />
 						<div class="input_grp1 marginTop10">
@@ -43,10 +43,10 @@
 								<label for="cityState">City and State or ZIP Code </label>
 							</div>
 							<div class="toolTip">
-								<span class="classic"><p>Enter the city and state or
+								<div class="classic"><p>Enter the city and state or
 										zip code of the location you want to search. Then select a
 										radius to expand your search up to 100 miles from your
-										starting point.</p></span>
+										starting point.</p></div>
 							</div>
 						</div>
 						<div class="input_grp2 marginTop10">

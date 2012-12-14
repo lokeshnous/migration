@@ -78,11 +78,11 @@
 										<label for="keywords">Keywords </label>
 									</div>
 									<div class="toolTip">
-										<span class="classic"><p>You can enter a job title,
+										<div class="classic"><p>You can enter a job title,
 												specialty, skill or any other keywords that describe the
 												position you're trying to fill. Then select an option from
 												the drop-down menu to match your exact phrase or any of the
-												individual words you entered.</p></span>
+												individual words you entered.</p></div>
 									</div>
 								</div>
 							</div>
@@ -103,9 +103,9 @@
 									<label for="city_state">City and State or ZIP Code</label>
 								</div>
 								<div class="toolTip">
-									<span class="classic"><p>Narrow your search to
+									<div class="classic"><p>Narrow your search to
 											job-seekers in a specific area by entering the location here.
-											Then select a search radius in the following drop-down menu.</p></span>
+											Then select a search radius in the following drop-down menu.</p></div>
 								</div>
 							</div>
 							<div class="floatLeft marginLeft10">

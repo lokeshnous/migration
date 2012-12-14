@@ -41,12 +41,12 @@
 					<div class="follow_us">
 						<h2>Follow Us</h2>
 						<p>Stay connected to the latest jobs.</p>
-						<a href=""><div class="social facebook_link">Facebook</div></a> <a
-							href=""><div class="social twitter_link">Twitter</div></a> <a
-							href=""><div class="social youTube_link">YouTube</div></a> <a
-							href=""><div class="last social linkedIn_link">LinkedIn</div></a>
+						<a href=""><span class="social facebook_link">Facebook</span></a>
+						<a href=""><span class="social twitter_link">Twitter</span></a>
+						<a href=""><span class="social youTube_link">YouTube</span></a>
+						<a href=""><span class="last social linkedIn_link">LinkedIn</span></a>
 					</div>
-					<br class="clearfix" />
+					
 
 				</div>
 				<!-- ad_col_right -->
@@ -54,7 +54,7 @@
 				<div class="content_wrapper">
 
 					<div class="job_Advancedsearch_main">
-						<form method="">
+						<form method="post">
 
 							<!--changed from an h1 to an h2-->
 							<h2 class="noTopBottomBorder">Advanced Search</h2>
@@ -69,9 +69,9 @@
 											Company Name </label>
 									</div>
 									<div class="toolTip">
-										<span class="classic"><p>Type in your search
+										<div class="classic"><p>Type in your search
 												criteria here. Include any group of terms related to your
-												desired position.</p></span>
+												desired position.</p></div>
 									</div>
 								</div>
 								<br />
@@ -84,10 +84,10 @@
 										<label for="cityState">City and State or ZIP Code </label>
 									</div>
 									<div class="toolTip">
-										<span class="classic"><p>Enter the city and state
+										<div class="classic"><p>Enter the city and state
 												or zip code of the location you want to search. Then select
 												a radius to expand your search up to 100 miles from your
-												starting point.</p></span>
+												starting point.</p></div>
 									</div>
 								</div>
 
@@ -180,9 +180,9 @@
 										<input type="text" name="Skills" id="Skills" class="jb_input2" />
 									</div>
 									<div class="toolTip marginLeft5 marginTop5">
-										<span class="classic"><p>Include any special skills
+										<div class="classic"><p>Include any special skills
 												you might have to find jobs that match your specific
-												qualifications.</p></span>
+												qualifications.</p></div>
 									</div>
 
 
@@ -201,7 +201,7 @@
 									</div>
 									<div class="input_grp3">
 										<select name="ZipCode" id="ZipCode" class="jb_input3">
-											<option selected="">Within 5 miles of</option>
+											<option>Within 5 miles of</option>
 											<option>Within 10 miles of</option>
 											<option>Within 25 miles of</option>
 											<option>Within 50 miles of</option>
@@ -216,9 +216,8 @@
 								</div>
 								<div class="row">
 									<div class="lableText2">
-										<input type="radio" name="radio" id="StateProvince"
-											value="StateProvince"> <label for="StateProvince" />By
-											State / Province:</label>
+									<input type="radio" name="radio" id="StateProvince" value="StateProvince" /> 
+										<label for="StateProvince" >By State / Province:</label>
 									</div>
 									<div class="input_grp3">
 										<form:select path="stateProvince" class="jb_input3"	id="stateProvince">
@@ -430,9 +429,7 @@
 
 				<div class="content_columns_search_results"  id="tableContent">
 					<jsp:include page="jobboardsearchresultsBody.jsp"></jsp:include>
-					<BR class="clearfix">
 				</div>
-				<BR class="clearfix">
 				<div class="ad_wrapper">
 					${adPageBottom }
                 </div><!-- ad_wrapper -->
@@ -443,7 +440,6 @@
 		<!-- end main_wrapper_inside -->
 	</div>
 	<!-- end main_wrapper_outside -->
-	<BR class="clearfix">
 	<jsp:include page="../templates/templates_footer.jsp"></jsp:include>
 </body>
 </html>

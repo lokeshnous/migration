@@ -39,7 +39,7 @@
 				<div class="row">
 
 					<div class="row">
-						<form method="">
+						<form method="post">
 
 							<!--changed from an h1 to an h2-->
 							<h2 class="noTopBottomBorder">Advanced Search</h2>
@@ -261,15 +261,14 @@
 									</div>
 									<div class="input_grp3">
 										<select name="ZipCode" id="ZipCode" class="jb_input3">
-											<option selected="">Within 10 miles of</option>
-											<option selected="">Within 25 miles of</option>
+											<option>Within 10 miles of</option>
+											<option>Within 25 miles of</option>
 											<option>Within 50 miles of</option>
 											<option>Within 100 miles of</option>
 										</select>
 									</div>
 									<div class="input_grp4 ">
-										<input name="Exclude" type="text"
-											class="jb_input3 InputActiveText" value="Enter Zip Code" />
+										<input name="Exclude" type="text" class="jb_input3 InputActiveText" value="Enter Zip Code" />
 									</div>
 
 

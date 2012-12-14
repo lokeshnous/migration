@@ -168,105 +168,66 @@
 		<!-- loginHeader -->
 
 	</div>
-	<div class="css_nav">
-		<ul class="css_main_menu">
-			<li class="css_main_menu_item"><a href="#">Magazines</a>
-				<ul class="css_subContainer">
-					<div class="css_column">
-						<li><a href="http://nursing.advanceweb.com/">Nurses</a></li>
-						<li><a href="http://physical-therapy.advanceweb.com/">Physical
-								Therapy and Rehab Medicine</a></li>
-						<li><a href="http://occupational-therapy.advanceweb.com/">Occupational
-								Therapy Practitioners</a></li>
-						<li><a
-							href="http://imaging-radiation-oncology.advanceweb.com/">Imaging
-								& Radiattion Oncology</a></li>
-						<li><a href="http://audiology.advanceweb.com/">Hearing
-								Practice Management</a></li>
-					</div>
-					<!-- END css_column -->
-
-					<div class="css_column">
-						<li><a
-							href="http://speech-language-pathology-audiology.advanceweb.com/">Speech-Language
-								Pathologists & Audiologists</a></li>
-						<li><a
-							href="http://respiratory-care-sleep-medicine.advanceweb.com/">Respiratory
-								Care and Sleep Medicine</a></li>
-						<li><a href="http://laboratory-manager.advanceweb.com/">Administrators
-								of the Laboratory</a></li>
-						<li><a href="http://laboratorian.advanceweb.com/">Medical
-								Laboratory Professionals</a></li>
-						<li><a href="http://health-information.advanceweb.com/">Health
-								Information Professionals</a></li>
-					</div>
-					<!-- END css_column -->
-
-					<div class="css_column">
-						<li><a href="http://long-term-care.advanceweb.com/">Long-Term
-								Care Management</a></li>
-						<li><a
-							href="http://nurse-practitioners-and-physician-assistants.advanceweb.com/">NPs
-								& PAs</a></li>
-						<li><a
-							href="http://healthcare-executive-insight.advanceweb.com/">Executive
-								Insight</a></li>
-					</div>
-					<!-- END css_column -->
-				</ul>
-				<!-- END css_subContainer --></li>
-			<!-- END css_main_menu_item -->
-
-			<li class="css_main_menu_item">
-			<security:authorize
-				access="!hasRole('ROLE_JOB_SEEKER') and !hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP') and !hasRole('ROLE_FACILITY_SYSTEM')" >
-				<a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html">Job Search</a>
-				</security:authorize>
-			<security:authorize
-				access="hasRole('ROLE_JOB_SEEKER')">
-				<a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html">Job Search</a>
-				</security:authorize>
-			<security:authorize
-				access="hasRole('ROLE_FACILITY') or hasRole('ROLE_FACILITY_GROUP') or hasRole('ROLE_FACILITY_SYSTEM')">
-				<a href="#">Job Search</a>
-				</security:authorize>
-				<ul class="css_subContainer">
-					<div class="css_column">
-						<li><a href="http://health-care-jobs.advanceweb.com/">Quick
-								Search</a></li>
-						<li><a
-							href="http://health-care-jobs.advanceweb.com/ResumeBuilder/Default.aspx">Resume
-								Builder</a></li>
-						<li><a
-							href="http://health-care-jobs.advanceweb.com/Salary/Default.aspx">Salary
-								Calculator</a></li>
-						<li><a
-							href="http://health-care-jobs.advanceweb.com/AdvanceMessenger/Default.aspx"><em>ADVANCE</em>
-								Messenger</a></li>
-						<li><a
-							href="http://health-care-jobs.advanceweb.com/careers/article.aspx?cc=251059">Career
-								Resource Center</a></li>
-						<li><a
-							href="http://health-care-jobs.advanceweb.com/FeaturedFacilities/Default.aspx">Featured
-								Facilities</a></li>
-						<li><a
-							href="http://health-care-jobs.advanceweb.com/Default.aspx">Home</a></li>
-					</div>
-					<!-- END css_column -->
-				</ul>
-				<!-- END css_subContainer --></li>
-			<!-- END css_main_menu_item -->
-
-			<li class="css_main_menu_item"><a
-				href="http://www.advanceweb.com/Advertise/CE2.aspx">Education</a></li>
-			<li class="css_main_menu_item"><a
-				href="http://events.advanceweb.com/Attendee/Default.aspx">Events</a></li>
-			<li class="css_main_menu_item"><a
-				href="http://community.advanceweb.com/bloggroups/2/Home.aspx">Community</a></li>
-			<li class="css_main_menu_item"><a
-				href="http://shop.advanceweb.com">Healthcare Shop</a></li>
-			<li class="css_main_menu_item"><a
-				href="http://promotions.advanceweb.com">Custom Promotions</a></li>
-		</ul>
-	</div>
+	<ul id="menu">
+    <li><a href="#" class="drop">MAGAZINES</a>
+        <div class="dropdown_4columns">
+            <div class="col_1">
+                <ul>
+                    <li><a href="http://nursing.advanceweb.com/">Nurses</a></li>
+					<li><a href="http://physical-therapy.advanceweb.com/">Physical Therapy and Rehab Medicine</a></li>
+					<li><a href="http://occupational-therapy.advanceweb.com/">Occupational Therapy Practitioners</a></li>
+					<li><a href="http://imaging-radiation-oncology.advanceweb.com/">Imaging &amp; Radiattion Oncology</a></li>
+					<li><a href="http://audiology.advanceweb.com/">Hearing Practice Management</a></li>
+                </ul>   
+            </div>
+            <div class="col_1">
+                <ul>
+                    <li><a href="http://speech-language-pathology-audiology.advanceweb.com/">Speech-Language Pathologists &amp; Audiologists</a></li>
+					<li><a href="http://respiratory-care-sleep-medicine.advanceweb.com/">Respiratory Care and Sleep Medicine</a></li>
+					<li><a href="http://laboratory-manager.advanceweb.com/">Administrators of the Laboratory</a></li>
+					<li><a href="http://laboratorian.advanceweb.com/">Medical Laboratory Professionals</a></li>
+					<li><a href="http://health-information.advanceweb.com/">Health Information Professionals</a></li>
+                </ul>   
+            </div>
+            <div class="col_1">
+                <ul>
+                    <li><a href="http://long-term-care.advanceweb.com/">Long-Term Care Management</a></li>
+					<li><a href="http://nurse-practitioners-and-physician-assistants.advanceweb.com/">NPs &amp; PAs</a></li>
+					<li><a href="http://healthcare-executive-insight.advanceweb.com/">Executive Insight</a></li>
+                </ul>   
+            </div>
+        </div><!-- End 4 columns container -->
+    </li>
+    
+    <li>
+    <security:authorize access="!hasRole('ROLE_JOB_SEEKER') and !hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP') and !hasRole('ROLE_FACILITY_SYSTEM')" >
+				<a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html">JOB SEARCH</a>
+	</security:authorize>
+	<security:authorize access="hasRole('ROLE_JOB_SEEKER')">
+				<a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html">JOB SEARCH</a>
+	</security:authorize>
+	<security:authorize access="hasRole('ROLE_FACILITY') or hasRole('ROLE_FACILITY_GROUP') or hasRole('ROLE_FACILITY_SYSTEM')">
+				<a href="#" class="drop">JOB SEARCH</a>
+	</security:authorize>
+        <div class="dropdown_2columns">
+            <div class="col_2">
+                <ul>
+                    <li><a href="http://health-care-jobs.advanceweb.com/">Quick Search</a></li>
+					<li><a href="http://health-care-jobs.advanceweb.com/ResumeBuilder/Default.aspx">Resume Builder</a></li>
+					<li><a href="http://health-care-jobs.advanceweb.com/Salary/Default.aspx">Salary Calculator</a></li>
+					<li><a href="http://health-care-jobs.advanceweb.com/AdvanceMessenger/Default.aspx"><em>ADVANCE</em> Messenger</a></li>
+					<li><a href="http://health-care-jobs.advanceweb.com/careers/article.aspx?cc=251059">Career Resource Center</a></li>
+					<li><a href="http://health-care-jobs.advanceweb.com/FeaturedFacilities/Default.aspx">Featured Facilities</a></li>
+					<li><a href="http://health-care-jobs.advanceweb.com/Default.aspx">Home</a></li>
+                </ul>   
+            </div>
+        </div><!-- End 4 columns container -->
+    </li>
+    
+    <li class="css_main_menu_item"><a href="http://www.advanceweb.com/Advertise/CE2.aspx">EDUCATION</a></li>
+	<li class="css_main_menu_item"><a href="http://events.advanceweb.com/Attendee/Default.aspx">EVENTS</a></li>
+	<li class="css_main_menu_item"><a href="http://community.advanceweb.com/bloggroups/2/Home.aspx">COMMUNITY</a></li>
+	<li class="css_main_menu_item"><a href="http://shop.advanceweb.com">HEALTHCARE SHOP</a></li>
+	<li class="css_main_menu_item"><a href="http://promotions.advanceweb.com">CUSTOM PROMOTION</a></li>
+</ul>
 	<!--css_nav-->
