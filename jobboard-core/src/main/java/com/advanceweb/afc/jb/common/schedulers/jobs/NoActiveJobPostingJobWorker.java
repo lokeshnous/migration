@@ -60,8 +60,10 @@ public class NoActiveJobPostingJobWorker implements JobWorker {
 		for(SchedulerDTO dto:sendMailList){
 		StringBuffer stringBuffer = new StringBuffer();
 		InternetAddress[] toAddress = new InternetAddress[1];
+		InternetAddress[] ccAddress = new InternetAddress[1];
 		try {
 			toAddress[0] = new InternetAddress(dto.getEmailId());
+			ccAddress[0]=new InternetAddress(emailConfiguration.getProperty("rep.email.address").trim());
 		} catch (AddressException jbex) {
 			LOGGER.error(
 					"Error occured while geting InternetAddress reference",
@@ -69,6 +71,7 @@ public class NoActiveJobPostingJobWorker implements JobWorker {
 		}
 		EmailDTO emailDTO = new EmailDTO();
 		emailDTO.setToAddress(toAddress);
+		emailDTO.setCcAddress(ccAddress);
 		emailDTO.setFromAddress(advanceWebAddress);
 		emailDTO.setSubject(emailConfiguration.getProperty("noActiveJobPostings.subject").trim());
 		

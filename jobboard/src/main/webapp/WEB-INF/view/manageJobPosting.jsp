@@ -202,7 +202,7 @@
 							$("form").attr(
 									"action",
 									"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
-											+ val);
+											+ val + "&sort=true");
 							$("form").submit();
 						});
 						$('#jobIdTab').click( function(){
@@ -212,7 +212,7 @@
 							$("form").attr(
 									"action",
 									"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
-											+ val);
+											+ val + "&sort=true");
 							$("form").submit();
 						});
 							$('#jobTitleTab').click( function(){
@@ -222,7 +222,7 @@
 							$("form").attr(
 									"action",
 									"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
-											+ val);
+											+ val + "&sort=true");
 							$("form").submit();
 						});
 							/* $('#jobLocationTab').click( function(){
@@ -242,7 +242,7 @@
 								$("form").attr(
 										"action",
 										"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
-												+ val);
+												+ val + "&sort=true");
 								$("form").submit();
 							});
 							$('#jobStartDateTab').click( function(){
@@ -252,7 +252,7 @@
 								$("form").attr(
 										"action",
 										"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
-												+ val);
+												+ val + "&sort=true");
 								$("form").submit();
 							});
 							$('#jobEndDateTab').click( function(){
@@ -262,7 +262,7 @@
 								$("form").attr(
 										"action",
 										"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
-												+ val);
+												+ val + "&sort=true");
 								$("form").submit();
 							});
 							$('#jobCompanyTab').click( function(){
@@ -272,7 +272,7 @@
 								$("form").attr(
 										"action",
 										"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
-												+ val);
+												+ val + "&sort=true");
 								$("form").submit();
 							});
 						$('#jobViewTab').click( function(){
@@ -283,7 +283,7 @@
 								$("form").attr(
 										"action",
 										"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
-												+ val);
+												+ val + "&sort=true");
 								$("form").submit();
 							});
 						$('#jobClicksTab').click( function(){
@@ -293,7 +293,7 @@
 							$("form").attr(
 									"action",
 									"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
-											+ val);
+											+ val + "&sort=true");
 							$("form").submit();
 						});
 					$('#jobAppliesTab').click( function(){
@@ -303,7 +303,7 @@
 							$("form").attr(
 									"action",
 									"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
-											+ val);
+											+ val + "&sort=true");
 							$("form").submit();
 						});
 					});

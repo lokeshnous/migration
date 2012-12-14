@@ -523,7 +523,8 @@ public class PaymentGatewayController extends AbstractController{
 			default:
 				LOGGER.info(statusCode.get(netSuiteStatus));
 				model.addObject(STATUS_CODE,
-						MMJBCommonConstants.STATUS_CODE_200);
+						MMJBCommonConstants.STATUS_CODE_DEFAULT);
+				errorMessage = MMJBCommonConstants.DEFAULT_NSERROR_MSG;
 				paymentGatewayForm = clearSessionFormData(session,
 						paymentGatewayForm);
 			}

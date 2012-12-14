@@ -362,7 +362,7 @@ public interface MMJBCommonConstants {
 	int STATUS_CODE_415 = 415;
 	int STATUS_CODE_500 = 500;
 	int STATUS_CODE_503 = 503;
-
+	int STATUS_CODE_DEFAULT = 9999;
 	String SUCCESS_200 = "The RESTlet web service request was executed successfully.";
 	String BAD_REQUEST_400 = "Invalid credit card / invoice information or billing address.";
 	String UNAUTHORIZED_401 = "This is not a valid NetSuite login session for the RESTlet calls.";
@@ -372,6 +372,7 @@ public interface MMJBCommonConstants {
 	String UNSUPPORTED_MEDIA_TYPE_415 = "An unsupported content type was specified. (Only JSON and text are allowed.)";
 	String INTERNAL_SERVER_ERROR_500 = "(unexpected errors): Occurs for non-user errors that cannot be recovered by resubmitting the same request. Contact Customer Support to file a case.";
 	String SERVICE_UNAVAILABLE_503 = "The server is temporarily unavailable. Please contact your system administrator.";
+	String DEFAULT_NSERROR_MSG = "Unexpected NetSuit error occured. Please contact your system administrator.";
 
 	String NEXT = "next";
 	int[] FILTER_VALS = { 20, 30, 40, 50 };

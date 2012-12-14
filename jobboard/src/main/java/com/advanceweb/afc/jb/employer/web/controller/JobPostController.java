@@ -882,12 +882,16 @@ public class JobPostController extends AbstractController {
 		List<DropDownDTO> templateList = new ArrayList<DropDownDTO>();
 		List<JobPostDTO> postedJobList = new ArrayList<JobPostDTO>();
 		String sortBy=null;
-		if(jobPostform.isSortAsc()){
-		 sortBy="Order By "+jobPostform.getSortBy()+ "  asc " ;
-		 jobPostform.setSortAsc(false);
-		}else{
-			 sortBy="Order By "+jobPostform.getSortBy()+ "  desc " ;
-			 jobPostform.setSortAsc(true);
+		if (null != request.getParameter("sort")) {
+			if (jobPostform.isSortAsc()) {
+				sortBy = "Order By " + jobPostform.getSortBy() + "  asc ";
+				jobPostform.setSortAsc(false);
+			} else {
+				sortBy = "Order By " + jobPostform.getSortBy() + "  desc ";
+				jobPostform.setSortAsc(true);
+			}
+		} else {
+			sortBy = "Order By " + jobPostform.getSortBy() + "  asc ";
 		}
 		
 		int userId = 0;
