@@ -17,7 +17,7 @@
 
 
 	jQuery(document).ready(function() {	
-				
+		$(".focusElement").last().focus();
 		//Date picker
     	$(function() {
     		$( ".datepicker" ).datepicker();
@@ -30,7 +30,7 @@
 	<div class="rowEvenNewSpacing">
 		<span class="lableText3">Job Title:</span>
 		<form:input path="createResume.listWorkExpForm[${workExpPositionId}].jobTitle"
-			class="job_seeker_Resume" />
+			class="job_seeker_Resume focusElement" />
 		<span class="required">(Required)</span>
 	</div>
 	<div class="rowEvenNewSpacing">

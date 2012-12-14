@@ -6,6 +6,7 @@
 <script type="text/javascript">
 	jQuery(document).ready(function() {	
 		$(".addPhoneNo").inputmask("mask", {"mask": "(999) 999-9999"});
+		$(".addPhoneNo").focus();
 	});		
 </script>
 <div class="rowEvenNewSpacing MarginBottom10">

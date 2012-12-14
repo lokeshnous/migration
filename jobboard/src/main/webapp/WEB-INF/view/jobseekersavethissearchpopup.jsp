@@ -17,17 +17,17 @@ function saveRecentSearch(searchJobId){
 	var searchName = $.trim($("#searchTitleName").val());
 	$.ajax({url: "${pageContext.request.contextPath}/savedSearches/saveRecentSearch.html?searchName="+searchName+"&searchJobId"+searchJobId,
 		success: function(data){ 
-			$.each(data, function(key, val) {
-				if (key == "NavigationPath") {
-					$.nmManual(val + '.html');
-					//parent.$.nmTop().close();
-				}
-				
+			$.each(data, function(key, val) {				
 				if(key == "EmptySearchName"){
 					$("#ErrorMsg").text("${msg.EmptySearchName}");
 				}
 				if(key == "DuplicateSearchName"){
 					$("#ErrorMsg").text("${msg.DuplicateSearchName}");
+				}
+				if (key == "NavigationPath") {
+					$.nmManual(val + '.html');
+					alert("Search saved successfully!.Access saved search criterias using \"My saved searches\" in dashboard.");
+					//parent.$.nmTop().close();
 				}
 			}); 
 		},
@@ -39,6 +39,9 @@ function saveRecentSearch(searchJobId){
 			
 		}
 	});
+}
+function cancelRecentSearch(){
+	$.nmManual("${pageContext.request.contextPath}/savedSearches/viewrecentsearches.html");
 }
 function closePopup() {
 	//parent.window.location.reload();
@@ -116,10 +119,6 @@ function closePopup() {
 
 		<div class="popUpContainerWrapper">
 			<form:form action="" method="GET" commandName="saveSearchForm">
-				<c:if test="${not empty recentSearchId}">
-				<br/>
-				<b>Access saved search criterias using "My saved searches" in dashboard</b>
-				</c:if>
 				<span class="lableText3 width505 TextAlignL">Search Title</span>
 				<div class="rowEvenSpacingMargin0">
 					<input type="text" name="searchTitleName" id="searchTitleName" class="jb_input1" /><br />
@@ -129,7 +128,8 @@ function closePopup() {
 				<c:choose>
 				<c:when test="${not empty recentSearchId}">
   				<input type="button" id="saveRecentId" onclick="saveRecentSearch(${recentSearchId})" class="orange cursor" value="Save"/>
-  				<a class="orange btn_sm cursor nyroModal" href="<%=request.getContextPath()%>/savedSearches/viewrecentsearches.html" id="cancelRecentId">CANCEL</a>
+  				<input type="button" id="cancelRecentId" onclick="cancelRecentSearch()" class="orange cursor" value="CANCEL"/>
+  				<%-- <a class="orange btn_sm cursor nyroModal" href="<%=request.getContextPath()%>/savedSearches/viewrecentsearches.html" id="cancelRecentId">CANCEL</a> --%>
 				</c:when>					
 				<c:otherwise>
 				<input type="button" id="saveData" class="orange cursor" value="Save"/>

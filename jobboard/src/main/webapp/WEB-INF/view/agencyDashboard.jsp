@@ -55,7 +55,7 @@
 				<div class="MidContent_Wrapper floatLeft">
 					<div class="dashboardHeader">
 						<h1>
-							[<%=(String) session.getAttribute(MMJBCommonConstants.COMPANY_EMP)%>] Dashboard
+							<%=(String) session.getAttribute(MMJBCommonConstants.COMPANY_EMP)%> Dashboard
 						</h1>
 					</div>
 					<div class="MidContent_Wrapper FloatLeft">

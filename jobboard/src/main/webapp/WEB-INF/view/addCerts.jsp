@@ -5,7 +5,7 @@
 
 <script type="text/javascript">
 	jQuery(document).ready(function() {	
-				
+		$(".focusElement").last().focus();
 		//Date picker
     	$(function() {
     		$( ".datepicker" ).datepicker();
@@ -17,7 +17,7 @@
 <p class="borderBottomDotted marginBottom15">&nbsp;</p> 
 	<div class="rowEvenNewSpacing">
 		<span class="lableText3">Certification Name:</span>
-		<form:input path="createResume.listCertForm[${certPositionId}].certificationName" class="job_seeker_password textBox350" />
+		<form:input path="createResume.listCertForm[${certPositionId}].certificationName" class="job_seeker_password textBox350 focusElement" />
 		<span class="required">(Required)</span>
 	</div>
  	<div class="rowEvenNewSpacing">

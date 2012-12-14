@@ -6,6 +6,7 @@
 <script type="text/javascript">
 	jQuery(document).ready(function() {	
 		$(".addReference").inputmask("mask", {"mask": "(999) 999-9999"});
+		$(".focusElement").last().focus();
 	});		
 </script>
 
@@ -14,7 +15,7 @@
 	<div class="rowEvenNewSpacing">
 		<span class="lableText3">Name:</span>
 		<form:input path="createResume.listRefForm[${refPositionId}].name"
-			class="job_seeker_password textBox350" />
+			class="job_seeker_password textBox350 focusElement" />
 	</div>
 
 	<div class="rowEvenNewSpacing">

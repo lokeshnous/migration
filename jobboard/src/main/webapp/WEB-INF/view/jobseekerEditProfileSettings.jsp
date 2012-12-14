@@ -70,6 +70,11 @@ function validateNumber(event) {
  		      if($("#otherProfession").val().length == 0){
  		    	 validate=false;
  		    	 $("#errmsg").html("Please fill the required fields");
+  		      }
+ 		      if($.isNumeric($("#otherProfession").val())){
+ 		    	 validate=false;
+ 		    	 $("#errmsg").html("Please enter a valid profession");
+ 		    	$("#errmsg").focus();
  		      }
  		    }
  			if(validate){

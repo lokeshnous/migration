@@ -2,6 +2,7 @@ jQuery(document).ready(function() {
 				jQuery(".megamenu").megamenu();
 				$(".saveThisPopup").displaypopup(".saveThisPopup","775","252");
 				$(".sendtofriend").displaypopup(".sendtofriend","775","252");
+				$("#keywords").focus();
 				if($("#searchtypeToSavedSearch").val() == "basic"){
 					
 		            $("#keywords").val($("#keywordsToSavedSearch").val());
