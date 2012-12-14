@@ -115,7 +115,7 @@ public class MMUtils {
 	 */
 	public static String isNull(String checkStr) {
 		if (checkStr == null) {
-			return "N/A";
+			return "";
 		} else {
 			return checkStr;
 		}
