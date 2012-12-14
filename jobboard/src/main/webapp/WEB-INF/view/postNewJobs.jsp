@@ -318,13 +318,19 @@ function validateNumber(event) {
 						
 						
 						//Auto complete on selecting state
-									$("#stateDpId").change( function(){
+						
 										$("#stateDpId").change( function(){
 											$('#cityAutoPopulation').val('');
 											$('#zipCodeITId').val('');
 											$('#countryDpId').val('');
 											});
-										});
+						
+									$("#countryDpId").change(function(){
+										$('#zipCodeITId').val("");
+										$('#stateDpId').val("");
+										$('#cityAutoPopulation').val("");
+									});
+									
 						//Auto complete on selecting zipcode			
 						$("#zipCodeITId")
 								.autocomplete(
