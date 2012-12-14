@@ -205,9 +205,10 @@ function closePopup() {
 				<span class="lableText7">Net Suite ID Number:</span>
 				<input type="text" id="nsId" name="nsId" class="job_seeker_Resume onlyNum"
 					value="${nsId}" />&nbsp;&nbsp;
-
+				<c:if test="${pageName == 'adminDashboard'}">
 				<input type="button" value="find" name="find" id="find"
 					class="btn_sm orange cursor" />
+				</c:if>	
 			</div>
 			<div id="jobPostingsDiv">
 			<c:if test="${pageName != 'adminDashboard'}">
