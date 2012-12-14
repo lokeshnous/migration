@@ -90,6 +90,18 @@
 			}
 		});	
  		
+		//wrote to clearing the fields the city, zipcode, country fields whiel changing the state
+		$("#State2").change( function(){
+				$('#cityTown2').val('');
+				$('#zip2').val('');
+				$('#Country2').val('');
+		});
+		$("#Country2").change(function(){
+			$('#zip2').val("");
+			$('#State2').val("");
+			$('#cityTown2').val("");
+		});
+		
 		$("#zip2").change(function(){
 			$('#cityTown2').val("");
 			$('#State2').val("");
