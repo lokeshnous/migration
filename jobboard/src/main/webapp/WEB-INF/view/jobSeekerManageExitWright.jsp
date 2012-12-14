@@ -126,7 +126,7 @@
 											src="../resources/images/tranBg.png" width="20" height="20"
 											alt="" class="editFile" /></a> <a
 										href="<%=request.getContextPath()%>/jobSeekerCoverLetter/jobseekerDownloadCoverLetter.html?coverletterId=${job.coverletterId}">
-											<img title="download" src="../resources/images/tranBg.png"
+											<img title="Download" src="../resources/images/tranBg.png"
 											width="20" height="20" alt="" class="download" />
 									</a> <a title="Print" id="print${job.coverletterId}"
 										onclick="printPopup(this.id)"> <img

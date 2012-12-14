@@ -9,10 +9,11 @@
 <title>${metaTitle}</title>
 <meta name="description" content="${metaDesc}">
 <link href="${canonicalUrl}" rel="canonical" />
-<jsp:include page="common/include.jsp" />
+
 <script src="<%=request.getContextPath()%>/resources/js/FB.Share" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/resources/js/in.js" type="text/javascript"></script>
 <script  src="<%=request.getContextPath()%>/resources/js/widgets.js"></script>
+<jsp:include page="common/include.jsp" />
 
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/js/searchResultsdatatable.js"></script>
@@ -102,21 +103,19 @@
 							<div class="jobDetailsIntroOptions">
 								<div class="rowEvenTB10Spacing">
 									<div class="ShareText">Send to friend: &nbsp;</div>
-									<a
-										onclick="sendToFrd(${jobDetail.jobId}, '${jobDetail.jobTitle}');"><div
-											class="email cursor"></div></a>
-									<div class="ShareText">|&nbsp;&nbsp;Share:&nbsp;</div>
 									
-									
-									 <a name="fb_share" class="fbook" href="http://www.facebook.com/sharer.php?u=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${jobDetail.jobTitle}.html" target="_blank"></a>
-									 <a href="https://www.linkedin.com/cws/share?url=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${jobDetail.jobTitle}.html" target="_blank"><div class="linkedIn"></div></a>
-									 <a href="https://twitter.com/share?url=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${jobDetail.jobTitle}.html" class="twitter" data-url="${basePath}/jobsearch/jobview/${jobDetail.jobId}/${jobDetail.jobTitle}.html" data-count="none" target="_blank"></a>
-									 
-									 
+										<a onclick="sendToFrd(${jobDetail.jobId}, '${jobDetail.jobTitle}');">
+											<div class="email cursor"></div>
+											</a>
+									 <div class="ShareText">|&nbsp;&nbsp;Share:&nbsp;</div>
+											<a name="fb_share" class="fbook" href="http://www.facebook.com/sharer.php?u=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${jobDetail.jobTitle}.html" target="_blank"></a>
+									 		<a href="https://www.linkedin.com/cws/share?url=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${jobDetail.jobTitle}.html" target="_blank"><div class="linkedIn"></div></a>
+									 		<a href="https://twitter.com/share" class="twitter" data-url="${basePath}/jobsearch/jobview/${jobDetail.jobId}/${jobDetail.jobTitle}.html" data-count="none" target="_blank"></a>
+	 		
 									<div class="ShareText">|&nbsp;&nbsp;Print:&nbsp;</div>
-									<a rel="nofollow,noindex" href="" onclick="window.print();"
-									><div
-											class="printJBdetail"></div></a>
+									<a rel="nofollow,noindex" href="" onclick="window.print();">
+									<div class="printJBdetail"></div>
+									</a>
 								</div>
 								<div class="rowEvenTB10Spacing">
 									<a
@@ -141,9 +140,8 @@
 									<div class="jobDetailsIntroOptions">
 										<div class="rowEvenTB10Spacing">
 											<div class="ShareText">Send to friend:&nbsp;</div>
-											<a
-												onclick="sendToFrd(${jobDetail.jobId}, '${jobDetail.jobTitle}','<%= request.getContextPath() %>');"><div
-													class="email cursor"></div></a>
+											<a onclick="sendToFrd(${jobDetail.jobId}, '${jobDetail.jobTitle}','<%= request.getContextPath() %>');">
+											<div class="email cursor"></div></a>
 											<div class="ShareText">|&nbsp;&nbsp;Share:&nbsp;</div>
 											
 											<a name="fb_share" class="fbook" href="http://www.facebook.com/sharer.php?u=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${jobDetail.jobTitle}.html" target="_blank"></a>
@@ -152,8 +150,9 @@
 									 		
 													
 											<div class="ShareText">|&nbsp;&nbsp;Print:&nbsp;</div>
-											<a href="" onclick="window.print();"
-											><div class="printJBdetail"></div></a>
+											<a href="" onclick="window.print();">
+											<div class="printJBdetail"></div>
+											</a>
 										</div>
 										<div class="rowEvenTB10Spacing">
 											<a
