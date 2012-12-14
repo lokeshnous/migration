@@ -274,12 +274,30 @@ a.white:hover {
 	position: absolute;
 }
 
+.toolTip span{
+	margin-left: -999em;
+	position: absolute;
+}
+
 .PopUpToolTip div {
 	margin-left: -999em;
 	position: absolute;
 }
 
 .toolTip:hover div,.toolTip01:hover span {
+	border-radius: 4px 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	font-family: Calibri, Tahoma, Geneva, sans-serif;
+	position: absolute;
+	left: 1em;
+	top: 1.5em;
+	z-index: 999;
+	margin-left: 0;
+	width: 235px;
+}
+
+.toolTip:hover span{
 	border-radius: 4px 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
@@ -4289,22 +4307,21 @@ h2.option2 span {color: #FE9400;
 
 #menu li {
 	float: left;
-display: block;
-text-align: center;
-position: relative;
-padding: 4px 10px 4px 9px;
-margin-right: 20px;
-border: none;
-height: 26px;
+	display: block;
+	text-align: center;
+	position: relative;
+	margin-right: 17px;
+	padding: 4px 9px 4px 10px;
+	border: none;
+	height: 26px;
 }
 
 #menu li:hover {
 	border: 1px solid #777;
-padding: 4px 9px 4px 9px;
-background: #606566;
-border: 1px solid white;
-border-top: none;
-
+	padding: 4px 9px 4px 9px;
+	background: #606566;
+	border: 1px solid white;
+	border-top: none;
 }
 
 #menu li a {
@@ -4419,5 +4436,7 @@ top: 29px;
 	padding:0;
 	margin:0;
 }
+
+.bodnew{font-weight:bold !important; color:#FFFFFF !important;}
 
 /* --- Navigation New Ends --- */

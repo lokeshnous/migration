@@ -169,7 +169,7 @@
 
 	</div>
 	<ul id="menu">
-    <li><a href="#" class="drop">MAGAZINES</a>
+    <li><a href="#" class="drop bodnew">MAGAZINES</a>
         <div class="dropdown_4columns">
             <div class="col_1">
                 <ul>
@@ -201,13 +201,13 @@
     
     <li>
     <security:authorize access="!hasRole('ROLE_JOB_SEEKER') and !hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP') and !hasRole('ROLE_FACILITY_SYSTEM')" >
-				<a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html">JOB SEARCH</a>
+				<a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="bodnew">JOB SEARCH</a>
 	</security:authorize>
 	<security:authorize access="hasRole('ROLE_JOB_SEEKER')">
-				<a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html">JOB SEARCH</a>
+				<a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="bodnew">JOB SEARCH</a>
 	</security:authorize>
 	<security:authorize access="hasRole('ROLE_FACILITY') or hasRole('ROLE_FACILITY_GROUP') or hasRole('ROLE_FACILITY_SYSTEM')">
-				<a href="#" class="drop">JOB SEARCH</a>
+				<a href="#" class="drop bodnew">JOB SEARCH</a>
 	</security:authorize>
         <div class="dropdown_2columns">
             <div class="col_2">
@@ -224,10 +224,10 @@
         </div><!-- End 4 columns container -->
     </li>
     
-    <li class="css_main_menu_item"><a href="http://www.advanceweb.com/Advertise/CE2.aspx">EDUCATION</a></li>
-	<li class="css_main_menu_item"><a href="http://events.advanceweb.com/Attendee/Default.aspx">EVENTS</a></li>
-	<li class="css_main_menu_item"><a href="http://community.advanceweb.com/bloggroups/2/Home.aspx">COMMUNITY</a></li>
-	<li class="css_main_menu_item"><a href="http://shop.advanceweb.com">HEALTHCARE SHOP</a></li>
-	<li class="css_main_menu_item"><a href="http://promotions.advanceweb.com">CUSTOM PROMOTION</a></li>
+    <li class="css_main_menu_item"><a href="http://www.advanceweb.com/Advertise/CE2.aspx" class="bodnew">EDUCATION</a></li>
+	<li class="css_main_menu_item"><a href="http://events.advanceweb.com/Attendee/Default.aspx" class="bodnew">EVENTS</a></li>
+	<li class="css_main_menu_item"><a href="http://community.advanceweb.com/bloggroups/2/Home.aspx" class="bodnew">COMMUNITY</a></li>
+	<li class="css_main_menu_item"><a href="http://shop.advanceweb.com" class="bodnew">HEALTHCARE SHOP</a></li>
+	<li class="css_main_menu_item"><a href="http://promotions.advanceweb.com" class="bodnew">CUSTOM PROMOTION</a></li>
 </ul>
 	<!--css_nav-->
