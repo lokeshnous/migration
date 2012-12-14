@@ -97,7 +97,7 @@ public class JobPostServiceTest extends ServiceTestBase{
 	@Test
 	public void testRetrieveAllJobPost(){
 		List <JobPostDTO> dto = new ArrayList<JobPostDTO>();
-		dto = employerJobPost.retrieveAllJobPost(1606,1,20);
+		dto = employerJobPost.retrieveAllJobPost(1606,1,20,"asc");
 		Assert.assertTrue("Total Record Found", dto.isEmpty()?false:true);
 	}
 	@Test
