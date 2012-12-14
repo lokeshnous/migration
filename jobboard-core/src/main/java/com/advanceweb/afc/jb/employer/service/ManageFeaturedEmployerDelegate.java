@@ -44,4 +44,15 @@ public interface ManageFeaturedEmployerDelegate {
 	
 	UserDTO getNSCustomerDetails(int nsCustomerID);
 
+	/**
+	 * This method is used to get Featured employer package start/End dates
+	 * based on adm facility id.
+	 * 
+	 * @param int admFacilityID
+	 * @return UserDTO
+	 */
+	
+	UserDTO getNSFeatureDates(int nsCustomerID);
+
+	
 }

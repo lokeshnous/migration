@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.common.controller.AbstractController;
 import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.ManageFeaturedEmployerProfile;
@@ -162,6 +163,8 @@ public class EmployerProfileManagementController extends AbstractController{
 			EmployerProfileManagementForm managementForm, BindingResult result,
 			HttpSession session, HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
+		int facilityId = 0;
+		int nsCustomerId = 0;
 		CompanyProfileDTO companyProfileDTO = manageFeaturedEmployerProfile
 				.getEmployerDetails((Integer) session
 						.getAttribute(MMJBCommonConstants.FACILITY_ID));
@@ -211,8 +214,15 @@ public class EmployerProfileManagementController extends AbstractController{
 
 				}
 
-				manageFeaturedEmployerProfile
-						.saveEmployerProfile(companyProfileDTO);
+
+				facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
+				nsCustomerId = manageFeaturedEmployerProfile.getNSCustomerIDFromAdmFacility(facilityId);
+				UserDTO userDTO = manageFeaturedEmployerProfile.getNSFeatureDates(nsCustomerId);
+				companyProfileDTO.setFeaturedStartDate(userDTO.getFeaturedStartDate());
+				companyProfileDTO.setFeaturedEndDate(userDTO.getFeaturedEndDate());
+				
+				manageFeaturedEmployerProfile.saveEmployerProfile(companyProfileDTO);
+				
 			}
 		} catch (Exception e) {
 			LOGGER.error(e);

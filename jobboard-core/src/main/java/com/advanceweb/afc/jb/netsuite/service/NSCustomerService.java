@@ -50,6 +50,16 @@ public interface NSCustomerService {
 	UserDTO getNSCustomerDetails(UserDTO userDTO) throws JobBoardNetSuiteServiceException;
 	
 	/**
+	 * This method is used to get the Featured employer package start/End dates.
+	 * 
+	 * @param userDTO
+	 * @return userDTO
+	 * @throws JobBoardNetSuiteServiceException
+	 */
+	
+	UserDTO getNSFeatureDates(UserDTO userDTO) throws JobBoardNetSuiteServiceException;
+	
+	/**
 	 * This method is used to get the customer purchased packages through
 	 * NetSuite.
 	 * 

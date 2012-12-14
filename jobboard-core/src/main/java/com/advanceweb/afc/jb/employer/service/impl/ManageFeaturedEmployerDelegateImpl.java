@@ -100,4 +100,28 @@ public class ManageFeaturedEmployerDelegateImpl implements
 		return userDTO;
 	}
 	
+	/**
+	 * This method is used to get the Featured employer package start/End dates.
+	 * 
+	 * If start/end date is not available for the feature package then NetSuite
+	 * returns start date=current date and end date=(current date + 10 years)
+	 * 
+	 * @param int admFacilityID
+	 * @return UserDTO
+	 */
+
+	public UserDTO getNSFeatureDates(int nsCustomerID) {
+		UserDTO userDTO = new UserDTO();
+		userDTO.setEntityId(nsCustomerID);
+		userDTO.setRecordType(CUSTOMER_STRING);
+
+		try {
+			userDTO = nsCustomerService.getNSFeatureDates(userDTO);
+		} catch (JobBoardNetSuiteServiceException jbns) {
+			LOGGER.info("Error occurred while getting the Customer details from net suite..Please contact your administrator."
+					+ jbns);
+		}
+		return userDTO;
+	}
+	
 }

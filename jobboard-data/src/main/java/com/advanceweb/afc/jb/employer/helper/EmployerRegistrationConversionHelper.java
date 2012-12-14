@@ -135,6 +135,8 @@ public class EmployerRegistrationConversionHelper {
 		admFacility.setUrlDisplay(companyProfileDTO.getCompanyWebsite());
 		admFacility.setEmailDisplay(companyProfileDTO.getCompanyEmail());
 		admFacility.setColorPalette(companyProfileDTO.getPrimaryColor());
+		admFacility.setFeStartDt(companyProfileDTO.getFeaturedStartDate());
+		admFacility.setFeEndDt(companyProfileDTO.getFeaturedEndDate());
 
 		return admFacility;
 

@@ -107,6 +107,14 @@ public class AdmFacility implements Serializable {
 	@Column(name="template_id")
 	private int templateId=0;
 	
+//	Featured Employer start date
+	@Column(name="fe_start_dt")
+	private Date feStartDt;
+
+//	Featured Employer end date
+	@Column(name="fe_end_dt")
+	private Date feEndDt;
+	
 	//bi-directional many-to-one association to AdmFacility
 //	@OneToMany(mappedBy="admFacility")
 //	private List<AdmFacility> admFacilities;
@@ -231,6 +239,34 @@ public class AdmFacility implements Serializable {
 
 	public void setCreateUserId(Integer createUserId) {
 		this.createUserId = createUserId;
+	}
+
+	/**
+	 * @return the feStartDt
+	 */
+	public Date getFeStartDt() {
+		return feStartDt;
+	}
+
+	/**
+	 * @param feStartDt the feStartDt to set
+	 */
+	public void setFeStartDt(Date feStartDt) {
+		this.feStartDt = feStartDt;
+	}
+
+	/**
+	 * @return the feEndDt
+	 */
+	public Date getFeEndDt() {
+		return feEndDt;
+	}
+
+	/**
+	 * @param feEndDt the feEndDt to set
+	 */
+	public void setFeEndDt(Date feEndDt) {
+		this.feEndDt = feEndDt;
 	}
 
 	public Date getDeleteDt() {

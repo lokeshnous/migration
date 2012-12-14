@@ -1,14 +1,15 @@
 package com.advanceweb.afc.jb.employer.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
@@ -59,16 +60,11 @@ public class ManageFeaturedEmployerProfileDAOImpl implements
 	@Transactional(propagation = Propagation.REQUIRED)
 	public boolean saveEmployerProfile(CompanyProfileDTO companyProfileDTO) {
 
-		AdmFacility facility = hibernateTemplateCareers.load(AdmFacility.class,
-				Long.valueOf(companyProfileDTO.getFacilityid()).intValue());
+		AdmFacility facility = hibernateTemplateCareers.get(AdmFacility.class,
+				Integer.parseInt(companyProfileDTO.getFacilityid()));
 		facility = employerRegistrationConversionHelper
 				.transformMerCompanyProfileDTOToAdmFacility(companyProfileDTO,
 						facility);
-		int nsCustomerID = 0;
-		List<FacilityDTO> admFacilityDTOList = getNSCustomerIDFromAdmFacility(Integer
-				.valueOf(companyProfileDTO.getFacilityid()));
-		nsCustomerID = admFacilityDTOList.get(0).getNsCustomerID();
-		facility.setNsCustomerID(nsCustomerID);
 		try {
 			if (companyProfileDTO != null) {
 				hibernateTemplateCareers.saveOrUpdate(facility);
@@ -91,9 +87,11 @@ public class ManageFeaturedEmployerProfileDAOImpl implements
 
 		try {
 
-			// modified to bring all facility groups in futured employer list.
-			List<?> admFacilityList = session.createQuery(
-					"from AdmFacility where facilityParentId = 0").list();
+			@SuppressWarnings("unchecked")
+			List<AdmFacility> admFacilityList = session
+					.createCriteria(AdmFacility.class)
+					.add(Restrictions.le("feStartDt", new Date()))
+					.add(Restrictions.ge("feEndDt", new Date())).list();
 
 			for (Iterator<?> iterator = admFacilityList.iterator(); iterator
 					.hasNext();) {
@@ -131,8 +129,7 @@ public class ManageFeaturedEmployerProfileDAOImpl implements
 			if (employerId != 0) {
 
 				AdmFacility admFacility = (AdmFacility) hibernateTemplateCareers
-						.get(AdmFacility.class, Long.valueOf(employerId)
-								.intValue());
+						.get(AdmFacility.class, employerId);
 				companyProfileDTO.setFacilityid(String.valueOf(admFacility
 						.getFacilityId()));
 				companyProfileDTO.setCompanyName(admFacility.getName());
@@ -224,15 +221,14 @@ public class ManageFeaturedEmployerProfileDAOImpl implements
 		List<CompanyProfileDTO> companyProfileDTOList = new ArrayList<CompanyProfileDTO>();
 
 		Session session = sessionFactory.openSession();
-		Query query = null;
 		try {
-
-			// modified to bring all facility groups in futured employer list.
-			query = session.createQuery(
-					"from AdmFacility adm where adm.facilityParentId = 0");
-			query.setFirstResult(startRow);
-			query.setMaxResults(endRow);
-			List<?> admFacilityList = query.list();
+			@SuppressWarnings("unchecked")
+			List<AdmFacility> admFacilityList = session
+					.createCriteria(AdmFacility.class)
+					.add(Restrictions.le("feStartDt", new Date()))
+					.add(Restrictions.ge("feEndDt", new Date()))
+					.setFirstResult(startRow).setMaxResults(endRow).list();
+			
 			for (Iterator<?> iterator = admFacilityList.iterator(); iterator
 					.hasNext();) {
 

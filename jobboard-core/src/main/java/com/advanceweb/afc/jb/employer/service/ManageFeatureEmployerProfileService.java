@@ -93,7 +93,18 @@ public class ManageFeatureEmployerProfileService implements
 	public UserDTO getNSCustomerDetails(int nsCustomerID){
 		return  manageFeaturedEmployerDelegate.getNSCustomerDetails(nsCustomerID);
 	}
-
+	
+	/**
+	 * This method is used to get Featured employer package start/End dates
+	 * based on adm facility id.
+	 * 
+	 * @param int admFacilityID
+	 * @return UserDTO
+	 */
+	
+	public UserDTO getNSFeatureDates(int nsCustomerID){
+		return  manageFeaturedEmployerDelegate.getNSFeatureDates(nsCustomerID);
+	}
 	/**
 	 * Get the employer List by start row and end row
 	 * 

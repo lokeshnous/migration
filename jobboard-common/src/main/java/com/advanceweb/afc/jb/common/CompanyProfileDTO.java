@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.common;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author Rajeshkb
@@ -33,6 +34,8 @@ public class CompanyProfileDTO implements Serializable {
 	private String logoPath;
 	private String positionalMedia;
 	private String primaryColor;
+	private Date featuredStartDate;
+	private Date featuredEndDate;
 
 	/**
 	 * @return the primaryColor
@@ -118,6 +121,34 @@ public class CompanyProfileDTO implements Serializable {
 
 	public void setPositionTitle(String positionTitle) {
 		this.positionTitle = positionTitle;
+	}
+
+	/**
+	 * @return the featuredStartDate
+	 */
+	public Date getFeaturedStartDate() {
+		return featuredStartDate;
+	}
+
+	/**
+	 * @param featuredStartDate the featuredStartDate to set
+	 */
+	public void setFeaturedStartDate(Date featuredStartDate) {
+		this.featuredStartDate = featuredStartDate;
+	}
+
+	/**
+	 * @return the featuredEndDate
+	 */
+	public Date getFeaturedEndDate() {
+		return featuredEndDate;
+	}
+
+	/**
+	 * @param featuredEndDate the featuredEndDate to set
+	 */
+	public void setFeaturedEndDate(Date featuredEndDate) {
+		this.featuredEndDate = featuredEndDate;
 	}
 
 }

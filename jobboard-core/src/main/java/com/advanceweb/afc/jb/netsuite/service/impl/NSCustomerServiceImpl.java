@@ -25,6 +25,7 @@ import org.codehaus.jettison.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.advanceweb.afc.jb.common.CommonUtil;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.JsonUtil;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
@@ -75,7 +76,9 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 	private static final String SCRIPT_STRING_GET_CUST_PACKAGES = "scriptForGetCustomerPackages";
 	private static final String DEPLOY_STRING_GET_CUST_PACKAGES = "deployForGetCustomerPackages";
 	
-	private static final String IS_FEATURED = "custentityfeaturedemployee";
+	private static final String SCRIPT_STRING_GET_FE_DATES = "scriptForGetFeatureDates";
+	private static final String DEPLOY_STRING_GET_FE_DATES = "deployForGetFeatureDates";
+	
 	private static final String AMP_RECORD_TYPE = "&recordtype=";
 
 	private static final String AMP_ID = "&id=";
@@ -85,13 +88,6 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 	private static final String TRUE_STRING = "true";
 
 	private static final String IS_INVOICE_ENABLED = "custentityinvoiceenabled";
-	private static final String IS_XML_FEED_ENABLED = "custentitycustxmlfeed";
-
-	private static final String FEATURED_START_DATE_STRING = "custentityfeaturedemployeestartdate";
-	private static final String FEATURED_END_DATE_STRING = "custentityfeaturedemployeeenddate";
-
-	private static final String XMLFEED_START_DATE_STRING = "custentitystartdate";
-	private static final String XMLFEED_END_DATE_STRING = "custentityenddate";
 
 	private static final String PACKAGE_TYPE_STRING = "custentitypackagetype";
 	private static final String NAME_STRING = "name";
@@ -103,6 +99,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 	private static final String RIGHT_SQ_BRKT_STRING = "]";
 	private static final String DOUBLE_QUOTE_STRING = "\"";
 	private static final String NS_ERROR = "Failed to get a string represenation of the NetSuite response";
+	private static final String NS_ERROR2 = "Error occurred while record updation in NetSuite.";
 
 	/**
 	 * This method is used to create a customer through NetSuite.
@@ -172,6 +169,26 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 				formParameterString);
 
 		return getUserDTOFromResponse(response);
+
+	}
+	
+	/**
+	 * This method is used to get the Featured employer package start/End dates.
+	 * 
+	 * @param userDTO
+	 * @return userDTO
+	 * @throws JobBoardNetSuiteServiceException
+	 */
+
+	public UserDTO getNSFeatureDates(UserDTO userDTO)
+			throws JobBoardNetSuiteServiceException {
+
+		Map<String, String> queryparamMap = getFeatureDatesQueryMap();
+		String formParameterString = formParameterForGetCustomerDetails(
+				userDTO, queryparamMap);
+		Response response = netSuiteMethod.netSuiteGet(queryparamMap,
+				formParameterString);
+		return getFEDateFromResponse(response);
 
 	}
 
@@ -306,16 +323,16 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 	 * @returnMap<String, String>
 	 */
 
-	private Map<String, String> getCustomerDetailsQueryMap() {
+	private Map<String, String> getFeatureDatesQueryMap() {
 
 		Properties entries = netSuiteHelper.getNSProperties();
 		Map<String, String> queryParamMap = new HashMap<String, String>();
 		queryParamMap
 				.put(BASE_URL_STRING, entries.getProperty(BASE_URL_STRING));
 		queryParamMap.put(SCRIPT_STRING,
-				entries.getProperty(SCRIPT_STRING_GET_USER_DETAILS));
+				entries.getProperty(SCRIPT_STRING_GET_FE_DATES));
 		queryParamMap.put(DEPLOY_STRING,
-				entries.getProperty(DEPLOY_STRING_GET_USER_DETAILS));
+				entries.getProperty(DEPLOY_STRING_GET_FE_DATES));
 
 		return queryParamMap;
 	}
@@ -341,6 +358,27 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 		return queryParamMap;
 	}
 
+	/**
+	 * This method is used for creating net suite service url map. The values
+	 * will be read from the netSuite.properties file.
+	 * 
+	 * @returnMap<String, String>
+	 */
+
+	private Map<String, String> getCustomerDetailsQueryMap() {
+
+		Properties entries = netSuiteHelper.getNSProperties();
+		Map<String, String> queryParamMap = new HashMap<String, String>();
+		queryParamMap
+				.put(BASE_URL_STRING, entries.getProperty(BASE_URL_STRING));
+		queryParamMap.put(SCRIPT_STRING,
+				entries.getProperty(SCRIPT_STRING_GET_USER_DETAILS));
+		queryParamMap.put(DEPLOY_STRING,
+				entries.getProperty(DEPLOY_STRING_GET_USER_DETAILS));
+
+		return queryParamMap;
+	}
+	
 	/**
 	 * This method is used to get the User object from the Net Suite Response
 	 * for Creating a Customer. The net suite response will be parsed and
@@ -433,9 +471,9 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 					.getEntity());
 
 			if (jsonResponse.contains(ERROR_STRING)) {
-				LOGGER.info("Error occurred while record updation in NetSuite.");
+				LOGGER.info(NS_ERROR2);
 				throw new JobBoardNetSuiteServiceException(
-						"Error occurred while record updation in NetSuite.");
+						NS_ERROR2);
 			} else {
 
 				try {
@@ -455,6 +493,52 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 		return userDTO;
 	}
 
+	/**
+	 * This method is used to get the User object from the Net Suite Response
+	 * for updating a Customer. The net suite response will be parsed and
+	 * encapsulated in the User object and return it back containing start and
+	 * end date of featured package.
+	 * 
+	 * @param Object
+	 *            of Response
+	 * @return Object of UserDTO
+	 * @throws JobBoardServiceException
+	 */
+
+	private UserDTO getFEDateFromResponse(Response response)
+			throws JobBoardNetSuiteServiceException {
+		String strResponse = null;
+		UserDTO userDTO = new UserDTO();
+
+		try {
+			strResponse = IOUtils.readStringFromStream((InputStream) response
+					.getEntity());
+
+			if (strResponse.contains(ERROR_STRING)) {
+				LOGGER.info(NS_ERROR2);
+				throw new JobBoardNetSuiteServiceException(
+						NS_ERROR2);
+			} else {
+				try {
+					String strArray[] = strResponse.split(",");
+					if (strArray.length > 2) {
+						userDTO.setFeaturedStartDate(CommonUtil.convertToDate(strArray[1]
+								.substring(strArray[1].lastIndexOf(':')+1).trim()));
+						userDTO.setFeaturedEndDate(CommonUtil.convertToDate(strArray[2]
+								.substring(strArray[2].lastIndexOf(':')+1).trim()));
+					}
+				} catch (Exception e) {
+					LOGGER.error(e);
+				}
+			}
+
+		} catch (IOException e) {
+			throw new JobBoardNetSuiteServiceException(NS_ERROR + e);
+		}
+
+		return userDTO;
+	}
+	
 	/**
 	 * This method is used to get the Job Post Package object from the Net Suite
 	 * Response. The Net Suite response will be parsed and encapsulated in the
