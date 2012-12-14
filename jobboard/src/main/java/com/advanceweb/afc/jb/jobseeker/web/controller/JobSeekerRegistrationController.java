@@ -135,6 +135,9 @@ public class JobSeekerRegistrationController extends AbstractController {
 	private String navigationPath;
 	@Value("${employerPageExtention}")
 	private String employerPageExtention;
+	@Value("${agencyPageExtention}")
+	private String agencyPageExtention;
+	
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
@@ -949,24 +952,32 @@ public class JobSeekerRegistrationController extends AbstractController {
 					.getProperty("email.footer").trim());
 			emailDTO.setBody(stringBuffer.toString());
 		} else {
-			String employerloginUrl = request.getRequestURL().toString()
-					.replace(request.getServletPath(), loginPath)
-					+ dothtmlExtention + employerPageExtention;
+			String employerloginUrl;
+			if (null != userRole
+					&& userRole.equals(MMJBCommonConstants.FACILITY)) {
+				employerloginUrl = request.getRequestURL().toString()
+						.replace(request.getServletPath(), loginPath)
+						+ dothtmlExtention + employerPageExtention;
+			} else {
+				employerloginUrl = request.getRequestURL().toString()
+						.replace(request.getServletPath(), loginPath)
+						+ dothtmlExtention + agencyPageExtention;
+			}
 			String employerChangePwdBody = emailConfiguration.getProperty(
 					"employer.change.pwdbody").trim();
-			employerChangePwdBody = employerChangePwdBody.replace(
-					"?user_name", (String) session
+			employerChangePwdBody = employerChangePwdBody.replace("?user_name",
+					(String) session
 							.getAttribute(MMJBCommonConstants.USER_NAME));
 			employerChangePwdBody = employerChangePwdBody.replace(
 					"?company_name", userDTO.getCompany());
 			employerChangePwdBody = employerChangePwdBody.replace(
 					"?empdashboardLink", employerloginUrl);
 
-			stringBuffer.append(emailConfiguration
-					.getProperty("employer.email.header").trim());
+			stringBuffer.append(emailConfiguration.getProperty(
+					"employer.email.header").trim());
 			stringBuffer.append(employerChangePwdBody);
-			stringBuffer.append(emailConfiguration
-					.getProperty("email.footer").trim());
+			stringBuffer.append(emailConfiguration.getProperty("email.footer")
+					.trim());
 			emailDTO.setBody(stringBuffer.toString());
 		}
 		return emailDTO;

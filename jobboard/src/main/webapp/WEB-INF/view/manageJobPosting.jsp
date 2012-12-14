@@ -249,7 +249,6 @@
 								
 								$('#sortBy').val('a.startDt');
 								val = $('#noOfPageId').val();
-								alert(val);
 								$("form").attr(
 										"action",
 										"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="

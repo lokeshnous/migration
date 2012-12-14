@@ -295,13 +295,16 @@ public class PDFGenerator {
 		// Creating the References Section
 		if ((null != resumeDTO.getListRefDTO())
 				&& (resumeDTO.getListRefDTO().size() > 0)) {
-
+			Chunk expTab = new Chunk(new VerticalPositionMark(),
+					Element.ALIGN_CENTER, true);
 			Paragraph referencesPara = generateReferencesPara(resumeDTO
 					.getListRefDTO());
 			if (null != referencesPara) {
-				Paragraph languageHeadingPara = generateParagraph(
+				Paragraph languageHeadingPara = new Paragraph(new Chunk(Chunk.NEWLINE));
+				languageHeadingPara.add(expTab);
+				 languageHeadingPara.add(generateParagraph(
 						"References", paragraphFontName,
-						sectionHeadingFontSize, Font.BOLD, Color.BLACK);
+						sectionHeadingFontSize, Font.BOLD, Color.BLACK));
 				document.add(Chunk.NEWLINE);
 				document.add(languageHeadingPara);
 				document.add(Chunk.NEWLINE);
@@ -332,11 +335,10 @@ public class PDFGenerator {
 			referencesTable.getDefaultCell().setBorder(0);
 
 			for (ReferenceDTO referenceDTO : listRefDTO) {
-
-				referencesTable.addCell(getHeadPdfCell("Name",
+				
+				referencesTable.addCell(new Paragraph("Name",
 						getLabelFontFactory()));
-				referencesTable.addCell(getHeadPdfCell(referenceDTO.getName(),
-						getLabelFontFactory()));
+				referencesTable.addCell(referenceDTO.getName());
 
 				referencesTable.addCell(new Paragraph("Job Title",
 						getLabelFontFactory()));
@@ -382,13 +384,16 @@ public class PDFGenerator {
 		// Creating the Membership Section
 		if ((null != resumeDTO.getOtherDetails())
 				&& (resumeDTO.getOtherDetails().trim().length() > 0)) {
-
-			Paragraph otherDetailsPara = generateParagraph(
+			Chunk expTab = new Chunk(new VerticalPositionMark(),
+					Element.ALIGN_CENTER, true);
+			Paragraph otherDetailsPara = new Paragraph(new Chunk(Chunk.NEWLINE));
+			otherDetailsPara.add(expTab);
+			 otherDetailsPara.add(generateParagraph(
 					resumeDTO.getOtherDetails(), paragraphFontName,
-					paragraphFontSize, Font.NORMAL, Color.BLACK);
+					paragraphFontSize, Font.NORMAL, Color.BLACK));
 			if (null != otherDetailsPara) {
 				Paragraph otherDetailsHeadingPara = generateParagraph(
-						"Memberships", paragraphFontName,
+						"Others", paragraphFontName,
 						sectionHeadingFontSize, Font.BOLD, Color.BLACK);
 				document.add(Chunk.NEWLINE);
 				document.add(otherDetailsHeadingPara);
@@ -413,14 +418,17 @@ public class PDFGenerator {
 		// Creating the Membership Section
 		if ((null != resumeDTO.getMemberships())
 				&& (resumeDTO.getMemberships().trim().length() > 0)) {
-
-			Paragraph membershipPara = generateParagraph(
-					resumeDTO.getMemberships(), paragraphFontName,
-					paragraphFontSize, Font.NORMAL, Color.BLACK);
+			Chunk expTab = new Chunk(new VerticalPositionMark(),
+					Element.ALIGN_CENTER, true);
+			Paragraph membershipPara =generateParagraph(resumeDTO.getMemberships(),
+					paragraphFontName, paragraphFontSize, Font.NORMAL,
+					Color.BLACK);
 			if (null != membershipPara) {
-				Paragraph membershipHeadingPara = generateParagraph("Others",
-						paragraphFontName, sectionHeadingFontSize, Font.BOLD,
-						Color.BLACK);
+				Paragraph membershipHeadingPara = new Paragraph(new Chunk(Chunk.NEWLINE));
+				membershipHeadingPara.add(expTab);
+				 membershipHeadingPara.add(generateParagraph(
+						"Memberships", paragraphFontName,
+						sectionHeadingFontSize, Font.BOLD, Color.BLACK));
 				document.add(Chunk.NEWLINE);
 				document.add(membershipHeadingPara);
 				document.add(membershipPara);
@@ -440,17 +448,21 @@ public class PDFGenerator {
 	 */
 	private void populateAwardsSection(Document document, ResumeDTO resumeDTO)
 			throws DocumentException {
+		Chunk expTab = new Chunk(new VerticalPositionMark(),
+				Element.ALIGN_CENTER, true);
 		// Creating the Awards Section
 		if ((null != resumeDTO.getAwards())
 				&& (resumeDTO.getAwards().trim().length() > 0)) {
-
+			
 			Paragraph awardsPara = generateParagraph(resumeDTO.getAwards(),
 					paragraphFontName, paragraphFontSize, Font.NORMAL,
 					Color.BLACK);
 			if (null != awardsPara) {
-				Paragraph awardsHeadingPara = generateParagraph("Awards",
+				Paragraph awardsHeadingPara = new Paragraph(new Chunk(Chunk.NEWLINE));
+				awardsHeadingPara.add(expTab);
+				awardsHeadingPara.add( generateParagraph("Awards",
 						paragraphFontName, sectionHeadingFontSize, Font.BOLD,
-						Color.BLACK);
+						Color.BLACK));
 				document.add(Chunk.NEWLINE);
 				document.add(awardsHeadingPara);
 				document.add(awardsPara);
@@ -471,37 +483,46 @@ public class PDFGenerator {
 	 */
 	private void populateSkillsSection(Document document, ResumeDTO resumeDTO)
 			throws DocumentException {
-
+		
+			Chunk expTab = new Chunk(new VerticalPositionMark(),
+					Element.ALIGN_CENTER, true);
 		// Creating the Skills Section
 		if ((null != resumeDTO.getListLangDTO())
 				&& (resumeDTO.getListLangDTO().size() > 0)) {
-
-			Paragraph skillsPara = generateParagraph(resumeDTO.getSkills(),
+			
+			Paragraph skillsPara= generateParagraph(resumeDTO.getSkills(),
 					paragraphFontName, paragraphFontSize, Font.NORMAL,
 					Color.BLACK);
 			if (null != skillsPara) {
-				Paragraph skillsHeadingPara = generateParagraph("Skills",
+				Paragraph skillsHeadingPara = new Paragraph(new Chunk(
+						Chunk.NEWLINE));
+				skillsHeadingPara.add(expTab);
+				skillsHeadingPara .add( generateParagraph("Skills",
 						paragraphFontName, sectionHeadingFontSize, Font.BOLD,
-						Color.BLACK);
+						Color.BLACK));
 				document.add(Chunk.NEWLINE);
 				document.add(skillsHeadingPara);
 				document.add(skillsPara);
 			}
-
-			Paragraph languagesPara = generateLanguagesPara(resumeDTO
+			
+			Paragraph languagesPara=generateLanguagesPara(resumeDTO
 					.getListLangDTO());
 			if (null != languagesPara) {
-				Paragraph languageHeadingPara = generateParagraph("Language",
-						paragraphFontName, paragraphFontSize, Font.BOLD,
-						Color.BLACK);
+				Paragraph languageHeadingPara = new Paragraph(new Chunk(
+						Chunk.NEWLINE));
+				languageHeadingPara.add(expTab);
+				languageHeadingPara.add( generateParagraph("Language",
+						paragraphFontName, sectionHeadingFontSize, Font.BOLD,
+						Color.BLACK));
 				document.add(Chunk.NEWLINE);
 				document.add(languageHeadingPara);
+				document.add(Chunk.NEWLINE);
 				document.add(languagesPara);
 			}
 			// Section separator - Draw Line
 			// drawLineSeperator(document);
 		}
-
+		
 	}
 
 	/**
@@ -581,11 +602,9 @@ public class PDFGenerator {
 			certificationTable.getDefaultCell().setBorder(0);
 			for (CertificationDTO certificationDTO : listCertDTO) {
 
-				certificationTable.addCell(getHeadPdfCell("Certification Name",
+				certificationTable.addCell(new Paragraph("Certification Name",
 						getLabelFontFactory()));
-				certificationTable.addCell(getHeadPdfCell(
-						certificationDTO.getCertificationName(),
-						getLabelFontFactory()));
+				certificationTable.addCell(certificationDTO.getCertificationName());
 
 				certificationTable.addCell(new Paragraph(
 						"Certifying Authority", getLabelFontFactory()));
@@ -698,6 +717,9 @@ public class PDFGenerator {
 				educationTable.addCell(new Paragraph("Certifications",
 						getLabelFontFactory()));
 				educationTable.addCell(educationDTO.getCertifications());
+				educationTable.addCell(new Paragraph("I havent graduated",
+						getLabelFontFactory()));
+				educationTable.addCell((educationDTO.isbNotGraduatedYet()==true?"Yes":"No"));
 
 				if (null == educationParagraph) {
 					educationParagraph = new Paragraph();
@@ -760,10 +782,9 @@ public class PDFGenerator {
 
 			for (WorkExpDTO workExpDTO : workExpDTOLst) {
 
-				workExpTable.addCell(getHeadPdfCell("Job Title",
+				workExpTable.addCell(new Paragraph("Job Title",
 						getLabelFontFactory()));
-				workExpTable.addCell(getHeadPdfCell(workExpDTO.getJobTitle(),
-						getLabelFontFactory()));
+				workExpTable.addCell(workExpDTO.getJobTitle());
 
 				workExpTable.addCell(new Paragraph("Company Name",
 						getLabelFontFactory()));

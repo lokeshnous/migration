@@ -209,14 +209,11 @@ public class JobSearchController extends AbstractController {
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
 
-	private @Value("${SUBJECT_OF_MAIL}")
+	private @Value("${jobseekerSuggestFrdSub}")
 	String subOfmail;
 
-	private @Value("${BODY_OFMAIL_FIRST}")
-	String bodyOfMailFirst;
-
-	private @Value("${BODY_OFMAIL_SECOND}")
-	String bodyOfMailSecond;
+	private @Value("${jobseekerSuggestFrdBody}")
+	String bodyOfMailBody;
 
 	private @Value("${JOB_TITLE_HEADING}")
 	String jobTitleHeading;
@@ -2411,7 +2408,6 @@ public class JobSearchController extends AbstractController {
 		Boolean status = Boolean.TRUE;
 		String finalmailbody;
 		StringBuffer mesg = new StringBuffer();
-		String bodyMesg = MMJBCommonConstants.EMPTY;
 		try {
 			String data = sendtofriendmail.getEmail().toString();
 			if ((null == data.trim())
@@ -2455,56 +2451,39 @@ public class JobSearchController extends AbstractController {
 
 				}
 				jobSeekerEmailDTO.setToAddress(jobSeekerToAddress);
-				String msgSubject = MMJBCommonConstants.EMPTY;
 				if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
 
 					jobseekerName = "XXXX-XXX";
-					msgSubject = subOfmail + " " + jobseekerName;
 				} else {
 					jobseekerName = (String) session
 							.getAttribute(MMJBCommonConstants.USER_NAME);
-					msgSubject = subOfmail + " " + jobseekerName;
 				}
-
-				jobSeekerEmailDTO.setSubject(msgSubject);
+				String subject = subOfmail.replace("?Jobseekername",
+						jobseekerName);
+				jobSeekerEmailDTO.setSubject(subject);
 				JobDTO jobDTO = jobSearchService
 						.viewJobDetails(sendtofriendmail.getJobId());
 
-				String Subject = subOfmail + " " + jobseekerName;
-				String bodyHead1 = bodyOfMailFirst + " " + jobseekerName + " "
-						+ bodyOfMailSecond;
-				String bodyHead2 = sendtofriendmail.getMessage();
-				String jobTitle = jobTitleHeading;
-				String companyName = cmpNameHeading;
-				// String jobUrl = sendtofriendmail.getJoburl();
-				/*
-				 * String joburl = urlLinkFirst + MMJBCommonConstants.EMPTY +
-				 * jobUrl + MMJBCommonConstants.EMPTY + urlLinkSecond;
-				 */
+				String emailBody = bodyOfMailBody.replace("?Jobseekername",
+						jobseekerName);
+				emailBody = emailBody
+						.replace("?Jobtitle", jobDTO.getJobTitle());
+				emailBody = emailBody.replace("?Companyname",
+						jobDTO.getCompanyNameDisp());
+				emailBody = emailBody.replace("?joburl",
+						sendtofriendmail.getJoburl());
+				emailBody = emailBody.replace("?jobURLDetail",
+						sendtofriendmail.getJoburl());
+				emailBody = emailBody.replace("?msgBody",
+						sendtofriendmail.getMessage());
+
 				mesg = mesg.append(emailConfiguration.getProperty(
 						"jobseeker.email.header").trim());
-				mesg = mesg.append("<TABLE><TR><TD>" + Subject + END_TAGS);
-				mesg = mesg.append("<TR><TD>" + bodyHead1 + "\n" + bodyHead2
-						+ END_TAGS);
-				mesg = mesg.append("<TR><TD><B>[" + jobTitle + "]</B>"
-						+ jobDTO.getJobTitle() + END_TAGS);
-				if (jobDTO.getCompanyNameDisp() != null) {
-					mesg = mesg.append("<TR><TD><B>[" + companyName + "]</B>"
-							+ jobDTO.getCompanyNameDisp() + END_TAGS);
-				}
-				mesg = mesg.append("<TR><TD>");
-				mesg = mesg.append(urlLinkFirst);
-				mesg = mesg.append(MMJBCommonConstants.EMPTY);
-				mesg = mesg.append(sendtofriendmail.getJoburl());
-				mesg = mesg.append(MMJBCommonConstants.EMPTY);
-				mesg = mesg.append(urlLinkSecond);
-				mesg = mesg.append("</TD></TR>\n\n\n");
-				mesg = mesg.append("<TR><TD>" + sendtofriendmail.getJoburl()
-						+ "</TD></TR></TABLE>");
+				mesg = mesg.append(emailBody);
+
 				mesg = mesg.append(emailConfiguration.getProperty(
 						"email.footer").trim());
-				bodyMesg = mesg.toString();
-				jobSeekerEmailDTO.setBody(bodyMesg);
+				jobSeekerEmailDTO.setBody(mesg.toString());
 				jobSeekerEmailDTO.setHtmlFormat(true);
 				emailService.sendEmail(jobSeekerEmailDTO);
 			} catch (Exception e) {
