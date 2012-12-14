@@ -42,44 +42,8 @@ function closePopup() {
 	jQuery(document).ready(function() {
 		//$('[id^=nsId]').keypress(validateNumber);
 		//$(".onlyNum").keypress(validateNumber);
-			var empList = $.trim($("#empList").val());
-			var nsId = $.trim($("#nsId").val());
-		
-		function validateTable() {
-			var count = $("#tb_save_search_total").val();
-			var valid = false;
-			if(count == null || count == ""){
-				return valid;
-			}
-			for(var i=1;i<=count;i++){
-				//alert($("#tb_save_search_"+i).val());
-				var val = $.trim($("#tb_save_search_"+i).val());
-				if(isNaN(val) || val ==0 ){
-					valid = false;
-					break;
-				}
-				valid = true;
-			}		
-			return valid;
-		}
-		function validateTable1() {
-			var countTb = $("#jp_slot_save_total").val();
-			var validTb = false;
-			if(countTb == null || countTb == ""){
-				return validTb;
-			}
-			for(var i=1;i<=countTb;i++){
-				//alert($("#tb_save_search_"+i).val());
-				var valTb = $.trim($("#jp_slot_save_"+i).val());
-				if(isNaN(valTb) || valTb ==0){
-					validTb = false;
-					break;
-				}
-				validTb = true;
-			}			
-		
-			return validTb;
-		}
+		var empList = $.trim($("#empList").val());
+		var nsId = $.trim($("#nsId").val());
 		
 		$('#jobPostingsDiv input').keydown(function(event) {
 		     if(event.shiftKey && ((event.keyCode >=48 && event.keyCode <=57) 
@@ -105,47 +69,54 @@ function closePopup() {
 		
 		$("#save").click(function(event){
 			$("#ErrorMsg").text("");
-			
-			if(!validateTable() || !validateTable1()){
-				$("#ErrorMsg").text("Please enter the the available quantity > 0");
-				return false;
-			}
-			var stringObj;
-			var stringObjNew = '';
-			//storing data in key  value manner
-			$('#tb_save_search > tbody > tr').each(function(){
-			    var inveId  = $(this).attr("id");   
-			    var availQty = $(this).find("td").eq(3).children().val(); 
-			    stringObj = inveId +"="+ availQty;
-			    stringObjNew = stringObj +";" + stringObjNew ;
-			 });
-			$('#jp_slot_save > tbody > tr').each(function(){
-			    var inveId  = $(this).attr("id");   
-			    var availQty = $(this).find("td").eq(3).children().val(); 
-			    stringObj = inveId +"="+ availQty;
-			    stringObjNew = stringObj +";" + stringObjNew ;
-			 });
-			$.ajax({url: "${pageContext.request.contextPath}/admininventory/saveAvailJobQty.html?stringObjNew="+stringObjNew,
-				data:$('#adminInventoryId').serialize(),
-				type:"GET",
-				success: function(data){
-				    if(data == true){
-				    	alert("Inventory details saved successfully!");
-				    	parent.$.nmTop().close();
-				    }else{
-				    	alert("Error occured while saving the data!");
-				    	parent.$.nmTop().close();
-				    }
-				    if(data.failure != null){
-				    };
-				},
-				error: function(response) {
-					alert("Server Error : "+response.status);
-				},
-				complete: function() {
+			var flag = true;
+			$("#jobPostingsDiv input").each(function(){
+				if($(this).val() == 0){
+					flag = false;
 				}
-			}); 
+			});
+			
+			if(!flag){
+				$("#ErrorMsg").text("Please enter the the available quantity > 0");
+			}else{
+				var stringObj;
+				var stringObjNew = '';
+				//storing data in key  value manner
+				$('#tb_save_search > tbody > tr').each(function(){
+				    var inveId  = $(this).attr("id");   
+				    var availQty = $(this).find("td").eq(3).children().val(); 
+				    stringObj = inveId +"="+ availQty;
+				    stringObjNew = stringObj +";" + stringObjNew ;
+				 });
+				$('#jp_slot_save > tbody > tr').each(function(){
+				    var inveId  = $(this).attr("id");   
+				    var availQty = $(this).find("td").eq(3).children().val(); 
+				    stringObj = inveId +"="+ availQty;
+				    stringObjNew = stringObj +";" + stringObjNew ;
+				 });
+				$.ajax({url: "${pageContext.request.contextPath}/admininventory/saveAvailJobQty.html?stringObjNew="+stringObjNew,
+					data:$('#adminInventoryId').serialize(),
+					type:"GET",
+					success: function(data){
+					    if(data == true){
+					    	alert("Inventory details saved successfully!");
+					    	parent.$.nmTop().close();
+					    }else{
+					    	alert("Error occured while saving the data!");
+					    	parent.$.nmTop().close();
+					    }
+					    if(data.failure != null){
+					    };
+					},
+					error: function(response) {
+						alert("Server Error : "+response.status);
+					},
+					complete: function() {
+					}
+				});
+			}	
 		}); 
+		
 		$("#find").click(function(event){	
 			/* if (empList == ''|| nsId == ''){
 				$("#ErrorMsg").text("Please enter Employee List or Net Suite Id to continue");
@@ -210,10 +181,12 @@ function closePopup() {
 					class="btn_sm orange cursor" />
 				</c:if>	
 			</div>
+			<input type="hidden" name="nsId" />
+			<input type="hidden" name="empList" />
+			<input id="tb_save_search_total" value="${jbPostList.size()}" type="hidden">
+			<input id="jp_slot_save_total" value="${jbSlotList.size()}" type="hidden">
 			<div id="jobPostingsDiv">
 			<c:if test="${pageName != 'adminDashboard'}">
-				<input type="hidden" name="nsId" />
-				<input type="hidden" name="empList" />
 				<c:if test="${jbPostList.size() != 0}">
 				<div class="rowEvenNewSpacing marginTop0">
 					<div class="row FontSize18 boldText">Standard Job Posting</div>
@@ -241,7 +214,7 @@ function closePopup() {
 							</c:forEach>							
 						</tbody>						
 					</table>
-					<input id="tb_save_search_total" value="${jbPostList.size()}" type="hidden">
+					
 					
 				</div>
 				</c:if>
@@ -272,7 +245,6 @@ function closePopup() {
 							</c:forEach>
 						</tbody>
 					</table>
-					<input id="jp_slot_save_total" value="${jbSlotList.size()}" type="hidden">
 				</div>
 				</c:if>
 				</div>
