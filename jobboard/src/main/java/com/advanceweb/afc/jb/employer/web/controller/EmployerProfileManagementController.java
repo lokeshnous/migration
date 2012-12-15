@@ -68,7 +68,7 @@ public class EmployerProfileManagementController extends AbstractController{
 	String isFeaturedEmployerErrorMsg;
 	private @Value("${virus.found.video.msg}")
 	String virusFoundMsg;
-	private @Value("${	virus.found.image.msg}")
+	private @Value("${virus.found.image.msg}")
 	String 	virusFoundImageMsg;
 
 	
