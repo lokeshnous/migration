@@ -78,7 +78,7 @@ public class AdminJobPostingInventoryController {
 				}catch(Exception ex){
 					status = false;
 					LOGGER.info("Excption occurred in jobSearchByComName Netsute Format : "+ex);
-					jsonObject.put(ERR_MSG, "Please enter valid Net Suite Id");
+					jsonObject.put(ERR_MSG, "Please enter a valid Net Suite Id");
 					jsonObject.put(SUCCESS, status);
 					return jsonObject;
 				}
@@ -88,7 +88,7 @@ public class AdminJobPostingInventoryController {
 							nsId);
 				} else {
 					status = false;
-					jsonObject.put(ERR_MSG, "Please enter valid Net Suite Id");
+					jsonObject.put(ERR_MSG, "Please enter a valid Net Suite Id");
 					jsonObject.put(SUCCESS, status);
 					return jsonObject;
 				}
