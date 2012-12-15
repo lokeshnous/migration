@@ -1,6 +1,10 @@
 package com.advanceweb.afc.jb.pgi.web.controller;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
@@ -13,7 +17,12 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 @Component("paymentGatewayValidation")
 public class PaymentGatewayValidation {
 	private static final String NOTEMPTY = "NotEmpty";
-
+	
+	@Value("${jobseekerRegPhoneMsg}")
+	private String jobseekerRegPhoneMsg;
+	
+	private Pattern pattern;
+	private Matcher matcher;
 	/**
 	 * @param form
 	 * @param errors
@@ -98,6 +107,13 @@ public class PaymentGatewayValidation {
 			errors.rejectValue("billingAddressForm.zipCodeForBillingAddr",
 					NOTEMPTY, "Zipcode should not be blank.");
 		}
+		// validation mobile number
+		if (StringUtils.isEmpty(form.getPhone())) {
+			errors.rejectValue("billingAddressForm.phone", NOTEMPTY,"Phone number should not be blank.");
+		}
+		if (!StringUtils.isEmpty(form.getPhone()) && !validateMobileNumberPattern(form.getPhone())) {
+			errors.rejectValue("billingAddressForm.phone", NOTEMPTY, jobseekerRegPhoneMsg);
+		}
 	}
 
 	/**
@@ -133,6 +149,18 @@ public class PaymentGatewayValidation {
 		validateBillAddrInfo(methodForm.getBillingAddressForm(), errors);
 		validatePurchaseOrderNO(methodForm.getInvoiceForm(), errors);
 
+	}
+	
+	/**
+	 * Validating Email Pattern
+	 * 
+	 * @param emailId
+	 * @return
+	 */
+	public boolean validateMobileNumberPattern(String mobile) {
+		pattern = Pattern.compile(MMJBCommonConstants.MOBILE_PATTERN);
+		matcher = pattern.matcher(mobile);
+		return matcher.matches();
 	}
 
 }

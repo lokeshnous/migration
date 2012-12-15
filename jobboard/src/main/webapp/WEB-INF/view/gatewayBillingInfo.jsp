@@ -361,6 +361,10 @@
 							<span class="lableText3">Phone:</span>
 							<form:input path="billingAddressForm.phone" type="text" id="phone2"
 								class="job_seeker_password textBox350 " />
+							<span class="required">(Required)</span>	
+						</div>
+						<div class="validationMsg ">
+							<form:errors path="billingAddressForm.phone" />
 						</div>
 						<div class="clearfix"></div>
 						<form:hidden path="billingAddressForm.facilityContactId" />
