@@ -27,6 +27,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +40,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.common.controller.AbstractController;
 import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
+import com.advanceweb.afc.jb.common.util.AVScannerHelper;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
@@ -108,7 +110,8 @@ public class BrandingTemplateController extends AbstractController{
 
 	private @Value("${empBrandTemplateExceed}")
 	String empBrandTemplateExceed;
-
+	private @Value("${virus.found.file.msg}")
+	String virusFoundMsg;
 	private static final String STR_BRANDINGTEMPLATEFORM = "brandingTemplateForm";
 	private static final String STR_CREATEBRANDINGTEMPLATE = "createBrandingTemplate";
 	private static final String STR_LOGOFILEDATA = "logoFileData";
@@ -184,10 +187,10 @@ public class BrandingTemplateController extends AbstractController{
 		}
 
 		// Upload the media files to File server
-		status = uploadMedia(brandingTemplate);
-		if (!status) {
-			result.rejectValue(STR_LOGOFILEDATA, STR_NOTEMPTY,
-					empBrandFileError);
+		status = uploadMedia(brandingTemplate,result);
+		if (result.hasErrors()) {
+			/*result.rejectValue(STR_LOGOFILEDATA, STR_NOTEMPTY,
+					empBrandFileError);*/
 			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 			model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplate);
 			return model;
@@ -288,10 +291,10 @@ public class BrandingTemplateController extends AbstractController{
 		}
 
 		// Upload the media files to File server
-		status = uploadMedia(brandingTemplateForm);
-		if (!status) {
-			result.rejectValue(STR_LOGOFILEDATA, STR_NOTEMPTY,
-					"An error occured while saving the file");
+		status = uploadMedia(brandingTemplateForm,result);
+		if (result.hasErrors()) {
+			/*result.rejectValue(STR_LOGOFILEDATA, STR_NOTEMPTY,
+					"An error occured while saving the file");*/
 			populateAds(session, request, model);
 			model.setViewName(STR_CREATEBRANDINGTEMPLATE);
 			return model;
@@ -600,7 +603,7 @@ public class BrandingTemplateController extends AbstractController{
 	 * @param brandingTemplateForm
 	 * @return Boolean
 	 */
-	public Boolean uploadMedia(BrandingTemplateForm brandingTemplateForm) {
+	public Boolean uploadMedia(BrandingTemplateForm brandingTemplateForm,Errors error) {
 		Boolean status = null;
 		File logoFileDest = new File(brandingTemplateForm.getLogoPath());
 		File mainImageFileDest = new File(
@@ -610,14 +613,23 @@ public class BrandingTemplateController extends AbstractController{
 			if (brandingTemplateForm.getLogoFileData().getSize() > 0) {
 				MultipartFile logoFile = brandingTemplateForm.getLogoFileData();
 				logoFile.transferTo(logoFileDest);
+				//Antivirus Scan
+				checkFileForVirus(logoFileDest,error);
 			}
 
 			if (brandingTemplateForm.getMainImageFileData().getSize() > 0) {
 				MultipartFile mainImageFile = brandingTemplateForm
 						.getMainImageFileData();
 				mainImageFile.transferTo(mainImageFileDest);
+				//Antivirus Scan
+				checkFileForVirus(mainImageFileDest,error);
+				
 			}
-
+			if (error.hasErrors()) {
+				status=Boolean.FALSE;
+				error.rejectValue(STR_LOGOFILEDATA, STR_NOTEMPTY,
+						empBrandFileError);
+			} 
 			if (!brandingTemplateForm.getIsSilverCustomer()) {
 
 				uploadMultiMedia(brandingTemplateForm);
@@ -625,7 +637,9 @@ public class BrandingTemplateController extends AbstractController{
 			status = Boolean.TRUE;
 
 		} catch (Exception e) {
-			status = Boolean.FALSE;
+			status=Boolean.FALSE;
+			error.rejectValue(STR_LOGOFILEDATA, STR_NOTEMPTY,
+					empBrandFileError);
 			LOGGER.error("ERROR OCCURED: " + e);
 		}
 
@@ -977,10 +991,10 @@ public class BrandingTemplateController extends AbstractController{
 		}
 
 		// Upload the media files to File server
-		status = uploadMedia(brandingTemplateForm);
-		if (!status) {
-			result.rejectValue(STR_LOGOFILEDATA, STR_NOTEMPTY,
-					"An error occured while saving the file");
+		status = uploadMedia(brandingTemplateForm,result);
+		if (result.hasErrors()) {
+			/*result.rejectValue(STR_LOGOFILEDATA, STR_NOTEMPTY,
+					"An error occured while saving the file");*/
 			model.setViewName("editBrandingTemplate");
 			populateAds(session, request, model);
 			return model;
@@ -1198,5 +1212,32 @@ public class BrandingTemplateController extends AbstractController{
 			LOGGER.error("Error occurred while getting the html content for Ads"
 					, e);
 		}
+	}
+	/**
+	 * Method to scan file for anti-virus
+	 * @param virusChkFiledest
+	 * @param error
+	 */
+	private void checkFileForVirus(File virusChkFiledest,Errors error) {
+		// Code to implement Antivirus Check Starts	
+		boolean virusFound = scanFileForVirus(virusChkFiledest.getPath(), virusChkFiledest.getName()); 
+		
+		if (virusFound && !error.hasErrors()) {
+			error.rejectValue(STR_LOGOFILEDATA, STR_NOTEMPTY,virusFoundMsg);
+		}
+		// Code to implement Antivirus Check Ends	
+	}
+	/**
+	 * Scan the file for virus
+	 * @param uploadedFile File that is uploaded
+	 * @param uploadFileName name of the file being uploaded 
+	 * @return boolean "true" if the file is virus free, "false" informing that the file
+	 *  is not clean and might contain virus thus we do not proceed to upload the file
+	 */
+	private boolean scanFileForVirus(String uploadFilePath, String uploadFileName) {
+		boolean virusFound = false;
+		AVScannerHelper avScanHelper = new AVScannerHelper();
+		virusFound = avScanHelper.scanFile(uploadFilePath, uploadFileName);
+		return virusFound;
 	}
 }

@@ -13,7 +13,10 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$(".megamenu").megamenu();
-		
+		var virusStatus=$('#virusFound').val();
+		if(virusStatus=='true'){
+			$("#resumeErrorMsg").html("The resume you tried to upload contains a virus. We attempted to remove the virus from your file, but we were unsuccessful. Please upload another file.");
+		}
 		var sizeInKB = 0;
 		
 		$("#resumeType").change(function() {
@@ -115,6 +118,7 @@
 			<form:form method="post" action="createResumeUpload.html"
 				commandName="createResume" id="resumeUploadForm"
 				enctype="multipart/form-data">
+				<form:hidden path="virusFound"/>
 				<div class="rowEvenNewSpacing">
 					<div id="resumeErrorMsg" class="FormErrorDisplayText"></div>
 					<div class="clearfix"></div>

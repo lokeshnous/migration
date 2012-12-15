@@ -99,6 +99,12 @@ public class JobSeekerDashBoardController extends AbstractController {
 
 		ModelAndView model = new ModelAndView();
 		JobSeekerDashBoardForm form = new JobSeekerDashBoardForm();
+		if(null !=session.getAttribute("virusStatus") ){
+			boolean virusStatus = (Boolean) session.getAttribute("virusStatus");
+			request.setAttribute("virusStatus", virusStatus);
+			session.removeAttribute("virusStatus");
+			LOGGER.info("Virus Status : " + true);
+		}
 		if (null != session.getAttribute("uploadStatus")) {
 			boolean status = (Boolean) session.getAttribute("uploadStatus");
 			request.setAttribute("uploadStatus", status);

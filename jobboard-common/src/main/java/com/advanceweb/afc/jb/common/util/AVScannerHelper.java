@@ -1,4 +1,4 @@
-// after POM file modification we need to Uncomment  the below code
+
 package com.advanceweb.afc.jb.common.util;
 
 import java.io.FileOutputStream;
@@ -29,7 +29,7 @@ public class AVScannerHelper {
 	private @Value("${semantic.antivirus.ip}")
 	String antivirusIp;
 	private @Value("${semantic.antivirus.port}")
-	int pord;
+	int port;
 	/**
 	 * Virus Scanning poicy
 	 */
@@ -46,11 +46,11 @@ public class AVScannerHelper {
 		Vector<ScanEngineInfo> scanEnginesForScanning = new Vector<ScanEngineInfo>();
 		LOGGER.info("Uploaded file Path : " + uploadedFilePath);
 
-		// TEST ONLY --DELETE
+		/*// TEST ONLY --DELETE
 		if (uploadedFilePath == null) {
 			uploadedFilePath = "c:\\temp\\ResumeTemp.docx";
 			fileName = "ResumeTemp.docx";
-		}
+		}*/
 
 		ScanEngine.ScanEngineInfo scanEngTobeUsed = new ScanEngine.ScanEngineInfo(
 				"192.168.31.230", 1344);
@@ -68,7 +68,7 @@ public class AVScannerHelper {
 					.createStreamScanRequest(uploadedFilePath, fileName,
 							output, scPolicy);
 			result = streamScanReq.scanFile();
-
+			printResult(result);	
 			if (output != null) {
 				output.close();
 			}

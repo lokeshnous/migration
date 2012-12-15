@@ -28,6 +28,7 @@ import com.advanceweb.afc.common.controller.AbstractController;
 import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.common.util.AVScannerHelper;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.ManageFeaturedEmployerProfile;
@@ -65,6 +66,11 @@ public class EmployerProfileManagementController extends AbstractController{
 	
 	private @Value("${isFeaturedEmployerErrorMsg}")
 	String isFeaturedEmployerErrorMsg;
+	private @Value("${virus.found.video.msg}")
+	String virusFoundMsg;
+	private @Value("${	virus.found.image.msg}")
+	String 	virusFoundImageMsg;
+
 	
 	@Autowired
 	private AdService adService;
@@ -181,12 +187,12 @@ public class EmployerProfileManagementController extends AbstractController{
         companyProfileDTO.setCompanyNews(managementForm.getCompanyNews());
         String fileName = null, filePath = null;
         Random random = new Random();
-        
 		try {
 			MultipartFile logoUrl = managementForm.getLogoUrl();
 			MultipartFile promoMedia = managementForm.getPositionalMedia();
 			validateImageFileFormat(logoUrl.getOriginalFilename(),result);
 			validateMediaFileFormat(promoMedia.getOriginalFilename(),result);
+			
 			if (result.hasErrors()) {
 				model.addObject("managementForm", managementForm);
 				model.setViewName("manageFeatureEmpPro");
@@ -201,7 +207,8 @@ public class EmployerProfileManagementController extends AbstractController{
 					companyProfileDTO.setLogoPath(filePath);
 					File dest = new File(filePath);
 					logoUrl.transferTo(dest);
-
+					checkImageFileForVirus(dest,result);
+					
 				}
 				if (null != promoMedia && promoMedia.getSize() > 0) {
 					fileName = promoMedia.getOriginalFilename();
@@ -211,9 +218,14 @@ public class EmployerProfileManagementController extends AbstractController{
 					filePath = System.getProperty("catalina.home") + appMediaPath + modifiedFileName;
 					File transfer = new File(filePath);
 					promoMedia.transferTo(transfer);
+					checkVedioFileForVirus(transfer,result);
 
 				}
-
+				if (result.hasErrors()) {
+					model.addObject("managementForm", managementForm);
+					model.setViewName("manageFeatureEmpPro");
+					return model;
+				} 
 
 				facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
 				nsCustomerId = manageFeaturedEmployerProfile.getNSCustomerIDFromAdmFacility(facilityId);
@@ -230,7 +242,33 @@ public class EmployerProfileManagementController extends AbstractController{
 		model.setViewName("redirect:/employer/employerDashBoard.html");
 		return model;
 	}
-	
+
+	/**
+	 * Method to scan file for anti-virus
+	 * @param virusChkFiledest
+	 * @param error
+	 */
+	private void checkImageFileForVirus(File virusChkFiledest,Errors error) {
+		// Code to implement Antivirus Check Starts	
+		boolean virusFound = scanFileForVirus(virusChkFiledest.getPath(), virusChkFiledest.getName()); 
+		
+		if (virusFound) {
+			error.rejectValue("logoUrl", STR_NOTEMPTY, virusFoundImageMsg);
+		}
+		// Code to implement Antivirus Check Ends	
+	}
+	/**
+	 * @param session
+	 */
+	private void checkVedioFileForVirus(File virusChkFiledest,Errors error) {
+		// Code to implement Antivirus Check Starts	
+		boolean virusFound = scanFileForVirus(virusChkFiledest.getPath(), virusChkFiledest.getName()); 
+		
+		if (virusFound) {
+			error.rejectValue("positionalMedia", STR_NOTEMPTY, virusFoundMsg);
+		}
+		// Code to implement Antivirus Check Ends	
+	}
 	
 	/**
 	 * Validating the emailId
@@ -342,5 +380,17 @@ public class EmployerProfileManagementController extends AbstractController{
 				.getTime() < endDate.getTime());
 	}
 	
-	
+	/**
+	 * Scan the file for virus
+	 * @param uploadedFile File that is uploaded
+	 * @param uploadFileName name of the file being uploaded 
+	 * @return boolean "true" if the file is virus free, "false" informing that the file
+	 *  is not clean and might contain virus thus we do not proceed to upload the file
+	 */
+	private boolean scanFileForVirus(String uploadFilePath, String uploadFileName) {
+		boolean virusFound = false;
+		AVScannerHelper avScanHelper = new AVScannerHelper();
+		virusFound = avScanHelper.scanFile(uploadFilePath, uploadFileName);
+		return virusFound;
+	}
 }

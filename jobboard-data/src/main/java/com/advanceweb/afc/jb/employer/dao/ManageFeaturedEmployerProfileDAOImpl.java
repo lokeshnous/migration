@@ -129,7 +129,8 @@ public class ManageFeaturedEmployerProfileDAOImpl implements
 			if (employerId != 0) {
 
 				AdmFacility admFacility = (AdmFacility) hibernateTemplateCareers
-						.get(AdmFacility.class, employerId);
+						.get(AdmFacility.class, Long.valueOf(employerId)
+								.intValue());
 				companyProfileDTO.setFacilityid(String.valueOf(admFacility
 						.getFacilityId()));
 				companyProfileDTO.setCompanyName(admFacility.getName());

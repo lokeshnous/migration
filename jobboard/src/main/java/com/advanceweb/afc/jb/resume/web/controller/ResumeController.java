@@ -50,6 +50,7 @@ import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
+import com.advanceweb.afc.jb.common.util.AVScannerHelper;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
@@ -406,7 +407,7 @@ public class ResumeController extends AbstractController{
 	 */
 	@RequestMapping(value = "/createResumePopUp", method = RequestMethod.GET)
 	public ModelAndView createResumePopUp(
-			@RequestParam("resumeType") String resumeType,HttpSession session) {
+			@RequestParam("resumeType") String resumeType,HttpSession session,HttpServletRequest request) {
 		
 		CreateResume createResume = new CreateResume();
 
@@ -415,7 +416,40 @@ public class ResumeController extends AbstractController{
 				.setResumeVisibility(MMJBCommonConstants.VISIBILITY_PRIVATE);
 
 		createResume.setResumeType(resumeType);
+		if (null != request.getParameter("virus")) {
+			if (null != session.getAttribute("resumeName")) {
+				createResume.setResumeName((String) session
+						.getAttribute("resumeName"));
+				session.removeAttribute("resumeName");
+			}
+			if (null != session.getAttribute("jobTitle")) {
+				createResume.setDesiredJobTitle((String) session
+						.getAttribute("jobTitle"));
+				session.removeAttribute("jobTitle");
+			}
+			if (null != session.getAttribute("empType")) {
+				createResume.setDesiredEmploymentType((String) session
+						.getAttribute("empType"));
+				session.removeAttribute("empType");
+			}
+			if (null != session.getAttribute("workAuthorizationUS")) {
+				createResume.setWorkAuthorizationUS((String) session
+						.getAttribute("workAuthorizationUS"));
+				session.removeAttribute("workAuthorizationUS");
+			}
+			if (null != session.getAttribute("willingToRelocate")) {
+				createResume.setWillingToRelocate((String) session
+						.getAttribute("willingToRelocate"));
+				session.removeAttribute("willingToRelocate");
+			}
+			if (null != session.getAttribute("resumeVisibility")) {
+				createResume.setResumeVisibility((String) session
+						.getAttribute("resumeVisibility"));
+				session.removeAttribute("resumeVisibility");
+			}
 
+			createResume.setVirusFound(true);
+		}
 		ModelAndView model = populateResumeDropDowns();
 		model.addObject(CREATE_RESUME, createResume);
 
@@ -495,44 +529,77 @@ public class ResumeController extends AbstractController{
 				MultipartFile file = createResume.getFileData();
 
 				if (null != file && file.getSize() > 0) {
-						fileName = file.getOriginalFilename();
-						filePath = basedirectorypathUpload;
-						resumeDTO.setFileServer(basedirectorypathUpload);
-						resumeDTO.setFileName(fileName);
-						resumeDTO.setFilePath(filePath);
-						resumeDTO.setUserId((Integer) session
-								.getAttribute(MMJBCommonConstants.USER_ID));
-						String tempDirectoryFilePath = createDirectoryFilePath(resumeDTO);
-						
-						File virusChkFiledest = new File(tempDirectoryFilePath);
-						file.transferTo(virusChkFiledest);
+					fileName = file.getOriginalFilename();
+					filePath = basedirectorypathUpload;
+					resumeDTO.setFileServer(basedirectorypathUpload);
+					resumeDTO.setFileName(fileName);
+					resumeDTO.setFilePath(filePath);
+					resumeDTO.setUserId((Integer) session
+							.getAttribute(MMJBCommonConstants.USER_ID));
+					String tempDirectoryFilePath = createDirectoryFilePath(resumeDTO);
+					// Code to implement Antivirus Check Starts
+					File virusChkFiledest = new File(tempDirectoryFilePath);
+					file.transferTo(virusChkFiledest);
+					boolean virusFound = scanFileForVirus(
+							virusChkFiledest.getPath(),
+							virusChkFiledest.getName());
+
+					if (virusFound) {
+						LOGGER.info("Virus Found In File "
+								+ resumeDTO.getFileName() + " Uploaded By !"
+								+ resumeDTO.getUserId());
+						// delete the temporary storage location in the server
+						// which was used
+						// for file uploading and virus scanning purposes
+						virusChkFiledest.delete();
+
+						// alert the user that the uploaded document contains
+						// virus and reject the resume
+						createResume
+								.setResumeType(MMJBCommonConstants.RESUME_TYPE_UPLOAD);
+						createResume.setVirusFound(true);
+						session.setAttribute("virusStatus", true);
+						if (null != createResume.getResumeName()) {
+							session.setAttribute("resumeName",
+									createResume.getResumeName());
+						}
+						if (null != createResume.getDesiredJobTitle()) {
+							session.setAttribute("jobTitle",
+									createResume.getDesiredJobTitle());
+						}
+						if (null != createResume.getDesiredEmploymentType()) {
+							session.setAttribute("empType",
+									createResume.getDesiredEmploymentType());
+						}
+						if (null != createResume.getWorkAuthorizationUS()) {
+							session.setAttribute("workAuthorizationUS",
+									createResume.getWorkAuthorizationUS());
+						}
+						if (null != createResume.getWillingToRelocate()) {
+							session.setAttribute("willingToRelocate",
+									createResume.getWillingToRelocate());
+						}
+						if (null != createResume.getResumeVisibility()) {
+							session.setAttribute("resumeVisibility",
+									createResume.getResumeVisibility());
+						}
+						model.addObject(CREATE_RESUME, createResume);
+						model.setViewName(JS_REDIRECT_URL);
+						return model;
+						// Code to implement Antivirus Check Ends
+					} else {
+						LOGGER.info("No Virus Found In File "
+								+ resumeDTO.getFileName() + " Uploaded By !"
+								+ resumeDTO.getUserId());
+						// virusChkFiledest.delete();
 						resumeDTO = resumeService.createResumeUpload(resumeDTO);
-						// after POM file modification we need to Uncomment  the below code
-						/*File dest = new File(resumeDTO.getFilePath());
-						boolean virusFound = scanFileForVirus(virusChkFiledest.getPath(), virusChkFiledest.getName()); 
-						
-						if (virusFound) {
-							LOGGER.info("Virus Found In File "+resumeDTO.getFileName()+" Uploaded By !"+resumeDTO.getUserId() );
-							//delete the temporary storage location in the server which was used
-							//for file uploading and virus scanning purposes 
-							virusChkFiledest.delete();
-							
-							//alert the user that the uploaded document contains virus and reject the resume
-							
-							model.setViewName("redirect:/jobSeekerResume/createResumePopUp.html?resumeType=Upload Existing Resume");
-						} else {
-							LOGGER.info("No Virus Found In File "+resumeDTO.getFileName()+" Uploaded By !"+resumeDTO.getUserId() );
-							//virusChkFiledest.delete();
-							resumeDTO = resumeService.createResumeUpload(resumeDTO);
-							File dest = new File(resumeDTO.getFilePath());*/
-							//virusChkFiledest.renameTo(dest);
-						/*}*/
-						
-						
-						
+						File dest = new File(resumeDTO.getFilePath());
+						virusChkFiledest.renameTo(dest);
+					}
+
 				}
 			} catch (Exception jbex) {
-				LOGGER.error("Error Occured While Uploading the File"+jbex);
+				LOGGER.error("Error Occured While Uploading the File" + jbex);
 			}
 			session.setAttribute("uploadStatus", true);
 			model.setViewName(JS_REDIRECT_URL);
@@ -561,12 +628,12 @@ public class ResumeController extends AbstractController{
 	 * @return boolean "true" if the file is virus free, "false" informing that the file
 	 *  is not clean and might contain virus thus we do not proceed to upload the file
 	 */
-	/*private boolean scanFileForVirus(String uploadFilePath, String uploadFileName) {
+	private boolean scanFileForVirus(String uploadFilePath, String uploadFileName) {
 		boolean virusFound = false;
 		AVScannerHelper avScanHelper = new AVScannerHelper();
 		virusFound = avScanHelper.scanFile(uploadFilePath, uploadFileName);
 		return virusFound;
-	}*/
+	}
 	/**
 	 * This method is called to update resume of type upload. 
 	 * @param createResume

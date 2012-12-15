@@ -49,6 +49,7 @@ public class CreateResume {
 	private int builderResumeId;
 	private int userId;
 	private Long totalProgress = 0L;
+	private boolean virusFound=false;
 	//Creating Resume	
 	
 	public String getUploadResumeId() {
@@ -252,5 +253,17 @@ public class CreateResume {
 	}
 	public void setAvailableDate(String availableDate) {
 		this.availableDate = availableDate;
+	}
+	/**
+	 * @return the virusFound
+	 */
+	public boolean isVirusFound() {
+		return virusFound;
+	}
+	/**
+	 * @param virusFound the virusFound to set
+	 */
+	public void setVirusFound(boolean virusFound) {
+		this.virusFound = virusFound;
 	}
 }

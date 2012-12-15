@@ -24,10 +24,18 @@
 	<script type="text/javascript">
 jQuery(document).ready(
 		function() {
+			$('#virusUrlDiv').hide();
 			var uploadStatus = <%= request.getAttribute("uploadStatus")%>
+			var virusStatus=<%= request.getAttribute("virusStatus")%>
+			if(virusStatus){
+				$("#createResumePopupUpload").displaypopup("#createResumePopupUpload",
+						"790", "350");
+				$('#createResumePopupUpload').trigger('click');
+			}
 			if(uploadStatus){
 				alert("Resume uploaded successfully")
 			}
+			
 			
 			//jQuery(".megamenu").megamenu();
 			$("#viewappliedjob").displaypopup("#viewappliedjob", "790", "350");
@@ -53,6 +61,9 @@ jQuery(document).ready(
 					"#profileViewCount", "400", "350");
 			$("#retainThisJobId").displaypopup(
 					"#retainThisJobId", "790", "252");
+			$("#createResumePopupUpload").displaypopup("#createResumePopupUpload",
+					"790", "350");
+			
 			var status = <%= session.getAttribute(MMJBCommonConstants.RETAIN_SEARCH)%>
 			if(status)
 			{
@@ -215,6 +226,11 @@ jQuery(document).ready(
 												<a
 													href="<%=request.getContextPath()%>/jobSeekerResume/createResumePopUp.html?resumeType=createResume"
 													id="createResumePopup">${msg.jsCreateNewResume}</a>
+													<div id="virusUrlDiv">
+													<a 
+													href="<%=request.getContextPath()%>/jobSeekerResume/createResumePopUp.html?resumeType=Upload Existing Resume&virus=true"
+													 id="createResumePopupUpload" >${msg.jsCreateNewResume}</a>
+													 </div>
 											</p>
 										</div>
 										<div class="lableTextBLineDashBoard">
