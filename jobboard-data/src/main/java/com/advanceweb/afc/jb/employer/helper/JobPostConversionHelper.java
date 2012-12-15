@@ -175,6 +175,7 @@ public class JobPostConversionHelper<JobPostForm> {
 				jobPostDTO.setJobId(job.getJobId());
 				jobPostDTO.setJobTitle(job.getJobtitle());
 				jobPostDTO.setCompanyName(job.getName());
+				jobPostDTO.setDisCompanyName(job.getFacility());
 				jobPostDTO.setJobNumber(job.getJobNumber());
 				jobPostDTO.setAutoRenew(job.getAutoRenew() == 0 ? false : true);
 				//jobPostDTO.setJobPostingType(job.getJpJobType().getName());

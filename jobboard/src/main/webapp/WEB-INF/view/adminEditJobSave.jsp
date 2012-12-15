@@ -21,6 +21,7 @@
 								<th width="10%" align="center" valign="middle" class="FontSize11">Job ID</th>
 								<th width="18%" align="center" valign="middle" class="FontSize11"><strong>Job
 										Title</strong></th>
+								<th width="18%" align="center" valign="middle" class="FontSize11"><strong>Company Name</strong></th>		
 								<th width="11%" align="center" valign="middle" class="FontSize11"><strong>Location</strong></th>
 								<th width="8%" align="center" valign="middle" class="FontSize11"><strong>Job
 										Status
@@ -41,6 +42,7 @@
 									<td align="center" valign="middle">${job.jobId}</td>
 									<td align="center" valign="middle">${job.jobNumber}</td>
 									<td align="center" valign="middle">${job.jobTitle}</td>
+									<td align="center" valign="middle">${job.disCompanyName}</td>
 									<td align="center" valign="middle">${job.location}</td>
 									<td align="center" valign="middle">${job.jobStatus}</td>
 									<td align="center" valign="middle">${job.startDt}</td>
