@@ -262,7 +262,7 @@ public class ManageFeaturedEmployerProfileDAOImpl implements
 	public Long getEmployerListCount() {
 		Long employerListCount = 0L;
 		try {
-
+			//Session session = sessionFactory.openSession();
 			// modified to bring all facility groups in futured employer list.
 			employerListCount =(Long) hibernateTemplateCareers
 					.getSessionFactory()
@@ -270,6 +270,10 @@ public class ManageFeaturedEmployerProfileDAOImpl implements
 					.createQuery(
 							"SELECT count(a) from AdmFacility a where a.facilityParentId = 0")
 					.uniqueResult(); 
+			/*employerListCount = (Long) session
+					.createCriteria(AdmFacility.class)
+					.add(Restrictions.le("feStartDt", new Date()))
+					.add(Restrictions.ge("feEndDt", new Date())).setProjection(Projections.rowCount()).uniqueResult();*/
 					
 		} catch (HibernateException e) {
 			LOGGER.error(e);

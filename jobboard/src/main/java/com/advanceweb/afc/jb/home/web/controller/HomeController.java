@@ -163,8 +163,8 @@ public class HomeController extends AbstractController{
 			model.addAttribute("healthcarenew",
 					"<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>");
 			model.addAttribute("careerstoolresource", "");
-			LOGGER.info("Error occurred while getting the html content for home page"
-					+ e);
+			LOGGER.error("Error occurred while getting the html content for home page"
+					, e);
 		}
 		// Get the SEO Details
 		getSEODetails(model, request);

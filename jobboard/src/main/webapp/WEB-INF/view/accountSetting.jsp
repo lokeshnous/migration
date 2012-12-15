@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -81,7 +82,6 @@ function copyAccToBillingAddr(obj) {
     	});
 		
  		$('#btn-submit').click(function(){			
- 			
 			$.ajax({url:"${pageContext.request.contextPath}/employerRegistration/employeeAccountSetting.html",
 				data:$('#editAccountSettingData').serialize(),
 				type:"POST",
@@ -404,7 +404,14 @@ $('#cityOrTown2').val("");
 					</div>
 					<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 						<span class="floatLeft marginTop10">
-							<input type="button" value="Save" name="btn-submit" disabled="${employeeAccountForm.readOnly }" id="btn-submit" class="orange cursor" />
+						<c:choose>
+						<c:when test="${employeeAccountForm.readOnly }">
+						<input type="button" value="Save" name="btn-submit" disabled="${employeeAccountForm.readOnly }" id="btn-submit" class="orange cursor" />
+						</c:when>
+						<c:otherwise>
+						<input type="button" value="Save" name="btn-submit" id="btn-submit" class="orange cursor" />
+						</c:otherwise>
+						</c:choose>
 							<input type="button" name="Cancel" id="Cancel" value="Cancel" class="orange cursor" />
 								
 						</span>
@@ -424,8 +431,7 @@ $('#cityOrTown2').val("");
 						<span class="lableText3"> Use my account address </span>
 						<form:checkbox onclick="copyAccToBillingAddr(this)" path="" value="false" disabled="${employeeAccountForm.readOnly }" name="useAcctAddress" id="useAcctAddress"/>
 					</div>
-				
-				<c:if test="${count == '1'}">
+				<%-- <c:if test="${count == '1'}"> --%>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3"> First Name: </span>
 						<form:input path="billingAddressForm.fnameForBillingAddr" readonly="${employeeAccountForm.readOnly }" id="firstName2" name="firstName2"
@@ -488,14 +494,22 @@ $('#cityOrTown2').val("");
 					</div>
 					<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 						<span class="floatLeft marginTop10">
-							<input type="button" value="Save" disabled="${employeeAccountForm.readOnly }" name="btn-submit2" id="btn-submit2" class="orange cursor" />
+							<c:choose>
+						<c:when test="${employeeAccountForm.readOnly }">
+						<input type="button" value="Save" disabled="${employeeAccountForm.readOnly }" name="btn-submit2" id="btn-submit2" class="orange cursor" />
+						</c:when>
+						<c:otherwise>
+						<input type="button" value="Save" name="btn-submit2" id="btn-submit2" class="orange cursor" />
+						</c:otherwise>
+						</c:choose>
+							
 							<input type="button" name="CancelData"  id="CancelData" value="Cancel" class="orange cursor" />
 						<a href="#jobSeekerRegister1" id="BackToTopId" style="display: none;">Back To Top</a>
 						<a href="#billingId" id="BackToMdlId" style="display: none;">Back To Middle</a>
 						</span>
 					</div>
 					<div class="clearfix"></div>
-				</c:if>
+				<%-- </c:if> --%>
 			</form:form>
 			</div>
 			<div class="clearfix">

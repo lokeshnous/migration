@@ -150,9 +150,27 @@ public class UserAlertController {
 			}
 			dropDownList = transferUserAlert.jbOwnerListTODropDownDTO(jbOwners);
 		}
+		// set the alerts for first job owner
+		/*int firstJobOwnerId = 0;
+		if(dropDownList != null && dropDownList.get(0).getOptionId() != null){
+			firstJobOwnerId = Integer.parseInt(dropDownList.get(0).getOptionId());
+		}
+		String[] selectedAlerts = null;
+		if(firstJobOwnerId != 0){
+			List<UserAlertDTO> alertDTOs = alertService.viewalerts(userId,
+					facilityId, jbOwnerList.subList(0, 1));
+			int index = 0;
+			selectedAlerts = new String[alertDTOs.size()];
+			for (UserAlertDTO userAlertDTO : alertDTOs) {
+				selectedAlerts[index] =  String.valueOf(userAlertDTO.getAlertId());
+				index++;
+			}
+		}
+		alertForm.setSelectedAlerts(selectedAlerts);*/
 		model.addObject("alertList", alertList);
 		model.addObject("jbOwnerList", dropDownList);
-		model.setViewName("alertForm");
+		model.addObject("alertForm", alertForm);
+		//model.setViewName("alertForm");
 		model.setViewName("setAlertPopup");
 		return model;
 	}
@@ -202,7 +220,7 @@ public class UserAlertController {
 		try {
 			jbOwnerList = permissionService.getJobOwnerList(facilityId, userId);
 		} catch (JobBoardServiceException e) {
-			LOGGER.info("error in viewalerts" + e);
+			LOGGER.error("error in viewalerts" , e);
 		}
 
 		// If logged in user role is 5 then we get all job owners of
@@ -213,8 +231,8 @@ public class UserAlertController {
 			try {
 				jbOwnerList = alertService.getJobOwner(facilityId, userId);
 			} catch (JobBoardException e) {
-				LOGGER.info("Error occurred while getting the data for set alert"
-						+ e);
+				LOGGER.error("Error occurred while getting the data for set alert"
+						, e);
 			}
 			// If logged in user role is 6 then we get only logged in user name
 			// in the drop down list
@@ -223,8 +241,8 @@ public class UserAlertController {
 			try {
 				jbOwnerList = alertService.getOwnerDetails(userId);
 			} catch (JobBoardException e) {
-				LOGGER.info("Error occurred while getting the data for set alert"
-						+ e);
+				LOGGER.error("Error occurred while getting the data for set alert"
+						, e);
 			}
 		}
 		List<UserAlertDTO> alertList = alertService.viewalerts(userId,

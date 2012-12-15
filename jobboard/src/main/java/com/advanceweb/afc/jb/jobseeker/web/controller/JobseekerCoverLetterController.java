@@ -299,7 +299,7 @@ public class JobseekerCoverLetterController {
 				out.write(listOfCoverLetter.getCoverletterText());
 				response.setContentType("application/msword");
 				response.setHeader("Content-Disposition",
-						"attachment; filename=" + fName + ".docx\"");
+						"attachment; filename=" + fName + ".doc");
 				//response.setHeader("Cache-Control", "no-cache");
 				byte[] bytesGot = listOfCoverLetter.getCoverletterText()
 						.getBytes();

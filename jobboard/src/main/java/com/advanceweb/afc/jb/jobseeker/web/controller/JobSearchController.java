@@ -383,7 +383,7 @@ public class JobSearchController extends AbstractController {
 			modelView.addObject("basePath",request.getRequestURL().toString().replace(request.getServletPath(), ""));
 			modelView.setViewName("jobseekerJobDetails");
 			// get the Ads
-			populateAds(request, session, modelView, PageNames.JOB_VIEW);
+			populateAds(request, session, modelView, PageNames.JOB_VIEW, 0);
 		} else {
 			List<JobPostDTO> jobPostDTOList = jobSearchService
 					.getRecentJobsPostedByEmployer(jobDTO.getFacilityId(),
@@ -406,7 +406,7 @@ public class JobSearchController extends AbstractController {
 			model.put("videoList", videoList);
 			modelView.setViewName("jobseekerJobDetailsTemplate");
 			// get the Ads
-			populateAds(request, session, modelView, PageNames.PREMIUM_JOB_VIEW);
+			populateAds(request, session, modelView, PageNames.PREMIUM_JOB_VIEW, 0);
 		}
 	}
 
@@ -427,7 +427,7 @@ public class JobSearchController extends AbstractController {
 		modelView.addObject("newsDTOList", newsDTOList);
 		modelView.setViewName("newsList");
 		// get the Ads
-		populateAds(request, session, modelView, PageNames.PREMIUM_JOB_VIEW);
+		populateAds(request, session, modelView, PageNames.PREMIUM_JOB_VIEW, 0);
 
 		return modelView;
 	}
@@ -440,9 +440,10 @@ public class JobSearchController extends AbstractController {
 	 * @param session
 	 * @param model
 	 * @param pageName
+	 * @param recordsPerPage 
 	 */
 	private void populateAds(HttpServletRequest request, HttpSession session,
-			ModelAndView model, String pageName) {
+			ModelAndView model, String pageName, int recordsPerPage) {
 		String bannerString = null;
 		try {
 			
@@ -461,6 +462,16 @@ public class JobSearchController extends AbstractController {
 			model.addObject(MMJBCommonConstants.ADPAGEBOTTOM, bannerString);
 
 			if (pageName.equalsIgnoreCase(PageNames.JOBSEEKER_BROWSE_JOBS)) {
+				List<String> adsList = new ArrayList<String>();
+				for (int index = 0; index < (recordsPerPage / MMJBCommonConstants.JOBSEARCH_GRID_PAGES_COUNT); index++) {
+					size = AdSize.IAB_LEADERBOARD;
+					position = AdPosition.CENTER_MIDDLE;
+					bannerString = adService.getBanner(clientContext, size,
+							position).getTag();
+					adsList.add(bannerString);
+				}
+				session.setAttribute("adPageCenterMiddleList", adsList);
+				
 				size = AdSize.IAB_MEDIUM_RECTANGLE;
 				position = AdPosition.RIGHT_TOP;
 				bannerString = adService.getBanner(clientContext, size,
@@ -912,7 +923,7 @@ public class JobSearchController extends AbstractController {
 
 		model.put(JOB_SEARCH_RESULT_FORM, jobSearchResultForm);
 		// get the Ads
-		populateAds(request, session, modelAndView, PageNames.JOBSEEKER_JOB_SEARCH);
+		populateAds(request, session, modelAndView, PageNames.JOBSEEKER_JOB_SEARCH, 0);
 		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
 		return modelAndView;
 	}
@@ -1002,15 +1013,12 @@ public class JobSearchController extends AbstractController {
 		setSessionForGrid(session, request, jobSearchResultDTO, page,
 				recordsPerPage, noOfRecords, jobSrchJsonObj);
 
-		// populate the ads for search results grid
-		populateAds(request, session, jobSrchJsonObj,
-				recordsPerPage);
 		modelAndView.addObject(MMJBCommonConstants.ADPGCENTER_MIDDLE_LIST,
 				jobSrchJsonObj.get(MMJBCommonConstants.ADPGCENTER_MIDDLE_LIST));
 
 		model.put(JOB_SEARCH_RESULT_FORM, jobSearchResultForm);
 		// get the Ads
-		populateAds(request, session, modelAndView, PageNames.JOBSEEKER_JOB_SEARCH);
+		populateAds(request, session, modelAndView, PageNames.JOBSEEKER_JOB_SEARCH, recordsPerPage);
 		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
 		return modelAndView;
 	}
@@ -1163,7 +1171,7 @@ public class JobSearchController extends AbstractController {
 		// get SEO details
 		addSEODetailsForBrowsePages(modelAndView, request, category);
 		populateAds(request, session, modelAndView,
-				PageNames.JOBSEEKER_BROWSE_JOBS);
+				PageNames.JOBSEEKER_BROWSE_JOBS, recordsPerPage);
 		modelAndView.addObject(JOB_SEARCH_RESULT_FORM, jobSearchResultForm);
 		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
 		return modelAndView;
@@ -1255,7 +1263,7 @@ public class JobSearchController extends AbstractController {
 
 		// populate the ads
 		populateAds(request, session, modelAndView,
-				PageNames.JOBSEEKER_BROWSE_JOBS);
+				PageNames.JOBSEEKER_BROWSE_JOBS, recordsPerPage);
 		return modelAndView;
 	}
 
@@ -1370,16 +1378,13 @@ public class JobSearchController extends AbstractController {
 		jobSearchMatchInfo = jobSearchMatchInfo.replace(Q_KEYWORD, jobTitle);
 		session.setAttribute(JOB_SRCH_MTCH_INFO, jobSearchMatchInfo);
 
-		// populate the ads for search results grid
-		populateAds(request, session, jobSrchJsonObj,
-				recordsPerPage);
 		String[] seoInfos = { jobTitle };
 		// Add the SEO details for job search results page
 		addSEODetailsForJobsSearchPages(modelAndView, request, JOBTITLE,
 				seoInfos, noOfRecords);
 		// populate the ads
 		populateAds(request, session, modelAndView,
-				PageNames.JOBSEEKER_BROWSE_JOBS);
+				PageNames.JOBSEEKER_BROWSE_JOBS, recordsPerPage);
 		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
 		return modelAndView;
 	}
@@ -1500,16 +1505,13 @@ public class JobSearchController extends AbstractController {
 		jobSearchMatchInfo = jobSearchMatchInfo.replace(Q_KEYWORD, employer);
 		session.setAttribute(JOB_SRCH_MTCH_INFO, jobSearchMatchInfo);
 
-		// populate the ads for search results grid
-		populateAds(request, session, jobSrchJsonObj,
-				recordsPerPage);
 		String[] seoInfos = { employer };
 		// Add the SEO details for job search results page
 		addSEODetailsForJobsSearchPages(modelAndView, request,
 				BROWSE_BY_EMPLOYER, seoInfos, noOfRecords);
 		// populate the ads
 		populateAds(request, session, modelAndView,
-				PageNames.JOBSEEKER_BROWSE_JOBS);
+				PageNames.JOBSEEKER_BROWSE_JOBS, recordsPerPage);
 		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
 		return modelAndView;
 	}
@@ -1626,16 +1628,13 @@ public class JobSearchController extends AbstractController {
 		session.setAttribute(BROWSE_BY_STATE, state);
 		session.removeAttribute(BROWSE_BY_EMPLOYER);
 
-		// populate the ads for search results grid
-		populateAds(request, session, jobSrchJsonObj,
-				recordsPerPage);
 		String[] seoInfos = { state };
 		// Add the SEO details for job search results page
 		addSEODetailsForJobsSearchPages(modelAndView, request, LOCATION,
 				seoInfos, noOfRecords);
 		// populate the ads
 		populateAds(request, session, modelAndView,
-				PageNames.JOBSEEKER_BROWSE_JOBS);
+				PageNames.JOBSEEKER_BROWSE_JOBS, recordsPerPage);
 		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
 		return modelAndView;
 	}
@@ -1758,16 +1757,13 @@ public class JobSearchController extends AbstractController {
 				+ "," + selectedLocation);
 		session.setAttribute(JOB_SRCH_MTCH_INFO, jobSearchMatchInfo);
 
-		// populate the ads for search reults grid
-		populateAds(request, session, jobSrchJsonObj,
-				recordsPerPage);
 		String[] seoInfos = { selectedArea, selectedLocation };
 		// Add the SEO details for job search results page
 		addSEODetailsForJobsSearchPages(modelAndView, request, AREA, seoInfos,
 				noOfRecords);
 		// populate the ads
 		populateAds(request, session, modelAndView,
-				PageNames.JOBSEEKER_BROWSE_JOBS);
+				PageNames.JOBSEEKER_BROWSE_JOBS, recordsPerPage);
 		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
 		return modelAndView;
 	}
@@ -1895,16 +1891,13 @@ public class JobSearchController extends AbstractController {
 				+ "," + selectedLocation);
 		session.setAttribute(JOB_SRCH_MTCH_INFO, jobSearchMatchInfo);
 
-		// populate the ads for search reults grid
-		populateAds(request, session, jobSrchJsonObj,
-				recordsPerPage);
 		String[] seoInfos = { selectedArea, selectedLocation };
 		// Add the SEO details for job search results page
 		addSEODetailsForJobsSearchPages(modelAndView, request, AREA, seoInfos,
 				noOfRecords);
 		// populate the ads
 		populateAds(request, session, modelAndView,
-				PageNames.JOBSEEKER_BROWSE_JOBS);
+				PageNames.JOBSEEKER_BROWSE_JOBS, recordsPerPage);
 		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
 		return modelAndView;
 	}
@@ -2316,7 +2309,7 @@ public class JobSearchController extends AbstractController {
 
 		model.setViewName("jobboardadvancedsearch");
 		// get the Ads
-		populateAds(request, session, model, PageNames.JOBSEEKER_ADVC_JOB_SEARCH);
+		populateAds(request, session, model, PageNames.JOBSEEKER_ADVC_JOB_SEARCH, 0);
 		clearSession(session);
 		return model;
 	}

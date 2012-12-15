@@ -19,8 +19,14 @@ function cancelProcess(){
 	}
 	jQuery(document).ready(function() {
 		$("#addNewJobOwnerPopUp").displaypopup("#addNewJobOwnerPopUp","770","360");
-		var selOwnerId = $("#selJobOwner").val();
 		$('#save').click(function(){
+		var selOwnerId = $("#selJobOwner").val();
+		var validate = true;
+		if(!$.isNumeric(selOwnerId)){
+	    	 $("#errmsg").html("Please add a new Job Owner and set the alerts.");
+	    	 validate=false;
+	      }
+			if(validate){
 				$.ajax({url:"${pageContext.request.contextPath}/alerts/employer/saveAlerts.html?selOwnerId="+selOwnerId,
 					data:$('#alertId').serialize(),
 					type:"GET",
@@ -28,6 +34,7 @@ function cancelProcess(){
 							parent.$.nmTop().close();
 					 },
 				});
+		}
 				
 		}); 
 		jQuery(".megamenu").megamenu();
@@ -45,6 +52,8 @@ function cancelProcess(){
 				title="Close" alt="cancel">
 		</div>
 		<div class="popUpContainerWrapper">
+		<div id="errmsg" class="validationMsg">
+				</div>
 			<form:form method="GET" action="../alerts/employer/saveAlerts.html"
 				id="alertId" commandName="alertForm">
 				<div class="rowEvenNewSpacing">

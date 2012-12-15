@@ -51,12 +51,11 @@ function validateNumber(event) {
 	    			$("#facilityErrorMsg").html("<span> </span>");
 		    		var facilityName = $.trim($("#facilityName").val());
 					var facilityStreet = $.trim($("#facilityStreet").val());
-					var facilityCity = $.trim($("#facilityCity").val());
+					var facilityCity = $.trim($("#cityAutoPopulation").val());
 					var facilityState = $.trim($("#facilityState").text());
 					var zipCode = $.trim($("#zipcode").val());
 					var facilityCountry = $.trim($("#facilityCountry").val());
 					var phoneNumber = $.trim($("#phoneNumber").val());	
-					
 					 if (facilityName.length <= 0 || facilityStreet.length <= 0 || facilityCity.length <= 0
 							 ){
 						$("#facilityErrorMsg").html("<span> Please enter the required fields.</span>");
