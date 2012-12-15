@@ -954,7 +954,8 @@ public class JobSeekerRegistrationController extends AbstractController {
 		} else {
 			String employerloginUrl;
 			if (null != userRole
-					&& userRole.equals(MMJBCommonConstants.FACILITY)) {
+					&& (userRole.equals(MMJBCommonConstants.FACILITY) || 
+							userRole.equals(MMJBCommonConstants.FACILITY_GROUP))) {
 				employerloginUrl = request.getRequestURL().toString()
 						.replace(request.getServletPath(), loginPath)
 						+ dothtmlExtention + employerPageExtention;
