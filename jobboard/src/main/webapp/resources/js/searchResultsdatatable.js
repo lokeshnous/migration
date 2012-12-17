@@ -570,7 +570,7 @@ jQuery(document).ready(function() {
 						success: function(data){ 
 							$.each(data, function(key, val) {
 								if (key == "NavigationPath") {
-									alert("Search saved successfully!");
+									alert("Search saved successfully!.Access saved search criterias using \"My saved searches\" in dashboard.");
 									window.location.href = val+ '.html';
 								}
 								
