@@ -81,7 +81,7 @@ function closePopup() {
 						}
 						
 						if(key == "success"){
-							alert("Search saved successfully!");
+							alert("Search saved successfully!.Access saved search criterias using \"My saved searches\" in dashboard.");
 							if(data.retainSaveSearch != 'undefined'){
 								window.location.reload();
 						    }
