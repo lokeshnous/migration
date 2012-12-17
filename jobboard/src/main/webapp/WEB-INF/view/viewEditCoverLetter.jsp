@@ -133,7 +133,7 @@
 					<c:if test="${covType=='Edit'}">
 						<div class="rowEvenNewSpacing">
 							<div class="rowEvenNewSpacing">
-								<span class="lableText3"> </span>
+								<span class="lableText7"> </span>
 								<div id="errmsg" class="FormErrorDisplayText"></div>
 							</div>
 							<span class="lableText7"> Cover Letter Name: </span>
