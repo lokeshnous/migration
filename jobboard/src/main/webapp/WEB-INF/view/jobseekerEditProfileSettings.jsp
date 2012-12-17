@@ -68,13 +68,16 @@ function validateNumber(event) {
  			var validate=true;
  			if($("#MyProfession :selected").text() == "Others"){
  		      if($("#otherProfession").val().length == 0){
+ 		    	 var href = $('#BackToTopId').attr('href');
+				 location.href = href;
  		    	 validate=false;
  		    	 $("#errmsg").html("Please fill the required fields");
   		      }
  		      if($.isNumeric($("#otherProfession").val())){
  		    	 validate=false;
+ 		    	 var href = $('#BackToTopId').attr('href');
+				 location.href = href;
  		    	 $("#errmsg").html("Please enter a valid profession");
- 		    	$("#errmsg").focus();
  		      }
  		    }
  			if(validate){

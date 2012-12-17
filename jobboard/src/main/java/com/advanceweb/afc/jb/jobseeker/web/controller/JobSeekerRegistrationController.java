@@ -102,6 +102,9 @@ public class JobSeekerRegistrationController extends AbstractController {
 
 	@Value("${js.all.req.fields}")
 	private String reqFields;
+	
+	@Value("${js.prof.numeric}")
+	private String profNumericMsg;
 
 	@Value("${js.email.exists}")
 	private String emailExists;
@@ -394,8 +397,14 @@ public class JobSeekerRegistrationController extends AbstractController {
 									.equals(dropDown.getOptionName())
 									&& form.getStrLabelValue().equals(
 											dropDown.getOptionId())) {
-								form.setStrLabelValue(registerForm
-										.getOtherProfession());
+								try{
+									Integer.parseInt(registerForm.getOtherProfession());
+									model.addObject("message", profNumericMsg);
+									return model;
+								}catch (NumberFormatException e) {
+									form.setStrLabelValue(registerForm
+											.getOtherProfession());
+								}
 							}
 						}
 					}

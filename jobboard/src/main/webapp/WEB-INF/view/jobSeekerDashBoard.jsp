@@ -154,7 +154,7 @@ jQuery(document).ready(
 										</div>
 										<div class="lableTextDashBoard">
 											<p>
-												<a href="../jobsearch/findJobPage.html">${msg.jsCreateNewSavedSearch}</a>
+												<a href="../jobsearch/findJobPage.html?isNewSearch=true">${msg.jsCreateNewSavedSearch}</a>
 											</p>
 										</div>
 										<div class="lableTextDashBoard">

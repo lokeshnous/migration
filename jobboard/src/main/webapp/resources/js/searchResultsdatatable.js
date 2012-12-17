@@ -214,7 +214,6 @@ jQuery(document).ready(function() {
 					$("#autoload").val(false);
 					$("#rows").val(25000);
 					$("#start").val("0");
-					
 					keywords = $("#keywords").val();
 					cityState = $("#cityState").val();
 					radius = $("#radius").val();
@@ -535,6 +534,7 @@ jQuery(document).ready(function() {
 				}
 				window.onload = function() {
 					var contextPath = $("#contextPath").val();
+					if(contextPath != undefined){
 					$.ajax({
 						url : contextPath+'/healthcarejobs/homeFeaturedEmps.html',
 						data : ({}),
@@ -564,6 +564,7 @@ jQuery(document).ready(function() {
 					}
 					);
 					getHistory();
+					}
 				};
 				function saveThisSearch() {
 					$.ajax({url : $("#contextPath").val()+"/savedSearches/saveThisSearch.html?keywords="+keywords,

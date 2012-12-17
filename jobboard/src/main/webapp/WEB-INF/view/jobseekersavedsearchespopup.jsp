@@ -230,7 +230,7 @@ var id = searchJobId.replace("viewSavedSearch", "");
 					</table>
 				</div>
 				<div class="popUpButtonRow">
-					<a href="<%=request.getContextPath()%>/jobsearch/findJobPage.html">
+					<a href="<%=request.getContextPath()%>/jobsearch/findJobPage.html?isNewSearch=true">
 						<h3>${msg.jsCreateNewSavedSearch}</h3>
 					</a> <em class="lineHeight16">${msg.jsSavedSearchInfo}</em>
 				</div>			

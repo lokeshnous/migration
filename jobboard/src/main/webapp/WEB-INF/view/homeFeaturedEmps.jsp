@@ -10,18 +10,21 @@
 										<a
 											href="featuredemployerdetails.html?id=${companyProfileDTOList[status.index].facilityid }">
 											<div class="slider1FrameA1">
-												<img src="${companyProfileDTOList[status.index].logoPath}"
+												<img src="<%=request.getContextPath()%>/healthcarejobs/viewImage.html?id=${companyProfileDTOList[status.index].logoPath}"
 													alt="${companyProfileDTOList[status.index].companyName }"
 													width="125" height="37">
 											</div>
-										</a> <a
+										</a> 
+										<c:if test="${not empty companyProfileDTOList[status.index+1].facilityid }">
+										<a
 											href="featuredemployerdetails.html?id=${companyProfileDTOList[status.index+1].facilityid }">
 											<div class="slider1FrameA2">
-												<img src="${companyProfileDTOList[status.index+1].logoPath}"
+												<img src="<%=request.getContextPath()%>/healthcarejobs/viewImage.html?id=${companyProfileDTOList[status.index+1].logoPath}"
 													alt="${companyProfileDTOList[status.index+1].companyName }"
 													width="125" height="37">
 											</div>
 										</a>
+										</c:if>
 									</div>
 								</c:forEach>
 									</div>

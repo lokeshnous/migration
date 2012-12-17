@@ -30,19 +30,19 @@
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Employer Name:</span>
-					<form:input readonly="true" path="firstName" class="job_seeker_email"
+					<form:input disabled="true" path="firstName" class="job_seeker_email"
 						id="emplyrNameAutoComplte" />
 					<span class="required">(Required)</span>
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Street Address:</span>
-					<form:input readonly="true" path="street" id="street" class="job_seeker_email" />
+					<form:input disabled="true" path="street" id="street" class="job_seeker_email" />
 					<span class="required">(Required)</span>
 				</div>
 
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">City:</span>
-					<form:input readonly="true" path="city" id="city" class="job_seeker_email" />
+					<form:input disabled="true" path="city" id="city" class="job_seeker_email" />
 					<span class="required">(Required)</span>
 				</div>
 				<c:forEach items="${empRegisterForm.listProfAttribForms}"
@@ -76,12 +76,12 @@
 				</c:forEach>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Zip Code:</span>
-					<form:input readonly="true" id="zipCode" path="zipCode" class="job_seeker_email" />
+					<form:input disabled="true" id="zipCode" path="zipCode" class="job_seeker_email" />
 					<span class="required">(Required)</span>
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Phone:</span>
-					<form:input readonly="true" path="primaryPhone" id="primaryPhone"
+					<form:input disabled="true" path="primaryPhone" id="primaryPhone"
 						class="job_seeker_email" />
 					<span class="required">(Required)</span>
 				</div>

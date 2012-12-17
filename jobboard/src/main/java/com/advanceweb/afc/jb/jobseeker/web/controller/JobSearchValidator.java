@@ -105,7 +105,7 @@ public class JobSearchValidator {
 			) {
 		
 		JSONObject jsonObject = null;
-		if (session.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP) != null) {			
+		//if (session.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP) != null) {			
 //			String searchtype =((HashMap<String, String>) session
 //					.getAttribute(SearchParamDTO.SEARCH_SESSION_MAP))
 //					.get(MMJBCommonConstants.SEARCH_TYPE);
@@ -121,7 +121,7 @@ public class JobSearchValidator {
 					jsonObject = new JSONObject();
 					jsonObject.put(ajaxMsg, jbSearchValCity);
 				}
-		}
+		//}
 		return jsonObject;
 	}
 	

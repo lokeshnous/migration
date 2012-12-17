@@ -884,47 +884,54 @@ public class JobSearchController extends AbstractController {
 	 * @return ModelAndView
 	 */
 	@RequestMapping(value = "/findJobPage", method = RequestMethod.GET)
-	public ModelAndView findJobPage(Map<String, JobSearchResultForm> model,
-			HttpSession session, HttpServletRequest request) {
+	public ModelAndView findJobPage(
+			Map<String, JobSearchResultForm> model,
+			HttpSession session,
+			HttpServletRequest request,
+			@RequestParam(value = "isNewSearch", required = false) boolean isNewSearch) {
 		JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
 		ModelAndView modelAndView = new ModelAndView();
-		Map<String, String> sessionMap = checkSessionMap
-				.getSearchSessionMap(session);
+		if (!isNewSearch) {
+			Map<String, String> sessionMap = checkSessionMap
+					.getSearchSessionMap(session);
 
-		if (!sessionMap.isEmpty()) {
+			if (!sessionMap.isEmpty()) {
 
-			String searchType = sessionMap.get(MMJBCommonConstants.SEARCH_TYPE);
-			String radius = MMJBCommonConstants.EMPTY;
-			String cityState = MMJBCommonConstants.EMPTY;
-			String keywords = MMJBCommonConstants.EMPTY;
-			String saveSearchName = MMJBCommonConstants.EMPTY;
-			keywords = sessionMap.get(SearchParamDTO.KEYWORDS);
-			cityState = sessionMap.get(SearchParamDTO.CITY_STATE);
-			radius = sessionMap.get(SearchParamDTO.RADIUS);
-			saveSearchName = sessionMap
-					.get(SearchParamDTO.SEARCH_NAME);
-//			jobSearchResultForm.setSaveSearchName(saveSearchName);
-			jobSearchResultForm.setSearchName(saveSearchName);
-			jobSearchResultForm.setSearchtype(searchType);
-			jobSearchResultForm.setKeywords(keywords);
-			jobSearchResultForm.setCityState(cityState);
-			jobSearchResultForm.setRadius(radius);
-			jobSearchResultForm.setAutoload(true);
+				String searchType = sessionMap
+						.get(MMJBCommonConstants.SEARCH_TYPE);
+				String radius = MMJBCommonConstants.EMPTY;
+				String cityState = MMJBCommonConstants.EMPTY;
+				String keywords = MMJBCommonConstants.EMPTY;
+				String saveSearchName = MMJBCommonConstants.EMPTY;
+				keywords = sessionMap.get(SearchParamDTO.KEYWORDS);
+				cityState = sessionMap.get(SearchParamDTO.CITY_STATE);
+				radius = sessionMap.get(SearchParamDTO.RADIUS);
+				saveSearchName = sessionMap.get(SearchParamDTO.SEARCH_NAME);
+				// jobSearchResultForm.setSaveSearchName(saveSearchName);
+				jobSearchResultForm.setSearchName(saveSearchName);
+				jobSearchResultForm.setSearchtype(searchType);
+				jobSearchResultForm.setKeywords(keywords);
+				jobSearchResultForm.setCityState(cityState);
+				jobSearchResultForm.setRadius(radius);
+				jobSearchResultForm.setAutoload(true);
 
-			LOGGER.info("Removing keywords, city,state, autoload from session....");
+				LOGGER.info("Removing keywords, city,state, autoload from session....");
 
-			session.removeAttribute(sessionMap.remove(SearchParamDTO.KEYWORDS));
-			session.removeAttribute(sessionMap
-					.remove(SearchParamDTO.CITY_STATE));
-			session.removeAttribute(sessionMap.remove(SearchParamDTO.RADIUS));
-			session.removeAttribute(sessionMap
-					.remove(MMJBCommonConstants.AUTOLOAD));
+				session.removeAttribute(sessionMap
+						.remove(SearchParamDTO.KEYWORDS));
+				session.removeAttribute(sessionMap
+						.remove(SearchParamDTO.CITY_STATE));
+				session.removeAttribute(sessionMap
+						.remove(SearchParamDTO.RADIUS));
+				session.removeAttribute(sessionMap
+						.remove(MMJBCommonConstants.AUTOLOAD));
 
+			}
 		}
-
 		model.put(JOB_SEARCH_RESULT_FORM, jobSearchResultForm);
 		// get the Ads
-		populateAds(request, session, modelAndView, PageNames.JOBSEEKER_JOB_SEARCH, 0);
+		populateAds(request, session, modelAndView,
+				PageNames.JOBSEEKER_JOB_SEARCH, 0);
 		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
 		return modelAndView;
 	}
@@ -2821,9 +2828,11 @@ public class JobSearchController extends AbstractController {
 				.viewMySavedSearches(userId, true);
 		
 		// If the searches are exceeding the limit then delete the old search
-		if (recentSearches.size() == Integer.parseInt(recentSearchsLimit)) {
-			int saveSearchId = recentSearches.get(recentSearches.size()-1).getSaveSearchID();
-			saveSearchService.deleteSavedSearch(saveSearchId);
+		if (recentSearches.size() >= Integer.parseInt(recentSearchsLimit)) {
+			for (int i = Integer.parseInt(recentSearchsLimit); i <= recentSearches.size(); i++) {
+				int saveSearchId = recentSearches.get(i-1).getSaveSearchID();
+				saveSearchService.deleteSavedSearch(saveSearchId);
+			}
 		}
 		
 		// save the search criteria

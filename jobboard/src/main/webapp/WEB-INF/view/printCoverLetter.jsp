@@ -39,11 +39,11 @@ function prepareForm()
 					  
 						<div class="row marginTop15">
 							<div class="lableTextCoverletter">
-								Cover Letter Name:
+								<b>Cover Letter Name:</b>
 							</div>
 							<div class="input_grp5 marginTop5">
 								<div class="floatLeft">	
-								${resCoverLetterForm.name}							
+								<b>${resCoverLetterForm.name}</b>							
 								<%-- <form:input path="name" name="name" id="name" class="jb_input2Coverletter" type="text" readonly="true"/> --%>						
 								</div>
 								
@@ -52,11 +52,11 @@ function prepareForm()
 						<div id="errmsg" class="FormErrorDisplayText"></div>
 						<div class="row marginTop15">
 							<div class="lableTextCoverletter">
-								Body Text:
+								<b>Body Text:</b>
 							</div>
 							
 							<div class="input_grp5 marginTop5">
-							${resCoverLetterForm.coverletterText}
+							<b>${resCoverLetterForm.coverletterText}</b>
 								<%-- <form:textarea path="coverletterText" name="coverletterText"  class="textareaBoxCResume" resize="none"  rows="5" cols="45"
 								id="coverletterText" readonly="true"/> --%>
 							</div>

@@ -64,7 +64,7 @@ jQuery(document).ready(function() {
 		<div class="popupHeader">
 			<h2>Manage Employer</h2>
 			<a href="#"><img src="../resources/images/Close.png" width="19"
-				height="19" alt="" onclick="closePopup();"></a>
+				height="19" alt="Close" onclick="closePopup();" title="Close"></a>
 		</div>
 		<div class="popUpContainerWrapper">
 			<form:form action="" method="">
@@ -83,9 +83,9 @@ jQuery(document).ready(function() {
 									<a  
 									href="<%=request.getContextPath()%>/agency/viewFacilityDetails.html?facilityId=${assocEmplyrsName.facilityId}" class="nyroModal view">
 									<img src="../resources/images/tranBg.png" width="20" height="20"
-									alt="">
+									alt="view" title="View">
 								</a>&nbsp;
-								    <a href="#"><img src="../resources/images/Delete.png" width="20" height="20" alt="delete"></a>
+								    <a href="#"><img src="../resources/images/Delete.png" width="20" height="20" alt="delete" title="Delete"></a>
 								</td>
 							</tr>
 						</c:forEach>
