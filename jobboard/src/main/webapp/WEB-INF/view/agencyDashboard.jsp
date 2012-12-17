@@ -68,6 +68,7 @@
 
 								<div class="dashboardPanalAGCcontent ">
 									<h2 class="noTopBorder">Profile Management</h2>
+									<c:if test="<%=(session.getAttribute(\"adminLogin\")==null )%>">
 									<div class="lableTextDashBoard">
 										<p>
 											<a
@@ -75,6 +76,7 @@
 												id="changePassword">${msg.jsChangePwd}</a>
 										</p>
 									</div>
+									</c:if>
 									<div class="lableTextDashBoard">
 										<p>
 											<a
@@ -82,9 +84,11 @@
 												id="accountSettingpopUp">Account Settings</a>
 										</p>
 									</div>
+									<c:if test="<%=(session.getAttribute(\"adminLogin\")==null )%>">
 									<security:authorize
 										access="!hasRole('ROLE_FACILITY_FULL_ACCESS') and !hasRole('ROLE_FACILITY_POST_EDIT') ">
 										<input type="hidden" name="pageValue" value="agePermPage" />
+										
 										<div class="lableTextDashBoard">
 											<p>
 												<a id="accessPermissioPopUp"
@@ -94,6 +98,7 @@
 											</p>
 										</div>
 									</security:authorize>
+									</c:if>
 								</div>
 							</div>
 							<!---->
