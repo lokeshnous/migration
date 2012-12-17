@@ -227,7 +227,7 @@ public class ManageAccessPermissionController {
         changeRgn=changeRgn.replace("?companyName", userDTO.getCompany());
         changeRgn=changeRgn.replace("?accessType", accessType);
 		
-		sendAdministratorUpdateMail(manageAccessPermissionForm.getOwnerEmail(),request,changeRgn.replace("?temporarypassword",userDTO.getPassword()));
+		sendAdministratorUpdateMail(manageAccessPermissionForm.getOwnerEmail(),request,changeRgn.replace("?temporarypassword",userDTO.getPassword()),session);
 		//sendEmail(manageAccessPermissionForm, userDTO, request, session);
 		LOGGER.info("Email : sent Email!");
 		warningMessage.put("success", jobOwnerAddSuccess);
@@ -347,7 +347,7 @@ public class ManageAccessPermissionController {
 	 * @param form
 	 */
 	public void sendAdministratorUpdateMail(String email,
-			HttpServletRequest request, String ChangeRsn) {
+			HttpServletRequest request, String ChangeRsn,HttpSession session) {
 		UserDTO merUserdto = userService.getUser(email);
 		EmployerInfoDTO facilityDetail = facilityService
 				.facilityDetails(merUserdto.getUserId());
@@ -355,9 +355,16 @@ public class ManageAccessPermissionController {
 		String userName = merUserdto.getFirstName() + " "
 				+ merUserdto.getLastName();
 		String loginPath = navigationPath.substring(2);
-		String employerloginUrl = request.getRequestURL().toString()
-				.replace(request.getServletPath(), loginPath)
-				+ dothtmlExtention + employerPageExtention;
+		String employerloginUrl;
+		if (session.getAttribute(MMJBCommonConstants.AGEN_PER_PAGE) != null) {
+			employerloginUrl = request.getRequestURL().toString()
+					.replace(request.getServletPath(), loginPath)
+					+ dothtmlExtention + "?page=agency";
+		} else {
+			employerloginUrl = request.getRequestURL().toString()
+					.replace(request.getServletPath(), loginPath)
+					+ dothtmlExtention + "?page=employer";
+		}
 		String emailContent = emailConfiguration.getProperty(
 				"adminstrator.change.email.body").trim();
 
