@@ -81,7 +81,7 @@
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="splLableText">Enter The Quantity :</span>
-					<form:input path="quantity" class="job_seeker_Resume" maxlength="3"/>
+					<form:input path="quantity" class="jb_input4 jb-iputnw" maxlength="3"/>
 					<span class="required">(Required)</span>
 				</div>
 				<br><br><br><br><br><br><br><br>

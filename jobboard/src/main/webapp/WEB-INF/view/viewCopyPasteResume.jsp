@@ -56,9 +56,9 @@
 							<span> <!--  <p class="marginTop3">Available 08/01/2012</p> -->
 							</span>
 							<div class="IconsArea">
-								<a href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}"><div
+								<a href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}" title="Download"><div
 										class="download"></div></a>&nbsp; <a
-									href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${createResume.uploadResumeId}"><div
+									href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${createResume.uploadResumeId}" title="Print" target="_blank"><div
 										class="printOrange"></div></a>
 							</div>
 
@@ -74,6 +74,12 @@
 						<div class="clearfix"></div>
 						<textarea readonly="readonly" cols="120" rows="50">${createResume.resumeText}</textarea>
 						<!-- class="textareaBoxCResume Height255 marginTop5 " -->
+					</div>
+					<div class="IconsArea">
+								<a href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}" title="Download"><div
+										class="download"></div></a>&nbsp; <a
+									href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${createResume.uploadResumeId}" title="Print" target="_blank"><div
+										class="printOrange"></div></a>
 					</div>
 			</div>
 			</form>

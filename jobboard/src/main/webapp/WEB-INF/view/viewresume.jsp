@@ -75,9 +75,9 @@
                     <p class="marginTop3">Available ${createResume.availableDate}</p>
                     </span> </div>
                   <div class="IconsArea">
-                  <a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}">
+                  <a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}" title="Download">
                   <div class="download"></div></a>&nbsp; 
-                  	<a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${createResume.uploadResumeId}" target="_blank">
+                  	<a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${createResume.uploadResumeId}" target="_blank" title="Print">
                   <div class="printOrange"></div></a>
                   </div>
                 </div>
@@ -379,9 +379,9 @@
             </c:forEach>
 
               <div class="IconsArea">
-              <a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}">
+              <a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}" title="Download">
               <div class="download"></div></a>&nbsp; 
-              <a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${createResume.uploadResumeId}"><div class="printOrange"></div></a></div>
+              <a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${createResume.uploadResumeId}" title="Print" target="_blank"><div class="printOrange"></div></a></div>
           </div>
                 </div>
 
