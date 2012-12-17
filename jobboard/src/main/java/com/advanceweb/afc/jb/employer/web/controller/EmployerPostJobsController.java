@@ -1,7 +1,9 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.util.Date;
+import java.util.Properties;
 
+import javax.annotation.Resource;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpSession;
@@ -50,6 +52,9 @@ public class EmployerPostJobsController {
 	private PaymentGatewayService fetchAdmFacilityConatact;
 	
 	private static final String COMPANYNAME = "?Companyname";
+	@Autowired
+	@Resource(name = "emailConfiguration")
+	private Properties emailConfiguration;
 
 	@RequestMapping(value = "/sendEmailForGold")
 	public ModelAndView sendEmailForGold(HttpSession session,
@@ -103,7 +108,13 @@ public class EmployerPostJobsController {
 						.replace("?Mailingaddress", userEmail)
 						.replace("?Packagetype",
 								MMJBCommonConstants.PACKAGE_ESPOST);
-				employerEmailDTO.setBody(jobseekerMailBody);
+				StringBuffer ezpostMail = new StringBuffer();
+				ezpostMail.append(emailConfiguration.getProperty(
+						"employer.email.header").trim());
+				ezpostMail.append(jobseekerMailBody);
+				ezpostMail.append(emailConfiguration.getProperty("email.footer")
+						.trim());
+				employerEmailDTO.setBody(ezpostMail.toString());
 				employerEmailDTO.setHtmlFormat(true);
 				emailService.sendEmail(employerEmailDTO);
 				// LOGGER.info("Mail sent to jobseeker");
@@ -127,7 +138,13 @@ public class EmployerPostJobsController {
 						.replace("?Mailingaddress", userEmail)
 						.replace("?Packagetype",
 								MMJBCommonConstants.PACKAGE_GOLD);
-				employerEmailDTO.setBody(jobseekerMailBody);
+				StringBuffer goldPackageMail = new StringBuffer();
+				goldPackageMail.append(emailConfiguration.getProperty(
+						"employer.email.header").trim());
+				goldPackageMail.append(jobseekerMailBody);
+				goldPackageMail.append(emailConfiguration.getProperty("email.footer")
+						.trim());
+				employerEmailDTO.setBody(goldPackageMail.toString());
 				employerEmailDTO.setHtmlFormat(true);
 				emailService.sendEmail(employerEmailDTO);
 				// LOGGER.info("Mail sent to jobseeker");
@@ -168,7 +185,13 @@ public class EmployerPostJobsController {
 						MMJBCommonConstants.PACKAGE_PLATINUM);
 		// jobseekerMailBody = jobseekerMailBody.replace("?companyname",
 		// jobDTO.getCompanyName());
-		employerEmailDTO.setBody(jobseekerMailBody);
+		StringBuffer platinumPackageMail = new StringBuffer();
+		platinumPackageMail.append(emailConfiguration.getProperty(
+				"employer.email.header").trim());
+		platinumPackageMail.append(jobseekerMailBody);
+		platinumPackageMail.append(emailConfiguration.getProperty("email.footer")
+				.trim());
+		employerEmailDTO.setBody(platinumPackageMail.toString());
 		employerEmailDTO.setHtmlFormat(true);
 		emailService.sendEmail(employerEmailDTO);
 		// LOGGER.info("Mail sent to jobseeker");
