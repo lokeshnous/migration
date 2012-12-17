@@ -127,8 +127,7 @@ public class AdminController extends AbstractController{
 	}
 
 	@RequestMapping(value = "/login")
-	public ModelAndView adminImpersonationPage(
-			@ModelAttribute(LOGINFORM) AdminLoginForm form) {
+	public ModelAndView adminImpersonationPage() {
 		ModelAndView model = new ModelAndView();
 		AdminLoginForm adminLoginForm = new AdminLoginForm();
 		model.addObject("adminLoginForm", adminLoginForm);

@@ -386,17 +386,20 @@ public class PDFGenerator {
 				&& (resumeDTO.getOtherDetails().trim().length() > 0)) {
 			Chunk expTab = new Chunk(new VerticalPositionMark(),
 					Element.ALIGN_CENTER, true);
-			Paragraph otherDetailsPara = new Paragraph(new Chunk(Chunk.NEWLINE));
-			otherDetailsPara.add(expTab);
-			 otherDetailsPara.add(generateParagraph(
+			
+			
+			Paragraph otherDetailsPara=generateParagraph(
 					resumeDTO.getOtherDetails(), paragraphFontName,
-					paragraphFontSize, Font.NORMAL, Color.BLACK));
+					paragraphFontSize, Font.NORMAL, Color.BLACK);
 			if (null != otherDetailsPara) {
-				Paragraph otherDetailsHeadingPara = generateParagraph(
+				Paragraph otherDetailsHeadingPara = new Paragraph(new Chunk(Chunk.NEWLINE));
+				otherDetailsHeadingPara.add(expTab);
+				otherDetailsHeadingPara.add(generateParagraph(
 						"Others", paragraphFontName,
-						sectionHeadingFontSize, Font.BOLD, Color.BLACK);
+						sectionHeadingFontSize, Font.BOLD, Color.BLACK));
 				document.add(Chunk.NEWLINE);
 				document.add(otherDetailsHeadingPara);
+				document.add(Chunk.NEWLINE);
 				document.add(otherDetailsPara);
 			}
 			// Section separator - Draw Line
@@ -429,8 +432,9 @@ public class PDFGenerator {
 				 membershipHeadingPara.add(generateParagraph(
 						"Memberships", paragraphFontName,
 						sectionHeadingFontSize, Font.BOLD, Color.BLACK));
-				document.add(Chunk.NEWLINE);
+				 document.add(Chunk.NEWLINE);
 				document.add(membershipHeadingPara);
+				document.add(Chunk.NEWLINE);
 				document.add(membershipPara);
 			}
 			// Section separator - Draw Line
@@ -465,6 +469,7 @@ public class PDFGenerator {
 						Color.BLACK));
 				document.add(Chunk.NEWLINE);
 				document.add(awardsHeadingPara);
+				document.add(Chunk.NEWLINE);
 				document.add(awardsPara);
 			}
 
@@ -502,6 +507,7 @@ public class PDFGenerator {
 						Color.BLACK));
 				document.add(Chunk.NEWLINE);
 				document.add(skillsHeadingPara);
+				document.add(Chunk.NEWLINE);
 				document.add(skillsPara);
 			}
 			
@@ -621,8 +627,8 @@ public class PDFGenerator {
 
 				certificationTable.addCell(new Paragraph("Summary",
 						getLabelFontFactory()));
+				
 				certificationTable.addCell(certificationDTO.getSummary());
-
 			}
 
 			if (null == certificationParagraph) {

@@ -33,10 +33,10 @@
 		<div class="lableText3 marginTop10">Summary:</div>
 		<div class="input_grp5 ">
 			<form:textarea path="createResume.listCertForm[${certPositionId}].summary" id="Certslimitedtextarea${certPositionId}"
-				onKeyDown="limitText(this.form.Certslimitedtextarea${certPositionId},this.form.countdownCerts${certPositionId},2000);"
-				onKeyUp="limitText(this.form.Certslimitedtextarea${certPositionId},this.form.countdownCerts${certPositionId},2000);"
+				onKeyDown="limitText(this.form.Certslimitedtextarea${certPositionId},this.form.countdownCerts${certPositionId},1000);"
+				onKeyUp="limitText(this.form.Certslimitedtextarea${certPositionId},this.form.countdownCerts${certPositionId},1000);"
 				class="textareaBoxCResume" rows="3" cols="45" />
-			<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdownCerts${certPositionId}" size="3" value="2000">characters remaining.<p>
+			<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdownCerts${certPositionId}" size="3" value="1000">characters remaining.<p>
 		</div>
 	</div> 
 </div>

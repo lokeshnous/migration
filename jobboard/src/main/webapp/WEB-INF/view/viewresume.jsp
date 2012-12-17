@@ -133,7 +133,7 @@
 
                   <div class="clearfix"></div>
                   <div class="floatLeft paddingLeft15 MarginBottom10">
-            <p><c:out value="${createResume.objective}"/></p>
+            <p><textarea class="textareaBoxCResume magrin_top0" rows="3" cols="45">${createResume.objective}</textarea></p>
           </div>
                 </div>
         <!---->
@@ -195,7 +195,8 @@
 
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Summary / Job Description:</strong></p>
-              </span> <span class="ContactInfoAreaRight width505 AutoHeight"><c:out value="${workExp.description}"/></span> </div>
+              </span> <span class="ContactInfoAreaRight width505 AutoHeight">
+              <textarea class="textareaBoxCResume magrin_top0" rows="3" cols="45">${workExp.description}</textarea></span> </div>
               <div class="clearfix"></div>
         </c:forEach>                          
        </div>
@@ -240,10 +241,12 @@
 
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Degrees:</strong></p>
-              </span><span class="ContactInfoAreaRight width505 AutoHeight"><c:out value="${education.degrees}"/></span> </div>
+              </span><span class="ContactInfoAreaRight width505 AutoHeight">
+              <textarea class="textareaBoxCResume magrin_top0" rows="3" cols="45">${education.degrees}</textarea></span> </div>
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Certifications:</strong></p>
-              </span><span class="ContactInfoAreaRight width505 AutoHeight"><c:out value="${education.certifications}"/></span> </div>
+              </span><span class="ContactInfoAreaRight width505 AutoHeight">
+              <textarea class="textareaBoxCResume magrin_top0" rows="3" cols="45">${education.certifications}</textarea></span> </div>
             <div class="clearfix"></div>
 			</c:forEach>
           </div>
@@ -272,7 +275,8 @@
               </span><span class="ContactInfoAreaRight"><c:out value="${certification.dateOfReceipt}"/></span> </div>
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Summary:</strong></p>
-              </span><span class="ContactInfoAreaRight width505 AutoHeight"><c:out value="${certification.summary}"/></span> </div>
+              </span><span class="ContactInfoAreaRight width505 AutoHeight">
+               <textarea class="textareaBoxCResume magrin_top0" rows="3" cols="45">${certification.summary}</textarea></span> </div>
             <div class="clearfix"></div>
 			</c:forEach>              
           </div>
@@ -284,7 +288,7 @@
           </div>
                   <div class="clearfix"></div>
                   <div class="floatLeft paddingLeft15 MarginBottom10">
-            <p><c:out value="${createResume.skills}"/></p>
+            <p> <textarea class="textareaBoxCResume magrin_top0" rows="3" cols="45">${createResume.skills}</textarea></p>
           </div>
                 </div>
         <!---->
@@ -312,7 +316,7 @@
           </div>
                   <div class="clearfix"></div>
                   <div class="floatLeft paddingLeft15 MarginBottom10">
-            <p><c:out value="${createResume.awards}"/></p>
+            <p> <textarea class="textareaBoxCResume magrin_top0" rows="3" cols="45">${createResume.awards}</textarea></p>
           </div>
                 </div>
           <!---->
@@ -323,7 +327,7 @@
           </div>
                   <div class="clearfix"></div>
                   <div class="floatLeft paddingLeft15 MarginBottom10">
-            <p><c:out value="${createResume.memberships}"/></p>
+            <p> <textarea class="textareaBoxCResume magrin_top0" rows="3" cols="45">${createResume.memberships}</textarea></p>
           </div>
 
                 </div>
@@ -335,7 +339,7 @@
                   <div class="clearfix"></div>
                   <div class="floatLeft paddingLeft15 MarginBottom10">
 
-            <p><c:out value="${createResume.otherDetails}"/></p>
+            <p> <textarea class="textareaBoxCResume magrin_top0" rows="3" cols="45">${createResume.otherDetails}</textarea></p>
           </div>
                 </div>
           <!---->

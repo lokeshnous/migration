@@ -672,6 +672,8 @@ public class ResumeController extends AbstractController{
 			} catch (Exception e) {
 				LOGGER.error(e);
 			}
+
+			session.setAttribute("uploadStatus", false);
 			resumeDTO.setUserId((Integer) session
 					.getAttribute(MMJBCommonConstants.USER_ID));
 			resumeService.updateResumeUpload(resumeDTO);

@@ -32,11 +32,13 @@ jQuery(document).ready(
 						"790", "350");
 				$('#createResumePopupUpload').trigger('click');
 			}
-			if(uploadStatus){
-				alert("Resume uploaded successfully")
+			if(null != uploadStatus){
+				if(uploadStatus){
+					alert("Resume uploaded successfully")
+				}else{
+					alert("Resume updated successfully")
+				}
 			}
-			
-			
 			//jQuery(".megamenu").megamenu();
 			$("#viewappliedjob").displaypopup("#viewappliedjob", "790", "350");
 			$("#viewsavedjob").displaypopup("#viewsavedjob", "790", "350");

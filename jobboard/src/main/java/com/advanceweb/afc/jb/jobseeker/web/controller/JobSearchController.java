@@ -739,7 +739,8 @@ public class JobSearchController extends AbstractController {
 			mailBody.append(employerMailBody);
 		} else {
 			coverLetterTxt = coverLetterTxt.replace("\r\n", "<br/>");
-			mailBody.append(coverLetterTxt + "<br/>" + employerMailBody);
+			employerMailBody=employerMailBody.replace("<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\">", "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\"><tr><td height=\"138\" align=\"left\" valign=\"top\" style=\"border-top:1px solid #cccccc; border-bottom:1px solid #cccccc;\"><br /><br /><span style=\"font-family:Arial, Helvetica, sans-serif; font-size:15px; color:#333333;\"><br />" +coverLetterTxt +"</span></td></tr>");
+			mailBody.append(employerMailBody);
 		}
 
 		mailBody.append(emailConfiguration.getProperty("email.footer").trim());

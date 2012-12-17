@@ -331,37 +331,37 @@ $("#country2").change(function(){
 						<span class="lableText3">
 							First Name:
 						</span>
-						<form:input path="firstName" id="firstName" name="firstName" class="job_seeker_email" type="text"/>
+						<form:input path="firstName" id="firstName" name="firstName" readonly="${employeeAccountForm.readOnly }" class="job_seeker_email" type="text"/>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">
 							Last Name:
 						</span>
-						<form:input path="lastName" id="lastName" name="lastName" class="job_seeker_email" type="text"/>
+						<form:input path="lastName" id="lastName" name="lastName" readonly="${employeeAccountForm.readOnly }" class="job_seeker_email" type="text"/>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">
 							Company:
 						</span>
-						<form:input path="company" name="company" class="job_seeker_password" type="text"/>
+						<form:input path="company" name="company" readonly="true" class="job_seeker_password" type="text"/>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">
 							Street Address:
 						</span>
-						<form:input path="streetAddress" name="streetAddress" class="job_seeker_password" type="text"/>
+						<form:input path="streetAddress" name="streetAddress" readonly="${employeeAccountForm.readOnly }" class="job_seeker_password" type="text"/>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">
 							City:
 						</span>
-						<form:input path="cityOrTown" name="cityOrTown" class="job_seeker_password" type="text"/>
+						<form:input path="cityOrTown" name="cityOrTown" readonly="${employeeAccountForm.readOnly }" class="job_seeker_password" type="text"/>
 					</div>
 					<div class="row">
 						<span class="lableTextSelect marginTop13 ">
 							State:
 						</span>
-						<form:select path="state" name="state" class="jb_input3 jb_input_width3" id="state">
+						<form:select path="state" name="state" disabled="${employeeAccountForm.readOnly }" class="jb_input3 jb_input_width3" id="state">
 						<form:option value="0" label="Select" />
 						<form:options items="${stateList}" itemValue="stateValue" itemLabel="stateValue" />
 						</form:select>
@@ -370,13 +370,13 @@ $("#country2").change(function(){
 						<span class="lableText3">
 							ZIP Code:
 						</span>
-						<form:input maxlength="5" id="zipCode" path="zipCode" name="zipCode" class="job_seeker_password" type="text"/>
+						<form:input maxlength="5" id="zipCode" readonly="${employeeAccountForm.readOnly }" path="zipCode" name="zipCode" class="job_seeker_password" type="text"/>
 					</div>
 					<div class="row">
 						<span class="lableTextSelect marginTop13 ">
 							Country:
 						</span>
-						<form:select path="country" name="country" class="jb_input3 jb_input_width3" id="country">
+						<form:select path="country" name="country" disabled="${employeeAccountForm.readOnly }" class="jb_input3 jb_input_width3" id="country">
 						<form:option value="0" label="Select" />
 						<form:options items="${countryList}" itemValue="countryValue" itemLabel="countryValue" />
 						</form:select>
@@ -392,11 +392,11 @@ $("#country2").change(function(){
 						<span class="lableText3">
 							Phone:
 						</span>
-						<form:input path="phone" id="phone" name="phone" class="job_seeker_password" type="text"/>
+						<form:input path="phone" id="phone" readonly="${employeeAccountForm.readOnly }" name="phone" class="job_seeker_password" type="text"/>
 					</div>
 					<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 						<span class="floatLeft marginTop10">
-							<input type="button" value="Save" name="btn-submit" id="btn-submit" class="btn_sm orange cursor" />
+							<input type="button" value="Save" readonly="${employeeAccountForm.readOnly }" name="btn-submit" id="btn-submit" class="btn_sm orange cursor" />
 							<input type="button" name="Cancel" id="Cancel" value="Cancel" class="btn_sm orange cursor" />
 								
 						</span>
@@ -414,40 +414,40 @@ $("#country2").change(function(){
 				</div>
 				<div class="rowEvenNewSpacing">
 						<span class="lableText3"> Use my account address </span>
-						<form:checkbox onclick="copyAccToBillingAddr(this)" path="" value="false" name="useAcctAddress" id="useAcctAddress"/>
+						<form:checkbox onclick="copyAccToBillingAddr(this)"  disabled="${employeeAccountForm.readOnly }" path="" value="false" name="useAcctAddress" id="useAcctAddress"/>
 					</div>
 				
 				<c:if test="${count == '1'}">
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3"> First Name: </span>
-						<form:input path="billingAddressForm.fnameForBillingAddr" id="firstName2" name="firstName2"
+						<form:input path="billingAddressForm.fnameForBillingAddr" id="firstName2" readonly="${employeeAccountForm.readOnly }" name="firstName2"
 							class="job_seeker_email" type="text" />
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">
 							Last Name:
 						</span>
-						<form:input path="billingAddressForm.lnameForBillingAddr" id="lastName2" name="lastName2" class="job_seeker_email" type="text"/>
+						<form:input path="billingAddressForm.lnameForBillingAddr" readonly="${employeeAccountForm.readOnly }" id="lastName2" name="lastName2" class="job_seeker_email" type="text"/>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3"> Company: </span>
-						<form:input path="company" name="company2" id="company2"
+						<form:input path="company" name="company2" id="company2" readonly="${employeeAccountForm.readOnly }"
 							class="job_seeker_password" type="text" />
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3"> Street Address: </span>
-						<form:input path="billingAddressForm.streetForBillingAddr" name="streetAddress2" id="streetAddress2"
+						<form:input path="billingAddressForm.streetForBillingAddr" readonly="${employeeAccountForm.readOnly }" name="streetAddress2" id="streetAddress2"
 							class="job_seeker_password" type="text" />
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3"> City: </span>
-						<form:input path="billingAddressForm.cityOrTownForBillingAddr" name="cityOrTown2" id="cityOrTown2"
+						<form:input path="billingAddressForm.cityOrTownForBillingAddr"  readonly="${employeeAccountForm.readOnly }" name="cityOrTown2" id="cityOrTown2"
 							class="job_seeker_password" type="text" />
 					</div>
 					<div class="row">
 						<span class="lableTextSelect marginTop13 "> State: </span>
 						<form:select path="billingAddressForm.stateBillingAddress" name="state2"
-							class="jb_input3 jb_input_width3" id="state2">
+							class="jb_input3 jb_input_width3" disabled="${employeeAccountForm.readOnly }" id="state2">
 							<form:option value="0" label="Select" />
 							<form:options items="${stateList}" itemValue="stateValue"
 								itemLabel="stateValue" />
@@ -455,14 +455,14 @@ $("#country2").change(function(){
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3"> ZIP Code: </span>
-						<form:input path="billingAddressForm.zipCodeForBillingAddr" name="zipCode2" id="zipCode2"
+						<form:input path="billingAddressForm.zipCodeForBillingAddr" readonly="${employeeAccountForm.readOnly }" name="zipCode2" id="zipCode2"
 							class="job_seeker_password" type="text" />
 							
 					</div>
 					<div class="row">
 						<span class="lableTextSelect marginTop13 "> Country: </span>
 						<form:select path="billingAddressForm.countryForBillingAddr"
-							class="jb_input3 jb_input_width3" id="country2" name="country2">
+							class="jb_input3 jb_input_width3" disabled="${employeeAccountForm.readOnly }" id="country2" name="country2">
 							<form:option value="0" label="Select" />
 							<form:options items="${countryList}" itemValue="countryValue"
 								itemLabel="countryValue" />
@@ -470,17 +470,17 @@ $("#country2").change(function(){
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3"> E-Mail: </span>
-						<form:input path="email" name="email2" id="email2" class="job_seeker_password" 
+						<form:input path="email" name="email2" readonly="${employeeAccountForm.readOnly }" id="email2" class="job_seeker_password" 
 							type="text"/>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3"> Phone: </span>
-						<form:input path="phone" name="phone2" id="phone2" class="job_seeker_password"
+						<form:input path="phone" name="phone2" readonly="${employeeAccountForm.readOnly }" id="phone2" class="job_seeker_password"
 							type="text"/>
 					</div>
 					<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 						<span class="floatLeft marginTop10">
-							<input type="button" value="Save" name="btn-submit2" id="btn-submit2" class="btn_sm orange cursor"/>
+							<input type="button" value="Save" readonly="${employeeAccountForm.readOnly }" name="btn-submit2" id="btn-submit2" class="btn_sm orange cursor"/>
 							<input type="button" name="CancelData"  id="CancelData" value="Cancel" class="btn_sm orange cursor"/>
 						<a href="#jobSeekerRegister1" id="BackToTopId" style="display: none;">Back To Top</a>
 						<a href="#billingId" id="BackToMdlId" style="display: none;">Back To Middle</a>
