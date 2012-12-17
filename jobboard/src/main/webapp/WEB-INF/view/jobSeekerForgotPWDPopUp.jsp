@@ -81,7 +81,7 @@
 		</div>
         <input type="hidden" class="testField" value="${MMJBCommonConstantsok}" >
 		<div class="popUpContainerWrapper">
-			<form:form method="" action="" commandName="loginForm">
+			<form:form method="" action="" commandName="loginForm" onsubmit="return false">
 				<div class="rowEvenSpacingMargin0 borderBottomDotted paddingBottom10">
 					<p>Enter the email address you use for this account and click
 						the 'SEND' button. We'll email your password.</p>
