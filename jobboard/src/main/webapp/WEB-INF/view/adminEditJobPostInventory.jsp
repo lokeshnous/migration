@@ -69,16 +69,6 @@ function closePopup() {
 		
 		$("#save").click(function(event){
 			$("#ErrorMsg").text("");
-			var flag = true;
-			$("#jobPostingsDiv input").each(function(){
-				if($(this).val() == 0){
-					flag = false;
-				}
-			});
-			
-			if(!flag){
-				$("#ErrorMsg").text("Please enter the the available quantity > 0");
-			}else{
 				var stringObj;
 				var stringObjNew = '';
 				//storing data in key  value manner
@@ -114,7 +104,6 @@ function closePopup() {
 					complete: function() {
 					}
 				});
-			}	
 		}); 
 		
 		$("#find").click(function(event){	

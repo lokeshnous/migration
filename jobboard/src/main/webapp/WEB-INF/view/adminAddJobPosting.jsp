@@ -23,9 +23,20 @@
 
 	$(document).ready(function() {
 		$("#quantity").val("");
+		
+		//if employer does not purchase any job posting then hide the dropdown,
+		//quantity & save button
+		if(null == $("#jbTypeId").val()){
+			$("#jobTypeDiv").remove();
+			$("#quantityDiv").remove();
+			$("#saveJobPosting").remove();
+			$("#errorMsg").html("There are no valid packages in netsuite.<br><br>");
+		}
+		
 		$("#saveJobPosting").click(function(){
 			var quantity = $("#quantity").val();
-			if(isNaN(quantity) || quantity <= 0 || isPositiveInt(quantity)){
+			var jobType = $("#jbTypeId").val();
+			if(isNaN(quantity) || quantity <= 0 || isPositiveInt(quantity) || isNaN(jobType)){
 				alert("Please enter quantity in numerics( > 0)");
 				return;
 			}
@@ -70,7 +81,7 @@
 		</div>
 		<div class="popUpContainerWrapper">
 			<form:form method="POST" action="" id="addJobPostingForm" commandName="inventoryForm">
-				<div class="rowEvenNewSpacing">
+				<div id="jobTypeDiv" class="rowEvenNewSpacing">
 					<div class="splLableText">Select Job Posing :</div>
 					<div id="postTypeToolTip" title="">
 						<form:select class="jb_input3 jb_input_width3"
@@ -79,12 +90,16 @@
 							<span class="required">(Required)</span>
 					</div>
 				</div>
-				<div class="rowEvenNewSpacing">
+				<div id="quantityDiv" class="rowEvenNewSpacing">
 					<span class="splLableText">Enter The Quantity :</span>
 					<form:input path="quantity" class="jb_input4 jb-iputnw" maxlength="3"/>
 					<span class="required">(Required)</span>
 				</div>
-				<br><br><br><br><br><br><br><br>
+				<div class="rowEvenNewSpacing">
+					<div id="errorMsg" class="FormErrorDisplayText">
+						
+					</div>
+				</div>
 				<div class="popUpButtonRow">
 					<span class="floatLeft ">
 						<a class="btn_sm orange" href="#" id="saveJobPosting">Save</a>

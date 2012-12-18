@@ -27,6 +27,7 @@ import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmpSearchDTO;
 import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.employer.service.ManageFeaturedEmployerProfile;
 import com.advanceweb.afc.jb.employer.web.controller.InventoryForm;
 import com.advanceweb.afc.jb.employer.web.controller.JobPostForm;
 
@@ -50,6 +51,9 @@ public class AdminJobPostingInventoryController {
 
 	@Autowired
 	private AdminService adminService;
+	
+	@Autowired
+	private ManageFeaturedEmployerProfile manageFeaturedEmployerProfile;
 
 	@RequestMapping(value = "/jobPostSearch", method = RequestMethod.GET)
 	public @ResponseBody
@@ -221,8 +225,29 @@ public class AdminJobPostingInventoryController {
 				
 			ModelAndView model = new ModelAndView();
 			
-			List<DropDownDTO> jobPostingList = adminService.listJobPostings();
-			model.addObject("jobPostingList", jobPostingList);
+			int nsCustomerID = 0;
+			List<DropDownDTO> jobPostingList = null;
+			if(null != session.getAttribute(MMJBCommonConstants.NS_CUSTOMER_ID)){
+				jobPostingList = adminService.listJobPostings();
+				
+				nsCustomerID = Integer.parseInt(String.valueOf(session.getAttribute(MMJBCommonConstants.NS_CUSTOMER_ID)));
+				
+				// Get the list of valid packages purchased by customers from NetSuite
+				List<String> purchasedPackages = manageFeaturedEmployerProfile
+						.getNSCustomerPackages(nsCustomerID);
+				
+				List<DropDownDTO> removeJbPostingList = new ArrayList<DropDownDTO>();
+				//remove the packages which are purchased offline & expired
+				for(DropDownDTO dropDownDTO : jobPostingList){
+					if(!purchasedPackages.contains(dropDownDTO.getNetSuiteId())){
+						removeJbPostingList.add(dropDownDTO);
+					}
+				}
+				
+				jobPostingList.removeAll(removeJbPostingList);
+				model.addObject("jobPostingList", jobPostingList);
+			}
+			
 			model.setViewName("adminAddJobPosting");
 			
 			return model;

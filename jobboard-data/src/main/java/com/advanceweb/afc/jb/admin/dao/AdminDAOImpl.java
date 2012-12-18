@@ -408,6 +408,7 @@ public class AdminDAOImpl implements AdminDAO {
 				
 				dropDownDTO.setOptionId(String.valueOf(jobTypeCombo.getComboId()));
 				dropDownDTO.setOptionName(jobTypeCombo.getAddons());
+				dropDownDTO.setNetSuiteId(String.valueOf(jobTypeCombo.getNetSuiteId()));
 				dropDownDTOList.add(dropDownDTO);
 			}
 		}
