@@ -58,7 +58,7 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	private static final String FIND_JOBSEEKER_ROLE_ID="from AdmRole role where role.name=?";
 	private static final String FIND_JOBSEEKER_SUBSCRIPTIONS="from AdmSubscription sub where sub.subscriptionType=?";
 	private static final String FIND_JOBSEEKER_PROFILE = "from MerUserProfile prof where prof.id.userId=?";
-
+	private static final String VERIFY_EMAIL_ADVANCEPASS = "from WebMembershipEmail e where e.email = ? and e.deleteDate is NULL";
 	@Autowired
 	public void setHibernateTemplate(
 			final SessionFactory sessionFactoryMerionTracker,
@@ -224,9 +224,18 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 		try {
 			if (!StringUtils.isEmptyOrWhitespaceOnly(email)) {
 				List<MerUser> usersList = hibernateTemplate.find(VERIFY_EMAIL,email);
+				List<WebMembershipEmail> webMembershipEmails = hibernateTemplateAdvancePass.find(
+						VERIFY_EMAIL_ADVANCEPASS, email);
 				if(null != usersList && !usersList.isEmpty()){
 					MerUser user = usersList.get(0);
 					return (null != user ? true : false);
+				}
+				// validating the email id in the advance pass server or not
+				if (null != webMembershipEmails
+						&& !webMembershipEmails.isEmpty()) {
+					WebMembershipEmail webMembershipEmail = webMembershipEmails
+							.get(0);
+					return (null != webMembershipEmail ? true : false);
 				}
 			}
 		} catch (HibernateException e) {

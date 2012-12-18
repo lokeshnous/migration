@@ -51,7 +51,7 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 	private static final String FIND_AGENCY_ROLE_ID = "from AdmRole role where role.name=?";
 	private static final String REGISTRATION_ATTRIBS = "from MerProfileAttrib prof";
 	private static final String VERIFY_EMAIL = "from MerUser e where e.email = ? and e.deleteDt is NULL";
-	
+	private static final String VERIFY_EMAIL_ADVANCEPASS = "from WebMembershipEmail e where e.email = ? and e.deleteDate is NULL";
 	@Autowired
 	private AgencyRegistrationConversionHelper agencyHelper;
 
@@ -298,6 +298,8 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 //			
 				List<MerUser> usersList = hibernateTemplateTracker.find(
 						VERIFY_EMAIL, email);
+				List<WebMembershipEmail> webMembershipEmails = hibernateTemplateAdvancePass.find(
+						VERIFY_EMAIL_ADVANCEPASS, email);
 				if (null != usersList && !usersList.isEmpty()) {
 					MerUser user = usersList.get(0);
 					boolean isUser = false;
@@ -306,6 +308,18 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 					}
 					return isUser;
 				}
+				// validating the email id in the advance pass server or not
+				if (null != webMembershipEmails
+						&& !webMembershipEmails.isEmpty()) {
+					WebMembershipEmail webMembershipEmail = webMembershipEmails
+							.get(0);
+					boolean isUser = false;
+					if (webMembershipEmail != null) {
+						isUser = true;
+					}
+					return isUser;
+				}
+			
 //			}
 		} catch (HibernateException e) {
 			LOGGER.error(e);

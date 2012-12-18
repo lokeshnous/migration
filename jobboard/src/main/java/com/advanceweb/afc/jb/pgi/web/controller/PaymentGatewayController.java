@@ -1,6 +1,8 @@
 package com.advanceweb.afc.jb.pgi.web.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
@@ -624,8 +626,6 @@ public class PaymentGatewayController extends AbstractController{
 				"sales.receipt.body").trim();
 		salesrcptMailBody = salesrcptMailBody.replace("?orderNumber",
 				orderDetailsDTO.getOrderPaymentDTO().getTransactionId());
-		salesrcptMailBody = salesrcptMailBody.replace("?orderNumber1",
-				orderDetailsDTO.getOrderPaymentDTO().getTransactionId());
 		salesrcptMailBody = salesrcptMailBody.replace("?userName", userName);
 		salesrcptMailBody = salesrcptMailBody.replace("?companyName",
 				comapnyName);
@@ -647,6 +647,8 @@ public class PaymentGatewayController extends AbstractController{
 				&& MMJBCommonConstants.INVOICE.equals(orderDetailsDTO.getOrderPaymentDTO().getMethod())) {
 			paymentType="Invoice";
 		}
+		SimpleDateFormat formatter = new SimpleDateFormat(
+				MMJBCommonConstants.SQL_DATE_PATTERN, Locale.US);
 		salesrcptMailBody = salesrcptMailBody.replace("?ordersum",
 				"<b>Order summary :</b>"
 						+ "<br> Package Name(s):"
@@ -656,8 +658,8 @@ public class PaymentGatewayController extends AbstractController{
 						+ "<br> Payment Method:"
 						+ paymentType
 						+ "<br> Payment Date:"
-						+ orderDetailsDTO.getOrderPaymentDTO()
-								.getTransactionDate());
+						+ formatter.format(orderDetailsDTO.getOrderPaymentDTO()
+								.getTransactionDate()));
 		salesrcptMailBody = salesrcptMailBody.replace("?empdashboardLink",
 				employerloginUrl);
 		emailDTO.setSubject(emailConfiguration.getProperty(

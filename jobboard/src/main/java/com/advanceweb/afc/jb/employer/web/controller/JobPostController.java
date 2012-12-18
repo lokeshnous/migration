@@ -83,6 +83,8 @@ public class JobPostController extends AbstractController {
 	private String repostFail;
 	@Value("${repostSuccess}")
 	private String repostSuccess;	
+	@Value("${repostSuccessInac}")
+	private String repostSuccessInactive;
 	@Value("${deactivationFail}")
 	private String deactivateMsg;
 	@Value("${deleteSuccess}")
@@ -1180,8 +1182,13 @@ public class JobPostController extends AbstractController {
 
 			if (!result) {
 				model.addObject(ERROR_MESSAGE, repostFail);
-			}else{
-				model.addObject(ERROR_MESSAGE, repostSuccess);
+			} else {
+				if (jobPostDTO.getJobStatus().equals(
+						MMJBCommonConstants.POST_JOB_INACTIVE)) {
+					model.addObject(ERROR_MESSAGE, repostSuccessInactive);
+				} else {
+					model.addObject(ERROR_MESSAGE, repostSuccess);
+				}
 			}
 
 		}
