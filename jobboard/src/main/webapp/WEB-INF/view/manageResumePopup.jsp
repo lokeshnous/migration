@@ -89,7 +89,7 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>MANAGE MY RESUMES</h2>
-			<img src="../resources/images/Close.png" width="19" class="nyroModalClose" title="Close"
+			<img src="../resources/images/Close.png" width="19" class="nyroModalClose cursor" title="Close"
 				height="19" alt="Close">
 		</div>
 		<div class="popUpContainerWrapper">

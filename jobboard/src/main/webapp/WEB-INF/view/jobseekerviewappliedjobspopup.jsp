@@ -63,7 +63,7 @@
 <div id="jobSeekerRegister1" class="job_seeker_login popUpContainer" style="display:block">
                   <div class="popupHeader">
                   <h2>JOBS I'VE APPLIED TO</h2>
-                  <img title="Close" src="../resources/images/Close.png" width="19" height="19" onclick="closePopup();"></div>
+                  <img title="Close" src="../resources/images/Close.png" width="19" height="19" class="cursor" onclick="closePopup();"></div>
                  
 <div class="popUpContainerWrapper"><form:form method="Post">
             <div class="rowEvenSpacingMargin0">
@@ -82,7 +82,7 @@
                 <td align="left">${dtoList.getAppliedDt()}</td>
                 <td align="center"><div class="centerAlignMButton">
                 <a title="Delete" onclick="confirmDelete(this.id); " id="${dtoList.getSaveJobId()}" class="deleteSavedJob" >
-                <div class="delete"></div></a></div></td>
+                <div class="delete cursor"></div></a></div></td>
               </tr>
               </c:forEach>
             </table>

@@ -389,14 +389,14 @@
 								<!-- <a onclick="preview()" id="preview" class="white" style=" cursor: default;">Preview</a> -->
 								
 								
-								<input type="submit" id="brandingpreview" value="Preview" class="white"  name="Preview"/>
-								<input type="submit" value="Save" class="white"  name="Save"/>
+								<input type="submit" id="brandingpreview" value="Preview" class="white cursor"  name="Preview"/>
+								<input type="submit" value="Save" class="white cursor"  name="Save"/>
 								<!-- <input type="submit" value="Cancel" class="btn_sm white"  name="Cancel"/> -->
 								 <%-- <a href="<%=request.getContextPath()%>/brandingTemplates/createBrandingTemplate.html"
 								class="btn_sm white">Save</a> --%> 
 								
 								<%-- <a href="<%=request.getContextPath()%>/brandingTemplates/cancelBrandTemp.html" class="btn_sm white">Cancel</a> --%>
-								<input type="submit" value="Cancel" class="white" name="Cancel"/>
+								<input type="submit" value="Cancel" class="white cursor" name="Cancel"/>
 								</span>
 						</div>
 						</form:form>

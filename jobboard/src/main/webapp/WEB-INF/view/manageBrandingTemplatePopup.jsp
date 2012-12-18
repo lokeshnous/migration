@@ -81,7 +81,7 @@
 	        <div id="jobSeekerRegister1" class="job_seeker_login popUpContainer" style="display:block">
 	          <div class="popupHeader">
 	            <h2>${errorMessage}</h2>
-	            <img src="../resources/images/Close.png" width="19" class="nyroModalClose" title="Close"
+	            <img src="../resources/images/Close.png" width="19" class="nyroModalClose cursor" title="Close"
 					height="19" alt="Close"></div>
 	        </div>
 	</body>
@@ -96,7 +96,7 @@
             <%-- <a href="<%=request.getContextPath()%>/brandingTemplates/cancelBrandTemp.html"><img src="../resources/images/Close.png" width="19" height="19" alt="Close"></a></div> --%>
 <!--             <a href="#"><img src="../resources/images/Close.png" class="nyroModalClose" width="19" height="19" alt="Close"></a></div> -->
 
-            <img src="../resources/images/Close.png" width="19" class="nyroModalClose" title="Close"
+            <img src="../resources/images/Close.png" width="19" class="nyroModalClose cursor" title="Close"
 				height="19" alt="Close"></div>
 
           <div class="popUpContainerWrapper">

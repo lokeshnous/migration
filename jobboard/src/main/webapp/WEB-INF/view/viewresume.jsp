@@ -390,7 +390,7 @@
    		<div class="clearfix"></div>
 		<br /> <span class="marginBottom10 FloatLeft"> 
 		<c:if test="${createResume.bHideBackButton == false}"> 
-			<input type="submit" value="Back" name="Back" class="orange"  id="saveResBuilderBtId"/>
+			<input type="submit" value="Back" name="Back" class="orange cursor"  id="saveResBuilderBtId"/>
 		</c:if>
 		</span>
  </form>                

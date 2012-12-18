@@ -76,7 +76,7 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>ADD JOB POSTING</h2>
-			<a id="closeButton" class="nyroModal" href="<%=request.getContextPath()%>/admininventory/employer1/jobInventory1.html"> <img src="../resources/images/Close.png" width="19" title="Close"
+			<a id="closeButton" class="nyroModal cursor" href="<%=request.getContextPath()%>/admininventory/employer1/jobInventory1.html"> <img src="../resources/images/Close.png" width="19" title="Close"
 				height="19" alt="Close"></a>
 		</div>
 		<div class="popUpContainerWrapper">

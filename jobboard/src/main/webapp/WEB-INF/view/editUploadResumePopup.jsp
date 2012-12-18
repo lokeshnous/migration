@@ -101,7 +101,7 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>Edit Resume</h2>
-			<img src="../resources/images/Close.png" onclick="parent.$.nmTop().close();" title="Close"
+			<img src="../resources/images/Close.png" onclick="parent.$.nmTop().close();" title="Close" class="cursor"
 				width="19" height="19" alt="">
 		</div>
 

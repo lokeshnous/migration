@@ -134,7 +134,7 @@
           <div class="popupHeader">
             <h2>PURCHASE RESUME SEARCH PACKAGES</h2>
             <img id="closeCheckOut" src="../resources/images/Close.png" width="19" height="19" title="Close"
-				alt="" class="nyroModalClose"></div>
+				alt="" class="nyroModalClose cursor"></div>
           <div class="popUpContainerWrapper">
             <form:form action="" method="POST" commandName="purchaseResumeSearchForm">
               

@@ -108,7 +108,7 @@
 			style="display: block">
 			<div class="popupHeader">
 				<h2>MODIFY SUBSCRIPTIONS</h2>
-				<img src="../resources/images/Close.png" class="nyroModalClose"
+				<img src="../resources/images/Close.png" class="nyroModalClose cursor"
 					title="Close" width="19" height="19" alt="">
 			</div>
 			<div class="popUpContainerWrapper">

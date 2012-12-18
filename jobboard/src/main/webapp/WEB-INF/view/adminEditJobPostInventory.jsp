@@ -146,7 +146,7 @@ function closePopup() {
 		style="display: block">
 		<div class="popupHeader">
 			<h2>MANAGE / EDIT JOB POSTING INVENTORY</h2>
-			<img id="closeButton" class="nyroModalClose" src="../resources/images/Close.png"
+			<img id="closeButton" class="nyroModalClose cursor" src="../resources/images/Close.png"
 				title="Close" width="19" height="19"
 				alt="Close">
 		</div>

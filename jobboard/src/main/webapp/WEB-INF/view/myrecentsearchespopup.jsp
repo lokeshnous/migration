@@ -76,7 +76,7 @@
 		<div class="popupHeader">
 			<h2>MY RECENT SEARCHES</h2>
 			<img src="../resources/images/Close.png" width="19" height="19"
-			class="nyroModalClose" title="Close" alt="" onclick="window.location.reload();">
+			class="nyroModalClose cursor" title="Close" alt="" onclick="window.location.reload();">
 		</div>
 		<div id="recentId">
 			<ul>
@@ -90,7 +90,7 @@
 								href="#" onclick="loadRecentSearch(${item.saveSearchID})">${item.recentURL}</a>
 								</span> 
 								<input 
-							type="button" value="Save This Search" class="white floatRight"
+							type="button" value="Save This Search" class="white floatRight cursor"
 							 onclick="displaysavesearchpopup('${item.saveSearchID}')"
 							id="${item.saveSearchID}" />
 						</li>
@@ -101,8 +101,8 @@
 			</ul>
 		</div>
 		<div class="popUpButtonRow" align="left">
-			<input type="button" value="Clear All" class="orange" id="Clear" />
-		    <input type="button" value="Cancel" class="orange nyroModalClose" onclick="window.location.reload();" name="Cancel" />
+			<input type="button" value="Clear All" class="orange cursor" id="Clear" />
+		    <input type="button" value="Cancel" class="orange nyroModalClose cursor" onclick="window.location.reload();" name="Cancel" />
 		</div>
 	</div>
 	</div>

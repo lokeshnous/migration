@@ -59,7 +59,7 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>Manage Facilities</h2>
-			 <img src="../resources/images/Close.png" title="Close" width="19" height="19" class="nyroModalClose" alt="close">
+			 <img src="../resources/images/Close.png" title="Close" width="19" height="19" class="nyroModalClose cursor" alt="close">
 		</div>
 		<div id="facilityErrorMsg" class="FormErrorDisplayText"></div>
 		<div class="popUpContainerWrapper">

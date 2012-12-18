@@ -122,7 +122,7 @@
 						</div>
 						<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 							<span class="floatLeft marginTop10"> <!-- <input type="button" value="Save" name="save" id="save" class="btn_sm orange" title="Save" /> -->
-								<input type="button" name="Cancel" id="Cancel" class="orange"
+								<input type="button" name="Cancel" id="Cancel" class="orange cursor"
 								value="Cancel" />
 							</span>
 						</div>
@@ -185,8 +185,8 @@
 						</div>
 						<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 							<span class="floatLeft marginTop10"> <input type="button"
-								value="Save" name="save" id="save" class="btn_sm orange" /> <input
-								type="button" name="Cancel" id="Cancel" class="orange"
+								value="Save" name="save" id="save" class="btn_sm orange cursor" /> <input
+								type="button" name="Cancel" id="Cancel" class="orange cursor"
 								value="Cancel" />
 							</span>
 						</div>

@@ -166,7 +166,7 @@ function validateNumber(event) {
 			<c:when test="${manageFacilityForm.facilityId>0}"><h2>Update FACILITY</h2></c:when>
 			<c:otherwise><h2>ADD FACILITY</h2></c:otherwise>
 			</c:choose>
-			 <img src="../resources/images/Close.png" title="Close" width="19" height="19" class="nyroModalClose" alt="close">
+			 <img src="../resources/images/Close.png" title="Close" width="19" height="19" class="nyroModalClose cursor" alt="close">
 			</div>
 			<div class="popUpContainerWrapper">
 

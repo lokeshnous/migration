@@ -315,7 +315,7 @@ $("#country2").change(function(){
 					ACCOUNT SETTINGS
 				</h2>
 				<a href="#">
-				<img width="19" height="19" alt="" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close">
+				<img width="19" height="19" alt="" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose cursor" title="Close" alt="Close">
 				</a>
 			</div>
 			<div class="popUpContainerWrapper">

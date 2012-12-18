@@ -74,7 +74,7 @@
 
 <div id="jobSeekerRegister1" class="job_seeker_login popUpContainer" style="display:block"> 
                   <div class="popupHeader marginBottom5"><h2>MY SAVED JOBS</h2>
-                 <img src="../resources/images/Close.png"  title="Close" width="19" height="19" onclick="closePopup();"></div>
+                 <img src="../resources/images/Close.png"  title="Close" class="cursor" width="19" height="19" onclick="closePopup();"></div>
                  
 <div class="popUpContainerWrapper"><form:form method="Post">
             <div class="rowEvenNewSpacing">
@@ -97,7 +97,7 @@
                 <td align="center">${dtoList.getJobAge()} days</td>
                 <td align="center"><div class="centerAlignMButton">
                 <a title="Delete" onclick="confirmDelete(this.id); " id="${dtoList.getSaveJobId()}" class="deleteSavedJob"  >
-                <div class="delete"></div>
+                <div class="delete cursor"></div>
                 </a></div></td>
               </tr>
               </c:forEach>

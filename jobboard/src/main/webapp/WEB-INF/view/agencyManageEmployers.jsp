@@ -64,7 +64,7 @@ jQuery(document).ready(function() {
 		<div class="popupHeader">
 			<h2>Manage Employer</h2>
 			<a href="#"><img src="../resources/images/Close.png" width="19"
-				height="19" alt="Close" onclick="closePopup();" title="Close"></a>
+				height="19" alt="Close" title="Close" onclick="closePopup();"></a>
 		</div>
 		<div class="popUpContainerWrapper">
 			<form:form action="" method="">

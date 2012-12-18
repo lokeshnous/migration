@@ -180,7 +180,7 @@ function loadTable(){
 		style="display: block">
 		<div class="popupHeader">
 			<h2>MANAGE/EDIT JOB POSTING EXPIRE DATE</h2>
-			<img id="closeCheckOut" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose cursor" alt="Close"/>
+			<img id="closeCheckOut" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose cursor" title="Close" alt="Close"/>
 		</div>
 		<div class="row">
 		<span class="lableText3"></span><span id="ErrorMsg" class="FormErrorDisplayText01"> </span>

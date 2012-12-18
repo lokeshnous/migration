@@ -49,7 +49,9 @@ function validateNumber(event) {
 	    }else{
 	    	$("#otherProfession").hide();
 	    }
-		 
+		
+		$("#country").val($("#countryDpId").val());
+		
 		$('#MyProfession').change(function() {
 			 if($("#MyProfession :selected").text() == "Others"){
 		         $("#otherProfession").show();
@@ -186,7 +188,7 @@ function validateNumber(event) {
 		style="display: block">
 		<div class="popupHeader">
 			<h2>Edit Profile Settings</h2>
-			<img src="../resources/images/Close.png" width="19" height="19" title="Close"
+			<img src="../resources/images/Close.png" width="19" height="19" title="Close" class="cursor"
 				alt="" onclick="parent.$.nmTop().close();">
 		</div>
 
@@ -356,6 +358,7 @@ function validateNumber(event) {
 						
 				</c:forEach>
 				<form:hidden path="emailId"/>
+				<form:hidden path="country"/>
 				<div class="popUpButtonRow">
 					<!--<a href="<%=request.getContextPath()%>/jobseekerregistration/updateJobSeekerProfile.html"
 						class="btn_sm orange">Save</a>  -->
