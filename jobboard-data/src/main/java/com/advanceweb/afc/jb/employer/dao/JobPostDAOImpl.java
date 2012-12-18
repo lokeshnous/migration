@@ -77,7 +77,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			"and date_format(job.startDt, '%Y-%m-%d') <= CURRENT_DATE and date_format(job.endDt, '%Y-%m-%d') >= CURRENT_DATE " +
 			"and (job.deleteDt is null) and DATEDIFF(date_format(job.endDt, '%Y-%m-%d'),CURRENT_DATE) <= 2";*/
 	
-	private static final String FIND_ACTIVE_JOBS_EXPIRE_SOON = "select job.job_id,job.facility_id,facility.user_id,fec.name,job.end_dt from jp_job job join adm_user_facility facility join adm_facility fec where job.facility_id=facility.facility_id and job.facility_id=fec.facility_id and job.active = 1 and date_format(job.start_dt, '%Y-%m-%d') <= CURRENT_DATE and date_format(job.end_dt, '%Y-%m-%d') >= CURRENT_DATE and (job.delete_dt is null) and DATEDIFF(date_format(job.end_dt, '%Y-%m-%d'),CURRENT_DATE) <= 2";
+	private static final String FIND_ACTIVE_JOBS_EXPIRE_SOON = "select job.job_id,job.facility_id,facility.user_id,fec.name,job.end_dt from jp_job job join adm_user_facility facility join adm_facility fec where job.facility_id=facility.facility_id and job.facility_id=fec.facility_id and job.active = 1 and date_format(job.start_dt, '%Y-%m-%d') <= CURRENT_DATE and date_format(job.end_dt, '%Y-%m-%d') >= CURRENT_DATE and (job.delete_dt is null) and DATEDIFF(date_format(job.end_dt, '%Y-%m-%d'),CURRENT_DATE) <= 3";
 	
 	private static final Logger LOGGER = Logger.getLogger(JobPostDAOImpl.class);
 	
