@@ -156,7 +156,7 @@ public class JobPostServiceTest extends ServiceTestBase{
 		for(SchedulerDTO schedulerDTO: schedulerDTOList){
 			
 			try {
-				jsToAddress[0] = new InternetAddress(schedulerDTO.getEmailId());
+				jsToAddress[0] = new InternetAddress("anilm@nousinfo.com");
 			} catch (AddressException jbex) {
 				LOGGER.error("Error occured while geting InternetAddress reference",jbex);
 			}
@@ -175,7 +175,14 @@ public class JobPostServiceTest extends ServiceTestBase{
 				mailBody.replace(start, end,
 						schedulerDTO.getExpireDate());
 			}
-			
+			start = mailBody.toString()
+					.indexOf("?empdashboardLink");
+			end = start + "?empdashboardLink".length();
+			if (start > 0 && end > 0) {
+				mailBody.replace(start, end,
+						emailConfiguration.getProperty("employerer.dashboard.url").trim());
+			}
+		
 			//set the company name in table
 			start = mailBody.toString()
 					.indexOf(Q_USERNAME);
@@ -241,7 +248,7 @@ public class JobPostServiceTest extends ServiceTestBase{
 		for(SchedulerDTO schedulerDTO: schedulerDTOList){
 			
 			try {
-				jsToAddress[0] = new InternetAddress(schedulerDTO.getEmailId());
+				jsToAddress[0] = new InternetAddress("anilm@nousinfo.com");
 			} catch (AddressException jbex) {
 				LOGGER.error("Error occured while geting InternetAddress reference",jbex);
 			}
@@ -260,7 +267,13 @@ public class JobPostServiceTest extends ServiceTestBase{
 				mailBody.replace(start, end,
 						schedulerDTO.getFirstName()+" "+schedulerDTO.getLastName());
 			}
-			
+			start = mailBody.toString()
+					.indexOf("?empdashboardLink");
+			end = start + "?empdashboardLink".length();
+			if (start > 0 && end > 0) {
+				mailBody.replace(start, end,
+						emailConfiguration.getProperty("employerer.dashboard.url").trim());
+			}
 			//set the company name in table
 			start = mailBody.toString()
 					.indexOf(Q_JOBID);

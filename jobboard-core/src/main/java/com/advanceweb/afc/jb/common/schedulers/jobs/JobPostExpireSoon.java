@@ -107,7 +107,13 @@ public class JobPostExpireSoon implements JobWorker{
 				mailBody.replace(start, end,
 						schedulerDTO.getExpireDate());
 			}
-						
+			start = mailBody.toString()
+					.indexOf("?empdashboardLink");
+			end = start + "?empdashboardLink".length();
+			if (start > 0 && end > 0) {
+				mailBody.replace(start, end,
+						emailConfiguration.getProperty("employerer.dashboard.url").trim());
+			}		
 			jobPostExpiresSoon.append(emailConfiguration.getProperty(
 					"employer.email.header").trim());
 			jobPostExpiresSoon.append(mailBody);

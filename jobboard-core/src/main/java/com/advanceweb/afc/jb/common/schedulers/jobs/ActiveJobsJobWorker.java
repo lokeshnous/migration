@@ -146,7 +146,13 @@ public class ActiveJobsJobWorker implements JobWorker {
 				mailBody.replace(start, end,
 						schedulerDTO.getCompanyName());
 			}
-			
+			start = mailBody.toString()
+					.indexOf("?empdashboardLink");
+			end = start + "?empdashboardLink".length();
+			if (start > 0 && end > 0) {
+				mailBody.replace(start, end,
+						emailConfiguration.getProperty("employerer.dashboard.url").trim());
+			}
 			autoRenewFailed.append(emailConfiguration.getProperty(
 					"employer.email.header").trim());
 			autoRenewFailed.append(mailBody);
@@ -211,7 +217,13 @@ public class ActiveJobsJobWorker implements JobWorker {
 				mailBody.replace(start, end,
 						schedulerDTO.getCompanyName());
 			}
-			
+			start = mailBody.toString()
+					.indexOf("?empdashboardLink");
+			end = start + "?empdashboardLink".length();
+			if (start > 0 && end > 0) {
+				mailBody.replace(start, end,
+						emailConfiguration.getProperty("employerer.dashboard.url").trim());
+			}
 			expireJobPost.append(emailConfiguration.getProperty(
 					"employer.email.header").trim());
 			expireJobPost.append(mailBody);
