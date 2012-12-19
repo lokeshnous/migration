@@ -354,16 +354,16 @@ public class ManageAccessPermissionController {
 		StringBuffer admChangeDetail = new StringBuffer();
 		String userName = merUserdto.getFirstName() + " "
 				+ merUserdto.getLastName();
-		String loginPath = navigationPath.substring(2);
+		//String loginPath = navigationPath.substring(2);
 		String employerloginUrl;
 		if (session.getAttribute(MMJBCommonConstants.AGEN_PER_PAGE) != null) {
-			employerloginUrl = request.getRequestURL().toString()
-					.replace(request.getServletPath(), loginPath)
-					+ dothtmlExtention + "?page=agency";
+		 employerloginUrl =request.getRequestURL().toString()
+					.replace(request.getServletPath(), "/agency/agencyDashBoard")
+					+ dothtmlExtention ;
 		} else {
-			employerloginUrl = request.getRequestURL().toString()
-					.replace(request.getServletPath(), loginPath)
-					+ dothtmlExtention + "?page=employer";
+		employerloginUrl =request.getRequestURL().toString()
+					.replace(request.getServletPath(), "/employer/employerDashBoard")
+					+ dothtmlExtention ;
 		}
 		String emailContent = emailConfiguration.getProperty(
 				"adminstrator.change.email.body").trim();

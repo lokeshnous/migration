@@ -242,20 +242,20 @@ public class LoginFormController extends AbstractController{
 		} else if (email.length() > 0 && value) {
 			try {
 				// Based on the login user need to send the email
-				String loginPath = navigationPath.substring(2);
+			//	String loginPath = navigationPath.substring(2);
 				String jonseekerloginUrl = MMJBCommonConstants.EMPTY;
 				if (page.equals(MMJBCommonConstants.JOB_SEEKER)) {
-					jonseekerloginUrl = request.getRequestURL().toString()
-							.replace(request.getServletPath(), loginPath)
-							+ dothtmlExtention + "?page=jobSeeker";
+					jonseekerloginUrl =request.getRequestURL().toString()
+							.replace(request.getServletPath(), "/jobSeeker/jobSeekerDashBoard")
+							+ dothtmlExtention ;
 				} else if (page.equals(MMJBCommonConstants.EMPLOYER)) {
-					jonseekerloginUrl = request.getRequestURL().toString()
-							.replace(request.getServletPath(), loginPath)
-							+ dothtmlExtention + "?page=employer";
+					jonseekerloginUrl =request.getRequestURL().toString()
+							.replace(request.getServletPath(), "/employer/employerDashBoard")
+							+ dothtmlExtention ;
 				} else if (page.equals(MMJBCommonConstants.AGENCY)) {
-					jonseekerloginUrl = request.getRequestURL().toString()
-							.replace(request.getServletPath(), loginPath)
-							+ dothtmlExtention + "?page=agency";
+					jonseekerloginUrl =request.getRequestURL().toString()
+							.replace(request.getServletPath(), "/agency/agencyDashBoard")
+							+ dothtmlExtention ;
 				}
 				EmailDTO jobSeekerEmailDTO = new EmailDTO();
 				jobSeekerEmailDTO.setFromAddress(advanceWebAddress);

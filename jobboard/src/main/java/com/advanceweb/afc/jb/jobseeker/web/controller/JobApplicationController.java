@@ -127,10 +127,10 @@ public class JobApplicationController {
 						.getApplyLink());
 			}
 			// Adding path for
-			String loginPath = navigationPath.substring(2);
-			String employerloginUrl = request.getRequestURL().toString()
-					.replace(request.getServletPath(), loginPath)
-					+ dothtmlExtention + employerPageExtention;
+			//String loginPath = navigationPath.substring(2);
+			String employerloginUrl =request.getRequestURL().toString()
+					.replace(request.getServletPath(), "/jobSeeker/jobSeekerDashBoard")
+					+ dothtmlExtention ;
 			EmailDTO toEmployer = new EmailDTO();
 			InternetAddress[] employerToAddress = new InternetAddress[1];
 			 try {

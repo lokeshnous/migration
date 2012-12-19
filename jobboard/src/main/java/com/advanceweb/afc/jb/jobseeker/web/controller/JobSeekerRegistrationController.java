@@ -944,9 +944,9 @@ public class JobSeekerRegistrationController extends AbstractController {
 		emailDTO.setSubject(emailConfiguration
 				.getProperty("change.password.successful.subject").trim());
 		if (null != userRole && userRole.equals(MMJBCommonConstants.JOBSEEKER)) {
-			String jonseekerloginUrl = request.getRequestURL().toString()
-					.replace(request.getServletPath(), loginPath)
-					+ dothtmlExtention + jobseekerPageExtention;
+			String jonseekerloginUrl =request.getRequestURL().toString()
+					.replace(request.getServletPath(), "/jobSeeker/jobSeekerDashBoard")
+					+ dothtmlExtention ;
 			String jobSeekerChangePwdBody=emailConfiguration
 					.getProperty("jobseeker.change.pwdbody").trim(); 
 			
@@ -965,13 +965,13 @@ public class JobSeekerRegistrationController extends AbstractController {
 			if (null != userRole
 					&& (userRole.equals(MMJBCommonConstants.FACILITY) || 
 							userRole.equals(MMJBCommonConstants.FACILITY_GROUP))) {
-				employerloginUrl = request.getRequestURL().toString()
-						.replace(request.getServletPath(), loginPath)
-						+ dothtmlExtention + employerPageExtention;
+				employerloginUrl =request.getRequestURL().toString()
+						.replace(request.getServletPath(), "/employer/employerDashBoard")
+						+ dothtmlExtention ;
 			} else {
-				employerloginUrl = request.getRequestURL().toString()
-						.replace(request.getServletPath(), loginPath)
-						+ dothtmlExtention + agencyPageExtention;
+				employerloginUrl =request.getRequestURL().toString()
+						.replace(request.getServletPath(), "/agency/agencyDashBoard")
+						+ dothtmlExtention ;
 			}
 			String employerChangePwdBody = emailConfiguration.getProperty(
 					"employer.change.pwdbody").trim();
