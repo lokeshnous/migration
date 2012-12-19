@@ -2714,6 +2714,11 @@ GradientType
 	height: 28px !important;
 }
 
+.Heightf5 {
+	height: 18px !important;
+	margin:0px !important;
+}
+
 .Height255 {
 	height: 255px !important;
 }
@@ -2839,8 +2844,8 @@ a.link_color1_emphasized,a.link_color2_emphasized,.link_color2_selected
 }
 
 input.job_seeker_Resume {
-	width: 125px;
-	height: 25px;
+	width: 115px;
+	height: 15px;
 	border-radius: 4px;
 	float: left;
 	-moz-border-radius: 4px;
@@ -2848,7 +2853,13 @@ input.job_seeker_Resume {
 	background-color: #f0f0f0;
 	font-size: 15px;
 	border: 1px solid #CCCCCC;
+	padding:5px 0;
 }
+
+.chanfixie{width:118px; height:18px; padding:
+
+}
+
 /* New Style end */
 .JobDetailHeaderLeft {
 	width: 100%;

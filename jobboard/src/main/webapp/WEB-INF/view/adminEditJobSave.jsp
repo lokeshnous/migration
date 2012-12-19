@@ -46,7 +46,7 @@
 									<td align="center" valign="middle">${job.location}</td>
 									<td align="center" valign="middle">${job.jobStatus}</td>
 									<td align="center" valign="middle">${job.startDt}</td>
-									<td align="right" valign="middle"><input type="text" class="InputTextRight" name="endDt" id="endDt" value='<c:out value="${job.endDt}"></c:out>'>
+									<td align="right" valign="middle"><input type="text" class="InputTextRight jb_input75 Heightf5" name="endDt" id="endDt" value='<c:out value="${job.endDt}"></c:out>'>
 													
 									
 									

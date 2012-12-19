@@ -107,7 +107,7 @@
                 <thead>
                  <tr  class="borderTopNone">
                     <th align="left" scope="col" >Name</th>
-                    <th align="left" scope="col"> Job Template Usage</th>
+                    <th align="center" scope="col"> Job Template Usage</th>
                     <th width="18%" align="center" scope="col"> Last Modified</th>
                     <th width="21%" align="center" scope="col">Actions</th>
                   </tr>
@@ -116,7 +116,7 @@
                   <c:forEach items="${templatesList}" var="template" varStatus="status">
 								<tr id="${template.jpBrandTempId}">
 									<td>${template.templateName}</td>
-									<td align="left"><label>${template.count}</label></td>
+									<td align="center"><label>${template.count}</label></td>
 									<td align="center"><label>
 											${template.createdDate}
 									</label></td>
