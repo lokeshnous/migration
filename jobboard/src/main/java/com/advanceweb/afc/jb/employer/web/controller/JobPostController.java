@@ -116,6 +116,7 @@ public class JobPostController extends AbstractController {
 		List<DropDownDTO> templateList;
 		facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		
 		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo(
 				(Integer) session.getAttribute(USER_ID), FACILITY_ADMIN);
 
@@ -178,7 +179,14 @@ public class JobPostController extends AbstractController {
 		// jobPostForm.setCompanyName(employerInfoDTO.getCustomerName());
 
 		List<DropDownDTO> companyList = getCompanyList(facilityId);
-		jobPostForm.setCustomerNo(employerInfoDTO.getCustomerNo());
+		if (null == employerInfoDTO.getCustomerNo()
+				|| employerInfoDTO.getCustomerNo().isEmpty()) {
+			jobPostForm.setCustomerNo(String.valueOf(nsCustomerID));
+		} else {
+			
+			jobPostForm.setCustomerNo(employerInfoDTO.getCustomerNo());
+		}
+		
 
 		// The following commented section can be deleted.
 
