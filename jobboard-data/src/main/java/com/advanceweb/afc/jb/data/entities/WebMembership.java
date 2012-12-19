@@ -35,10 +35,10 @@ public class WebMembership implements Serializable {
 	private String salt;
 
 	@Column(name="AddressInfoID")
-	private int addressInfoID;
+	private String addressInfoID;
 
 	@Column(name="SubRequestID")
-	private int subRequestID;
+	private String subRequestID;
 
 //	@Column(name="WebMembershipInfoID")
 //	private int WebMembershipInfoID;
@@ -68,14 +68,14 @@ public class WebMembership implements Serializable {
 	@Column(name="obs_ACRUserID")
 	private int obsACRUserID;
 	@Column(name="MerionEmployeeID")
-	private int merionEmployeeID;
+	private String merionEmployeeID;
 	
 	@Column(name="MyAdvanceID")
 	private int myAdvanceID;
 	@Column(name="EncryptPassword")
 	private String encryptPassword;
 	@Column(name="ClientEmployeeID")
-	private int clientEmployeeID;
+	private String clientEmployeeID;
 	@Column(name="CreateWebUserId")
 	private int createWebUserId;
 	@Column(name="ModifyWebUserId")
@@ -151,28 +151,28 @@ public class WebMembership implements Serializable {
 		/**
 		 * @return the addressInfoID
 		 */
-		public int getAddressInfoID() {
+		public String getAddressInfoID() {
 			return addressInfoID;
 		}
 
 		/**
 		 * @param addressInfoID the addressInfoID to set
 		 */
-		public void setAddressInfoID(int addressInfoID) {
+		public void setAddressInfoID(String addressInfoID) {
 			this.addressInfoID = addressInfoID;
 		}
 
 		/**
 		 * @return the subRequestID
 		 */
-		public int getSubRequestID() {
+		public String getSubRequestID() {
 			return subRequestID;
 		}
 
 		/**
 		 * @param subRequestID the subRequestID to set
 		 */
-		public void setSubRequestID(int subRequestID) {
+		public void setSubRequestID(String subRequestID) {
 			this.subRequestID = subRequestID;
 		}
 
@@ -264,14 +264,14 @@ public class WebMembership implements Serializable {
 		/**
 		 * @return the merionEmployeeID
 		 */
-		public int getMerionEmployeeID() {
+		public String getMerionEmployeeID() {
 			return merionEmployeeID;
 		}
 
 		/**
 		 * @param merionEmployeeID the merionEmployeeID to set
 		 */
-		public void setMerionEmployeeID(int merionEmployeeID) {
+		public void setMerionEmployeeID(String merionEmployeeID) {
 			this.merionEmployeeID = merionEmployeeID;
 		}
 
@@ -306,14 +306,14 @@ public class WebMembership implements Serializable {
 		/**
 		 * @return the clientEmployeeID
 		 */
-		public int getClientEmployeeID() {
+		public String getClientEmployeeID() {
 			return clientEmployeeID;
 		}
 
 		/**
 		 * @param clientEmployeeID the clientEmployeeID to set
 		 */
-		public void setClientEmployeeID(int clientEmployeeID) {
+		public void setClientEmployeeID(String clientEmployeeID) {
 			this.clientEmployeeID = clientEmployeeID;
 		}
 

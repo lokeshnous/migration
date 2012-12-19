@@ -368,12 +368,12 @@ public class EmployerRegistrationController extends AbstractController{
 		String userName=userDTO.getFirstName()+" " + userDTO.getLastName();
 		emailDTO.setSubject(emailConfiguration.getProperty(
 				"welcome.mail.message").trim());
-		String loginPath = navigationPath.substring(2);
+		//String loginPath = request.getContextPath()+"/jobSeeker/jobSeekerDashBoard";
 		String employerWelcomeMailBody = emailConfiguration.getProperty(
 				"employer.welcome.mail.body").trim();
-		String employerloginUrl = request.getRequestURL().toString()
+		String employerloginUrl =request.getContextPath()+"/employer/employerDashBoard"; /*request.getRequestURL().toString()
 				.replace(request.getServletPath(), loginPath)
-				+ dothtmlExtention + employerPageExtention;
+				+ dothtmlExtention + employerPageExtention;*/
 		employerWelcomeMailBody = employerWelcomeMailBody.replace("?user_name",
 				userName);
 		employerWelcomeMailBody = employerWelcomeMailBody.replace("?userName",
