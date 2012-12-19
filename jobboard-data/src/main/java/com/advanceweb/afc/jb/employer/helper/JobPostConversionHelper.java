@@ -168,6 +168,8 @@ public class JobPostConversionHelper<JobPostForm> {
 		 */
 	public List<JobPostDTO> transformJpJobListToJobPostDTOList(List<JpJob> jobs) {
 		List<JobPostDTO> jobPostDTOList = new ArrayList<JobPostDTO>();
+		SimpleDateFormat formatter = new SimpleDateFormat(
+				MMJBCommonConstants.DISP_DATE_PATTERN, Locale.US);
 		String location=null;
 		if (null != jobs) {
 			for (JpJob job : jobs) {
@@ -201,7 +203,12 @@ public class JobPostConversionHelper<JobPostForm> {
 
 				}
 				jobPostDTO.setFacilityId(job.getAdmFacility().getFacilityId());
-				jobPostDTO.setbTemplateOverride(job.getTemplateOverride()==1?true:false);
+				jobPostDTO
+						.setbTemplateOverride(job.getTemplateOverride() == 1 ? true
+								: false);
+				if (null != job.getEndDt() && null == jobPostDTO.getEndDt()) {
+					jobPostDTO.setEndDt(formatter.format(job.getEndDt()));
+				}
 				jobPostDTOList.add(jobPostDTO);
 			}
 		}
