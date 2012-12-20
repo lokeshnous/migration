@@ -6,7 +6,14 @@
 	   		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 			http://www.springframework.org/schema/security 
 			http://www.springframework.org/schema/security/spring-security-3.1.xsd">
-
+	<security:http pattern="/resources/**" security="none"/>
+	<security:http pattern="/index.jsp" security="none"/>
+	<security:http pattern="/jobsearch/jobboardSearchesHistory.html" security="none"/>
+	<security:http pattern="/healthcarejobs/logo.html" security="none"/>
+	<!-- <security:http pattern="/commonLogin/**" security="none"/> -->
+	<security:http pattern="/healthcarejobs/homeFeaturedEmps.html" security="none"/>
+	<security:http pattern="/healthcarejobs/activeJobs.html" security="none"/>
+	
 	<security:http auto-config="false" use-expressions="true"
 		access-denied-page="/healthcarejobs/advanceweb.html" entry-point-ref="authenticationEntryPoint">
 
@@ -62,7 +69,14 @@
 			position="FORM_LOGIN_FILTER" />
 		<security:custom-filter ref="rememberMeProcessingFilter"
 			position="REMEMBER_ME_FILTER" />
+			<security:custom-filter ref="preAuthFilter"
+			position="PRE_AUTH_FILTER" />
 	</security:http>
+
+<bean id="preAuthenticationProvider"
+    class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider" p:preAuthenticatedUserDetailsService-ref="customAuthenticationManager"/>
+<bean id="preAuthFilter"
+    class="com.advanceweb.afc.jb.login.web.controller.PreAuthenticationManager" p:authenticationManager-ref="theauthenticationManager"/>
 
 	<bean id="authenticationFilter"
 		class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter"
@@ -78,7 +92,7 @@
 		p:authenticationSuccessHandler-ref="customAuthenticationSuccessHandler" />
 	
 	<bean id="customAuthenticationManager"
-		class="com.advanceweb.afc.jb.security.DatabaseAuthenticationManager"/>
+		class="com.advanceweb.afc.jb.security.DatabaseAuthenticationManager" p:userDetailsService-ref="customAuthenticationManager"/>
 
 	<bean id="customAuthenticationFailureHandler"
 		class="com.advanceweb.afc.jb.login.web.controller.LoginFailureManager"/>
@@ -107,10 +121,14 @@
 		<property name="userDetailsService" ref="customAuthenticationManager" />
 	</bean>
 	<security:authentication-manager alias="theauthenticationManager">
+	<security:authentication-provider ref="customAuthenticationManager" />
+	
+	<security:authentication-provider ref="preAuthenticationProvider" />
 		<security:authentication-provider
 			ref="rememberMeAuthenticationProvider" />
-		<security:authentication-provider
-			ref="daoAuthenticationProvider" />
+		<!-- <security:authentication-provider
+			ref="daoAuthenticationProvider" /> -->
 	</security:authentication-manager>
 
 </beans>
+ 
