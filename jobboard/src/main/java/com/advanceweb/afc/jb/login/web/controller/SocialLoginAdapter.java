@@ -34,7 +34,8 @@ public class SocialLoginAdapter implements SignInAdapter {
 	@Override
 	public String signIn(String localUserId, Connection<?> connection, NativeWebRequest request) {
 		String result=null;
-		UserDTO user = userService.getUser(localUserId);
+		//UserDTO user = userService.getUser(localUserId);
+		UserDTO user = userService.getAdvancePassUser(localUserId);
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
 				user.getEmailId(), user.getPassword(), null);
 		Authentication authenticatedUser = customAuthenticationManager

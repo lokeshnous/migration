@@ -335,7 +335,8 @@ public class SocialLoginController {
 		int profileAttrId=0;
 		model.addObject("socialLoginForm", socialLoginForm);
 		model.setViewName("commonSocialLogin");
-		UserDTO user = userService.getUser(socialLoginForm.getEmailId());
+		//UserDTO user = userService.getUser(socialLoginForm.getEmailId());
+		UserDTO user = userService.getAdvancePassUser(socialLoginForm.getEmailId());
 		if (user == null) {
 			return addErrorMessage(model,socialLoginForm);
 		} else if (!(socialLoginForm.getPassword().equals(user.getPassword()))) {
@@ -362,7 +363,8 @@ public class SocialLoginController {
 					profileAttrId=Integer.parseInt(MMJBCommonConstants.LINKEDIN_PROFILE_ATTR_ID);
 				}
 			try {
-				userService.updateSocialProfileId(user.getUserId(),
+				UserDTO userDTO = userService.getUser(socialLoginForm.getEmailId());
+				userService.updateSocialProfileId(userDTO.getUserId(),
 						socialLoginForm.getProfileId(),
 						profileAttrId);
 				loginSuccessManager.onAuthenticationSuccess(request, response,

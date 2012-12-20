@@ -585,6 +585,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginFormContr
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginFormValidator.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginManager.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LogoutManager.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/PreAuthenticationManager.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/SocialConnectionManager.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/SocialLoginAdapter.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/SocialLoginController.java -text

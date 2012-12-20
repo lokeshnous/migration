@@ -140,6 +140,9 @@ public class AgencyDashBoardController extends AbstractController {
 
 	@Autowired
 	private AdService adService;
+	
+	@Autowired
+	private UserService userService;
 
 	@Value("${requiredField}")
 	private String requiredField;
@@ -171,8 +174,6 @@ public class AgencyDashBoardController extends AbstractController {
 	private String accountStreet;
 	@Value("${emailInUse}")
 	private String emailInUse;
-	@Autowired
-	private UserService userService;
 	@RequestMapping("/agencyDashboard")
 	public ModelAndView displayDashBoard(HttpSession session,
 			HttpServletRequest request) {
@@ -738,8 +739,13 @@ public class AgencyDashBoardController extends AbstractController {
 		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
 		authList.add(new SimpleGrantedAuthority(
 				MMJBCommonConstants.ROLE_FACILITY));
+		
+		UserDTO user=userService.getAdvancePassUser(userDTO.getEmailId());
+		
+//		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+//				userDTO.getEmailId(), userDTO.getPassword(), authList);
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-				userDTO.getEmailId(), userDTO.getPassword(), authList);
+				user.getEmailId(),user.getPassword(), authList);
 		token.setDetails(new WebAuthenticationDetails(request));
 		Authentication authenticatedUser = customAuthenticationManager
 				.authenticate(token);
@@ -772,9 +778,13 @@ public class AgencyDashBoardController extends AbstractController {
 		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
 		authList.add(new SimpleGrantedAuthority(
 				MMJBCommonConstants.ROLE_FACILITY_GROUP));
-		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-				userDTO.getEmailId(), userDTO.getPassword(), authList);
-		token.setDetails(new WebAuthenticationDetails(request));
+		UserDTO user =userService.getAdvancePassUser(userDTO.getEmailId());
+//		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+//				userDTO.getEmailId(), userDTO.getPassword(), authList);
+				UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+						user.getEmailId(), user.getPassword(), authList);
+
+				token.setDetails(new WebAuthenticationDetails(request));
 		Authentication authenticatedUser = customAuthenticationManager
 				.authenticate(token);
 		SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
@@ -918,8 +928,8 @@ public class AgencyDashBoardController extends AbstractController {
 		long count = 0;
 		try {
 			count = facilityService.getEmployerCount();
-		} catch (JobBoardServiceException e) {
-			e.printStackTrace();
+		} catch (JobBoardException e) {
+			LOGGER.info("Error occured while getting the Result from Database");
 		}
 		MetricsDTO dto = facilityService.getAllJobStats();
 
