@@ -26,7 +26,7 @@ public class WebMembershipEmail implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="WebMembershipEmailID")
-	private int webMembershipEmailID;
+	private Integer webMembershipEmailID;
 
 //	@Column(name="WebMembershipID")
 //	private int webMembershipID;
@@ -44,7 +44,7 @@ public class WebMembershipEmail implements Serializable {
 	@Column(name="PrimaryEmail")
 	private boolean primaryEmail;
 	@Column(name="WelcomeEMailHistoryID")
-	private int welcomeEMailHistoryID;
+	private Integer welcomeEMailHistoryID;
 	
 	@Column(name="DeleteDate")
 	private Date deleteDate;
@@ -56,213 +56,83 @@ public class WebMembershipEmail implements Serializable {
 	private Date modifyDate;
 	
 	@Column(name="CreateWebUserId")
-	private int createWebUserId;
+	private Integer createWebUserId;
 	@Column(name="ModifyWebUserId")
-	private int modifyWebUserId;
+	private Integer modifyWebUserId;
 	@Column(name="DeleteWebUserId")
-	private int deleteWebUserId;
-
-	
-
-
-	/**
-	 * @return the webMembershipEmailID
-	 */
-	public int getWebMembershipEmailID() {
+	private Integer deleteWebUserId;
+	public Integer getWebMembershipEmailID() {
 		return webMembershipEmailID;
 	}
-
-
-
-	/**
-	 * @param webMembershipEmailID the webMembershipEmailID to set
-	 */
-	public void setWebMembershipEmailID(int webMembershipEmailID) {
+	public void setWebMembershipEmailID(Integer webMembershipEmailID) {
 		this.webMembershipEmailID = webMembershipEmailID;
 	}
-
-
-
-
-	/**
-	 * @return the webMembership
-	 */
 	public WebMembership getWebMembership() {
 		return webMembership;
 	}
-
-
-
-	/**
-	 * @param webMembership the webMembership to set
-	 */
 	public void setWebMembership(WebMembership webMembership) {
 		this.webMembership = webMembership;
 	}
-
-
-
-	/**
-	 * @return the email
-	 */
 	public String getEmail() {
 		return email;
 	}
-
-
-
-	/**
-	 * @param email the email to set
-	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	/**
-	 * @return the primaryEmail
-	 */
-	public boolean isPrimaryEmail() {
-		return primaryEmail;
-	}
-
-
-
-	/**
-	 * @param primaryEmail the primaryEmail to set
-	 */
-	public void setPrimaryEmail(boolean primaryEmail) {
-		this.primaryEmail = primaryEmail;
-	}
-
-
-
-	/**
-	 * @return the welcomeEMailHistoryID
-	 */
-	public int getWelcomeEMailHistoryID() {
-		return welcomeEMailHistoryID;
-	}
-
-
-
-	/**
-	 * @param welcomeEMailHistoryID the welcomeEMailHistoryID to set
-	 */
-	public void setWelcomeEMailHistoryID(int welcomeEMailHistoryID) {
-		this.welcomeEMailHistoryID = welcomeEMailHistoryID;
-	}
-
-	/**
-	 * @return the emailStatusID
-	 */
-	public int getEmailStatusID() {
-		return emailStatusID;
-	}
-
-
-
-	/**
-	 * @param emailStatusID the emailStatusID to set
-	 */
-	public void setEmailStatusID(int emailStatusID) {
-		this.emailStatusID = emailStatusID;
-	}
-
-	/**
-	 * @return the createWebUserId
-	 */
-	public int getCreateWebUserId() {
-		return createWebUserId;
-	}
-
-
-
-	/**
-	 * @param createWebUserId the createWebUserId to set
-	 */
-	public void setCreateWebUserId(int createWebUserId) {
-		this.createWebUserId = createWebUserId;
-	}
-
-
-
-	/**
-	 * @return the modifyWebUserId
-	 */
-	public int getModifyWebUserId() {
-		return modifyWebUserId;
-	}
-
-
-
-	/**
-	 * @param modifyWebUserId the modifyWebUserId to set
-	 */
-	public void setModifyWebUserId(int modifyWebUserId) {
-		this.modifyWebUserId = modifyWebUserId;
-	}
-
-
-
-	/**
-	 * @return the deleteWebUserId
-	 */
-	public int getDeleteWebUserId() {
-		return deleteWebUserId;
-	}
-
-
-
-	/**
-	 * @param deleteWebUserId the deleteWebUserId to set
-	 */
-	public void setDeleteWebUserId(int deleteWebUserId) {
-		this.deleteWebUserId = deleteWebUserId;
-	}
-
-
-
-	/**
-	 * @return the serialversionuid
-	 */
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-
-
 	public Date getCreateDate() {
 		return createDate;
 	}
-
-
-
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-
-
-
+	public boolean isPrimaryEmail() {
+		return primaryEmail;
+	}
+	public void setPrimaryEmail(boolean primaryEmail) {
+		this.primaryEmail = primaryEmail;
+	}
+	public Integer getWelcomeEMailHistoryID() {
+		return welcomeEMailHistoryID;
+	}
+	public void setWelcomeEMailHistoryID(Integer welcomeEMailHistoryID) {
+		this.welcomeEMailHistoryID = welcomeEMailHistoryID;
+	}
 	public Date getDeleteDate() {
 		return deleteDate;
 	}
-
-
-
 	public void setDeleteDate(Date deleteDate) {
 		this.deleteDate = deleteDate;
 	}
-
-
-
+	public int getEmailStatusID() {
+		return emailStatusID;
+	}
+	public void setEmailStatusID(int emailStatusID) {
+		this.emailStatusID = emailStatusID;
+	}
 	public Date getModifyDate() {
 		return modifyDate;
 	}
-
-
-
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
 	}
+	public Integer getCreateWebUserId() {
+		return createWebUserId;
+	}
+	public void setCreateWebUserId(Integer createWebUserId) {
+		this.createWebUserId = createWebUserId;
+	}
+	public Integer getModifyWebUserId() {
+		return modifyWebUserId;
+	}
+	public void setModifyWebUserId(Integer modifyWebUserId) {
+		this.modifyWebUserId = modifyWebUserId;
+	}
+	public Integer getDeleteWebUserId() {
+		return deleteWebUserId;
+	}
+	public void setDeleteWebUserId(Integer deleteWebUserId) {
+		this.deleteWebUserId = deleteWebUserId;
+	}
+
 
 }

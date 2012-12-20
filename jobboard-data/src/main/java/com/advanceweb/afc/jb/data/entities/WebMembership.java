@@ -26,7 +26,7 @@ public class WebMembership implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="WebMembershipID")
-	private int webMembershipID;
+	private Integer webMembershipID;
 
 	@Column(name="Password")
 	private String password;
@@ -35,11 +35,11 @@ public class WebMembership implements Serializable {
 	private String salt;
 
 	@Column(name="AddressInfoID")
+//	private Integer addressInfoID;
 	private String addressInfoID;
-
 	@Column(name="SubRequestID")
+//	private Integer subRequestID;
 	private String subRequestID;
-
 //	@Column(name="WebMembershipInfoID")
 //	private int WebMembershipInfoID;
 	
@@ -57,7 +57,7 @@ public class WebMembership implements Serializable {
 	private Date createDate;
 
 	@Column(name="WebMembershipLevelID")
-	private int webMembershipLevelID;
+	private Integer webMembershipLevelID;
 
 	@Column(name="DisplayName")
 	private String displayName;
@@ -66,24 +66,25 @@ public class WebMembership implements Serializable {
 	private boolean deleted;
 
 	@Column(name="obs_ACRUserID")
-	private int obsACRUserID;
+	private Integer obsACRUserID;
 	@Column(name="MerionEmployeeID")
+//	private Integer merionEmployeeID;
 	private String merionEmployeeID;
-	
 	@Column(name="MyAdvanceID")
-	private int myAdvanceID;
+	private Integer myAdvanceID;
 	@Column(name="EncryptPassword")
 	private String encryptPassword;
 	@Column(name="ClientEmployeeID")
+//	private Integer clientEmployeeID;
 	private String clientEmployeeID;
 	@Column(name="CreateWebUserId")
-	private int createWebUserId;
+	private Integer createWebUserId;
 	@Column(name="ModifyWebUserId")
-	private int modifyWebUserId;
+	private Integer modifyWebUserId;
 	@Column(name="ModifyDate")
 	private Date modifyDate;
 	@Column(name="DeleteWebUserId")
-	private int deleteWebUserId;
+	private Integer deleteWebUserId;
 	@Column(name="DeleteDate")
 	private Date deleteDate;
 	@Column(name="ShopSalt")
