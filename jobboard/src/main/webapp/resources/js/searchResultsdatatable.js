@@ -33,7 +33,7 @@ jQuery(document).ready(function() {
 
 		
 		function saveThisJob(jobId) {
-			var currentUrl = window.location.pathname;
+			//var currentUrl = window.location.pathname;
 			$.ajax({
 				url : $("#contextPath").val()+'/jobsearch/saveThisJob.html?id='+jobId+"&currentUrl=null",
 				data : ({
@@ -595,7 +595,7 @@ jQuery(document).ready(function() {
 				} 
 				
 				function btsaveThisJob(jobId,context) {
-					var currentUrl = window.location.pathname;
+					//var currentUrl = window.location.pathname;
 					$.ajax({
 						url : $("#contextPath").val()+'/jobsearch/saveThisJob.html?id='+jobId+"&currentUrl=null",
 						data : ({

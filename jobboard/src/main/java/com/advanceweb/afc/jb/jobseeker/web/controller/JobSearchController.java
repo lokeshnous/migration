@@ -1118,27 +1118,21 @@ public class JobSearchController extends AbstractController {
 					}
 				}
 				int totalKeyCount = emplyrsByName.keySet().size();
-				int rowsCount = (int) Math.ceil((totalEmployers + totalKeyCount) / 3);
+				int rowsCount = (int) Math.ceil((double)(totalEmployers + totalKeyCount) / 3);
 				Map<Integer, TreeMap<String, List<String>>> list = new TreeMap<Integer, TreeMap<String, List<String>>>();
 				Iterator<Entry<String, List<String>>> keyIt = emplyrsByName
 						.entrySet().iterator();
 				int i = 0, j = 1;
-				TreeMap<String, List<String>> sets = null;
-				boolean isNewList = true;
+				TreeMap<String, List<String>> sets = new TreeMap<String, List<String>>();
 				while (keyIt.hasNext()) {
 					Entry<String, List<String>> entry = (Entry<String, List<String>>) keyIt
 							.next();
-					if (i < (rowsCount * j)) {
-						if (isNewList) {
-							sets = new TreeMap<String, List<String>>();
-						}
-						isNewList = false;
-						sets.put(entry.getKey(), entry.getValue());
-						list.put(j, sets);
-					} else {
+					if (!(i < (rowsCount * j))) {
 						j++;
-						isNewList = true;
+						sets = new TreeMap<String, List<String>>();
 					}
+					sets.put(entry.getKey(), entry.getValue());
+					list.put(j, sets);
 					i++;
 					i = entry.getValue().size() + i;
 				}
