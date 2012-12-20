@@ -49,7 +49,7 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 	@Value("${dothtmlExtention}")
 	private String dothtmlExtention;
 	private static final Logger LOGGER = Logger
-			.getLogger(DatabaseAuthenticationManager.class);
+			.getLogger(LoginManager.class);
 	public void onAuthenticationSuccess(HttpServletRequest request,
 			HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {
