@@ -316,7 +316,7 @@ public class DatabaseAuthenticationManager extends DaoAuthenticationProvider imp
 			}
 			advPassUser=userService.getAdvancePassUser(email);
 		} catch (Exception e) {
-			System.out.println("error in loadUserByUsername :"+e.getMessage());
+			LOGGER.debug("error in loadUserByUsername :"+e.getMessage());
 			e.printStackTrace();
 		}
 		
@@ -327,7 +327,7 @@ public class DatabaseAuthenticationManager extends DaoAuthenticationProvider imp
 	@Override
 	public UserDetails loadUserDetails(Authentication token)
 			throws UsernameNotFoundException {
-		System.out.println("loadUserDetails===>");
+		LOGGER.debug("loadUserDetails===>");
 		/*if(!token.isAuthenticated()){
 			throw new BadCredentialsException(userNotExist);
 		}*/
