@@ -13,11 +13,7 @@
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
 		
-		$("#purchaseJobPostingId").displaypopup("#purchaseJobPostingId",
-				"770", "360");
-		$("#purchaseJobPostingId2").displaypopup("#purchaseJobPostingId2",
-				"770", "360");
-		$("#purchaseJobPostingId3").displaypopup("#purchaseJobPostingId3",
+		$(".purchaseJobPostingId").displaypopup(".purchaseJobPostingId",
 				"770", "360");
 	});
 	function sendEmail(){
@@ -71,7 +67,7 @@
 							</p>
 							<div class="clearfix"></div>
 							<span class="FloatLeft marginTop25"><a
-								id="purchaseJobPostingId" class="btn_sm orange"
+								class="btn_sm orange purchaseJobPostingId"
 								href="<%=request.getContextPath()%>/purchaseJobPosting/purchaseJobPostings.html"
 								name="standardJob">BUY ONLINE NOW</a></span>
 							<div class="PlayDemo marginTop15">
@@ -99,9 +95,8 @@
 							</p>
 							<div class="clearfix"></div>
 							<span class="FloatLeft marginTop40"><a
-								id="purchaseJobPostingId2"
 								href="<%=request.getContextPath()%>/purchaseJobPosting/purchaseJobPostings.html"
-								name="jobPostingSlot" class="btn_sm orange">BUY ONLINE NOW</a></span>
+								name="jobPostingSlot" class="btn_sm orange purchaseJobPostingId">BUY ONLINE NOW</a></span>
 							<div class="PlayDemo marginTop30">
 								<a
 									href="https://www.google.co.in/url?url=http://www.youtube.com/watch%3Fv%3Du5O5JKV7H5A&rct=j&sa=X&ei=9Zo7UL-fDMHtrAfh1oCIBQ&ved=0CEIQuAIwBQ&q=flowers+vide&usg=AFQjCNEik81RAbq6ffmdq3EprRgPio6tRg&cad=rja"
@@ -192,9 +187,8 @@
 									</table>
 								</div>
 								<span class="FloatLeft marginTop20"><a
-									id="purchaseJobPostingId3"
 									href="<%=request.getContextPath()%>/purchaseJobPosting/purchaseJobPostings.html"
-									name="silver" class="btn_sm orange">BUY ONLINE NOW</a></span>
+									name="silver" class="btn_sm orange purchaseJobPostingId">BUY ONLINE NOW</a></span>
 								<div class="PlayDemo marginTop10">
 									<a
 										href="https://www.google.co.in/url?url=http://www.youtube.com/watch%3Fv%3Du5O5JKV7H5A&rct=j&sa=X&ei=9Zo7UL-fDMHtrAfh1oCIBQ&ved=0CEIQuAIwBQ&q=flowers+vide&usg=AFQjCNEik81RAbq6ffmdq3EprRgPio6tRg&cad=rja"
