@@ -62,15 +62,6 @@ public interface FacilityService {
 	List<DropDownDTO> getFacilityGroup(int facilityId)
 			throws JobBoardServiceException;
 	
-	/**
-	 * This method is to get facility parent id
-	 * 
-	 * @param facilityId
-	 * @return
-	 * @throws JobBoardServiceException
-	 */
-	int getFacilityParent(int facilityId)
-			throws JobBoardServiceException;
 	int getfacilityUserId(int facilityId);
 	/**
 	 * This method is to get all facility list 

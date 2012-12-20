@@ -621,16 +621,20 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	}
 
 	@Override
-	public List<DropDownDTO> populateCompanyNames(int facilityId,
-			int facilityParentId) {
+	public List<DropDownDTO> populateCompanyNames(int facilityId){
+		int facilityParentId = 0;
 		List<DropDownDTO> companyNames = new ArrayList<DropDownDTO>();
 		try {
+			AdmFacility admFacility = (AdmFacility) hibernateTemplate.find(
+					"from AdmFacility e where e.facilityId=?", facilityId).get(
+							0);
+			facilityParentId = admFacility.getFacilityParentId();
 			if (MMJBCommonConstants.ZERO_INT == facilityParentId) {
 				populateGroupCompany(facilityId, companyNames);
 			} else {
 
 				// Check if the parent is a FACILITY_SYSTEM (Agency)
-				AdmFacility admFacility = hibernateTemplate.get(
+				admFacility = hibernateTemplate.get(
 						AdmFacility.class, facilityParentId);
 				if (null != admFacility
 						&& admFacility.getFacilityType().equalsIgnoreCase(
@@ -667,8 +671,8 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 					}
 				}
 			}
-		} catch (DataAccessException e) {
-			LOGGER.error(e);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
 		}
 		return companyNames;
 	}

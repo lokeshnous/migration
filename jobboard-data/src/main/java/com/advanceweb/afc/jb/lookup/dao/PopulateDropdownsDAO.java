@@ -196,7 +196,7 @@ public interface PopulateDropdownsDAO {
 
 	List<String> populatePostalCodeAutoComplete(String postalCode);
 
-	List<DropDownDTO> populateCompanyNames(int facilityid, int facilityParentId);
+	List<DropDownDTO> populateCompanyNames(int facilityid);
 
 	List<DropDownDTO> populateTemplateAutoComplete(String company);
 

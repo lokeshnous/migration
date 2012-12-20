@@ -40,7 +40,6 @@ import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.employer.service.ManageFeaturedEmployerProfile;
 import com.advanceweb.afc.jb.job.service.JobPostService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
-import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
 import com.advanceweb.common.client.ClientContext;
@@ -178,7 +177,9 @@ public class JobPostController extends AbstractController {
 
 		// jobPostForm.setCompanyName(employerInfoDTO.getCustomerName());
 
-		List<DropDownDTO> companyList = getCompanyList(facilityId);
+		List<DropDownDTO> companyList = populateDropdownsService
+				.populateCompanyNames(facilityId);
+		
 		if (null == employerInfoDTO.getCustomerNo()
 				|| employerInfoDTO.getCustomerNo().isEmpty()) {
 			jobPostForm.setCustomerNo(String.valueOf(nsCustomerID));
@@ -482,7 +483,8 @@ public class JobPostController extends AbstractController {
 		int facilityId = 0;
 		facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
-		List<DropDownDTO> companyList = getCompanyList(facilityId);
+		List<DropDownDTO> companyList = populateDropdownsService
+				.populateCompanyNames(facilityId);
 		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo(
 				(Integer) session.getAttribute(USER_ID), FACILITY_ADMIN);
 		List<DropDownDTO> empTypeList = populateDropdownsService
@@ -547,7 +549,8 @@ public class JobPostController extends AbstractController {
 		int facilityId = 0;
 		facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
-		List<DropDownDTO> companyList = getCompanyList(facilityId);
+		List<DropDownDTO> companyList = populateDropdownsService
+				.populateCompanyNames(facilityId);
 
 		int jobPostType = employerJobPost
 				.getinvDetIdByJobId(jobId, (Integer) session
@@ -823,20 +826,6 @@ public class JobPostController extends AbstractController {
 		return country;
 	}
 
-	public List<DropDownDTO> getCompanyList(int facilityId) {
-		int facilityParentId = 0;
-		try {
-			facilityParentId = facilityService.getFacilityParent(facilityId);
-		} catch (JobBoardServiceException e) {
-			LOGGER.error(e);
-		}
-
-		List<DropDownDTO> companyList = populateDropdownsService
-				.populateCompanyNames(facilityId, facilityParentId);
-
-		return companyList;
-	}
-
 	@RequestMapping(value = "/getTemplate")
 	@ResponseBody
 	public List<DropDownDTO> getTemplate(
@@ -914,7 +903,8 @@ public class JobPostController extends AbstractController {
 			facilityId = (Integer) session
 					.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		}
-		List<DropDownDTO> companyList = getCompanyList(facilityId);
+		List<DropDownDTO> companyList = populateDropdownsService
+					.populateCompanyNames(facilityId);
 		String jobStatus = null;
 		if (null != jobPostform.getStatusValue()) {
 			jobStatus = jobPostform.getStatusValue();

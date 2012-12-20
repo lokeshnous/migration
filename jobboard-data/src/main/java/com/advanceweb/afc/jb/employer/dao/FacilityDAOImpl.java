@@ -209,30 +209,6 @@ public class FacilityDAOImpl implements FacilityDAO {
 				admFacility);
 	}
 
-	/**
-	 * This method is to get facility parent id
-	 * 
-	 * @param facilityId
-	 * @return
-	 * @throws JobBoardDataException
-	 * @throws JobBoardServiceException
-	 */
-	public int getFacilityParent(int facilityId) throws JobBoardDataException {
-		int facilityParentId = 0;
-		AdmFacility admFacility;
-		try {
-			admFacility = (AdmFacility) hibernateTemplate.find(
-					"from AdmFacility e where e.facilityId=?", facilityId).get(
-					0);
-			facilityParentId = admFacility.getFacilityParentId();
-		} catch (Exception e) {
-			throw new JobBoardDataException(
-					"Error occured while getting the facility parent id from Database"
-							+ e);
-		}
-
-		return facilityParentId;
-	}
 	public int getfacilityUserId(int facilityId) {
 		AdmRole role = (AdmRole) DataAccessUtils.uniqueResult(hibernateTemplate
 				.find("from AdmRole role where role.name=?", MMJBCommonConstants.FACILITY_ADMIN));

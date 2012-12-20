@@ -162,12 +162,8 @@ public class EmployerDashBoardController extends AbstractController {
 		int count = loginService.getactivejobposting(facilityId);
 
 		// Get All facilities
-		List<DropDownDTO> downDTOs = new ArrayList<DropDownDTO>();
-		try {
-			downDTOs = facilityService.getFacilityGroup(facilityId);
-		} catch (JobBoardException e) {
-			LOGGER.error("Error occurred while getting data for metrics" , e);
-		}
+		List<DropDownDTO> companyList = populateDropdownsService
+				.populateCompanyNames(facilityId);
 
 		// Retrieve Current subscriptions of the user
 		List<DropDownDTO> currentSubs = getCurrentSubscriptions(facilityId);
@@ -179,7 +175,7 @@ public class EmployerDashBoardController extends AbstractController {
 		// getting the metrics details
 		jbPostTotalList = getMetricsDetails(facilityId);
 
-		model.addObject("downDTOs", downDTOs);
+		model.addObject("downDTOs", companyList);
 		model.addObject(JBPOSTTOTALLIST, jbPostTotalList);
 		session.setAttribute(JBPOSTTOTALLIST, jbPostTotalList);
 		session.setAttribute(COUNT, count);
@@ -195,7 +191,7 @@ public class EmployerDashBoardController extends AbstractController {
 		return model;
 
 	}
-
+	
 	/**
 	 * The method helps to populate the ads for the page
 	 * 

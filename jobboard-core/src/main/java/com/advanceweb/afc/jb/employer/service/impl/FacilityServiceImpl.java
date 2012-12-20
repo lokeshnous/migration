@@ -43,26 +43,6 @@ public class FacilityServiceImpl implements FacilityService {
 	}
 
 	/**
-	 * This method is to get facility parent id
-	 * 
-	 * @param facilityId
-	 * @return
-	 * @throws JobBoardServiceException
-	 */
-	public int getFacilityParent(int facilityId)
-			throws JobBoardServiceException {
-		int facilityParentId = 0;
-		try {
-			facilityParentId = facilityDAO.getFacilityParent(facilityId);
-		} catch (JobBoardDataException e) {
-			throw new JobBoardServiceException(
-					"Error occured while getting parent id for facility from Database"
-							+ e);
-		}
-		return facilityParentId;
-	}
-
-	/**
 	 * This method is to get all list of facilities
 	 * 
 	 * @param facilityId

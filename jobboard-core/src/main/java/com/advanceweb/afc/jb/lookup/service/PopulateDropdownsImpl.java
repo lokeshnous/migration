@@ -252,11 +252,8 @@ public class PopulateDropdownsImpl implements PopulateDropdowns {
 	}
 
 	@Override
-	public List<DropDownDTO> populateCompanyNames(int facilityid,
-			int facilityParentId) {
-
-		return populateDropdownsDAO.populateCompanyNames(facilityid,
-				facilityParentId);
+	public List<DropDownDTO> populateCompanyNames(int facilityid) {
+		return populateDropdownsDAO.populateCompanyNames(facilityid);
 	}
 
 	@Override
