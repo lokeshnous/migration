@@ -221,6 +221,8 @@ jobboard-core/src/main/java/com/advanceweb/afc/jb/search/service/JobSearchServic
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/service/ResumeSearchService.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/service/impl/JobSearchServiceImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/search/service/impl/ResumeSearchServiceImpl.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/security/DatabaseAuthenticationDelegate.java -text
+jobboard-core/src/main/java/com/advanceweb/afc/jb/security/DatabaseAuthenticationDelegateImpl.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/security/DatabaseAuthenticationManager.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/service/exception/JobBoardNetSuiteServiceException.java -text
 jobboard-core/src/main/java/com/advanceweb/afc/jb/service/exception/JobBoardServiceException.java -text
