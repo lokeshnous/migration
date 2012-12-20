@@ -101,7 +101,7 @@ public class AdmFacility implements Serializable {
 	@Column(name="facility_parent_id")
 	private int  facilityParentId;
 
-	@Column(name="ns_customer_id")
+	@Column(name="netsuite_id")
 	private int nsCustomerID;
 	
 	@Column(name="template_id")
