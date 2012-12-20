@@ -71,27 +71,19 @@ public class DatabaseAuthenticationManager extends DaoAuthenticationProvider imp
 
 		try {
 			if(!(auth instanceof PreAuthenticatedAuthenticationToken)){
-//			validUser=authenticationDelegate.validateUser(auth.getName().toString(), auth.getCredentials().toString());
+			validUser=authenticationDelegate.validateUser(auth.getName().toString(), auth.getCredentials().toString());
 				//validUser=true;
 //			validUser=authenticationDelegate.validateUser("harsha@gmail.com", "harsha123");
 //			validUser=authenticationDelegate.validateUser("fdnyrk@sbcglobal.net", "yo040204");
 			}
-			UserDTO userDTO=userService.getAdvancePassUser(auth.getPrincipal().toString());
-			if(userDTO==null){
-				throw new BadCredentialsException(userNotExist);
-			}
-			if(userDTO!=null && !userDTO.getPassword().equals( auth.getCredentials())){
-				throw new BadCredentialsException(userNotExist);
-			}
+			if(validUser || auth instanceof PreAuthenticatedAuthenticationToken){
 			user = userDAO.getUser(auth.getName());
-//			if(validUser || auth instanceof PreAuthenticatedAuthenticationToken){
-//			user = userDAO.getUser(auth.getName());
-//			}
-//			if (!(validUser || auth instanceof PreAuthenticatedAuthenticationToken)) {
-//				LOGGER.debug("User not found with the given email id:"
-//						+ auth.getName());
-//				throw new BadCredentialsException(userNotExist);
-//			}
+			}
+			if (!(validUser || auth instanceof PreAuthenticatedAuthenticationToken)) {
+				LOGGER.debug("User not found with the given email id:"
+						+ auth.getName());
+				throw new BadCredentialsException(userNotExist);
+			}
 		} catch (Exception e) {
 			LOGGER.debug("Error while fetching the data with the given email id:"
 					+ auth.getName());
@@ -108,7 +100,6 @@ public class DatabaseAuthenticationManager extends DaoAuthenticationProvider imp
 			userRoles.add(new SimpleGrantedAuthority(
 					MMJBCommonConstants.ROLE_MERION_ADMIN));
 		}
-//		SecurityContextHolder.getContext().setAuthentication(token);
 		return new UsernamePasswordAuthenticationToken(auth.getName(),
 				auth.getCredentials(), userRoles);
 	}
@@ -325,7 +316,7 @@ public class DatabaseAuthenticationManager extends DaoAuthenticationProvider imp
 			}
 			advPassUser=userService.getAdvancePassUser(email);
 		} catch (Exception e) {
-			LOGGER.debug("error in loadUserByUsername :"+e.getMessage());
+			System.out.println("error in loadUserByUsername :"+e.getMessage());
 			e.printStackTrace();
 		}
 		
@@ -336,7 +327,7 @@ public class DatabaseAuthenticationManager extends DaoAuthenticationProvider imp
 	@Override
 	public UserDetails loadUserDetails(Authentication token)
 			throws UsernameNotFoundException {
-		LOGGER.debug("loadUserDetails===>");
+		System.out.println("loadUserDetails===>");
 		/*if(!token.isAuthenticated()){
 			throw new BadCredentialsException(userNotExist);
 		}*/
