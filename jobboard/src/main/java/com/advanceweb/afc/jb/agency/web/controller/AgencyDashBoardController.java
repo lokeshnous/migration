@@ -82,8 +82,8 @@ import com.advanceweb.afc.jb.pgi.web.controller.TransformPaymentMethod;
 import com.advanceweb.afc.jb.security.DatabaseAuthenticationManager;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
+import com.advanceweb.afc.jb.user.UserService;
 import com.advanceweb.afc.jb.user.UserSubscriptionService;
-import com.advanceweb.afc.jb.user.dao.UserDao;
 import com.advanceweb.afc.jb.user.web.controller.TransformUserubscription;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
@@ -172,7 +172,7 @@ public class AgencyDashBoardController extends AbstractController {
 	@Value("${emailInUse}")
 	private String emailInUse;
 	@Autowired
-	private UserDao userDAO;
+	private UserService userService;
 	@RequestMapping("/agencyDashboard")
 	public ModelAndView displayDashBoard(HttpSession session,
 			HttpServletRequest request) {
@@ -421,7 +421,7 @@ public class AgencyDashBoardController extends AbstractController {
 
 			int userId = (Integer) session.getAttribute("userId");
 			// Post/Edit Only users: should NOT be able to change Account Settings
-			List<UserRoleDTO> roleList = userDAO.getUserRole(userId);
+			List<UserRoleDTO> roleList = userService.getUserRole(userId);
 			if (null != roleList) {
 				for (UserRoleDTO userRole : roleList) {
 					if (null != userRole.getRoleName()

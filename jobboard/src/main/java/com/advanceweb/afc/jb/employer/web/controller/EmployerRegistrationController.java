@@ -63,7 +63,7 @@ import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 import com.advanceweb.afc.jb.pgi.web.controller.BillingAddressForm;
 import com.advanceweb.afc.jb.pgi.web.controller.TransformPaymentMethod;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
-import com.advanceweb.afc.jb.user.dao.UserDao;
+import com.advanceweb.afc.jb.user.UserService;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
 import com.advanceweb.common.client.ClientContext;
@@ -172,7 +172,7 @@ public class EmployerRegistrationController extends AbstractController{
 	@Value("${emailInUse}")
 	private String emailInUse;
 	@Autowired
-	private UserDao userDAO;
+	private UserService userService;
 	// Spring ReCaptcha
 
 	private String recaptchaResponse;
@@ -741,7 +741,7 @@ public class EmployerRegistrationController extends AbstractController{
 
 			int userId = (Integer) session.getAttribute("userId");
 			// Post/Edit Only users: should NOT be able to change Account Settings
-						List<UserRoleDTO> roleList = userDAO.getUserRole(userId);
+						List<UserRoleDTO> roleList = userService.getUserRole(userId);
 						if (null != roleList) {
 							for (UserRoleDTO userRole : roleList) {
 								if (null != userRole.getRoleName()
