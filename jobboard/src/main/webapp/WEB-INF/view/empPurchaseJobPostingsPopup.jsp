@@ -24,7 +24,7 @@
 		
 		jQuery(".megamenu").megamenu();
 		
-		$("#purchaseJobPostingId :checkbox").click(function(){
+		$("#purchaseJobPostingId :checkbox").change(function(){
 			if($(this).is(':checked')){
 				var planObj = $(this).parent().parent().parent().parent().parent().children(0).children(0).children(0).children(0);
 				if(!planObj.is(':checked')){
