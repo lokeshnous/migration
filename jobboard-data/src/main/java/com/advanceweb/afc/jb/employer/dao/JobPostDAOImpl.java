@@ -58,7 +58,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 
 	private static final String FIND_ADM_USER_FACILITY = "select facility from AdmUserFacility facility, AdmRole role where role.roleId=facility.id.roleId and facility.id.userId=? and role.name=?";
 	private static final String FIND_EXPIRED_JOBS = "from JpJob job where job.active='1' and date_format(job.endDt, '%Y-%m-%d') = ?";
-	private static final String FIND_EXPIRED_JOBS_FOR_RENEWAL = "from JpJob job where job.active='0'and job.autoRenew='1' and date_format(job.endDt, '%Y-%m-%d') = ?";
+	private static final String FIND_EXPIRED_JOBS_FOR_RENEWAL = "from JpJob job where job.active='1'and job.autoRenew='1' and date_format(job.endDt, '%Y-%m-%d') = ?";
 	private static final String FIND_SCHEDULED_JOBS = "from JpJob job where date_format(job.startDt, '%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') and job.active='0'";
 	private static final String FIND_INVENTORY_DETAILS = "select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 "
 			+ "and dtl.productId=? and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) order by dtl.availableqty ";
@@ -827,6 +827,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 						LOGGER.error(job.getName()
 								+ " Doesn't have sufficient credits to post the job "
 								+ job.getJobId());
+						getUserDetails(schedulerDTOList, job);
 					} else {
 						try {
 							job.setFeatured((byte) (dto.isbFeatured() ? 1 : 0));
