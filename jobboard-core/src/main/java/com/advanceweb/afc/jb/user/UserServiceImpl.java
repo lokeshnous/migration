@@ -87,4 +87,9 @@ public class UserServiceImpl implements UserService{
 		return userDAO.getAllJobSeekerList();
 	}
 
+	@Override
+	public UserDTO getAdvancePassUser(String email) {
+		return userDAO.getAdvancePassUser(email);
+	}
+
 }

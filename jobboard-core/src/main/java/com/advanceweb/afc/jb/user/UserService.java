@@ -48,4 +48,5 @@ public interface UserService {
 	long getEmployerCount() throws JobBoardServiceException;
 	
 	public List<SchedulerDTO> getAllJobSeekerList();
+	public UserDTO getAdvancePassUser(String email);
 }
