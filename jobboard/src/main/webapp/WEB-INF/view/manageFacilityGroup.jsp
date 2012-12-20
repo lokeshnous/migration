@@ -62,6 +62,15 @@ function validateFacility() {
 
 	<script type="text/javascript">
 	jQuery(document).ready(function() {
+		
+		$.nmFilters({
+    	    custom: {
+    	        afterShowCont: function(nm) {
+    	        	$('.focus').focus();
+    	        }
+    	    }
+    	});
+		
 		//$('[id^=nsId]').keypress(validateNumber);
 		//$(".onlyNum").keypress(validateNumber);
 			var empList = $.trim($("#empList").val());
@@ -162,7 +171,7 @@ function validateFacility() {
 			<div class="row">
 				<span class="splLableText">Company Name: </span>
 				<form:input path="compName" id="empList" name="empList"
-					class="job_seeker_Resume" value="${empList}"/>
+					class="job_seeker_Resume focus" value="${empList}"/>
 						<span class="splLableText FormErrorDisplayText01">&nbsp;&nbsp;OR&nbsp;</span>
 
 				<span class="lableText7">Net Suite ID Number:</span>

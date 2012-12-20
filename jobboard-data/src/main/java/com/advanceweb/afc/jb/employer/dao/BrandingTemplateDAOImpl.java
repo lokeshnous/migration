@@ -265,24 +265,6 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 		return false;
 	}
 	
-	/**
-	 * update the job posting Branding Template.
-	 */
-	@Override
-	public boolean updateBrandingTemplate(
-			BrandingTemplateDTO brandingTemplatesDTO) {
-		JpTemplate template = hibernateTemplateCareer.load(JpTemplate.class,
-				brandingTemplatesDTO.getJpBrandTempId());
-		template.setColorPalette(brandingTemplatesDTO.getColor());
-		template.setCompanyOverview(brandingTemplatesDTO.getCompanyOverview());
-		template.setCreateDt(new Date());
-		template.setTemplateName(brandingTemplatesDTO.getTemplateName());
-		template.setMainImagePath(brandingTemplatesDTO.getMainImagePath());
-		template.setLogoPath(brandingTemplatesDTO.getLogoPath());
-		hibernateTemplateCareer.update(template);
-		return true;
-	}
-
 	@Override
 	public int getBrandingInformation(int facilityId) {
 		int packageId = 0;

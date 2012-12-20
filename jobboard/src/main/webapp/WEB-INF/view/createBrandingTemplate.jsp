@@ -16,9 +16,8 @@
 		<script type="text/javascript">
 
                 jQuery(document).ready(
-
                 function() {
-
+                	$('#templateName').focus();
 	                	var existingLength = $('#companyOverview').val().length;
 						$('#counterTextID').val(1000 - existingLength);
 
@@ -168,7 +167,7 @@
 
 								<span class="charactersRemaining"> <input readonly
 									type="text" class="input2000_width" name="countdownCoverLetter"
-									size="3" value="1000" id="counterTextID">characters
+									size="3" value="1000" id="counterTextID" tabindex="-1">characters
 									remaining.
 								</span>
 						</div>

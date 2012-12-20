@@ -687,7 +687,6 @@ jobboard/src/main/webapp/WEB-INF/view/createResumeCopyPastePopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/createResumeUploadPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/createresumepopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/defaultErrorPage.jsp -text
-jobboard/src/main/webapp/WEB-INF/view/editBrandingTemplate.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/editCopyPasteResumePopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/editUploadResumePopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/editresumepopup.jsp -text
@@ -772,6 +771,7 @@ jobboard/src/main/webapp/WEB-INF/view/viewAlertPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/viewCopyPasteResume.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/viewEditCoverLetter.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/viewTestimony.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/viewallcareertools.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/viewresume.jsp -text
 jobboard/src/main/webapp/WEB-INF/web.xml -text
 jobboard/src/main/webapp/index.jsp -text

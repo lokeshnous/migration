@@ -11,6 +11,7 @@ import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.UserAlertDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmAlert;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityAlert;
@@ -201,25 +202,33 @@ public class EmpConversionHelper {
 	}
 
 	/**
-	 * This method is to get all list of facilities
+	 * The method helps to get all list of facilities of employer and mark as star for
+	 * main facility
 	 * 
-	 * @param facilityId
+	 * @param facilityList
+	 * @param admFacility
 	 * @return
-	 * @throws JobBoardServiceException
 	 */
 	public List<DropDownDTO> transformFacilityToDropDownDTO(
-			List<AdmFacility> facilityList, AdmFacility admFacility,
-			int facilityId) {
+			List<AdmFacility> facilityList, AdmFacility admFacility) {
 		List<DropDownDTO> downDTOs = new ArrayList<DropDownDTO>();
 		DropDownDTO dto = new DropDownDTO();
-		dto.setOptionId(admFacility.getFacilityId().toString());
-		dto.setOptionName("*" + " " + admFacility.getName());
-		downDTOs.add(dto);
-		for (AdmFacility facility : facilityList) {
-			dto = new DropDownDTO();
-			dto.setOptionId(facility.getFacilityId().toString());
-			dto.setOptionName(facility.getName());
+		if (admFacility.getFacilityType().equals(MMJBCommonConstants.FACILITY)) {
+			dto.setOptionId(admFacility.getFacilityId().toString());
+				dto.setOptionName("*" + " " + admFacility.getName());
 			downDTOs.add(dto);
+		} else {
+			for (int i = 0; i < facilityList.size(); i++) {
+				dto = new DropDownDTO();
+				dto.setOptionId(facilityList.get(i).getFacilityId().toString());
+				if (i == 0) {
+						dto.setOptionName("*" + " " + facilityList.get(i).getName());
+				} else {
+					dto.setOptionName(facilityList.get(i).getName());
+				}
+				downDTOs.add(dto);
+
+			}
 		}
 		return downDTOs;
 	}

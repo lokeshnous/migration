@@ -93,6 +93,15 @@ public class FacilityServiceImpl implements FacilityService {
 	}
 
 	/**
+	 * This method is used to get all jobs stats for Site – wide average per job posting.
+	 * 
+	 * @return metricsDTO
+	 */
+	public MetricsDTO getAllJobStats() {
+		return facilityDAO.getAllJobStats();
+	}
+
+	/**
 	 * This method is used to get the total count of employer
 	 * 
 	 * @return

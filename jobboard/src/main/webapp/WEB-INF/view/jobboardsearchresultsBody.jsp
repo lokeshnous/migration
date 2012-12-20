@@ -22,7 +22,7 @@
 		</c:when> 		
 		<c:otherwise>
 			<form:form method="POST" action="" commandName="jobSearchResultForm" id="jobSearchResultBodyFormId"> 
-					
+					<div id="connectionStatus" class="FormErrorDisplayText"></div>
 					<div class="row">
 
 						<div class="row marginTop5 paddingBottom05">

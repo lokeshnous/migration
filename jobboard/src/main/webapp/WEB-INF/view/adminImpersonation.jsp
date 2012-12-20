@@ -11,7 +11,13 @@
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
-		
+		$.nmFilters({
+    	    custom: {
+    	        afterShowCont: function(nm) {
+    	        	$('#empOrAgencyEmail').focus();
+    	        }
+    	    }
+    	});
 	$('#impersonate').click(function(){			
  			
 			$.ajax({url:"${pageContext.request.contextPath}/admin/authenticate.html",
@@ -36,6 +42,7 @@
 					}
 			});
 		});
+	
 	});
 </script>
 </head>
@@ -59,7 +66,7 @@
 						</div>
 						<div class="rowEvenNewSpacing">
 							<div class="lableText5">Email Address of Employer / Agency:</div>
-							<form:input path="empOrAgencyEmail" name="Exclude" class="job_seeker_email" />
+							<form:input path="empOrAgencyEmail" name="Exclude" class="job_seeker_email focus" />
 						</div>
 						<div class="row">
 						<span class="validationMsgPadding">

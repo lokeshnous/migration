@@ -523,9 +523,9 @@
 											class="row width80 SearchIcons">
 											<a title="edit"
 												href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}&jobStatus=${job.jobStatus}&readOnly=false"><div
-													class="editFile"></div></a><a title="view"
+													class="editFile"><img title="Edit" src="../resources/images/tranBg.png" class="edit"></div></a><a title="view"
 												href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}&readOnly=true"><div
-													class="view"></div></a><%-- <a title="check" href="#"><div class="check" name="check"
+													class="view"><img title="View" src="../resources/images/tranBg.png" class="view"></div></a><%-- <a title="check" href="#"><div class="check" name="check"
 													id="${job.jobId}"><img title="delete" src="../resources/images/tranBg.png" class="check"></div></a> --%>
 										</div></td>
 								</tr>

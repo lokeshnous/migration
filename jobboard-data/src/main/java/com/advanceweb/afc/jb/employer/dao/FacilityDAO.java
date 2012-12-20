@@ -34,6 +34,14 @@ public interface FacilityDAO {
 	List<MetricsDTO> getJobPostTotal(int facilityId);
 
 	/**
+	/**
+	 * This method is used to get all jobs stats for Site – wide average per job posting.
+	 * 
+	 * @return metricsDTO
+	 */
+	MetricsDTO getAllJobStats();
+	
+	/**
 	 * This method is used to get the total count of employer
 	 * 
 	 * @return

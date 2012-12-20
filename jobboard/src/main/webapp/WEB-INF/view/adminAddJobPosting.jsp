@@ -23,7 +23,7 @@
 
 	$(document).ready(function() {
 		$("#quantity").val("");
-		
+		$('.focus').focus();
 		//if employer does not purchase any job posting then hide the dropdown,
 		//quantity & save button
 		if(null == $("#jbTypeId").val()){
@@ -92,7 +92,7 @@
 				</div>
 				<div id="quantityDiv" class="rowEvenNewSpacing">
 					<span class="splLableText">Enter The Quantity :</span>
-					<form:input path="quantity" class="jb_input4 jb-iputnw" maxlength="3"/>
+					<form:input path="quantity" class="jb_input4 jb-iputnw focus" maxlength="3"/>
 					<span class="required">(Required)</span>
 				</div>
 				<div class="rowEvenNewSpacing">

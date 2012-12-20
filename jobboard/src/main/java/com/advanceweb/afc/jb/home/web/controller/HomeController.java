@@ -7,6 +7,7 @@ package com.advanceweb.afc.jb.home.web.controller;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -556,6 +557,37 @@ public class HomeController extends AbstractController{
 			Model model) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("homeFeaturedEmps");
+		return modelAndView;
+	}
+
+	/**
+	 * Method helps to view the all career tools.
+	 * 
+	 * @param response
+	 * @param request
+	 * @param model
+	 * @param session 
+	 * @return
+	 */
+	@RequestMapping(value = "/viewallcareertools")
+	public ModelAndView viewallcareertools(HttpServletResponse response,
+			HttpServletRequest request, Model model, HttpSession session) {
+		if (new File(basedirectorypath + directory + careertoolfilename)
+				.exists()) {
+			try {
+				String htmlcareercontent = ReadFile
+						.htmlReader(basedirectorypath + directory
+								+ careertoolfilename);
+				model.addAttribute("careerstoolresource", htmlcareercontent);
+			} catch (IOException e) {
+				LOGGER.error(
+						"Error occurred while getting the html content for careertools page",
+						e);
+			}
+		}
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("viewallcareertools");
+		populateAds(request, session, model, PageNames.FEATURED_EMP);
 		return modelAndView;
 	}
 	

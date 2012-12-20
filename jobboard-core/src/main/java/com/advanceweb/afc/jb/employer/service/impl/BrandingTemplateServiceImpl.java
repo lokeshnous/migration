@@ -66,13 +66,6 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 	}
 	
 	/**
-	 * Update the job posting Branding Template.
-	 */
-	@Override
-	public boolean updateBrandingTemplate(BrandingTemplateDTO brandingTemplatesDTO){
-		return brandingTemplateDAO.updateBrandingTemplate(brandingTemplatesDTO);
-	}
-	/**
 	 * Delete the job posting Branding Template.
 	 */
 	@Override

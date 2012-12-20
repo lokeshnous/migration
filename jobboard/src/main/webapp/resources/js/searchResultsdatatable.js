@@ -224,6 +224,7 @@ jQuery(document).ready(function() {
 					var navUrl =  $("#contextPath").val()+"/jobsearch/searchJob.html";
 					var formData= $("#jobSearchResultBodyFormId").serialize()+$("#jobSearchResultHeaderFormId").serialize();
 					$("#TotalRecord").text("");
+					$("#connectionStatus").text("Progressing..");
 					$.getJSON(navUrl,formData,function(data) {
 						/*$.each(data, function(key, val) {
 							
@@ -326,7 +327,6 @@ jQuery(document).ready(function() {
 					$("#selectedCity").val("");
 					$(".otherContent").attr("style","display: none");
 					$(".searchContent").attr("style","display: block");
-					
 					return false;
 				 
 			}

@@ -312,6 +312,8 @@ public class PaymentGatewayController extends AbstractController{
 			String orderNo = paymentGatewayForm.getInvoiceForm().getPurchaseOrderNo();
 			model.addObject("orderNo", orderNo);
 		}
+		// get the Ads
+		populateAds(request, session, model, PageNames.EMPLOYER_PG_BILLING);
 		model.setViewName(CONFIRM_ORDER_FORM);
 		return model;
 	}

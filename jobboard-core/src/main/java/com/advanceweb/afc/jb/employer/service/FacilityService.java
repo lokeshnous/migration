@@ -35,12 +35,20 @@ public interface FacilityService {
 	List<MetricsDTO> getJobPostTotal(int facilityId);
 	
 	/**
+	 * This method is used to get all jobs stats for Site – wide average per job posting.
+	 * 
+	 * @return
+	 */
+	MetricsDTO getAllJobStats();
+	
+	/**
 	 * This method is used to get the total count of employer
 	 * 
 	 * @return
 	 * @throws JobBoardServiceException
 	 */
 	long getEmployerCount() throws JobBoardServiceException;
+	
 	
 	FacilityDTO getFacilityByFacilityId(int facilityId);
 	

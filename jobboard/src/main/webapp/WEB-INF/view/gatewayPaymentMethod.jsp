@@ -79,7 +79,9 @@
 				<!-- gateway -->
 			</div>
 			<!-- main -->
+			<br class="clearfix" />
 
+			<div class="ad_wrapper">${adPageBottom}</div>
 		</div>
 		<!-- end main_wrapper_inside -->
 	</div>

@@ -110,6 +110,24 @@ public class FacilityDAOImpl implements FacilityDAO {
 	}
 
 	/**
+	 * This method is used to get all jobs stats for Site – wide average per job posting
+	 * 
+	 * @return metricsDTO
+	 */
+	@Override
+	public MetricsDTO getAllJobStats() {
+		List<?> metricsDeatil= (List<?>) hibernateTemplate
+				.find("select sum(views), sum(clicks), sum(applies) from JpJobStat");
+		Iterator<?> iterator = metricsDeatil.iterator();
+		Object[] row = (Object[]) iterator.next();
+		MetricsDTO metricsDTO = new MetricsDTO();
+		metricsDTO.setViews((Long) row[0]);
+		metricsDTO.setClicks((Long) row[1]);
+		metricsDTO.setApplies((Long) row[2]);
+		return metricsDTO;
+	}
+
+	/**
 	 * This method is used to get the total count of employer
 	 * 
 	 * @return
@@ -118,7 +136,10 @@ public class FacilityDAOImpl implements FacilityDAO {
 	public long getEmployerCount() throws JobBoardDataException {
 		long count = 0;
 		try {
-			count = hibernateTemplate.find("from AdmFacility").size();
+			String hql = "select count(*) from AdmUserRole where admRole = 3";
+			Query query = hibernateTemplate.getSessionFactory()
+					.getCurrentSession().createQuery(hql);
+			count = ((Number) query.uniqueResult()).intValue();
 		} catch (HibernateException he) {
 			throw new JobBoardDataException(
 					"Error occured while getting the Result from Database" + he);
@@ -168,27 +189,14 @@ public class FacilityDAOImpl implements FacilityDAO {
 		if (admFacility.getFacilityType().equals(
 				MMJBCommonConstants.FACILITY_GROUP)) {
 			try {
-				facilityList = hibernateTemplate
+				List<AdmFacility> admFacilityList = hibernateTemplate
 						.find("from AdmFacility e where e.facilityParentId=? and e.deleteDt is Null",
 								facilityId);
-				for (int i = 0; i < facilityList.size(); i++) {
-					AdmFacility facility = facilityList.get(i);
-					int facId = facility.getFacilityId();
-					try {
-						AdmUserFacility userFacility = (AdmUserFacility) hibernateTemplate
-								.find("from AdmUserFacility af where af.admFacility.facilityId=?",
-										facId).get(0);
-						// if facility has role 5 or 6 then he is the job owner
-						// need to remove it from metrics drop down list
-						if ((userFacility.getAdmRole().getRoleId() != Integer
-								.parseInt(MMJBCommonConstants.FULL_ACCESS))
-								|| (userFacility.getAdmRole().getRoleId() != Integer
-										.parseInt(MMJBCommonConstants.MANAGEEDITACCESS))) {
-							facilityList.remove(i);
-						}
-					} catch (Exception e) {
-						LOGGER.info("Error while getting Facility details for metrics"
-								+ e);
+				for (AdmFacility facility : admFacilityList) {
+					// Add the facilities only by avoiding the job owners
+					if (facility.getAdmUserFacilities() == null
+							|| facility.getAdmUserFacilities().isEmpty()) {
+						facilityList.add(facility);
 					}
 				}
 			} catch (HibernateException e) {
@@ -198,7 +206,7 @@ public class FacilityDAOImpl implements FacilityDAO {
 			}
 		}
 		return conversionHelper.transformFacilityToDropDownDTO(facilityList,
-				admFacility, facilityId);
+				admFacility);
 	}
 
 	/**

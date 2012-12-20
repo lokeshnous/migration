@@ -60,7 +60,6 @@ import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.resume.web.controller.SearchResumeForm;
 import com.advanceweb.afc.jb.search.service.ResumeSearchService;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
-import com.advanceweb.afc.jb.user.UserService;
 import com.advanceweb.afc.jb.user.UserSubscriptionService;
 import com.advanceweb.afc.jb.user.web.controller.TransformUserubscription;
 import com.advanceweb.common.ads.AdPosition;
@@ -104,10 +103,6 @@ public class EmployerDashBoardController extends AbstractController {
 	@Autowired
 	private LoginService loginService;
 	
-	@Autowired
-	private UserService userService;
-	
-
 	private @Value("${funnelChartPath}")
 	String funnelChartPath;
 	
@@ -171,7 +166,7 @@ public class EmployerDashBoardController extends AbstractController {
 		try {
 			downDTOs = facilityService.getFacilityGroup(facilityId);
 		} catch (JobBoardException e) {
-			LOGGER.info("Error occurred while getting data for metrics" + e);
+			LOGGER.error("Error occurred while getting data for metrics" , e);
 		}
 
 		// Retrieve Current subscriptions of the user
@@ -287,9 +282,9 @@ public class EmployerDashBoardController extends AbstractController {
 				.populateDropdown("Metrics");
 
 		// jbPostTotalList will be having job post total details for metrics
-		int views = 0;
-		int clicks = 0;
-		int applies = 0;
+		long views = 0;
+		long clicks = 0;
+		long applies = 0;
 		int size = metricsDTOs.size();
 		for (int i = 0; i < metricsDTOs.size(); i++) {
 			MetricsDTO dto = new MetricsDTO();
@@ -306,13 +301,13 @@ public class EmployerDashBoardController extends AbstractController {
 		metricsDTO = new MetricsDTO();
 
 		// Calculating average per job posting
-		int avgViews = 0;
-		int avgClicks = 0;
-		int avgApplies = 0;
+		long avgViews = 0;
+		long avgClicks = 0;
+		long avgApplies = 0;
 		if (size > 0) {
-			avgViews = views / size;
-			avgClicks = clicks / size;
-			avgApplies = applies / size;
+			avgViews = Math.round((double) views / size);
+			avgClicks = Math.round((double) clicks / size);
+			avgApplies = Math.round((double) applies / size);
 		}
 		metricsDTO.setMetricsName(metricsList.get(1).getOptionName());
 		metricsDTO.setViews(avgViews);
@@ -322,26 +317,27 @@ public class EmployerDashBoardController extends AbstractController {
 		metricsDTO = new MetricsDTO();
 
 		// Calculating site - wide average per job posting
-		int swAvgViews = 0;
-		int swAvgClicks = 0;
-		int swAvgApplies = 0;
+		long swAvgViews = 0;
+		long swAvgClicks = 0;
+		long swAvgApplies = 0;
 		long count = 0;
 		try {
 			count = facilityService.getEmployerCount();
-		} catch (JobBoardException e) {
-			LOGGER.info("Error occured while getting the Result from Database");
+		} catch (JobBoardServiceException e) {
+			e.printStackTrace();
 		}
+		MetricsDTO dto = facilityService.getAllJobStats();
 
 		if (count > 0) {
-			swAvgViews = (int) (views / count);
-			swAvgClicks = (int) (clicks / count);
-			swAvgApplies = (int) (applies / count);
+			swAvgViews = Math.round((double) dto.getViews() / count);
+			swAvgClicks = Math.round((double) dto.getClicks() / count);
+			swAvgApplies = Math.round((double) dto.getApplies() / count);
 		}
-		metricsDTO.setMetricsName(metricsList.get(2).getOptionName());
-		metricsDTO.setViews(swAvgViews);
-		metricsDTO.setClicks(swAvgClicks);
-		metricsDTO.setApplies(swAvgApplies);
-		jbPostTotalList.add(2, metricsDTO);
+		dto.setMetricsName(metricsList.get(2).getOptionName());
+		dto.setViews(swAvgViews);
+		dto.setClicks(swAvgClicks);
+		dto.setApplies(swAvgApplies);
+		jbPostTotalList.add(2, dto);
 
 		return jbPostTotalList;
 	}
@@ -380,10 +376,10 @@ public class EmployerDashBoardController extends AbstractController {
 				.populateDropdown("Metrics");
 
 		// jbPostTotalList will be having job post total details for metrics
-		int views = 0;
-		int clicks = 0;
-		int applies = 0;
-		int size = jobstatDTOs.size();
+		long views = 0;
+		long clicks = 0;
+		long applies = 0;
+		long size = jobstatDTOs.size();
 		MetricsDTO dto = new MetricsDTO();
 		for (int i = 0; i < jobstatDTOs.size(); i++) {
 
@@ -399,13 +395,13 @@ public class EmployerDashBoardController extends AbstractController {
 		jbPostTotalList.add(0, metricsDTO);
 		metricsDTO = new MetricsDTO();
 		// Calculating average per job posting
-		int avgViews = 0;
-		int avgClicks = 0;
-		int avgApplies = 0;
+		long avgViews = 0;
+		long avgClicks = 0;
+		long avgApplies = 0;
 		if (size > 0) {
-			avgViews = views / size;
-			avgClicks = clicks / size;
-			avgApplies = applies / size;
+			avgViews = Math.round((double) views / size);
+			avgClicks = Math.round((double) clicks / size);
+			avgApplies = Math.round((double) applies / size);
 		}
 		metricsDTO.setMetricsName(metricsList.get(1).getOptionName());
 		metricsDTO.setViews(avgViews);
@@ -414,25 +410,27 @@ public class EmployerDashBoardController extends AbstractController {
 		jbPostTotalList.add(1, metricsDTO);
 		metricsDTO = new MetricsDTO();
 		// Calculating site - wide average per job posting
-		int swAvgViews = 0;
-		int swAvgClicks = 0;
-		int swAvgApplies = 0;
+		long swAvgViews = 0;
+		long swAvgClicks = 0;
+		long swAvgApplies = 0;
 		long count = 0;
 		try {
-			count = userService.getEmployerCount();
-		} catch (JobBoardException e) {
-			LOGGER.info("Error occured while getting the Result from Database");
+			count = facilityService.getEmployerCount();
+		} catch (JobBoardServiceException e) {
+			e.printStackTrace();
 		}
+		MetricsDTO metricsdto = facilityService.getAllJobStats();
+
 		if (count > 0) {
-			swAvgViews = (int) (views / count);
-			swAvgClicks = (int) (clicks / count);
-			swAvgApplies = (int) (applies / count);
+			swAvgViews = Math.round((double) metricsdto.getViews() / count);
+			swAvgClicks = Math.round((double) metricsdto.getClicks() / count);
+			swAvgApplies = Math.round((double) metricsdto.getApplies() / count);
 		}
-		metricsDTO.setMetricsName(metricsList.get(2).getOptionName());
-		metricsDTO.setViews(swAvgViews);
-		metricsDTO.setClicks(swAvgClicks);
-		metricsDTO.setApplies(swAvgApplies);
-		jbPostTotalList.add(2, metricsDTO);
+		metricsdto.setMetricsName(metricsList.get(2).getOptionName());
+		metricsdto.setViews(swAvgViews);
+		metricsdto.setClicks(swAvgClicks);
+		metricsdto.setApplies(swAvgApplies);
+		jbPostTotalList.add(2, metricsdto);
 		model.addObject(JBPOSTTOTALLIST, jbPostTotalList);
 		session.setAttribute(JBPOSTTOTALLIST, jbPostTotalList);
 		model.addObject(EMPLOYERDASHBOARDFORM, employerDashBoardForm);

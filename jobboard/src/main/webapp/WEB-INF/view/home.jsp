@@ -52,8 +52,8 @@
 					<div class="content_columns">
 						<div class="column1">
 								<h2 class="more_link">
-								<a href="">
-									Career Tools</a><span><a href="">More</a></span>
+								<a href="viewallcareertools.html" target="_blank">
+									Career Tools</a><span><a href="viewallcareertools.html" target="_blank">More</a></span>
 								</h2>
 							 ${careerstoolresource}
 						</div>

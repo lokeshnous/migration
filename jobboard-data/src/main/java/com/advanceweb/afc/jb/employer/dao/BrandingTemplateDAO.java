@@ -49,14 +49,6 @@ public interface BrandingTemplateDAO {
 	BrandingTemplateDTO editBrandingTemplate(int templateId);
 
 	/**
-	 * Update the job posting Branding Template.
-	 * 
-	 * @param brandingTemplatesDTO
-	 * @return <true> if successfully updated otherwise <false>
-	 */
-	boolean updateBrandingTemplate(BrandingTemplateDTO brandingTemplatesDTO);
-
-	/**
 	 * Delete the job posting Branding Template.
 	 * 
 	 * @param brandingTemplatesDTO

@@ -163,9 +163,9 @@ public class LoginFormDAOImpl implements LoginFormDAO {
 		while (iterator.hasNext()) {
 			MetricsDTO dto = new MetricsDTO();
 			Object[] row = (Object[]) iterator.next();
-			dto.setViews((Integer) row[0]);
-			dto.setClicks((Integer) row[1]);
-			dto.setApplies((Integer) row[2]);
+			dto.setViews((Long) row[0]);
+			dto.setClicks((Long) row[1]);
+			dto.setApplies((Long) row[2]);
 			listmetricsTotal.add(dto);
 		}
 

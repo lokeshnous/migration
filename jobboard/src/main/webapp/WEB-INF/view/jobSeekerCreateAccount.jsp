@@ -21,11 +21,9 @@
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 		<script type="text/javascript">
 		    jQuery(document).ready(function(){
+		    $('.focus').focus();
 		    jQuery(".megamenu").megamenu();
-		    $('#emailId').focus();
 		});
-		</script>
-		<script type="text/javascript">
 		    function cancelProcess(){
 		    	window.location.href = '${pageContext.request.contextPath}/healthcarejobs/advanceweb.html';
 		    }	
@@ -63,7 +61,7 @@
            
            	
 	            <div class="rowEvenSpacingMargin0"> <span class="lableText3">Email Address:</span>
-	                      <form:input path="emailId" class="job_seeker_password textBox350" readonly="${registerForm.bReadOnly}"/>
+	                      <form:input path="emailId" class="job_seeker_password textBox350 focus" readonly="${registerForm.bReadOnly}"/>
 	                      <span class="required">(Required)</span> 
 	            </div>
 				<div class="validationMsg">

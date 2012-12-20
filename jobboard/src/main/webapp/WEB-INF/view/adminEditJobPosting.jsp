@@ -137,7 +137,13 @@ jQuery(document).ready(function() {
 		
 		
 		jQuery(".megamenu").megamenu();
-
+		$.nmFilters({
+    	    custom: {
+    	        afterShowCont: function(nm) {
+    	        	$('#advJobId').focus();
+    	        }
+    	    }
+    	});
 window.onload = function() {
 	loadTable();
 }
@@ -195,7 +201,7 @@ function loadTable(){
 					<span class="lableText3">
 						Adv Job Id
 					</span>
-					<input name="advJobId" id="advJobId" class="job_seeker_email" type="text"/>&nbsp;&nbsp;&nbsp;
+					<input name="advJobId" id="advJobId" class="job_seeker_email focus" type="text"/>&nbsp;&nbsp;&nbsp;
 					<input type="button" value="Search" name="SearchJob" id="SearchJob" class="btn_sm orange cursor"  />
 					<!-- <div class="toolTip"><span class="classic">Example: Only Job id like 15030</span></div> -->
 			</div>

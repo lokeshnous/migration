@@ -877,9 +877,9 @@ public class AgencyDashBoardController extends AbstractController {
 				.populateDropdown("Metrics");
 
 		// jbPostTotalList will be having job post total details for metrics
-		int views = 0;
-		int clicks = 0;
-		int applies = 0;
+		long views = 0;
+		long clicks = 0;
+		long applies = 0;
 		int size = metricsDTOs.size();
 		for (int i = 0; i < metricsDTOs.size(); i++) {
 			MetricsDTO dto = new MetricsDTO();
@@ -896,13 +896,13 @@ public class AgencyDashBoardController extends AbstractController {
 		metricsDTO = new MetricsDTO();
 
 		// Calculating average per job posting
-		int avgViews = 0;
-		int avgClicks = 0;
-		int avgApplies = 0;
+		long avgViews = 0;
+		long avgClicks = 0;
+		long avgApplies = 0;
 		if (size > 0) {
-			avgViews = views / size;
-			avgClicks = clicks / size;
-			avgApplies = applies / size;
+			avgViews = Math.round((double) views / size);
+			avgClicks = Math.round((double) clicks / size);
+			avgApplies = Math.round((double) applies / size);
 		}
 		metricsDTO.setMetricsName(metricsList.get(1).getOptionName());
 		metricsDTO.setViews(avgViews);
@@ -912,26 +912,27 @@ public class AgencyDashBoardController extends AbstractController {
 		metricsDTO = new MetricsDTO();
 
 		// Calculating site - wide average per job posting
-		int swAvgViews = 0;
-		int swAvgClicks = 0;
-		int swAvgApplies = 0;
+		long swAvgViews = 0;
+		long swAvgClicks = 0;
+		long swAvgApplies = 0;
 		long count = 0;
 		try {
 			count = facilityService.getEmployerCount();
-		} catch (JobBoardException e) {
-			LOGGER.info("Error occured while getting the Result from Database");
+		} catch (JobBoardServiceException e) {
+			e.printStackTrace();
 		}
+		MetricsDTO dto = facilityService.getAllJobStats();
 
 		if (count > 0) {
-			swAvgViews = (int) (views / count);
-			swAvgClicks = (int) (clicks / count);
-			swAvgApplies = (int) (applies / count);
+			swAvgViews = Math.round((double) dto.getViews() / count);
+			swAvgClicks = Math.round((double) dto.getClicks() / count);
+			swAvgApplies = Math.round((double) dto.getApplies() / count);
 		}
-		metricsDTO.setMetricsName(metricsList.get(2).getOptionName());
-		metricsDTO.setViews(swAvgViews);
-		metricsDTO.setClicks(swAvgClicks);
-		metricsDTO.setApplies(swAvgApplies);
-		jbPostTotalList.add(2, metricsDTO);
+		dto.setMetricsName(metricsList.get(2).getOptionName());
+		dto.setViews(swAvgViews);
+		dto.setClicks(swAvgClicks);
+		dto.setApplies(swAvgApplies);
+		jbPostTotalList.add(2, dto);
 
 		return jbPostTotalList;
 	}

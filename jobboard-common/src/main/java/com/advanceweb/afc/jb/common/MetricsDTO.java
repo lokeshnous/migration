@@ -13,9 +13,9 @@ import java.util.Date;
 public class MetricsDTO {
 
 	private int jobId;
-	private int views;
-	private int clicks;
-	private int applies;
+	private long views;
+	private long clicks;
+	private long applies;
 	private Date statsDate;
 	private String metricsName;
 
@@ -32,51 +32,6 @@ public class MetricsDTO {
 	 */
 	public void setJobId(int jobId) {
 		this.jobId = jobId;
-	}
-
-	/**
-	 * @return the views
-	 */
-	public int getViews() {
-		return views;
-	}
-
-	/**
-	 * @param views
-	 *            the views to set
-	 */
-	public void setViews(int views) {
-		this.views = views;
-	}
-
-	/**
-	 * @return the clicks
-	 */
-	public int getClicks() {
-		return clicks;
-	}
-
-	/**
-	 * @param clicks
-	 *            the clicks to set
-	 */
-	public void setClicks(int clicks) {
-		this.clicks = clicks;
-	}
-
-	/**
-	 * @return the applies
-	 */
-	public int getApplies() {
-		return applies;
-	}
-
-	/**
-	 * @param applies
-	 *            the applies to set
-	 */
-	public void setApplies(int applies) {
-		this.applies = applies;
 	}
 
 	/**
@@ -106,6 +61,30 @@ public class MetricsDTO {
 	 */
 	public void setMetricsName(String metricsName) {
 		this.metricsName = metricsName;
+	}
+
+	public long getViews() {
+		return views;
+	}
+
+	public void setViews(long views) {
+		this.views = views;
+	}
+
+	public long getClicks() {
+		return clicks;
+	}
+
+	public void setClicks(long clicks) {
+		this.clicks = clicks;
+	}
+
+	public long getApplies() {
+		return applies;
+	}
+
+	public void setApplies(long applies) {
+		this.applies = applies;
 	}
 
 }
