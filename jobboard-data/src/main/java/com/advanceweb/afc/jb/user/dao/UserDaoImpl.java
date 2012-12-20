@@ -268,5 +268,27 @@ public class UserDaoImpl implements UserDao {
 		}
 		return schedulerDTOList;
 	}
-	
+
+	@Override
+	public UserDTO getAdvancePassUser(String email) {
+		UserDTO userDTO=null;
+		try {
+			WebMembershipEmail webMembershipEmail = (WebMembershipEmail) DataAccessUtils
+					.uniqueResult(hibernateTemplateAdvancePass.find(
+							"from WebMembershipEmail where email = ?", email));
+			if (webMembershipEmail != null) {
+				WebMembership membership = hibernateTemplateAdvancePass.get(
+						WebMembership.class, webMembershipEmail
+								.getWebMembership().getWebMembershipID());
+				if (membership != null) {
+					userDTO = new UserDTO();
+					userDTO.setEmailId(email);
+					userDTO.setPassword(membership.getPassword());
+				}
+			}
+		} catch (Exception e) {
+			LOGGER.error("Exception occur while fetching the username and password from Advance Pass DB"+e.getMessage());
+		}
+		return userDTO;
+	}
 }

@@ -41,4 +41,5 @@ public interface UserDao {
 	long getEmployerCount() throws JobBoardDataException;
 	
 	public List<SchedulerDTO> getAllJobSeekerList();
+	public UserDTO getAdvancePassUser(String email);
 }
