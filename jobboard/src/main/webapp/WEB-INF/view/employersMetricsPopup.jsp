@@ -35,6 +35,7 @@
 		);
 	}
 	 function changeMetrics(){
+		 $(".EDTextBox").val("");
 		var selEmployerId = $("#selEmployer").val();
 		$.ajax({url:"${pageContext.request.contextPath}/agency/viewFacilityMetrics.html?facilityId="+selEmployerId,
 			data:$('#selEmployerId').serialize(),
@@ -159,23 +160,24 @@ var options = {
 				$("#showMertics")
 				.click(
 						function() {
+							$("#showMetricsErr").html("");
 							var startDate = $("#startDate")
 									.val();
 							var endDate = $("#endDate").val();
 							if(startDate == '' || endDate == ''){
-								$("#container").html("Please enter both start date and end date");
-								$("#container").css("width", "550px");
-								$("#container").css("text-align", "center");
-								$("#container").css("color", "#FF0000");
+								$("#showMetricsErr").html("Please enter both start date and end date");
+								//$("#container").css("width", "550px");
+								//$("#container").css("text-align", "center");
+								//$("#container").css("color", "#FF0000");
 								return false;
 							}
 							var convStartDate = new Date(startDate);
 					        var convEndDate = new Date(endDate);
 					        if(convEndDate < convStartDate){
-					        	$("#container").html("Please enter end date greater than start date!");
-								$("#container").css("width", "550px");
-								$("#container").css("text-align", "center");
-								$("#container").css("color", "#FF0000");
+					        	$("#showMetricsErr").html("Please enter end date greater than start date!");
+								//$("#container").css("width", "550px");
+								//$("#container").css("text-align", "center");
+								//$("#container").css("color", "#FF0000");
 								return false;
 					        }
 							var selEmployerId = $(
@@ -341,13 +343,15 @@ var options = {
 												width="14" height="14" alt="Datepick"></a>
 										</div>
 									</div>
-									<div class="">
+									<div>
 										<input type="button" name="SHOW" id="showMertics"
 											class="orange" value="SHOW" />
 									</div>
-
+									<div id="showMetricsErr" class="Error-ne"></div>
+									
 									<div class="floatLeft marginTop5 marginLeft15">
-										<a href="../employer/getExcelSheet.html" id="metricsExcel">Export</a>
+									<!-- commented the  code for phase 2A -->
+										<a href="../employer/getExcelSheet.html" id="metricsExcel" style="display: none;">Export</a>
 										
 									</div>
 
@@ -375,7 +379,8 @@ var options = {
 									</div>
 									<div class=" clearfix"></div>
 								</div>
-								 <div id="container" style="height: 250px; width: 290px"></div>
+								<!-- commented the  code for phase 2A -->
+								<div style="display: none;"><div id="container" style="height: 250px; width: 290px"></div></div>
 							</div>
               
               </div></div>

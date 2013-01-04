@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -105,7 +104,7 @@ public class AdmFacility implements Serializable {
 	private int nsCustomerID;
 	
 	@Column(name="template_id")
-	private int templateId=0;
+	private int templateId=-1;
 	
 //	Featured Employer start date
 	@Column(name="fe_start_dt")
@@ -124,7 +123,7 @@ public class AdmFacility implements Serializable {
 	private List<AdmFacilityContact> admFacilityContacts;
 
 	//bi-directional one-to-one association to AdmFacilityCredit
-	@OneToOne(mappedBy=ADM_FACILITY, fetch=FetchType.LAZY)
+	@OneToOne(mappedBy=ADM_FACILITY)
 	private AdmFacilityCredit admFacilityCredit;
 
 	//bi-directional many-to-one association to AdmFacilitySubscription
@@ -386,6 +385,9 @@ public class AdmFacility implements Serializable {
 	}
 
 	public void setFacilityParentId(int facilityParentId) {
+		if(facilityParentId==0){
+			facilityParentId=-1;
+		}
 		this.facilityParentId = facilityParentId;
 	}
 
@@ -474,6 +476,9 @@ public class AdmFacility implements Serializable {
 	}
 
 	public void setTemplateId(int templateId) {
+		if(templateId==0){
+			templateId=-1;
+		}
 		this.templateId = templateId;
 	}
 

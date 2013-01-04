@@ -104,7 +104,7 @@
 					<span class="lableText3">Upload Resume File:</span>
 					<div class="floatLeft">
 						<form:input path="fileContent" type="file" id="filePath" size="20"
-							class="job_seeker_login_email fileType" />
+							class="job_seeker_login_email fileType cursor" />
 					</div>
 					<div class="toolTip marginTop8">
 						<span class="classic">Select the resume you want to upload. Accepted file types are .doc, .docx and PDF only</span>
@@ -115,9 +115,9 @@
 				<div class="errorRow"> <div style="color: red" align="left" id="filePathError"></div></div>
 					<div class="popUpButtonRow">
 
-						<input type="button" class="btn_sm orange" id="sendButton"
+						<input type="button" class="btn_sm orange cursor" id="sendButton"
 							value="Send" /> 
-							<input type="button" class="btn_sm orange" onclick="closePopup();" id="cancelButton"
+							<input type="button" class="btn_sm orange cursor" onclick="closePopup();" id="cancelButton"
 							value="Cancel" />
 							
 					</div>

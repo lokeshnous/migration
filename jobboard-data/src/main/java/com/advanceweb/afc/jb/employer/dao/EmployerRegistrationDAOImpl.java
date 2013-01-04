@@ -184,8 +184,12 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 				// saving the data in the adm_user_facility
 				setUserFacility(facility, merUser.getUserId(), roleId);
 			}
-
+			if(!empDTO.getMerUserDTO().isOldUser()){
 			saveAdvancePassDetails(facility.getFacilityId(),merUser);
+			}else{
+				AccountProfileDTO apDto=empHelper.transformToAccountProfileDTO(empDTO);
+				editAdvancePassDetails(apDto,merUser.getEmail());
+			}
 			return empHelper.transformMerUserToUserDTO(merUser);
 
 		} catch (DataAccessException e) {
@@ -455,6 +459,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 				// update meruser Entity
 				MerUser mer = hibernateTemplateTracker.get(MerUser.class,
 						userId);
+				editAdvancePassDetails(apd,mer.getEmail());
 				mer.setFirstName(apd.getFirstName());
 				mer.setLastName(apd.getLastName());
 				if(apd.getEmail()!=null){
@@ -503,6 +508,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 				hibernateTemplateCareers.update(facility);
 				isUpdate = true;
 			}
+			
 		} catch (Exception e) {
 			LOGGER.info("Error im Meruser duplicate Data insert");
 		}
@@ -631,8 +637,60 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 		membershipEmail.setWebMembership(webMembership);
 		membershipEmail.setEmail(merUser.getEmail());
 		membershipEmail.setCreateDate(timestamp);
+		membershipEmail.setPrimaryEmail(true);
 
 		hibernateTemplateAdvancePass.saveOrUpdate(membershipEmail);
 	}
 
+	/**
+	 * Method to update required Data Into Advance Pass
+	 * 
+	 * @param facilityIdP
+	 * @param merUser
+	 */
+	private void editAdvancePassDetails(AccountProfileDTO empDTO, String email) {
+		WebMembership webMembership = new WebMembership();
+		WebMembershipInfo membershipInfo = new WebMembershipInfo();
+
+		List<WebMembershipEmail> membershipEmailList = hibernateTemplateAdvancePass
+				.find("from  WebMembershipEmail WHERE  email=?", email);
+
+		if (null != membershipEmailList && !membershipEmailList.isEmpty()) {
+
+			// Update WebMembershipEmail
+			WebMembershipEmail webMembershipEmail = membershipEmailList.get(0);
+			if (null != empDTO.getEmail()) {
+				webMembershipEmail.setEmail(empDTO.getEmail());
+			}
+
+			// Update WebMembership
+			webMembership = webMembershipEmail.getWebMembership();
+
+			// Update WebMembershipInfo
+			membershipInfo = webMembership.getWebMembershipInfo();
+
+			membershipInfo.setFirstName(empDTO.getFirstName());
+			membershipInfo.setLastName(empDTO.getLastName());
+			membershipInfo.setZipCode(empDTO.getZipCode());
+			if (null != empDTO.getCountry()
+					&& (empDTO.getCountry().equalsIgnoreCase(
+							MMJBCommonConstants.COUNTRY_USA) || empDTO
+							.getCountry().equalsIgnoreCase("US"))) {
+				membershipInfo
+						.setCountryId(MMJBCommonConstants.COUNTRY_USA_VAL);
+			} else if (null != empDTO.getCountry()
+					&& (empDTO.getCountry()
+							.equalsIgnoreCase(MMJBCommonConstants.COUNTRY_CA))) {
+				membershipInfo.setCountryId(MMJBCommonConstants.COUNTRY_CA_VAL);
+			}
+
+			webMembership.setWebMembershipInfo(membershipInfo);
+			webMembershipEmail.setWebMembership(webMembership);
+
+			hibernateTemplateAdvancePass.saveOrUpdate(webMembershipEmail);
+			hibernateTemplateAdvancePass.saveOrUpdate(webMembership);
+			hibernateTemplateAdvancePass.saveOrUpdate(membershipInfo);
+		}
+
+	}
 }

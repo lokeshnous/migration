@@ -27,6 +27,7 @@ public class JpJobAddon implements Serializable {
 	@EmbeddedId
 	private JpJobAddonPK jobAddonPK;
 
+	@Column(name="active")
 	private byte active;
 
 	@Column(name="create_dt")

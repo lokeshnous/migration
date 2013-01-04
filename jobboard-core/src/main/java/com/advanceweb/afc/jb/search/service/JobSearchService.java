@@ -106,8 +106,9 @@ public interface JobSearchService {
 	 * This method is used to clear the recent searches of user
 	 * 
 	 * @param userId
+	 * @param recentSearchsLimit
 	 */
-	 void clearRecentSearches(int userId);
+	 void clearRecentSearches(int userId, int recentSearchsLimit);
 	 /**
 		 * This method is used to check existing session in application
 		 * 

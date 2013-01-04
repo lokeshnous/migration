@@ -53,6 +53,8 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 	public void onAuthenticationSuccess(HttpServletRequest request,
 			HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {
+		String registrationValue=(String) request.getAttribute("userRegistration");
+		
 		String pageValue = request.getParameter(MMJBCommonConstants.PAGE_VALUE);
 		String socialSignUp = (String) request.getAttribute("socialSignUp");
 		UserDTO user = userService.getUser(authentication.getName());
@@ -76,6 +78,7 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 			cookie.setPath(StringUtils.hasLength(request.getContextPath()) ? request
 					.getContextPath() : "/");
 			response.addCookie(cookie);
+			
 		}
 		
 //		if((authentication instanceof RememberMeAuthenticationToken)){
@@ -99,19 +102,23 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 			else{
 				advancePassUser = userService.getAdvancePassUser(authentication.getPrincipal().toString());
 			}
-			//response.addCookie(createCookie(user.getEmailId(),user.getPassword()));
+			if (!authentication.getAuthorities().contains(
+					new SimpleGrantedAuthority(
+							MMJBCommonConstants.ROLE_MERION_ADMIN))) {
 		response.addCookie(createCookie(advancePassUser.getEmailId(),advancePassUser.getPassword()));
+			}
+		
 		}
 		session.setAttribute(MMJBCommonConstants.USER_ID, user.getUserId());
 		session.setAttribute(MMJBCommonConstants.USER_NAME, user.getFirstName()
 				+ " " + user.getLastName());
 		session.setAttribute(MMJBCommonConstants.USER_EMAIL, user.getEmailId());
 
-		if (isJobSeeker(authentication, pageValue)) {
+		if (isJobSeeker(authentication, pageValue,registrationValue)) {
 			session.setAttribute(MMJBCommonConstants.LOGIN_DATE_TIME,
 					new Date());
 			redirectJobSeeker(user, request, response, session);
-		} else if (isFacility(authentication, pageValue)) {
+		} else if (isFacility(authentication, pageValue,registrationValue)) {
 
 			/**
 			 * Added to put facility id in the session
@@ -122,8 +129,8 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 					infoDTO.getFacilityId());
 			session.setAttribute(MMJBCommonConstants.COMPANY_EMP,
 					infoDTO.getCustomerName());
-			redirectFacility(user, request, response, session);
-		} else if (isFacilitySystem(authentication, pageValue)) {
+			redirectFacility(user, request, response, session,registrationValue);
+		} else if (isFacilitySystem(authentication, pageValue,registrationValue)) {
 
 			/**
 			 * Added to put facility id in the session
@@ -171,8 +178,8 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 	 * @return
 	 */
 	public boolean isFacilitySystem(Authentication authentication,
-			String pageValue) {
-		if (authentication instanceof RememberMeAuthenticationToken || authentication instanceof PreAuthenticatedAuthenticationToken) {
+			String pageValue,String userRegistration) {
+		if (authentication instanceof RememberMeAuthenticationToken || authentication instanceof PreAuthenticatedAuthenticationToken||(userRegistration!=null && userRegistration.equals("agencyRegistration"))) {
 			return authentication.getAuthorities().contains(
 					new SimpleGrantedAuthority(
 							MMJBCommonConstants.ROLE_FACILITY_SYSTEM));
@@ -194,8 +201,8 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 	 * @param pageValue
 	 * @return
 	 */
-	public boolean isFacility(Authentication authentication, String pageValue) {
-		if (authentication instanceof RememberMeAuthenticationToken || authentication instanceof PreAuthenticatedAuthenticationToken) {
+	public boolean isFacility(Authentication authentication, String pageValue,String userRegistration) {
+		if (authentication instanceof RememberMeAuthenticationToken || authentication instanceof PreAuthenticatedAuthenticationToken||(userRegistration!=null && userRegistration.equals("employerRegistration"))) {
 			return authentication.getAuthorities().contains(
 					new SimpleGrantedAuthority(
 							MMJBCommonConstants.ROLE_FACILITY))
@@ -220,8 +227,8 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 	 * @param pageValue
 	 * @return
 	 */
-	public boolean isJobSeeker(Authentication authentication, String pageValue) {
-		if (authentication instanceof RememberMeAuthenticationToken || authentication instanceof PreAuthenticatedAuthenticationToken) {
+	public boolean isJobSeeker(Authentication authentication, String pageValue,String userRegistration) {
+		if (authentication instanceof RememberMeAuthenticationToken || authentication instanceof PreAuthenticatedAuthenticationToken ||(userRegistration!=null && userRegistration.equals("jobseekerRegistration"))) {
 			return authentication.getAuthorities().contains(
 					new SimpleGrantedAuthority(
 							MMJBCommonConstants.ROLE_JOB_SEEKER));
@@ -293,8 +300,12 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 	 *            session
 	 */
 	private void redirectFacility(UserDTO user, HttpServletRequest request,
-			HttpServletResponse response, HttpSession session)
+			HttpServletResponse response, HttpSession session,String userRegistration)
 			throws IOException, ServletException {
+		if(userRegistration!=null){
+			sendRedirect(request, response, "/employerRegistration/redirectToAddPage.html");
+		}
+		
 
 		if (profileRegistration.validateProfileAttributes(user.getUserId())) {
 			sendRedirect(request, response, "/employer/employerDashBoard.html");
@@ -324,7 +335,7 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 	private void redirectFacilitySystem(UserDTO user,
 			HttpServletRequest request, HttpServletResponse response,
 			HttpSession session) throws IOException, ServletException {
-
+		
 		if (profileRegistration.validateProfileAttributes(user.getUserId())) {
 
 			sendRedirect(request, response, "/agency/agencyDashboard.html");
@@ -343,9 +354,7 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 			URLConnection connection=authenticationDelegate.getConnection(userName, password);
 			String cookieValue=authenticationDelegate.getCookieValue(connection);
 			cookie=new Cookie(".ASPXAUTH",cookieValue);
-//			cookie=new Cookie(".ASPXAUTH","ravindra@nous.com");
 			cookie.setDomain(".advanceweb.com");
-//			cookie.setDomain(".nousinfo.com");
 			cookie.setPath("/");
 			//cookie.setMaxAge((int)TimeUnit.SECONDS.convert(30, TimeUnit.MINUTES));
 		} catch (Exception e) {

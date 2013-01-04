@@ -44,7 +44,7 @@
 					<div class="content_columns_search_results">
 						<div class="column1">
 							<div class="section">
-							<c:if test="${currentSearchList != null}">
+							<c:if test="${currentSearchList != null && not empty currentSearchList}">
 								<h3>Current Search</h3>
 								<c:forEach items="${currentSearchList}" var="item">
 									<div class="buttonRow">
@@ -63,7 +63,13 @@
 								</c:if>
 							</div>
 							<div class="section">
-								<h3>Refine Results</h3>
+								<h3
+								<c:if test="${(empty company) and (empty state) and (empty city) and (!displayRadius)}"> 
+								style=" visibility: hidden;"
+								</c:if>
+								>
+								Refine Results
+								</h3>
 
 								<div class="refineResults">
 									<c:if test="${displayRadius}">
@@ -125,6 +131,7 @@
 									<c:if test="${sessionMap.get('secondFQParam') != ''}">
 									<script type="text/javascript">$("#companyPlus").click();</script>
 									</c:if> 
+									<c:if test="${not empty company}"> 
 									<span class="refineResultsItem plus" id="companyPlus">Employer</span>
 									<div class="refineResultsSubContent cursor">
 										<ul>
@@ -149,11 +156,13 @@
 											</c:forEach>
 										</ul>
 									</div>
+									</c:if>
 									
 									<input type="hidden" name="refined" id="refined" />
 									<c:if test="${sessionMap.get('thirdFQParam') != ''}">
 									 <script type="text/javascript">$("#statePlus").click();</script>
 									</c:if>
+									<c:if test="${not empty state}"> 
 									<span class="refineResultsItem plus" id="statePlus">State</span>
 									<div class="refineResultsSubContent cursor">
 										<ul>
@@ -179,7 +188,8 @@
 											</c:forEach>
 										</ul>
 									</div>
-
+									</c:if>
+									<c:if test="${not empty city}"> 
 									<span class="refineResultsItem plus" id="cityPlus">City</span>
 									<c:if test="${sessionMap.get('fouthFQParam') != ''}">
 									 <script type="text/javascript">$("#cityPlus").click();</script>
@@ -201,6 +211,7 @@
 										</c:forEach>
 										</ul>
 									</div>
+									</c:if>
 								</div>
 							</div>
 
@@ -354,9 +365,12 @@
 
 								<div class="ShareSearch" >
 								<div class="ShareText">|&nbsp;&nbsp;Share:&nbsp;</div>
-								<a name="fb_share" class="fbook" href="http://www.facebook.com/sharer.php?u=${basePath}/jobsearch/jobview/${job.JobId}/${job.JobTitle}.html" target="_blank"></a>
-								<a href="https://www.linkedin.com/cws/share?url=${basePath}/jobsearch/jobview/${job.JobId}/${job.JobTitle}.html" target="_blank"><div class="linkedIn"></div></a>
-								<a href="https://twitter.com/share" class="twitter" data-url="${basePath}/jobsearch/jobview/${job.JobId}/${job.JobTitle}.html" data-count="none" target="_blank"></a>
+								<a class="fbook" href="http://www.facebook.com/sharer.php?u=${basePath}/jobsearch/jobview/${job.JobId}/${fn:toLowerCase(fn:replace(job.JobTitle, 
+                                					' ', '-'))}.html" target="_blank"></a>
+								<a href="https://www.linkedin.com/cws/share?url=${basePath}/jobsearch/jobview/${job.JobId}/${fn:toLowerCase(fn:replace(job.JobTitle, 
+                                					' ', '-'))}.html" target="_blank"><div class="linkedIn"></div></a>
+								<a href="https://twitter.com/share" class="twitter" data-url="${basePath}/jobsearch/jobview/${job.JobId}/${fn:toLowerCase(fn:replace(job.JobTitle, 
+                                					' ', '-'))}.html" data-count="none" target="_blank"></a>
 								
 							</div>
 							

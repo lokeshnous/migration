@@ -4,8 +4,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -50,11 +52,13 @@ import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
+import com.advanceweb.afc.jb.common.util.DateUtils;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.service.JobPostInventoryService;
+import com.advanceweb.afc.jb.job.service.JobPostService;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.resume.web.controller.SearchResumeForm;
@@ -99,6 +103,9 @@ public class EmployerDashBoardController extends AbstractController {
 
 	@Autowired
 	private JobPostInventoryService inventoryService;
+	
+	@Autowired
+	private JobPostService employerJobPost;
 
 	@Autowired
 	private LoginService loginService;
@@ -149,21 +156,19 @@ public class EmployerDashBoardController extends AbstractController {
 		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
 
 		// Available Job Postings
-
+		int mainFacilityId = facilityService.getParentFacility(facilityId).getFacilityId();
 		List<JobPostingInventoryDTO> inventiryDTO = inventoryService
-				.getInventoryDetails(userId, facilityId);
+				.getInventoryDetails(userId, mainFacilityId);
 		int avaQuantity = 0;
 		for (JobPostingInventoryDTO dto : inventiryDTO) {
 			avaQuantity = avaQuantity + dto.getAvailableQty();
 
 		}
 
-		// active job posting
-		int count = loginService.getactivejobposting(facilityId);
 
 		// Get All facilities
 		List<DropDownDTO> companyList = populateDropdownsService
-				.populateCompanyNames(facilityId);
+				.populateCompanyNames(facilityId, true);
 
 		// Retrieve Current subscriptions of the user
 		List<DropDownDTO> currentSubs = getCurrentSubscriptions(facilityId);
@@ -173,8 +178,12 @@ public class EmployerDashBoardController extends AbstractController {
 		}
 
 		// getting the metrics details
-		jbPostTotalList = getMetricsDetails(facilityId);
+		jbPostTotalList = getMetricsDetails(Integer.parseInt(companyList.get(0).getOptionId()));
 
+		// active job posting
+//		int count = loginService.getactivejobposting(facilityId);
+		int count = employerJobPost.getEmpJobsCountByStatus(
+				MMJBCommonConstants.POST_NEW_JOB, companyList);
 		model.addObject("downDTOs", companyList);
 		model.addObject(JBPOSTTOTALLIST, jbPostTotalList);
 		session.setAttribute(JBPOSTTOTALLIST, jbPostTotalList);
@@ -352,18 +361,20 @@ public class EmployerDashBoardController extends AbstractController {
 		String pattern = MMJBCommonConstants.DISP_DATE_RANGE;
 		DateFormat formater = new SimpleDateFormat(pattern, Locale.US);
 
-		try {
-			startFrom = formater.parse(startDate);
-
-			endFrom = formater.parse(endDate);
-		} catch (Exception e) {
-			LOGGER.error("date format is not correct");
-		}
-
 		ModelAndView model = new ModelAndView();
 		MetricsDTO metricsDTO = new MetricsDTO();
 		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
-
+		try {
+			startFrom = DateUtils.convertDateStringToSQLDate(formater.parse(startDate).toString());
+			// End date is shifted to one day to get the last day details.  
+			endFrom = DateUtils.convertDateStringToSQLDate(formater.parse(endDate).toString());
+			Calendar c = Calendar.getInstance();
+		    c.setTime(endFrom);
+		    c.add(Calendar.DATE, 1);
+		    endFrom.setTime(c.getTimeInMillis());
+		} catch (ParseException e) {
+			LOGGER.error("date format is not correct", e);
+		}
 		List<MetricsDTO> jobstatDTOs = loginService.employerMetrics(startFrom,
 				endFrom, selEmployerId);
 

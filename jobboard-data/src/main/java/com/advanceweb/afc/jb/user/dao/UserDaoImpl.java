@@ -173,7 +173,8 @@ public class UserDaoImpl implements UserDao {
 			WebMembership membership = hibernateTemplateAdvancePass.get(WebMembership.class, webMembershipEmail.getWebMembership().getWebMembershipID());
 			search.setPassword(tempassword);
 			membership.setPassword(tempassword);
-			
+			membership.setSalt(null);
+			membership.setEncryptPassword(null);
 			hibernateTemplateTracker.saveOrUpdate(search);
 			hibernateTemplateAdvancePass.saveOrUpdate(membership);
 		} catch (HibernateException e) {

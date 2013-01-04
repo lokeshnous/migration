@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
@@ -20,7 +21,7 @@ import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
-import com.advanceweb.afc.jb.data.entities.AdmSaveSearch;
+import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpJobApply;
 import com.advanceweb.afc.jb.data.entities.MerApplication;
@@ -74,6 +75,17 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 						(int) jobId);
 				jobDetail = jobSearchConversionHelper
 						.transformJpJobToJobDTO(jpJob);
+				// Added code to support migrated old data, where in the jp_jpb table the email column is blank or empty
+				if(null==jobDetail.getEmail() || jobDetail.getEmail().isEmpty()){
+					if(jobDetail.getFacilityId()>0){
+						List<AdmUserFacility> admFacility = hibernateTemplate
+								.find("from AdmUserFacility a where a.facilityPK.facilityId=?",
+										jobDetail.getFacilityId());
+						int userId = admFacility.get(0).getFacilityPK().getUserId();
+						MerUser merUser = hibernateTemplateTracker.get(MerUser.class, userId);
+						jobDetail.setEmail(merUser.getEmail());
+					}
+				}
 			}
 		} catch (HibernateException e) {
 			// logger call
@@ -264,12 +276,15 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 	 * @return
 	 */
 	@Override
-	public void clearRecentSearches(int userId) {
-
-		List<AdmSaveSearch> admsearches = hibernateTemplate.find(" from AdmSaveSearch where userId =? and searchName = ''",userId);
-
-		hibernateTemplate.deleteAll(admsearches);
-
+	public void clearRecentSearches(int userId, int recentSearchsLimit) {
+		Query query = hibernateTemplate
+				.getSessionFactory()
+				.getCurrentSession().createQuery(" select admsearch from AdmSaveSearch admsearch where admsearch.userId =:userId and admsearch.searchName = '' and admsearch.deleteDt is null"
+						);
+		query.setParameter("userId", userId);
+		query.setFirstResult(0);
+		query.setMaxResults(recentSearchsLimit);
+		hibernateTemplate.deleteAll(query.list());
 	}
 	
 	/**

@@ -30,6 +30,8 @@ public class TransformJobPost {
 		JobPostDTO jobPostDTO=new JobPostDTO();
 		jobPostDTO.setJobOwner(form.getJobOwner());
 		jobPostDTO.setCustomerNo(form.getCustomerNo());
+		// Add the facility Id of selected company
+		jobPostDTO.setFacilityId(form.getFacilityId());
 		jobPostDTO.setCompanyName(form.getCompanyName());
 		jobPostDTO.setbHideCompName(form.isbHideCompName());
 		jobPostDTO.setDisCompanyName(form.getDisCompanyName());
@@ -112,6 +114,7 @@ public class TransformJobPost {
 		jobPostform.setbHideCompName(jobPostDTO.isbHideCompName());
 		jobPostform.setbHideZipCode(jobPostDTO.isbHideZipCode());
 		jobPostform.setbTemplateOverride(jobPostDTO.isbTemplateOverride());
+		jobPostform.setFacilityId(jobPostDTO.getFacilityId());
 		return jobPostform;
 		
 	}

@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.CommonUtil;
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
@@ -35,12 +36,14 @@ import com.advanceweb.afc.jb.data.entities.AdmFacilityJpAuditPK;
 import com.advanceweb.afc.jb.data.entities.AdmInventoryDetail;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.JpJob;
+import com.advanceweb.afc.jb.data.entities.JpJobAddon;
 import com.advanceweb.afc.jb.data.entities.JpJobApply;
 import com.advanceweb.afc.jb.data.entities.JpJobLocation;
 import com.advanceweb.afc.jb.data.entities.JpJobType;
 import com.advanceweb.afc.jb.data.entities.JpJobTypeCombo;
 import com.advanceweb.afc.jb.data.entities.JpLocation;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
+import com.advanceweb.afc.jb.data.entities.JpTypeAddonXref;
 import com.advanceweb.afc.jb.employer.helper.JobPostConversionHelper;
 import com.advanceweb.afc.jb.user.dao.UserDao;
 
@@ -66,6 +69,8 @@ public class JobPostDAOImpl implements JobPostDAO {
 			+ "and dtl.productId=? and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) order by dtl.availableqty ";
 	private static final String FIND_INVENTORY_DETAILS_BY_INV_ID = "from AdmInventoryDetail inv  where inv.invDetailId=?)";
 	private static final String FIND_JP_JOB = "SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId=:userId and a.deleteDt is NULL ";
+	private static final String FIND_EMP_JP_JOB = "SELECT a from JpJob a where a.admFacility.facilityId in (:facilityList) and a.deleteDt is NULL ";
+	private static final String COUNT_EMP_JP_JOB = "SELECT count(a) from JpJob a where a.admFacility.facilityId in (:facilityList) and a.deleteDt is NULL ";
 	private static final String FIND_JP_JOBS = "SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId=:userId and a.deleteDt is NULL ORDER BY a.jobId DESC ";
 	
 	
@@ -82,8 +87,6 @@ public class JobPostDAOImpl implements JobPostDAO {
 	private static final Logger LOGGER = Logger.getLogger(JobPostDAOImpl.class);
 	
 	private HibernateTemplate hibernateTemplate;
-	
-	private int numberOfJobRecordsByStatus;
 	
 	@Autowired
 	private JobPostConversionHelper<?> jobPostConversionHelper;
@@ -160,7 +163,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 							.getJobStatus())
 							&& (!dto.isXmlStartEndDateEnabled()) && !validateAndDecreaseAvailableCredits(
 								Integer.valueOf(dto.getJobPostingType()),
-								dto.getFacilityId()))) {
+								dto.getMainFacilityId()))) {
 				return false;
 			}
 			if ((dto.getJobId() > 0 && dto.isbActive())
@@ -169,7 +172,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 							.equals(dto.getJobStatus())))
 							&& (!dto.isXmlStartEndDateEnabled()) && !validateAndDecreaseAvailableCredits(
 								Integer.valueOf(dto.getJobPostingType()),
-								dto.getFacilityId()))) {
+								dto.getMainFacilityId()))) {
 				return false;
 			}
 
@@ -197,7 +200,24 @@ public class JobPostDAOImpl implements JobPostDAO {
 			JpJob jpJob = jobPostConversionHelper.transformJobDtoToJpJob(dto,
 					template, admFacility);
 			jpJob.setJpJobType(jobType);
+
 			hibernateTemplate.saveOrUpdate(jpJob);
+			
+			// Update the JpJobAddon entity
+			List<AdmInventoryDetail> invList = hibernateTemplate.find(
+					FIND_INVENTORY_DETAILS_BY_INV_ID,
+					Integer.valueOf(dto.getJobPostingType()));
+			if (null != invList && !invList.isEmpty()) {
+				AdmInventoryDetail admInventoryDetail = invList.get(0);
+
+				List<JpTypeAddonXref> xrefList = hibernateTemplate.find(
+						"from JpTypeAddonXref xrf where xrf.comboId=?",
+						admInventoryDetail.getProductId());
+				List<JpJobAddon> jpJobAddonList = jobPostConversionHelper.transformXrefToJpJob(xrefList,
+						jpJob, dto);
+				hibernateTemplate.saveOrUpdateAll(jpJobAddonList);
+			}
+			
 
 			AdmFacilityJpAudit audit = new AdmFacilityJpAudit();
 			AdmFacilityJpAuditPK pKey = new AdmFacilityJpAuditPK();
@@ -229,6 +249,10 @@ public class JobPostDAOImpl implements JobPostDAO {
 			List<JpJobLocation> locList = jobPostConversionHelper
 					.transformJobPostDTOToJpJbLocation(dto, jpJob, location);
 			hibernateTemplate.saveOrUpdateAll(locList);
+			
+			
+		
+			
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
 		}
@@ -281,28 +305,35 @@ public class JobPostDAOImpl implements JobPostDAO {
 
 	/**
 	 * @Author :devi mishra
-	 * @Purpose:This method is called to retrieve all posted job
+	 * @Purpose:Method to retrieve all job Posted by the employer and sub facilities
 	 * @Created:Aug 29, 2012
-	 * @Param :employerId
+	 * @Param :companyList
+	 * @Param :noOfRecords
+	 * @Param :sortBy
+	 * @Param :mainFacilityId
 	 * @Return :List<JobPostDTO>
 	 * 
 	 */
 	@Override
-	public List<JobPostDTO> retrieveAllJobPost(int employerId, int offset,
-			int noOfRecords,String sortBy) {
+	public List<JobPostDTO> retrieveAllJobPost(List<DropDownDTO> companyList,
+			int offset, int noOfRecords, String sortBy) {
 
 		List<JpJob> jobs = new ArrayList<JpJob>();
 		try {
 			Query query = hibernateTemplate.getSessionFactory()
-					.getCurrentSession().createQuery(FIND_JP_JOB + sortBy);
-			query.setParameter("userId", employerId);
+					.getCurrentSession().createQuery(FIND_EMP_JP_JOB + sortBy);
+			// get the facility id list 
+			List<Integer> facilityList = new ArrayList<Integer>();
+			for (DropDownDTO facility : companyList) {
+				facilityList.add(Integer.parseInt(facility.getOptionId()));
+			}			
+			query.setParameterList("facilityList", facilityList);
 			query.setFirstResult(offset);
 			query.setMaxResults(noOfRecords);
 			jobs = query.list();
 		} catch (DataAccessException e) {
-			LOGGER.error(e);
+			LOGGER.error(e.getMessage(), e);
 		}
-
 		return jobPostConversionHelper.transformJpJobListToJobPostDTOList(jobs);
 
 	}
@@ -504,15 +535,17 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 * @Author :devi mishra
 	 * @Purpose:This method is called to retrieve all posted job by Status
 	 * @Created:Aug 29, 2012
-	 * @Param :employerId
+	 * @Param :jobStatus
+	 * @Param :companyList
+	 * @Param :offset
+	 * @Param :noOfRecords
 	 * @Return :List<JobPostDTO>
 	 * 
 	 */
 	@Override
 	public List<JobPostDTO> retrieveAllJobByStatus(String jobStatus,
-			int userId, int offset, int noOfRecords) {
+			List<DropDownDTO> companyList, int offset, int noOfRecords) {
 		List<JpJob> jobs = new ArrayList<JpJob>();
-		int jobCount = 0;
 		Query query = null;
 
 		Session session = hibernateTemplate.getSessionFactory()
@@ -524,47 +557,47 @@ public class JobPostDAOImpl implements JobPostDAO {
 				// Need to check the end date condition once the Package
 				// and plan functionality finalized
 				query = session
-						.createQuery(FIND_JP_JOB
+						.createQuery(FIND_EMP_JP_JOB
 								+ " and a.active = 1 and (DATE_FORMAT(a.startDt, '%Y-%m-%d') <= CURRENT_DATE and DATE_FORMAT(a.endDt, '%Y-%m-%d') >= CURRENT_DATE)");
 
 			} else if (null != jobStatus
 					&& jobStatus
 							.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_INACTIVE)) {
 				query = session
-						.createQuery(FIND_JP_JOB
+						.createQuery(FIND_EMP_JP_JOB
 								+ " and (a.active = 0 and DATE_FORMAT(a.startDt, '%Y-%m-%d') <= CURRENT_DATE)");
 
 			} else if (null != jobStatus
 					&& jobStatus
 							.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_DRAFT)) {
 				query = session
-						.createQuery(FIND_JP_JOB
+						.createQuery(FIND_EMP_JP_JOB
 								+ " and (a.active = 0 and a.startDt is NULL and a.endDt is NULL)");
 
 			} else if (null != jobStatus
 					&& jobStatus
 							.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_EXPIRED)) {
 				query = session
-						.createQuery(FIND_JP_JOB
+						.createQuery(FIND_EMP_JP_JOB
 								+ " and (a.active = 1 and DATE_FORMAT(a.endDt, '%Y-%m-%d') < CURRENT_DATE)");
 
 			} else if (null != jobStatus
 					&& jobStatus
 							.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_SCHEDULED)) {
 				query = session
-						.createQuery(FIND_JP_JOB
+						.createQuery(FIND_EMP_JP_JOB
 								+ " and (a.active = 0 and DATE_FORMAT(a.startDt, '%Y-%m-%d') > CURRENT_DATE)");
 
 			}
-			query.setParameter("userId", userId);
+			// get the facility id list 
+			List<Integer> facilityList = new ArrayList<Integer>();
+			for (DropDownDTO facility : companyList) {
+				facilityList.add(Integer.parseInt(facility.getOptionId()));
+			}			
+			query.setParameterList("facilityList", facilityList);
 			query.setFirstResult(offset);
 			query.setMaxResults(noOfRecords);
 			jobs = query.list();
-
-			if (null != jobs && !jobs.isEmpty()) {
-				jobCount = jobs.size();
-			}
-			setNumberOfJobRecordsByStatus(jobCount);
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
 		}
@@ -572,42 +605,81 @@ public class JobPostDAOImpl implements JobPostDAO {
 	}
 
 	@Override
-	public int getTotalNumberOfJobRecords(int employerId) {
-		int jobCount = 0;
+	public int getEmpJobsCount(List<DropDownDTO> companyList) {
+		int jobsCount = 0;
 		try {
-			List<JpJob> jobs = new ArrayList<JpJob>();
 			Query query = hibernateTemplate.getSessionFactory()
-					.getCurrentSession()
-					.createQuery(FIND_JP_JOB);
-			query.setParameter("userId", employerId);
-			jobs = query.list();
-			if (null != jobs && !jobs.isEmpty()) {
-				jobCount = jobs.size();
+					.getCurrentSession().createQuery(COUNT_EMP_JP_JOB);
+			// get the facility id list
+			List<Integer> facilityList = new ArrayList<Integer>();
+			for (DropDownDTO facility : companyList) {
+				facilityList.add(Integer.parseInt(facility.getOptionId()));
 			}
+			query.setParameterList("facilityList", facilityList);
+			jobsCount = ((Long) query.uniqueResult()).intValue();
 		} catch (DataAccessException e) {
-			LOGGER.error(e);
+			LOGGER.error(e.getMessage(), e);
 		}
-		return jobCount;
+		return jobsCount;
 	}
-
-	/**
-	 * @return the totalNumberOfJobRecordsByStatus
-	 */
-	public int getNumberOfJobRecordsByStatus() {
-		return numberOfJobRecordsByStatus;
-	}
-
-	/**
-	 * @param totalNumberOfJobRecordsByStatus
-	 *            the totalNumberOfJobRecordsByStatus to set
-	 */
-	public void setNumberOfJobRecordsByStatus(int numberOfJobRecordsByStatus) {
-		this.numberOfJobRecordsByStatus = numberOfJobRecordsByStatus;
-	}
-
+	
 	@Override
-	public int getTotalNumberOfJobRecordsByStatus() {
-		return this.numberOfJobRecordsByStatus;
+	public int getEmpJobsCountByStatus(String jobStatus,
+			List<DropDownDTO> companyList){
+	Query query = null;
+	int jobsCount = 0 ;
+	Session session = hibernateTemplate.getSessionFactory()
+			.getCurrentSession();
+	try {
+		if (null != jobStatus
+				&& jobStatus
+						.equalsIgnoreCase(MMJBCommonConstants.POST_NEW_JOB)) {
+			// Need to check the end date condition once the Package
+			// and plan functionality finalized
+			query = session
+					.createQuery(COUNT_EMP_JP_JOB
+							+ " and a.active = 1 and (DATE_FORMAT(a.startDt, '%Y-%m-%d') <= CURRENT_DATE and DATE_FORMAT(a.endDt, '%Y-%m-%d') >= CURRENT_DATE)");
+
+		} else if (null != jobStatus
+				&& jobStatus
+						.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_INACTIVE)) {
+			query = session
+					.createQuery(COUNT_EMP_JP_JOB
+							+ " and (a.active = 0 and DATE_FORMAT(a.startDt, '%Y-%m-%d') <= CURRENT_DATE)");
+
+		} else if (null != jobStatus
+				&& jobStatus
+						.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_DRAFT)) {
+			query = session
+					.createQuery(COUNT_EMP_JP_JOB
+							+ " and (a.active = 0 and a.startDt is NULL and a.endDt is NULL)");
+
+		} else if (null != jobStatus
+				&& jobStatus
+						.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_EXPIRED)) {
+			query = session
+					.createQuery(COUNT_EMP_JP_JOB
+							+ " and (a.active = 1 and DATE_FORMAT(a.endDt, '%Y-%m-%d') < CURRENT_DATE)");
+
+		} else if (null != jobStatus
+				&& jobStatus
+						.equalsIgnoreCase(MMJBCommonConstants.POST_JOB_SCHEDULED)) {
+			query = session
+					.createQuery(COUNT_EMP_JP_JOB
+							+ " and (a.active = 0 and DATE_FORMAT(a.startDt, '%Y-%m-%d') > CURRENT_DATE)");
+
+		}
+		// get the facility id list 
+		List<Integer> facilityList = new ArrayList<Integer>();
+		for (DropDownDTO facility : companyList) {
+			facilityList.add(Integer.parseInt(facility.getOptionId()));
+		}			
+		query.setParameterList("facilityList", facilityList);
+		jobsCount = ((Long) query.uniqueResult()).intValue();
+	} catch (DataAccessException e) {
+		LOGGER.error(e.getMessage(), e);
+	}
+		return jobsCount;
 	}
 
 	/**
@@ -1014,10 +1086,10 @@ public class JobPostDAOImpl implements JobPostDAO {
 			Date currentDate = new Date();
 			
 			if (endDate.after(currentDate) || endDate.equals(currentDate)) {
-				mer.setJobStatus(MMJBCommonConstants.STATUS_ACTIVE);
+				//mer.setJobStatus(MMJBCommonConstants.STATUS_ACTIVE);
 				mer.setActive((byte) 1);
 			} else{
-				mer.setJobStatus(MMJBCommonConstants.STATUS_EXPIRED);
+				//mer.setJobStatus(MMJBCommonConstants.STATUS_EXPIRED);
 			}
 			mer.setEndDt(endDate);
 			hibernateTemplate.update(mer);
@@ -1137,4 +1209,5 @@ public class JobPostDAOImpl implements JobPostDAO {
 		now.add(Calendar.DAY_OF_MONTH, extendDays);
 		return now.getTime();
 	}
+
 }

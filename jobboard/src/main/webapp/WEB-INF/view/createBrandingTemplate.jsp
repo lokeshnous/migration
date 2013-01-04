@@ -149,6 +149,7 @@
 								<div class="floatLeft">
 									<form:input path="templateName" id="templateName" class="jb_input2Coverletter FontSize15" />
 								</div>
+								<span class="required">(Required)</span>
 								<div class="clearfix"></div>
 								<div class="FormErrorDisplayText">
 									<form:errors path="templateName" />
@@ -177,7 +178,7 @@
 								<div class="floatLeft">
 									<form:input path="logoFileData" name="textfield4" type="file"
 										id="textfield4" size="20"
-										class="job_seeker_login_email fileType"  />
+										class="job_seeker_login_email fileType cursor"  />
 										
 								</div>
 								<div class="toolTip colorPkrAreaToolTip">
@@ -186,6 +187,7 @@
 										is ${brandingTemplateForm.imageSizeLimit} KB at 72 dpi. Accepted file types include .jpg, .gif,
 										.png and .tif.</span>
 								</div>
+								<span class="required">(Required)</span>
 								<label class="MultimediaLabel">
 									<c:if test="${brandingTemplateForm.chosenLogo != null}">
 										You uploaded <Strong>${brandingTemplateForm.chosenLogo}</Strong> as your Logo, you can upload a different Logo.
@@ -226,7 +228,7 @@
 								<div class="floatLeft">
 									<form:input path="mainImageFileData" name="textfield4" type="file"
 										id="textfield4" size="20"
-										class="job_seeker_login_email fileType" />
+										class="job_seeker_login_email fileType cursor" />
 										
 								</div>
 								<div class="toolTip colorPkrAreaToolTip">
@@ -235,6 +237,7 @@
 										limit is ${brandingTemplateForm.imageSizeLimit} KB at 72 dpi. Accepted file types include .jpg,
 										.gif, .png and .tif.</span>
 								</div>
+								<span class="required">(Required)</span>
 								<label class="MultimediaLabel">
 									<c:if test="${brandingTemplateForm.chosenMainImage != null}">
 										You uploaded <Strong>${brandingTemplateForm.chosenMainImage}</Strong> as your Main Image, you can upload a different Main Image.
@@ -305,7 +308,7 @@
 									<!-- <div class="floatLeft marginRight10"></div> -->
 									<span class="floatLeft marginRight10">
 									 
-										<form:input path="listAddImages[${status.index}].addImageFileData" name="textfield4" type="file" id="textfield4" class="job_seeker_login_email fileType" size="20" />
+										<form:input path="listAddImages[${status.index}].addImageFileData" name="textfield4" type="file" id="textfield4" class="job_seeker_login_email fileType cursor" size="20" />
 									</span>	
 									<label class="MultimediaLabel">
 									<c:if test="${brandingTemplateForm.listAddImages[status.index].chosenAddImage != null and errorMessage==null}">
@@ -344,7 +347,7 @@
 									<!-- <div class="floatLeft marginRight10"></div> -->
 									<span class="floatLeft marginRight10">
 									 
-										<form:input path="listVideos[${status.index}].videoFileData" name="textfield4" type="file" id="textfield4" class="job_seeker_login_email fileType" size="20" />
+										<form:input path="listVideos[${status.index}].videoFileData" name="textfield4" type="file" id="textfield4" class="job_seeker_login_email fileType cursor" size="20" />
 									</span>
 									<label class="MultimediaLabel">
 									<c:if test="${brandingTemplateForm.listVideos[status.index].chosenVideo != null and errorMessage==null}">

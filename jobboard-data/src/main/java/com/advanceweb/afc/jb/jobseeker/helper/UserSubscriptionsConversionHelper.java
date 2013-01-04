@@ -117,7 +117,9 @@ public class UserSubscriptionsConversionHelper {
 			res.setCoverletterId(merUser.getCoverletterId());
 			res.setCreateDt(dateToStringConveter(merUser.getCreateDt()));
 			res.setCoverletterText(merUser.getCoverletterText());
-			res.setUpdateDt(dateToStringConveter(merUser.getUpdateDt()));
+			if(merUser.getUpdateDt() != null){
+				res.setUpdateDt(dateToStringConveter(merUser.getUpdateDt()));
+			}
 			res.setUserId(merUser.getUserId());
 			manageCoverLetterDTOList.add(res);
 			clIndex = clIndex + 1;

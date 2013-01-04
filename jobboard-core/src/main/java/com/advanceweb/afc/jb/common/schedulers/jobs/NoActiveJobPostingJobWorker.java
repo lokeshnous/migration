@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.SchedulerDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
@@ -51,8 +52,10 @@ public class NoActiveJobPostingJobWorker implements JobWorker {
 	public void executeJob() {
 		List<SchedulerDTO> schedulerDTO=facilityService.getAllFacilityList();
 		List<SchedulerDTO> sendMailList=new ArrayList<SchedulerDTO>();
+		List<DropDownDTO> dropdownDTO = new ArrayList<DropDownDTO>();
 		for(SchedulerDTO dto:schedulerDTO){
-			List<JobPostDTO>jobPostDTOList=jobPostService.retrieveAllJobByStatus(MMJBCommonConstants.POST_NEW_JOB, dto.getUserId(), 0, 10);
+//			@TODO Verify the scheduler functionality after adding dropdownDTO
+			List<JobPostDTO>jobPostDTOList=jobPostService.retrieveAllJobByStatus(MMJBCommonConstants.POST_NEW_JOB, dropdownDTO, 0, 10);
 		if(jobPostDTOList!=null){
 			sendMailList.add(dto);
 		}

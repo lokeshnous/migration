@@ -76,7 +76,7 @@ public class JobSearchConversionHelper {
 //			jobDTO.setLogo(entity.getLogo());
 			
 			JpTemplate jpTemplate = entity.getJpTemplate();
-			if(null != jpTemplate)
+			if(null != jpTemplate && jpTemplate.getTemplateId()>0)
 			{
 				jobDTO.setTemplateId(jpTemplate.getTemplateId());
 				jobDTO.setCompanyOverview(jpTemplate.getCompanyOverview());
@@ -131,11 +131,12 @@ public class JobSearchConversionHelper {
 		}catch (Exception e) {
 			LOGGER.info("Locations not found for Job Id :"+jobDTO.getJobId());
 		}
+		if(null != jpLocation){
 		jobDTO.setCity(jpLocation.getCity());
 		jobDTO.setState(jpLocation.getState());
 		jobDTO.setCountry(jpLocation.getCountry());
 		jobDTO.setPostCode(jpLocation.getPostcode());
-		
+		}
 		jobDTO.setHideCity(hideCity);
 		jobDTO.setHideState(hideState);
 		jobDTO.setHideCountry(hideCountry);

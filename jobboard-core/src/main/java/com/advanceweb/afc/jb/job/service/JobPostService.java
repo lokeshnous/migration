@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.job.service;
 
 import java.util.List;
 
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
@@ -23,9 +24,49 @@ public interface JobPostService {
 	// List<StateDTO> getStateList();
 	boolean savePostJob(JobPostDTO dto);
 
-	List<JobPostDTO> retrieveAllJobPost(int employerId, int offset,
+	/**
+	 * Method to retrieve all job Posted by the employer and sub facilities
+	 * 
+	 * @param companyList 
+	 * @param offset
+	 * @param noOfRecords
+	 * @param sortBy
+	 * @return
+	 */
+	List<JobPostDTO> retrieveAllJobPost(List<DropDownDTO> companyList, int offset,
 			int noOfRecords,String sortBy);
-
+	
+	/**
+	 * Method to retrieve all job Posted by the employer and sub facilities by filtering 
+	 * on job status
+	 * 
+	 * @param jobStatus
+	 * @param companyList
+	 * @param offset
+	 * @param noOfRecords
+	 * @return
+	 */
+	List<JobPostDTO> retrieveAllJobByStatus(String jobStatus,
+			List<DropDownDTO> companyList, int offset,
+			int noOfRecords);
+	
+	/**
+	 * Method helps to get the employer total number of jobs count by selected status
+	 * 
+	 * @param jobStatus
+	 * @param companyList
+	 * @return
+	 */
+	int getEmpJobsCountByStatus(String jobStatus, List<DropDownDTO> companyList);
+	
+	/**
+	 * Method helps to get the employer total number of jobs 
+	 * 
+	 * @param companyList
+	 * @return
+	 */
+	int getEmpJobsCount(List<DropDownDTO> companyList);
+	
 	JobPostDTO retrieveJobById(int jobId);
 
 	boolean deleteJob(int jobId, int userId);
@@ -39,14 +80,7 @@ public interface JobPostService {
 	
 	boolean repostJob(int jobId, int extendDays);
 
-	List<JobPostDTO> retrieveAllJobByStatus(String jobStatus, int employerId,
-			int offset, int noOfRecords);
-
 	List<JobPostingPlanDTO> getJobPostingPlans();
-
-	int getTotalNumberOfJobRecords(int employerId);
-
-	int getTotalNumberOfJobRecordsByStatus();
 
 	boolean validateAndDecreaseAvailableCredits(int invDtlId, int facilityId);
 

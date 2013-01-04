@@ -68,6 +68,9 @@ function validateNumber(event) {
 		
  		$('#save').click(function(){
  			var validate=true;
+ 			var href = $('#BackToTopId').attr('href');
+			location.href = href;
+		    $("#errmsg").html("Processing...");
  			if($("#MyProfession :selected").text() == "Others"){
  		      if($("#otherProfession").val().length == 0){
  		    	 var href = $('#BackToTopId').attr('href');

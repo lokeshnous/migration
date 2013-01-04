@@ -197,7 +197,7 @@
 								});
 						$('#avdJobIdTab').click( function(){
 							
-							$('#sortBy').val('a.jobNumber');
+							$('#sortBy').val('a.jobId');
 							val = $('#noOfPageId').val();
 							$("form").attr(
 									"action",
@@ -235,7 +235,7 @@
 												+ val);
 								$("form").submit();
 							}); */
-							$('#jobStatusTab').click( function(){
+							/* $('#jobStatusTab').click( function(){
 								
 								$('#sortBy').val('a.jobStatus');
 								val = $('#noOfPageId').val();
@@ -244,7 +244,7 @@
 										"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
 												+ val + "&sort=true");
 								$("form").submit();
-							});
+							}); */
 							$('#jobStartDateTab').click( function(){
 								
 								$('#sortBy').val('a.startDt');
@@ -275,11 +275,11 @@
 												+ val + "&sort=true");
 								$("form").submit();
 							});
-						$('#jobViewTab').click( function(){
+						/* $('#jobViewTab').click( function(){
 								
 								$('#sortBy').val('a.jpJobStat.views');
 								val = $('#noOfPageId').val();
-								alert(val);
+								//alert(val);
 								$("form").attr(
 										"action",
 										"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
@@ -305,7 +305,7 @@
 									"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
 											+ val + "&sort=true");
 							$("form").submit();
-						});
+						});*/
 					});
 	
 </script>
@@ -521,9 +521,11 @@
 										</c:if>
 									<td align="center" valign="middle"><div
 											class="row width80 SearchIcons">
-											<a title="edit"
-												href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}&jobStatus=${job.jobStatus}&readOnly=false"><div
-													class="editFile"><img title="Edit" src="../resources/images/tranBg.png" class="edit"></div></a><a title="view"
+											<a 
+												href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}&jobStatus=${job.jobStatus}&readOnly=false">
+												<div
+													class="editFile"><img title="Edit" src="../resources/images/tranBg.png" class="edit"></div></a>
+											<a
 												href="<%=request.getContextPath()%>/employer/editJob.html?jobId=${job.jobId}&readOnly=true"><div
 													class="view"><img title="View" src="../resources/images/tranBg.png" class="view"></div></a><%-- <a title="check" href="#"><div class="check" name="check"
 													id="${job.jobId}"><img title="delete" src="../resources/images/tranBg.png" class="check"></div></a> --%>

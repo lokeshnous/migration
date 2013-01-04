@@ -19,7 +19,7 @@
 	type="text/css">
 	
  <link rel="stylesheet" type="text/css" media="screen"
-	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
+	href="../resources/css/jquery-ui.css">
 
 
 <script type="text/javascript">
@@ -79,14 +79,18 @@ function validateNumber(event) {
     	});
     	
     	$('#skillRefId').click(function() {
-    	    var skillName = $('#skillId').val();
-
-    	    if(skillName != ''){
+    	    var skillName = $('#skillId').val(); 
+    	    var textLength = $('#textAreaId').val().length + skillName.length;
+    	    if(textLength < 256 && skillName != ''){
+    	    	
     	    	if($('#textAreaId').val() != '') {
-    	    		$("#textAreaId").append(',');    	    
+    	    		$('#textAreaId').val($('#textAreaId').val() + ',');    	    
     	    	}   	    
-    	    	$("#textAreaId").append(skillName);
+    	    	$('#textAreaId').val($('#textAreaId').val() + skillName);
+    	    	
     	    	$("#skillId").val('');
+    	    	/* $("#countdownSkills").val(255 - $("#textAreaId").val().length); */
+    	    	textLength = 0;
     	    }
     	    //send to server and process response
     	});
@@ -752,7 +756,7 @@ function validateNumber(event) {
 								<div class="job_seeker_login leftFormHolderResumepage">
 									<div class="rowEvenNewSpacing">
 										<span class="lableText3">Skill:</span> 
-										<input type="text" name="skill" class="job_seeker_password textBox350" id="skillId"/> 
+										<input type="text" name="skill" class="job_seeker_password textBox350" id="skillId" maxlength="50"/> 
 										<span class="required"><a href="#" class="btn_sm orange" id="skillRefId">Add</a></span>
 										<div class="toolTip marginTop8 marginLeft5">
 											<span class="classic">Show potential employers what
@@ -766,8 +770,9 @@ function validateNumber(event) {
 										<div class="lableText3 marginTop10"></div>
 										<div class="input_grp5 ">
 											<form:textarea path="skills" class="textareaBoxCResume"
-												rows="3" cols="45" id="textAreaId"/>
-
+												rows="3" cols="45" id="textAreaId" maxlength="255" 
+											/>
+										<!-- <p class="magrin_top0"><input readonly type="text" class="input2000_width" id="countdownSkills" size="3" value="255">characters remaining.<p> -->
 										</div>
 									</div>
 								</div>

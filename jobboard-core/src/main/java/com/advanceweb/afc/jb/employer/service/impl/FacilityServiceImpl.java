@@ -12,6 +12,7 @@ import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.SchedulerDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.employer.dao.FacilityDAO;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
@@ -110,5 +111,27 @@ public class FacilityServiceImpl implements FacilityService {
 	@Override
 	public UserDTO getUser(String email) {
 		return userDao.getUser(email);
+	}
+	
+	/**
+	 * The method helps to get main facility. If job owner login then method
+	 * retrieves the main facility group. 
+	 * 
+	 * @param currentFacilityId
+	 * @return
+	 */
+	@Override
+	public AdmFacility getParentFacility(int currentFacilityId) {
+		return facilityDAO.getParentFacility(currentFacilityId);
+	}
+
+	/**
+	 * The method returns true if application logged in by job owner otherwise false 
+	 * 
+	 * @param facilityId
+	 * @return
+	 */
+	public boolean isJobOwner(int facilityId) {
+		return facilityDAO.isJobOwner(facilityId);
 	}
 }

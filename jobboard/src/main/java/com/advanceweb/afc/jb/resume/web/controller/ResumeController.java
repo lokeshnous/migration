@@ -5,6 +5,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -37,7 +39,6 @@ import com.advanceweb.afc.common.controller.AbstractController;
 import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.CertificationDTO;
-import com.advanceweb.afc.jb.common.CommonUtil;
 import com.advanceweb.afc.jb.common.ContactInformationDTO;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
@@ -864,7 +865,8 @@ public class ResumeController extends AbstractController{
 		if(StringUtils.isEmpty(createResume.getUploadResumeId())){
 			createResume.setUploadResumeId("0");
 			//since resume is not saved yet , setting the current date as available date
-			createResume.setAvailableDate(CommonUtil.convertToReqdDateString(new Date()));
+			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+			createResume.setAvailableDate(df.format(new Date()));
 		}
 		model.setViewName("viewresume");
 		return model;

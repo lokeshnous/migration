@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.tanesha.recaptcha.ReCaptchaImpl;
@@ -45,6 +46,7 @@ import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
+import com.advanceweb.afc.jb.login.web.controller.LoginManager;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
@@ -116,7 +118,8 @@ public class AgencyRegistrationController extends AbstractController {
 	private String agencyPageExtention;
 	@Autowired
 	private MMEmailService emailService;
-
+	@Autowired
+	private LoginManager loginSuccessManager;
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
@@ -161,6 +164,7 @@ public class AgencyRegistrationController extends AbstractController {
 			agencyRegForm.setConfirmPassword(userDTO.getPassword());
 			agencyRegForm.setUserId(userDTO.getUserId());
 			agencyRegForm.setbReadOnly(true);
+			agencyRegForm.setOldUSer(true);
 		}
 
 		if (profileId != null) {
@@ -244,7 +248,7 @@ public class AgencyRegistrationController extends AbstractController {
 	@RequestMapping(value = "/saveAgencyRegistraion", method = RequestMethod.POST)
 	public ModelAndView saveEmployerRegistration(
 			@ModelAttribute(AGENCY_REG_FORM) AgencyRegistrationForm agencyRegistrationForm,
-			HttpSession session, HttpServletRequest req, BindingResult result) {
+			HttpSession session, HttpServletRequest req,HttpServletResponse response, BindingResult result) {
 		ModelAndView model = new ModelAndView();
 
 		populateAds(req, session, model);
@@ -313,9 +317,9 @@ public class AgencyRegistrationController extends AbstractController {
 					infoDTO.getCustomerName());
 			model.setViewName("redirect:/agency/agencyDashboard.html");
 		}
-		authenticateUserAndSetSession(userDTO, req);
+		authenticateUserAndSetSession(userDTO, req,response);
 		LOGGER.info("Registration is completed.");
-		return model;
+		return null;
 	}
 
 	private boolean validateEmpRegForm(
@@ -388,7 +392,8 @@ public class AgencyRegistrationController extends AbstractController {
 	 * @param request
 	 */
 	private void authenticateUserAndSetSession(UserDTO user,
-			HttpServletRequest request) {
+			HttpServletRequest request,HttpServletResponse response) {
+		try{
 		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
 		authList.add(new GrantedAuthorityImpl(
 				MMJBCommonConstants.ROLE_FACILITY_SYSTEM));
@@ -402,6 +407,13 @@ public class AgencyRegistrationController extends AbstractController {
 				.authenticate(token);
 
 		SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
+		request.setAttribute("userRegistration","agencyRegistration");
+		loginSuccessManager.onAuthenticationSuccess(request, response,
+				authenticatedUser);
+	} catch (Exception e) {
+		LOGGER.info("Exception while authenticating Agency while registration ("
+				+ e.getMessage() + ")");
+	}
 	}
 	/**
 	 * @param request
@@ -429,13 +441,13 @@ public class AgencyRegistrationController extends AbstractController {
 		emailDTO.setFromAddress(advanceWebAddress);
 		emailDTO.setSubject(emailConfiguration.getProperty(
 				"welcome.mail.message").trim());
-		//String loginPath = navigationPath.substring(2);
+		String loginPath = navigationPath.substring(2);
 		String userName=userDTO.getFirstName()+" " + userDTO.getLastName();
 		String employerWelcomeMailBody = emailConfiguration.getProperty(
 				"employer.welcome.mail.body").trim();
-		String employerloginUrl =request.getRequestURL().toString()
-				.replace(request.getServletPath(), "/agency/agencyDashboard")
-				+ dothtmlExtention ;
+		String employerloginUrl = request.getRequestURL().toString()
+				.replace(request.getServletPath(), loginPath)
+				+ dothtmlExtention + agencyPageExtention;
 		employerWelcomeMailBody = employerWelcomeMailBody.replace("?userName",
 				userDTO.getFirstName());
 		employerWelcomeMailBody = employerWelcomeMailBody.replace("?user_name",

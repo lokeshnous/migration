@@ -133,7 +133,7 @@
 
                   <div class="clearfix"></div>
                   <div class="floatLeft paddingLeft15 MarginBottom10">
-            <p><textarea class="textareaBoxCResume magrin_top0" rows="3" cols="45">${createResume.objective}</textarea></p>
+            <p><textarea readonly="readonly" style="background-color: #F0F0F0;font-family: Arial, Helvetica, sans-serif;font-size: 15px;" rows="3" cols="100">${createResume.objective}</textarea></p>
           </div>
                 </div>
         <!---->
@@ -196,7 +196,7 @@
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Summary / Job Description:</strong></p>
               </span> <span class="ContactInfoAreaRight width505 AutoHeight">
-              <textarea class="textareaBoxCResume magrin_top0" rows="3" cols="45">${workExp.description}</textarea></span> </div>
+              <textarea readonly="readonly" style="background-color: #F0F0F0;font-family: Arial, Helvetica, sans-serif;font-size: 15px;" rows="3" cols="70">${workExp.description}</textarea></span> </div>
               <div class="clearfix"></div>
         </c:forEach>                          
        </div>
@@ -242,11 +242,11 @@
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Degrees:</strong></p>
               </span><span class="ContactInfoAreaRight width505 AutoHeight">
-              <textarea class="textareaBoxCResume magrin_top0" rows="3" cols="45">${education.degrees}</textarea></span> </div>
+              <textarea readonly="readonly" style="background-color: #F0F0F0;font-family: Arial, Helvetica, sans-serif;font-size: 15px;" rows="3" cols="70">${education.degrees}</textarea></span> </div>
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Certifications:</strong></p>
               </span><span class="ContactInfoAreaRight width505 AutoHeight">
-              <textarea class="textareaBoxCResume magrin_top0" rows="3" cols="45">${education.certifications}</textarea></span> </div>
+              <textarea readonly="readonly" style="background-color: #F0F0F0;font-family: Arial, Helvetica, sans-serif;font-size: 15px;" rows="3" cols="70">${education.certifications}</textarea></span> </div>
             <div class="clearfix"></div>
 			</c:forEach>
           </div>
@@ -276,7 +276,7 @@
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Summary:</strong></p>
               </span><span class="ContactInfoAreaRight width505 AutoHeight">
-               <textarea class="textareaBoxCResume magrin_top0" rows="3" cols="45">${certification.summary}</textarea></span> </div>
+                <textarea readonly="readonly" style="background-color: #F0F0F0;font-family: Arial, Helvetica, sans-serif;font-size: 15px;" rows="3" cols="70">${certification.summary}</textarea></span> </div>
             <div class="clearfix"></div>
 			</c:forEach>              
           </div>
@@ -288,7 +288,7 @@
           </div>
                   <div class="clearfix"></div>
                   <div class="floatLeft paddingLeft15 MarginBottom10">
-            <p> <textarea class="textareaBoxCResume magrin_top0" rows="3" cols="45">${createResume.skills}</textarea></p>
+            <p> <textarea readonly="readonly" style="background-color: #F0F0F0;font-family: Arial, Helvetica, sans-serif;font-size: 15px;" rows="3" cols="100">${createResume.skills}</textarea></p>
           </div>
                 </div>
         <!---->
@@ -316,7 +316,7 @@
           </div>
                   <div class="clearfix"></div>
                   <div class="floatLeft paddingLeft15 MarginBottom10">
-            <p> <textarea class="textareaBoxCResume magrin_top0" rows="3" cols="45">${createResume.awards}</textarea></p>
+            <p> <textarea readonly="readonly" style="background-color: #F0F0F0;font-family: Arial, Helvetica, sans-serif;font-size: 15px;" rows="3" cols="100">${createResume.awards}</textarea></p>
           </div>
                 </div>
           <!---->
@@ -327,7 +327,7 @@
           </div>
                   <div class="clearfix"></div>
                   <div class="floatLeft paddingLeft15 MarginBottom10">
-            <p> <textarea class="textareaBoxCResume magrin_top0" rows="3" cols="45">${createResume.memberships}</textarea></p>
+            <p> <textarea readonly="readonly"style="background-color: #F0F0F0;font-family: Arial, Helvetica, sans-serif;font-size: 15px;"  rows="3" cols="100">${createResume.memberships}</textarea></p>
           </div>
 
                 </div>
@@ -339,7 +339,7 @@
                   <div class="clearfix"></div>
                   <div class="floatLeft paddingLeft15 MarginBottom10">
 
-            <p> <textarea class="textareaBoxCResume magrin_top0" rows="3" cols="45">${createResume.otherDetails}</textarea></p>
+            <p> <textarea readonly="readonly" style="background-color: #F0F0F0;font-family: Arial, Helvetica, sans-serif;font-size: 15px;" rows="3" cols="100">${createResume.otherDetails}</textarea></p>
           </div>
                 </div>
           <!---->

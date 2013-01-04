@@ -74,6 +74,7 @@ import com.advanceweb.afc.jb.employer.web.controller.MetricsForm;
 import com.advanceweb.afc.jb.employer.web.controller.TransformEmployerRegistration;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.service.JobPostInventoryService;
+import com.advanceweb.afc.jb.job.service.JobPostService;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
@@ -140,6 +141,9 @@ public class AgencyDashBoardController extends AbstractController {
 
 	@Autowired
 	private AdService adService;
+	
+	@Autowired
+	private JobPostService employerJobPost;
 	
 	@Autowired
 	private UserService userService;
@@ -224,13 +228,13 @@ public class AgencyDashBoardController extends AbstractController {
 	 * @return true
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/employeeAccountSetting", method = RequestMethod.POST)
+	@RequestMapping(value = "/agencyAccountSetting", method = RequestMethod.POST)
 	public String editAccountSetting(EmployeeAccountForm employeeAccountForm,
 			BindingResult result, HttpSession session) {
 		boolean isUpdated = false;
 		try {
 			if(employeeAccountForm.isAdminLogin()){
-				if(facilityService.getUser(employeeAccountForm.getEmail())!=null){
+				if(facilityService.getUser(employeeAccountForm.getEmail())!=null || userService.getAdvancePassUser(employeeAccountForm.getEmail())!=null){
 					return emailInUse;
 				}
 			}
@@ -312,7 +316,7 @@ public class AgencyDashBoardController extends AbstractController {
 	 * @return true
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/employeeBillingSetting", method = RequestMethod.POST)
+	@RequestMapping(value = "/agencyBillingSetting", method = RequestMethod.POST)
 	public String editBillingSetting(EmployeeAccountForm employeeBillingForm,
 			BindingResult result, HttpSession session) {
 
@@ -412,7 +416,7 @@ public class AgencyDashBoardController extends AbstractController {
 	 * @param model
 	 * @return true
 	 */
-	@RequestMapping(value = "/viewEmpAccountProfile", method = RequestMethod.GET)
+	@RequestMapping(value = "/viewAgencyAccountProfile", method = RequestMethod.GET)
 	public ModelAndView viewEmpAccountProfileSettings(HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		try {
@@ -431,6 +435,9 @@ public class AgencyDashBoardController extends AbstractController {
 						employeeAccountForm.setReadOnly(true);
 					}
 				}
+			}
+			if(session.getAttribute("adminLogin")!=null ){
+				employeeAccountForm.setAdminLogin(true);
 			}
 			List<CountryDTO> countryList = populateDropdownsService
 					.getCountryList();
@@ -640,7 +647,7 @@ public class AgencyDashBoardController extends AbstractController {
 			if (facility.getFacilityParentId() == facilityId) {
 				return alreadyAdded;
 			}
-			if (facility.getFacilityParentId() != 0) {
+			if (facility.getFacilityParentId() != -1) {
 				return employerLinked;
 			}
 			FacilityDTO facilityDTO = facilityService
@@ -821,18 +828,17 @@ public class AgencyDashBoardController extends AbstractController {
 			avaQuantity = avaQuantity + dto.getAvailableQty();
 
 		}
-		try {
-			downDTOs = facilityService.getFacilityGroup(facilityId);
-			// active job posting
-			int count = loginService.getactivejobposting(facilityId);
-			session.setAttribute("count", count);
-			session.setAttribute("avaQuantity", avaQuantity);
-		} catch (JobBoardException e) {
-			LOGGER.info("Error occurred while getting data for metrics" + e);
-		}
+		downDTOs = populateDropdownsService
+				.populateCompanyNames(facilityId, true);
+		// active job posting
+		int count = employerJobPost.getEmpJobsCountByStatus(
+				MMJBCommonConstants.POST_NEW_JOB, downDTOs);
+		
+		session.setAttribute("count", count);
+		session.setAttribute("avaQuantity", avaQuantity);
 
-		// getting the metrics details
-		jbPostTotalList = getMetricsDetails(facilityId);
+		// getting the metrics details		
+		jbPostTotalList = getMetricsDetails(Integer.parseInt(downDTOs.get(0).getOptionId()));
 		model.addObject("downDTOs", downDTOs);
 		session.setAttribute(JB_POST_TOTAL_LIST, jbPostTotalList);
 		model.addObject("employerDetails", employerDetails);

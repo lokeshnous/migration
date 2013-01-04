@@ -4,6 +4,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
+<%@page import="com.advanceweb.afc.jb.common.util.MMJBCommonConstants"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,7 +31,8 @@ function cancelProcess(){
 				$.ajax({url:"${pageContext.request.contextPath}/alerts/employer/saveAlerts.html?selOwnerId="+selOwnerId,
 					data:$('#alertId').serialize(),
 					type:"GET",
-					success: function(data) {			
+					success: function(data) {	
+						alert("Data saved successfully !");
 							parent.$.nmTop().close();
 					 },
 				});
@@ -86,9 +88,20 @@ function cancelProcess(){
 						<c:if
 							test="${enableAccess == 'true' && enablePostEditAccess == 'true'}">
 							<input type="hidden" name="pageValue" value="setAlertPage" />
-							<span class="required paddingTop4"> <a
+							<span class="required paddingTop4"> 
+							<c:if
+							test="<%=!(session.getAttribute(MMJBCommonConstants.FACILITY_POST_EDIT)!=null )%>">
+							<c:if
+								test="<%=!(session.getAttribute(MMJBCommonConstants.FACILITY_FULL_ACCESS)!=null )%>">
+								<security:authorize
+									access="!hasRole('ROLE_FACILITY_FULL_ACCESS') and !hasRole('ROLE_FACILITY_POST_EDIT') ">
+								<a
 								href="<%=request.getContextPath()%>/employer/addNewJobOwner.html?page=setAlertPage"
-								id="addNewJobOwnerPopUp"">Add NewJob Owner</a></span>
+								id="addNewJobOwnerPopUp">Add NewJob Owner</a>
+								</security:authorize>
+							</c:if>
+						</c:if>
+							</span>
 						</c:if>
 					</div>
 

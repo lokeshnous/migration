@@ -32,6 +32,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+//import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -380,7 +381,6 @@ public class JobSearchController extends AbstractController {
 		}
 
 		if (MMJBCommonConstants.ZERO_INT == jobDTO.getTemplateId()) {
-			modelView.addObject("basePath",request.getRequestURL().toString().replace(request.getServletPath(), ""));
 			modelView.setViewName("jobseekerJobDetails");
 			// get the Ads
 			populateAds(request, session, modelView, PageNames.JOB_VIEW, 0);
@@ -408,6 +408,8 @@ public class JobSearchController extends AbstractController {
 			// get the Ads
 			populateAds(request, session, modelView, PageNames.PREMIUM_JOB_VIEW, 0);
 		}
+		modelView.addObject("basePath", request.getRequestURL().toString()
+				.replace(request.getServletPath(), ""));
 	}
 
 	
@@ -490,7 +492,8 @@ public class JobSearchController extends AbstractController {
 				bannerString = adService.getBanner(clientContext, size,
 						position).getTag();
 				model.addObject(MMJBCommonConstants.ADPGRIGHT_MIDDLE, bannerString);
-			}else if (pageName.equalsIgnoreCase(PageNames.JOBSEEKER_ADVC_JOB_SEARCH)) {
+			}else if (pageName.equalsIgnoreCase(PageNames.JOBSEEKER_ADVC_JOB_SEARCH)
+					|| pageName.equalsIgnoreCase(PageNames.JOBSEEKER_JOB_SEARCH)) {
 				size = AdSize.IAB_MEDIUM_RECTANGLE;
 				position = AdPosition.RIGHT_MIDDLE;
 				bannerString = adService.getBanner(clientContext, size,
@@ -632,7 +635,7 @@ public class JobSearchController extends AbstractController {
 					jobApplyTypeDTO)) {
 				return jsonObject;
 			}
-			if (jobDTO.getEmail() == null) {
+			if (null !=jobApplyTypeDTO && null== jobDTO.getEmail() ) {
 				jobDTO.setEmail(jobApplyTypeDTO.getApplyLink());
 			}
 			if (!jobSearchValidator.isLoggedIn(jobId,
@@ -927,6 +930,8 @@ public class JobSearchController extends AbstractController {
 						.remove(MMJBCommonConstants.AUTOLOAD));
 
 			}
+		}else{
+			clearSession(session);
 		}
 		model.put(JOB_SEARCH_RESULT_FORM, jobSearchResultForm);
 		// get the Ads
@@ -1387,6 +1392,8 @@ public class JobSearchController extends AbstractController {
 		// populate the ads
 		populateAds(request, session, modelAndView,
 				PageNames.JOBSEEKER_BROWSE_JOBS, recordsPerPage);
+		modelAndView.addObject("basePath", request.getRequestURL().toString()
+				.replace(request.getServletPath(), ""));
 		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
 		return modelAndView;
 	}
@@ -1515,6 +1522,8 @@ public class JobSearchController extends AbstractController {
 		populateAds(request, session, modelAndView,
 				PageNames.JOBSEEKER_BROWSE_JOBS, recordsPerPage);
 		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
+		modelAndView.addObject("basePath", request.getRequestURL().toString()
+				.replace(request.getServletPath(), ""));
 		return modelAndView;
 	}
 
@@ -1638,6 +1647,8 @@ public class JobSearchController extends AbstractController {
 		populateAds(request, session, modelAndView,
 				PageNames.JOBSEEKER_BROWSE_JOBS, recordsPerPage);
 		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
+		modelAndView.addObject("basePath", request.getRequestURL().toString()
+				.replace(request.getServletPath(), ""));
 		return modelAndView;
 	}
 
@@ -1767,6 +1778,8 @@ public class JobSearchController extends AbstractController {
 		populateAds(request, session, modelAndView,
 				PageNames.JOBSEEKER_BROWSE_JOBS, recordsPerPage);
 		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
+		modelAndView.addObject("basePath", request.getRequestURL().toString()
+				.replace(request.getServletPath(), ""));
 		return modelAndView;
 	}
 
@@ -1901,6 +1914,8 @@ public class JobSearchController extends AbstractController {
 		populateAds(request, session, modelAndView,
 				PageNames.JOBSEEKER_BROWSE_JOBS, recordsPerPage);
 		modelAndView.setViewName(JOBBOARD_SEARCHRESULTS_PAGE);
+		modelAndView.addObject("basePath", request.getRequestURL().toString()
+				.replace(request.getServletPath(), ""));
 		return modelAndView;
 	}
 
@@ -2086,7 +2101,7 @@ public class JobSearchController extends AbstractController {
 			}
 			String radius = sessionMap.get(SearchParamDTO.RADIUS).trim();
 			// TODO: validate for refine radius search
-			if (!radius.equalsIgnoreCase(MMJBCommonConstants.ZERO)) {
+			if (!radius.isEmpty() && !radius.equalsIgnoreCase(MMJBCommonConstants.ZERO)) {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put(MMJBCommonConstants.HASHMAP_KEY, SearchParamDTO.RADIUS);
 				map.put(MMJBCommonConstants.HASHMAP_VALUE, radius
@@ -2237,24 +2252,30 @@ public class JobSearchController extends AbstractController {
 	 * 
 	 * @param session
 	 * @param map
+	 * @param request 
 	 * @return
 	 */
 	@RequestMapping(value = "/jobseekerPostYourResume")
 	public @ResponseBody
 	JSONObject callPostYourResumePopUp(HttpSession session,
-			Map<String, Object> map) {
+			Map<String, Object> map, HttpServletRequest request) {
 		JSONObject jsonObject = new JSONObject();
 
 		// Check for job seeker login ,open popup if not logged in.
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
 			map.put("loginForm", new LoginForm());
-			jsonObject.put("LoggedInNavigationPath", navigationPath
-					+ dothtmlExtention + jobseekerPageExtention);
+			String loginPath = navigationPath.substring(2);
+			String jonseekerloginUrl = request.getRequestURL().toString()
+					.replace(request.getServletPath(), loginPath)
+					+ dothtmlExtention + jobseekerPageExtention;
+			jsonObject.put("LoggedInNavigationPath", jonseekerloginUrl);
 			return jsonObject;
 		}
 		jsonObject
 				.put(ajaxNavigationPath,
-						"../jobSeekerResume/createResumePopUp.html?resumeType=createResume");
+						request.getRequestURL().toString()
+								.replace(request.getServletPath(), "")
+								+ "/jobSeekerResume/createResumePopUp.html?resumeType=createResume");
 		return jsonObject;
 	}
 
@@ -2466,8 +2487,6 @@ public class JobSearchController extends AbstractController {
 				emailBody = emailBody.replace("?Companyname",
 						jobDTO.getCompanyNameDisp());
 				emailBody = emailBody.replace("?joburl",
-						sendtofriendmail.getJoburl());
-				emailBody = emailBody.replace("?jobURLDetail",
 						sendtofriendmail.getJoburl());
 				emailBody = emailBody.replace("?msgBody",
 						sendtofriendmail.getMessage());
@@ -2852,13 +2871,13 @@ public class JobSearchController extends AbstractController {
 	 */
 	@RequestMapping(value = "/clearrecentsearches", method = RequestMethod.GET)
 	public @ResponseBody
-	String clearLatestSearches(HttpSession session, 
+	String clearrecentsearches(HttpSession session, 
 			HttpServletRequest request) {
 		// get the userId from session
 		int userId = getUserID(session);
 
 		// clear the recent searches
-		jobSearchService.clearRecentSearches(userId);
+		jobSearchService.clearRecentSearches(userId, Integer.parseInt(recentSearchsLimit));
 		session.removeAttribute(LATEST_RECENT_LIST);
 
 		return "success";
@@ -2920,6 +2939,7 @@ public class JobSearchController extends AbstractController {
 			final JSONObject jobSrchJson = new JSONObject();
 			jobSrchJson.put(MMJBCommonConstants.AD_TEXT,
 					MMUtils.isNull(jobDTO.getAdText()));
+			//MMUtils.isNull(Jsoup.parse(jobDTO.getAdText()).text()));
 			jobSrchJson.put(MMJBCommonConstants.CAP_COMPANY,
 					MMUtils.isNull(jobDTO.getCompany()));
 			jobSrchJson.put(MMJBCommonConstants.JOB_TITLE,
@@ -2934,8 +2954,8 @@ public class JobSearchController extends AbstractController {
 			if (jobDTO.getHideState() == 0) {
 				location.append(jobDTO.getState());
 			}
-			jobSrchJson.put(MMJBCommonConstants.CAP_CITY,
-					MMUtils.isNull(location.toString()));
+			jobSrchJson.put(MMJBCommonConstants.CAP_CITY, location.toString()
+					.equals("null,null") ? "" : location.toString());
 			jobSrchJson.put(MMJBCommonConstants.POSTED_DATE,
 					MMUtils.convertToReqdDateString(jobDTO.getPostedDate()));
 			jobSrchJson.put(MMJBCommonConstants.APPLY_ONLINE,

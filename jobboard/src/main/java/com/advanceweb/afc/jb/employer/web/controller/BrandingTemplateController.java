@@ -173,6 +173,7 @@ public class BrandingTemplateController extends AbstractController{
 
 		if (result.hasErrors()) {
 			if (!brandingTemplateForm.getIsSilverCustomer()) {
+				clearChosendata(brandingTemplate);
 				verifyMultimediaContent(brandingTemplateForm);
 			}
 			model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplate);
@@ -215,6 +216,18 @@ public class BrandingTemplateController extends AbstractController{
 			return model;
 
 		}
+	}
+
+	/**
+	 * The method helps to clear the chosen multimedia
+	 * section files when errors occurred
+	 * 
+	 * @param templateForm 
+	 * 
+	 */
+	private void clearChosendata(BrandingTemplateForm templateForm) {
+		templateForm.setListAddImages(new ArrayList<AddImageForm>());
+		templateForm.setListVideos(new ArrayList<VideoForm>());
 	}
 
 	public boolean validateNonSilverCust(BrandingTemplateForm brandingTemplate,
@@ -276,6 +289,7 @@ public class BrandingTemplateController extends AbstractController{
 
 		if (result.hasErrors()) {
 			if (!brandingTemplateForm.getIsSilverCustomer()) {
+				clearChosendata(brandingTemplateForm);
 				verifyMultimediaContent(brandingTemplateForm);
 			}
 			model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);

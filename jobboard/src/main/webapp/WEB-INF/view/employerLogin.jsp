@@ -20,7 +20,50 @@
 		
 		$("#forgrtpassword").displaypopup("#forgrtpassword", "790", "252");
 		jQuery(".megamenu").megamenu();
+		
+		$("#loginButton")
+		.click(
+				function(event) {
+					if (validate()) {
+						$("form").attr("action","../j_spring_security_check");
+						$("#loginForm").submit();
+					}
+				});
 		});
+	
+	function validate() {
+		var userName = $.trim($("#j_username").val());
+		var userPassword = $.trim($("#j_password").val());
+		var x = userName.indexOf('@');
+		var y = userName.lastIndexOf('.');
+		var result = true;
+		if (userName.length == 0) {
+			$("#error").text("The Username/Password you have entered is invalid, please enter the correct Username/Password");
+			$("#error").show();
+			$("#error1").hide();
+			result = false;
+		} 
+		
+		if(userPassword.length == 0){
+			$("#error").text("The Username/Password you have entered is invalid, please enter the correct Username/Password");
+			$("#error").show();
+			$("#error1").hide();
+			result = false;
+		}
+		if (x == -1 || y == -1 || (x + 2) >= y) {
+			$("#error")
+					.text("The Username/Password you have entered is invalid, please enter the correct Username/Password");
+			$("#error").show();
+			$("#error1").hide();
+			result = false;
+		} 
+		
+		if (!result) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 </script>			
 		
     </head>
@@ -47,10 +90,11 @@
 		    <div class="job_seeker_login">
 			<h2 class="noTopBottomBorder">Employer Login</h2>
 			<div class="FormErrorDisplayText">
-			${error}
+			<div id="error1">${error}</div>
+			<div id="error" style=" display: none"></div>
 			</div>
 			
-			<form method="post" action="../j_spring_security_check">
+			<form method="post" id="loginForm" action="../j_spring_security_check">
 			    <div class="rowEvenSpacingMargin0">
 				<span class="lableText1">Email Address:</span> <input type="text" id="j_username" name="j_username" class="job_seeker_email" />
 			    </div>
@@ -65,7 +109,7 @@
 				</div>		    
 				<div class="rowEvenNewSpacing">
 							
-				    	<input type="submit" class="orange cursor" value="Login"/>				    
+				    	<input type="button" id="loginButton" class="orange cursor" value="Login"/>				    
 										
                     	<a href="forgrtPasswordLogin.html?page=employer" id="forgrtpassword">Forgot your password?</a>
 			

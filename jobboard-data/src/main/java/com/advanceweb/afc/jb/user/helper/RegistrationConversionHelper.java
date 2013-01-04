@@ -393,7 +393,7 @@ public class RegistrationConversionHelper {
 	 * @param user
 	 * @return
 	 */
-	public UserDTO transformMerUserToUserDTO(MerUser user) {
+	public UserDTO transformMerUserToUserDTO(MerUser user,Boolean oldUser) {
 
 		UserDTO userDTO = new UserDTO();
 		if (null != user) {
@@ -403,9 +403,43 @@ public class RegistrationConversionHelper {
 			userDTO.setUserId(user.getUserId());
 			userDTO.setMiddleName(user.getMiddleName());
 			userDTO.setPassword(user.getPassword());
+			if(oldUser)
+			{
+				userDTO.setOldUser(true);
+			}
 		}
 
 		return userDTO;
 	}
 
+	/**
+	 * Transform JobSeekerRegistrationDTO to UserDTO
+	 * 
+	 * @param dto
+	 * @return
+	 */
+	public UserDTO transformJSRegnToUserDTO(JobSeekerRegistrationDTO jsDTO, UserDTO userDTO) {
+
+		if (null != jsDTO.getAttribList()) {
+
+			for (ProfileAttribDTO attribDTO : jsDTO.getAttribList()) {
+				if (MMJBCommonConstants.FIRST_NAME.equalsIgnoreCase(attribDTO
+						.getStrLabelName())) {
+					userDTO.setFirstName(attribDTO.getStrLabelValue());
+				} else if (MMJBCommonConstants.LAST_NAME
+						.equalsIgnoreCase(attribDTO.getStrLabelName())) {
+					userDTO.setLastName(attribDTO.getStrLabelValue());
+				} else if (MMJBCommonConstants.ZIP_CODE
+						.equalsIgnoreCase(attribDTO.getStrLabelName())) {
+					userDTO.setZipCode(attribDTO.getStrLabelValue());
+				} else if (MMJBCommonConstants.COUNTRY
+						.equalsIgnoreCase(attribDTO.getStrLabelName())) {
+					userDTO.setCountry(attribDTO.getStrLabelValue());
+				} 
+			}
+		}
+
+		return userDTO;
+	}
+	
 }

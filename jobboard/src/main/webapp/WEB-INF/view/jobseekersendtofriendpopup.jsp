@@ -18,6 +18,7 @@
 					if(data == ''){
 						//alert("Successfully sent!");
 						$("#mailSending").html("<span></span>");
+						alert("Email has been sent successfully.");
 						parent.$.nmTop().close();
 					}else{
 						$("#mailSending").html("<span></span>");
@@ -27,24 +28,7 @@
 			});
 		});
 		
- 		$('#send').click(function(){			
- 			$("#mailSending").html("<span>Processing...</span>");
-			$.ajax({url:"${pageContext.request.contextPath}/jobsearch/sendtofriendpost.html",
-				data:$('#formid').serialize(),
-				type:"POST",
-				success: function(data) {
-					if(data == ''){
-						//alert("Successfully sent!");
-						$("#mailSending").html("<span></span>");
-						parent.$.nmTop().close();
-					}else{
-						$("#mailSending").html("<span></span>");
-						$("#errmsg").html(data);
-					}
-				 },
-			});
-		});
-	     <c:if test="${visible}">
+	    <c:if test="${visible}">
         parent.window.location.reload();
         parent.$.nmTop().close();
         </c:if> 
@@ -53,7 +37,15 @@
 		$("#Cancel").click(function() {
  	          // parent.window.location.reload();
 	           parent.$.nmTop().close();
-    });
+    	});
+		
+		$("#formid").keypress(function(e){
+		    if (e.which == 13) {
+				e.preventDefault();
+				$('#send').click();
+			    return false;
+			  }
+		});
 
 		jQuery(".megamenu").megamenu();
 

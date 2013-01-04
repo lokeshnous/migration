@@ -16,9 +16,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
+import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.jobseeker.web.controller.JobSeekerProfileAttribForm;
+import com.advanceweb.afc.jb.jobseeker.web.controller.TransformJobSeekerRegistration;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
+import com.advanceweb.afc.jb.user.ProfileRegistration;
 import com.advanceweb.afc.jb.user.UserSubscriptionService;
 
 /**
@@ -41,6 +45,12 @@ public class UserSubscriptionsController {
 
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
+	
+	@Autowired
+	private ProfileRegistration profileRegistration;
+	
+	@Autowired
+	private TransformJobSeekerRegistration transformJobSeekerRegistration;
 
 	/**
 	 * to view subscription page
@@ -86,7 +96,27 @@ public class UserSubscriptionsController {
 		boolean digSubscription = false;
 		boolean enewsSubscription = false;
 		boolean emailSubscription = false;
-		if (null != getSelectedSub) {
+		// Call to service layer
+		JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration
+				.viewProfile((Integer) session
+						.getAttribute(MMJBCommonConstants.USER_ID));
+		List<JobSeekerProfileAttribForm> listProfAttribForms = transformJobSeekerRegistration
+				.transformDTOToProfileAttribForm(jsRegistrationDTO, null);
+		for (JobSeekerProfileAttribForm profileForm : listProfAttribForms) {
+			if (profileForm.getStrLabelValue() != null
+					&& profileForm.getStrLabelName().equalsIgnoreCase(
+							MMJBCommonConstants.COUNTRY)) {
+				if(profileForm.getStrLabelValue().equalsIgnoreCase(MMJBCommonConstants.COUNTRY_USA)){
+					printSubscription = true;
+				}else if(profileForm.getStrLabelValue().equalsIgnoreCase(MMJBCommonConstants.COUNTRY_CA)){
+					printSubscription = true;
+					digSubscription = true;
+					enewsSubscription = true;
+					emailSubscription = true;
+				}
+			}
+		}
+		/*if (null != getSelectedSub) {
 			for (UserSubscriptionsDTO subscriptionsDTO : getSelectedSub) {
 				if (subscriptionsDTO.getSubscriptionId() == MMJBCommonConstants.PRINT_JS_SUBSCRIPTION) {
 					printSubscription = true;
@@ -101,7 +131,7 @@ public class UserSubscriptionsController {
 					emailSubscription = true;
 				}
 			}
-		}
+		}*/
 		model.addObject("jobSubscriptionsList", listSubscriptions);
 		model.addObject("listpublicationprint", listpublicationprint);
 		model.addObject("listpublicationdigital", listpublicationdigital);

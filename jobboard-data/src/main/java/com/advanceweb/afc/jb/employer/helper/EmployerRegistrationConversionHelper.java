@@ -229,6 +229,28 @@ public class EmployerRegistrationConversionHelper {
 		return listProfiles;
 
 	}
+	
+	public AccountProfileDTO transformToAccountProfileDTO(EmployerProfileDTO dto) {
+		AccountProfileDTO aPDto=new AccountProfileDTO();
+		if (null != dto.getAttribList()) {
+			for (ProfileAttribDTO attribDTO : dto.getAttribList()) {
+				if(attribDTO.getStrLabelName().equals(MMJBCommonConstants.FIRST_NAME)){
+					aPDto.setFirstName(attribDTO.getStrLabelValue());
+				}
+				if(attribDTO.getStrLabelName().equals(MMJBCommonConstants.LAST_NAME)){
+					aPDto.setLastName(attribDTO.getStrLabelValue());
+				}
+				if(attribDTO.getStrLabelName().equals(MMJBCommonConstants.ZIP_CODE)){
+					aPDto.setZipCode(attribDTO.getStrLabelValue());
+				}
+				if(attribDTO.getStrLabelName().equals(MMJBCommonConstants.COUNTRY)){
+					aPDto.setCountry(attribDTO.getStrLabelValue());
+				}
+			}
+			
+		}
+		return aPDto;
+	}
 
 	/**
 	 * Transform MerUserDTO to entity MerUser
@@ -587,15 +609,23 @@ public class EmployerRegistrationConversionHelper {
 		List<ManageAccessPermissionDTO> manageAccessPermissionDTOList = new ArrayList<ManageAccessPermissionDTO>();
 		int roleIndex = 0;
 		for (MerUser merUser : merUsers) {
-			ManageAccessPermissionDTO manageAccessPermissionDTO = new ManageAccessPermissionDTO();
-			manageAccessPermissionDTO.setOwnerId(merUser.getUserId());
-			manageAccessPermissionDTO.setOwnerName(merUser.getLastName() + " "
-					+ merUser.getFirstName());
-			if (roleId.size() > roleIndex && null != roleId.get(roleIndex)) {
+
+			if (roleId.size() > roleIndex
+					&& null != roleId.get(roleIndex)
+					&& (roleId.get(roleIndex).equals(Integer
+							.valueOf(MMJBCommonConstants.FULL_ACCESS)) || roleId
+							.get(roleIndex).equals(Integer
+							.valueOf(MMJBCommonConstants.MANAGEEDITACCESS)))) {
+				ManageAccessPermissionDTO manageAccessPermissionDTO = new ManageAccessPermissionDTO();
+				manageAccessPermissionDTO.setOwnerId(merUser.getUserId());
+				manageAccessPermissionDTO.setOwnerName(merUser.getLastName()
+						+ " " + merUser.getFirstName());
+
 				manageAccessPermissionDTO
 						.setTypeOfAccess(roleId.get(roleIndex));
+				manageAccessPermissionDTOList.add(manageAccessPermissionDTO);
 			}
-			manageAccessPermissionDTOList.add(manageAccessPermissionDTO);
+
 			roleIndex = roleIndex + 1;
 		}
 		return manageAccessPermissionDTOList;

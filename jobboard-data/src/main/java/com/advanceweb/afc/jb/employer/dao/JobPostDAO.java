@@ -2,6 +2,7 @@ package com.advanceweb.afc.jb.employer.dao;
 
 import java.util.List;
 
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
@@ -19,20 +20,45 @@ public interface JobPostDAO {
 	
 	EmployerInfoDTO getEmployerInfo(int userId, String roleName);
 	boolean savePostJob(JobPostDTO dto) ;
-	List<JobPostDTO> retrieveAllJobPost(int employerId, int offset, int noOfRecords,String sortBy);
+	
+	/**
+	 * Method to retrieve all job Posted by the employer and sub facilities
+	 * 
+	 * @param companyList 
+	 * @param offset
+	 * @param noOfRecords
+	 * @param sortBy
+	 * @return
+	 */
+	List<JobPostDTO> retrieveAllJobPost(List<DropDownDTO> companyList,
+			int offset, int noOfRecords, String sortBy);
+
+	/**
+	 * Method to retrieve all job Posted by the employer and sub facilities by filtering 
+	 * on job status
+	 * 
+	 * @param jobStatus
+	 * @param companyList
+	 * @param offset
+	 * @param noOfRecords
+	 * @return
+	 */
+	List<JobPostDTO> retrieveAllJobByStatus(String jobStatus,
+			List<DropDownDTO> companyList,int offset,
+			int noOfRecords);
+
+	int getEmpJobsCount(List<DropDownDTO> companyList);
+	int getEmpJobsCountByStatus(String jobStatus, List<DropDownDTO> companyList);
+	
 	JobPostDTO retrieveJobById(int jobId);
 	boolean deleteJob(int jobId , int userId);
 	boolean updateManageJob(boolean autoRenew, int brandTemplate, int jobId,
 			int userId);
 	boolean deactivateJob(int jobId, int userId);
-
+	
 	boolean repostJob(int jobId, int extendDays);
-	List<JobPostDTO> retrieveAllJobByStatus(String jobStatus, int userId, int offset, int noOfRecords);
 	
 	List<JobPostingPlanDTO> getJobPostingPlans();
-	int getTotalNumberOfJobRecords(int employerId);
-	int getTotalNumberOfJobRecordsByStatus();
-	
 	List<SchedulerDTO> executeActiveJobWorker(List<JobPostDTO> jobsList);
 	List<SchedulerDTO> executeAutoRenewalJobWorker(List<JobPostDTO> jobsList);
 	List<JobPostDTO> retreiveAllScheduledJobs();

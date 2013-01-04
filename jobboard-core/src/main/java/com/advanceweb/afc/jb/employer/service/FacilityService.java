@@ -8,6 +8,7 @@ import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.SchedulerDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 /**
@@ -69,4 +70,21 @@ public interface FacilityService {
 	 */
 	List<SchedulerDTO> getAllFacilityList();
 	UserDTO getUser(String email);
+	
+	/**
+	 * The method helps to get main facility. If job owner login then method
+	 * retrieves the main facility group. 
+	 * 
+	 * @param currentFacilityId
+	 * @return
+	 */
+	AdmFacility getParentFacility(int currentFacilityId);
+	
+	/**
+	 * The method returns true if application logged in by job owner otherwise false 
+	 * 
+	 * @param facilityId
+	 * @return
+	 */
+	public boolean isJobOwner(int facilityId);
 }

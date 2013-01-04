@@ -24,8 +24,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.security.DatabaseAuthenticationManager;
@@ -51,7 +53,9 @@ public class PreAuthenticationManager extends AbstractPreAuthenticatedProcessing
 		LOGGER.debug("getPreAuthenticatedPrincipal=======>");
 		 authentication = SecurityContextHolder.getContext().getAuthentication();
 		    HttpServletRequest req=(HttpServletRequest)request;
-		    if (authentication == null) {   
+		    if (authentication == null && null != req.getCookies()) { 
+		    	if(!request.getServletPath().contains("/commonLogin/")){
+		    		LOGGER.debug("/commonLogin/");
 		    	String userEmail="";
 		    	for(Cookie cookie:req.getCookies()){
 		    		//boolean value=cookie.getName().equals(".ASPXAUTH");
@@ -60,16 +64,16 @@ public class PreAuthenticationManager extends AbstractPreAuthenticatedProcessing
 //		    		cookie.getName().equals(".ASPXAUTH")
 					if(cookie.getName().equals(".ASPXAUTH")){
 						LOGGER.debug("1 .ASPXAUTH cookie is there=======>");
-						//String cookieValue=cookie.getValue();
-//						String cookieValue="E349A4BE8158C56A72B47385C985CCE72D84498052D28130231E179CCD00CF9F10B475B05B70AC89DFDD07435B5863180224634DF8312E38E6477E74ECB3541B4560838235D41BAE9BF0D3DD9547C9A86FED6BEDF8FE1BFA0A45CEE09941C1839E02C4D67AE5BD9EFD4E47C1";
 						String cookieValue=cookie.getValue();
+//						String cookieValue="BE6C14EFBA657F8003BBAC058D5815B121C6F79CFADCF122F6DFAF868A8FB7E513CAE347F3963CF4DABFE251AE0F0EA6F9A1884670A824071221997D69FEF754EA61364A63AB9CB7ECC1020195A58DBF514CACF96FA19F1733C75D7E94595CACA7808AF32A3B0ACE6095B64D";
+//						String cookieValue=cookie.getValue();
 						LOGGER.debug("2 cookieValue=======>"+cookieValue);
 						Date date =new Date();
 						SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH.mm.ss aa", Locale.US);
 						String postData = cookieValue + "^" + formatter.format(date) + "^" + "30" + "^" + "true";
 						
 						try {
-							//URLConnection connection = new URL("http://12.104.61.122:901/testinterpreter.ashx?").openConnection();
+//							URLConnection connection = new URL("http://12.104.61.122:901/testinterpreter.ashx?").openConnection();
 //							URL url = new URL("https://securedev.advanceweb.com/interpreter.ashx");
 							URL url = new URL("http://12.104.61.122:901/testinterpreter.ashx");
 							TrustManager[] trustAllCerts = new TrustManager[]{
@@ -115,50 +119,56 @@ public class PreAuthenticationManager extends AbstractPreAuthenticatedProcessing
 						break;
 					}
 				}
-		    	
+//		    	userEmail="fdnyrk@sbcglobal.net";
 		        if(userEmail!=null && userEmail.contains("@")){
 		        	LOGGER.debug("user email is  "+userEmail);
 		        	UserDTO jbuser = userService.getUser(userEmail);
 		        	if(jbuser!=null){
 		        	user = userService.getAdvancePassUser(userEmail);
 		        	}
-//		        	System.out.println("userDTO ===>"+user);
-//		        	if(user==null){
-//		        		System.out.println(" no user with "+userEmail+" emailId");
-//		        		return null;
-//		        	}
-//		        	PreAuthenticatedAuthenticationToken token = new PreAuthenticatedAuthenticationToken(
-//		        			userEmail, null, null);
-//		            token.setDetails(ads.buildDetails(request));
-//		            try{
-//		                logger.debug("Going to set Authentication");
-//		                authentication = authenticationManager.authenticate(token);
+		        	System.out.println("userDTO ===>"+user);
+		        	if(user==null){
+		        		System.out.println(" no user with "+userEmail+" emailId");
+		        		return null;
+		        	}
+		        	PreAuthenticatedAuthenticationToken token = new PreAuthenticatedAuthenticationToken(
+		        			user.getEmailId(), user.getPassword(), null);
+		            token.setDetails(ads.buildDetails(request));
+		            try{
+		                logger.debug("Going to set Authentication");
+		                authentication = authenticationManager.authenticate(token);
 //		                auth = authenticationManager.loadUserDetails(token);
-		                //SecurityContextHolder.getContext().setAuthentication(auth);
+		                SecurityContextHolder.getContext().setAuthentication(authentication);
 		            
-		               // logger.debug("Authenticated");
-//		            }
-//		            catch(AuthenticationException e){
-//		                logger.debug("Authentication information was rejected by the authentication manager \n",e);
+		                logger.debug("Authenticated");
+		            }
+		            catch(AuthenticationException e){
+		                logger.debug("Authentication information was rejected by the authentication manager \n",e);
 		               // failureHandler.onAuthenticationFailure((HttpServletRequest)request, (HttpServletResponse)response, e);
-//		            }
+		            }
 		        }// end if     
 		    }// end if(authenication == null)
 //		    return authentication != null ?authentication.getCredentials():null;
-		return user != null ?user.getEmailId():null;
+		    }
+
+		    return  authentication != null ?authentication.getPrincipal():null;
+//		return userFor != null ?user.getEmailId():null;
+//		    return "fdnyrk@sbcglobal.net";
 	}
 
 	@Override
 	protected Object getPreAuthenticatedCredentials(HttpServletRequest request) {
 		LOGGER.debug("getPreAuthenticatedCredentials=======>");
-		//return authentication != null ?authentication.getCredentials():null;
-		//return auth != null ?auth.getPassword():null;
-		return user != null ?user.getPassword():null;
+		return authentication != null ?authentication.getCredentials():null;
+//		return "yo040204";
+//		UserDTO userFor=user;
+//		return userFor != null ?user.getPassword():null;
 	}
 
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, Authentication authResult) {
 		 try {
 			 LOGGER.debug("in successfulAuthentication of pre auth");
+			SecurityContextHolder.getContext().setAuthentication(authResult);
 			loginManager.onAuthenticationSuccess(request, response, authResult);
 		} catch (Exception e) {
 			LOGGER.debug("exception in onAuthenticationSuccess");

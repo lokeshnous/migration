@@ -60,7 +60,7 @@ public class WebMembershipInfo implements Serializable {
 	@Column(name="ZipCode")
 	private String zipCode;
 
-	@OneToOne(fetch=FetchType.LAZY, mappedBy="webMembershipInfo")
+	@OneToOne(fetch=FetchType.EAGER, mappedBy="webMembershipInfo")
 	private WebMembership webMembership;
 
 	public Integer getWebMembershipInfoID() {

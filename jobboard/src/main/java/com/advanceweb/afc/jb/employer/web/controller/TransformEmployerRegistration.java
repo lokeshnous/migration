@@ -141,6 +141,7 @@ public class TransformEmployerRegistration {
 		dto.setEmailId(form.getEmailId());
 		dto.setUserId(form.getUserId());
 		dto.setHelthSystem(form.isHelthSystem());
+		dto.setOldUser(form.isOldUser());
 		return dto;
 	}
 

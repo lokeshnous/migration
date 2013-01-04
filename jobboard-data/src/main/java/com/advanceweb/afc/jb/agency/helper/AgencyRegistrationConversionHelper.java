@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Repository;
 
+import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.ProfileAttribDTO;
@@ -379,6 +380,26 @@ public class AgencyRegistrationConversionHelper {
 		registerDTO.setAttribList(listDTO);
 		return registerDTO;
 	}
-	
+	public AccountProfileDTO transformToAccountProfileDTO(AgencyProfileDTO dto) {
+		AccountProfileDTO aPDto=new AccountProfileDTO();
+		if (null != dto.getAttribList()) {
+			for (ProfileAttribDTO attribDTO : dto.getAttribList()) {
+				if(attribDTO.getStrLabelName().equals(MMJBCommonConstants.FIRST_NAME)){
+					aPDto.setFirstName(attribDTO.getStrLabelValue());
+				}
+				if(attribDTO.getStrLabelName().equals(MMJBCommonConstants.LAST_NAME)){
+					aPDto.setLastName(attribDTO.getStrLabelValue());
+				}
+				if(attribDTO.getStrLabelName().equals(MMJBCommonConstants.ZIP_CODE)){
+					aPDto.setZipCode(attribDTO.getStrLabelValue());
+				}
+				if(attribDTO.getStrLabelName().equals(MMJBCommonConstants.COUNTRY)){
+					aPDto.setCountry(attribDTO.getStrLabelValue());
+				}
+			}
+			
+		}
+		return aPDto;
+	}
 
 }

@@ -56,6 +56,18 @@ public class UserSubscriptionServiceImpl implements UserSubscriptionService,
 	}
 
 	/**
+	 * To get current subscriptions of the user
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+	public void deleteSubscriptionsById(int userId) {
+		subscriptionsDAO.deleteSubscriptionsById(userId);
+	}
+
+	/**
 	 * To Save the Cover letter of particular user
 	 * 
 	 * @param userId

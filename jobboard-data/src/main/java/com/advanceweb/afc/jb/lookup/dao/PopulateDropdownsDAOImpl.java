@@ -41,7 +41,6 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmInventoryDetail;
 import com.advanceweb.afc.jb.data.entities.AdmSubscription;
-import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
 import com.advanceweb.afc.jb.data.entities.JpJobTypeCombo;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
@@ -452,41 +451,51 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	}
 
 	@Override
-	public List<DropDownDTO> populateJobOwnersDropdown(int facilityId,
-			int userId, int roleId) {
-
-		try {
-			List<MerUser> merUsers = new ArrayList<MerUser>();
-			List<AdmFacility> facilityList = new ArrayList<AdmFacility>();
-			// List<AdmUserFacility> userFacilityList =
-			// hibernateTemplate.find("from AdmUserFacility facility where facility.id.userId=?",userId);
-			// for(AdmUserFacility userFacility : userFacilityList){
-			List<AdmFacility> admFacilityList = hibernateTemplate.find(
-					"from AdmFacility adm where adm.facilityParentId=?",
-					facilityId);
-			facilityList.addAll(admFacilityList);
-			// }
-
-			for (AdmFacility facility : admFacilityList) {
-				Object[] inputs = { facility.getFacilityId(), 5, 6 };
-				List<AdmUserFacility> admUsersList = hibernateTemplate
-						.find("from AdmUserFacility admFacility where admFacility.id.facilityId=? and (admFacility.id.roleId=? or admFacility.id.roleId=?)",
-								inputs);
-				if (null != admUsersList && !admUsersList.isEmpty()) {
-					AdmUserFacility admUserFacility = admUsersList.get(0);
-					List<MerUser> merUserList = hibernateTemplateTracker
-							.find("from MerUser user where user.userId=? and user.deleteDt is null",
-									admUserFacility.getFacilityPK().getUserId());
-					merUsers.addAll(merUserList);
+	public List<DropDownDTO> populateJobOwnersDropdown(int facilityId) {
+		List<DropDownDTO> dropdownList = new ArrayList<DropDownDTO>();
+		try {	
+			
+			AdmFacility admFacility = hibernateTemplate.get(AdmFacility.class, facilityId);
+			int facilityParentId = admFacility.getFacilityParentId();
+			if (MMJBCommonConstants.ZERO_INT < facilityParentId) {
+				AdmFacility parentAdmFacility = hibernateTemplate.get(
+						AdmFacility.class, facilityParentId);
+				if (parentAdmFacility.getFacilityType().equalsIgnoreCase(
+						MMJBCommonConstants.FACILITY_GROUP)
+						|| parentAdmFacility.getFacilityType()
+								.equalsIgnoreCase(MMJBCommonConstants.FACILITY)) {
+					facilityId = facilityParentId;
 				}
-
 			}
-			return dropdownHelper.transformAdmFacilityToDropDownDTO(merUsers);
-
+			// Get the list of job owners of employee
+			List<AdmFacility> admFacilityList = hibernateTemplate
+					.find("from AdmFacility adm where adm.facilityParentId=?",
+							facilityId);
+			for (AdmFacility jobOwner : admFacilityList) {
+				if (jobOwner.getAdmUserFacilities() != null
+						&& !jobOwner.getAdmUserFacilities().isEmpty()) {
+					int facilityRoleId = jobOwner.getAdmUserFacilities().get(0)
+							.getAdmRole().getRoleId();
+					if (facilityRoleId == 5 || facilityRoleId == 6) {
+						int jobownerUserId = jobOwner.getAdmUserFacilities()
+								.get(0).getFacilityPK().getUserId();
+						// Get the job owner details
+						MerUser merUser = hibernateTemplateTracker.get(
+								MerUser.class, jobownerUserId);
+						if(merUser!=null && merUser.getDeleteDt()==null){
+						DropDownDTO dropdownDTO = new DropDownDTO();
+						dropdownDTO.setOptionId(String.valueOf(jobownerUserId));
+						dropdownDTO.setOptionName(merUser.getLastName() + " "
+								+ merUser.getFirstName());
+						dropdownList.add(dropdownDTO);
+						}
+					}
+				}
+			}
 		} catch (Exception e) {
-			LOGGER.error(e);
+			LOGGER.error(e.getMessage(), e);
 		}
-		return null;
+		return dropdownList;
 	}
 
 	@Override
@@ -621,49 +630,54 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	}
 
 	@Override
-	public List<DropDownDTO> populateCompanyNames(int facilityId){
-		int facilityParentId = 0;
+	public List<DropDownDTO> populateCompanyNames(int facilityId,
+			boolean isHighlightFacility) {
+		boolean isEmployer = false;
+		boolean isEmployerGroup = false;
+		int mainFacilityId = facilityId;
+		int facilityParentId = -1;
 		List<DropDownDTO> companyNames = new ArrayList<DropDownDTO>();
 		try {
-			AdmFacility admFacility = (AdmFacility) hibernateTemplate.find(
-					"from AdmFacility e where e.facilityId=?", facilityId).get(
-							0);
+			AdmFacility admFacility = hibernateTemplate.load(AdmFacility.class, facilityId);
+			
 			facilityParentId = admFacility.getFacilityParentId();
-			if (MMJBCommonConstants.ZERO_INT == facilityParentId) {
-				populateGroupCompany(facilityId, companyNames);
-			} else {
-
-				// Check if the parent is a FACILITY_SYSTEM (Agency)
-				admFacility = hibernateTemplate.get(
+			// Check for employer facility and facility group
+			if (admFacility.getFacilityType().equalsIgnoreCase(
+					MMJBCommonConstants.FACILITY)) {
+				isEmployer = true;
+			} else if (admFacility.getFacilityType().equalsIgnoreCase(
+					MMJBCommonConstants.FACILITY_GROUP)) {
+				isEmployerGroup = true;
+			}
+			
+			// For job owner login
+			if (MMJBCommonConstants.ZERO_INT < facilityParentId) {
+				AdmFacility parentAdmFacility = hibernateTemplate.get(
 						AdmFacility.class, facilityParentId);
-				if (null != admFacility
-						&& admFacility.getFacilityType().equalsIgnoreCase(
-								MMJBCommonConstants.FACILITY_SYSTEM)) {
-					AdmFacility singleFacility = hibernateTemplate.get(
-							AdmFacility.class, facilityId);
-					if (null != singleFacility) {
-						DropDownDTO dto = new DropDownDTO();
-						dto.setOptionId(String.valueOf(singleFacility
-								.getFacilityId()));
-						dto.setOptionName(singleFacility.getName());
-						companyNames.add(dto);
-					}
-
-					return companyNames;
+				if (parentAdmFacility.getFacilityType().equalsIgnoreCase(
+						MMJBCommonConstants.FACILITY_GROUP)) {
+					isEmployer = false;
+					isEmployerGroup = true;
+					mainFacilityId = facilityParentId;
+				}else{
+					admFacility = parentAdmFacility;
 				}
-
-				// Retrieve all facilities present under the logged in user's
-				// parent
-				List<AdmFacility> listAdmFacility = hibernateTemplate
-						.find("from  AdmFacility fac WHERE fac.facilityParentId=? and fac.deleteDt is null",
-								facilityParentId);
-				for (AdmFacility facility : listAdmFacility) {
+			}
+			
+			// Add the facilities for employer
+			if (isEmployer) {
+				DropDownDTO dto = new DropDownDTO();
+				dto.setOptionId(String.valueOf(admFacility.getFacilityId()));
+				dto.setOptionName(admFacility.getName());
+				companyNames.add(dto);
+			} else if (isEmployerGroup) {
+				List<AdmFacility> subAdmFacility = hibernateTemplate
+						.find("from  AdmFacility fac WHERE fac.facilityParentId=? and fac.deleteDt is null order by fac.createDt asc",
+								mainFacilityId);
+				for (AdmFacility facility : subAdmFacility) {
 					// Do not display job owners
-					Object[] inputs = { facility.getFacilityId(), 5, 6 };
-					List<AdmUserFacility> admUsersList = hibernateTemplate
-							.find("from AdmUserFacility admFacility where admFacility.id.facilityId=? and (admFacility.id.roleId=? or admFacility.id.roleId=?)",
-									inputs);
-					if (null == admUsersList || admUsersList.isEmpty()) {
+					if (facility.getAdmUserFacilities() == null
+							|| facility.getAdmUserFacilities().isEmpty()) {
 						DropDownDTO dto = new DropDownDTO();
 						dto.setOptionId(String.valueOf(facility.getFacilityId()));
 						dto.setOptionName(facility.getName());
@@ -674,40 +688,12 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
 		}
+		// Highlight the main facility for matrics
+		if (isHighlightFacility && !companyNames.isEmpty()) {
+			companyNames.get(0).setOptionName(
+					"* " + companyNames.get(0).getOptionName());
+		}
 		return companyNames;
-	}
-
-	/**
-	 * This method populates the Company Group name
-	 * 
-	 * @param facilityId
-	 * @param companyNames
-	 */
-	private void populateGroupCompany(int facilityId,
-			List<DropDownDTO> companyNames) {
-		List<AdmFacility> listAdmFacility = hibernateTemplate
-				.find("from  AdmFacility fac WHERE fac.facilityParentId=? and fac.deleteDt is null",
-						facilityId);
-
-		if (null == listAdmFacility || listAdmFacility.isEmpty()) {
-			listAdmFacility = hibernateTemplate
-					.find("from  AdmFacility fac WHERE fac.facilityId=? and fac.deleteDt is null",
-							facilityId);
-
-		}
-		for (AdmFacility facility : listAdmFacility) {
-			// Do not display job owners
-			Object[] inputs = { facility.getFacilityId(), 5, 6 };
-			List<AdmUserFacility> admUsersList = hibernateTemplate
-					.find("from AdmUserFacility admFacility where admFacility.id.facilityId=? and (admFacility.id.roleId=? or admFacility.id.roleId=?)",
-							inputs);
-			if (null == admUsersList || admUsersList.isEmpty()) {
-				DropDownDTO dto = new DropDownDTO();
-				dto.setOptionId(String.valueOf(facility.getFacilityId()));
-				dto.setOptionName(facility.getName());
-				companyNames.add(dto);
-			}
-		}
 	}
 
 	@Override
@@ -866,5 +852,4 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
 		return null;
 	}
-
 }

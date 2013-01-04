@@ -44,7 +44,7 @@ function copyAccToBillingAddr(obj) {
            		$("#state2").val($("#state").val());
            		$("#country2").val($("#country").val());
            		$("#zipCode2").val($("#zipCode").val());
-           		$("#email2").val($("#email").val());
+           		$("#email2").val($("#emailId").val());
            		$("#phone2").val($("#phone").val());
            	}
            	if(!isSelected)
@@ -76,7 +76,10 @@ function copyAccToBillingAddr(obj) {
     	    }
     	});
  		$('#btn-submit').click(function(){
-			$.ajax({url:"${pageContext.request.contextPath}/agency/employeeAccountSetting.html",
+ 			var href = $('#BackToTopId').attr('href');
+			location.href = href;
+ 			$("#errmsg").html("Processing...");
+			$.ajax({url:"${pageContext.request.contextPath}/agency/agencyAccountSetting.html",
 				data:$('#editAccountSettingData').serialize(),
 				type:"POST",
 				success: function(data) {
@@ -96,7 +99,9 @@ function copyAccToBillingAddr(obj) {
  		//$('[id^=zipCode]').keypress(validateNumber);
  		//$('[id^=zipCode2]').keypress(validateNumber); 		
 		jQuery(".megamenu").megamenu();
-		
+		if ($("#adminLogin").val() == 'true') {
+			$("#emailId").attr('readonly', false);
+		}
 		$("#cityOrTown").autocomplete({
 			source: '${pageContext.request.contextPath}/employer/getCityList.html',
 			width:500,
@@ -272,10 +277,11 @@ $("#country2").change(function(){
 
 <script type="text/javascript">
 	 jQuery(document).ready(function() {
-		
- 		$('#btn-submit2').click(function(){			
- 			
-			$.ajax({url:"${pageContext.request.contextPath}/agency/employeeBillingSetting.html",
+ 		$('#btn-submit2').click(function(){	
+ 			var href = $('#BackToMdlId').attr('href');
+			location.href = href;
+		 	$("#errmsgData").html("Processing...");
+			$.ajax({url:"${pageContext.request.contextPath}/agency/agencyBillingSetting.html",
 				data:$('#editBillingSettingData').serialize(),
 				type:"POST",
 				success: function(data) {
@@ -319,7 +325,7 @@ $("#country2").change(function(){
 				</a>
 			</div>
 			<div class="popUpContainerWrapper">
-				<form:form action="../agency/employeeAccountSetting.html" method="POST" commandName="employeeAccountForm" id="editAccountSettingData" name="editAccountSettingData" enctype="multipart/form-data">
+				<form:form action="../agency/agencyAccountSetting.html" method="POST" commandName="employeeAccountForm" id="editAccountSettingData" name="editAccountSettingData" enctype="multipart/form-data">
 					<div class="EvenNewSpacing marginLeft20">
 						<h3>Account Profile</h3>
 					</div>
@@ -327,6 +333,7 @@ $("#country2").change(function(){
 					<span class="lableText3"> </span>
 					<div id="errmsg" class="FormErrorDisplayText"></div>
 					</div>
+					<form:hidden path="adminLogin"/>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">
 							First Name:
@@ -386,7 +393,7 @@ $("#country2").change(function(){
 							E-Mail:
 						</span>
 						<!-- readonly="true" -->
-						<form:input path="email" name="email" class="job_seeker_password" readonly="true" retype="text"/>
+						<form:input path="email" id="emailId" name="email" class="job_seeker_password" readonly="true" retype="text"/>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">
@@ -404,7 +411,7 @@ $("#country2").change(function(){
 					</form:form>
 					 <div class="borderBottomDotted row">
 					</div>
-					<form:form action="../agency/employeeBillingSetting.html" method="get" commandName="employeeBillingForm" id="editBillingSettingData" enctype="multipart/form-data">
+					<form:form action="../agency/agencyBillingSetting.html" method="get" commandName="employeeBillingForm" id="editBillingSettingData" enctype="multipart/form-data">
 				<div class="row marginLeft20 marginTop25">
 					<h3>Billing Contact</h3>
 				</div>

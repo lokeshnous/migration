@@ -10,9 +10,9 @@
 	<security:http pattern="/index.jsp" security="none"/>
 	<security:http pattern="/jobsearch/jobboardSearchesHistory.html" security="none"/>
 	<security:http pattern="/healthcarejobs/logo.html" security="none"/>
-	<!-- <security:http pattern="/commonLogin/**" security="none"/> -->
 	<security:http pattern="/healthcarejobs/homeFeaturedEmps.html" security="none"/>
 	<security:http pattern="/healthcarejobs/activeJobs.html" security="none"/>
+	<security:http pattern="/healthcarejobs/viewImage.html" security="none"/>
 	
 	<security:http auto-config="false" use-expressions="true"
 		access-denied-page="/healthcarejobs/advanceweb.html" entry-point-ref="authenticationEntryPoint">

@@ -59,8 +59,7 @@ jQuery(document).ready(
 			$("#manageCoverLett").displaypopup(
 					"#manageCoverLett", "400", "350");
 			
-			$("#profileViewCount").displaypopup(
-					"#profileViewCount", "400", "350");
+			
 			$("#retainThisJobId").displaypopup(
 					"#retainThisJobId", "790", "252");
 			$("#createResumePopupUpload").displaypopup("#createResumePopupUpload",
@@ -191,7 +190,7 @@ jQuery(document).ready(
 										</div>
 										<div class="lableTextDashBoard">
 											<p>
-												 <a href="<%=request.getContextPath()%>/jobSeekerJobDetail/viewResumeCount.html"
+												 <a href="#" title="Coming Soon"
 													id="profileViewCount">${msg.jsEmployersViewedProfile} </a> 
 											</p>
 										</div>

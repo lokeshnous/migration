@@ -2412,6 +2412,11 @@ table.grid div.gridActionIcon img:nth-child(2) {
 	color: #FFF !important;
 }
 
+.orange-bg a {
+	font-weight: bold !important;
+	color: #FFF !important;
+}
+
 .input_grp3New {
 	margin-left: 18px;
 	width: 132px;
@@ -3996,6 +4001,11 @@ orange:hover {
 	margin-left: 175px;
 	color: red;
 }
+.Error-ne{
+	color: red;
+    margin-left: 9px;
+    margin-top: 6px;
+}
 
 .FormErrorDisplayText,.FormErrorDisplayText01  {
 	float: left;
@@ -4454,3 +4464,7 @@ top: 29px;
     }
 
 /* --- Navigation New Ends --- */
+
+/* -- new css -- */
+
+.disabled-input{color: #545454 !important; background-color:#F0F0F0;}

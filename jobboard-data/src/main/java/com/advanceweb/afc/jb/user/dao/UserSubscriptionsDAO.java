@@ -31,6 +31,14 @@ public interface UserSubscriptionsDAO {
 	List<UserSubscriptionsDTO> getCurrentSubscriptions(int userId);
 
 	/**
+	 * Delete the subscription of user by user Id
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	void deleteSubscriptionsById(int userId);
+
+	/**
 	 * 
 	 * @param rclDTO
 	 *            .

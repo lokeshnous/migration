@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
@@ -75,15 +76,15 @@ public class JobPostServiceImpl implements JobPostService {
 	}
 
 	/**
-	 * Method to retrieve all job Posted by the Employer
-	 * 
-	 * @param : employerId
+	 * Method to retrieve all job Posted by the employer and sub facilities
 	 */
 	@Override
-	public List<JobPostDTO> retrieveAllJobPost(int employerId, int offset, int noOfRecords,String sortBy) {
-		return employerJobPostDAO.retrieveAllJobPost(employerId,offset,noOfRecords,sortBy);
+	public List<JobPostDTO> retrieveAllJobPost(List<DropDownDTO> companyList,
+			int offset, int noOfRecords, String sortBy) {
+		return employerJobPostDAO.retrieveAllJobPost(
+				companyList, offset, noOfRecords, sortBy);
 	}
-	
+
 	@Override
 	public JobPostDTO retrieveJobById(int jobId) {
 		return employerJobPostDAO.retrieveJobById(jobId);
@@ -111,9 +112,16 @@ public class JobPostServiceImpl implements JobPostService {
 		return employerJobPostDAO.repostJob(jobId, extendDays);
 	}
 
+	/**
+	 * Method to retrieve all job Posted by the employer and sub facilities by filtering 
+	 * on job status
+	 */
 	@Override
-	public List<JobPostDTO> retrieveAllJobByStatus(String jobStatus, int userId, int offset, int noOfRecords) {
-		return employerJobPostDAO.retrieveAllJobByStatus(jobStatus, userId,offset,noOfRecords);
+	public List<JobPostDTO> retrieveAllJobByStatus(String jobStatus,
+			List<DropDownDTO> companyList, int offset,
+			int noOfRecords) {
+		return employerJobPostDAO.retrieveAllJobByStatus(jobStatus, companyList,
+				offset, noOfRecords);
 	}
 	
 	@Override
@@ -122,14 +130,14 @@ public class JobPostServiceImpl implements JobPostService {
 	}
 
 	@Override
-	public int getTotalNumberOfJobRecords(int userId) {
-		return employerJobPostDAO.getTotalNumberOfJobRecords(userId);
+	public int getEmpJobsCount(List<DropDownDTO> companyList) {
+		return employerJobPostDAO.getEmpJobsCount(companyList);
 		
 	}
 
 	@Override
-	public int getTotalNumberOfJobRecordsByStatus() {
-		return employerJobPostDAO.getTotalNumberOfJobRecordsByStatus();
+	public int getEmpJobsCountByStatus(String jobStatus, List<DropDownDTO> companyList) {
+		return employerJobPostDAO.getEmpJobsCountByStatus(jobStatus, companyList);
 	}
 
 	@Override

@@ -139,7 +139,7 @@ public class JobseekerCoverLetterController {
 			}
 
 		} catch (Exception e) {
-			LOGGER.info("error" + e);
+			LOGGER.error("error" , e);
 			LOGGER.info("Manager Edit Job Posting Search Option");
 		}
 		return "";

@@ -59,6 +59,7 @@ public class JobPostDTO implements Serializable {
 	private int clicks;
 	private int views;
 	private int facilityId;
+	private int mainFacilityId;
 
 	private String selectedRow;
     private boolean readOnly= false;
@@ -473,6 +474,14 @@ public class JobPostDTO implements Serializable {
 
 	public void setXmlStartEndDateEnabled(boolean xmlStartEndDateEnabled) {
 		this.xmlStartEndDateEnabled = xmlStartEndDateEnabled;
+	}
+
+	public int getMainFacilityId() {
+		return mainFacilityId;
+	}
+
+	public void setMainFacilityId(int mainFacilityId) {
+		this.mainFacilityId = mainFacilityId;
 	}
 
 /*	*//**

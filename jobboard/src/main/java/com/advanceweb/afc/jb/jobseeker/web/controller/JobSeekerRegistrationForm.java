@@ -32,6 +32,7 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 	private String[] currentsubs;
 	private String userId;	
 	private boolean bReadOnly;
+	private boolean oldUser;
 	// used for social media sign up
 	private boolean socialSignUp;
 	private String serviceProviderName;
@@ -42,6 +43,14 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 	
 	
 	
+	public boolean isOldUser() {
+		return oldUser;
+	}
+
+	public void setOldUser(boolean oldUser) {
+		this.oldUser = oldUser;
+	}
+
 	public String getOtherProfession() {
 		return otherProfession;
 	}

@@ -10,6 +10,12 @@
 	<jsp:include page="common/include.jsp" />
 		<script type="text/javascript">
 		    jQuery(document).ready(function(){
+		    $("#loginButton").click(function() {
+							if (validate()) {
+								$("form").attr("action","${pageContext.request.contextPath}/signin/verifyUserAccount.html");
+								$("#loginForm").submit();
+							}
+						});
 		    jQuery(".megamenu").megamenu();
 		    $("#signInButton").click(function() {
 		    	 $("#commonPage").hide();
@@ -32,6 +38,9 @@
 		    	 }
 		    });
 		    $("#back").click(function() {
+		    	$("#j_username").val('');
+		    	$("#j_password").val('');
+		    	$("#errorMsgDiv").hide();
 		    	$("#loginPage").hide();
 				$("#commonPage").show();
 				$("#jsLogin").hide();
@@ -44,6 +53,8 @@
 	    		 $("#employerLogin").hide();
 	    		 $("#agencyLogin").hide();
 								if ($("#error").val() == 'true') {
+									$("#j_username").val('');
+							    	$("#j_password").val('');
 									$("#loginPage").show();
 									$("#commonPage").hide();
 									if ($("#pageValue").val() == 'employer') {
@@ -99,7 +110,42 @@
 																	"#serviceProviderId")
 																	.val());
 								}
+								
 							});
+		    
+		    function validate() {
+				var userName = $.trim($("#j_username").val());
+				var userPassword = $.trim($("#j_password").val());
+				var x = userName.indexOf('@');
+				var y = userName.lastIndexOf('.');
+				var result = true;
+				if (userName.length == 0) {
+					$("#errorMsgDiv").text("The Username/Password you have entered is invalid, please enter the correct Username/Password");
+					$("#errorMsgDiv").show();
+					$("#errorDiv").hide();
+					result = false;
+				} 
+				
+				if(userPassword.length == 0){
+					$("#errorMsgDiv").text("The Username/Password you have entered is invalid, please enter the correct Username/Password");
+					$("#errorMsgDiv").show();
+					$("#errorDiv").hide();
+					result = false;
+				}
+				if (x == -1 || y == -1 || (x + 2) >= y) {
+					$("#errorMsgDiv")
+							.text("The Username/Password you have entered is invalid, please enter the correct Username/Password");
+					$("#errorMsgDiv").show();
+					$("#errorDiv").hide();
+					result = false;
+				} 
+				
+				if (!result) {
+					return false;
+				} else {
+					return true;
+				}
+			}
 		</script>
     </head>
     
@@ -118,7 +164,7 @@
 				</div><!-- header_wrapper -->
 
 
-		<form:form commandName="socialLoginForm" action="verifyUserAccount.html">
+		<form:form commandName="socialLoginForm" id="loginForm" action="verifyUserAccount.html">
                 <div class="alignCenter">
               <h2 class="noTopBottomBorder" id="jsLogin" align="center">Job Seeker Login</h2>
 			<h2 class="noTopBottomBorder" id="employerLogin" align="center">Employer Login</h2>
@@ -145,16 +191,17 @@
 									</c:if>
 								</FONT>
 							</div>
+							<div id="errorMsgDiv" class="FormErrorDisplayText" style=" display: none"></div>
 			<h2 class="noTopBottomBorder">Already have a Job Board ID? </h2>
 			<p>Enter your Email Address and Password.</p><br/>
 			
 			    <div class="rowEvenSpacingMargin0">
 				<span class="lableText1">Email Address:</span> 
-				<form:input path="emailId" class="job_seeker_email" />
+				<form:input path="emailId" id="j_username" class="job_seeker_email" />
 			    </div>
 			    <div class="rowEvenNewSpacing">
 				<span class="lableText1">Password:</span> <form:password
-											path="password" class="job_seeker_password" />
+											path="password" id="j_password" class="job_seeker_password" />
 			    </div>
                 
 			    <div class="loginOptions">
@@ -162,7 +209,7 @@
 				   <!--  <input type="checkbox" value="stayLoggedIn" /> Stay Logged In<br /> -->
 				</div>		    
 				<div class="rowEvenNewSpacing marginTop15">
-				 <span class="floatLeft"><input type="submit" class="orange" value="Login"/></span>
+				 <span class="floatLeft"><input type="button" id="loginButton" class="orange" value="Login"/></span>
 				  <span class="floatLeft"><input type="button" id="back" class="orange" value="Back"/></span>
 				</div>
 				<div class="clearfix"></div>

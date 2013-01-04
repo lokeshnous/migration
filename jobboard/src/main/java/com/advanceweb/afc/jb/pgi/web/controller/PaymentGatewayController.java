@@ -590,10 +590,10 @@ public class PaymentGatewayController extends AbstractController{
 		emailDTO.setSubject(emailConfiguration.getProperty(
 				"new.credit.message").trim());
 
-		//String loginPath = navigationPath.substring(2);
-		String employerloginUrl =request.getRequestURL().toString()
-				.replace(request.getServletPath(), "/employer/employerDashBoard")
-				+ dothtmlExtention ;
+		String loginPath = navigationPath.substring(2);
+		String employerloginUrl = request.getRequestURL().toString()
+				.replace(request.getServletPath(), loginPath)
+				+ dothtmlExtention + employerPageExtention;
 		if (null != orderDetailsDTO
 				&& null != orderDetailsDTO.getJobPostingPlanDTOList()
 				&& !orderDetailsDTO.getJobPostingPlanDTOList().isEmpty()) {

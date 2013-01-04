@@ -43,7 +43,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 	private static final Logger LOGGER = Logger
 			.getLogger(ManageAccessPermissionDAOImpl.class);
 	private static final String FIND_ADM_FACILITY = "from AdmFacility where facilityId=?";
-
+	private static final String VERIFY_EMAIL_ADVANCEPASS = "from WebMembershipEmail e where e.email = ? and e.deleteDate is NULL";
 	private HibernateTemplate hibernateTemplateTracker;
 
 	private HibernateTemplate hibernateTemplateCareers;
@@ -174,7 +174,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 		membershipEmail.setWebMembership(webMembership);
 		membershipEmail.setEmail(merUser.getEmail());
 		membershipEmail.setCreateDate(timestamp);
-
+		membershipEmail.setPrimaryEmail(true);
 		hibernateTemplateAdvancePass.saveOrUpdate(membershipEmail);
 
 	}
@@ -217,7 +217,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 			for (AdmFacilityContact contact : admFacilityContactP) {
 
 				setFacilityContactDetails(facility, admFacilityContactList,
-						currentDate, contact);
+						currentDate, contact, merUser);
 			}
 		}
 
@@ -235,7 +235,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 	 */
 	private void setFacilityContactDetails(AdmFacility facility,
 			List<AdmFacilityContact> admFacilityContactList, Date currentDate,
-			AdmFacilityContact contact) {
+			AdmFacilityContact contact, MerUser merUser) {
 		/**
 		 * creating add Job owner Users in OpenAM
 		 */
@@ -249,18 +249,18 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 		admFacilityContact.setCity(contact.getCity());
 		admFacilityContact.setCompany(contact.getCompany());
 		admFacilityContact.setCountry(contact.getCountry());
-		admFacilityContact.setFirstName(contact.getFirstName());
+		admFacilityContact.setFirstName(merUser.getFirstName());
 		admFacilityContact.setStreet(contact.getStreet());
 		admFacilityContact.setState(contact.getState());
 		admFacilityContact.setPostcode(contact.getPostcode());
-		admFacilityContact.setLastName(contact.getLastName());
+		admFacilityContact.setLastName(merUser.getLastName());
 		admFacilityContact.setMiddleName(contact.getMiddleName());
 		admFacilityContact.setJobTitle(contact.getJobTitle());
 		admFacilityContact.setPhone(contact.getPhone());
 		admFacilityContact.setPhone2(contact.getPhone2());
 		admFacilityContact.setContactType(contact.getContactType());
 		admFacilityContact.setCreateDt(currentDate);
-		admFacilityContact.setEmail(contact.getEmail());
+		admFacilityContact.setEmail(merUser.getEmail());
 		admFacilityContact.setActive(contact.getActive());
 		admFacilityContact.setCreateDt(currentDate);
 		admFacilityContact.setAdmFacility(facility);
@@ -332,20 +332,31 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 	public boolean deleteJobOwner(int jobOwnerId) {
 		MerUser ownerDetails = hibernateTemplateTracker.get(MerUser.class,
 				jobOwnerId);
+		List<WebMembershipEmail> webMembershipEmails = hibernateTemplateAdvancePass
+				.find(VERIFY_EMAIL_ADVANCEPASS, ownerDetails.getEmail());
 		LOGGER.info("delete Emailid ----" + ownerDetails.getEmail());
 		/**
 		 * Delete Job owner from OpenAM
 		 */
 
-//		boolean isDeleted = OpenAMEUtility.openAMDeleteUser(ownerDetails
-//				.getEmail());
-//		LOGGER.info("Open AM :Employee add owner User is created!" + isDeleted);
+		// boolean isDeleted = OpenAMEUtility.openAMDeleteUser(ownerDetails
+		// .getEmail());
+		// LOGGER.info("Open AM :Employee add owner User is created!" +
+		// isDeleted);
 		// Ends OpenAM code
 
 		boolean bDelete = false;
 		try {
 			ownerDetails.setDeleteDt(new Timestamp(new Date().getTime()));
 			hibernateTemplateTracker.save(ownerDetails);
+			// update Delete date in Advence pass
+			if (null != webMembershipEmails && !webMembershipEmails.isEmpty()) {
+				WebMembershipEmail webMembershipEmail = webMembershipEmails
+						.get(0);
+				webMembershipEmail.setDeleteDate(new Timestamp(new Date()
+						.getTime()));
+				hibernateTemplateAdvancePass.saveOrUpdate(webMembershipEmail);
+			}
 			bDelete = true;
 
 		} catch (DataAccessException e) {

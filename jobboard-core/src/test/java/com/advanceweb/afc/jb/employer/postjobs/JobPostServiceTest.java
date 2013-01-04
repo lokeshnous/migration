@@ -14,11 +14,13 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.SchedulerDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.dao.JobPostDAO;
+import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.employer.service.ManageFeaturedEmployerProfile;
 import com.advanceweb.afc.jb.job.service.JobPostService;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
@@ -43,6 +45,8 @@ public class JobPostServiceTest extends ServiceTestBase{
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
+	@Autowired
+	private FacilityService facilityService;
 	
 	@Autowired
 	private ManageFeaturedEmployerProfile manageFeaturedEmployerProfile;
@@ -102,13 +106,17 @@ public class JobPostServiceTest extends ServiceTestBase{
 	@Test
 	public void testRetrieveAllJobPost(){
 		List <JobPostDTO> dto = new ArrayList<JobPostDTO>();
-		dto = employerJobPost.retrieveAllJobPost(1606,1,20,"asc");
+//		@TODO Verify the scheduler functionality after adding dropdownDTO
+		List<DropDownDTO> dropdownDTO = new ArrayList<DropDownDTO>();
+		dto = employerJobPost.retrieveAllJobPost(dropdownDTO,1,20,"asc");
 		Assert.assertTrue("Total Record Found", dto.isEmpty()?false:true);
 	}
 	@Test
 	public void testRetrieveAllJobPostByStatus(){
 		List <JobPostDTO> dto = new ArrayList<JobPostDTO>();
-		dto = employerJobPost.retrieveAllJobByStatus("Active", 1606,1,20);
+//		@TODO Verify the scheduler functionality after adding dropdownDTO
+		List<DropDownDTO> dropdownDTO = new ArrayList<DropDownDTO>();
+		dto = employerJobPost.retrieveAllJobByStatus("Active",dropdownDTO,1,20);
 		Assert.assertTrue("Total Record Found", dto.isEmpty()?false:true);
 	}
 	
@@ -409,4 +417,70 @@ public class JobPostServiceTest extends ServiceTestBase{
 		
 		LOGGER.info("ActiveJobsJobWorker-> Executed Job Successfully.....");
 	}
+	
+	@Test 
+	public void noActiveJobPosting(){
+		
+		List<SchedulerDTO> schedulerDTO=facilityService.getAllFacilityList();
+		List<SchedulerDTO> sendMailList=new ArrayList<SchedulerDTO>();
+//		@TODO Verify the scheduler functionality after adding dropdownDTO
+		List<DropDownDTO> dropdownDTO = new ArrayList<DropDownDTO>();
+		for(SchedulerDTO dto:schedulerDTO){
+			List<JobPostDTO>jobPostDTOList=employerJobPost.retrieveAllJobByStatus(MMJBCommonConstants.POST_NEW_JOB, dropdownDTO, 0, 10);
+		if(jobPostDTOList!=null){
+			sendMailList.add(dto);
+		}
+		}
+		for(SchedulerDTO dto:sendMailList){
+		StringBuffer stringBuffer = new StringBuffer();
+		InternetAddress[] toAddress = new InternetAddress[1];
+		InternetAddress[] ccAddress = new InternetAddress[1];
+		try {
+			toAddress[0] = new InternetAddress("anilm@nousinfo.com");
+			ccAddress[0]=new InternetAddress("anilm@nousinfo.com");
+		} catch (AddressException jbex) {
+			LOGGER.error(
+					"Error occured while geting InternetAddress reference",
+					jbex);
+		}
+		EmailDTO emailDTO = new EmailDTO();
+		emailDTO.setToAddress(toAddress);
+		emailDTO.setCcAddress(ccAddress);
+		emailDTO.setFromAddress(advanceWebAddress);
+		emailDTO.setSubject(emailConfiguration.getProperty("noActiveJobPostings.subject").trim());
+		
+		StringBuffer mailBody=new StringBuffer(emailConfiguration.getProperty("no.active.job.posting.mail.body").trim());
+		int start, end;
+		start = mailBody.indexOf("?user_name");
+		end = start + "?user_name".length();
+		if (start > 0 && end > 0) {
+			mailBody.replace(start, end,
+					dto.getFirstName()+" "+dto.getLastName());
+		}
+		start = mailBody.toString()
+				.indexOf("?company_name");
+		end = start + "?company_name".length();
+		if (start > 0 && end > 0) {
+			mailBody.replace(start, end,
+					dto.getCompanyName());
+		}
+		start = mailBody.toString()
+				.indexOf("?empdashboardLink");
+		end = start + "?empdashboardLink".length();
+		if (start > 0 && end > 0) {
+			mailBody.replace(start, end,
+					emailConfiguration.getProperty("employerer.dashboard.url").trim());
+		}
+		stringBuffer.append(emailConfiguration.getProperty(
+				"employer.email.header").trim());
+		stringBuffer.append(mailBody);
+		stringBuffer.append(emailConfiguration.getProperty("email.footer").trim());
+		emailDTO.setBody(stringBuffer.toString());
+		emailDTO.setHtmlFormat(true);
+		emailService.sendEmail(emailDTO);
+		break;
+		}
+		LOGGER.info("NoActiveJobPostingJobWorker.-> Executed Job Successfully.....");
+	}
+	
 }

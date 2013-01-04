@@ -31,7 +31,7 @@ public class WebMembershipEmail implements Serializable {
 //	@Column(name="WebMembershipID")
 //	private int webMembershipID;
 //	
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="WebMembershipID")
 	private WebMembership webMembership;
 
@@ -50,7 +50,7 @@ public class WebMembershipEmail implements Serializable {
 	private Date deleteDate;
 
 	@Column(name="EmailStatusID")
-	private int emailStatusID;
+	private Integer emailStatusID;
 
 	@Column(name="ModifyDate")
 	private Date modifyDate;

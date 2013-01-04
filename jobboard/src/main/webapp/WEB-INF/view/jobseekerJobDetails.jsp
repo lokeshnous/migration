@@ -108,9 +108,12 @@
 											<div class="email cursor"></div>
 											</a>
 									 <div class="ShareText">|&nbsp;&nbsp;Share:&nbsp;</div>
-											<a name="fb_share" class="fbook" href="http://www.facebook.com/sharer.php?u=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${jobDetail.jobTitle}.html" target="_blank"></a>
-									 		<a href="https://www.linkedin.com/cws/share?url=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${jobDetail.jobTitle}.html" target="_blank"><div class="linkedIn"></div></a>
-									 		<a href="https://twitter.com/share" class="twitter" data-url="${basePath}/jobsearch/jobview/${jobDetail.jobId}/${jobDetail.jobTitle}.html" data-count="none" target="_blank"></a>
+											<a name="fb_share" class="fbook" href="http://www.facebook.com/sharer.php?u=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitle, 
+                                					' ', '-'))}.html" target="_blank"></a>
+									 		<a href="https://www.linkedin.com/cws/share?url=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitle, 
+                                					' ', '-'))}.html" target="_blank"><div class="linkedIn"></div></a>
+									 		<a href="https://twitter.com/share" class="twitter" data-url="${basePath}/jobsearch/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitle, 
+                                					' ', '-'))}.html" data-count="none" target="_blank"></a>
 	 		
 									<div class="ShareText">|&nbsp;&nbsp;Print:&nbsp;</div>
 									<a rel="nofollow,noindex" href="" onclick="window.print();">
@@ -144,9 +147,12 @@
 											<div class="email cursor"></div></a>
 											<div class="ShareText">|&nbsp;&nbsp;Share:&nbsp;</div>
 											
-											<a name="fb_share" class="fbook" href="http://www.facebook.com/sharer.php?u=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${jobDetail.jobTitle}.html" target="_blank"></a>
-									 		<a href="https://www.linkedin.com/cws/share?url=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${jobDetail.jobTitle}.html" target="_blank"><div class="linkedIn"></div></a>
-									 		<a href="https://twitter.com/share" class="twitter" data-url="${basePath}/jobsearch/jobview/${jobDetail.jobId}/${jobDetail.jobTitle}.html" data-count="none" target="_blank"></a>
+											<a name="fb_share" class="fbook" href="http://www.facebook.com/sharer.php?u=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitle, 
+                                					' ', '-'))}.html" target="_blank"></a>
+									 		<a href="https://www.linkedin.com/cws/share?url=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitle, 
+                                					' ', '-'))}.html" target="_blank"><div class="linkedIn"></div></a>
+									 		<a href="https://twitter.com/share" class="twitter" data-url="${basePath}/jobsearch/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitle, 
+                                					' ', '-'))}.html" data-count="none" target="_blank"></a>
 									 		
 													
 											<div class="ShareText">|&nbsp;&nbsp;Print:&nbsp;</div>

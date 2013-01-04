@@ -80,7 +80,7 @@
 									<div class="lableTextDashBoard">
 										<p>
 											<a
-												href="<%=request.getContextPath()%>/agency/viewEmpAccountProfile.html"
+												href="<%=request.getContextPath()%>/agency/viewAgencyAccountProfile.html"
 												id="accountSettingpopUp">Account Settings</a>
 										</p>
 									</div>
@@ -179,6 +179,7 @@
 									</c:forEach>
 									<div class="rowEvenTB10Spacing"></div>
 									<div class="rowEvenTB10Spacing"></div>
+									<security:authorize access="!hasRole('ROLE_FACILITY_FULL_ACCESS') and !hasRole('ROLE_FACILITY_POST_EDIT')">
 									<div class="row">
 										<a
 											href="<%=request.getContextPath()%>/agency/getAddFacilityPopup.html"
@@ -188,6 +189,7 @@
 											id="manageEmployers" class="btn_sm orange cursor">MANAGE
 											EMPLOYERS</a>
 									</div>
+									</security:authorize>
 								</div>
 
 							</div>

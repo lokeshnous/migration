@@ -80,8 +80,11 @@ function copyAccToBillingAddr(obj) {
     	        }
     	    }
     	});
-		
- 		$('#btn-submit').click(function(){			
+    	
+ 		$('#btn-submit').click(function(){
+ 			var href = $('#BackToTopId').attr('href');
+			location.href = href;
+ 			$("#errmsg").html("Processing...");
 			$.ajax({url:"${pageContext.request.contextPath}/employerRegistration/employeeAccountSetting.html",
 				data:$('#editAccountSettingData').serialize(),
 				type:"POST",
@@ -279,8 +282,10 @@ $('#cityOrTown2').val("");
 <script type="text/javascript">
 	 jQuery(document).ready(function() {
 		
- 		$('#btn-submit2').click(function(){			
- 			
+ 		$('#btn-submit2').click(function(){		
+ 			var href = $('#BackToMdlId').attr('href');
+			location.href = href;
+ 			$("#errmsgData").html("Processing...");
 			$.ajax({url:"${pageContext.request.contextPath}/employerRegistration/employeeBillingSetting.html",
 				data:$('#editBillingSettingData').serialize(),
 				type:"POST",

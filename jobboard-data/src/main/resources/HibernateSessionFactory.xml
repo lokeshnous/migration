@@ -130,6 +130,7 @@
 					<value>com.advanceweb.afc.jb.data.entities.JpJobApply</value>
 					<value>com.advanceweb.afc.jb.data.entities.JpJobLocation</value>
 					<value>com.advanceweb.afc.jb.data.entities.JpJobLocationPK</value>
+					<value>com.advanceweb.afc.jb.data.entities.JpTypeAddonXref</value>
 					<!-- <value>com.advanceweb.afc.jb.data.entities.JpJobLocationBckup</value> -->
 					<value>com.advanceweb.afc.jb.data.entities.JpJobStat</value>
 					<value>com.advanceweb.afc.jb.data.entities.JpJobTemp</value>

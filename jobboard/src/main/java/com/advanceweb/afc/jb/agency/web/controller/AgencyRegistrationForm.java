@@ -63,6 +63,15 @@ public class AgencyRegistrationForm {
     private boolean socialSignUp;
 	private String serviceProviderName;
 	private String socialProfileId;
+	private boolean oldUSer;
+
+	public boolean isOldUSer() {
+	return oldUSer;
+}
+
+public void setOldUSer(boolean oldUSer) {
+	this.oldUSer = oldUSer;
+}
 
 	private List<AgencyProfileAttribForm> listProfAttribForms;
 

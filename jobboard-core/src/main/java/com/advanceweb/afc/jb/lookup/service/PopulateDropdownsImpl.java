@@ -213,10 +213,8 @@ public class PopulateDropdownsImpl implements PopulateDropdowns {
 	}
 
 	@Override
-	public List<DropDownDTO> populateJobOwnersDropdown(int facilityId,
-			int userId, int roleId) {
-		return populateDropdownsDAO.populateJobOwnersDropdown(facilityId,
-				userId, roleId);
+	public List<DropDownDTO> populateJobOwnersDropdown(int facilityId) {
+		return populateDropdownsDAO.populateJobOwnersDropdown(facilityId);
 	}
 
 	@Override
@@ -252,8 +250,10 @@ public class PopulateDropdownsImpl implements PopulateDropdowns {
 	}
 
 	@Override
-	public List<DropDownDTO> populateCompanyNames(int facilityid) {
-		return populateDropdownsDAO.populateCompanyNames(facilityid);
+	public List<DropDownDTO> populateCompanyNames(int facilityId,
+			boolean isHighlightFacility) {
+		return populateDropdownsDAO.populateCompanyNames(facilityId,
+				isHighlightFacility);
 	}
 
 	@Override

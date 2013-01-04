@@ -108,15 +108,16 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 				if (null == admUsersList || admUsersList.isEmpty()) {
 					facilityDTO.setFacilityId(facility.getFacilityId());
 					facilityDTO.setName(facility.getName());
-
-					List<Object> templateNames = hibernateTemplateCareers
-							.find("select tnam.templateName from  JpTemplate tnam where tnam.templateId=? and tnam.deleteDt is null",
-									facility.getTemplateId());
-					if (null != templateNames && !templateNames.isEmpty()) {
-						facilityDTO.setTemplateName(templateNames.get(0)
-								.toString());
-					} else {
-						facilityDTO.setTemplateName(NONE);
+					if (facility.getTemplateId() > 0) {
+						List<Object> templateNames = hibernateTemplateCareers
+								.find("select tnam.templateName from  JpTemplate tnam where tnam.templateId=? and tnam.deleteDt is null",
+										facility.getTemplateId());
+						if (null != templateNames && !templateNames.isEmpty()) {
+							facilityDTO.setTemplateName(templateNames.get(0)
+									.toString());
+						} else {
+							facilityDTO.setTemplateName(NONE);
+						}
 					}
 					facilityDTOList.add(facilityDTO);
 				}

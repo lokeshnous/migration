@@ -144,8 +144,6 @@ public class JpJob implements Serializable {
 	@Column(name="url_display")
 	private String urlDisplay;
 	
-	@Column(name="job_status")
-	private String jobStatus;
 	
 	@Column(name="template_override")
 	private int templateOverride=0;
@@ -576,14 +574,6 @@ public class JpJob implements Serializable {
 
 	public void setResGuestApplies(List<ResGuestApply> resGuestApplies) {
 		this.resGuestApplies = resGuestApplies;
-	}
-
-	public String getJobStatus() {
-		return jobStatus;
-	}
-
-	public void setJobStatus(String jobStatus) {
-		this.jobStatus = jobStatus;
 	}
 
 	public int getTemplateOverride() {

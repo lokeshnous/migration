@@ -14,6 +14,7 @@ import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
+import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.employer.helper.FacilityConversionHelper;
 
@@ -71,10 +72,37 @@ public class AgencyDAOImpl implements AgencyDAO {
 	 * @return List<FacilityDTO>
 	 */
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<FacilityDTO> getLinkedFacilityNames(int agencyFacilityId)
 			throws JobBoardDataException {
 		List<AdmFacility> facilityList = new ArrayList<AdmFacility>();
 		try {
+
+			Object[] inputs = { agencyFacilityId, 5, 6 };
+			List<AdmUserFacility> admUsersList = hibernateTemplateCareers
+					.find("from AdmUserFacility admFacility where admFacility.id.facilityId=? and (admFacility.id.roleId=? or admFacility.id.roleId=?)",
+							inputs);
+			if (null != admUsersList && !admUsersList.isEmpty()) {
+				AdmFacility admFacility = hibernateTemplateCareers.get(
+						AdmFacility.class, agencyFacilityId);
+				if (null != admFacility) {
+					List<AdmFacility> assocEmplyrs = hibernateTemplateCareers
+							.find("from AdmFacility where facilityParentId=?",
+									admFacility.getFacilityParentId());
+					for (AdmFacility facility : assocEmplyrs) {
+						if (facility.getFacilityId() != agencyFacilityId) {
+							int roleId = facility.getAdmUserFacilities().get(0)
+									.getAdmRole().getRoleId();
+							if (!(roleId == 5 | roleId == 6)) {
+								facilityList.add(facility);
+							}
+						}
+					}
+					return facilityConversionHelper
+							.transformToFacilityDTO(facilityList);
+				}
+			}
+
 			List<AdmFacility> assocEmplyrs = hibernateTemplateCareers.find(
 					"from AdmFacility where facilityParentId=?",
 					agencyFacilityId);
@@ -108,7 +136,7 @@ public class AgencyDAOImpl implements AgencyDAO {
 		try {
 			AdmFacility facility = hibernateTemplateCareers.get(
 					AdmFacility.class, facilityId);
-			facility.setFacilityParentId(0);
+			facility.setFacilityParentId(-1);
 			hibernateTemplateCareers.update(facility);
 			result = true;
 		} catch (Exception e) {
@@ -138,7 +166,7 @@ public class AgencyDAOImpl implements AgencyDAO {
 			List<AdmFacility> facility = hibernateTemplateCareers
 					.find("from AdmFacility adm where adm.name like '"
 							+ employerName
-							+ "%' and adm.facilityType!='FACILITY_SYSTEM' and adm.facilityParentId='0'");
+							+ "%' and adm.facilityType!='FACILITY_SYSTEM' and adm.facilityParentId='-1'");
 			for (AdmFacility adm : facility) {
 				FacilityDTO dto = new FacilityDTO();
 				dto.setName(adm.getName());

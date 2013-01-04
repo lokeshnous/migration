@@ -102,7 +102,7 @@ public class TransformJobSeekerRegistration {
 		dto.setEmailId(form.getEmailId());
 		dto.setUserId(null != form.getUserId() ? Integer.valueOf(form
 				.getUserId()) : 0);
-
+		dto.setOldUser(form.isOldUser());
 		return dto;
 	}
 

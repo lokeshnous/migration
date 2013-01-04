@@ -84,11 +84,7 @@ public class DatabaseAuthenticationManager extends DaoAuthenticationProvider imp
 						+ auth.getName());
 				throw new BadCredentialsException(userNotExist);
 			}
-		} catch (Exception e) {
-			LOGGER.debug("Error while fetching the data with the given email id:"
-					+ auth.getName());
-			throw new BadCredentialsException(userNotExist);
-		}
+		
 //		if (!(user.getPassword().equals(auth.getCredentials()))) {
 //			LOGGER.debug("User password is not matching with the given password");
 //			throw new BadCredentialsException(wrongPassword);
@@ -102,7 +98,13 @@ public class DatabaseAuthenticationManager extends DaoAuthenticationProvider imp
 		}
 		return new UsernamePasswordAuthenticationToken(auth.getName(),
 				auth.getCredentials(), userRoles);
+		} catch (Exception e) {
+			LOGGER.debug("Error while fetching the data with the given email id:"
+					+ auth.getName());
+			throw new BadCredentialsException(userNotExist);
+		}
 	}
+			
 
 	/**
 	 * This method is used to get the roles of the corresponding user
@@ -317,17 +319,15 @@ public class DatabaseAuthenticationManager extends DaoAuthenticationProvider imp
 			advPassUser=userService.getAdvancePassUser(email);
 		} catch (Exception e) {
 			System.out.println("error in loadUserByUsername :"+e.getMessage());
-			e.printStackTrace();
 		}
 		
-	//	return new User(userDTO.getEmailId(), userDTO.getPassword(), userRoles);
 		return new User(advPassUser.getEmailId(), advPassUser.getPassword(), userRoles);
 	}
 
 	@Override
 	public UserDetails loadUserDetails(Authentication token)
 			throws UsernameNotFoundException {
-		System.out.println("loadUserDetails===>");
+		LOGGER.debug(" in loadUserDetails method===>");
 		/*if(!token.isAuthenticated()){
 			throw new BadCredentialsException(userNotExist);
 		}*/

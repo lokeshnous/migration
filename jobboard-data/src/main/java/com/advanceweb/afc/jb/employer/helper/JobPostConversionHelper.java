@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.employer.helper;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,12 +21,15 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.JpAddon;
 import com.advanceweb.afc.jb.data.entities.JpJob;
+import com.advanceweb.afc.jb.data.entities.JpJobAddon;
+import com.advanceweb.afc.jb.data.entities.JpJobAddonPK;
 import com.advanceweb.afc.jb.data.entities.JpJobApply;
 import com.advanceweb.afc.jb.data.entities.JpJobLocation;
 import com.advanceweb.afc.jb.data.entities.JpJobLocationPK;
 import com.advanceweb.afc.jb.data.entities.JpJobType;
 import com.advanceweb.afc.jb.data.entities.JpLocation;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
+import com.advanceweb.afc.jb.data.entities.JpTypeAddonXref;
 
 
 /**
@@ -101,6 +105,7 @@ public class JobPostConversionHelper<JobPostForm> {
 		 jpJob.setActive((byte)(dto.isbActive()?1:0));
 		 jpJob.setTemplateOverride(dto.isbTemplateOverride()?1:0);
 		 jpJob.setFeatured(dto.isbFeatured()?(byte)1:0);
+		 jpJob.setCreateUserId(dto.getUserId());
 		 
 		 
 		if (dto.getJobCountry().equals("USA")) {
@@ -294,6 +299,7 @@ public class JobPostConversionHelper<JobPostForm> {
 		jobPostDTO.setJobOwner(String.valueOf(jpJob.getAdminUserId()));
 		jobPostDTO.setJobTitle(jpJob.getJobtitle());
 		jobPostDTO.setJobId(jpJob.getJobId());
+		jobPostDTO.setUserId(jpJob.getCreateUserId());
 		if (null != jpJob.getJpJobApplies()
 				&& jpJob.getJpJobApplies().size() > 0) {
 			jobPostDTO.setApplicationMethod(jpJob.getJpJobApplies().get(0)
@@ -406,6 +412,28 @@ public class JobPostConversionHelper<JobPostForm> {
 		addOnDTO.setAddOnDescription(jpAddon.getDescription());
 		addOnDTO.setAddOnCreditAmt(String.valueOf(jpAddon.getCreditAmt()));
 		return addOnDTO;
+	}
+	
+	public List<JpJobAddon> transformXrefToJpJob(
+			List<JpTypeAddonXref> xrefList, JpJob jpJob, JobPostDTO dto) {
+
+		List<JpJobAddon> jpJobAddonList = new ArrayList<JpJobAddon>();
+		if (null != xrefList && !xrefList.isEmpty()) {
+			for (JpTypeAddonXref xref : xrefList) {
+				JpJobAddonPK jpJobAddonPK = new JpJobAddonPK();
+				jpJobAddonPK.setAddonId(xref.getAddonId());
+				jpJobAddonPK.setJobId(jpJob.getJobId());
+
+				JpJobAddon jpJobAddon = new JpJobAddon();
+				jpJobAddon.setActive(dto.isbActive() ? (byte) 1 : 0);
+				jpJobAddon.setCreateDt(new Timestamp(new Date().getTime()));
+				jpJobAddon.setJobAddonPK(jpJobAddonPK);
+				jpJobAddon.setJpJob(jpJob);
+				jpJobAddonList.add(jpJobAddon);
+			}
+			// jpJob.setJpJobAddons(jpJobAddonList);
+		}
+		return jpJobAddonList;
 	}
 }
 class AddOnComparable implements Comparator<AddOnDTO>{

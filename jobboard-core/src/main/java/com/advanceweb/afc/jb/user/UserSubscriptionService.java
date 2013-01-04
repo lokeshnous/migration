@@ -35,6 +35,14 @@ public interface UserSubscriptionService {
 	List<UserSubscriptionsDTO> getCurrentSubscriptions(int userId);
 
 	/**
+	 * Delete the subscription of user by user Id
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	void deleteSubscriptionsById(int userId);
+
+	/**
 	 * To get current subscription List for Facility
 	 * 
 	 * @param userId

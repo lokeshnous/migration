@@ -77,6 +77,10 @@
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Job Owner Name:</span> <form:input path="ownerName"
 						name="EmailAddress" class="job_seeker_email width300" />
+					<div class="toolTip colorPkrAreaToolTip">
+						<span class="classic">Please type the Last Name followed by
+							a space and then type the First Name</span>
+					</div>
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Job Owner Email Address:</span> 

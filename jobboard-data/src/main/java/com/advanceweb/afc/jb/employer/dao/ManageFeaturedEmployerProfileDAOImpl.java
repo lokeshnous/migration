@@ -268,7 +268,7 @@ public class ManageFeaturedEmployerProfileDAOImpl implements
 					.getSessionFactory()
 					.getCurrentSession()
 					.createQuery(
-							"SELECT count(a) from AdmFacility a where a.facilityParentId = 0")
+							"SELECT count(a) from AdmFacility a where a.facilityParentId = -1")
 					.uniqueResult(); 
 			/*employerListCount = (Long) session
 					.createCriteria(AdmFacility.class)

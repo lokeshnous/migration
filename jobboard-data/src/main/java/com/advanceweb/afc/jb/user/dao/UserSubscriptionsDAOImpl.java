@@ -42,6 +42,7 @@ import com.advanceweb.afc.jb.lookup.helper.PopulateDropdownConversionHelper;
 @Repository("subscriptionsDAO")
 public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 
+	private static final String FETCH_USER_SUBSCRIPTIONS = "select usersubs from AdmUserSubscription usersubs where usersubs.id.userId=:userId and usersubs.deleteDt is null";
 	private static final String SELECTED_CURRENT_SUBS = "from AdmUserSubscription sub where sub.id.userId=?";
 	private static final String SELECTED_FACILITY_SUBS = "from AdmFacilitySubscription e where e.admFacility.facilityId=?";
 	// private static final String FIND_USER_SUBSCRIPTIONS =
@@ -126,6 +127,28 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 	}
 
 	/**
+	 *  Delete the subscription of user by user Id
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public void deleteSubscriptionsById(int userId) {
+		try {
+			Query query = hibernateTemplateCareers.getSessionFactory()
+					.getCurrentSession().createQuery(FETCH_USER_SUBSCRIPTIONS);
+			query.setParameter("userId", userId);
+			query.setFirstResult(0);
+			//TODO: Remove hard code 100
+			query.setMaxResults(100);
+			hibernateTemplateCareers.deleteAll(query.list());
+		} catch (DataAccessException e) {
+			LOGGER.error(e);
+		}
+
+	}
+
+	/**
 	 * @author kartikm
 	 * @Purpose:Save of Cover letter when submit the cover letter text
 	 * @Created:Sept 14, 2012
@@ -158,7 +181,7 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 			res.setCoverletterText(rclDTO.getCoverletterText());
 			res.setActive(rclDTO.getActive());
 			res.setCreateDt(todayDate);
-			res.setUpdateDt(todayDate);
+			//res.setUpdateDt(null);
 			hibernateTemplateCareers.save(res);
 			// this is save option in ResCoverletterPriv
 			List<ResPrivacy> rpData = hibernateTemplateCareers.find(

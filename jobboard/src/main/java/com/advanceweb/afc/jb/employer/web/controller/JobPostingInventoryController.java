@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.job.service.JobPostInventoryService;
 
 /**
@@ -37,6 +38,9 @@ public class JobPostingInventoryController {
 	@Autowired
 	private JobPostInventoryService inventoryService;
 	private static final String PAGE = "page";
+	
+	@Autowired
+	private FacilityService facilityService;
 
 	/**
 	 * This method to get job posting inventory details
@@ -58,7 +62,7 @@ public class JobPostingInventoryController {
 		
 		int userId = (Integer) session.getAttribute(MMJBCommonConstants.USER_ID);
 		int facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
-
+		facilityId = facilityService.getParentFacility(facilityId).getFacilityId();
 		List<JobPostingInventoryDTO> inventiryDTOList = inventoryService.getInventoryDetails(userId, facilityId);
 
 		List<JobPostingInventoryDTO> jbPostList = new ArrayList<JobPostingInventoryDTO>();

@@ -90,8 +90,6 @@ var options = {
 						"370");
 				$("#purchaseJobPostings").displaypopup("#purchaseJobPostings",
 						"790", "360");
-				$("#purchaseResumeSearch").displaypopup("#purchaseResumeSearch",
-						"790", "360");
 				$("#accessPermissioPopUp").displaypopup(
 						"#accessPermissioPopUp", "770", "360");
 				$("#setAlertPopUp")
@@ -178,24 +176,28 @@ var options = {
 				$("#showMertics")
 				.click(
 						function() {
-							$("#container").text("");
+							$("#showMetricsErr").html("");
 							var startDate = $("#startDate")
 									.val();
 							var endDate = $("#endDate").val();
 							if(startDate == '' || endDate == ''){
-								$("#container").html("Please enter both start date and end date");
-								$("#container").css("width", "550px");
-								$("#container").css("text-align", "center");
-								$("#container").css("color", "#FF0000");
+								$("#showMetricsErr").html("Please enter both start date and end date");
+								//$("#showMetricsErr").css("width", "550px");
+								//$("#showMetricsErr").css("text-align", "center");
+								//$("#showMetricsErr").css("color", "#FF0000");
 								return false;
 							}
+							var arr = startDate.split("/");
+							startDate = arr[1]+"/"+arr[0]+"/"+arr[2];
+							arr = endDate.split("/");
+							endDate = arr[1]+"/"+arr[0]+"/"+arr[2];
 							var convStartDate = new Date(startDate);
 					        var convEndDate = new Date(endDate);
 					        if(convEndDate < convStartDate){
-					        	$("#container").html("Please enter end date greater than start date!");
-								$("#container").css("width", "550px");
-								$("#container").css("text-align", "center");
-								$("#container").css("color", "#FF0000");
+					        	$("#showMetricsErr").html("Please enter end date greater than start date!");
+								//$("#showMetricsErr").css("width", "550px");
+								//$("#showMetricsErr").css("text-align", "center");
+								//$("#showMetricsErr").css("color", "#FF0000");
 								return false;
 					        }
 							
@@ -294,6 +296,7 @@ var options = {
 		});
 	}
 	function changeMetrics() {
+		$(".EDTextBox").val("");
 		var selEmployerId = $("#selEmployer").val();
 		$
 				.ajax({
@@ -510,7 +513,7 @@ var options = {
 								<%-- 	<c:if test="${enablePostEditAccess eq 'true'}"> --%>
 								<div class="lableTextDashBoard">
 									<p>
-										<a href="<%=request.getContextPath()%>/purchaseResumeSearch/showResumeSearchPachages.html" id="purchaseResumeSearch" >Purchase Resume Search
+										<a href="#" id="purchaseResumeSearch" title="Coming Soon">Purchase Resume Search
 											Packages</a>
 									</p>
 								</div>
@@ -518,15 +521,14 @@ var options = {
 						</c:if>
 						<div class="lableTextDashBoard">
 							<p>
-								<a href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=-1">Manage
+								<a href="#" title="Coming Soon">Manage
 									Job-Seekers</a>
 							</p>
 						</div>
 						<div class="lableTextDashBoard">
 							<p>
 								<a
-									href="<%=request.getContextPath()%>/employerSearchResume/mySavedResumeSearches.html"
-									id="mySavedResumeSearches"> My Saved
+									href="#" title="Coming Soon"> My Saved
 									Resume Searches&nbsp;${msg.commonOpenBrace}<c:out
 										value="${employerDashBoardForm.resumeSearchCount}" />${msg.commonCloseBrace}
 								</a>
@@ -631,16 +633,16 @@ var options = {
 												width="14" height="14" alt="Datepick"></a>
 										</div>
 									</div>
-									<div class="">
+									<div>
 										<input type="button" name="SHOW" id="showMertics"
 											class="orange cursor" value="SHOW" />
 										<!-- <button type="button" class="orange" onclick="myFunction()">SHOW</button> -->
-
-
 									</div>
+									<div id="showMetricsErr" class="Error-ne"></div>
 
 									<div class="floatLeft marginTop5 marginLeft15">
-										<a href="../employer/getExcelSheet.html" id="metricsExcel">Export</a>
+									<!-- Disable the link for phase 2A -->
+										 <a href="../employer/getExcelSheet.html" id="metricsExcel" style="display: none;">Export</a> 
 										
 									</div>
 
@@ -672,7 +674,9 @@ var options = {
 											
 											
 								</div>
-								 <div id="container" style="height: 250px;"></div>
+								<!-- Funnel part: Code is commented for Phase 2A: -->
+								<div style="display: none;"><div id="container">
+								</div> </div>
 							</div>
 
 						</div>

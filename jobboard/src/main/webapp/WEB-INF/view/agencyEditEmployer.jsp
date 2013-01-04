@@ -30,19 +30,19 @@
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Employer Name:</span>
-					<form:input disabled="true" path="firstName" class="job_seeker_email"
+					<form:input disabled="true" path="firstName" class="job_seeker_email disabled-input"
 						id="emplyrNameAutoComplte" />
 					<span class="required">(Required)</span>
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Street Address:</span>
-					<form:input disabled="true" path="street" id="street" class="job_seeker_email" />
+					<form:input disabled="true" path="street" id="street" class="job_seeker_email disabled-input" />
 					<span class="required">(Required)</span>
 				</div>
 
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">City:</span>
-					<form:input disabled="true" path="city" id="city" class="job_seeker_email" />
+					<form:input disabled="true" path="city" id="city" class="job_seeker_email disabled-input" />
 					<span class="required">(Required)</span>
 				</div>
 				<c:forEach items="${empRegisterForm.listProfAttribForms}"
@@ -51,8 +51,7 @@
 						<div class="row">
 							<span class="lableTextSelect marginTop13">State:</span>
 							<form:select disabled="true" name="state" id="state"
-								path="state"
-								class="jb_input3 jb_input_width3">
+								path="state" class="jb_input3 jb_input_width3 disabled-input">
 								<form:option value="0" label="Select" />
 								<form:options items="${profAttrib.dropdown}"
 									itemValue="optionId" itemLabel="optionName" />
@@ -65,7 +64,7 @@
 							<span class="lableTextSelect marginTop13 ">Country:</span>
 							<form:select disabled="true"
 								path="country"
-								name="Country" id="Country" class="jb_input3 jb_input_width3">
+								name="Country" id="Country" class="jb_input3 jb_input_width3 disabled-input">
 								<form:option value="0" label="Select" />
 								<form:options items="${profAttrib.dropdown}"
 									itemValue="optionId" itemLabel="optionName"/>
@@ -76,13 +75,13 @@
 				</c:forEach>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Zip Code:</span>
-					<form:input disabled="true" id="zipCode" path="zipCode" class="job_seeker_email" />
+					<form:input disabled="true" id="zipCode" path="zipCode" class="job_seeker_email disabled-input" />
 					<span class="required">(Required)</span>
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Phone:</span>
 					<form:input disabled="true" path="primaryPhone" id="primaryPhone"
-						class="job_seeker_email" />
+						class="job_seeker_email disabled-input" />
 					<span class="required">(Required)</span>
 				</div>
 				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">

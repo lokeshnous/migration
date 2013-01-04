@@ -248,4 +248,57 @@ public class FacilityDAOImpl implements FacilityDAO {
 		}
 		return schedulerDTOList;
 	}
+	
+	/**
+	 * The method helps to get main facility. If job owner login then method
+	 * retrieves the main facility group. 
+	 * 
+	 * @param currentFacilityId
+	 * @return
+	 */
+	@Override
+	public AdmFacility getParentFacility(int currentFacilityId) {
+		AdmFacility admFacility = (AdmFacility) hibernateTemplate.find(
+				"from AdmFacility e where e.facilityId=?", currentFacilityId).get(0);
+		int facilityParentId = admFacility.getFacilityParentId();
+		
+		if (facilityParentId > 0) {
+			AdmFacility parentAdmFacility = hibernateTemplate.get(
+					AdmFacility.class, facilityParentId);
+			if (parentAdmFacility.getFacilityType().equalsIgnoreCase(
+					MMJBCommonConstants.FACILITY_GROUP)) {
+				// For job owner login
+				admFacility = parentAdmFacility;
+			}else if (parentAdmFacility.getFacilityType().equalsIgnoreCase(
+					MMJBCommonConstants.FACILITY)) {
+				// For job owner login
+				admFacility = parentAdmFacility;
+			}
+		}
+		return admFacility;
+	}
+	
+	/**
+	 * The method returns true if application logged in by job owner otherwise false 
+	 * 
+	 * @param facilityId
+	 * @return
+	 */
+	@Override
+	public boolean isJobOwner(int facilityId){
+		boolean isJobOwner = false;
+		AdmFacility admFacility = hibernateTemplate.get(AdmFacility.class, facilityId);
+		int facilityParentId = admFacility.getFacilityParentId();
+		if (MMJBCommonConstants.ZERO_INT < facilityParentId) {
+			AdmFacility parentAdmFacility = hibernateTemplate.get(
+					AdmFacility.class, facilityParentId);
+			if (parentAdmFacility.getFacilityType().equalsIgnoreCase(
+					MMJBCommonConstants.FACILITY_GROUP)
+					|| parentAdmFacility.getFacilityType()
+							.equalsIgnoreCase(MMJBCommonConstants.FACILITY)) {
+				isJobOwner = true;
+			}
+		}
+		return isJobOwner;
+	}
 }

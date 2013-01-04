@@ -172,8 +172,7 @@ public interface PopulateDropdowns {
 
 	List<DropDownDTO> populateEducationDegreesDropdowns();
 
-	List<DropDownDTO> populateJobOwnersDropdown(int facilityId, int userId,
-			int roleId);
+	List<DropDownDTO> populateJobOwnersDropdown(int facilityId);
 
 	List<DropDownDTO> populateBrandingTemplateDropdown(int facilityId,
 			int userId);
@@ -189,7 +188,14 @@ public interface PopulateDropdowns {
 
 	List<String> populatePostalCodeAutoComplete(String postalCode);
 
-	List<DropDownDTO> populateCompanyNames(int facilityid);
+	/**
+	 * The method help to get the list of companies in dropdown and highlight the main facility
+	 * 
+	 * @param facilityid
+	 * @param isHighlightFacility
+	 * @return
+	 */
+	List<DropDownDTO> populateCompanyNames(int facilityid, boolean isHighlightFacility);
 
 	List<DropDownDTO> populateTemplateAutoComplete(String company);
 

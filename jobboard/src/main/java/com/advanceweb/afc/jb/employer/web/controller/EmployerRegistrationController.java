@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -56,6 +57,7 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.EmloyerRegistartionService;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
+import com.advanceweb.afc.jb.login.web.controller.LoginManager;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
@@ -174,7 +176,8 @@ public class EmployerRegistrationController extends AbstractController{
 	@Autowired
 	private UserService userService;
 	// Spring ReCaptcha
-
+	@Autowired
+	private LoginManager loginSuccessManager;
 	private String recaptchaResponse;
 	private String recaptchaChallenge;
 	private String remoteAddr;
@@ -209,6 +212,7 @@ public class EmployerRegistrationController extends AbstractController{
 			empRegisterForm.setConfirmPassword(userDTO.getPassword());
 			empRegisterForm.setUserId(userDTO.getUserId());
 			empRegisterForm.setbReadOnly(true);
+			empRegisterForm.setOldUser(true);
 		}
 		if(profileId!=null){
 			empRegisterForm.setServiceProviderName(serviceProviderId);
@@ -251,7 +255,7 @@ public class EmployerRegistrationController extends AbstractController{
 	public ModelAndView saveEmployerRegistration(
 			@ModelAttribute(EMPREGFORM) EmployerRegistrationForm empRegForm,
 			Map map, HttpSession session,HttpServletRequest req,
-			BindingResult result, HttpServletRequest request) {
+			BindingResult result, HttpServletRequest request,HttpServletResponse response) {
 		
 		ModelAndView model = new ModelAndView();
 		if (null != empRegForm.getListProfAttribForms()) {
@@ -333,12 +337,21 @@ public class EmployerRegistrationController extends AbstractController{
 			if (empRegForm.isHelthSystem()) {
 				role = MMJBCommonConstants.ROLE_FACILITY_GROUP;
 			}
-			authenticateUserAndSetSession(userDTO, req, role);
+			authenticateUserAndSetSession(userDTO, req,response, role);
 			// get the Ads
 			populateAds (request, session, model, PageNames.EMPLOYER_POSTJOB_REG);
-			return model;
+			return null;
 		}
 
+	}
+	@RequestMapping(value = "/redirectToAddPage")
+	public ModelAndView redirectToAddPage(HttpSession session,HttpServletRequest req,HttpServletResponse res){
+		ModelAndView model = new ModelAndView();
+		EmployerRegistrationForm empRegForm=new EmployerRegistrationForm();
+		model.addObject(EMPREGFORM, empRegForm);
+		model.addObject("viewMediaUrl", viewMediaUrl);
+		model.setViewName("jobBoardEmployerPostJobs01");
+		return model;
 	}
 
 	/**
@@ -368,12 +381,12 @@ public class EmployerRegistrationController extends AbstractController{
 		String userName=userDTO.getFirstName()+" " + userDTO.getLastName();
 		emailDTO.setSubject(emailConfiguration.getProperty(
 				"welcome.mail.message").trim());
-		//String loginPath = request.getContextPath()+"/jobSeeker/jobSeekerDashBoard";
+		String loginPath = navigationPath.substring(2);
 		String employerWelcomeMailBody = emailConfiguration.getProperty(
 				"employer.welcome.mail.body").trim();
-		String employerloginUrl =request.getRequestURL().toString()
-				.replace(request.getServletPath(), "/employer/employerDashBoard")
-				+ dothtmlExtention ;
+		String employerloginUrl = request.getRequestURL().toString()
+				.replace(request.getServletPath(), loginPath)
+				+ dothtmlExtention + employerPageExtention;
 		employerWelcomeMailBody = employerWelcomeMailBody.replace("?user_name",
 				userName);
 		employerWelcomeMailBody = employerWelcomeMailBody.replace("?userName",
@@ -491,7 +504,8 @@ public class EmployerRegistrationController extends AbstractController{
 	 * @param request
 	 */
 	private void authenticateUserAndSetSession(UserDTO user,
-			HttpServletRequest request, String role) {
+			HttpServletRequest request,HttpServletResponse response, String role) {
+		try {
 		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
 		authList.add(new GrantedAuthorityImpl(role));
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
@@ -504,6 +518,12 @@ public class EmployerRegistrationController extends AbstractController{
 				.authenticate(token);
 
 		SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
+		request.setAttribute("userRegistration","employerRegistration");
+		loginSuccessManager.onAuthenticationSuccess(request, response,
+				authenticatedUser);
+		} catch (Exception e) {
+			LOGGER.info("Exception while authenticating employer while registration ("+ e.getMessage() + ")");
+		}
 	}
 
 	/**
@@ -549,8 +569,7 @@ public class EmployerRegistrationController extends AbstractController{
 
 		try {
 			if(employeeAccountForm.isAdminLogin()){
-				UserDTO userDto=facilityService.getUser(employeeAccountForm.getEmail());
-				if(userDto!=null && !userDto.getEmailId().equals(employeeAccountForm.getEmail())){
+				if(facilityService.getUser(employeeAccountForm.getEmail())!=null || userService.getAdvancePassUser(employeeAccountForm.getEmail())!=null){
 					return emailInUse;
 				}
 			}

@@ -16,6 +16,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.agency.helper.AgencyRegistrationConversionHelper;
+import com.advanceweb.afc.jb.common.AccountProfileDTO;
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
@@ -89,7 +90,7 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 					agencyDTO, null);
 			if (merUser != null) {
 				// saving employer credentials
-				hibernateTemplateTracker.save(merUser);
+				hibernateTemplateTracker.saveOrUpdate(merUser);
 			}
 			// saving the employer profile
 			List<MerUserProfile> merUserProfiles = agencyHelper
@@ -120,23 +121,10 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 			facility.setFacilityType(MMJBCommonConstants.FACILITY_SYSTEM);
 			// TODO: Remove hard code values
 			facility.setEmail(agencyDTO.getMerUserDTO().getEmailId());
-			facility.setFacilityParentId(MMJBCommonConstants.ZERO_INT);
+			facility.setFacilityParentId(-1);
 			facility.setNsCustomerID(agencyDTO.getMerUserDTO()
 					.getNsCustomerID());
 			facility.setCreateDt(new Date());
-			facility.setCreateUserId(null);
-			facility.setAccountNumber(null);
-			facility.setNameDisplay(null);
-			facility.setUrl(null);
-			facility.setUrlDisplay(null);
-			facility.setEmailDisplay(null);
-			facility.setLogoPath(null);
-			facility.setAdminUserId(null);
-			facility.setCreateUserId(0);
-			facility.setPromoMediaPath(null);
-			facility.setColorPalette(null);
-			facility.setCompanyNews(null);
-			facility.setCompanyOverview(null);
 			hibernateTemplateCareers.save(facility);
 
 			// saving the data in adm_facility_contact
@@ -159,7 +147,15 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 			// userfacility.setAdmRole();
 			userfacility.setCreateDt(new Date());
 			hibernateTemplateCareers.save(userfacility);
-			saveAdvancePassDetails(facility.getFacilityId(),merUser);
+			//saveAdvancePassDetails(facility.getFacilityId(),merUser);
+			
+			if(!agencyDTO.getMerUserDTO().isOldUser()){
+				saveAdvancePassDetails(facility.getFacilityId(),merUser);
+				}
+			else{
+				AccountProfileDTO apDto=agencyHelper.transformToAccountProfileDTO(agencyDTO);
+					editAdvancePassDetails(apDto,merUser.getEmail());
+				}
 			return agencyHelper.transformMerUserToUserDTO(merUser);
 
 		} catch (DataAccessException e) {
@@ -366,9 +362,59 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 		membershipEmail.setWebMembership(webMembership);
 		membershipEmail.setEmail(merUser.getEmail());
 		membershipEmail.setCreateDate(timestamp);
-
+		membershipEmail.setPrimaryEmail(true);
 		hibernateTemplateAdvancePass.saveOrUpdate(membershipEmail);
 	}
+	/**
+	 * Method to update required Data Into Advance Pass
+	 * 
+	 * @param facilityIdP
+	 * @param merUser
+	 */
+	private void editAdvancePassDetails(AccountProfileDTO empDTO, String email) {
+		WebMembership webMembership = new WebMembership();
+		WebMembershipInfo membershipInfo = new WebMembershipInfo();
 
+		List<WebMembershipEmail> membershipEmailList = hibernateTemplateAdvancePass
+				.find("from  WebMembershipEmail WHERE  email=?", email);
+
+		if (null != membershipEmailList && !membershipEmailList.isEmpty()) {
+
+			// Update WebMembershipEmail
+			WebMembershipEmail webMembershipEmail = membershipEmailList.get(0);
+			if (null != empDTO.getEmail()) {
+				webMembershipEmail.setEmail(empDTO.getEmail());
+			}
+
+			// Update WebMembership
+			webMembership = webMembershipEmail.getWebMembership();
+
+			// Update WebMembershipInfo
+			membershipInfo = webMembership.getWebMembershipInfo();
+
+			membershipInfo.setFirstName(empDTO.getFirstName());
+			membershipInfo.setLastName(empDTO.getLastName());
+			membershipInfo.setZipCode(empDTO.getZipCode());
+			if (null != empDTO.getCountry()
+					&& (empDTO.getCountry().equalsIgnoreCase(
+							MMJBCommonConstants.COUNTRY_USA) || empDTO
+							.getCountry().equalsIgnoreCase("US"))) {
+				membershipInfo
+						.setCountryId(MMJBCommonConstants.COUNTRY_USA_VAL);
+			} else if (null != empDTO.getCountry()
+					&& (empDTO.getCountry()
+							.equalsIgnoreCase(MMJBCommonConstants.COUNTRY_CA))) {
+				membershipInfo.setCountryId(MMJBCommonConstants.COUNTRY_CA_VAL);
+			}
+
+			webMembership.setWebMembershipInfo(membershipInfo);
+			webMembershipEmail.setWebMembership(webMembership);
+
+			hibernateTemplateAdvancePass.saveOrUpdate(webMembershipEmail);
+			hibernateTemplateAdvancePass.saveOrUpdate(webMembership);
+			hibernateTemplateAdvancePass.saveOrUpdate(membershipInfo);
+		}
+
+	}
 	
 }

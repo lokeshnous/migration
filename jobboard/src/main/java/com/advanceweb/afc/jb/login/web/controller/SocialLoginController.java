@@ -397,13 +397,13 @@ private ModelAndView addErrorMessage(ModelAndView model,SocialLoginForm socialLo
  */
 private boolean checkUserRoute(String pageValue,Authentication authenticatedUser){
 	boolean result=false;
-	if(pageValue.equals(MMJBCommonConstants.JOB_SEEKER)&&!loginSuccessManager.isJobSeeker(authenticatedUser, pageValue)){
+	if(pageValue.equals(MMJBCommonConstants.JOB_SEEKER)&&!loginSuccessManager.isJobSeeker(authenticatedUser, pageValue,"jobseekerRegistration")){
 		result=true;
 	}
-	else if(pageValue.equals(MMJBCommonConstants.EMPLOYER)&&!loginSuccessManager.isFacility(authenticatedUser, pageValue)){
+	else if(pageValue.equals(MMJBCommonConstants.EMPLOYER)&&!loginSuccessManager.isFacility(authenticatedUser, pageValue,"employerRegistration")){
 		result=true;
 	}
-	else if(pageValue.equals(MMJBCommonConstants.AGENCY)&& !loginSuccessManager.isFacilitySystem(authenticatedUser, pageValue)){
+	else if(pageValue.equals(MMJBCommonConstants.AGENCY)&& !loginSuccessManager.isFacilitySystem(authenticatedUser, pageValue,"agencyRegistration")){
 		result=true;
 	}
 	return result;

@@ -17,10 +17,18 @@
 <script type="text/javascript" src="javascripts/slider.js"></script>
 <script type="text/javascript" src="javascripts/jquery.megamenu.js"></script>
 <script type="text/javascript">
+function closePopup() {
+	parent.window.location.reload();
+}
+$(document).keyup(function(event) {
+	if (event.keyCode == 27) {
+		parent.window.location.reload();
+	}
+});
+
 		    jQuery(document).ready(function(){
 		    	$("#addFacility").displaypopup("#addFacility","800","360");
-		    	
-		    	$("#tb_manage_facility img").click(function(event) {
+		    		    	$("#tb_manage_facility img").click(function(event) {
 
 		    		var action = $(this).attr("alt");
 		    		var rowObj = $(this).parent().parent().parent();
@@ -59,7 +67,7 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>Manage Facilities</h2>
-			 <img src="../resources/images/Close.png" title="Close" width="19" height="19" class="nyroModalClose cursor" alt="close">
+			 <img src="../resources/images/Close.png" title="Close" width="19" height="19" class="nyroModalClose cursor" alt="close" onclick="closePopup();">
 		</div>
 		<div id="facilityErrorMsg" class="FormErrorDisplayText"></div>
 		<div class="popUpContainerWrapper">
@@ -94,9 +102,7 @@
 				</div>
 				<div class="row marginTop20 paddingBottom10">
 					<a href="<%=request.getContextPath()%>/facility/addFacility.html"
-						id="addFacility" class="btn_sm orange">ADD FACILITY</a> <a
-						href="<%=request.getContextPath()%>/employer/employerDashBoard.html"
-						id="cancelUpdateFacility" class="btn_sm orange">Cancel</a></span>
+						id="addFacility" class="btn_sm orange">ADD FACILITY</a> <a href="#" onclick="closePopup();" class="nyroModalClose btn_sm orange">Cancel</a>
 				</div>
 <a hidden="hidden" class="nyroModal" href="<%=request.getContextPath()%>/facility/updateFacilityDetail.html" id="updateFacility"></a>
 		</div>

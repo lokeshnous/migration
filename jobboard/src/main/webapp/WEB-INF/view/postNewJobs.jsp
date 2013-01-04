@@ -591,7 +591,7 @@ function validateNumber(event) {
 								<div class="rowEvenNewSpacing">
 									<span class="lableText3">Company Name:</span>
 									<%-- <form:input path="companyName" class="job_seeker_password textBox350"  id="companyAutoPopulation"/> --%>
-									<form:select path="companyName"
+									<form:select path="facilityId"
 										class="jb_input3 jb_input_width3" id="companyAutoPopulation"
 										onchange="callTemplate()">
 										<%-- <form:option value="0" label="None" /> --%>

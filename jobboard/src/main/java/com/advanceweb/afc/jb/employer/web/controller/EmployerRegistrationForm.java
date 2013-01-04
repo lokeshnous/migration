@@ -69,9 +69,18 @@ public class EmployerRegistrationForm {
 	private boolean socialSignUp;
 	private String serviceProviderName;
 	private String socialProfileId;
-
+	private boolean oldUser;
 	private boolean helthSystem;
 	
+	
+	public boolean isOldUser() {
+		return oldUser;
+	}
+
+	public void setOldUser(boolean oldUser) {
+		this.oldUser = oldUser;
+	}
+
 	public boolean isHelthSystem() {
 		return helthSystem;
 	}

@@ -90,7 +90,7 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>Create Or Upload My New Resume</h2>
-			<img src="../resources/images/Close.png" class="nyroModalClose cursor" title="Close"
+			<img src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose cursor" title="Close"
 				width="19" height="19" alt="">
 		</div>
 

@@ -27,6 +27,7 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
  * 
  */
 @Service("jobSearchService")
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 public class JobSearchServiceImpl implements JobSearchService {
 
 	@Autowired
@@ -145,8 +146,8 @@ public class JobSearchServiceImpl implements JobSearchService {
 	 * This method is used to clear the recent searches of user
 	 */
 	@Override
-	public void clearRecentSearches(int userId) {
-		jobSearchDAO.clearRecentSearches(userId);
+	public void clearRecentSearches(int userId, int recentSearchsLimit) {
+		jobSearchDAO.clearRecentSearches(userId, recentSearchsLimit);
 	}
 
 	@Override

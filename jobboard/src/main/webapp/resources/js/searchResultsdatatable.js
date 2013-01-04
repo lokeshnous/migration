@@ -876,8 +876,9 @@ jQuery(document).ready(function() {
 								blockId = "#empBlockKey"+i;
 							}
 						}
-						$(blockId).addClass('NameOrderSelected');	
-						
+						$(blockId).addClass('NameOrderSelected');
+						// The href is added to focus the selected block
+						$("#"+id).attr('href',blockId);
 					}
 					
 					/*$('.NameSelectonArea ul li a').click(function () {

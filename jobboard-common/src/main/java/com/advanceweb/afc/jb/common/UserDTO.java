@@ -47,8 +47,15 @@ public class UserDTO implements Serializable{
 	private List<String> emailList;
 	private boolean helthSystem;
 	private boolean admin;
+	private boolean oldUser;
 	
 	
+	public boolean isOldUser() {
+		return oldUser;
+	}
+	public void setOldUser(boolean oldUser) {
+		this.oldUser = oldUser;
+	}
 	public boolean isAdmin() {
 		return admin;
 	}

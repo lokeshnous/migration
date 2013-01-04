@@ -70,6 +70,9 @@ public class JobPostForm {
     private boolean adminLogin;
     private boolean sortAsc=true;
     private String sortBy="a.jobId";
+    private int facilityId;
+    
+    
 	public boolean isAdminLogin() {
 		return adminLogin;
 	}
@@ -469,6 +472,14 @@ public class JobPostForm {
 	 */
 	public void setSortBy(String sortBy) {
 		this.sortBy = sortBy;
+	}
+
+	public int getFacilityId() {
+		return facilityId;
+	}
+
+	public void setFacilityId(int facilityId) {
+		this.facilityId = facilityId;
 	}
 
 }

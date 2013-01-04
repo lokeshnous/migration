@@ -71,7 +71,7 @@
 								value="Find Jobs" class="orange jb_search_submit cursor" />
 							<!-- <input type="submit" id= "submit" value="Find Jobs" class="orange jb_search_submit" /> -->  
 
-							<a title="Coming Soon" href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/advanceSearch.html">Advanced
+							<a title="Coming Soon" href="#">Advanced
 								Search</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
 								onclick="postYourResume();" class="cursor">Post Your Resume</a>
 						</div>
