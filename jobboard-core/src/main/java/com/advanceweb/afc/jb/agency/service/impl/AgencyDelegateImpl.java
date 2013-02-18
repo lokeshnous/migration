@@ -61,7 +61,7 @@ public class AgencyDelegateImpl implements AgencyDelegate {
 		try {
 			userDTO = nsCustomerService.createCustomer(userDTO);
 
-			LOGGER.info("CustomerID from JSON for Agency===>"
+			LOGGER.debug("CustomerID from JSON for Agency===>"
 					+ userDTO.getNsCustomerID());
 			agencyProfileDTO.getMerUserDTO().setNsCustomerID(
 					userDTO.getNsCustomerID());
@@ -176,7 +176,7 @@ public class AgencyDelegateImpl implements AgencyDelegate {
 			userDTO = nsCustomerService.getNSCustomerDetails(userDTO);
 			
 		} catch (JobBoardNetSuiteServiceException jbns) {
-			LOGGER.info("Error occurred while getting the Customer details from net suite..Please contact your administrator."
+			LOGGER.error("Error occurred while getting the Customer details from net suite..Please contact your administrator."
 					+ jbns);
 		}
 		return userDTO;

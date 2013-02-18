@@ -116,7 +116,8 @@ public class SolrJobDTO implements Serializable{
 	@Field("country")
 	private String country;
 	
-	
+	@Field("facility_id")
+	private int facilityId;
 
 	public int getTemplateId() {
 		return templateId;
@@ -382,6 +383,13 @@ public class SolrJobDTO implements Serializable{
 	public void setJobGeo1LatLon(String jobGeo1LatLon) {
 		this.jobGeo1LatLon = jobGeo1LatLon;
 	}
-	
+
+	public int getFacilityId() {
+		return facilityId;
+	}
+
+	public void setFacilityId(int facilityId) {
+		this.facilityId = facilityId;
+	}
 
 }

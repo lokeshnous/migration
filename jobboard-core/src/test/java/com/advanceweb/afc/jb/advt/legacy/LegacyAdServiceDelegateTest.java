@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.advt.service.ads;
+package com.advanceweb.afc.jb.advt.legacy;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.advt.legacy.LegacyAdServiceDelegate;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
 import com.advanceweb.common.client.ClientContext;

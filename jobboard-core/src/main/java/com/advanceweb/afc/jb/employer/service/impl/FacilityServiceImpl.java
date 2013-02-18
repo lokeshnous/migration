@@ -1,6 +1,7 @@
 package com.advanceweb.afc.jb.employer.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.SchedulerDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
-import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.employer.dao.FacilityDAO;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
@@ -69,25 +69,53 @@ public class FacilityServiceImpl implements FacilityService {
 	 * @param facilityId
 	 * @return metricsDTO
 	 */
-	public List<MetricsDTO> getJobPostTotal(int facilityId) {
+	@Override
+	public MetricsDTO getJobPostTotal(int facilityId) {
 		return facilityDAO.getJobPostTotal(facilityId);
 	}
 
+	/**
+	 * This method returns total number of active jobs posted by the employer
+	 * 
+	 * @param facilityId
+	 * @return long
+	 */
+	@Override
+	public long getJobsByFacility(int facilityId){
+		return facilityDAO.getJobsByFacility(facilityId);
+	}
+	
 	/**
 	 * This method is used to get all jobs stats for Site – wide average per job posting.
 	 * 
 	 * @return metricsDTO
 	 */
+	@Override
 	public MetricsDTO getAllJobStats() {
 		return facilityDAO.getAllJobStats();
 	}
 
+	/**
+	 * This method is used to get date wise jobs stats for Site – wide average
+	 * per job posting
+	 * 
+	 * @param startDate
+	 * @param endDate
+	 * 
+	 * @return metricsDTO
+	 */
+	@Override
+	public MetricsDTO getDateJobStats(Date startDate, Date endDate){
+		return facilityDAO.getDateJobStats(startDate, endDate);
+	}
+	
 	/**
 	 * This method is used to get the total count of employer
 	 * 
 	 * @return
 	 * @throws JobBoardServiceException
 	 */
+	@Override
 	public long getEmployerCount() throws JobBoardServiceException {
 		long returnVal = 0;
 		try {
@@ -99,6 +127,23 @@ public class FacilityServiceImpl implements FacilityService {
 		}
 		return returnVal;
 	}
+	
+	@Override
+	/**
+	 * Get the Date range specific data
+	 * 
+	 * @param startFrom
+	 * @param endFrom
+	 * @param selEmployerId
+	 * 
+	 * @return MetricsDTO
+	 */
+	public MetricsDTO employerDateMetrics(Date startFrom, Date endFrom,
+			int selEmployerId){
+		return facilityDAO.employerDateMetrics(startFrom, endFrom, selEmployerId);
+	} 
+	
+	
 	@Override
 	public int getfacilityUserId(int facilityId) {
 		return facilityDAO.getfacilityUserId(facilityId);
@@ -121,7 +166,7 @@ public class FacilityServiceImpl implements FacilityService {
 	 * @return
 	 */
 	@Override
-	public AdmFacility getParentFacility(int currentFacilityId) {
+	public FacilityDTO getParentFacility(int currentFacilityId) {
 		return facilityDAO.getParentFacility(currentFacilityId);
 	}
 

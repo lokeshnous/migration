@@ -1,12 +1,6 @@
 package com.advanceweb.afc.jb.login.service;
 
-import java.util.Date;
-import java.util.List;
-
 import com.advanceweb.afc.jb.common.LoginDTO;
-import com.advanceweb.afc.jb.common.MetricsDTO;
-import com.advanceweb.afc.jb.common.UserDTO;
-import com.advanceweb.afc.jb.common.UserRoleDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 /**
@@ -35,17 +29,6 @@ public interface LoginService {
 	 * @param emailAddress
 	 */
 	LoginDTO getUserEmailDetails(String emailAddress);
-
-	/**
-	 * This method is to get all list of Dates
-	 * 
-	 * @param startFrom
-	 *            ,endFrom,facilityId
-	 * @return
-	 * @throws JobBoardServiceException
-	 */
-	List<MetricsDTO> employerMetrics(Date startFrom, Date endFrom,
-			int selEmployerId) throws JobBoardServiceException;
 
 	/**
 	 * This method is to get active job Posting

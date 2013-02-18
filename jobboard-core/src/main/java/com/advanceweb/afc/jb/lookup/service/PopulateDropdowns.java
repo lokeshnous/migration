@@ -213,5 +213,6 @@ public interface PopulateDropdowns {
 	 * @return
 	 */
 	List<DropDownDTO> getFacilitySubList();
+	List<DropDownDTO> getBlockedCompanyList(int resumeId);
 
 }

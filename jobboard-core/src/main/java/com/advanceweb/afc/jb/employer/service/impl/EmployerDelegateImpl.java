@@ -60,10 +60,10 @@ public class EmployerDelegateImpl implements EmployerDelegate {
 		try {
 			userDTO = nsCustomerService.createCustomer(userDTO);
 
-			LOGGER.info("CustomerID from JSON for Employer===>"
+			LOGGER.debug("CustomerID from JSON for Employer===>"
 					+ userDTO.getNsCustomerID());
 			if (userDTO.getNsStatus() != null && userDTO.getNsStatus().equalsIgnoreCase("record already exist")) {
-				LOGGER.info("User Already Exist. Please login to continue.");
+				LOGGER.debug("User Already Exist. Please login to continue.");
 			} else {
 				empProfileDTO.getMerUserDTO().setNsCustomerID(
 						userDTO.getNsCustomerID());
@@ -164,7 +164,7 @@ public class EmployerDelegateImpl implements EmployerDelegate {
 			userDTO = nsCustomerService.editCustomer(userDTO);
 
 		if (userDTO.getNsStatus() != null && userDTO.getNsStatus().equalsIgnoreCase("true")) {
-				LOGGER.info("Successfully Updated Record in NetSuite.");
+				LOGGER.debug("Successfully Updated Record in NetSuite.");
 				isUpdate = employerRegistrationDAO.editUser(accountProfDTO,
 						admFacilityid, userId, billing);
 			}

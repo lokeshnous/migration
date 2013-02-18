@@ -13,9 +13,11 @@ import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityJpAudit;
+import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.employer.dao.JobPostDAO;
 import com.advanceweb.afc.jb.job.service.JobPostDelegate;
 import com.advanceweb.afc.jb.job.service.JobPostService;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 /**
  * @Author : Prince Mathew
@@ -182,6 +184,20 @@ public class JobPostServiceImpl implements JobPostService {
 	@Override
 	public AdmFacilityJpAudit getinvDtlByJobId(int jobId) {
 		return employerJobPostDAO.getinvDtlByJobId(jobId);
-	} 
+	}
 
+	@Override
+	public boolean checkDraftAndSchedule(int avdSearchId) {
+		return employerJobPostDAO.checkDraftAndSchedule(avdSearchId);
+	} 
+	@Override
+	public boolean validateLocationdetails(String city,String state,String zip,String country) throws JobBoardServiceException{
+		boolean valied=false;
+		try {
+			valied= employerJobPostDAO.validateCityStateZip(city,state,zip,country);
+		} catch (JobBoardDataException e) {
+			e.printStackTrace();
+		}
+		return valied;
+	}
 }

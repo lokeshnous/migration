@@ -92,4 +92,14 @@ public class UserServiceImpl implements UserService{
 		return userDAO.getAdvancePassUser(email);
 	}
 
+	@Override
+	public boolean checkUserMail(String email) {
+		return userDAO.checkUserMail(email);
+	}
+
+	@Override
+	public UserDTO getAdminInfo(String email) {
+		return userDAO.getAdminInfo(email);
+	}
+
 }

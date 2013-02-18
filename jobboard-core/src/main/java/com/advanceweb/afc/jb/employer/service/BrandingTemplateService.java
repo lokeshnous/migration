@@ -112,6 +112,8 @@ public interface BrandingTemplateService {
 	 */
 	boolean getBrandPackage(int productId);
 	
+	int getParentId(int facilityId);
 	
-
+	int getParentUserId(int userId,int parentFacilityId);
+	
 }

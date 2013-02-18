@@ -202,7 +202,7 @@ public class OpenAMEUtility {
 			in.close();
 			subjectid = subjectid.replace("token.id=", "");
 			openUrl(_LOGOUT_URL + subjectid);
-			LOGGER.info("User Logged out successfully");
+			LOGGER.debug("User Logged out successfully");
 
 		} catch (MalformedURLException e) {
 			LOGGER.error("Exception - LOGOUT-USER : While URL reading - " + e);
@@ -355,8 +355,8 @@ public class OpenAMEUtility {
 
 	
 	public static boolean openAMCreateEmp(MerUser meruserDTO,AdmFacilityContact contact) {
-		LOGGER.info("-----------------------------------");
-		LOGGER.info(meruserDTO.getEmail()+ meruserDTO.getPassword()+ meruserDTO.getFirstName()+" " + meruserDTO.getLastName()+ meruserDTO.getEmail());
+		LOGGER.debug("-----------------------------------");
+		LOGGER.debug(meruserDTO.getEmail()+ meruserDTO.getPassword()+ meruserDTO.getFirstName()+" " + meruserDTO.getLastName()+ meruserDTO.getEmail());
 
 		StringBuffer attributes = new StringBuffer();
 

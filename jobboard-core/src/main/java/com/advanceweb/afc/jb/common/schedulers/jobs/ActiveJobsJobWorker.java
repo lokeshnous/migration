@@ -13,13 +13,19 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.SchedulerDTO;
+import com.advanceweb.afc.jb.common.UserAlertDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.dao.JobPostDAO;
+import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.employer.service.ManageFeaturedEmployerProfile;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
+import com.advanceweb.afc.jb.user.UserAlertService;
+import com.advanceweb.afc.jb.user.UserService;
 
 /**
  * @author muraliananthr
@@ -50,20 +56,26 @@ public class ActiveJobsJobWorker implements JobWorker {
 	
 	@Autowired
 	private ManageFeaturedEmployerProfile manageFeaturedEmployerProfile;
-
+	@Autowired
+	private UserAlertService alertService;
+	
+	@Autowired
+	private FacilityService facilityService;
+	
+	@Autowired
+	private UserService userService;
 
 	@Override
 	public void executeJob() {
 		
-		LOGGER.info("ActiveJobsJobWorker.-> Execute Job.....");
-		
-		LOGGER.info("ActiveJobsJobWorker -> Expiring the eligible jobs started.....");	
-		expireEligibleJobs();
-		LOGGER.info("ActiveJobsJobWorker -> Expiring the eligible jobs completed.....");
+		LOGGER.info("ActiveJobsJobWorker.-> Executing Job.....");
 		
 		LOGGER.info("ActiveJobsJobWorker -> Auto renew the scheduled jobs started.....");
 		autoRenewScheduledJobs();				
 		LOGGER.info("ActiveJobsJobWorker -> Auto renew the scheduled jobs completed.....");
+		LOGGER.info("ActiveJobsJobWorker -> Expiring the eligible jobs started.....");	
+		expireEligibleJobs();
+		LOGGER.info("ActiveJobsJobWorker -> Expiring the eligible jobs completed.....");
 		
 		LOGGER.info("ActiveJobsJobWorker.-> Executed Job Successfully.....");
 	}
@@ -164,76 +176,135 @@ public class ActiveJobsJobWorker implements JobWorker {
 		}
 	}
 
-	private boolean expireEligibleJobs(){
-		//expire the jobs if eligible to expire
-		List<SchedulerDTO> schedulerDTOList = employerJobPostDAO.executeExpireJobs();
-		//send the mails here 
+	private boolean expireEligibleJobs() {
+		// expire the jobs if eligible to expire
+		List<SchedulerDTO> schedulerDTOList = employerJobPostDAO
+				.executeExpireJobs();
+		// send the mails here
 		EmailDTO emailDTO = new EmailDTO();
-		StringBuffer expireJobPost = null;
-		StringBuffer mailBody  = null;
-		int start,end;
-		InternetAddress[] jsToAddress = new InternetAddress[1];
-		
+
 		emailDTO.setFromAddress(advanceWebAddress);
-		emailDTO.setSubject(emailConfiguration.getProperty("employer.jobpost.expired.email.subject").trim());
-		
-		for(SchedulerDTO schedulerDTO: schedulerDTOList){
+		emailDTO.setSubject(emailConfiguration.getProperty(
+				"employer.jobpost.expired.email.subject").trim());
+
+		for (SchedulerDTO schedulerDTO : schedulerDTOList) {
 			
+			FacilityDTO mainFacilityDTO = facilityService.getParentFacility(schedulerDTO.getFacilityId());
+//	        UserDTO mainuserDto = userService.getUserByUserId(mainFacilityDTO
+//					.getUserId());
+	        
+	        // check for job is posted by Job owner and send mail on interest
+	        if(schedulerDTO.getCreateUserId() !=  mainFacilityDTO.getUserId()){
+	        	List<UserAlertDTO> alertDTOs = alertService.viewAlerts(schedulerDTO
+						.getCreateUserId());
+	        	UserDTO mainuserDto = userService.getUserByUserId(schedulerDTO
+						.getCreateUserId());
+	        	InternetAddress[] jsToAddress = new InternetAddress[1];
+				try {
+					jsToAddress[0] = new InternetAddress(mainuserDto.getEmailId());
+				} catch (AddressException jbex) {
+					LOGGER.error(
+							"Error occured while geting InternetAddress reference",
+							jbex);
+				}
+				if (null != alertDTOs && alertDTOs.size() > 0) {
+					for (UserAlertDTO alertDTO : alertDTOs) {
+						if (alertDTO.getAlertId() > 0
+								&& alertDTO.getAlertId() == MMJBCommonConstants.YOUR_JOB_HAS_EXPIRED) {
+							expireJobSendMail(emailDTO, schedulerDTO, jsToAddress);
+						}
+					}
+				} else {
+					expireJobSendMail(emailDTO, schedulerDTO, jsToAddress);
+				}
+	        }
+	        // send mail to employer on interest
+			List<UserAlertDTO> alertDTOs = alertService
+					.viewAlerts(mainFacilityDTO.getUserId());
+			UserDTO mainuserDto = userService.getUserByUserId(mainFacilityDTO
+					.getUserId());
+			InternetAddress[] jsToAddress = new InternetAddress[1];
 			try {
-				jsToAddress[0] = new InternetAddress(schedulerDTO.getEmailId());
+				jsToAddress[0] = new InternetAddress(mainuserDto.getEmailId());
 			} catch (AddressException jbex) {
-				LOGGER.error("Error occured while geting InternetAddress reference",jbex);
+				LOGGER.error(
+						"Error occured while geting InternetAddress reference",
+						jbex);
 			}
-			
-			emailDTO.setToAddress(jsToAddress);
-			
-			expireJobPost  = new StringBuffer();
-			
-			mailBody  = new StringBuffer(emailConfiguration.getProperty("employer.jobpost.expired.email.body").trim());
-			
-			//set the company name in table
-			start = mailBody.toString()
-					.indexOf(Q_USERNAME);
-			end = start + Q_USERNAME.length();
-			if (start > 0 && end > 0) {
-				mailBody.replace(start, end,
-						schedulerDTO.getFirstName()+" "+schedulerDTO.getLastName());
+			if (null != alertDTOs && alertDTOs.size() > 0) {
+				for (UserAlertDTO alertDTO : alertDTOs) {
+					if (alertDTO.getAlertId() > 0
+							&& alertDTO.getAlertId() == MMJBCommonConstants.YOUR_JOB_HAS_EXPIRED) {
+						expireJobSendMail(emailDTO, schedulerDTO, jsToAddress);
+					}
+				}
+			} else {
+				expireJobSendMail(emailDTO, schedulerDTO, jsToAddress);
 			}
+		}
 			
-			//set the company name in table
-			start = mailBody.toString()
-					.indexOf(Q_JOBID);
-			end = start + Q_JOBID.length();
-			if (start > 0 && end > 0) {
-				mailBody.replace(start, end,
-						String.valueOf(schedulerDTO.getJobId()));
-			}
-			
-			//set the expire date in table
-			start = mailBody.toString()
-					.indexOf(Q_COMPANYNAME);
-			end = start + Q_COMPANYNAME.length();
-			if (start > 0 && end > 0) {
-				mailBody.replace(start, end,
-						schedulerDTO.getCompanyName());
-			}
-			start = mailBody.toString()
-					.indexOf("?empdashboardLink");
-			end = start + "?empdashboardLink".length();
-			if (start > 0 && end > 0) {
-				mailBody.replace(start, end,
-						emailConfiguration.getProperty("employerer.dashboard.url").trim());
-			}
-			expireJobPost.append(emailConfiguration.getProperty(
-					"employer.email.header").trim());
-			expireJobPost.append(mailBody);
-			expireJobPost.append(emailConfiguration.getProperty("email.footer").trim());
-			
-			emailDTO.setBody(expireJobPost.toString());
-			emailDTO.setHtmlFormat(true);
-			emailService.sendEmail(emailDTO);
-		}	
+		
 		return true;
+	}
+
+	/**
+	 * Method helps to send mail for expired jobs
+	 * 
+	 * @param emailDTO
+	 * @param schedulerDTO
+	 * @param jsToAddress
+	 */
+	private void expireJobSendMail(EmailDTO emailDTO, SchedulerDTO schedulerDTO, InternetAddress[] jsToAddress) {
+
+		StringBuffer expireJobPost;
+		StringBuffer mailBody;
+		int start;
+		int end;
+		emailDTO.setToAddress(jsToAddress);
+
+		expireJobPost = new StringBuffer();
+
+		mailBody = new StringBuffer(emailConfiguration.getProperty(
+				"employer.jobpost.expired.email.body").trim());
+
+		// set the company name in table
+		start = mailBody.toString().indexOf(Q_USERNAME);
+		end = start + Q_USERNAME.length();
+		if (start > 0 && end > 0) {
+			mailBody.replace(start, end, schedulerDTO.getFirstName() + " "
+					+ schedulerDTO.getLastName());
+		}
+
+		// set the company name in table
+		start = mailBody.toString().indexOf(Q_JOBID);
+		end = start + Q_JOBID.length();
+		if (start > 0 && end > 0) {
+			mailBody.replace(start, end,
+					String.valueOf(schedulerDTO.getJobId()));
+		}
+
+		// set the expire date in table
+		start = mailBody.toString().indexOf(Q_COMPANYNAME);
+		end = start + Q_COMPANYNAME.length();
+		if (start > 0 && end > 0) {
+			mailBody.replace(start, end, schedulerDTO.getCompanyName());
+		}
+		start = mailBody.toString().indexOf("?empdashboardLink");
+		end = start + "?empdashboardLink".length();
+		if (start > 0 && end > 0) {
+			mailBody.replace(start, end,
+					emailConfiguration.getProperty("employerer.dashboard.url")
+							.trim());
+		}
+		expireJobPost.append(emailConfiguration.getProperty(
+				"employer.email.header").trim());
+		expireJobPost.append(mailBody);
+		expireJobPost.append(emailConfiguration.getProperty("email.footer")
+				.trim());
+
+		emailDTO.setBody(expireJobPost.toString());
+		emailDTO.setHtmlFormat(true);
+		emailService.sendEmail(emailDTO);
 	}
 	@Override
 	public String getJobName() {

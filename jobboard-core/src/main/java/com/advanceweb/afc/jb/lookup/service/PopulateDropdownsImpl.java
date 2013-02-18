@@ -300,4 +300,10 @@ public class PopulateDropdownsImpl implements PopulateDropdowns {
 
 		return populateDropdownsDAO.getFacilitySubList();
 	}
+
+	@Override
+	public List<DropDownDTO> getBlockedCompanyList(int resumeId) {
+		
+		return populateDropdownsDAO.getBlockedCompanyList(resumeId);
+	}
 }

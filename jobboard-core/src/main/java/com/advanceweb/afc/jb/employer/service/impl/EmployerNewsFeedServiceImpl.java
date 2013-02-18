@@ -84,6 +84,7 @@ public class EmployerNewsFeedServiceImpl implements EmployerNewsFeedService {
 						NewsDTO newsDTOForPlatinum = new NewsDTO();
 						newsDTOForPlatinum.setTitle(getTagValue(TITLE_STRING, eElement));
 						newsDTOForPlatinum.setLink(getTagValue(LINK_STRING, eElement));
+						newsDTOForPlatinum.setFacility(getTagValue(FACILITY_STRING, eElement));
 						newsDTOListForPlatinum.add(newsDTOForPlatinum);
 					}
 				}
@@ -93,7 +94,7 @@ public class EmployerNewsFeedServiceImpl implements EmployerNewsFeedService {
 			newsMap.put(HOMEPAGE_LIST, newsDTOListForHomePage);
 
 		} catch (Exception e) {
-			LOGGER.info("Error occurred while parsing the XML."+e);
+			LOGGER.error("Error occurred while parsing the XML."+e);
 		}
 		
 		

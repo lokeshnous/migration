@@ -72,7 +72,7 @@ public class NetSuiteMethodImpl implements NetSuiteMethod{
 		client.header(AUTHORIZATION_STRING, authorization);
 		client.header(CONTENT_TYPE_STRING, CONTENT_TYPE_VALUE);
 		
-		LOGGER.info("Web Client URI"+client.getCurrentURI());
+		LOGGER.debug("Web Client URI"+client.getCurrentURI());
 		
 		return client;
 	}
@@ -108,7 +108,7 @@ public class NetSuiteMethodImpl implements NetSuiteMethod{
 				+ ", nlauth_email=" + netSuiteCredential.getEmail() + ", nlauth_signature=" + netSuiteCredential.getPassword()
 				+ ", nlauth_role=" + netSuiteCredential.getRole();
 		
-		LOGGER.info("Authorization=>"+authorization);
+		LOGGER.debug("Authorization=>"+authorization);
 		return authorization;
 	}
 	

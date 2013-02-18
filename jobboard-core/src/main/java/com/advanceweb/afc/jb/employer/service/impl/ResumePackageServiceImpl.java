@@ -35,7 +35,7 @@ public class ResumePackageServiceImpl implements ResumePackageService{
 		try {
 			return resumePackageDAO.showResumeSearchPackages();
 		} catch (JobBoardDataException e) {
-			LOGGER.info("Error occurred while fetching the Resume Search Packages"+ e);
+			LOGGER.error("Error occurred while fetching the Resume Search Packages"+ e);
 			throw new JobBoardServiceException("Error occurred while fetching the Resume Search Packages"+ e);
 			
 		}

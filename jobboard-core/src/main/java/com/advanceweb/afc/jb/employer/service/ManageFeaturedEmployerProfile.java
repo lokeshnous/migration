@@ -71,6 +71,17 @@ public interface ManageFeaturedEmployerProfile {
 	 * @return UserDTO
 	 */
 	
-	UserDTO getNSFeatureDates(int nsCustomerID);;
+	UserDTO getNSFeatureDates(int nsCustomerID);
+	
+	int getParentId(int facilityId);
+	
+	/**
+	 * This method returns the facilityId of FACILITY_GROUP if the facility
+	 * belongs to FACILITY_GROUP
+	 * 
+	 * @param facilityId
+	 * @return facilityId
+	 */
+	int getParentGroup(int facilityId);
 	
 }

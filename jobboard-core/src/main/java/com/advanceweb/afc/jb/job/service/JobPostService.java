@@ -8,6 +8,7 @@ import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityJpAudit;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 
 /**
@@ -114,4 +115,15 @@ public interface JobPostService {
 	int getinvDetIdByJobId(int jobId, int facilityId, int userId);
 	
 	AdmFacilityJpAudit getinvDtlByJobId(int jobId);
+	public boolean checkDraftAndSchedule(int avdSearchId);
+	
+	/**
+	 * Validate city state and zip code
+	 * @param city
+	 * @param state
+	 * @param Zip
+	 * @return
+	 * @throws JobBoardServiceException
+	 */
+	boolean validateLocationdetails(String city,String state,String zip,String country)  throws JobBoardServiceException;
 }

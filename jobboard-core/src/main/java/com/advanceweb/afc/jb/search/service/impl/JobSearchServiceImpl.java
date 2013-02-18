@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.common.AdminSeoDTO;
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
 import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.JobTitleDTO;
 import com.advanceweb.afc.jb.job.dao.JobSearchDAO;
 import com.advanceweb.afc.jb.search.JobSearchDelegate;
 import com.advanceweb.afc.jb.search.JobSearchResultDTO;
@@ -78,6 +80,15 @@ public class JobSearchServiceImpl implements JobSearchService {
 	}
 
 	/**
+	 * This method provides the total active job count
+	 * 
+	 * @return jobCount
+	 */
+	@Override
+	public long getActiveJobs() {
+		return jobSearchDAO.getActiveJobs();
+	}
+	/**
 	 * create save or apply the job for logged in user
 	 */
 	@Override
@@ -120,16 +131,6 @@ public class JobSearchServiceImpl implements JobSearchService {
 	}
 
 	/**
-	 * This method is used to get the total number of Active jobs.
-	 * 
-	 * @return long
-	 */
-
-	public long getTotalActiveJobs() {
-		return jobSearchDAO.getTotalActiveJobs();
-	}
-
-	/**
 	 * This method will fetch the last five job details based on posted date for
 	 * the selected employer.
 	 * 
@@ -156,9 +157,29 @@ public class JobSearchServiceImpl implements JobSearchService {
 		jobSearchDAO.inserSessinfo(session_id, userId);
 	}
 	
+	/**
+	 * The method is used to save the SEO info for job title
+	 */
+	@Override
+	public boolean saveJobTitleSeoInfo(AdminSeoDTO seoDTO) {
+		return jobSearchDAO.saveJobTitleSeoInfo(seoDTO);
+	}
 	
+	/**
+	 * The method is used to get the SEO info by job title
+	 */
+	@Override
+	public AdminSeoDTO getSeoInfoByJobTitle(String title) {
+		return jobSearchDAO.getSeoJobInfoByTitle(title);
+	}	
 
-	
+	/**
+	 * The method is used to get the job title list
+	 */
+	@Override
+	public List<JobTitleDTO> getJobTitleList() {
+		return jobSearchDAO.getJobTitleList();
+	}	
 	
 	//here implementation work after descsion
 	/*@Override

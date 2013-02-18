@@ -42,8 +42,12 @@ public class VelocityTemplateTest extends ServiceTestBase {
 		assertTrue(String.format(ERROR_MSG, "auid", "297453"),
 				result.indexOf("297453") >= 0);
 		assertFalse(
-				"A var section is added in the tag even though no variables are passed",
+				"A var parameter is added in the tag even though no variables are passed",
 				result.indexOf("vars") >= 0);
+
+		assertFalse(
+				"A tid parameter is added in the tag even though no variables are passed",
+				result.indexOf("tid") >= 0);
 
 		// Check with var parameter keyword
 		Map<String, Object> vars = new HashMap<String, Object>();
@@ -95,5 +99,21 @@ public class VelocityTemplateTest extends ServiceTestBase {
 				result.indexOf("\"state\":\"new york\"") >= 0);
 		assertTrue(String.format(ERROR_MSG, "state", "new york"),
 				result.indexOf("\"city\":\"Puerto Rico\"") >= 0);
+
+		params.put("tid", 30);
+		result = velocityTestTemplate.process(params);
+		LOGGER.debug(result);
+		assertTrue(String.format(ERROR_MSG, "auid", "297453"),
+				result.indexOf("297453") >= 0);
+		assertTrue(String.format(ERROR_MSG, "keyword", "nurse"),
+				result.indexOf("\"nurse\"") >= 0);
+		assertFalse(
+				"State variable is added even though it is not specified in the variables",
+				result.indexOf("\"state\":\"new york\"") >= 0);
+		assertTrue(String.format(ERROR_MSG, "state", "new york"),
+				result.indexOf("\"city\":\"Puerto Rico\"") >= 0);
+		assertTrue(String.format(ERROR_MSG, "tid", "30"),
+				result.indexOf("\"tid\":\"30\"") > 0);
+
 	}
 }

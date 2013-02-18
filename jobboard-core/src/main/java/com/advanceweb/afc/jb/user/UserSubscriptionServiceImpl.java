@@ -183,8 +183,8 @@ public class UserSubscriptionServiceImpl implements UserSubscriptionService,
 	}
 
 	@Override
-	public ResCoverLetterDTO fetchPublicCoverLetter(long jobSeekerId) {
-		return subscriptionsDAO.fetchPublicCoverLetter(jobSeekerId);
+	public ResCoverLetterDTO fetchPublicCoverLetter(long jobSeekerId,String coverLetterId) {
+		return subscriptionsDAO.fetchPublicCoverLetter(jobSeekerId,coverLetterId);
 	}
 
 	/**
@@ -214,6 +214,11 @@ public class UserSubscriptionServiceImpl implements UserSubscriptionService,
 	@Override
 	public List<UserSubscriptionsDTO> getEnewsLetterSubList() {
 		return subscriptionsDAO.getEnewsLetterSubList();
+	}
+	
+	@Override
+	public List<DropDownDTO> getSubEmailerList(){
+		return subscriptionsDAO.getSubEmailerList();
 	}
 
 	/**
@@ -247,6 +252,11 @@ public class UserSubscriptionServiceImpl implements UserSubscriptionService,
 		// TODO Auto-generated method stub
 		return subscriptionsDAO.getSubscriptionsletter(userId);
 	}
+	
+	@Override
+	public List<DropDownDTO> getSubscriptionsEmailer(int userId){
+		return subscriptionsDAO.getSubscriptionsEmailer(userId);
+	}
 
 	/**
 	 * Get the subscription list which selected during registration for logged
@@ -258,5 +268,21 @@ public class UserSubscriptionServiceImpl implements UserSubscriptionService,
 	@Override
 	public List<UserSubscriptionsDTO> getSelectedSub(int userId) {
 		return subscriptionsDAO.getSelectedSub(userId);
+	}
+	
+	@Override
+	public int getParentId(int facilityId){
+		return subscriptionsDAO.getParentId(facilityId);
+	}
+	
+	/**
+	 * This method is to get the publications based on the profession
+	 * 
+	 * @param professionId
+	 * @return
+	 */
+	@Override 
+	public List<List<DropDownDTO>> getPublications(int professionId){
+		return subscriptionsDAO.getPublications(professionId);
 	}
 }

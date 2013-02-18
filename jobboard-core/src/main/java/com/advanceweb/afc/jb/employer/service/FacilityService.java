@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.employer.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
@@ -8,7 +9,6 @@ import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.SchedulerDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
-import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 /**
@@ -33,7 +33,15 @@ public interface FacilityService {
 	 * @param facilityId
 	 * @return
 	 */
-	List<MetricsDTO> getJobPostTotal(int facilityId);
+	MetricsDTO getJobPostTotal(int facilityId);
+	
+	/**
+	 * This method returns total number of active jobs posted by the employer
+	 * 
+	 * @param facilityId
+	 * @return long
+	 */
+	long getJobsByFacility(int facilityId);
 	
 	/**
 	 * This method is used to get all jobs stats for Site – wide average per job posting.
@@ -43,6 +51,17 @@ public interface FacilityService {
 	MetricsDTO getAllJobStats();
 	
 	/**
+	 * This method is used to get date wise jobs stats for Site – wide average
+	 * per job posting
+	 * 
+	 * @param startDate
+	 * @param endDate
+	 * 
+	 * @return metricsDTO
+	 */
+	MetricsDTO getDateJobStats(Date startDate, Date endDate);
+	
+	/**
 	 * This method is used to get the total count of employer
 	 * 
 	 * @return
@@ -50,6 +69,17 @@ public interface FacilityService {
 	 */
 	long getEmployerCount() throws JobBoardServiceException;
 	
+	/**
+	 * Get the Date range specific data
+	 * 
+	 * @param startFrom
+	 * @param endFrom
+	 * @param selEmployerId
+	 * 
+	 * @return MetricsDTO
+	 */
+	MetricsDTO employerDateMetrics(Date startFrom, Date endFrom,
+			int selEmployerId); 
 	
 	FacilityDTO getFacilityByFacilityId(int facilityId);
 	
@@ -78,7 +108,7 @@ public interface FacilityService {
 	 * @param currentFacilityId
 	 * @return
 	 */
-	AdmFacility getParentFacility(int currentFacilityId);
+	FacilityDTO getParentFacility(int currentFacilityId);
 	
 	/**
 	 * The method returns true if application logged in by job owner otherwise false 

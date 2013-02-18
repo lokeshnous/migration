@@ -6,6 +6,8 @@ public class NSItem {
 	
 	private String quantity;
 
+	private String purchaseOrderNumber;
+	
 	public String getItem() {
 		return item;
 	}
@@ -21,7 +23,13 @@ public class NSItem {
 	public void setQuantity(String quantity) {
 		this.quantity = quantity;
 	}
-	
-	
+
+	public String getPurchaseOrderNumber() {
+		return purchaseOrderNumber;
+	}
+
+	public void setPurchaseOrderNumber(String purchaseOrderNumber) {
+		this.purchaseOrderNumber = purchaseOrderNumber;
+	}
 	
 }

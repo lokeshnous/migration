@@ -102,6 +102,6 @@ public interface CoverLetterService {
 	 */
 	ResCoverLetterDTO getCoverList(int coverletterId);
 
-	ResCoverLetterDTO fetchPublicCoverLetter(long jobSeekerId);
+	ResCoverLetterDTO fetchPublicCoverLetter(long jobSeekerId,String coverLetterId);
 
 }

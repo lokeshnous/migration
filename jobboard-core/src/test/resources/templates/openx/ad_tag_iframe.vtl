@@ -1,6 +1,16 @@
-<iframe id="50bf58b99304b" name="50bf58b99304b" src="http://ox-d.advanceweb.com/w/1.0/afr?auid=$auid&cb=INSERT_RANDOM_NUMBER_HERE&c.keyword=Nursing" frameborder="0" scrolling="no" width="$size.width" height="$size.height"></iframe>
-
+<!--/* OpenX IFrame tag */-->
+#set ($params="auid=$auid")
 #if($vars)
 	#set ($separator="")
-	#foreach($var in $vars.entrySet())$separator$var.key=$esc.url($var.value)#set($separator="&")#end
+	#set ($namespace="c")
+	#set ($params="$params&amp;cb=$random&amp;#foreach($var in $vars.entrySet())$separator$namespace.$var.key=$esc.url($var.value)#set($separator='&amp;')#end")
 #end
+#if($tid)
+	#set ($params="$params&amp;tid=$tid")
+#end
+<iframe id="$id" name="$id" src="http://ox-d.advanceweb.com/w/1.0/afr?$params"
+	frameborder="0" scrolling="no" width="$size.width" height="$size.height">
+	<a href="http://ox-d.advanceweb.com/w/1.0/rc?&amp;cs=$id&amp;$params" >
+		<img src="http://ox-d.advanceweb.com/w/1.0/ai?cs=$id&amp;$params" border="0" alt=""/>
+	</a>
+</iframe>

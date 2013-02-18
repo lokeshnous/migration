@@ -65,7 +65,7 @@ public class BrandingTemplateDelegateImpl implements BrandingTemplateDelegate{
 			listPackage = nsCustomerService.getNSCustomerPackages(userDTO);
 
 		} catch (JobBoardNetSuiteServiceException jbns) {
-			LOGGER.info("Error occurred while getting the Customer details from net suite..Please contact your administrator."
+			LOGGER.error("Error occurred while getting the Customer details from net suite..Please contact your administrator."
 					+ jbns);
 		}
 		return listPackage;

@@ -28,7 +28,7 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 
 	@Autowired
 	private BrandingTemplateDelegate brandingTemplateDelegate;
-	
+
 	/**
 	 * Fetch the job posting Branding Templates
 	 */
@@ -36,6 +36,7 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 	public List<BrandingTemplateDTO> getBrandingTemplate(int userId) {
 		return brandingTemplateDAO.getBrandingTemplate(userId);
 	}
+
 	/**
 	 * Create the job posting Branding Template.
 	 */
@@ -50,7 +51,8 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 	 * View the job posting Branding Template.
 	 */
 	@Override
-	public BrandingTemplateDTO viewEmpBrandTemp(BrandingTemplateDTO brandingTemplatesDTO) {
+	public BrandingTemplateDTO viewEmpBrandTemp(
+			BrandingTemplateDTO brandingTemplatesDTO) {
 		BrandingTemplateDTO empBrandTempDTO = null;
 		empBrandTempDTO = brandingTemplateDAO
 				.viewEmpBrandTemp(brandingTemplatesDTO);
@@ -64,15 +66,16 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 	public BrandingTemplateDTO editBrandingTemplate(int templateId) {
 		return brandingTemplateDAO.editBrandingTemplate(templateId);
 	}
-	
+
 	/**
 	 * Delete the job posting Branding Template.
 	 */
 	@Override
 	public boolean deleteBrandingTemplate(int templateId, int deleteUserId) {
-		return brandingTemplateDAO.deleteBrandingTemplate(templateId, deleteUserId);
+		return brandingTemplateDAO.deleteBrandingTemplate(templateId,
+				deleteUserId);
 	}
-	
+
 	/**
 	 * This method checks if any active job is using the template
 	 * 
@@ -91,10 +94,10 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 	 * @return boolean
 	 */
 	@Override
-	public boolean checkTemplateLimit(int facilityId){
+	public boolean checkTemplateLimit(int facilityId) {
 		return brandingTemplateDAO.checkTemplateLimit(facilityId);
 	}
-	
+
 	/**
 	 * This method checks if the template Name already exists
 	 * 
@@ -104,21 +107,23 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 	 * @return boolean
 	 */
 	@Override
-	public boolean checkTemplateName(int facilityId, String templateName){
+	public boolean checkTemplateName(int facilityId, String templateName) {
 		return brandingTemplateDAO.checkTemplateName(facilityId, templateName);
 	}
-	
+
 	/**
-	 * This method is used to get the net suite customer id based on
-	 * adm facility id.
+	 * This method is used to get the net suite customer id based on adm
+	 * facility id.
+	 * 
 	 * @param int admFacilityID
 	 * @return int nsCustomerID
 	 */
-	public int getNSCustomerIDFromAdmFacility(int admFacilityID){
-		return brandingTemplateDelegate.getNSCustomerIDFromAdmFacility(admFacilityID);
-		
+	public int getNSCustomerIDFromAdmFacility(int admFacilityID) {
+		return brandingTemplateDelegate
+				.getNSCustomerIDFromAdmFacility(admFacilityID);
+
 	}
-	
+
 	/**
 	 * Fetch the employer Branding information.
 	 */
@@ -131,15 +136,16 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 
 	/**
 	 * This method is used the get the Branding Template Purchase information
+	 * 
 	 * @param facilityId
 	 * @return boolean
 	 */
 	@Override
-	public	boolean getBrandPurchaseInfo(int facilityId){
-		
+	public boolean getBrandPurchaseInfo(int facilityId) {
+
 		return brandingTemplateDAO.getBrandPurchaseInfo(facilityId);
 	}
-	
+
 	/**
 	 * This method is used the get the Branding Template Package information
 	 * 
@@ -149,6 +155,16 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 	@Override
 	public boolean getBrandPackage(int productId) {
 		return brandingTemplateDAO.getBrandPackage(productId);
+	}
+
+	@Override
+	public int getParentId(int facilityId) {
+		return brandingTemplateDAO.getParentId(facilityId);
+	}
+
+	@Override
+	public int getParentUserId(int userId, int parentFacilityId) {
+		return brandingTemplateDAO.getParentUserId(userId, parentFacilityId);
 	}
 
 }

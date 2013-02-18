@@ -45,6 +45,7 @@ public class PaymentGatewayDelegateImpl implements PaymentGatewayDelegate{
 		}
 		
 		userDTO.setSalesOrderDTO(orderDetailsDTO.getSalesOrderDTO());
+		userDTO.setDiscountItem(orderDetailsDTO.getDiscountItem());
 		// call to NetSuite WS 
 		userDTO = nsSalesOrderService.createSalesOrder(userDTO);		
 		// save order details 

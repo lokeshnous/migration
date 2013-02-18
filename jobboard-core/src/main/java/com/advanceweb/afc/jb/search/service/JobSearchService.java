@@ -3,10 +3,12 @@ package com.advanceweb.afc.jb.search.service;
 import java.util.List;
 import java.util.Map;
 
+import com.advanceweb.afc.jb.common.AdminSeoDTO;
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
 import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.JobTitleDTO;
 import com.advanceweb.afc.jb.search.JobSearchResultDTO;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
@@ -44,6 +46,13 @@ public interface JobSearchService {
 	 */
 	JobDTO viewJobDetails(long jobId);
 
+	/**
+	 * This method provides the total active job count
+	 * 
+	 * @return jobCount
+	 */
+	long getActiveJobs();
+	
 	/**
 	 * validating job for save/apply.
 	 * 
@@ -85,14 +94,6 @@ public interface JobSearchService {
 	JobApplyTypeDTO applyJobDetails(int jobId);
 
 	/**
-	 * This method is used to get the total number of Active jobs.
-	 * 
-	 * @return long
-	 */
-
-	long getTotalActiveJobs();
-
-	/**
 	 * This method will fetch the last five job details based on posted date for
 	 * the selected employer.
 	 * 
@@ -120,5 +121,24 @@ public interface JobSearchService {
 	/* public List<VstSessioninfo> getSessionId(String newSession_id);
 	 public void insertSessionId(Integer sessioninfo_id);*/
 	 
+	 /**
+	 * The method is used to save the SEO info for job title
+	 * 
+	 * @param seoDTO
+	 */
+	boolean saveJobTitleSeoInfo(AdminSeoDTO seoDTO);
+	
+	 /**
+	 * The method is used to get the SEO info by job title
+	 * 
+	 * @param title
+	 */
+	AdminSeoDTO getSeoInfoByJobTitle(String title);
+	 
+	/**
+	 * The method is used to get the job title list
+	 * 
+	 */
+	List<JobTitleDTO> getJobTitleList();
 	 
 }

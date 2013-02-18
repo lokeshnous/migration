@@ -49,4 +49,6 @@ public interface UserService {
 	
 	public List<SchedulerDTO> getAllJobSeekerList();
 	public UserDTO getAdvancePassUser(String email);
+	public boolean checkUserMail(String email);
+	public UserDTO getAdminInfo(String email);
 }

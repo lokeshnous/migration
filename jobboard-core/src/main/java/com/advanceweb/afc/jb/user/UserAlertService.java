@@ -25,6 +25,14 @@ public interface UserAlertService {
 	boolean saveAlerts(int userId, List<UserAlertDTO> alertDTOs);
 
 	/**
+	 * This method is called to view the selected alerts
+	 * 
+	 * @param userId 
+	 * @return
+	 */
+	List<UserAlertDTO> viewAlerts(int userId);
+
+	/**
 	 * The method is called to view the alerts for employer.
 	 * 
 	 * @param userId

@@ -63,6 +63,8 @@ public interface UserSubscriptionService {
 	 * @return
 	 */
 	List<UserSubscriptionsDTO> getEnewsLetterSubList();
+	
+	List<DropDownDTO> getSubEmailerList();
 
 	/**
 	 * Method to save the selected facility subscriptions to the DB
@@ -79,6 +81,8 @@ public interface UserSubscriptionService {
 	List<DropDownDTO> getSubscriptionsdigital(int userId);
 
 	List<DropDownDTO> getSubscriptionsletter(int userId);
+	
+	List<DropDownDTO> getSubscriptionsEmailer(int userId);
 
 	/**
 	 * Get the subscription list which selected during registration for logged
@@ -88,5 +92,15 @@ public interface UserSubscriptionService {
 	 * @return
 	 */
 	List<UserSubscriptionsDTO> getSelectedSub(int userId);
+
+	int getParentId(int facilityId);
+
+	/**
+	 * This method is to get the publications based on the profession
+	 * 
+	 * @param professionId
+	 * @return
+	 */
+	List<List<DropDownDTO>> getPublications(int professionId);
 
 }

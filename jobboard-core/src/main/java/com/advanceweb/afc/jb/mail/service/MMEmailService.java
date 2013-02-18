@@ -38,7 +38,7 @@ import com.advanceweb.afc.jb.user.dao.UserDao;
 public class MMEmailService implements MMEmail {
 
 	private static final Logger LOGGER = Logger
-			.getLogger("MMEmailService.class");
+			.getLogger(MMEmailService.class);
 	
 	@Autowired
 	private JavaMailSender mailSender;
@@ -148,6 +148,7 @@ public class MMEmailService implements MMEmail {
 						"desc");
 				inputParams.put(MMJBCommonConstants.SCHEDULER_DAY,
 						scheduleDay);
+				inputParams.put(MMJBCommonConstants.FACET_SORT,"index");
 				try {
 					JobSearchResultDTO jobSearchResultDTO = jobSearchService
 							.jobSearch(inputParams, 0, 20);

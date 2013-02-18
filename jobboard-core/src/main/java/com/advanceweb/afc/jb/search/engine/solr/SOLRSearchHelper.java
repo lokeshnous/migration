@@ -94,7 +94,7 @@ public class SOLRSearchHelper {
 		try {
 
 			String testURL = url + "/select";
-			LOGGER.info("Server URL To Check is " + testURL);
+			LOGGER.debug("Server URL To Check is " + testURL);
 
 			final HttpURLConnection connection = (HttpURLConnection) new URL(
 					testURL).openConnection();
@@ -102,7 +102,7 @@ public class SOLRSearchHelper {
 
 			if (connection.getResponseCode() == 200) {
 				serverAccessible = true;
-				LOGGER.info("Server URL " + url + " is accessible.");
+				LOGGER.debug("Server URL " + url + " is accessible.");
 			}
 		} catch (final MalformedURLException e) {
 			serverAccessible = false;

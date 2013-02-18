@@ -43,16 +43,19 @@ public class NewJobsUpdationMailWorkerDaily implements JobWorker {
 		Map<String, String> inputParams = new HashMap<String, String>();
 		for (SaveSearchedJobsDTO saveSearchedJobsDTO : savedSearch) {
 			searchUrl = saveSearchedJobsDTO.getUrl();
-		
+
 			StringTokenizer stringNew = new StringTokenizer(searchUrl, ";");
-			if (null != saveSearchedJobsDTO.getEmailFrequency()) {
-				emailFrequency = Integer.valueOf(saveSearchedJobsDTO
-						.getEmailFrequency());
-				if (emailFrequency > 0
-						&& emailFrequency == MMJBCommonConstants.DAILY_SCHEDULER) {
-					emailService.sendMailBySavedSearch(MMJBCommonConstants.SCHEDULE_DAILY, inputParams,
-							saveSearchedJobsDTO, stringNew);
-				}
+			if (null == saveSearchedJobsDTO.getEmailFrequency()) {
+				saveSearchedJobsDTO
+						.setEmailFrequency(MMJBCommonConstants.DAILY_ALERT);
+			}
+			emailFrequency = Integer.valueOf(saveSearchedJobsDTO
+					.getEmailFrequency());
+			if (emailFrequency > 0
+					&& emailFrequency == MMJBCommonConstants.DAILY_SCHEDULER) {
+				emailService.sendMailBySavedSearch(
+						MMJBCommonConstants.SCHEDULE_DAILY, inputParams,
+						saveSearchedJobsDTO, stringNew);
 			}
 
 		}

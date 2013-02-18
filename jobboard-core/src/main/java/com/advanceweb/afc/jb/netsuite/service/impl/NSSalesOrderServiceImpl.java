@@ -84,10 +84,12 @@ public class NSSalesOrderServiceImpl implements NSSalesOrderService{
 			nsItem = new NSItem();
 			nsItem.setItem(salesItemDTO.getItem());
 			nsItem.setQuantity(salesItemDTO.getQuantity());
+			nsItem.setPurchaseOrderNumber(userDTO.getSalesOrderDTO().getPurchaseOrderNumber());
 			nsItemList.add(nsItem);
 		}
 		nsCustomer.setEntity(String.valueOf(userDTO.getNsCustomerID()));
 		nsCustomer.setItem(nsItemList);
+		nsCustomer.setDiscountItem(userDTO.getDiscountItem());
 		if(MMJBCommonConstants.INVOICE.equals(userDTO.getSalesOrderDTO().getPaymentMethod())){
 			nsCustomer.setPaymentMethod(userDTO.getSalesOrderDTO().getPaymentMethod());
 		}

@@ -1,13 +1,9 @@
 package com.advanceweb.afc.jb.login.service.impl;
 
-import java.util.Date;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.LoginDTO;
-import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.login.dao.LoginFormDAO;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
@@ -44,22 +40,6 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public LoginDTO getUserEmailDetails(String emailAddress) {
 		return loginFormDAO.getUserEmailDetails(emailAddress);
-	}
-
-	/**
-	 * This method to get the Date range data
-	 * 
-	 * @param startFrom
-	 * @param endFrom
-	 * @param selEmployerId
-	 * 
-	 */
-
-	@Override
-	public List<MetricsDTO> employerMetrics(Date startFrom, Date endFrom,
-			int selEmployerId) {
-		// TODO Auto-generated method stub
-		return loginFormDAO.employerMetrics(startFrom, endFrom, selEmployerId);
 	}
 
 	/**

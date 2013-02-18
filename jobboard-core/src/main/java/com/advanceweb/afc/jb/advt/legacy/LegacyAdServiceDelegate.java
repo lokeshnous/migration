@@ -1,4 +1,4 @@
-package com.advanceweb.afc.jb.advt.service.ads;
+package com.advanceweb.afc.jb.advt.legacy;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -87,9 +87,9 @@ public class LegacyAdServiceDelegate implements AdServiceDelegate {
 
 		URL url = new URL(sbUrl.toString());
 
-		LOGGER.info("Advertisement URL = " + url.toExternalForm());
-		LOGGER.info("Advertisement size = " + size);
-		LOGGER.info("Advertisement Position = " + position);
+		LOGGER.debug("Advertisement URL = " + url.toExternalForm());
+		LOGGER.debug("Advertisement size = " + size);
+		LOGGER.debug("Advertisement Position = " + position);
 		return url;
 	}
 

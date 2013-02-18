@@ -36,7 +36,7 @@ public class DateUtils {
 			}
 
 		} catch (ParseException e) {
-			LOGGER.info("convertSQLDateTimeToStdDateTime Exception");
+			LOGGER.error("convertSQLDateTimeToStdDateTime Exception",e);
 		}
 		return stdDate;
 	}
@@ -61,7 +61,7 @@ public class DateUtils {
 
 			}
 		} catch (ParseException e) {
-			LOGGER.info("convertSQLDateToStdDateString Exception");
+			LOGGER.error("convertSQLDateToStdDateString Exception",e);
 		}
 		return stdDate;
 	}
@@ -90,7 +90,7 @@ public class DateUtils {
 
 			}
 		} catch (ParseException e) {
-			LOGGER.info("convertDateStringToSQLDate Exception");
+			LOGGER.error("convertDateStringToSQLDate Exception",e);
 		}
 		return sqltDate;
 	}
@@ -118,7 +118,7 @@ public class DateUtils {
 
 			}
 		} catch (ParseException e) {
-			LOGGER.info("convertDateStringToSQLDate Exception");
+			LOGGER.error("convertDateStringToSQLDate Exception",e);
 		}
 		return sqltDate;
 	}
@@ -138,10 +138,29 @@ public class DateUtils {
 		try {
 			convertedDate = (java.util.Date) dateFormat.parse(date);
 		} catch (ParseException e) {
-			LOGGER.info(e);
+			LOGGER.error(e);
 		}
 		return convertedDate;
 	}
-
-
+	
+	/**
+	 * This method is used to convert a String date to display date pattern.
+	 * EEE MMM d HH:mm:ss z yyyy pattern to MM/dd/yyyy pattern
+	 * 
+	 * @param date
+	 * @return Date object
+	 */
+	public static String convertDateStringToDisplayDatePattern(String date) {
+		String convertedDate = null;
+		try {
+			convertedDate = new SimpleDateFormat(
+					MMJBCommonConstants.DISP_DATE_PATTERN, Locale.ENGLISH)
+					.format(new SimpleDateFormat(
+							MMJBCommonConstants.NEWDATE_PATTERN, Locale.ENGLISH)
+							.parse(date));
+		} catch (ParseException e) {
+			LOGGER.error(e.getMessage(), e);
+		}
+		return convertedDate;
+	}
 }

@@ -28,9 +28,6 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 public class LuceneIndex {
 	private static final Logger LOGGER = Logger.getLogger(LuceneIndex.class);
 
-	public static final String FIELD_KEYWORD = "keyword";
-	public static final String FIELD_RELATED = "related";
-
 	private static final Version LUCENE_VERSION = Version.LUCENE_36;
 
 	private LuceneIndexer indexer;

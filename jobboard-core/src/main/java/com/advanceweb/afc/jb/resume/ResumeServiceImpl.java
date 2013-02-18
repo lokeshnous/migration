@@ -13,7 +13,9 @@ import com.advanceweb.afc.jb.common.LanguageDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
+import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.resume.dao.ResumeDao;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 /**
  * anilm
@@ -140,8 +142,8 @@ public class ResumeServiceImpl implements ResumeService {
 	 * @return ResumeDTO
 	 */
 	@Override
-	public ResumeDTO fetchPublicResumeByUserId(long jobSeekerId) {
-		return resumeDao.fetchPublicResumeByUserId(jobSeekerId);
+	public ResumeDTO fetchPublicResumeByUserId(long jobSeekerId,int uploadResumeId) {
+		return resumeDao.fetchPublicResumeByUserId(jobSeekerId,uploadResumeId);
 	}
 
 	@Override
@@ -168,6 +170,18 @@ public class ResumeServiceImpl implements ResumeService {
 	 */
 	public boolean moveResumesToFolder(List<String> publishResumeIdArrList, int userId){
 		return resumeDao.moveResumesToFolder(publishResumeIdArrList, userId);
+	}
+
+	@Override
+	public boolean saveBlockedCompanydetails(ResumeDTO resumeDTO)throws JobBoardServiceException {
+		boolean result = false;
+		try {
+			result= resumeDao.saveBlockedCompanydetails(resumeDTO);
+		} catch (JobBoardDataException jdex) {
+			throw new JobBoardServiceException(
+					"Error while saving Blocked comapny details..." + jdex);
+		}
+		return result;
 	}
 	
 

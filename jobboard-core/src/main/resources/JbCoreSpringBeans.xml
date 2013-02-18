@@ -27,11 +27,11 @@
 			<map>
 				<!-- The values should be provided with no space between field names -->
 				<entry key="KEYWORD-FILTER-JB2"
-					value="keywords,rows,start,firstFQParam,secondFQParam,thirdFQParam,fouthFQParam,sessionid,searchName,search_seq,sortParam,sortOrder" />
+					value="keywords,rows,start,firstFQParam,secondFQParam,thirdFQParam,fouthFQParam,sessionid,searchName,search_seq,sortParam,sortOrder,facetSort" />
 				<entry key="LOCATION-FILTER-JB2"
-					value="position,radius,keywords,rows,start,firstFQParam,secondFQParam,thirdFQParam,fouthFQParam,sessionid,searchName,search_seq,sortParam,sortOrder" />
+					value="position,radius,keywords,rows,start,firstFQParam,secondFQParam,thirdFQParam,fouthFQParam,sessionid,searchName,search_seq,sortParam,sortOrder,facetSort" />
 				<entry key="BROWSE-JB2"
-					value="sortParam,sortOrder,facetSort,keywords,rows,start,firstFQParam,secondFQParam,thirdFQParam,fouthFQParam,fifthFQParam,sessionid,searchName,search_seq" />
+					value="sortParam,sortOrder,facetSort,keywords,rows,start,firstFQParam,secondFQParam,thirdFQParam,fouthFQParam,fifthFQParam,sessionid,searchName,search_seq,facilityIdNameFQParam,facilityIdFQParam" />
 			</map>
 		</constructor-arg>
 	</bean>
@@ -124,12 +124,12 @@
 	<bean id="adServiceDelegate" class="com.advanceweb.afc.jb.advt.openx.OpenxAdServiceDelegate" />
 
 	<bean id="keywordIndexer"
-		class="com.advanceweb.common.index.service.impl.ExcelKeywordIndexer">
-		<constructor-arg type="java.lang.String" value="/import/OpenX-JB2 Mapping.xlsx" />
+		class="com.advanceweb.common.ads.keyword.index.ExcelKeywordIndexer">
+		<constructor-arg type="java.lang.String" value="/import/openx_content_topics.xlsx" />
 	</bean>
 
 	<bean id="keywordQueryBuilder"
-		class="com.advanceweb.common.index.service.impl.KeywordQueryBuilder" />
+		class="com.advanceweb.common.ads.keyword.index.KeywordQueryBuilder" />
 
 	<bean id="keywordIndex" class="com.advanceweb.common.index.lucene.LuceneIndex">
 		<constructor-arg ref="keywordIndexer" />
@@ -138,14 +138,18 @@
 	</bean>
 
 	<bean id="locationIndexer"
-		class="com.advanceweb.common.index.service.impl.LocationIndexer" />
+		class="com.advanceweb.common.ads.location.index.LocationIndexer" />
 
 	<bean id="locationQueryBuilder"
-		class="com.advanceweb.common.index.service.impl.LocationQueryBuilder" />
+		class="com.advanceweb.common.ads.location.index.LocationIndexQueryBuilder" />
 		
 	<bean id="locationIndex" class="com.advanceweb.common.index.lucene.LuceneIndex">
 		<constructor-arg ref="locationIndexer" />
 		<constructor-arg ref="locationQueryBuilder" />
 		<constructor-arg type="java.lang.String" value="${user.home}/jobboard/index/location"/>
+	</bean>
+	
+	<bean id ="locationSource" class="com.advanceweb.common.ads.location.index.ExcelLocationSource">
+		<constructor-arg value="/import/openx_locations.xlsx"/>
 	</bean>
 </beans>

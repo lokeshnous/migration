@@ -3,7 +3,7 @@
 	if (!window.OX_ads) { OX_ads = []; }
 #if($vars)
 	#set ($separator="")
-	OX_ads.push({ "auid" : "$auid" ,"vars":{#foreach($var in $vars.entrySet())$separator"$var.key":"$var.value"#set($separator=",")#end}});
+	OX_ads.push({ "auid" : "$auid" #if($tid),"tid":"$tid"#end,"vars":{#foreach($var in $vars.entrySet())$separator"$var.key":"$var.value"#set($separator=",")#end}});
 ##// Push the ad	
 ##OX_ads.push({ "auid" : "$auid" ,"vars":{"keyword" : "$vars.get("keyword")"}});
 
@@ -22,6 +22,9 @@ $esc.url("hello <there>")
 	#set ($params="auid=$auid&cb=INSERT_RANDOM_NUMBER_HERE&#foreach($var in $vars.entrySet())$separator$namespace.$var.key=$esc.url($var.value)#set($separator='&')#end")
 #else
 	#set ($params="") 
+#end
+#if($tid)
+	#set ($params="$params&amp;tid=$tid")
 #end
 <iframe id="50bff408737b1" name="50bff408737b1" src="http://ox-d.advanceweb.com/w/1.0/afr?$params"
 	frameborder="0" scrolling="no" width="$size.width" height="$size.height">

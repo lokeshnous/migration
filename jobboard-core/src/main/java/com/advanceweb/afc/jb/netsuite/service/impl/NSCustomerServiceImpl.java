@@ -20,7 +20,6 @@ import net.sf.json.JSONSerializer;
 
 import org.apache.cxf.helpers.IOUtils;
 import org.apache.log4j.Logger;
-import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +33,7 @@ import com.advanceweb.afc.jb.netsuite.NetSuiteHelper;
 import com.advanceweb.afc.jb.netsuite.service.NSCustomerService;
 import com.advanceweb.afc.jb.netsuite.service.NetSuiteMethod;
 import com.advanceweb.afc.jb.service.exception.JobBoardNetSuiteServiceException;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 /**
  * This service class helps to call the different WebServices from NetSuite.
@@ -58,7 +58,10 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 
 	private static final String RECORD_TYPE = "customer";
 	private static final String IS_PERSION_STRING = "isperson";
-	private static final String IS_PERSON_VAL = "T";
+	private static final String IS_PERSON_VAL = "F";
+	private static final String COMPANY_NAME = "companyname";
+	private static final String COUNTRY = "country";
+	private static final String USA = "USA";
 
 	private static final String BASE_URL_STRING = "baseUrl";
 	private static final String SCRIPT_STRING = "script";
@@ -115,9 +118,9 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 
 		NSCustomer nsCustomer = getNSCustomerForCreateUser(userDTO);
 		String jsonCustomer = JsonUtil.toJson(nsCustomer);
-		JSONObject json = getIsPerson(jsonCustomer);
+		JSONObject json = getIsPerson(jsonCustomer, userDTO);
 
-		LOGGER.info("Customer Json sending to NetSuite=>" + json.toString());
+		LOGGER.debug("Customer Json sending to NetSuite=>" + json.toString());
 
 		Map<String, String> queryparamMap = createCustomerQueryMap();
 		Response response = netSuiteMethod.netSuitePost(queryparamMap,
@@ -141,10 +144,10 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 		NSCustomer nsCustomer = getNSCustomerForUpdateUser(userDTO);
 		String jsonCustomer = JsonUtil.toJson(nsCustomer);
 
-		JSONObject json = getIsPerson(jsonCustomer);
+		JSONObject json = getIsPerson(jsonCustomer, userDTO);
 
 		Map<String, String> queryparamMap = updateCustomerQueryMap();
-		LOGGER.info("Json Data sent to NS is " + json);
+		LOGGER.debug("Json Data sent to NS is " + json);
 		Response response = netSuiteMethod.netSuitePost(queryparamMap,
 				json.toString());
 
@@ -397,8 +400,9 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 		try {
 			jsonResponse = IOUtils.readStringFromStream((InputStream) response
 					.getEntity());
+			LOGGER.debug("jsonResponse: "+jsonResponse);
 			if (jsonResponse.contains(ERROR_STRING)) {
-				LOGGER.info("Error occurred while getting the response from NetSuite.");
+				LOGGER.error("Error occurred while getting the response from NetSuite.");
 				throw new JobBoardNetSuiteServiceException(
 						"Error occurred while getting the response from NetSuite.");
 			} else if (jsonResponse.contains("already exist")) {
@@ -432,11 +436,11 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 		String jsonResponse = null;
 		UserDTO userDTO = new UserDTO();
 		try {
-			LOGGER.info("jSON response=>" + response.toString());
 			jsonResponse = IOUtils.readStringFromStream((InputStream) response
 					.getEntity());
+			LOGGER.debug("jSON response=>" + jsonResponse);
 			if (jsonResponse.contains(ERROR_STRING)) {
-				LOGGER.info("Error occurred while record updation in Net Suite.");
+				LOGGER.error("Error occurred while record updation in Net Suite.");
 				throw new JobBoardNetSuiteServiceException(
 						"Error occurred while updating record in NetSuite.");
 			} else if (jsonResponse.contains("updated")) {
@@ -471,7 +475,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 					.getEntity());
 
 			if (jsonResponse.contains(ERROR_STRING)) {
-				LOGGER.info(NS_ERROR2);
+				LOGGER.error(NS_ERROR2);
 				throw new JobBoardNetSuiteServiceException(
 						NS_ERROR2);
 			} else {
@@ -515,7 +519,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 					.getEntity());
 
 			if (strResponse.contains(ERROR_STRING)) {
-				LOGGER.info(NS_ERROR2);
+				LOGGER.error(NS_ERROR2);
 				throw new JobBoardNetSuiteServiceException(
 						NS_ERROR2);
 			} else {
@@ -604,7 +608,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 					+ e);
 		}
 
-		LOGGER.info("IS_INVOICE_ENABLED===>"
+		LOGGER.debug("IS_INVOICE_ENABLED===>"
 				+ jsonObject.get(IS_INVOICE_ENABLED));
 
 		return userDTO;
@@ -622,19 +626,23 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 	private List<String> setContactEmailList(
 			org.codehaus.jettison.json.JSONObject jsonObject)
 			throws JSONException {
-		JSONArray jsonArray = new JSONArray();
+//		JSONArray jsonArray = new JSONArray();
 		List<String> emailList = new ArrayList<String>();
-		if (jsonObject.has(CONTACT_ROLES_STRING)) {
-			jsonArray = (JSONArray) jsonObject.get(CONTACT_ROLES_STRING);
+//		if (jsonObject.has(CONTACT_ROLES_STRING)) {
+//			jsonArray = (JSONArray) jsonObject.get("email");
+//		}
+//		for (int index = 0; index < jsonArray.length(); index++) {
+//			org.codehaus.jettison.json.JSONObject innerJsonObj = jsonArray
+//					.getJSONObject(index);
+//			if (innerJsonObj.has(EMAIL_STRING)) {
+//				emailList.add(innerJsonObj.getString(EMAIL_STRING));
+//			}
+//		}
+		
+		if(jsonObject.has(EMAIL_STRING)){
+		emailList.add(jsonObject.get(EMAIL_STRING).toString());
 		}
-		for (int index = 0; index < jsonArray.length(); index++) {
-			org.codehaus.jettison.json.JSONObject innerJsonObj = jsonArray
-					.getJSONObject(index);
-			if (innerJsonObj.has(EMAIL_STRING)) {
-				emailList.add(innerJsonObj.getString(EMAIL_STRING));
-			}
-		}
-		LOGGER.info("Email List is " + emailList);
+		LOGGER.debug("Email List is " + emailList);
 		return emailList;
 	}
 
@@ -653,7 +661,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 			org.codehaus.jettison.json.JSONObject jsonObj = (org.codehaus.jettison.json.JSONObject) jsonObject
 					.get(PACKAGE_TYPE_STRING);
 			if (jsonObj.has(NAME_STRING)) {
-				LOGGER.info("PACKAGE TYP IS " + jsonObj.get(NAME_STRING));
+				LOGGER.debug("PACKAGE TYP IS " + jsonObj.get(NAME_STRING));
 				userDTO.setPackageName(jsonObj.get(NAME_STRING).toString());
 			}
 		}
@@ -667,11 +675,15 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 	 * @return JSONObject
 	 */
 
-	private JSONObject getIsPerson(String jsonCustomer) {
+	private JSONObject getIsPerson(String jsonCustomer, UserDTO userDTO) {
 		JSONObject json = (JSONObject) JSONSerializer.toJSON(jsonCustomer
 				.toLowerCase(Locale.ENGLISH));
 		json.put(IS_PERSION_STRING, json.getString(IS_PERSION_STRING)
 				.toUpperCase());
+		json.put(COMPANY_NAME, userDTO.getCompany());
+		json.put(COUNTRY, userDTO.getCountry().equals(USA) ? userDTO
+				.getCountry().substring(0, 2).toUpperCase() : userDTO
+				.getCountry().toUpperCase());
 		return json;
 	}
 
@@ -708,7 +720,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 		try {
 			convertedDate = dateFormat.parse(date);
 		} catch (ParseException e) {
-			LOGGER.info(e);
+			LOGGER.error(e);
 		}
 		return convertedDate;
 	}

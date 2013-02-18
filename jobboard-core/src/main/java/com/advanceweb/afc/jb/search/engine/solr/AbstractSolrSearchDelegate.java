@@ -98,8 +98,8 @@ public abstract class AbstractSolrSearchDelegate {
 
 		if (serverAccessible) {
 			QueryResponse response = null;
-			if(!inputParams.get(SearchParamDTO.KEYWORDS).equalsIgnoreCase("*")){
-				
+			if (!inputParams.get(SearchParamDTO.KEYWORDS).equalsIgnoreCase("*")){
+	
 				// Merge the parameters
 				List<SearchParamDTO> queryParams = searchParamBuilder.buildParams(
 						queryDTO.getmSrchParamList(), inputParams);
@@ -267,7 +267,13 @@ public abstract class AbstractSolrSearchDelegate {
 		return resultDTO;
 	}
 	
-	List<SearchParamDTO> createParamForAllJobs(Map<String, String> inputParams) {
+	/**
+	 * The method helps to create the search params to get the all jobs
+	 * 
+	 * @param inputParams
+	 * @return
+	 */
+	private List<SearchParamDTO> createParamForAllJobs(Map<String, String> inputParams) {
 		List<SearchParamDTO> result = new ArrayList<SearchParamDTO>();
 		// TODO create and use a constructor
 		SearchParamDTO resultParam = new SearchParamDTO();

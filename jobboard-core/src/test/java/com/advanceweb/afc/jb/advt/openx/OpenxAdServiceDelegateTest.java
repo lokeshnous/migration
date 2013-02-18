@@ -20,21 +20,29 @@ public class OpenxAdServiceDelegateTest extends ServiceTestBase {
 	@Autowired
 	private OpenxAdServiceDelegate openxAdServiceDelegate;
 
-	private AdSize[] adSizes = { AdSize.IAB_LEADERBOARD, AdSize.IAB_MEDIUM_RECTANGLE,
-			new AdSize(120, 90) };
-	private String[] auids = { "284880", "284879", "309613" };
+	private AdSize[] adSizes = { AdSize.IAB_LEADERBOARD,
+			AdSize.IAB_MEDIUM_RECTANGLE
+	/* , new AdSize(120, 90) */};
+	private String[] auids = { "284880", "323620"/* , "309613" */};
 
 	@Test
 	public void testGetBanner() {
 		for (int i = 0; i < adSizes.length; i++) {
 			AdSize adSize = adSizes[i];
 			String auid = auids[i];
-			Banner banner = openxAdServiceDelegate.getBanner(
-					new ClientContext(), adSize, null);
+			Banner banner = openxAdServiceDelegate.getBanner(getTestContext(),
+					adSize, null);
 			String tag = banner.getTag();
 			LOGGER.debug(tag);
 			assertTrue(String.format(ERROR_MESSAGE, adSize, auid),
 					tag.indexOf(auid) >= 0);
 		}
+	}
+
+	private ClientContext getTestContext() {
+		ClientContext ctx = new ClientContext();
+		ctx.setProperty(ClientContext.USER_CURRENT_SEARCH, "Nursing");
+		ctx.setProperty(ClientContext.CLIENT_LOCATION, "Irving, TX");
+		return ctx;
 	}
 }

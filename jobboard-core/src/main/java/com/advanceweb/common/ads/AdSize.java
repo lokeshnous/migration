@@ -1,5 +1,13 @@
 package com.advanceweb.common.ads;
 
+/**
+ * This class is used to represent the advertisement sizes. The standard IAB
+ * sizez are added as constants in this class for reference within the
+ * application.
+ * 
+ * @author sukeshnambiar
+ * 
+ */
 public class AdSize {
 
 	// Standard IAB sizes
@@ -41,12 +49,27 @@ public class AdSize {
 	private long height;
 	private String name;
 
+	/**
+	 * Copy constructore. Create a copy of an existing adsize
+	 * 
+	 * @param size
+	 */
 	public AdSize(AdSize size) {
 		width = size.width;
 		height = size.height;
 		name = size.name;
 	}
 
+	/**
+	 * Constructs and AdSize from the given inputs
+	 * 
+	 * @param name
+	 *            Name of the size
+	 * @param width
+	 *            width in pixels
+	 * @param height
+	 *            height in pixels
+	 */
 	public AdSize(String name, long width, long height) {
 		this.width = width;
 		this.height = height;

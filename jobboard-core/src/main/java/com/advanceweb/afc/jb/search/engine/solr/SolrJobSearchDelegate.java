@@ -201,6 +201,7 @@ public class SolrJobSearchDelegate extends AbstractSolrSearchDelegate
 		jobDTO.setHidePostcode(jobSearchDTO.getHidePostcode());
 		jobDTO.setHideCountry(jobSearchDTO.getHideCountry());
 		jobDTO.setCountry(jobSearchDTO.getCountry());
+		jobDTO.setFacilityId(jobSearchDTO.getFacilityId());
 
 		return jobDTO;
 
@@ -222,7 +223,7 @@ public class SolrJobSearchDelegate extends AbstractSolrSearchDelegate
 	private LocationDTO getLocationFromCityStateOrZipCode(String cityState)
 			throws JobBoardServiceException {
 		List<LocationDTO> locations = null;
-		if (MMUtils.isIntNumber(cityState)) {
+		if (MMUtils.isAlphaNumeric(cityState)) {
 			try {
 				locations = locationDAO.getLocationByPostcode(cityState);
 			} catch (JobBoardDataException e) {

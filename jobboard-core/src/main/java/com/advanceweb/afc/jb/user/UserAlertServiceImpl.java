@@ -116,4 +116,14 @@ public class UserAlertServiceImpl implements UserAlertService {
 	public boolean saveAlerts(int userId, List<UserAlertDTO> alertDTOs) {
 		return alertDAO.saveAlerts(userId, alertDTOs);
 	}
+
+	/**
+	 * This method is called to view the selected alerts
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public List<UserAlertDTO> viewAlerts(int userId) {
+		return alertDAO.viewAlerts(userId);
+	}
 }

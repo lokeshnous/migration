@@ -122,5 +122,21 @@ public class ManageFeatureEmployerProfileService implements
 		return manageFeaturedEmployerProfileDAO.getEmployerListCount();
 	}
 	
+	@Override
+	public int getParentId(int facilityId){
+		return manageFeaturedEmployerProfileDAO.getParentId(facilityId);
+	}
+	
+	/**
+	 * This method returns the facilityId of FACILITY_GROUP if the facility
+	 * belongs to FACILITY_GROUP
+	 * 
+	 * @param facilityId
+	 * @return facilityId
+	 */
+	@Override
+	public int getParentGroup(int facilityId){
+		return manageFeaturedEmployerProfileDAO.getParentGroup(facilityId);
+	}
 
 }

@@ -63,6 +63,7 @@ public class NSCustomer {
 	private boolean custEntityFeaturedEmployee;
 	
 	private List<NSItem> item = new ArrayList<NSItem>();
+	private String discountItem;
 	
 	public boolean isCustEntityFeaturedEmployee() {
 		return custEntityFeaturedEmployee;
@@ -263,6 +264,20 @@ public class NSCustomer {
 
 	public void setRecordType(String recordType) {
 		this.recordType = recordType;
+	}
+
+	/**
+	 * @return the discounItem
+	 */
+	public String getDiscountItem() {
+		return discountItem;
+	}
+
+	/**
+	 * @param discounItem the discounItem to set
+	 */
+	public void setDiscountItem(String discounItem) {
+		this.discountItem = discounItem;
 	}
 
 }
