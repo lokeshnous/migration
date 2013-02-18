@@ -64,6 +64,16 @@ public class AgencyRegistrationForm {
 	private String serviceProviderName;
 	private String socialProfileId;
 	private boolean oldUSer;
+	private boolean advPassUser;
+
+	
+	public boolean isAdvPassUser() {
+		return advPassUser;
+	}
+
+	public void setAdvPassUser(boolean advPassUser) {
+		this.advPassUser = advPassUser;
+	}
 
 	public boolean isOldUSer() {
 	return oldUSer;

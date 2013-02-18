@@ -7,7 +7,13 @@ jQuery.fn.displaypopup = function(detailClass, width, height) {
         minW: width, minH: height,
         w: width, h: height
       },
-      callbacks: {
+      closeOnEscape: false,
+      keyHandle: function(event) {
+    	  if (event.keyCode == 13){
+    		  return false;
+    	  }
+      },
+      callbacks: {   	
         beforeShowCont: function() { 
             width = $('.nyroModalCont').width();
             height = $('.nyroModalCont').height();
@@ -15,8 +21,5 @@ jQuery.fn.displaypopup = function(detailClass, width, height) {
             $('.nyroModalCont iframe').css('height', height);
         }
       }      
-    });
-
-	
-	
+    });	
 	};	

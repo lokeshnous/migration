@@ -157,7 +157,7 @@
             <div class="main">
 
 				<div class="header_wrapper">
-				<div class="socialLoginLogo"><a href="">
+				<div class="socialLoginLogo"><a href="<%=request.getContextPath()%>/healthcarejobs/index.html">
           <div class="logo"></div>
           </a></div> 
 

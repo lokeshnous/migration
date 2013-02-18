@@ -20,6 +20,10 @@
 		    	        }
 		    	    }
 		    	});
+		    	
+		    	$("#cancel").live("keydown",function(){		    		
+		    		$("#emailId").focus();		    				    		
+		    	});
 
 		 		$('#save').click(function(){			
 		 			
@@ -94,7 +98,7 @@
             <div class="popUpButtonRow">
             <span class="floatLeft marginTop10">
              <input type="button" id="save" value="Save" class="orange cursor"/><!-- <a href="" class="btn_sm orange">Save</a> --> 
-             <input type="button" value="Cancel" onclick="cancelProcess()"
+             <input type="button" id="cancel" value="Cancel" onclick="cancelProcess()"
 									class="orange cursor" name="Cancel" /></span>
              
              <!-- <a href="#" onclick="parent.$.nmTop().close();"  class="btn_sm orange">Cancel</a> -->

@@ -14,6 +14,10 @@ import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.social.support.URIBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -24,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.advanceweb.afc.common.controller.AbstractController;
 import com.advanceweb.afc.jb.advt.service.AdService;
@@ -293,7 +298,7 @@ public class LoginFormController extends AbstractController{
 				try {
 					userService.saveNewPWD(emailAddress, formDTO.getPassword());
 				} catch (JobBoardException jbex) {
-					LOGGER.info("Exception while saving temporary password "
+					LOGGER.error("Exception while saving temporary password "
 							+ jbex);
 				}
 				mailBody.append(emailConfiguration
@@ -313,7 +318,7 @@ public class LoginFormController extends AbstractController{
 
 			} catch (Exception e) {
 				// loggers call
-				LOGGER.info("ERROR  ");
+				LOGGER.error("ERROR",e);
 			}
 			finalresult = MMJBCommonConstants.OK_STRING;
 		} else {
@@ -321,5 +326,57 @@ public class LoginFormController extends AbstractController{
 		}
 
 		return finalresult;
+	}
+	
+	
+	
+	
+	@RequestMapping(value = "/mailLogin", method = RequestMethod.GET)
+	public RedirectView redirectToDashbord(@RequestParam(value = "page", required = false) String page) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if(authentication!=null && authentication.getAuthorities().contains(
+				new SimpleGrantedAuthority(
+						MMJBCommonConstants.ROLE_JOB_SEEKER))){
+			
+			
+			return redirect(URIBuilder.fromUri("/jobSeeker/jobSeekerDashBoard.html").build().toString());
+		}
+		else if(authentication.getAuthorities().contains(
+				new SimpleGrantedAuthority(
+						MMJBCommonConstants.ROLE_FACILITY))
+				|| authentication.getAuthorities().contains(
+						new SimpleGrantedAuthority(
+								MMJBCommonConstants.ROLE_FACILITY_GROUP))){
+			
+			
+			return redirect(URIBuilder.fromUri("/employer/employerDashBoard.html").build().toString());
+		}
+		else if(authentication.getAuthorities().contains(
+				new SimpleGrantedAuthority(
+						MMJBCommonConstants.ROLE_FACILITY_SYSTEM))){
+			
+			
+			return redirect(URIBuilder.fromUri("/agency/agencyDashboard.html").build().toString());
+		}
+		else{
+			if(page!=null && page.equals("jobSeeker")){
+				return redirect(URIBuilder.fromUri("/commonLogin/login.html").queryParam("page", "jobSeeker").build().toString());
+			}
+			else if(page!=null && page.equals("employer")){
+				return redirect(URIBuilder.fromUri("/commonLogin/login.html").queryParam("page", "employer").build().toString());
+			}
+			else if(page!=null && page.equals("agency")){
+				return redirect(URIBuilder.fromUri("/commonLogin/login.html").queryParam("page", "agency").build().toString());
+			}
+			else{
+			return redirect(URIBuilder.fromUri("/healthcarejobs/index.html").build().toString());
+			}
+		}
+		
+		
+	}
+	// internal helper method
+	private RedirectView redirect(String url) {
+		return new RedirectView(url, true);
 	}
 }

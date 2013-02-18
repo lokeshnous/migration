@@ -124,6 +124,7 @@ public class TransformAgencyRegistration {
 		dto.setEmailId(form.getEmailId());
 		dto.setUserId(form.getUserId());
 		dto.setOldUser(form.isOldUSer());
+		dto.setAdvPassUser(form.isAdvPassUser());
 		return dto;
 	}
 

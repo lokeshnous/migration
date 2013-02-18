@@ -24,6 +24,7 @@ public class ManageFacilityForm {
 	private String facilityCountry;
 	private String phoneNumber;
 	private String templateId;
+	private boolean readOnly=false;
 	/**
 	 * @return the facilityType
 	 */
@@ -155,5 +156,17 @@ public class ManageFacilityForm {
 	 */
 	public void setTemplateId(String templateId) {
 		this.templateId = templateId;
+	}
+	/**
+	 * @return the readOnly
+	 */
+	public boolean isReadOnly() {
+		return readOnly;
+	}
+	/**
+	 * @param readOnly the readOnly to set
+	 */
+	public void setReadOnly(boolean readOnly) {
+		this.readOnly = readOnly;
 	}
 }

@@ -7,7 +7,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -62,6 +61,7 @@ import com.advanceweb.afc.jb.job.service.JobPostService;
 import com.advanceweb.afc.jb.login.service.LoginService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.resume.web.controller.SearchResumeForm;
+import com.advanceweb.afc.jb.search.service.JobSearchService;
 import com.advanceweb.afc.jb.search.service.ResumeSearchService;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.afc.jb.user.UserSubscriptionService;
@@ -110,6 +110,9 @@ public class EmployerDashBoardController extends AbstractController {
 	@Autowired
 	private LoginService loginService;
 	
+	@Autowired
+	private JobSearchService jobSearchService;
+	
 	private @Value("${funnelChartPath}")
 	String funnelChartPath;
 	
@@ -130,6 +133,11 @@ public class EmployerDashBoardController extends AbstractController {
 		String enableAccess = "true";
 		String enablePostEditAccess = "true";
 		ModelAndView model = new ModelAndView();
+		if(null !=session.getAttribute("brandingTemplate") ){
+			boolean brandingTemplate = (Boolean) session.getAttribute("brandingTemplate");
+			request.setAttribute("brandingTemplate", brandingTemplate);
+			session.removeAttribute("brandingTemplate");
+		}
 		int facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		int userId = (Integer) session
@@ -165,13 +173,12 @@ public class EmployerDashBoardController extends AbstractController {
 
 		}
 
-
 		// Get All facilities
 		List<DropDownDTO> companyList = populateDropdownsService
 				.populateCompanyNames(facilityId, true);
 
 		// Retrieve Current subscriptions of the user
-		List<DropDownDTO> currentSubs = getCurrentSubscriptions(facilityId);
+		List<DropDownDTO> currentSubs = getCurrentSubscriptions(mainFacilityId);
 		Set<DropDownDTO> set = new HashSet<DropDownDTO>();
 		for (DropDownDTO dto : currentSubs) {
 			set.add(dto);
@@ -276,73 +283,63 @@ public class EmployerDashBoardController extends AbstractController {
 	 * @return
 	 */
 	private List<MetricsDTO> getMetricsDetails(int facilityId) {
+		long views = 0;
+		long clicks = 0;
+		long applies = 0;
+
 		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
-		MetricsDTO metricsDTO = new MetricsDTO();
 		// Get the job post details of logged in employer
-		List<MetricsDTO> metricsDTOs = facilityService
-				.getJobPostTotal(facilityId);
+		MetricsDTO metricsDTO = facilityService.getJobPostTotal(facilityId);
+		
+		views = metricsDTO.getViews();
+		clicks = metricsDTO.getClicks();
+		applies = metricsDTO.getApplies();
 
 		// Getting metrics values from look up table
 		List<DropDownDTO> metricsList = populateDropdownsService
 				.populateDropdown("Metrics");
-
-		// jbPostTotalList will be having job post total details for metrics
-		long views = 0;
-		long clicks = 0;
-		long applies = 0;
-		int size = metricsDTOs.size();
-		for (int i = 0; i < metricsDTOs.size(); i++) {
-			MetricsDTO dto = new MetricsDTO();
-			dto = (MetricsDTO) metricsDTOs.get(i);
-			views = views + dto.getViews();
-			clicks = clicks + dto.getClicks();
-			applies = applies + dto.getApplies();
-		}
 		metricsDTO.setMetricsName(metricsList.get(0).getOptionName());
-		metricsDTO.setViews(views);
-		metricsDTO.setClicks(clicks);
-		metricsDTO.setApplies(applies);
+		
+		// jbPostTotalList will be having job post total details for metrics
 		jbPostTotalList.add(0, metricsDTO);
-		metricsDTO = new MetricsDTO();
+		MetricsDTO avgMetricsDTO = new MetricsDTO();
 
 		// Calculating average per job posting
 		long avgViews = 0;
 		long avgClicks = 0;
 		long avgApplies = 0;
-		if (size > 0) {
-			avgViews = Math.round((double) views / size);
-			avgClicks = Math.round((double) clicks / size);
-			avgApplies = Math.round((double) applies / size);
+		long totalJobs = 0;
+
+		totalJobs = facilityService.getJobsByFacility(facilityId);
+		if (totalJobs > 0) {
+			avgViews = Math.round((double) views / totalJobs);
+			avgClicks = Math.round((double) clicks / totalJobs);
+			avgApplies = Math.round((double) applies / totalJobs);
 		}
-		metricsDTO.setMetricsName(metricsList.get(1).getOptionName());
-		metricsDTO.setViews(avgViews);
-		metricsDTO.setClicks(avgClicks);
-		metricsDTO.setApplies(avgApplies);
-		jbPostTotalList.add(1, metricsDTO);
-		metricsDTO = new MetricsDTO();
+		avgMetricsDTO.setMetricsName(metricsList.get(1).getOptionName());
+		avgMetricsDTO.setViews(avgViews);
+		avgMetricsDTO.setClicks(avgClicks);
+		avgMetricsDTO.setApplies(avgApplies);
+		jbPostTotalList.add(1, avgMetricsDTO);
 
 		// Calculating site - wide average per job posting
 		long swAvgViews = 0;
 		long swAvgClicks = 0;
 		long swAvgApplies = 0;
-		long count = 0;
-		try {
-			count = facilityService.getEmployerCount();
-		} catch (JobBoardServiceException e) {
-			e.printStackTrace();
-		}
-		MetricsDTO dto = facilityService.getAllJobStats();
+		long activeJobs = 0;
+			activeJobs = jobSearchService.getActiveJobs();
+		MetricsDTO swAvgMetricsDto = facilityService.getAllJobStats();
 
-		if (count > 0) {
-			swAvgViews = Math.round((double) dto.getViews() / count);
-			swAvgClicks = Math.round((double) dto.getClicks() / count);
-			swAvgApplies = Math.round((double) dto.getApplies() / count);
+		if (activeJobs > 0) {
+			swAvgViews = Math.round((double) swAvgMetricsDto.getViews() / activeJobs);
+			swAvgClicks = Math.round((double) swAvgMetricsDto.getClicks() / activeJobs);
+			swAvgApplies = Math.round((double) swAvgMetricsDto.getApplies() / activeJobs);
 		}
-		dto.setMetricsName(metricsList.get(2).getOptionName());
-		dto.setViews(swAvgViews);
-		dto.setClicks(swAvgClicks);
-		dto.setApplies(swAvgApplies);
-		jbPostTotalList.add(2, dto);
+		swAvgMetricsDto.setMetricsName(metricsList.get(2).getOptionName());
+		swAvgMetricsDto.setViews(swAvgViews);
+		swAvgMetricsDto.setClicks(swAvgClicks);
+		swAvgMetricsDto.setApplies(swAvgApplies);
+		jbPostTotalList.add(2, swAvgMetricsDto);
 
 		return jbPostTotalList;
 	}
@@ -360,84 +357,81 @@ public class EmployerDashBoardController extends AbstractController {
 		java.util.Date endFrom = null;
 		String pattern = MMJBCommonConstants.DISP_DATE_RANGE;
 		DateFormat formater = new SimpleDateFormat(pattern, Locale.US);
-
+		long views = 0;
+		long clicks = 0;
+		long applies = 0;
 		ModelAndView model = new ModelAndView();
-		MetricsDTO metricsDTO = new MetricsDTO();
 		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
 		try {
-			startFrom = DateUtils.convertDateStringToSQLDate(formater.parse(startDate).toString());
-			// End date is shifted to one day to get the last day details.  
-			endFrom = DateUtils.convertDateStringToSQLDate(formater.parse(endDate).toString());
-			Calendar c = Calendar.getInstance();
-		    c.setTime(endFrom);
-		    c.add(Calendar.DATE, 1);
-		    endFrom.setTime(c.getTimeInMillis());
+			startFrom = DateUtils.convertDateStringToSQLDate(formater.parse(
+					startDate).toString());
+			endFrom = DateUtils.convertDateStringToSQLDate(formater.parse(
+					endDate).toString());
 		} catch (ParseException e) {
 			LOGGER.error("date format is not correct", e);
 		}
-		List<MetricsDTO> jobstatDTOs = loginService.employerMetrics(startFrom,
+
+		MetricsDTO metricsDTO = facilityService.employerDateMetrics(startFrom,
 				endFrom, selEmployerId);
+
+		views = metricsDTO.getViews();
+		clicks = metricsDTO.getClicks();
+		applies = metricsDTO.getApplies();
 
 		// Getting metrics values from look up table
 		List<DropDownDTO> metricsList = populateDropdownsService
 				.populateDropdown("Metrics");
+		metricsDTO.setMetricsName(metricsList.get(0).getOptionName());
 
 		// jbPostTotalList will be having job post total details for metrics
-		long views = 0;
-		long clicks = 0;
-		long applies = 0;
-		long size = jobstatDTOs.size();
-		MetricsDTO dto = new MetricsDTO();
-		for (int i = 0; i < jobstatDTOs.size(); i++) {
-
-			dto = (MetricsDTO) jobstatDTOs.get(i);
-			views = views + dto.getViews();
-			clicks = clicks + dto.getClicks();
-			applies = applies + dto.getApplies();
-		}
-		metricsDTO.setMetricsName(metricsList.get(0).getOptionName());
-		metricsDTO.setViews(views);
-		metricsDTO.setClicks(clicks);
-		metricsDTO.setApplies(applies);
 		jbPostTotalList.add(0, metricsDTO);
-		metricsDTO = new MetricsDTO();
+		MetricsDTO avgMetricsDTO = new MetricsDTO();
+
 		// Calculating average per job posting
 		long avgViews = 0;
 		long avgClicks = 0;
 		long avgApplies = 0;
-		if (size > 0) {
-			avgViews = Math.round((double) views / size);
-			avgClicks = Math.round((double) clicks / size);
-			avgApplies = Math.round((double) applies / size);
+		long totalJobs = 0;
+
+		totalJobs = facilityService.getJobsByFacility(selEmployerId);
+		if (totalJobs > 0) {
+			avgViews = Math.round((double) views / totalJobs);
+			avgClicks = Math.round((double) clicks / totalJobs);
+			avgApplies = Math.round((double) applies / totalJobs);
 		}
-		metricsDTO.setMetricsName(metricsList.get(1).getOptionName());
-		metricsDTO.setViews(avgViews);
-		metricsDTO.setClicks(avgClicks);
-		metricsDTO.setApplies(avgApplies);
-		jbPostTotalList.add(1, metricsDTO);
-		metricsDTO = new MetricsDTO();
+		avgMetricsDTO.setMetricsName(metricsList.get(1).getOptionName());
+		avgMetricsDTO.setViews(avgViews);
+		avgMetricsDTO.setClicks(avgClicks);
+		avgMetricsDTO.setApplies(avgApplies);
+		jbPostTotalList.add(1, avgMetricsDTO);
+
 		// Calculating site - wide average per job posting
 		long swAvgViews = 0;
 		long swAvgClicks = 0;
 		long swAvgApplies = 0;
-		long count = 0;
+		long empCount = 0;
 		try {
-			count = facilityService.getEmployerCount();
+			empCount = facilityService.getEmployerCount();
 		} catch (JobBoardServiceException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
-		MetricsDTO metricsdto = facilityService.getAllJobStats();
+		MetricsDTO swAvgMetricsDto = facilityService.getDateJobStats(startFrom,
+				endFrom);
 
-		if (count > 0) {
-			swAvgViews = Math.round((double) metricsdto.getViews() / count);
-			swAvgClicks = Math.round((double) metricsdto.getClicks() / count);
-			swAvgApplies = Math.round((double) metricsdto.getApplies() / count);
+		if (empCount > 0) {
+			swAvgViews = Math.round((double) swAvgMetricsDto.getViews()
+					/ empCount);
+			swAvgClicks = Math.round((double) swAvgMetricsDto.getClicks()
+					/ empCount);
+			swAvgApplies = Math.round((double) swAvgMetricsDto.getApplies()
+					/ empCount);
 		}
-		metricsdto.setMetricsName(metricsList.get(2).getOptionName());
-		metricsdto.setViews(swAvgViews);
-		metricsdto.setClicks(swAvgClicks);
-		metricsdto.setApplies(swAvgApplies);
-		jbPostTotalList.add(2, metricsdto);
+		swAvgMetricsDto.setMetricsName(metricsList.get(2).getOptionName());
+		swAvgMetricsDto.setViews(swAvgViews);
+		swAvgMetricsDto.setClicks(swAvgClicks);
+		swAvgMetricsDto.setApplies(swAvgApplies);
+		jbPostTotalList.add(2, swAvgMetricsDto);
+
 		model.addObject(JBPOSTTOTALLIST, jbPostTotalList);
 		session.setAttribute(JBPOSTTOTALLIST, jbPostTotalList);
 		model.addObject(EMPLOYERDASHBOARDFORM, employerDashBoardForm);

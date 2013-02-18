@@ -223,23 +223,59 @@
 									<div class="row">
 										<div class="SolidBorderBottom"></div>
 										<div class="row">
-											<table width="100%" border="0" cellpadding="0"
-												cellspacing="0">
-												<tr cellpadding="0" cellspacing="0" border="0">
+											<table width="100%" border="0" cellpadding="10"
+												cellspacing="10">
+												
 													
-													<c:if test="${paymentGatewayForm.purchaseType =='jobPost'}">	
+													<c:if test="${paymentGatewayForm.purchaseType =='jobPost'}">
+														<c:if
+															test="${paymentGatewayForm.purchaseJobPostForm.discountAmt > 0}">
+
+															<tr cellpadding="0" cellspacing="0" border="0">
+																<td width="40%" align="Left">&nbsp;
+														</td>
+																<td width="14%"><h3 class="TextColorA01">
+																	<h3 class="TextColorA01">Total :</h3></td>
+
+
+															<td width="11%"><h3 class="TextColorA01">
+																	<span>&nbsp;$</span>${paymentGatewayForm.purchaseJobPostForm.total}0
+																</h3></td>
+															</tr>
+															
+															<tr cellpadding="0" cellspacing="0" border="0">
+														<td width="40%" align="Left">&nbsp;
+														</td>
+																<td width="14%"><h3 class="TextColorA01">Discounts :</h3>
+																</td>
+
+
+																<td width="11%"><h3 class="TextColorA01">
+																		<span>-$&nbsp;&nbsp;</span>${paymentGatewayForm.purchaseJobPostForm.discountAmt}0
+																	</h3></td>
+															</tr>
+															
+															
+														
+														</c:if>
+
+													
+													<tr cellpadding="0" cellspacing="0" border="0">
 														<td width="40%" align="Left">&nbsp;
 														</td>
 														<td width="14%"><h3 class="TextColorA01">Grand
 																Total :</h3>
 														</td>
 														<td width="11%"><h3 class="TextColorA01">
-															<span>$</span>${paymentGatewayForm.purchaseJobPostForm.grandTotal}
+															<span>&nbsp;$</span>${paymentGatewayForm.purchaseJobPostForm.grandTotal}0
 														</h3></td>
 														<td width="40%"></td>
+														<td width="12%"><h3 class="TextColorA01">&nbsp;</h3></td>
+														</tr>
 													</c:if>	
 														
 													<c:if test="${paymentGatewayForm.purchaseType =='resumeSearch'}">	
+													<tr cellpadding="0" cellspacing="0" border="0">
 														<td width="30%" align="Left">&nbsp;
 														</td>
 														<td width="20%" align="Left">
@@ -249,10 +285,12 @@
 														<td width="20%"><h3 class="TextColorA01">
 															<span>$</span>${paymentGatewayForm.purchaseResumeSearchForm.grandTotal}
 														</h3></td>
+														<td width="12%"><h3 class="TextColorA01">&nbsp;</h3></td>
+														</tr>
 													</c:if>
 													
-													<td width="12%"><h3 class="TextColorA01">&nbsp;</h3></td>
-												</tr>
+													
+												
 												<tr>
 												</tr>
 											</table>
@@ -307,10 +345,10 @@
 										<td align="right" valign="top"><span
 											class="paymentLineHeight">$</span> 
 											<c:if test="${paymentGatewayForm.purchaseType =='jobPost'}">
-												<span class="paymentLineHeight" id="grandTotalId">${paymentGatewayForm.purchaseJobPostForm.grandTotal}</span>
+												<span class="paymentLineHeight" id="grandTotalId">${paymentGatewayForm.purchaseJobPostForm.grandTotal}0</span>
 											</c:if> 
 											<c:if test="${paymentGatewayForm.purchaseType =='resumeSearch'}">
-												<span class="paymentLineHeight" id="grandTotalId">${paymentGatewayForm.purchaseResumeSearchForm.grandTotal}</span>
+												<span class="paymentLineHeight" id="grandTotalId">${paymentGatewayForm.purchaseResumeSearchForm.grandTotal}0</span>
 											</c:if></td>
 									</tr>
 								</table>

@@ -91,10 +91,10 @@ public class SaveSearchController {
 
 		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
 				.viewMySavedSearches(userId, false);
-		int savedSearchCount = saveSearchedJobsDTOList.size();
+		/*int savedSearchCount = saveSearchedJobsDTOList.size();
 		if (savedSearchCount == Integer.parseInt(savedSearchsLimit)) {
 			saveSearchService.deleteFirstSearch(userId);
-		}
+		}*/
 
 		JSONObject jsonObject = new JSONObject();
 		Map<String, String> sessionMap = checkSessionMap
@@ -144,6 +144,11 @@ public class SaveSearchController {
 								.getAttribute("clearAllSearchId"));
 						saveSearchService.updateSearchName(id, searchName);
 					} else {
+						
+						int savedSearchCount = saveSearchedJobsDTOList.size();
+						if (savedSearchCount == Integer.parseInt(savedSearchsLimit)) {
+							saveSearchService.deleteFirstSearch(userId);
+						}
 						saveSearchService.saveSearchedJobs(searchedJobsDTO);
 					}
 					if (null != session
@@ -260,7 +265,7 @@ public class SaveSearchController {
 	@RequestMapping(value = "/displaysavesearchpopup", method = RequestMethod.GET)
 	public @ResponseBody
 	JSONObject displaySaveSearchPopup(@Valid SaveSearchForm saveSearchForm,
-			Model model, HttpSession session,
+			Model model, HttpSession session,HttpServletRequest request,
 			@RequestParam("savesearchid") int saveSearchID) {
 
 		JSONObject jsonObject = new JSONObject();
@@ -269,7 +274,7 @@ public class SaveSearchController {
 			saveSearchForm.setSaveSearchId(saveSearchID);
 			model.addAttribute(SAVE_SEARCH_FORM, saveSearchForm);
 			jsonObject.put("NavigationPath",
-					"../savedSearches/displaySaveThisSearchPopup");
+					request.getContextPath()+"/savedSearches/displaySaveThisSearchPopup");
 		} catch (Exception e) {
 			LOGGER.error("display the Save This SearchPopup on recent search page :", e);
 		}
@@ -307,11 +312,23 @@ public class SaveSearchController {
 				
 			} 
 			session.removeAttribute("recentSearchId");
+			// Before user saves his search need to check save search
+			// records are more than 5 searches.
+			// if yes then delete the first saved search
+			int userId = (Integer) session
+					.getAttribute(MMJBCommonConstants.USER_ID);
+
+			List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
+					.viewMySavedSearches(userId, false);
+			int savedSearchCount = saveSearchedJobsDTOList.size();
+			if (savedSearchCount == Integer.parseInt(savedSearchsLimit)) {
+				saveSearchService.deleteFirstSearch(userId);
+			}
 
 			saveSearchService.saveRecentSearch(saveSearchId, saveSearchName);
 
 			jsonObject.put("NavigationPath",
-					"../savedSearches/viewrecentsearches");
+					request.getContextPath()+"/savedSearches/viewrecentsearches");
 		} catch (Exception e) {
 			LOGGER.error("Save this search ERROR", e);
 		}

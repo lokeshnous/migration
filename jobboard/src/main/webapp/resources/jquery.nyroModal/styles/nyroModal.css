@@ -14,11 +14,12 @@
 }
 .nyroModalCloseButton {
 	top: -13px;
-	right: -13px;
-	width: 12px;
-	height: 12px;
+	right: -18px;
+	width: 18px;
+	height: 18px;
 	text-indent: -9999em;
 	background: url(../img/close.gif);
+	z-index: 1000;
 }
 .nyroModalTitle {
 	top: -26px;

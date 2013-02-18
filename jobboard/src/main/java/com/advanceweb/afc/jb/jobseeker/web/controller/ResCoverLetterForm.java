@@ -19,6 +19,8 @@ public class ResCoverLetterForm {
 	private String deleteDt;
 	private int userId;
 	private int active;
+	private String description;
+	
 	/**
 	 * @return the coverletterId
 	 */
@@ -114,5 +116,15 @@ public class ResCoverLetterForm {
 	 */
 	public void setActive(int active) {
 		this.active = active;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+	/**
+	 * @param coverletterText the coverletterText to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

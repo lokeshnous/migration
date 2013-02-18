@@ -14,15 +14,15 @@
 <!-- JAVASCRIPT FILES -->
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-<script type="text/javascript" src="javascripts/jquery.cycle.all.min.js"></script>
+<!-- <script type="text/javascript" src="javascripts/jquery.cycle.all.min.js"></script>
 <script type="text/javascript" src="javascripts/slider.js"></script>
-<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script>
+<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script> -->
 
 <script type="text/javascript" src="../resources/js/slider.js"></script>
 <link href="../resources/css/jquery-ui.css" rel="stylesheet"
 	type="text/css">
-<script type="text/javascript" language="javascript"
-	src="/media/js/jquery.js"></script>
+<!-- <script type="text/javascript" language="javascript"
+	src="/media/js/jquery.js"></script> -->
 	
 	<script src="../resources/js/recaptcha_ajax.js"></script>
 <script src="../resources/js/jquery.dataTables.nightly.js"></script>
@@ -45,6 +45,13 @@ function validateNumber(event) {
 </script>
 <script type="text/javascript">
 		    jQuery(document).ready(function(){
+		    	$.nmFilters({
+		    	    custom: {
+		    	        afterShowCont: function(nm) {
+		    	        	$('#facilityName').focus();
+		    	        }
+		    	    }
+		    	});
 		    	$("#phone").inputmask("mask", {"mask": "(999) 999-9999"});
 		    	$("#cancelAddFacility").displaypopup("#cancelAddFacility","770","360");
 		    	$("#saveNewFacility").click(function() {
@@ -52,10 +59,10 @@ function validateNumber(event) {
 		    		var facilityName = $.trim($("#facilityName").val());
 					var facilityStreet = $.trim($("#facilityStreet").val());
 					var facilityCity = $.trim($("#cityAutoPopulation").val());
-					var facilityState = $.trim($("#facilityState").text());
-					var zipCode = $.trim($("#zipcode").val());
-					var facilityCountry = $.trim($("#facilityCountry").val());
-					var phoneNumber = $.trim($("#phoneNumber").val());	
+					//var facilityState = $.trim($("#facilityState").text());
+					//var zipCode = $.trim($("#zipcode").val());
+					//var facilityCountry = $.trim($("#facilityCountry").val());
+					//var phoneNumber = $.trim($("#phoneNumber").val());	
 					 if (facilityName.length <= 0 || facilityStreet.length <= 0 || facilityCity.length <= 0
 							 ){
 						$("#facilityErrorMsg").html("<span> Please enter the required fields.</span>");
@@ -79,12 +86,7 @@ function validateNumber(event) {
 
 					});
 		    	//wrote to clearing the fields the city, zipcode, country fields whiel changing the state
-				$("#stateDpId").change( function(){
-						$('#cityAutoPopulation').val('');
-						$('#zipCode').val('');
-						$('#countryDpId').val('');
-					});
-				$("#zipCode").change(function(){
+				/* $("#zipCode").change(function(){
 					$('#cityAutoPopulation').val("");
 					$('#stateDpId').val("");
 					$('#countryDpId').val("");
@@ -94,14 +96,13 @@ function validateNumber(event) {
 					$('#zipCode').val("");
 					$('#stateDpId').val("");
 					$('#countryDpId').val("");
-				});
-				$("#countryDpId").change(function(){
-					$('#zipCode').val("");
-					$('#stateDpId').val("");
-					$('#cityAutoPopulation').val("");
-				});
+				}); */
+				
+				//Need to set default country as USA
+				 $('#countryDpId').val("USA");
+				
 				//Auto complete on selecting city
-				$("#cityAutoPopulation").autocomplete({
+				/* $("#cityAutoPopulation").autocomplete({
 					source: '${pageContext.request.contextPath}/employer/getCityList.html',
 					width:500,
 					select: function(event, ui) {
@@ -121,6 +122,9 @@ function validateNumber(event) {
 								url: '${pageContext.request.contextPath}/employer/getCountry.html?city='+$("#cityAutoPopulation").val()+'&state='+$("#stateDpId").val()+'&postalCode='+$("#zipCode").val(),
 								success : function(country) {
 									$('#countryDpId').val(country);
+									var modCity = $("#cityAutoPopulation").val();
+									modCity = modCity.substring(0,modCity.lastIndexOf(", "));
+									$("#cityAutoPopulation").val(modCity);
 								},
 							}); 						
 						},
@@ -147,7 +151,7 @@ function validateNumber(event) {
 							}
 						});		
 					}
-				});	
+				});	 */
 				
 			
 		    	//$('[id^=zipCodeITId]').keypress(validateNumber);
@@ -179,9 +183,17 @@ function validateNumber(event) {
 					<div id="facilityErrorMsg" class="validationMsg"></div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText4">Facility Name:</span>
-						<form:input path="facilityName"
+						<c:if test="${manageFacilityForm.readOnly}">
+						<form:input path="facilityName" readonly="${manageFacilityForm.readOnly}" 
+							class="job_seeker_password disabled-input" />
+						<span class="required">(Required)</span>
+						</c:if>
+						
+						<c:if test="${!manageFacilityForm.readOnly}">
+						<form:input path="facilityName" readonly="${manageFacilityForm.readOnly}"
 							class="job_seeker_password textBox2" />
 						<span class="required">(Required)</span>
+						</c:if>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText4">Street Address:</span>
@@ -195,7 +207,7 @@ function validateNumber(event) {
 							class="job_seeker_password textBox2" />
 						<span class="required">(Required)</span>
 					</div>
-
+					
 					<div class="rowEvenNewSpacing">
 						<span class="lableText4">State:</span>
 						<form:select path="facilityState"
@@ -250,6 +262,7 @@ function validateNumber(event) {
 				</div>
 			</div>
 			<div class="clearfix"></div>
+			</div>
 	</form:form>
 </body>
 </html>

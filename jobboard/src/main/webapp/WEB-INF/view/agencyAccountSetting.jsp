@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,8 +25,9 @@ function validateNumber(event) {
 
 
 <script type="text/javascript">
-function copyAccToBillingAddr(obj) {            	
-            	var isSelected = obj.value;          	
+function copyAccToBillingAddr() {     
+	var isSelected = $('#useAcctAddress').is(':checked');
+            	/* var isSelected = obj.value;          	
            	 var firstNameVal = $("#firstName2").val();
            	 var lastNameVal = $("#lastName2").val();
            	 var companyVal = $("#company2").val();
@@ -33,7 +35,7 @@ function copyAccToBillingAddr(obj) {
            	 var cityOrTownVal = $("#cityOrTown").val();
            	 var zipCodeVal = $("#zipCode2").val();
            	 var emailVal = $("#email2").val();
-           	 var phoneVal = $("#phone2").val();
+           	 var phoneVal = $("#phone2").val(); */
            	 
            	if (isSelected) {
            		$("#firstName2").val($("#firstName").val());
@@ -46,8 +48,18 @@ function copyAccToBillingAddr(obj) {
            		$("#zipCode2").val($("#zipCode").val());
            		$("#email2").val($("#emailId").val());
            		$("#phone2").val($("#phone").val());
+           	}else{
+           		$("#firstName2").val("");
+           		$("#lastName2").val("");
+           		$("#company2").val("");
+           		$("#streetAddress2").val("");
+           		$("#cityOrTown2").val("");
+           		$("#state2").val("");
+           		$("#zipCode2").val("");
+           		$("#email2").val("");
+           		$("#phone2").val("");
            	}
-           	if(!isSelected)
+           	/* if(!isSelected)
            		{
            		$("#firstName2").val(firstNameVal);
            		$("#lastName2").val(lastNameVal);
@@ -57,7 +69,7 @@ function copyAccToBillingAddr(obj) {
            		$("#zipCode2").val(zipCodeVal);
            		$("#email2").val(emailVal);
            		$("#phone2").val(phoneVal);
-           		}
+           		} */
             	
     } 
    
@@ -102,7 +114,7 @@ function copyAccToBillingAddr(obj) {
 		if ($("#adminLogin").val() == 'true') {
 			$("#emailId").attr('readonly', false);
 		}
-		$("#cityOrTown").autocomplete({
+		/* $("#cityOrTown").autocomplete({
 			source: '${pageContext.request.contextPath}/employer/getCityList.html',
 			width:500,
 			select: function(event, ui) {
@@ -123,6 +135,9 @@ function copyAccToBillingAddr(obj) {
 						success : function(country) {
 							//alert(country);
 							$('#country').val(country);
+							var modCity = $("#cityOrTown").val();
+							modCity = modCity.substring(0,modCity.lastIndexOf(", "));
+							$("#cityOrTown").val(modCity);
 							if (country == "USA" || country == "US") {           		
 			            		 var checks = ["2","3","4"];
 			            		 $(":checkbox").val(checks).filter(":checked").attr("disabled",true);
@@ -162,14 +177,12 @@ function copyAccToBillingAddr(obj) {
 					}
 				});		
 			}
-		});	
+		});	 */
 			
-		$("#state").change( function(){
-			$('#cityOrTown').val('');
-			$('#zipCode').val('');
-			$('#country').val('');
-		});
-	$("#zipCode").change(function(){
+		//setting value by default as USA
+		$('#country2').val("USA");
+		
+	/* $("#zipCode").change(function(){
 		$('#cityOrTown').val("");
 		$('#state').val("");
 		$('#country').val("");
@@ -179,14 +192,7 @@ function copyAccToBillingAddr(obj) {
 		$('#zipCode').val("");
 		$('#state').val("");
 		$('#country').val("");
-	});
-	$("#country").change(function(){
-		$('#zipCode').val("");
-		$('#state').val("");
-		$('#cityOrTown').val("");
-	});
-
-	
+	}); 
 	$("#cityOrTown2").autocomplete({
 		source: '${pageContext.request.contextPath}/employer/getCityList.html',
 		width:500,
@@ -208,6 +214,9 @@ function copyAccToBillingAddr(obj) {
 					success : function(country) {
 						//alert(country);
 						$('#country2').val(country);
+						var modCity = $("#cityOrTown2").val();
+						modCity = modCity.substring(0,modCity.lastIndexOf(", "));
+						$("#cityOrTown2").val(modCity);
 						if (country == "USA" || country == "US") {           		
 		            		 var checks = ["2","3","4"];
 		            		 $(":checkbox").val(checks).filter(":checked").attr("disabled",true);
@@ -226,7 +235,7 @@ function copyAccToBillingAddr(obj) {
 			}
 			});
 		}
-	}); 
+	});  
 	
 	//Auto complete on selecting zipcode			
 	$("#zipCode2").autocomplete({
@@ -249,11 +258,6 @@ function copyAccToBillingAddr(obj) {
 		}
 	});	
 		
-	$("#state2").change( function(){
-		$('#cityOrTown2').val('');
-		$('#zipCode2').val('');
-		$('#country2').val('');
-	});
 $("#zipCode2").change(function(){
 	$('#cityOrTown2').val("");
 	$('#state2').val("");
@@ -265,12 +269,7 @@ $("#cityOrTown2").change(function(){
 	$('#state2').val("");
 	$('#country2').val("");
 });
-$("#country2").change(function(){
-	$('#zipCode2').val("");
-	$('#state2').val("");
-	$('#cityOrTown2').val("");
-});
-	
+		*/
 	
 	});
 </script>
@@ -331,39 +330,56 @@ $("#country2").change(function(){
 					</div>
 					<div class="rowEvenNewSpacing">
 					<span class="lableText3"> </span>
-					<div id="errmsg" class="FormErrorDisplayText"></div>
+					<div id="errmsg" class="FormErrorDisplayText" style="padding-left:0px;"></div>
 					</div>
 					<form:hidden path="adminLogin"/>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">
 							First Name:
 						</span>
-						<form:input path="firstName" id="firstName" name="firstName" readonly="${employeeAccountForm.readOnly }" class="job_seeker_email" type="text"/>
+						<form:input path="firstName" id="firstName" name="firstName" disabled="${employeeAccountForm.readOnly }" class="job_seeker_email" type="text"/>
+						<span class="required">(Required)</span>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">
 							Last Name:
 						</span>
-						<form:input path="lastName" id="lastName" name="lastName" readonly="${employeeAccountForm.readOnly }" class="job_seeker_email" type="text"/>
+						<form:input path="lastName" id="lastName" name="lastName" disabled="${employeeAccountForm.readOnly }" class="job_seeker_email" type="text"/>
+						<span class="required">(Required)</span>
 					</div>
-					<div class="rowEvenNewSpacing">
+					<div class="rowEvenNewSpacing ">
 						<span class="lableText3">
 							Company:
 						</span>
-						<form:input path="company" name="company" readonly="true" class="job_seeker_password" type="text"/>
+						
+						<c:if test="${!employeeAccountForm.adminLogin && !employeeAccountForm.readOnly}">
+						<form:input path="company" name="company" readonly="true" class="job_seeker_password disabled-input" type="text"/>
+						</c:if>
+						<c:if test="${employeeAccountForm.readOnly }">
+						<form:input path="company" name="company" disabled="${employeeAccountForm.readOnly }" class="job_seeker_password" type="text"/>
+						</c:if>
+						<c:if test="${employeeAccountForm.adminLogin }">
+						<form:input path="company" name="company" readonly="true" class="job_seeker_password disabled-input" type="text"/>
+						</c:if>
+						
+						<%-- <form:input path="company" name="company" readonly="true" disabled="${employeeAccountForm.readOnly }" class="job_seeker_password" type="text"/> --%>
+						<span class="required">(Required)</span>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">
 							Street Address:
 						</span>
-						<form:input path="streetAddress" name="streetAddress" readonly="${employeeAccountForm.readOnly }" class="job_seeker_password" type="text"/>
+						<form:input path="streetAddress" name="streetAddress" disabled="${employeeAccountForm.readOnly }" class="job_seeker_password" type="text"/>
+						<span class="required">(Required)</span>	
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">
 							City:
 						</span>
-						<form:input path="cityOrTown" name="cityOrTown" readonly="${employeeAccountForm.readOnly }" class="job_seeker_password" type="text"/>
+						<form:input path="cityOrTown" name="cityOrTown" disabled="${employeeAccountForm.readOnly }" class="job_seeker_password" type="text"/>
+						<span class="required">(Required)</span>
 					</div>
+					
 					<div class="row">
 						<span class="lableTextSelect marginTop13 ">
 							State:
@@ -372,38 +388,53 @@ $("#country2").change(function(){
 						<form:option value="0" label="Select" />
 						<form:options items="${stateList}" itemValue="stateValue" itemLabel="stateValue" />
 						</form:select>
+						<span class="required">(Required)</span>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">
 							ZIP Code:
 						</span>
-						<form:input maxlength="5" id="zipCode" readonly="${employeeAccountForm.readOnly }" path="zipCode" name="zipCode" class="job_seeker_password" type="text"/>
+						<form:input maxlength="5" id="zipCode" disabled="${employeeAccountForm.readOnly }" path="zipCode" name="zipCode" class="job_seeker_password" type="text"/>
+						<span class="required">(Required)</span>
 					</div>
 					<div class="row">
 						<span class="lableTextSelect marginTop13 ">
 							Country:
 						</span>
 						<form:select path="country" name="country" disabled="${employeeAccountForm.readOnly }" class="jb_input3 jb_input_width3" id="country">
-						<form:option value="0" label="Select" />
+						<%-- <form:option value="0" label="Select" /> --%>
 						<form:options items="${countryList}" itemValue="countryValue" itemLabel="countryValue" />
 						</form:select>
+						<span class="required">(Required)</span>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">
 							E-Mail:
 						</span>
 						<!-- readonly="true" -->
-						<form:input path="email" id="emailId" name="email" class="job_seeker_password" readonly="true" retype="text"/>
+						<c:if test="${!employeeAccountForm.adminLogin && !employeeAccountForm.readOnly}">
+						<form:input path="email" id="emailId" name="email"  class="job_seeker_password disabled-input" readonly="true" retype="text"/>
+						</c:if>
+						<c:if test="${employeeAccountForm.readOnly }">
+						<form:input path="email" id="emailId" name="email" disabled="${employeeAccountForm.readOnly }" class="job_seeker_password" retype="text"/>
+						</c:if>
+						<c:if test="${employeeAccountForm.adminLogin }">
+						<form:input path="email" id="emailId" name="email" class="job_seeker_password" retype="text"/>
+						</c:if>
+						<span class="required">(Required)</span>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">
 							Phone:
 						</span>
-						<form:input path="phone" id="phone" readonly="${employeeAccountForm.readOnly }" name="phone" class="job_seeker_password" type="text"/>
+						<form:input path="phone" id="phone" disabled="${employeeAccountForm.readOnly }" name="phone" class="job_seeker_password" type="text"/>
+						<span class="required">(Required)</span>
 					</div>
 					<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 						<span class="floatLeft marginTop10">
-							<input type="button" value="Save" readonly="${employeeAccountForm.readOnly }" name="btn-submit" id="btn-submit" class="btn_sm orange cursor" />
+						<c:if test="${!employeeAccountForm.readOnly }">
+							<input type="button" value="Save" name="btn-submit" id="btn-submit" class="btn_sm orange cursor" />
+							</c:if>
 							<input type="button" name="Cancel" id="Cancel" value="Cancel" class="btn_sm orange cursor" />
 								
 						</span>
@@ -417,24 +448,26 @@ $("#country2").change(function(){
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3"> </span>
-					<div id="errmsgData" class="FormErrorDisplayText"></div>
+					<div id="errmsgData" class="FormErrorDisplayText" style="padding-left:0px;"></div>
 				</div>
 				<div class="rowEvenNewSpacing">
 						<span class="lableText3"> Use my account address </span>
-						<form:checkbox onclick="copyAccToBillingAddr(this)"  disabled="${employeeAccountForm.readOnly }" path="" value="false" name="useAcctAddress" id="useAcctAddress"/>
+						<form:checkbox onclick="copyAccToBillingAddr()"  disabled="${employeeAccountForm.readOnly }" path="billingAddressForm.useMyAccountAddr" name="useAcctAddress" id="useAcctAddress"/>
 					</div>
 				
-				<c:if test="${count == '1'}">
+				<%-- <c:if test="${count == '1'}"> --%>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3"> First Name: </span>
 						<form:input path="billingAddressForm.fnameForBillingAddr" id="firstName2" readonly="${employeeAccountForm.readOnly }" name="firstName2"
 							class="job_seeker_email" type="text" />
+							<span class="required">(Required)</span>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">
 							Last Name:
 						</span>
 						<form:input path="billingAddressForm.lnameForBillingAddr" readonly="${employeeAccountForm.readOnly }" id="lastName2" name="lastName2" class="job_seeker_email" type="text"/>
+						<span class="required">(Required)</span>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3"> Company: </span>
@@ -445,12 +478,16 @@ $("#country2").change(function(){
 						<span class="lableText3"> Street Address: </span>
 						<form:input path="billingAddressForm.streetForBillingAddr" readonly="${employeeAccountForm.readOnly }" name="streetAddress2" id="streetAddress2"
 							class="job_seeker_password" type="text" />
+							<span class="required">(Required)</span>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3"> City: </span>
 						<form:input path="billingAddressForm.cityOrTownForBillingAddr"  readonly="${employeeAccountForm.readOnly }" name="cityOrTown2" id="cityOrTown2"
 							class="job_seeker_password" type="text" />
+							<span class="required">(Required)</span>
 					</div>
+					
+					
 					<div class="row">
 						<span class="lableTextSelect marginTop13 "> State: </span>
 						<form:select path="billingAddressForm.stateBillingAddress" name="state2"
@@ -459,12 +496,13 @@ $("#country2").change(function(){
 							<form:options items="${stateList}" itemValue="stateValue"
 								itemLabel="stateValue" />
 						</form:select>
+						<span class="required">(Required)</span>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3"> ZIP Code: </span>
 						<form:input path="billingAddressForm.zipCodeForBillingAddr" readonly="${employeeAccountForm.readOnly }" name="zipCode2" id="zipCode2"
 							class="job_seeker_password" type="text" />
-							
+							<span class="required">(Required)</span>
 					</div>
 					<div class="row">
 						<span class="lableTextSelect marginTop13 "> Country: </span>
@@ -474,27 +512,32 @@ $("#country2").change(function(){
 							<form:options items="${countryList}" itemValue="countryValue"
 								itemLabel="countryValue" />
 						</form:select>
+						<span class="required">(Required)</span>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3"> E-Mail: </span>
 						<form:input path="email" name="email2" readonly="${employeeAccountForm.readOnly }" id="email2" class="job_seeker_password" 
 							type="text"/>
+							<span class="required">(Required)</span>
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3"> Phone: </span>
 						<form:input path="phone" name="phone2" readonly="${employeeAccountForm.readOnly }" id="phone2" class="job_seeker_password"
 							type="text"/>
+							<span class="required">(Required)</span>
 					</div>
 					<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 						<span class="floatLeft marginTop10">
-							<input type="button" value="Save" readonly="${employeeAccountForm.readOnly }" name="btn-submit2" id="btn-submit2" class="btn_sm orange cursor"/>
+						<c:if test="${!employeeAccountForm.readOnly }">
+							<input type="button" value="Save"  name="btn-submit2" id="btn-submit2" class="btn_sm orange cursor"/>
+							</c:if>
 							<input type="button" name="CancelData"  id="CancelData" value="Cancel" class="btn_sm orange cursor"/>
 						<a href="#jobSeekerRegister1" id="BackToTopId" style="display: none;">Back To Top</a>
 						<a href="#billingId" id="BackToMdlId" style="display: none;">Back To Middle</a>
 						</span>
 					</div>
 					<div class="clearfix"></div>
-				</c:if>
+				<%-- </c:if> --%>
 			</form:form>
 			</div>
 			<div class="clearfix">

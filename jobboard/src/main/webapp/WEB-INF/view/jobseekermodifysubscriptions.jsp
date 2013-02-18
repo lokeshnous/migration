@@ -13,7 +13,7 @@
 
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-
+		$('#mailCheckbox').prop('checked', true);
 		$('#save').click(function(){			
 			var printCheckbox = $('#printCheckbox').is(':checked');
 			var digCheckbox = $('#digCheckbox').is(':checked');
@@ -31,7 +31,7 @@
 			});
 		}); 
 		
-		var printEnable = '${printSubscription}';
+		/* var printEnable = '${printSubscription}';
 		var digEnable = '${digSubscription}';
 		var newEnable = '${enewsSubscription}';
 		var emailEnable = '${emailSubscription}';
@@ -39,7 +39,7 @@
 		
 		modifyPrint('${listpublicationprint.size()}');
 		modifyDig('${listpublicationdigital.size()}');
-		modifyNews('${listnewsletter.size()}');
+		modifyNews('${listnewsletter.size()}'); */
 		jQuery(".megamenu").megamenu();
 	});
 	
@@ -121,61 +121,83 @@
 							<td valign="top">
 								<table>
 									<tr class="borderTopNone">
-										<th align="left" scope="col">Subscriptions</th>
+										<div class="row paddingBottom10 marginLeft10">I would
+										like the following sent to me so I can stay up to date with
+										the latest healthcare news and information. The following
+										subscriptions are always a free service.</div>
 									</tr>
 									<tr>
-										<td valign="top"><form:checkbox path="printCheckbox"
-												id="printCheckbox"
-												onchange="modifyPrint('${listpublicationprint.size()}')" /><label
-											for="checkbox">Print-Magazine</label>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<td valign="top" ><form:hidden path="printCheckbox"
+												id="printCheckbox" /><label
+												<%-- onchange="modifyPrint('${listpublicationprint.size()}')" /><label --%>
+											for="checkbox"><strong>Print-Magazine</strong></label>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 											<c:if test="${!listpublicationprint.isEmpty()}">
 												<c:forEach items="${listpublicationprint}"
 													var="subscriptionsprint" varStatus="status">
-
+												<div style=" width:170px; padding-left:10px;">
 													<form:checkbox path="printSub"
 														label="${subscriptionsprint.optionName}"
 														value="${subscriptionsprint.optionId}"
 														cssStyle="width:20px" id="print${status.index}" />
-													<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		
+												</div>			
 													 												
 										       </c:forEach>
 
 											</c:if></td>
 
-										<td valign="top"><form:checkbox path="digCheckbox"
-												id="digCheckbox"
-												onchange="modifyDig('${listpublicationdigital.size()}')" /><label
-											for="checkbox">Digital-Magazine</label>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<td valign="top" ><form:hidden path="digCheckbox"
+												id="digCheckbox" /><label
+												<%-- onchange="modifyDig('${listpublicationdigital.size()}')" /><label --%>
+											for="checkbox"><strong>Digital-Magazine</strong></label>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 											<c:if test="${!listpublicationdigital.isEmpty()}">
 												<c:forEach items="${listpublicationdigital}"
 													var="subscriptionsprint" varStatus="status">
-
+													<div style=" width:170px; padding-left:10px;">
 													<form:checkbox path="digSub"
 														label="${subscriptionsprint.optionName}"
 														value="${subscriptionsprint.optionId}"
-														cssStyle="width:20px" id="dig${status.index}" />
-													<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;														
+														id="dig${status.index}" />
+													</div>												
 										       </c:forEach>
 											</c:if></td>
 
-										<td valign="top"><form:checkbox path="enewsCheckbox"
-												id="enewsCheckbox"
-												onchange="modifyNews('${listnewsletter.size()}')" /><label
-											for="checkbox">E-newsletters</label>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<td valign="top" >
+										<form:hidden path="enewsCheckbox"
+												id="enewsCheckbox" /><label
+												<%-- onchange="modifyNews('${listnewsletter.size()}')" /><label --%>
+											for="checkbox"><strong>E-newsletters</strong></label>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 											<c:if test="${!listnewsletter.isEmpty()}">
+											 
 												<c:forEach items="${listnewsletter}"
 													var="subscriptionsprint" varStatus="status">
-
+													<div style=" width:170px; padding-left:10px;">
 													<form:checkbox path="newsSub"
 														label="${subscriptionsprint.optionName}"
 														value="${subscriptionsprint.optionId}"
-														cssStyle="width:20px" id="news${status.index}" />
-													<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;														
+														id="news${status.index}" />
+													
+													</div>													
 										       </c:forEach>
 											</c:if></td>
 
-										<td valign="top"><form:checkbox path="mailCheckbox"
-												id="mailCheckbox" /><label for="checkbox">E-mailer</label><br />
+										<td valign="top" width="120"><form:hidden class="floatLeft" path="mailCheckbox"
+												id="mailCheckbox" /><label class="floatLeft" for="checkbox"><strong>E-mails</strong></label>
+												<div class="toolTip01 marginLeft5">
+											<span class="classic">Select this option if you want us to send you emails regarding featured career opportunities</span>
+										</div>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<c:if test="${!listEmailer.isEmpty()}">
+											 
+												<c:forEach items="${listEmailer}"
+													var="subscriptionsprint" varStatus="status">
+													<div style=" width:120px; padding-left:10px;">
+													<form:checkbox path="emailSub"
+														label="${subscriptionsprint.optionName}"
+														value="${subscriptionsprint.optionId}"
+														id="news${status.index}" />												
+													</div>													
+										       </c:forEach>
+											</c:if>
+												
 										</td>
 										<%-- <td valign="top">
 

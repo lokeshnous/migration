@@ -9,6 +9,17 @@ jQuery(document).ready(function() {
 		            $("#cityState").val($("#cityStateToSavedSearch").val());
 		            $("#radius").val($("#radiusToSavedSearch").val());
 				}
+				$(".normalList").hide();
+				$(".LeftContantLinks").click(function(e){					
+					$(".cursor").show();
+					$(".normalList").hide();
+					$(this).parent().children().removeClass('LeftContantLinksActive');
+					$(this).parent().children().addClass('LeftContantLinks');
+					$(this).addClass('LeftContantLinksActive');
+					$(this).removeClass('LeftContantLinks');
+					$(this).children(".cursor").hide();
+					$(this).children(".normalList").show();
+				});
 
 			});
 
@@ -16,7 +27,7 @@ jQuery(document).ready(function() {
 
 			function sendToFrd(jobId,jobtitle) {	
 				var currentUrl = window.location.pathname;
-				$.nmManual($("#contextPath").val()+'/jobsearch/sendtofriend.html?id='+jobId+'&jobtitle='+jobtitle+'&currentUrl='+currentUrl);
+				$.nmManual($("#contextPath").val()+'/search/sendtofriend.html?id='+jobId+'&jobtitle='+jobtitle+'&currentUrl='+currentUrl);
 			}
 
 		function validateRadius() {
@@ -31,11 +42,19 @@ jQuery(document).ready(function() {
 			}
 		}
 
+		function setDefaultRadius(){
+			var cityState = $('#cityState').val();
+			if(cityState.length >0){
+				$('#radius').val("25");
+			}else{
+				$('#radius').val("0");
+			}
+		}
 		
 		function saveThisJob(jobId) {
 			//var currentUrl = window.location.pathname;
 			$.ajax({
-				url : $("#contextPath").val()+'/jobsearch/saveThisJob.html?id='+jobId+"&currentUrl=null",
+				url : $("#contextPath").val()+'/search/saveThisJob.html?id='+jobId+"&currentUrl=null",
 				data : ({
 				}),
 				success : function(data) {
@@ -60,10 +79,93 @@ jQuery(document).ready(function() {
 				}
 			});
 		}
+		
+		
+		
+		function bottomSelectResume(jobId){
+			$('#bottomjobActionInfo').html("Processing...");
+			var navUrl = $("#contextPath").val()+'/search/selectResume.html?id='+jobId+'&position=bottom';
+			$.ajax({
+				url : navUrl,
+				data : ({
+					userID : "userID"
+				}),
+
+				success : function(data) {
+					$.each(data, function(key, val) {
+						if (key == "applyLink") {
+							$('#bottomjobActionInfo').html("");
+							window.open(val, '_blank');
+						}
+					});
+					$.each(data, function(key, val) {
+						if (key == "AjaxMSG") {
+							$('#bottomjobActionInfo').html(val);
+							$('#topjobActionInfo').html('');
+						}
+					});
+					$.each(data, function(key, val) {
+						if (key == "NavigationPath") {
+							$('#bottomjobActionInfo').html("");
+							$.nmManual(val);
+						}
+					});
+				},
+				error : function(data) {
+				},
+				complete : function(data) {
+				}
+			});
+		}
+		
+		function selectResume(jobId){
+			$('#topjobActionInfo'+jobId).html("Processing...");
+			$('#topjobActionInfo').html("Processing...");
+			var navUrl = $("#contextPath").val()+'/search/selectResume.html?id='+jobId+'&position=top';
+			$.ajax({
+				url : navUrl,
+				data : ({
+					userID : "userID"
+				}),
+
+				success : function(data) {
+					$.each(data, function(key, val) {
+						if (key == "applyLink") {
+							$('#topjobActionInfo'+jobId).html("");
+							$('#topjobActionInfo').html("");
+							window.open(val, '_blank');
+						}
+					});
+					$.each(data, function(key, val) {
+						if (key == "AjaxMSG") {
+							$('#topjobActionInfo'+jobId).html(val);
+							$('#topjobActionInfo').html(val);
+							$('#bottomjobActionInfo').html('');
+						}
+					});
+					$.each(data, function(key, val) {
+						if (key == "NavigationPath") {
+							$('#topjobActionInfo'+jobId).html("");
+							$('#topjobActionInfo').html("");
+							$.nmManual(val);
+						}
+					});
+				},
+				error : function(data) {
+				},
+				complete : function(data) {
+				}
+			});
+		}
+		
+		
+
+		
+		
 		function applyThisJob(jobId) {
 			$('#topjobActionInfo'+jobId).html("Processing...");
 			$('#topjobActionInfo').html("Processing...");
-			var navUrl = $("#contextPath").val()+'/jobsearch/applyJob.html?id='+jobId+'&currentUrl=null';
+			var navUrl = $("#contextPath").val()+'/search/applyJob.html?id='+jobId+'&currentUrl=null';
 			$.ajax({
 				url : navUrl,
 				data : ({
@@ -120,6 +222,10 @@ jQuery(document).ready(function() {
 								if(autoLoad == true || autoLoad == "true"){	
 									// help to get the search results
 									searchJobs();								
+								}else if($("#autoloadDiv").text() == true || $("#autoloadDiv").text() == "true"){	
+									// help to get the search results
+									searchJobs();		
+									
 								}
 								
 								// after clicking the find job button
@@ -165,7 +271,7 @@ jQuery(document).ready(function() {
 											start = $("#start").val();
 											searchtype = $("#searchtype").val();
 											isSorting = false;
-											var navUrl = $("#contextPath").val()+"/jobsearch/searchJob.html?keywords="
+											var navUrl = $("#contextPath").val()+"/search/searchJob.html?keywords="
 													+ keywords + "&cityState=" + cityState
 													+ "&radius=" + radius + "&rows=" + rows
 													+ "&start=" + start + "&searchtype="
@@ -192,7 +298,7 @@ jQuery(document).ready(function() {
 			
 			 $(document).ready(function() {
 				var cityState = $("#cityState").val();
-				var url = $("#contextPath").val()+"/jobsearch/findLocation.html?cityState="+cityState;
+				var url = $("#contextPath").val()+"/search/findLocation.html?cityState="+cityState;
 				if(typeof(cityState) != "undefined"){
 				$( "#cityState" ).autocomplete({
 					source: url
@@ -208,9 +314,10 @@ jQuery(document).ready(function() {
 					 searchJobs();
 				 }				
 			}
-			
+			 $("#loading-image").hide();
 			 // helps to retrive jobs from criteria 
 			function searchJobs() {
+				$("#loading-image").show();
 					$("#autoload").val(false);
 					$("#rows").val(25000);
 					$("#start").val("0");
@@ -221,120 +328,31 @@ jQuery(document).ready(function() {
 					start = $("#start").val();
 					searchtype = $("#searchtype").val();
 					isSorting = false;
-					var navUrl =  $("#contextPath").val()+"/jobsearch/searchJob.html";
+					var navUrl =  $("#contextPath").val()+"/search/searchJob.html";
 					var formData= $("#jobSearchResultBodyFormId").serialize()+$("#jobSearchResultHeaderFormId").serialize();
 					$("#TotalRecord").text("");
-					$("#connectionStatus").text("Progressing..");
+					//$("#connectionStatus").text("Searching..");
 					$.getJSON(navUrl,formData,function(data) {
-						/*$.each(data, function(key, val) {
-							
-							// print the rows for grid
-							if (key == "jsonRows") {
-								 //alert("JSON Data: " +  val);
-								 //alert("JSON Data: " +  val);
-								 //$("<input/>").attr("type", "text").attr("value", val).appendTo("#imagespp");
-								var htmlData = "";
-								for (var i = 0; i < val.length; i++) {
-								    var object = val[i];
-								   // for (var property in object) {
-								        var JobId = object["JobId"];
-								        var JobTitle = object["JobTitle"];
-								        var Company = object["Company"];
-								        var PostedDate = object["PostedDate"];
-								        htmlData = htmlData+"<ul ";
-										if(object["IsPremium"] == 0){
-											htmlData = htmlData + "class='searchResultsJobInfo closed'";
-										}else{
-											htmlData = htmlData + "class='searchResultsJobInfo closed orange-bg'";
-										}
-										htmlData = htmlData + "id='searchResultsJobInfo"+JobId+"' onclick='trackClick("+JobId+");' >";
-										
-										htmlData = htmlData + "<li class='searchResultsColumn1'><a class='clickableLink'>"+JobTitle+"</a></li>";
-
-										htmlData = htmlData + "<li class='searchResultsColumn2'><a class='clickableLink'>"+Company+"</a></li>";
-										htmlData = htmlData + "<li class='searchResultsColumn3'>" ;
-										alert(object["HideCity"]);
-										alert(object["HideState"]);
-										alert(object["HideCountry"]);
-										if(object["HideCity"] == 1 || object["HideState"] == 1 || object["HideCountry"] == 1){
-											htmlData = htmlData + object["City"];
-										}
-											htmlData = htmlData + "</li>";
-
-										htmlData = htmlData + "<li class='searchResultsColumn4'>"+PostedDate+"</li>";
-										htmlData = htmlData + " </ul>";
-								    //}
-								}
-								$("#searchResultsItem").html(htmlData);
-								//alert(val["JobId"]);
-							}
-					});	*/
-						$.each(data, function(key, val) {
-							
+						$.each(data, function(key, val) {							
 							// get the jobs count after search 
 							if (key == "TotalNoRecords") {
-								//alert("JSON Data: " +  val);
 							}
 						});	
-						//$.each(data, function(key, val) {
-							
-							// print if any validation messages
-							//if (key == "AjaxMSG") {
 								$('#findSearchInfo').html(data.AjaxMSG);
-								//return false;
-							//}
-						//});	
-						
-						//$('#ad_page_top').append(data.adPageTop);
-						//console.log(data.adPageTop);
-						//OX_ads.push(data.adPageTop);
-						//$.each(data.adPageTop, function(key, val) {
-							// print if any validation messages
-							//if (key == "adPageTop") {
-								//document.getElementById("ad_page_top").innerHTML=val;
-								
-								//$('#ad_page_top').html('');
-								//alert(val);
-								//$('#ad_page_top').html("<script type=\"text/javascript\"> document.write('<script src=\"http://ox-d.advanceweb.com/w/1.0/jstag\"></script>'); </script> ");
-								/*$('#ad_page_top').writeCapture().html("<script type=\"text/javascript\"> document.write('\<script src=\"http://ox-d.advanceweb.com/w/1.0/jstag\" \>\<\script>ppasd'); </script> ");*/
-								//$('#ad_page_top').writeCapture().html("<script type=\"text/javascript\"> document.write('\<script src=\"http://ox-d.advanceweb.com/w/1.0/jstag\" \>\<\script>ppasd'); </script> ");
-								//$.writeCapture.write(document.getElementById('ad_page_top'),"<script >alert('hi');</script>");
-								//debugger;
-								//$('#ad_page_top').text(val);
-								//$('#ad_page_top').writeCapture().html(val);
-								
-								//$('#ad_page_top').writeCapture().html(val);
-								//var pp = "<script>document.write('<script src="+"http://ox-d.advanceweb.com/w/1.0/jstag"+"></script>');</script>";
-								//alert(pp);
-								//$('#ad_page_top').writeCapture().html(val);
-								//$('#ad_page_top').writeCapture().html($('#ad_page_top').html());
-//								$('#ad_page_top').writeCapture().html('<script type="text/javascript">'+
-//										'document.write('+'<script src="http://ox-d.advanceweb.com/w/1.0/jstag"></script>'+');'+
-//								'</script>');
-//								$('#ad_page_top').writeCapture().html('<script type="text/javascript">if (!window.OX_ads) { OX_ads = []; }'+
-//										'OX_ads.push({ "auid" : "284880" ,"vars":{"keyword" : "Nursing"}});'+
-//								'</script>');
-								//$.writeCapture.write(document.getElementById('ad_page_top'),val);
-								//$.writeCapture.autoAsync();
-								//postscribe('#ad_page_top', val);
-							//}
-						//});
 								processPaginationReq(data, "20");
-					//$("#TotalRecord").text(data["TotalNoRecords"]);
-					});
+					})
 					$("#selectedCompany").val("");
 					$("#selectedState").val("");
 					$("#selectedCity").val("");
 					$(".otherContent").attr("style","display: none");
+					$(".careersContent").attr("style","display: none");
 					$(".searchContent").attr("style","display: block");
-					return false;
+					return true;
 				 
-			}
-			
+			}			
 			 
-				 function postYourResume() {
-					$.ajax({
-						url : $("#contextPath").val()+'/jobsearch/jobseekerPostYourResume.html',
+			function postYourResumeLink() {
+				$.ajax({url : $("#contextPath").val()+'/search/jobseekerPostYourResume.html',
 						data : ({
 							userID : "userID"
 							
@@ -357,11 +375,33 @@ jQuery(document).ready(function() {
 						}
 					});
 				}
+			
+			function postYourResume(context) {
+				$.ajax({url : context+'/search/jobseekerPostYourResume.html',
+						data : ({}),
+						success : function(data) {
+							$.each(data, function(key, val) {
+								if (key == "LoggedInNavigationPath") {
+									window.location.href = val;
+								}
+							});
+							$.each(data, function(key, val) {
+								if (key == "NavigationPath") {
+									$.nmManual(val);
+								}
+							});
+						},
+						error : function(data) {
+						},
+						complete : function(data) {
+						}
+					});
+				}
 
 				function viewJobDetails(jobId, jobTitle) {
 					jobTitle = jobTitle.toLowerCase();
 					jobTitle = ReplaceAll(jobTitle," ","-");
-					window.location.href = $("#contextPath").val()+"/jobsearch/jobview/" + jobId + "/" +jobTitle+ ".html";
+					window.location.href = $("#contextPath").val()+"/search/jobview/" + jobId + "/" +jobTitle+ ".html";
 				}
 				
 				function ReplaceAll(Source,stringToFind,stringToReplace){
@@ -378,7 +418,7 @@ jQuery(document).ready(function() {
 					var pageSize = $("#noOfPage").val();
 					isSorting = true;
 					//$("#refined").val(refinedResults);
-					var navUrl =  $("#contextPath").val()+"/jobsearch/searchJob.html?pageSize="+ pageSize+ "&isSorting="+isSorting
+					var navUrl =  $("#contextPath").val()+"/search/searchJob.html?pageSize="+ pageSize+ "&isSorting="+isSorting
 					+"&freshjobsearch=false"+"&refined="+refined;
 					var formData= $("#jobSearchResultFormId").serialize()+$("#jobSearchResultHeaderFormId").serialize();
 					$.getJSON(navUrl,formData, function(data) {
@@ -390,7 +430,7 @@ jQuery(document).ready(function() {
 					var pageSize = $("#noOfPage").val();
 					isSorting = false;
 					refined= false;
-					var navUrl =  $("#contextPath").val()+"/jobsearch/searchJob.html?pageSize="+ pageSize +"&isSorting="+isSorting
+					var navUrl =  $("#contextPath").val()+"/search/searchJob.html?pageSize="+ pageSize +"&isSorting="+isSorting
 					+"&freshjobsearch=false"+"&refined="+refined;
 					var formData= $("#jobSearchResultFormId").serialize()+$("#jobSearchResultHeaderFormId").serialize();
 					$.getJSON(navUrl, formData, function(data) {
@@ -402,7 +442,7 @@ jQuery(document).ready(function() {
 					var pageSize = $("#noOfPageLower").val();
 					isSorting = false;
 					refined= false;
-					var navUrl =  $("#contextPath").val()+"/jobsearch/searchJob.html?pageSize="+ pageSize +"&isSorting="+isSorting
+					var navUrl =  $("#contextPath").val()+"/search/searchJob.html?pageSize="+ pageSize +"&isSorting="+isSorting
 					+"&freshjobsearch=false"+"&refined="+refined;
 					var formData= $("#jobSearchResultFormId").serialize()+$("#jobSearchResultHeaderFormId").serialize();
 					$.getJSON(navUrl, formData, function(data) {
@@ -411,9 +451,10 @@ jQuery(document).ready(function() {
 				}
 				
 				function getPage(page, begin) {
+					//$("#loading-image").show();
 					var pageSize = $("#noOfPage").val();
 					refined= false;
-					var navUrl =  $("#contextPath").val()+"/jobsearch/searchJob.html?pageSize="+ pageSize+ "&page="+page
+					var navUrl =  $("#contextPath").val()+"/search/searchJob.html?pageSize="+ pageSize+ "&page="+page
 					+"&isSorting="+isSorting+"&freshjobsearch=false"+"&next="+begin+"&refined="+refined;
 					var formData= $("#jobSearchResultFormId").serialize()+$("#jobSearchResultHeaderFormId").serialize();
 					$.getJSON(navUrl, formData, function(data) {
@@ -423,11 +464,12 @@ jQuery(document).ready(function() {
 				}
 				
 				function getNextPages(page) {
+					//$("#loading-image").show();
 					var pageSize = $("#noOfPage").val();
 					var fastforward = true;
 					refined= false;
 					var formData= $("#jobSearchResultFormId").serialize()+$("#jobSearchResultHeaderFormId").serialize();
-					var navUrl =  $("#contextPath").val()+"/jobsearch/searchJob.html?pageSize="+ pageSize+ "&page="+page+"&fastforward="+fastforward+"&isSorting="+isSorting
+					var navUrl =  $("#contextPath").val()+"/search/searchJob.html?pageSize="+ pageSize+ "&page="+page+"&fastforward="+fastforward+"&isSorting="+isSorting
 					+"&freshjobsearch=false"+"&next="+page+"&refined="+refined;
 					$.getJSON(navUrl, formData, function(data) {
 						processPaginationReq(data, pageSize);
@@ -436,11 +478,12 @@ jQuery(document).ready(function() {
 				}
 				
 				function getPrevPages(page) {
+					//$("#loading-image").show();
 					var pageSize = $("#noOfPage").val();
 					var fastforward = false;
 					refined= false;
 					var formData= $("#jobSearchResultFormId").serialize()+$("#jobSearchResultHeaderFormId").serialize();
-					var navUrl =  $("#contextPath").val()+"/jobsearch/searchJob.html?pageSize="+ pageSize+ "&page="+page+"&fastforward="+fastforward+"&isSorting="+isSorting
+					var navUrl =  $("#contextPath").val()+"/search/searchJob.html?pageSize="+ pageSize+ "&page="+page+"&fastforward="+fastforward+"&isSorting="+isSorting
 					+"&freshjobsearch=false"+"&next="+page+"&refined="+refined;
 					$.getJSON(navUrl, formData, function(data) {
 						processPaginationReq(data, pageSize);
@@ -451,7 +494,7 @@ jQuery(document).ready(function() {
 				function processPaginationReq(data, pageSize){
 					$.ajaxSetup({ cache: false });
 					$.ajax({
-						url : $("#contextPath").val()+'/jobsearch/jobboardsearchresultsBody.html',
+						url : $("#contextPath").val()+'/search/jobboardsearchresultsBody.html',
 						pgdata : ({}),
 						
 						success : function(pgdata) {
@@ -463,62 +506,62 @@ jQuery(document).ready(function() {
 						},
 						complete : function(pgdata) {
 							// do nothing for now.
+							//$("#loading-image").hide();
+							 $('#loading-image').hide('fast', function() {
+								// code to paste ads
+									var count = 1 ;
+									// populate the ads for grid
+									if(data.adPageCenterMiddleList != undefined){
+									$.each(data.adPageCenterMiddleList, function(key, val) {
+											var id = '#ad_wrapper'+count;
+											window.setTimeout(function() { 
+												renderAd(val, id); 
+												}, 100);
+											count = count+1;
+									});
+									}
+								  });
+							// populate the ads for leader banner
+								if(data.adPageTop != undefined){
+								window.setTimeout(function() { 
+									renderAd(data.adPageTop, ".ad_page_top"); 
+									}, 100);
+								}
+								// populate the ads for bottom banner
+								if(data.adPageBottom != undefined){
+								window.setTimeout(function() { 
+									renderAd(data.adPageBottom, ".ad_wrapper"); 
+									}, 100);
+								}
+								// populate the ads for bottom banner
+								if(data.adPageRightTop != undefined){
+								window.setTimeout(function() { 
+									renderAd(data.adPageRightTop, "#adPageRightTop"); 
+									}, 100);
+								}
+								// populate the ads for bottom banner
+								if(data.adPageRightMiddle != 'undefined'){
+								window.setTimeout(function() { 
+									renderAd(data.adPageRightMiddle, "#adPageRightMiddle"); 
+									}, 100);
+								}							
 						}
-					}
-					);
-					getHistory();
-					// code to paste ads
-					var count = 1 ;
-					// populate the ads for grid
-					if(data.adPageCenterMiddleList != 'undefined'){
-					$.each(data.adPageCenterMiddleList, function(key, val) {
-							var id = '#ad_wrapper'+count;
-							//$(id).html(val);
-							window.setTimeout(function() { 
-								renderAd(val, id); 
-								}, 100);
-
-//							setTimeout(renderAd,100,val, id);
-							//document.getElementById(id).innerHTML="pramoda";
-							count = count+1;
 					});
-					}
-					// populate the ads for leader banner
-					if(data.adPageTop != 'undefined'){
-					window.setTimeout(function() { 
-						renderAd(data.adPageTop, ".ad_page_top"); 
-						}, 100);
-					}
-					// populate the ads for bottom banner
-					if(data.adPageBottom != 'undefined'){
-					window.setTimeout(function() { 
-						renderAd(data.adPageBottom, ".ad_wrapper"); 
-						}, 100);
-					}
-					// populate the ads for bottom banner
-					if(data.adPageRightTop != 'undefined'){
-					window.setTimeout(function() { 
-						renderAd(data.adPageRightTop, "#adPageRightTop"); 
-						}, 100);
-					}
-					// populate the ads for bottom banner
-					if(data.adPageRightMiddle != 'undefined'){
-					window.setTimeout(function() { 
-						renderAd(data.adPageRightMiddle, "#adPageRightMiddle"); 
-						}, 100);
-					}
+					getHistory();
 					//setTimeout(renderAd,100,data.adPagerighttop, ".ad_wrapper");	
 					//setTimeout(renderAd,100,data.adPagerightBtm, ".ad_wrapper");	
 				}
 				
 				function renderAd(val, id){
+					if(val != undefined){
 					$(id).html(val).submit();
+					}
 				}
 
 				
 				function getHistory(){
 					$.ajax({
-						url : $("#contextPath").val()+'/jobsearch/jobboardSearchesHistory.html',
+						url : $("#contextPath").val()+'/search/jobboardSearchesHistory.html',
 						data : ({}),
 						
 						success : function(data) {
@@ -551,7 +594,7 @@ jQuery(document).ready(function() {
 					//processPaginationReq("20");
 					$.ajaxSetup({ cache: false });
 					$.ajax({
-						url : contextPath+'/healthcarejobs/activeJobs.html',
+						url : contextPath+'/search/activeJobs.html',
 						data : ({}),						
 						success : function(data) {
 						$("#TotalNoRecords").html(data);
@@ -571,7 +614,7 @@ jQuery(document).ready(function() {
 						success: function(data){ 
 							$.each(data, function(key, val) {
 								if (key == "NavigationPath") {
-									alert("Search saved successfully!.Access saved search criterias using \"My saved searches\" in dashboard.");
+									alert("Search saved successfully! Access saved search criteria using  \"My saved searches\" on your dashboard.");
 									window.location.href = val+ '.html';
 								}
 								
@@ -597,7 +640,7 @@ jQuery(document).ready(function() {
 				function btsaveThisJob(jobId,context) {
 					//var currentUrl = window.location.pathname;
 					$.ajax({
-						url : $("#contextPath").val()+'/jobsearch/saveThisJob.html?id='+jobId+"&currentUrl=null",
+						url : $("#contextPath").val()+'/search/saveThisJob.html?id='+jobId+"&currentUrl=null",
 						data : ({
 							userID : "userID"
 						}),
@@ -624,7 +667,7 @@ jQuery(document).ready(function() {
 				function btapplyThisJob(jobId) {
 					$('#bottomjobActionInfo').html("Processing...");
 					$.ajax({
-						url : $("#contextPath").val()+'/jobsearch/applyJob.html?id='+jobId+'&currentUrl=null',
+						url : $("#contextPath").val()+'/search/applyJob.html?id='+jobId+'&currentUrl=null',
 						data : ({
 							userID : "userID"
 						}),
@@ -657,17 +700,21 @@ jQuery(document).ready(function() {
 					});
 				}
 				
-				function trackClick(jobId) {					
+				function trackClick(jobId,clickType) {					
 				$.ajax({
-					url : $("#contextPath").val()+'/jobsearch/clicksTrack.html?id='+jobId+'&clickType=click',
-					data : ({
-						userID : "userID"
-					}),
+					url : $("#contextPath").val()+'/search/clicksTrack.html?id='+jobId+'&clickType='+clickType,
 				});
 				}
 	
+				function trackPrint(jobId,clickType) {
+					$.ajax({
+						url : $("#contextPath").val()+'/search/clicksTrack.html?id='+jobId+'&clickType='+clickType,
+					});
+					window.print();
+					}
+				
 				function deleteCurrentSearch(key, value) {
-					var navUrl =  $("#contextPath").val()+"/jobsearch/deleteCurrentSearch.html?key="+key+"&value="+value;
+					var navUrl =  $("#contextPath").val()+"/search/deleteCurrentSearch.html?key="+key+"&value="+value;
 					$.ajax({url: navUrl,
 						success: function(data){
 							$("#autoload").val(true);
@@ -681,7 +728,7 @@ jQuery(document).ready(function() {
 								$("#radius").val(data.radius);
 							}
 							//findJobs();
-							var navUrl =  $("#contextPath").val()+"/jobsearch/searchJob.html";
+							var navUrl =  $("#contextPath").val()+"/search/searchJob.html";
 							var formData= $("#jobSearchResultBodyFormId").serialize()+$("#jobSearchResultHeaderFormId").serialize();
 							//$("#TotalRecord").text("");
 							$.getJSON(navUrl,formData,function(data) {
@@ -801,11 +848,11 @@ jQuery(document).ready(function() {
 						radius = $("#selectedRadius").val();
 					}
 					
-					/*var navUrl =  $("#contextPath").val()+"/jobsearch/searchJob.html?keywords="+keywords+"&cityState="
+					/*var navUrl =  $("#contextPath").val()+"/search/searchJob.html?keywords="+keywords+"&cityState="
 					+cityState+"&radius="+radius+"&rows="+rows+"&start="+start+"&searchtype="+searchtype+
 					"&isSorting="+isSorting+"&firstFQParam="+firstFQParam+"&secondFQParam="+secondFQParam+"&thirdFQParam="+thirdFQParam+
 					"&fouthFQParam="+fouthFQParam+"&fifthFQParam="+fifthFQParam+"&refined="+refined;*/
-					var navUrl =  $("#contextPath").val()+"/jobsearch/searchJob.html?isSorting="+isSorting+
+					var navUrl =  $("#contextPath").val()+"/search/searchJob.html?isSorting="+isSorting+
 					"&refineKey="+refineKey+"&refineVal="+refineVal+"&refined="+refined+"&freshjobsearch=false";
 					$("#TotalRecord").text("");
 					$.getJSON(navUrl,function(data) {
@@ -819,6 +866,7 @@ jQuery(document).ready(function() {
 						$("#TotalRecord").text(data["TotalNoRecords"]);
 					});
 					$(".otherContent").attr("style","display: none");
+					$(".careersContent").attr("style","display: none");
 					$(".searchContent").attr("style","display: block");
 					
 					return true;
@@ -826,7 +874,7 @@ jQuery(document).ready(function() {
 				}
 				
 				function clearRecentSearches(){
-					$.ajax({url: $("#contextPath").val()+"/jobsearch/clearrecentsearches.html",
+					$.ajax({url: $("#contextPath").val()+"/search/clearrecentsearches.html",
 							success: function(data){ 
 								
 								getHistory();
@@ -845,7 +893,7 @@ jQuery(document).ready(function() {
 							success: function(data){ 
 								$.each(data, function(key, val) {
 									 if (key == "searchtype" && val == "basic") {
-										parent.window.location.href = $("#contextPath").val()+'/jobsearch/findJobPage.html';
+										parent.window.location.href = $("#contextPath").val()+'/search/findJobPage.html';
 										parent.$.nmTop().close();
 									}									
 								}); 								
@@ -886,4 +934,64 @@ jQuery(document).ready(function() {
 					    $('.NameSelectonArea ul li a').removeClass('NameSelected');
 					    $(this).addClass('NameSelected');
 					});*/
+					
+					// to show careers parts in home page
+					function showCareersPart(careerType){
+						$.ajaxSetup({ cache: false });
+						$.ajax({
+								url : $("#contextPath").val()+'/healthcarejobs/showCareersPart.html?careerType='+careerType,
+								page : ({}),								
+								success : function(page) {
+								//	alert(page);
+								$(".careersSubContent").html(page);
+								$(".otherContent").attr("style","display: none");
+								$(".careersContent").attr("style","display: block");
+								$(".careersSubContent").attr("style","display: block");
+								$(".searchContent").attr("style","display: none");
+								if(careerType == 'careers'){
+									$("#resourceCarrerId").addClass('LeftContantLinksActive');
+									$("#resourceCarrerId").removeClass('LeftContantLinks');
+									$("#resourceCarrerId").children(".cursor").hide();
+									$("#resourceCarrerId").children(".normalList").show();
+								}else if(careerType == 'resumeBuilder'){
+									$("#resumeBuilderId").addClass('LeftContantLinksActive');
+									$("#resumeBuilderId").removeClass('LeftContantLinks');
+									$("#resumeBuilderId").children(".cursor").hide();
+									$("#resumeBuilderId").children(".normalList").show();
+								}else if(careerType == 'messanger'){
+									$("#messaangerId").addClass('LeftContantLinksActive');
+									$("#messaangerId").removeClass('LeftContantLinks');
+									$("#messaangerId").children(".cursor").hide();
+									$("#messaangerId").children(".normalList").show();
+								}
+								
+								},
+								error : function(pgdata) {
+								},
+								complete : function(pgdata) {
+									// do nothing for now.
+								}
+							});
+					}
+					// to show careers parts in home page
+					function showCareersSubPart(careerType){
+						$.ajaxSetup({ cache: false });
+						$.ajax({
+							url : $("#contextPath").val()+'/healthcarejobs/showCareersPart.html?careerType='+careerType,
+							page : ({}),								
+							success : function(page) {
+								//alert(page);
+								$(".careersSubContent").html(page);
+								$(".otherContent").attr("style","display: none");
+								$(".careersContent").attr("style","display: block");
+								$(".careersSubContent").attr("style","display: block");
+								$(".searchContent").attr("style","display: none");
+							},
+							error : function(pgdata) {
+							},
+							complete : function(pgdata) {
+								// do nothing for now.
+							}
+						});
+					}				
 						 

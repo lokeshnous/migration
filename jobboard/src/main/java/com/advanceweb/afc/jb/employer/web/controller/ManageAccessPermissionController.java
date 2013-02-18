@@ -24,7 +24,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
+import com.advanceweb.afc.jb.common.UserAlertDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
@@ -34,6 +36,7 @@ import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
+import com.advanceweb.afc.jb.user.UserAlertService;
 import com.advanceweb.afc.jb.user.UserService;
 
 /**
@@ -80,17 +83,16 @@ public class ManageAccessPermissionController {
 	@Autowired
 	private UserService userService;
 	
-	@Value("${employerPageExtention}")
-	private String employerPageExtention;
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
+	@Autowired
+	private UserAlertService alertService;
 	@RequestMapping(value = "/manageAccessPermission")
 	public ModelAndView showJobOwnerDetails(
 			ManageAccessPermissionForm manageAccessPermissionForm,
 			HttpSession session,
 			@RequestParam(value = "page", required = false) String page) {
-		LOGGER.info("showJobOwner Method");
 		ModelAndView model = new ModelAndView();
 
 		// Added for agency manage access permission task
@@ -143,7 +145,7 @@ public class ManageAccessPermissionController {
 	JSONObject saveNewJobOwner(HttpSession session,
 			ManageAccessPermissionForm manageAccessPermissionForm,
 			HttpServletRequest request) {
-		LOGGER.info("Save Job Owner : Process to save new job Owner detail Starts !");
+		LOGGER.debug("Save Job Owner : Process to save new job Owner detail Starts !");
 		JSONObject warningMessage = new JSONObject();
 
 		EmployerProfileDTO empDTO = new EmployerProfileDTO();
@@ -226,10 +228,41 @@ public class ManageAccessPermissionController {
         		
         changeRgn=changeRgn.replace("?companyName", userDTO.getCompany());
         changeRgn=changeRgn.replace("?accessType", accessType);
+
+        // Send the mail to job owner with temporary password 
+		sendAdministratorUpdateMail(manageAccessPermissionForm.getOwnerEmail(),
+				request,
+				changeRgn.replace("?temporarypassword", userDTO.getPassword()),
+				session);
 		
-		sendAdministratorUpdateMail(manageAccessPermissionForm.getOwnerEmail(),request,changeRgn.replace("?temporarypassword",userDTO.getPassword()),session);
+        // Send the mail to employer on interest
+        FacilityDTO mainFacilityDTO = facilityService.getParentFacility(facilityIdParent);
+        UserDTO mainuserDto = userService.getUserByUserId(mainFacilityDTO
+				.getUserId());
+		List<UserAlertDTO> alertDTOs = alertService.viewAlerts(mainuserDto.getUserId());
+		if (null != alertDTOs && alertDTOs.size() > 0) {
+			for (UserAlertDTO alertDTO : alertDTOs) {
+				if (alertDTO.getAlertId() > 0
+						&& alertDTO.getAlertId() == MMJBCommonConstants.ADMINISTRATOR_CHANGES) {
+					LOGGER.debug("Employer has the administrator alerts");
+					sendAdministratorUpdateMail(
+							mainuserDto.getEmailId(),
+							request,
+							changeRgn.replace("?temporarypassword",
+									userDTO.getPassword()), session);
+					break;
+				}
+			}
+		}else{
+			LOGGER.debug("Employer has the default administrator alerts");
+			sendAdministratorUpdateMail(
+					mainuserDto.getEmailId(),
+					request,
+					changeRgn.replace("?temporarypassword",
+							userDTO.getPassword()), session);
+		}
 		//sendEmail(manageAccessPermissionForm, userDTO, request, session);
-		LOGGER.info("Email : sent Email!");
+		LOGGER.debug("Email : sent Email!");
 		warningMessage.put("success", jobOwnerAddSuccess);
 		return warningMessage;
 	}
@@ -247,7 +280,7 @@ public class ManageAccessPermissionController {
 		} catch (JobBoardException jbex) {
 			LOGGER.error("Error occured while deleting the job owner", jbex);
 		}
-		LOGGER.info("Request For - delete" + "user Id :" + userId);
+		LOGGER.debug("Request For - delete" + "user Id :" + userId);
 
 		warningMessage.put("success", "succes");
 		return warningMessage;
@@ -255,18 +288,68 @@ public class ManageAccessPermissionController {
 
 	@RequestMapping(value = "/updateJobOwner", method = RequestMethod.POST)
 	public ModelAndView updateJobOwner(
-			ManageAccessPermissionForm manageAccessPermissionForm) {
+			ManageAccessPermissionForm manageAccessPermissionForm,
+			HttpServletRequest request, HttpSession session) {
 		ModelAndView model = new ModelAndView();
 
 		try {
-			LOGGER.info("Request For - update access permission ");
+			LOGGER.debug("Request For - update access permission ");
 			if (null != manageAccessPermissionForm
 					.getManageAccessPermissiondetails()
 					&& manageAccessPermissionForm
 							.getManageAccessPermissiondetails().size() > 0) {
+				/*List<ManageAccessPermissionDTO> accessPermissionDTOList = manageAccessPermissionForm
+						.getManageAccessPermissiondetails();*/
 				manageAccessPermissionService
 						.updateJobOwner(manageAccessPermissionForm
 								.getManageAccessPermissiondetails());
+				
+				// send email to all updated job owners 
+				/*int userIdParent = (Integer) session
+						.getAttribute(MMJBCommonConstants.USER_ID);
+				for (ManageAccessPermissionDTO accessPermissionDTO : accessPermissionDTOList) {
+					String changeRgn = emailConfiguration.getProperty(
+							"admin.jobowner.added").trim();
+					UserDTO userDTO = transformEmpReg
+							.createUserDTOFromManageAccessForm(manageAccessPermissionForm);
+					EmployerInfoDTO facilityDetail =facilityService.facilityDetails(userIdParent);
+					if(null !=facilityDetail){
+					userDTO.setCompany(facilityDetail.getCustomerName());
+					}
+					changeRgn = changeRgn.replace("?companyName",
+							userDTO.getCompany());
+					String accessType = null;
+					if (accessPermissionDTO.getTypeOfAccess() > 0
+							&& accessPermissionDTO.getTypeOfAccess() == 5) {
+						accessType = "Full access";
+					} else {
+						accessType = "Post / Edit access";
+					}
+					changeRgn = changeRgn.replace("?accessType", accessType);
+
+					List<UserAlertDTO> alertDTOs = alertService
+							.viewAlerts(userDTO.getUserId());
+					if (null != alertDTOs && alertDTOs.size() > 0) {
+						for (UserAlertDTO alertDTO : alertDTOs) {
+							if (alertDTO.getAlertId() > 0
+									&& alertDTO.getAlertId() == MMJBCommonConstants.ADMINISTRATOR_CHANGES) {
+								sendAdministratorUpdateMail(
+										manageAccessPermissionForm
+												.getOwnerEmail(),
+										request, changeRgn.replace(
+												"?temporarypassword", ""),
+										session);
+							}
+						}
+					} else {
+						sendAdministratorUpdateMail(
+								manageAccessPermissionForm.getOwnerEmail(),
+								request,
+								changeRgn.replace("?temporarypassword", ""),
+								session);
+					}
+				}
+*/
 			}
 		} catch (JobBoardException jbex) {
 			LOGGER.error("Error occured while updating the job owner", jbex);
@@ -358,12 +441,14 @@ public class ManageAccessPermissionController {
 		String employerloginUrl;
 		if (session.getAttribute(MMJBCommonConstants.AGEN_PER_PAGE) != null) {
 			employerloginUrl = request.getRequestURL().toString()
-					.replace(request.getServletPath(), loginPath)
-					+ dothtmlExtention + "?page=agency";
+					.replace(request.getServletPath(), emailConfiguration.getProperty(
+							"agency.email.login.url").trim());
+//					+ dothtmlExtention + "?page=agency";
 		} else {
 			employerloginUrl = request.getRequestURL().toString()
-					.replace(request.getServletPath(), loginPath)
-					+ dothtmlExtention + "?page=employer";
+					.replace(request.getServletPath(), emailConfiguration.getProperty(
+							"employer.email.login.url").trim());
+//					+ dothtmlExtention + "?page=employer";
 		}
 		String emailContent = emailConfiguration.getProperty(
 				"adminstrator.change.email.body").trim();

@@ -29,7 +29,6 @@ import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.security.DatabaseAuthenticationDelegate;
-import com.advanceweb.afc.jb.security.DatabaseAuthenticationManager;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 import com.advanceweb.afc.jb.user.UserService;
 
@@ -53,11 +52,13 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 	public void onAuthenticationSuccess(HttpServletRequest request,
 			HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {
+		
 		String registrationValue=(String) request.getAttribute("userRegistration");
 		
 		String pageValue = request.getParameter(MMJBCommonConstants.PAGE_VALUE);
 		String socialSignUp = (String) request.getAttribute("socialSignUp");
 		UserDTO user = userService.getUser(authentication.getName());
+		
 		HttpSession session;
 		if (authentication instanceof UsernamePasswordAuthenticationToken || authentication instanceof PreAuthenticatedAuthenticationToken) {
 			session = request.getSession(false);
@@ -65,7 +66,6 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 		 else {
 			session = request.getSession();
 		}
-
 		if (authentication.getAuthorities().contains(
 				new SimpleGrantedAuthority(
 						MMJBCommonConstants.ROLE_MERION_ADMIN))) {
@@ -267,9 +267,9 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 				sendRedirect(
 						request,
 						response,
-						"/jobsearch/jobview/"
+						"/search/jobview/"
 								+ session.getAttribute("jobId")+
-								"/"+jobTitle+dothtmlExtention);
+								"/"+jobTitle.replaceAll(MMJBCommonConstants.IGNORE_SPECIAL_CHAR_PATTERN,"")+dothtmlExtention);
 			}else{
 				sendRedirect(request, response,
 						"/jobSeeker/jobSeekerDashBoard.html");
@@ -279,6 +279,8 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 			/**
 			 * if the logged in user is new
 			 */
+			UserDTO advPassUser=userService.getAdvancePassUser(user.getEmailId());
+			user.setPassword(advPassUser.getPassword());
 			session.setAttribute(MMJBCommonConstants.USER_DTO, user);
 			sendRedirect(request, response,
 					"/jobseekerregistration/createJobSeekerCreateYrAcct.html");
@@ -306,12 +308,12 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 			sendRedirect(request, response, "/employerRegistration/redirectToAddPage.html");
 		}
 		
-
 		if (profileRegistration.validateProfileAttributes(user.getUserId())) {
 			sendRedirect(request, response, "/employer/employerDashBoard.html");
 
 		} else {
-
+			UserDTO advPassUser=userService.getAdvancePassUser(user.getEmailId());
+			user.setPassword(advPassUser.getPassword());
 			session.setAttribute(MMJBCommonConstants.USER_DTO, user);
 			sendRedirect(request, response,
 					"/employerRegistration/employerregistration.html");
@@ -341,6 +343,8 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 			sendRedirect(request, response, "/agency/agencyDashboard.html");
 
 		} else {
+			UserDTO advPassUser=userService.getAdvancePassUser(user.getEmailId());
+			user.setPassword(advPassUser.getPassword());
 			session.setAttribute(MMJBCommonConstants.USER_DTO, user);
 			sendRedirect(request, response,
 					"/agencyRegistration/agencyregistration.html");

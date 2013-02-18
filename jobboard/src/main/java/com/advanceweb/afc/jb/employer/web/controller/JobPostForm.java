@@ -72,6 +72,8 @@ public class JobPostForm {
     private String sortBy="a.jobId";
     private int facilityId;
     
+    private boolean viewPage = false;
+    
     
 	public boolean isAdminLogin() {
 		return adminLogin;
@@ -481,5 +483,15 @@ public class JobPostForm {
 	public void setFacilityId(int facilityId) {
 		this.facilityId = facilityId;
 	}
+
+	public boolean isViewPage() {
+		return viewPage;
+	}
+
+	public void setViewPage(boolean viewPage) {
+		this.viewPage = viewPage;
+	}
+
+	
 
 }

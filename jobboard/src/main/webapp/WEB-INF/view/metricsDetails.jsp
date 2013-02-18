@@ -11,24 +11,39 @@ jQuery(document).ready(function() {
 </script>
 <table id="tb_matrix" width="100%" border="0" cellspacing="0" cellpadding="0"
 									class="grid marginTop3">
-									
-									
 
 <tbody>
 	
-	<c:forEach items="${jbPostTotalList}" var="jobList">
+	<c:forEach items="${jbPostTotalList}" var="jobList" varStatus="index">
 		<tr class="gridB">
-			<td><input width="46%" name="radio2" type="radio" id="${jobList.getViews()}-${jobList.getClicks()}-${jobList.getApplies()}"
+			<td 
+			<c:if test="${index.count ==  jbPostTotalList.size()}">
+			class="borderBottomNone"
+			</c:if>
+			><input width="46%" name="radio2" type="radio" id="${jobList.getViews()}-${jobList.getClicks()}-${jobList.getApplies()}"
 				value="radio" class="marginLeft10 marginRight10" onclick="getData(this);" > 
 				
 				<label for="radio2" >${jobList.getMetricsName()}</label></td>
 			<td width="18%" align="center" valign="middle"
-				class="BorderLeft TcolorA" id="view">${jobList.getViews()}</td>
+			class="BorderLeft TcolorA 
+			<c:if test="${index.count ==  jbPostTotalList.size()}">
+			borderBottomNone
+			</c:if>
+			" 
+				id="view">${jobList.getViews()}</td>
 			<td width="18%" align="center" valign="middle"
-				class="BorderLeft TcolorB" id="click">${jobList.getClicks()}</td>
+				class="BorderLeft TcolorB 
+				<c:if test="${index.count ==  jbPostTotalList.size()}">
+			borderBottomNone
+			</c:if>
+			" id="click">${jobList.getClicks()}</td>
 			<td width="18%" align="center" valign="middle"
-				class="BorderLeft TcolorC" id="apply">${jobList.getApplies()}</td>
-		</tr>
+				class="BorderLeft TcolorC
+				<c:if test="${index.count ==  jbPostTotalList.size()}">
+			borderBottomNone
+			</c:if> 
+				" id="apply">${jobList.getApplies()}</td>
+</tr>
 	</c:forEach>
 </tbody>
 

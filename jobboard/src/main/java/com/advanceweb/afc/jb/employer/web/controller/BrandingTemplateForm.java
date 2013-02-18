@@ -40,6 +40,7 @@ public class BrandingTemplateForm {
 	private String chosenLogo;
 	private String chosenMainImage;
 	private boolean editMode;
+	private String saveSuccess;
 	
 	public int getFacilityId() {
 		return facilityId;
@@ -129,7 +130,6 @@ public class BrandingTemplateForm {
 		this.mainImageFileData = mainImageFileData;
 	}
 
-	
 	public List<TestimonyForm> getListTestimony() {
 		return listTestimony;
 	}
@@ -224,6 +224,14 @@ public class BrandingTemplateForm {
 
 	public void setIsSilverCustomer(Boolean isSilverCustomer) {
 		this.isSilverCustomer = isSilverCustomer;
+	}
+
+	public String getSaveSuccess() {
+		return saveSuccess;
+	}
+
+	public void setSaveSuccess(String saveSuccess) {
+		this.saveSuccess = saveSuccess;
 	}
 
 }

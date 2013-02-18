@@ -18,6 +18,7 @@
 	});
 	function sendEmail(){
 		$("#processingMsg").html("<span>Processing...</span>");
+		alert("Your request for pricing has been submitted. A representative from ADVANCE will contact you as soon as possible.");
 	}
 </script>
 </head>
@@ -33,9 +34,9 @@
 				<div class="row">
 					<!-- Step 1 -->
 					<div class="MidContent_Wrapper FloatLeft">
-						<h1 class=" TextColor03 FontSize35">Find the Perfect
+						<h1 class="color1 FontSize35 marginBottom0">Find the Perfect
 							Candidates Today!</h1>
-						<p class="FontSize17 FloatLeft">
+						<p class="FontSize16 FloatLeft bold">
 							Post your listings instantly on the <em>ADVANCE</em> Healthcare
 							Jobs website.
 						</p>
@@ -47,37 +48,36 @@
 					<div class=" clearfix"></div>
 					<div class="MidContent_Wrapper FloatLeft marginTop15">
 						<!--1-->
-						<div class="MidContentBox01">
-							<h3 class="FontSize16">STANDARD JOB POSTING</h3>
-							<p class="marginTop5 lineHeight16">30-day listings can be
+						<div class="MidContentBox01 minHeight235">
+							<h3 class="FontSize16">STANDARD JOB POSTINGS</h3>
+							<p class="marginTop5 lineHeight16">30-day listings that can be
 								posted anytime with no long-term commitment.</p>
 							<div class=" paddingBottom05 marginTop5"></div>
 							<div class="cont_info_box2 AutoWidth marginTop5">
 								<ul>
-									<li>1-2 postings: $349 each</li>
-									<li>3-5 postings: $334 each</li>
-									<li>6-9 postings: $317 each</li>
-									<li>10 postings: $286 each</li>
+									<li>Standard Job Postings: $449 each</li>
+									<li>For discounts on multiple posting purchases,</br>contact your
+									<a href="mailto:sales@advanceweb.com?Subject=ADVANCE%20Sales%20Rep">ADVANCE Sales Rep</a></li>
 								</ul>
 							</div>
-							<div class=" paddingBottom05 "></div>
-							<p class="marginTop5 FloatLeft lineHeight16">
+							<!-- <div class=" paddingBottom05 "></div> -->
+							<!-- <p class="marginTop5 FloatLeft lineHeight16">
 								For more than 10 postings, contact your <em>ADVANCE</em> sales
 								rep.
-							</p>
+							</p> -->
 							<div class="clearfix"></div>
-							<span class="FloatLeft marginTop25"><a
+							<span class="FloatLeft bottomAlign" ><a
 								class="btn_sm orange purchaseJobPostingId"
 								href="<%=request.getContextPath()%>/purchaseJobPosting/purchaseJobPostings.html"
 								name="standardJob">BUY ONLINE NOW</a></span>
-							<div class="PlayDemo marginTop15">
+							<!-- <div class="PlayDemo marginTop15">
 								<a
 									href="https://www.google.co.in/url?url=http://www.youtube.com/watch%3Fv%3Du5O5JKV7H5A&rct=j&sa=X&ei=9Zo7UL-fDMHtrAfh1oCIBQ&ved=0CEIQuAIwBQ&q=flowers+vide&usg=AFQjCNEik81RAbq6ffmdq3EprRgPio6tRg&cad=rja"
 									target="_blank" class="TextColor01 PlayDemo">Video Demo</a>
-							</div>
+							</div> -->
 						</div>
 						<!--2-->
-						<div class="MidContentBox01 marginLeft20">
+						<div class="MidContentBox01 marginLeft20 minHeight235">
 							<h3 class="FontSize16">JOB POSTING SLOTS</h3>
 							<p class="marginTop10 lineHeight16">Do you have staffing
 								needs that change rapidly? Purchase 'slots' that can be used and
@@ -85,43 +85,42 @@
 							<div class=" paddingBottom05 marginTop5"></div>
 							<div class="cont_info_box2 AutoWidth marginTop5">
 								<ul>
-									<li>1-2 Postings: $499 each</li>
-									<li>3-7 Postings: $425 each</li>
+									<li>Job Postings Slots: $599 each</li>
+									<li>For discounts on multiple slot purchases,</br>contact your 									
+									<a href="mailto:sales@advanceweb.com?Subject=ADVANCE%20Sales%20Rep">ADVANCE Sales Rep</a></li>
 								</ul>
 							</div>
-							<div class=" paddingBottom05 "></div>
+							<!-- <div class=" paddingBottom05 "></div>
 							<p class="marginTop3 FloatLeft lineHeight16">
 								For more than 8 slots, contact your <em>ADVANCE</em> sales rep.
-							</p>
+							</p> -->
 							<div class="clearfix"></div>
-							<span class="FloatLeft marginTop40"><a
+							<span class="FloatLeft bottomAlign"><a
 								href="<%=request.getContextPath()%>/purchaseJobPosting/purchaseJobPostings.html"
 								name="jobPostingSlot" class="btn_sm orange purchaseJobPostingId">BUY ONLINE NOW</a></span>
-							<div class="PlayDemo marginTop30">
+							<!-- <div class="PlayDemo marginTop30">
 								<a
 									href="https://www.google.co.in/url?url=http://www.youtube.com/watch%3Fv%3Du5O5JKV7H5A&rct=j&sa=X&ei=9Zo7UL-fDMHtrAfh1oCIBQ&ved=0CEIQuAIwBQ&q=flowers+vide&usg=AFQjCNEik81RAbq6ffmdq3EprRgPio6tRg&cad=rja"
 									target="_blank" class="TextColor01 PlayDemo">Video Demo</a>
-							</div>
+							</div> -->
 						</div>
 						<!--3-->
-						<div class="MidContentBox01 marginLeft20">
+						<div class="MidContentBox01 marginLeft20 minHeight235">
 							<h3 class="FontSize16">EZ POST</h3>
 							<p class="marginTop10 lineHeight16">
-								Save time and eliminate errors using <em>ADVANCE</em> EZ Post.
-								This valuable service automatically adds all of your listings to
-								the <em>ADVANCE</em> Healthcare Jobs website. Choose from a
-								daily XML feed or a weekly job scraping. With XML feeds, jobs
-								are automatically pushed from your website to ours. With job
-								scraping, we pull them over from your website each week. Contact
-								us today for pricing!
-							<div class="clearfix"></div>
-							<span class="FloatLeft marginTop40"><a onclick="sendEmail();"
+								Save time and eliminate errors using our job posting technology. With <em>ADVANCE</em> EZ Post,
+								your jobs automatically appear on the <em>ADVANCE</em> Healthcare jobs website.
+								Choose from a daily XML feed. or a weekly job scraping. With XML feeds, jobs are 
+								automatically pushed from your website to ours. With job scraping, we pull them 
+								over from your website each week. Contact us today for pricing!.
+								<div class="clearfix"></div>
+							<span class="FloatLeft bottomAlign"><a onclick="sendEmail();"
 								name="purchaseJobPostingId2"
 								href="../employerPostJobs/sendEmailForGold.html?package=ezpost"
 								class="btn_sm orange">REQUEST PRICING</a></span>
 							<div class="PlayDemo marginTop30">
 								<a
-									href="https://www.google.co.in/url?url=http://www.youtube.com/watch%3Fv%3Du5O5JKV7H5A&rct=j&sa=X&ei=9Zo7UL-fDMHtrAfh1oCIBQ&ved=0CEIQuAIwBQ&q=flowers+vide&usg=AFQjCNEik81RAbq6ffmdq3EprRgPio6tRg&cad=rja"
+									href="http://youtu.be/s2nvxWoa7cA"
 									target="_blank" class="TextColor01 PlayDemo">Video Demo</a>
 							</div>
 						</div>
@@ -143,17 +142,27 @@
 							<div class="BoxLogoHeadSilver SilverColor">
 								<div class="BoxText marginTop10 marginLeft25">
 									<h3 class="FontSize18 SilverColor">SILVER</h3>
-									<p>Add your logo, an image and an accent color to any job
+									<p>Add logo, an image and an accent color to any job
 										posting.</p>
 								</div>
 							</div>
 							<div class="BoxContantIn lineHeight16">
+							<div class="heightOne50">
 								<p>
 									<strong>Exclusivity Upgrade:</strong>
 								</p>
-								<p>No competitor ads will ever run on the pages with your
-									full job postings.</p>
-								<div class="cont_info_box3 AutoWidth marginTop5">
+								<p>No competitor ads will ever run on the page of your
+									full job posting</p>
+									<div class=" paddingBottom05 marginTop5"></div>
+							<div class="cont_info_box2 AutoWidth marginTop5">
+								<ul>
+									<li>Upgrades:$99 each</li>
+									<li>For discounts on multiple upgrades,</br>contact your 
+									<a href="mailto:sales@advanceweb.com?Subject=ADVANCE%20Sales%20Rep">ADVANCE Sales Rep</a></li>
+								</ul>
+							</div>
+							</div>
+								<!-- <div class="cont_info_box3 AutoWidth marginTop5">
 									<table width="100%" border="1" cellspacing="0" cellpadding="0">
 										<tr>
 											<td width="10%"><ul>
@@ -185,13 +194,14 @@
 											<td align="right">&nbsp;</td>
 										</tr>
 									</table>
-								</div>
-								<span class="FloatLeft marginTop20"><a
+								</div> -->
+								
+								<span class="FloatLeft marginTop10"><a
 									href="<%=request.getContextPath()%>/purchaseJobPosting/purchaseJobPostings.html"
 									name="silver" class="btn_sm orange purchaseJobPostingId">BUY ONLINE NOW</a></span>
-								<div class="PlayDemo marginTop10">
+								<div class="PlayDemo">
 									<a
-										href="https://www.google.co.in/url?url=http://www.youtube.com/watch%3Fv%3Du5O5JKV7H5A&rct=j&sa=X&ei=9Zo7UL-fDMHtrAfh1oCIBQ&ved=0CEIQuAIwBQ&q=flowers+vide&usg=AFQjCNEik81RAbq6ffmdq3EprRgPio6tRg&cad=rja"
+										href="http://youtu.be/zrgqy8733go"
 										target="_blank" class="TextColor01 PlayDemo">Video Demo</a>
 								</div>
 								<div class="clearfix"></div>
@@ -212,22 +222,22 @@
 								</div>
 							</div>
 							<div class="BoxContantIn lineHeight16">
-								<p>
-									<strong>Multimedia Upgrades:</strong>
+								<div class="heightOne50">
+								<span class="downArowGold"> <img src="../resources/images/downarow.png"
+											width="11" height="11" ></span><p style="float:left;"><strong>Multimedia Upgrades: </strong> 						
 								</p>
-								<p>
-									Add a multimedia section to your jobs postings with videos,
-									slideshows and testimonials. This helps you fully engage
-									job-seekers while immersing them in your brand.&nbsp;&nbsp;<span><a
-										href="#"><img src="../resources/images/more_orange.png"
-											width="11" height="10"></a></span>
+								<p><br/>
+									Add a videos,slideshows and testimonials into an interactive multimedia section. Bring positive attention to your facility an communicate your brand and company message.
+									<!-- <span> <a href="#"><img src="../resources/images/more_orange.png"
+											width="11" height="10"></a></span> -->
 								</p>
-								<span class="FloatLeft marginTop60"><a onclick="sendEmail();"
+								</div>
+								<span class="FloatLeft marginTop10"><a onclick="sendEmail();"
 									href="../employerPostJobs/sendEmailForGold.html?package=gold" 
 									class="btn_sm orange">REQUEST PRICING</a></span>
-								<div class="PlayDemo marginTop50">
+								<div class="PlayDemo">
 									<a
-										href="https://www.google.co.in/url?url=http://www.youtube.com/watch%3Fv%3Du5O5JKV7H5A&rct=j&sa=X&ei=9Zo7UL-fDMHtrAfh1oCIBQ&ved=0CEIQuAIwBQ&q=flowers+vide&usg=AFQjCNEik81RAbq6ffmdq3EprRgPio6tRg&cad=rja"
+										href="http://youtu.be/NQoNh1yFldQ"
 										target="_blank" class="TextColor01 PlayDemo">Video Demo</a>
 								</div>
 								<div class="clearfix"></div>
@@ -248,28 +258,29 @@
 								</div>
 							</div>
 							<div class="BoxContantIn lineHeight16">
-								<p>
-									<strong>Related Jobs Upgrade: </strong>Include a comprehensive
+								<div class="heightOne50">
+									 <p style="float:left;"> <span class="downArowPlatinum" > <img src="../resources/images/downarow.png"
+											width="11" height="11" ></span> <strong>Related Jobs Upgrade: </strong>Include a comprehensive
 									list of your other openings on each of your full job posting
-									pages.&nbsp;&nbsp;<span><a href="#"><img
+									pages.</p>
+									&nbsp;&nbsp;<!-- <span><a href="#"><img
 											src="../resources/images/more_orange.png" width="11"
-											height="10"></a></span>
-								</p>
-								<br />
-								<p>
-									<strong>PR Upgrade:</strong> We include a feed on your full job
+											height="10"></a></span>  -->
+													
+									<p style="float:left;"><span class="downArowPlatinumTwo" > <img src="../resources/images/downarow.png"
+											width="11" height="11" ></span><strong>PR Upgrade:</strong> We include a feed on your full job
 									posting pages to highlight the latest news, articles and
-									features that ADVANCE has written about your facility.
-									&nbsp;&nbsp;<span><a href="#"><img
+									features that ADVANCE has written about your facility.</p> 
+									<!-- <span><a href="#"><img
 											src="../resources/images/more_orange.png" width="11"
-											height="10"></a></span>
-								</p>
-								<span class="FloatLeft marginTop20"><a onclick="sendEmail();"
+											height="10"></a></span> -->
+								</div>
+								<span class="FloatLeft marginTop10"><a onclick="sendEmail();"
 									href="../employerPostJobs/sendEmailForGold.html?package=platinum"
 									class="btn_sm orange">REQUEST PRICING</a></span>
-								<div class="PlayDemo marginTop15">
+								<div class="PlayDemo ">
 									<a
-										href="https://www.google.co.in/url?url=http://www.youtube.com/watch%3Fv%3Du5O5JKV7H5A&rct=j&sa=X&ei=9Zo7UL-fDMHtrAfh1oCIBQ&ved=0CEIQuAIwBQ&q=flowers+vide&usg=AFQjCNEik81RAbq6ffmdq3EprRgPio6tRg&cad=rja"
+										href="http://youtu.be/urozQz0kgGQ"
 										target="_blank" class="TextColor01 PlayDemo">Video Demo </a>
 								</div>
 								<div class="clearfix"></div>
@@ -294,8 +305,8 @@
 							<h1 class=" TextColorA01 FontSize19  FloatLeft">
 								<strong>EMAIL</strong>
 							</h1>
-							<a href="#" class="floatRight marginTop1"><img
-								src="images/email.png" width="22" height="22"></a>
+							<a href="mailto:sales@advanceweb.com?Subject=ADVANCE%20Sales%20Rep" class="floatRight marginTop1"><img
+								src="../resources/images/email.png" width="22" height="22"></a>
 						</div>
 						<div class="TextBoxLBorder width100 marginLeft15 marginTop4">
 							<h1 class=" TextColorA01 FontSize19  FloatLeft">
@@ -304,7 +315,7 @@
 						</div>
 						<span class="floatRight"><a
 							href="../employer/employerDashBoard.html"
-							class="btn_sm orange marginRight5">RETURN TO MY DASHBOARD</a></span>
+							class="btn_sm orange marginRight10">RETURN TO MY DASHBOARD</a></span>
 					</div>
 				</div>
 
@@ -312,7 +323,7 @@
 				<!--  <div class="ad_col_right"> <img src="images/ads/300x250ad1.png" /> <br class="clearfix" /></div>-->
 			</div>
 			<div class="clearfix"></div>
-			<div class="ad_wrapper">
+			<div class="ad_wrapper marginTop20 marginLeft20">
 				${adPageBottom}
 			</div>
 		</div>

@@ -18,8 +18,8 @@
 <script type="text/javascript" src="../resources/js/slider.js"></script>
 <link href="../resources/css/jquery-ui.css" rel="stylesheet"
 	type="text/css">
-<script type="text/javascript" language="javascript"
-	src="/media/js/jquery.js"></script>
+<!-- <script type="text/javascript" language="javascript"
+	src="/media/js/jquery.js"></script> -->
 	
 	<script src="../resources/js/recaptcha_ajax.js"></script>
 <script src="../resources/js/jquery.dataTables.nightly.js"></script>
@@ -47,12 +47,7 @@ function validateNumber(event) {
 		jQuery(".megamenu").megamenu();
 		$('.focus').focus();
 		//wrote to clearing the fields the city, zipcode, country fields whiel changing the state
-		$("#stateDpId").change( function(){
-				$('#cityAutoPopulation').val('');
-				$('#zipCode').val('');
-				$('#countryDpId').val('');
-			});
-		$("#zipCode").change(function(){
+		/* $("#zipCode").change(function(){
 			$('#cityAutoPopulation').val("");
 			$('#stateDpId').val("");
 			$('#countryDpId').val("");
@@ -62,14 +57,12 @@ function validateNumber(event) {
 			$('#zipCode').val("");
 			$('#stateDpId').val("");
 			$('#countryDpId').val("");
-		});
-		$("#countryDpId").change(function(){
-			$('#zipCode').val("");
-			$('#stateDpId').val("");
-			$('#cityAutoPopulation').val("");
-		});
+		}); */
+		
+		//Need to set default country as USA
+		$('#countryDpId').val("USA");
 		//Auto complete on selecting city
-		$("#cityAutoPopulation").autocomplete({
+		/* $("#cityAutoPopulation").autocomplete({
 			source: '${pageContext.request.contextPath}/employer/getCityList.html',
 			width:500,
 			select: function(event, ui) {
@@ -89,6 +82,9 @@ function validateNumber(event) {
 						url: '${pageContext.request.contextPath}/employer/getCountry.html?city='+$("#cityAutoPopulation").val()+'&state='+$("#stateDpId").val()+'&postalCode='+$("#zipCode").val(),
 						success : function(country) {
 							$('#countryDpId').val(country);
+							var modCity = $("#cityAutoPopulation").val();
+							modCity = modCity.substring(0,modCity.lastIndexOf(", "));
+							$("#cityAutoPopulation").val(modCity);
 						},
 					}); 						
 				},
@@ -115,13 +111,13 @@ function validateNumber(event) {
 					}
 				});		
 			}
-		});	
+		});	 */
 		
 	});
 </script>
 <script type="text/javascript">
 		    function cancelProcess(){
-		    	window.location.href = '${pageContext.request.contextPath}/healthcarejobs/advanceweb.html';
+		    	window.location.href = '${pageContext.request.contextPath}/healthcarejobs/index.html';
 		    }		
 		</script>
 
@@ -200,9 +196,10 @@ function validateNumber(event) {
 									class="job_seeker_password textBox350"  readonly="${empRegisterForm.bReadOnly}"/>
 								<span class="required">(Required)</span>
 							</div>
+							
 							<div class="row">
 								<FONT class="validationMsgPadding" color="red"><form:errors
-										path="emailId" /></FONT>
+										path="emailId" htmlEscape="false"/></FONT>
 							</div>
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">Confirm Email Address:</span>
@@ -265,6 +262,8 @@ function validateNumber(event) {
 										<span class="lableText3"></span>
 										<div class="floatLeft">
 										Health System:&nbsp;&nbsp; </div> <div class="floatLeft"> <form:checkbox path="helthSystem" />
+										</div><div class="toolTip marginLeft5">
+											<span class="classic">check this box if your company is a health system and you wish to post jobs at the individual facility level</span>
 										</div>
 									</div>
 								</c:if>
@@ -400,7 +399,7 @@ function validateNumber(event) {
 								 <c:if test="${empRegisterForm.bReadOnly == false}">
 									<input type="button" value="Cancel" onclick="cancelProcess()" class="orange cursor" name="Cancel" />
 								</c:if> 
-								<%-- <a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="btn_sm orange">Cancel</a> --%></span>
+								<%-- <a href="<%=request.getContextPath()%>/healthcarejobs/index.html" class="btn_sm orange">Cancel</a> --%></span>
 							<!-- <span class="floatLeft marginTop10">I'll set up my profile
 								later. <a href="#">Continue</a> to the site now.
 							</span> -->
@@ -411,7 +410,7 @@ function validateNumber(event) {
 							<input type="button" value="Cancel" onclick="cancelProcess()"
 									class="orange" name="Cancel" />
 							
-							<a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="btn_sm orange">Cancel</a></span> <span
+							<a href="<%=request.getContextPath()%>/healthcarejobs/index.html" class="btn_sm orange">Cancel</a></span> <span
 							class="floatLeft marginTop10">I'll set up my profile
 							later. <a href="#">Continue</a> to the site now. --%>
 				

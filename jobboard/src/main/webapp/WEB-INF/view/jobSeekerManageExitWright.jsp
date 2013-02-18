@@ -100,7 +100,6 @@
 							<tr class="borderTopNone">
 								<th width="38%" align="left" scope="col">Cover Letter
 									Name</th>
-								<th width="23%" align="center" scope="col">Visibility*</th>
 								<th width="18%" align="center" scope="col">Modified</th>
 								<th width="21%" align="center" scope="col">Actions</th>
 							</tr>
@@ -110,9 +109,6 @@
 							<c:forEach items="${jobOwners}" var="job" varStatus="status">
 								<tr id="${job.coverletterId}">
 									<td align="left" valign="middle">${job.name}</td>
-									<td align="center" valign="middle"><c:if
-											test="${job.active=='1'}">Public</c:if> <c:if
-											test="${job.active=='0'}">Private</c:if></td>
 									<td align="center" valign="middle">${job.updateDt}</td>
 									<td align="center">
 									

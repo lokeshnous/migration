@@ -29,7 +29,7 @@
 		style="display: block">
 		<div class="popupHeader">
 			<h2>SAVE THIS SEARCH</h2>
-			<img src="<%= request.getContextPath() %>/resources/images/Close.png" width="19" class="nyroModalClose" title="Close"
+			<img src="<%= request.getContextPath() %>/resources/images/Close.png" width="19" class="nyroModalClose cursor" title="Close"
 				height="19" alt="Close">
 		</div>
 
@@ -37,8 +37,8 @@
 			<form action="" method="">
 				<div class="MidContent_Wrapper">
 					<span class="floatleft">This feature is only available for
-						registered users.Click here to <a
-						href="<%= request.getContextPath() %>/savedSearches/retainSaveSearch.html" id="id">Signin
+						registered users. Click here to <a
+						href="<%= request.getContextPath() %>/savedSearches/retainSaveSearch.html" id="id">login
 					</a>now.
 					</span>
 				</div>

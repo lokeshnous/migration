@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <title>ADVANCE Heathcare Jobs</title>
 <script type="text/javascript">
 	function loadRecentSearch(searchJobId){
@@ -12,7 +11,7 @@
 			success: function(data){ 
 				$.each(data, function(key, val) {
 					 if (key == "searchtype" && val == "basic") {
-						parent.window.location.href = '${pageContext.request.contextPath}/jobsearch/findJobPage.html';
+						parent.window.location.href = '${pageContext.request.contextPath}/search/findJobPage.html';
 						parent.$.nmTop().close();
 					}
 					
@@ -29,7 +28,7 @@
 	}
 	
 	function displaysavesearchpopup(savesearchid) {
-		$.ajax({url : "../savedSearches/displaysavesearchpopup.html?savesearchid="+savesearchid,
+		$.ajax({url : "${pageContext.request.contextPath}/savedSearches/displaysavesearchpopup.html?savesearchid="+savesearchid,
 			success: function(data){ 
 				$.each(data, function(key, val) {
 					if (key == "NavigationPath") {
@@ -58,7 +57,7 @@
 	 
 	$("#Clear").click(function() {
 		$.ajax({
-			url : "${pageContext.request.contextPath}/jobsearch/clearrecentsearches.html",
+			url : "${pageContext.request.contextPath}/search/clearrecentsearches.html",
 			success : function(data) {
 			//alert("All recent search has been cleared!");
 			parent.$.nmTop().close();
@@ -75,7 +74,7 @@
 			value="myrecentserach" />
 		<div class="popupHeader">
 			<h2>MY RECENT SEARCHES</h2>
-			<img src="../resources/images/Close.png" width="19" height="19"
+			<img src="<%=request.getContextPath()%>/resources/images/Close.png" width="19" height="19"
 			class="nyroModalClose cursor" title="Close" alt="" onclick="window.location.reload();">
 		</div>
 		<div id="recentId">
@@ -104,7 +103,7 @@
 			<input type="button" value="Clear All" class="orange cursor" id="Clear" />
 		    <input type="button" value="Cancel" class="orange nyroModalClose cursor" onclick="window.location.reload();" name="Cancel" />
 		</div>
-	</div>
+	<%--</div>--%>
 	</div>
 </body>
 </html>

@@ -8,8 +8,9 @@
 		$(".addPhoneNo").inputmask("mask", {"mask": "(999) 999-9999"});
 		$(".addPhoneNo").focus();
 	});		
+	
 </script>
-<div class="rowEvenNewSpacing MarginBottom10">
+<div class="rowEvenNewSpacing MarginBottom10" id="phone${phNoPositionId}">
 	<span class="lableText3"></span>
 	<div class="floatLeft marginRight10"></div>
 	<span class="floatLeft marginRight10"></span>
@@ -18,5 +19,5 @@
 		<form:options items="${phoneTypeList}" itemValue="optionId" itemLabel="optionName" />
 	</form:select>
 	<form:input path="createResume.listPhoneDtlForm[${phNoPositionId}].phoneNumber" class="job_seeker_password addPhoneNo" />
-	<span class="required">(Required)</span>
-</div>
+	<span  class="required"><img id="closeCheckOut" onclick="pop('phone${phNoPositionId}',${phNoPositionId})" src="<%= request.getContextPath() %>/resources/images/Close.png" class="cursor" title="Delete" alt="Delete"/></span>
+ <span class="required">(Required)</span> </div>

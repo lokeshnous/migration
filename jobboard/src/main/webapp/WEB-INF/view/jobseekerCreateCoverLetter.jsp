@@ -8,6 +8,22 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <jsp:include page="common/include.jsp" />
 		<script type="text/javascript">
+		
+		tinyMCE.init({
+			mode : "textareas",
+			theme : "advanced",
+			theme_advanced_buttons1 : "mybutton,bold,italic,underline,strikethrough,separator,|,justifyleft,justifycenter,justifyright, justifyfull,|,bullist,numlist,|,undo,redo,link,unlink",
+			theme_advanced_buttons2 :"",
+			theme_advanced_buttons3 :"",
+			theme_advanced_toolbar_location : "top",
+			theme_advanced_toolbar_align : "left",
+			max_chars : 5000,
+			max_chars_indicator : "characterCounter",
+			/*plugins : 'inlinepopups',*/
+			plugins : "autolink,advlink,maxchars",
+			ontent_css : "css/mycontent.css"
+		});
+		
 		jQuery(document).ready(function(){  
 			$.nmFilters({
 	    	    custom: {
@@ -16,15 +32,17 @@
 	    	        }
 	    	    }
 	    	});
-
-			$('#save').click(function(){			
-	 			
-				$.ajax({url:"${pageContext.request.contextPath}/jobSeekerCoverLetter/jobseekerCoverLetterSub.html",
+			$('#save').click(function(){ 
+				var coverLetterName = $.trim($("#name").val());
+				var coverLetterText = tinyMCE.get('coverletterText').getContent();				
+				$("#description").val(coverLetterText);
+				$.ajax({url:"${pageContext.request.contextPath}/jobSeekerCoverLetter/jobseekerCoverLetterSub.html?coverLetterText="+coverLetterText+"&coverLetterName="+coverLetterName,
 					data:$('#resCovLetForm').serialize(),
 					type:"POST",
 					success: function(data) {
 						if(data == ''){
-							alert("Data saved successfully!");	
+						  alert("Data saved successfully!");	
+							location.reload();
 							parent.$.nmTop().close();
 						}else{
 							$("#errmsg").html(data);
@@ -46,14 +64,18 @@
 		}
 		
 	}
+	function refreshCall(){
+		location.reload();
+	}
 	</script>
 	<script type="text/javascript">
-		$('#Cancel').click(function(){		
+		$('#Cancel').click(function(){	
+			location.reload();
 			parent.$.nmTop().close();		
 		});
 		
 		</script>
-	<script src="javascripts/expandCollapse.js" type="text/javascript"></script>
+<!-- 	<script src="javascripts/expandCollapse.js" type="text/javascript"></script> -->
 	</head>
 	<body class="job_board">
 		
@@ -63,7 +85,7 @@
 						<h2>
 							CREATE NEW COVER LETTER 
 						</h2>
-						<a href="#"><img width="19" height="19" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" alt="Close" title="Close"/></a>
+						<a href="#"><img width="19" height="19" src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose" onclick="refreshCall();" alt="Close" title="Close"/></a>
 					</div>
 					<div class="popUpContainerWrapper">
 					<div class="row ">
@@ -90,11 +112,10 @@
 								<span class="lableText7" style="margin-top:8px;">
 								Body Text:
 								</span>
-								<form:textarea path="coverletterText" name="coverletterText"  class="textareaBoxCResume textareaBoxCResumeTemplate" resize="none"  rows="5" cols="20"
-								id="coverletterText"
-									onKeyDown="limitText(this.form.coverletterText,this.form.countdownCoverLetter,5000);"
-									onKeyUp="limitText(this.form.coverletterText,this.form.countdownCoverLetter,5000);"/>
-									<div class="required2" style="float:right; margin-right:21px;">(Required)</div>
+								<form:hidden path="description" id="description"/>
+								<form:textarea path="coverletterText" name="coverletterText" class="textareaBoxCResume textareaBoxCResumeTemplate" resize="none"  rows="5" cols="20"
+								id="coverletterText" />
+									<div class="required2" style="float:right; margin-top:0px;">(Required)</div>
 									</div>
 									
 								<div class="rowEvenNewSpacing magrin_top0">
@@ -102,13 +123,11 @@
 								&nbsp;
 								</span>
 								<p class="magrin_top0">
-								<span class="lableText3 Padding0">
-								
-								
-								<input readonly type="text" class="input2000_width" name="countdownCoverLetter" size="3" value="5000">characters remaining.</span>
+								<span class="lableText3 Padding0">			
+								<input readonly type="text" id="characterCounter" class="input2000_width" name="countdownCoverLetter" size="3" value="5000">characters remaining.</span>
 								</p>
 							</div>						
-						<div class="rowEvenNewSpacing">
+						<%-- <div class="rowEvenNewSpacing">
 								<span class="lableText7">
 								Cover Letter Visibility:
 								</span>
@@ -134,7 +153,7 @@
 							<div class="required2">
 								(Required)
 							</div>
-					 </div>						
+					 </div>	 --%>					
 						<div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 							<span class="floatLeft marginTop10">
 								<input type="button" value="Save" name="save" id="save" class="btn_sm orange cursor"/>

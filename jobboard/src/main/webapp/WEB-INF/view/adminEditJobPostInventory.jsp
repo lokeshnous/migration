@@ -21,10 +21,10 @@
 	<!-- JAVASCRIPT FILES -->
 	<!--  <script type="text/javascript"
 		src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>-->
-	<script type="text/javascript"
+	<!-- <script type="text/javascript"
 		src="javascripts/jquery.cycle.all.min.js"></script>
 	<script type="text/javascript" src="javascripts/slider.js"></script>
-	<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script>
+	<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script> -->
 
 	<!-- <script type="text/javascript" src="jquery-1.3.2.min.js"></script>
 	<script type="text/javascript" src="jquery.autocomplete.min.js"></script>-->
@@ -60,7 +60,10 @@ function closePopup() {
 		     }
 		     else if ((event.shiftKey || event.ctrlKey) && (event.keyCode > 34 && event.keyCode < 40)){     
 		          // let it happen, don't do anything
-		     }      
+		     } 
+		     else if (event.keyCode >=96 && event.keyCode <=105){     
+		          // let it happen, don't do anything
+		     } 
 		     else{
 		        // Allow only backspace , delete, numbers               
 		        if (event.keyCode == 9 || event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 39 ||event.keyCode == 37 
@@ -149,7 +152,7 @@ function closePopup() {
 </head>
 
 <body class="job_board">
-	<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer"
+	<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer width750"
 		style="display: block">
 		<div class="popupHeader">
 			<h2>MANAGE / EDIT JOB POSTING INVENTORY</h2>
@@ -167,7 +170,7 @@ function closePopup() {
 			<div class="row">
 				<span class="splLableText">Company Name: &nbsp;</span>
 				<input type="text" id="empList" name="empList"
-					class="job_seeker_Resume focus" value="${empList}"/>
+					class="job_seeker_Resume focus textBox2" value="${empList}"/>
 				<span class="splLableText FormErrorDisplayText01">&nbsp;&nbsp;OR</span>
 				<span class="lableText7">Net Suite ID Number:</span>
 				<input type="text" id="nsId" name="nsId" class="job_seeker_Resume onlyNum"

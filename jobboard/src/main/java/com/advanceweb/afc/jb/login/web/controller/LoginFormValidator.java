@@ -161,6 +161,7 @@ public class LoginFormValidator {
 				&& email != null
 				&& userDetailsDTO != null
 				&& email.equals(userDetailsDTO.getEmailAddress())
+				&& userDetailsDTO.getFacilityType()!=null
 				&& ((userDetailsDTO.getFacilityType()
 						.equals(MMJBCommonConstants.FACILITY_GROUP)) || (userDetailsDTO
 						.getFacilityType().equals(MMJBCommonConstants.FACILITY)))) {
@@ -169,6 +170,7 @@ public class LoginFormValidator {
 				&& email != null
 				&& userDetailsDTO != null
 				&& email.equals(userDetailsDTO.getEmailAddress())
+				&& userDetailsDTO.getFacilityType()!=null
 				&& (userDetailsDTO.getFacilityType()
 						.equals(MMJBCommonConstants.FACILITY_SYSTEM))) {
 			return true;

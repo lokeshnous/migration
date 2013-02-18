@@ -124,7 +124,7 @@ public class PDFGenerator {
 			// Rename
 			newFile.deleteOnExit();
 			if (temp.renameTo(newFile)) {
-				LOGGER.info("File has been renamed.");
+				LOGGER.debug("File has been renamed.");
 			}
 			temp.deleteOnExit();
 			
@@ -1220,7 +1220,7 @@ public class PDFGenerator {
 	 * @param string
 	 */
 	private void logException(Exception exception, String errorMessage) {
-		LOGGER.info(errorMessage, exception);
+		LOGGER.error(errorMessage, exception);
 
 	}
 

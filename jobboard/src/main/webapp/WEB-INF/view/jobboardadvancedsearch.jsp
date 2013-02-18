@@ -18,7 +18,7 @@
 <!-- JAVASCRIPT FILES -->
 <script language="javascript" type="text/javascript" src="../resources/js/slider.js"></script>
 <link href="../resources/css/jquery-ui.css" rel="stylesheet" type="text/css" />
-<script language="javascript" type="text/javascript" src="/media/js/jquery.js"></script>
+<!-- <script language="javascript" type="text/javascript" src="/media/js/jquery.js"></script> -->
 <script language="javascript" type="text/javascript" src="../resources/js/jquery.dataTables.nightly.js"></script>
 <script language="javascript" type="text/javascript" src="../resources/js/searchResultsdatatable.js"></script>
 

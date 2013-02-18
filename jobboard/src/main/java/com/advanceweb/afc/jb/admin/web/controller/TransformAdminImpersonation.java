@@ -15,7 +15,8 @@ public class TransformAdminImpersonation {
 	public AdminDTO transformAdminFormToDTO(AdminLoginForm form){
 		AdminDTO adminDTO = new AdminDTO();
 		adminDTO.setEmpOrAgencyEmail(form.getEmpOrAgencyEmail());
-		adminDTO.setUserEmail(form.getUserEmail());
+//		adminDTO.setUserEmail(form.getUserEmail());
+		adminDTO.setAdminUserId(form.getAdminUserId());
 		return adminDTO;
 	}
 	

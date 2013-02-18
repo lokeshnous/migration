@@ -213,6 +213,6 @@ public class EmployerRegistrationValidation {
 	 */
 	public boolean accountValidate(Object target, Errors errors) {
 		EmployeeAccountForm registerForm = (EmployeeAccountForm) target;
-		return StringUtils.isEmpty(registerForm.getEmail());
+		return StringUtils.isBlank(registerForm.getEmail());
 	}
 }

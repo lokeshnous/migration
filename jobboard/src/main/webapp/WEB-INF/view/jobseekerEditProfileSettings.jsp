@@ -10,10 +10,10 @@
 <!-- STYLESHEETS -->
 <jsp:include page="common/include.jsp" />
 <link href="../resources/css/JB.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" language="javascript"
-	src="/media/js/jquery.js"></script>		
- <link href="../resources/css/jquery-auto-ui.css" rel="stylesheet"
-	type="text/css"> 
+<!-- <script type="text/javascript" language="javascript"
+	src="/media/js/jquery.js"></script>	 -->	
+ <!-- <link href="../resources/css/jquery-auto-ui.css" rel="stylesheet"
+	type="text/css">  -->
 	<script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 <link href="../resources/css/jquery.megamenu.css" rel="stylesheet"
 	type="text/css" />
@@ -106,7 +106,7 @@ function validateNumber(event) {
  		//$('[id^=zipCode]').keypress(validateNumber);
  		
  		//Auto complete on selecting city
-		$("#cityAutoPopulation").autocomplete({
+		/* $("#cityAutoPopulation").autocomplete({
 			source: '${pageContext.request.contextPath}/employer/getCityList.html',
 			width:500,
 			select: function(event, ui) {
@@ -126,6 +126,9 @@ function validateNumber(event) {
 						url: '${pageContext.request.contextPath}/employer/getCountry.html?city='+$("#cityAutoPopulation").val()+'&state='+$("#stateDpId").val()+'&postalCode='+$("#zipCode").val(),
 						success : function(country) {
 							$('#countryDpId').val(country);
+							var modCity = $("#cityAutoPopulation").val();
+							modCity = modCity.substring(0,modCity.lastIndexOf(", "));
+							$("#cityAutoPopulation").val(modCity);
 						},
 					}); 						
 				},
@@ -154,11 +157,6 @@ function validateNumber(event) {
 			}
 		});	
  		
-		$("#stateDpId").change( function(){
-			$('#cityAutoPopulation').val('');
-			$('#zipCode').val('');
-			$('#countryDpId').val('');
-		});
 	$("#zipCode").change(function(){
 		$('#cityAutoPopulation').val("");
 		$('#stateDpId').val("");
@@ -169,12 +167,7 @@ function validateNumber(event) {
 		$('#zipCode').val("");
 		$('#stateDpId').val("");
 		$('#countryDpId').val("");
-	});
-	$("#countryDpId").change(function(){
-		$('#zipCode').val("");
-		$('#stateDpId').val("");
-		$('#cityAutoPopulation').val("");
-	});
+	}); */
 		jQuery(".megamenu").megamenu();
 	});
 </script>

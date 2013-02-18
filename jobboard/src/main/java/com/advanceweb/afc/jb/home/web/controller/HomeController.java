@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.annotation.Resource;
@@ -22,6 +23,10 @@ import javax.servlet.http.HttpSession;
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -40,12 +45,16 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.common.controller.AbstractController;
 import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
+import com.advanceweb.afc.jb.common.NewsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.constants.PageNames;
+import com.advanceweb.afc.jb.employer.service.EmployerNewsFeedService;
 import com.advanceweb.afc.jb.employer.service.ManageFeaturedEmployerProfile;
 import com.advanceweb.afc.jb.employer.web.controller.EmployerProfileManagementForm;
 import com.advanceweb.afc.jb.job.web.controller.JobSearchResultForm;
-import com.advanceweb.afc.jb.search.service.JobSearchService;
+import com.advanceweb.afc.jb.jobseeker.web.controller.CheckSessionMap;
+import com.advanceweb.afc.jb.search.SearchParamDTO;
 import com.advanceweb.afc.jb.web.utils.CopyUtil;
 import com.advanceweb.afc.jb.web.utils.ReadFile;
 import com.advanceweb.common.ads.AdPosition;
@@ -54,7 +63,7 @@ import com.advanceweb.common.client.ClientContext;
 
 @Controller
 @RequestMapping(value = "/healthcarejobs")
-public class HomeController extends AbstractController{
+public class HomeController extends AbstractController {
 
 	private static final String FEATURED_EMPS_COUNT = "count";
 	private static final String PREV_FEATURED_EMP = "prev";
@@ -67,6 +76,9 @@ public class HomeController extends AbstractController{
 
 	@Value("${directory}")
 	private String directory;
+
+	@Value("${careerImagesDirectory}")
+	private String careerImagesDirectory;
 
 	@Value("${healthcarenewsfilename}")
 	private String healthcarenewsfilename;
@@ -96,44 +108,65 @@ public class HomeController extends AbstractController{
 	private ManageFeaturedEmployerProfile manageFeatureEmployerProfile;
 
 	@Autowired
-	private JobSearchService jobSearchService;
-	
-	@Autowired
 	private AdService adService;
 	
+	@Autowired
+	private EmployerNewsFeedService employerNewsFeedService;
+	
+	private static final String NEWS_LIST = "HomePageNewsList";
+	
+	@Autowired
+	private CheckSessionMap checkSessionMap;
+
 	@Autowired
 	@Resource(name = "seoConfiguration")
 	private Properties seoConfiguration;
 
-	@RequestMapping(value = "/advanceweb", method = RequestMethod.GET)
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String gethtmlContents(HttpServletRequest request, Model model,
 			HttpSession session, @ModelAttribute JobSearchResultForm jobSearchResultForm) {
-		
-//		WebSitemapGenerator wsg = new WebSitemapGenerator("http://www.example.com", myDir);
-//		wsg.addUrl("http://www.example.com/index.html"); // repeat multiple times
-//		wsg.write();
-		
-		model.addAttribute("viewhtml", true);
+		if(request.getQueryString() != null){
+			
+			Map<String, String> sessionMap = checkSessionMap
+					.getSearchSessionMap(session);
+			sessionMap.put(MMJBCommonConstants.SEARCH_TYPE,
+					MMJBCommonConstants.BASIC_SEARCH_TYPE);
+			sessionMap.put(SearchParamDTO.KEYWORDS,
+					request.getParameter("keyword"));
+			sessionMap.put(SearchParamDTO.CITY_STATE,
+					request.getParameter("citystate"));
+			sessionMap.put(SearchParamDTO.RADIUS,
+					request.getParameter("radius"));
+			sessionMap.put(MMJBCommonConstants.AUTOLOAD, String.valueOf(true));
+			jobSearchResultForm.setCityState(request.getParameter("citystate"));
+			jobSearchResultForm.setRadius(request.getParameter("radius"));
+			jobSearchResultForm.setAutoload(true);
+			session.setAttribute(SearchParamDTO.SEARCH_SESSION_MAP, sessionMap);
+			session.setAttribute(MMJBCommonConstants.AUTOLOAD, "true");
+		}
 		try {
 
-			if (new File(basedirectorypath + directory + healthcarenewsfilename)
-					.exists()) {
-				String htmlhealthcontent = ReadFile
-						.htmlReader(basedirectorypath + directory
-								+ healthcarenewsfilename);
-				model.addAttribute("healthcarenew", htmlhealthcontent);
+			/*
+			 * if (new File(basedirectorypath + directory +
+			 * healthcarenewsfilename) .exists()) { String htmlhealthcontent =
+			 * ReadFile .htmlReader(basedirectorypath + directory +
+			 * healthcarenewsfilename); model.addAttribute("healthcarenew",
+			 * htmlhealthcontent); } else { model.addAttribute("healthcarenew",
+			 * "<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />"
+			 * ); }
+			 */
+
+			Map<String, List<NewsDTO>> newsMap = employerNewsFeedService
+					.getNewsFromXML();
+
+			List<NewsDTO> newsDTOList = newsMap.get(NEWS_LIST);
+			if (null != newsDTOList && newsDTOList.size() > 5) {
+				List<NewsDTO> modNewsDTOList = newsDTOList.subList(0, 5);
+				model.addAttribute("newsDTOList", modNewsDTOList);
 			} else {
-				model.addAttribute("healthcarenew",
-						"<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />");
+				model.addAttribute("newsDTOList", newsDTOList);
 			}
 
-			if (new File(basedirectorypath + directory + careertoolfilename)
-					.exists()) {
-				String htmlcareercontent = ReadFile
-						.htmlReader(basedirectorypath + directory
-								+ careertoolfilename);
-				model.addAttribute("careerstoolresource", htmlcareercontent);
-			}
 			session.removeAttribute(NEXT_FEATURED_EMP);
 			session.removeAttribute(PREV_FEATURED_EMP);
 			session.removeAttribute(FEATURED_EMPS_COUNT);
@@ -146,26 +179,27 @@ public class HomeController extends AbstractController{
 					.getEmployerList(firstIndex, 2);
 			Long companyProfileDTOListCount = manageFeatureEmployerProfile
 					.getEmployerListCount();
-			session.setAttribute(FEATURED_EMPS_COUNT, companyProfileDTOListCount);			
-			session.setAttribute("companyProfileDTOList",companyProfileDTOList);
+			session.setAttribute(FEATURED_EMPS_COUNT,
+					companyProfileDTOListCount);
+			session.setAttribute("companyProfileDTOList", companyProfileDTOList);
 			model.addAttribute("followuplinkfacebook", followuplinkfacebook);
 			model.addAttribute("followuplinktwitter", followuplinktwitter);
 			model.addAttribute("followuplinkyoutube", followuplinkyoutube);
 			model.addAttribute("followuplinklinkedin", followuplinklinkedin);
-//			JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
+			// JobSearchResultForm jobSearchResultForm = new
+			// JobSearchResultForm();
 			model.addAttribute("jobSearchResultForm", jobSearchResultForm);
 			model.addAttribute("isHomePage", true);
 
 			// populate the Ads
 			populateAds(request, session, model, PageNames.HOME);
-			
+
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			model.addAttribute("healthcarenew",
 					"<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>");
-			model.addAttribute("careerstoolresource", "");
-			LOGGER.error("Error occurred while getting the html content for home page"
-					, e);
+			LOGGER.error(
+					"Error occurred while getting the html content for home page",
+					e);
 		}
 		// Get the SEO Details
 		getSEODetails(model, request);
@@ -174,76 +208,181 @@ public class HomeController extends AbstractController{
 				.replace(request.getServletPath(), "")
 				+ "/jobs/alljobs.html";
 		model.addAttribute("jobsUrl", jobsUrl);
-		String jobsUrlMessage = seoConfiguration
-				.getProperty("homepage.jobsurlmessage").trim();
-		String staticContent = seoConfiguration
-				.getProperty("homepage.staticContent").trim();
+		String jobsUrlMessage = seoConfiguration.getProperty(
+				"homepage.jobsurlmessage").trim();
+		String staticContent = seoConfiguration.getProperty(
+				"homepage.staticContent").trim();
 		model.addAttribute("jobsUrlTitle", jobsUrlMessage);
-		model.addAttribute("staticContent", staticContent);		
+		model.addAttribute("staticContent", staticContent);
+
+		if (session.getAttribute("showCareersType") != null) {
+			String showCareersType = (String) session
+					.getAttribute("showCareersType");
+			model.addAttribute("showCareersType", showCareersType);
+			session.removeAttribute("showCareersType");
+		}
 		return "home";
 	}
-
+	
 	/**
-	 * populate the ads for home ,featured employers list and featured employer detail page 
+	 *  The method generate the site map for application.
 	 * 
 	 * @param request
 	 * @param model
 	 * @param session
-	 * @param pageName 
+	 * @return
+	 */
+	@RequestMapping(value = "/generateSiteMap", method = RequestMethod.GET)
+	/*public ModelAndView startSiteMapGeneratot(HttpServletRequest request, Model model,
+			HttpSession session){
+		ModelAndView modelAndView = new ModelAndView();
+		File myDir = new File("C:\\");
+		WebSitemapGenerator wsg;
+		try {
+			String websiteAdd = "http://"+request.getRequestURL().toString()
+					.replace(request.getServletPath(), "");
+			wsg = new WebSitemapGenerator(websiteAdd, myDir);
+			JobSearchResultDTO jobSearchResultDTO = null;
+			JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
+
+			// Set the search type for SOLR facets
+			String searchName = MMJBCommonConstants.KEYWORD_SEARCH;
+			jobSearchResultForm.setSearchName(searchName);
+			jobSearchResultForm.setSearchtype(MMJBCommonConstants.BASIC_SEARCH_TYPE);
+
+			// merge the parameters
+			int searchSeq = MMJBCommonConstants.ZERO_INT;
+			String sessionId = "";
+			Map<String, String> paramMap = new HashMap<String, String>();
+			paramMap.put(SearchParamDTO.KEYWORDS, "*");
+			paramMap.put(SearchParamDTO.SESSION_ID, sessionId.trim());
+			paramMap.put(SearchParamDTO.SEARCH_SEQ,
+					String.valueOf(searchSeq + 1));
+			paramMap.put(SearchParamDTO.SEARCH_NAME, searchName.trim());
+
+			// For testing. Remove it while committing
+			paramMap.put(MMJBCommonConstants.SORT_PARAM, MMJBCommonConstants.POSTED_DT);
+			paramMap.put(MMJBCommonConstants.FIRST_FQ_PARAM,
+					MMJBCommonConstants.EMPTY);
+			paramMap.put(MMJBCommonConstants.SECOND_FQ_PARAM,
+					MMJBCommonConstants.EMPTY);
+			paramMap.put(MMJBCommonConstants.THIRD_FQ_PARAM,
+					MMJBCommonConstants.EMPTY);
+			paramMap.put(MMJBCommonConstants.FOURTH_FQ_PARAM,
+					MMJBCommonConstants.EMPTY);
+			paramMap.put(MMJBCommonConstants.FIFTH_FQ_PARAM,
+					MMJBCommonConstants.EMPTY);
+			paramMap.put(MMJBCommonConstants.SORT_ORDER,
+					MMJBCommonConstants.DESC_STR);
+			paramMap.put(MMJBCommonConstants.FACET_SORT,
+					MMJBCommonConstants.INDEX_STR);
+
+			try {
+				for(int i = 1 ; i<20 ; i++){
+					long start = (i - 1) * 3000;
+					long rows = 3000;
+					jobSearchResultDTO = jobSearchService.jobSearch(
+							paramMap, start, rows);
+					List<JobDTO> jobDTOList = jobSearchResultDTO.getResultList();
+					WebSitemapUrl url = null;
+					String title = null;
+					String jobId = null;
+					for (JobDTO jobDTO : jobDTOList) {
+						title = MMUtils.isNull(jobDTO.getJobTitle());
+						jobId = MMUtils.isNull(String.valueOf(jobDTO.getJobId()));
+						if (!title.isEmpty()) {
+							title = title
+									.replaceAll(
+											MMJBCommonConstants.IGNORE_SPECIAL_CHAR_PATTERN,
+											"");
+						} 
+						url = new WebSitemapUrl.Options(websiteAdd+"/search/jobview/"+jobId+"/"+title+".html")
+						.lastMod(new Date()).priority(1.0).changeFreq(ChangeFreq.HOURLY).build();
+						wsg.addUrl(url);
+
+					}
+					
+				}
+			} catch (JobBoardException e) {
+				LOGGER.debug("Error occured while getting the Job Search Result from SOLR...");
+			}
+			wsg.write();
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
+		}catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+		}
+		return modelAndView;
+	}*/
+	
+	/**
+	 * populate the ads for home ,featured employers list and featured employer
+	 * detail page
+	 * 
+	 * @param request
+	 * @param model
+	 * @param session
+	 * @param pageName
 	 */
 	private void populateAds(HttpServletRequest request, HttpSession session,
 			Model model, String pageName) {
 		String bannerString = null;
 		try {
-			
+
 			ClientContext clientContext = getClientContextDetails(request,
 					session, pageName);
 			AdSize size = AdSize.IAB_LEADERBOARD;
 			AdPosition position = AdPosition.TOP;
-			bannerString = adService
-					.getBanner(clientContext, size, position).getTag();
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
 			model.addAttribute(MMJBCommonConstants.ADPAGETOP, bannerString);
-			
+
 			size = AdSize.IAB_LEADERBOARD;
 			position = AdPosition.BOTTOM;
-			bannerString = adService
-					.getBanner(clientContext, size, position).getTag();
+			bannerString = adService.getBanner(clientContext, size, position)
+					.getTag();
 			model.addAttribute(MMJBCommonConstants.ADPAGEBOTTOM, bannerString);
-			
-			if(pageName.equalsIgnoreCase(PageNames.HOME)){
+
+			if (pageName.equalsIgnoreCase(PageNames.HOME)) {
 				size = AdSize.IAB_MEDIUM_RECTANGLE;
 				position = AdPosition.RIGHT_TOP;
-				bannerString = adService
-						.getBanner(clientContext, size, position).getTag();
-				model.addAttribute(MMJBCommonConstants.ADPGRIGHT_TOP, bannerString);
-				
+				bannerString = adService.getBanner(clientContext, size,
+						position).getTag();
+				model.addAttribute(MMJBCommonConstants.ADPGRIGHT_TOP,
+						bannerString);
+
 				size = AdSize.IAB_MEDIUM_RECTANGLE;
 				position = AdPosition.RIGHT_MIDDLE;
-				bannerString = adService
-						.getBanner(clientContext, size, position).getTag();
-				model.addAttribute(MMJBCommonConstants.ADPGRIGHT_MIDDLE, bannerString);
+				bannerString = adService.getBanner(clientContext, size,
+						position).getTag();
+				model.addAttribute(MMJBCommonConstants.ADPGRIGHT_MIDDLE,
+						bannerString);
+
+				// size = AdSize.IAB_WIDE_SKYSCRAPER;
+				// position = AdPosition.RIGHT_TOP;
+				// bannerString = adService
+				// .getBanner(clientContext, size, position).getTag();
+				// model.addAttribute(MMJBCommonConstants.ADPGRIGHT_TOP_MIDDLE,
+				// bannerString);
 			}
 
-
 		} catch (Exception e) {
-			LOGGER.error("Error occurred while getting the html content for Ads"
-					, e);
+			LOGGER.error(
+					"Error occurred while getting the html content for Ads", e);
 		}
 	}
-	
+
 	/**
 	 * Get the SEO details.
 	 * 
 	 * @param model
-	 * @param request 
-	 * @param jobDTO 
+	 * @param request
+	 * @param jobDTO
 	 */
-	private void getSEODetails(Model model,
-			HttpServletRequest request) {		
-		String metaDesc = seoConfiguration
-				.getProperty("homepage.meta.description").trim();
-		String jobsCount = String.valueOf(jobSearchService.getTotalActiveJobs());
-		metaDesc = metaDesc.replace("?jobsCount", jobsCount);
+	private void getSEODetails(Model model, HttpServletRequest request) {
+		String metaDesc = seoConfiguration.getProperty(
+				"homepage.meta.description").trim();
+		// merge the parameters
 		String metaTitle = seoConfiguration
 				.getProperty("homepage.meta.title").trim();
 		model.addAttribute("metaDesc", metaDesc);
@@ -263,22 +402,24 @@ public class HomeController extends AbstractController{
 		populateAds(request, session, model, PageNames.FEATURED_EMPS);
 		return "featuredemployers";
 	}
-	
+
 	/**
 	 * Method called to get the featured employer details by facility Id
 	 * 
 	 * @param employerProfileManagementForm
 	 * @param request
 	 * @param model
-	 * @param session 
+	 * @param session
 	 * @return
 	 */
 	@RequestMapping(value = "/featuredemployerdetails", method = RequestMethod.GET)
 	public String getfeaturedemployerbyid(
 			EmployerProfileManagementForm employerProfileManagementForm,
 			HttpServletRequest request, Model model, HttpSession session) {
+		int facilityId = Integer.parseInt(request.getParameter("id"));
+		facilityId = manageFeatureEmployerProfile.getParentGroup(facilityId);
 		CompanyProfileDTO companyProfileDTO = manageFeatureEmployerProfile
-				.getEmployerDetails(Integer.parseInt(request.getParameter("id")));
+				.getEmployerDetails(facilityId);
 		employerProfileManagementForm.setCompanyName(companyProfileDTO
 				.getCompanyName());
 		employerProfileManagementForm.setCompanyNews(companyProfileDTO
@@ -293,6 +434,7 @@ public class HomeController extends AbstractController{
 				.getPositionTitle());
 		employerProfileManagementForm.setLogoPath(companyProfileDTO
 				.getLogoPath());
+		employerProfileManagementForm.setFacilityId(facilityId);
 		if (null != companyProfileDTO.getPrimaryColor()) {
 			employerProfileManagementForm.setPrimaryColor(companyProfileDTO
 					.getPrimaryColor().replace("HEX #", "#"));
@@ -306,11 +448,15 @@ public class HomeController extends AbstractController{
 		model.addAttribute("windowmediaplayerfilepath", path);
 		model.addAttribute("employerProfileManagementForm",
 				employerProfileManagementForm);
+		model.addAttribute("companyNameEncoded",
+				MMUtils.encodeString(employerProfileManagementForm.getCompanyName().trim().replaceAll(
+						MMJBCommonConstants.IGNORE_SPECIAL_CHAR_PATTERN,
+						"").trim()).toLowerCase());
 		// populate the Ads
 		populateAds(request, session, model, PageNames.FEATURED_EMP);
 		return "featuredemployerdetails";
 	}
-	
+
 	@RequestMapping("/logo")
 	public void getPhoto(@RequestParam("id") Long id,
 			HttpServletResponse response, HttpServletRequest request) {
@@ -327,7 +473,7 @@ public class HomeController extends AbstractController{
 			// Display the image
 			write(response, result.getBody());
 		} catch (Exception e) {
-			LOGGER.info("Error" + e);
+			LOGGER.debug(e.getMessage(), e);
 		}
 	}
 
@@ -349,7 +495,7 @@ public class HomeController extends AbstractController{
 			// Display the image
 			write(response, result.getBody());
 		} catch (Exception e) {
-			LOGGER.info(e);
+			LOGGER.debug(e.getMessage(), e);
 		}
 	}
 
@@ -439,7 +585,7 @@ public class HomeController extends AbstractController{
 			outputStream.close();
 
 		} catch (Exception e) {
-			LOGGER.info(e);
+			LOGGER.debug(e);
 		}
 	}
 
@@ -459,7 +605,7 @@ public class HomeController extends AbstractController{
 			outputStream.close();
 
 		} catch (Exception e) {
-			LOGGER.info(e);
+			LOGGER.debug(e);
 		}
 	}
 
@@ -476,30 +622,10 @@ public class HomeController extends AbstractController{
 		} catch (Exception e) {// Catch exception if any
 			// System.err.println("Error: " + e.getMessage());
 			model.addAttribute("copyhtml", "");
-			LOGGER.info("Error while copying the HTML files" + e);
+			LOGGER.error("Error while copying the HTML files" + e);
 		}
 
 		return "jspviewcontent";
-	}
-
-	/**
-	 * This method is used to get the total number of Active jobs.
-	 * 
-	 * @param HttpServletRequest
-	 * @return String
-	 */
-	// To do: Take it from SOLR. Not from DB.
-	@ResponseBody
-	@RequestMapping(value = "/activeJobs", method = RequestMethod.GET)
-	public String activeJobs(HttpServletRequest request) {
-		long totalNoOfActiveJobs = 0;
-		try {
-			totalNoOfActiveJobs = jobSearchService.getTotalActiveJobs();
-
-		} catch (Exception e) {// Catch exception if any
-			LOGGER.error(e);
-		}
-		return String.valueOf(totalNoOfActiveJobs);
 	}
 
 	/**
@@ -538,8 +664,7 @@ public class HomeController extends AbstractController{
 		Long companyProfileDTOListCount = manageFeatureEmployerProfile
 				.getEmployerListCount();
 		session.setAttribute(FEATURED_EMPS_COUNT, companyProfileDTOListCount);
-		session.setAttribute("companyProfileDTOList",
-				companyProfileDTOList);
+		session.setAttribute("companyProfileDTOList", companyProfileDTOList);
 		return jsonObject;
 	}
 
@@ -566,7 +691,7 @@ public class HomeController extends AbstractController{
 	 * @param response
 	 * @param request
 	 * @param model
-	 * @param session 
+	 * @param session
 	 * @return
 	 */
 	@RequestMapping(value = "/viewallcareertools")
@@ -575,10 +700,23 @@ public class HomeController extends AbstractController{
 		if (new File(basedirectorypath + directory + careertoolfilename)
 				.exists()) {
 			try {
-				String htmlcareercontent = ReadFile
-						.htmlReader(basedirectorypath + directory
-								+ careertoolfilename);
-				model.addAttribute("careerstoolresource", htmlcareercontent);
+				if (new File(basedirectorypath + directory + careertoolfilename)
+						.exists()) {
+					String htmlcareercontent = ReadFile
+							.htmlReader(basedirectorypath + directory
+									+ careertoolfilename);
+					Document doc = Jsoup.parse(htmlcareercontent);
+					Elements link = doc.select("img");
+					for (Element element : link) {
+						String linkSrc = element.attr("src");
+						element.attr("src", request.getContextPath()
+								+ "/healthcarejobs/viewImage.html?id="
+								+ basedirectorypath + directory
+								+ careerImagesDirectory + "/" + linkSrc);
+					}
+					model.addAttribute("careerstoolresource", doc);
+				}
+
 			} catch (IOException e) {
 				LOGGER.error(
 						"Error occurred while getting the html content for careertools page",
@@ -590,27 +728,28 @@ public class HomeController extends AbstractController{
 		populateAds(request, session, model, PageNames.FEATURED_EMP);
 		return modelAndView;
 	}
-	
+
 	/**
 	 * Navigate to site Map page
 	 * 
 	 * @param response
 	 * @param request
 	 * @param model
-	 * @param session 
+	 * @param session
 	 * @return
 	 */
 	@RequestMapping(value = "/sitemap")
-	public ModelAndView siteMapPage(
-			HttpServletResponse response, HttpServletRequest request,
-			Model model, HttpSession session) {
+	public ModelAndView siteMapPage(HttpServletResponse response,
+			HttpServletRequest request, Model model, HttpSession session) {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("sitemap");
 		populateAds(request, session, model, PageNames.JOBSEEKER_SITE_MAP);
 		return modelAndView;
 	}
+
 	/**
 	 * Method which will redirect the request to error page
+	 * 
 	 * @param request
 	 * @param model
 	 * @param session
@@ -622,4 +761,118 @@ public class HomeController extends AbstractController{
 		model.addAttribute("isHomePage", true);
 		return "defaultErrorPage";
 	}
+
+	/**
+	 * The method helps to show the career part depending on career type
+	 * 
+	 * @param request
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/showCareersPart", method = RequestMethod.GET)
+	public ModelAndView showCareersPart(HttpServletRequest request,
+			Model model, HttpSession session) {
+		ModelAndView modelAndView = new ModelAndView();
+		// Get the career type to show
+		String careersType = (String) request.getParameter("careerType");
+
+		if (careersType.equalsIgnoreCase("careers")) {
+			try {
+				if (new File(basedirectorypath + directory + careertoolfilename)
+						.exists()) {
+					String htmlcareercontent = ReadFile
+							.htmlReader(basedirectorypath + directory
+									+ careertoolfilename);
+					Document doc = Jsoup.parse(htmlcareercontent);
+					Elements link = doc.select("img");
+					for (Element element : link) {
+						String linkSrc = element.attr("src");
+						element.attr("src", request.getContextPath()
+								+ "/healthcarejobs/viewImage.html?id="
+								+ basedirectorypath + directory
+								+ careerImagesDirectory + linkSrc);
+					}
+					model.addAttribute("careerstoolresource", doc);
+					session.setAttribute("careerstools", doc);
+				}
+				modelAndView.setViewName("jobboardCareerResource");
+			} catch (Exception e) {
+				LOGGER.error(e.getMessage(), e);
+			}
+		} else if (careersType.equalsIgnoreCase("resumeBuilder")) {
+			try {
+
+			} catch (Exception e) {
+				LOGGER.error(e.getMessage(), e);
+			}
+			modelAndView.setViewName("jobBoardCareerAdvanceBuilder");
+		} else if (careersType.equalsIgnoreCase("messanger")) {
+			try {
+
+			} catch (Exception e) {
+				LOGGER.error(e.getMessage(), e);
+			}
+			modelAndView.setViewName("jobBoardCareerAdvanceMessenger");
+		}
+
+		return modelAndView;
+	}
+
+	/**
+	 * The method helps to navigate job seeker dashboard page if he logged in
+	 * other wise navigate to login page.
+	 * 
+	 * @param request
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/navigateJsDashboard", method = RequestMethod.GET)
+	public ModelAndView navigateJobseekerDashboard(HttpServletRequest request,
+			Model model, HttpSession session) {
+		ModelAndView modelAndView = new ModelAndView();
+		// Check for Login
+		if (session.getAttribute(MMJBCommonConstants.USER_ID) != null) {
+			modelAndView
+					.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
+		} else {
+			modelAndView
+					.setViewName("redirect:/commonLogin/login.html?page=jobSeeker");
+		}
+
+		return modelAndView;
+	}
+
+	/**
+	 * The method helps to navigate job seeker dashboard page if he logged in
+	 * other wise navigate to login page.
+	 * 
+	 * @param request
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/showCareers", method = RequestMethod.GET)
+	public ModelAndView showCareers(HttpServletRequest request, Model model,
+			HttpSession session) {
+		ModelAndView modelAndView = new ModelAndView();
+		// Get the career type
+		String careerType = request.getParameter("careerType");
+
+		session.setAttribute("showCareersType", careerType);
+		if (careerType.equalsIgnoreCase("career")) {
+			modelAndView
+					.setViewName("redirect:/healthcarejobs/index.html");
+		} else if (careerType.equalsIgnoreCase("messanger")) {
+			modelAndView
+					.setViewName("redirect:/healthcarejobs/index.html");
+		} else if (careerType.equalsIgnoreCase("resumeBuilder")) {
+			modelAndView
+					.setViewName("redirect:/healthcarejobs/index.html");
+		}
+
+		return modelAndView;
+	}
+
 }

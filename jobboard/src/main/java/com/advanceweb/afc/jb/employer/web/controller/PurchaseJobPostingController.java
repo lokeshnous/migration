@@ -12,6 +12,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -88,7 +89,10 @@ public class PurchaseJobPostingController {
 
 			JobPostingsForm jobPostingsCart = mapper.readValue(jobPostJson,
 					JobPostingsForm.class);
-
+			// If a valid Promotional code available
+			if (purchaseJobPostForm.getDiscountAmt()>0) {
+				purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getTotal());
+			}
 			planCreditAmt = Integer.parseInt(jobPostingsCart
 					.getJobPostPlanCretitAmt());
 
@@ -103,7 +107,9 @@ public class PurchaseJobPostingController {
 
 			purchaseJobPostForm.setGrandTotal(purchaseJobPostForm
 					.getGrandTotal() + packageSubTotal);
-
+			//calculating the Total amount after deducting the discount 
+			
+			calculateDiscount(purchaseJobPostForm);
 			purchaseJobPostForm.getJobPostingsCart().add(jobPostingsCart);
 
 		} catch (JsonParseException e) {
@@ -147,12 +153,49 @@ public class PurchaseJobPostingController {
 		ModelAndView model = new ModelAndView();
 		JobPostingsForm cartItem = purchaseJobPostForm.getJobPostingsCart()
 				.get(cartItemIndex);
+		if (purchaseJobPostForm.getDiscountAmt()>0) {
+			purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getTotal());
+		}
 		purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getGrandTotal()
 				- cartItem.getPackageSubTotal());
+		//calculating the Total amount after deducting the discount 
+			calculateDiscount(purchaseJobPostForm);
 		purchaseJobPostForm.getJobPostingsCart().remove(cartItemIndex);
 		model.addObject(MMJBCommonConstants.PURCHASE_JOB_POST_FORM, purchaseJobPostForm);
 		model.setViewName(PURCHASE_JOB_POSTINGS);
 		return model;
+	}
+
+	/**
+	 * calculating the Total amount after deducting the discount 
+	 * @param purchaseJobPostForm
+	 */
+	private void calculateDiscount(PurchaseJobPostForm purchaseJobPostForm) {
+		if (purchaseJobPostForm.getDiscountAmt() > 0) {
+			int total = (int) purchaseJobPostForm.getGrandTotal();
+			double discountAmt = Math.round((total * .15) * 10.0) / 10.0;
+			double grandTotal = total - discountAmt;
+			purchaseJobPostForm.setTotal(total);
+			purchaseJobPostForm.setDiscountAmt(discountAmt);
+			purchaseJobPostForm.setGrandTotal(grandTotal);
+		}
+	}
+	/**
+	 * calculating the Total amount after deducting the discount 
+	 * @param purchaseJobPostForm
+	 */
+	private void calculateDiscountAmount(PurchaseJobPostForm purchaseJobPostForm) {
+		 if ((null != purchaseJobPostForm.getPromotionCode() && purchaseJobPostForm
+				.getPromotionCode().equalsIgnoreCase(
+						MMJBCommonConstants.PROMOCODE_15ADVOFF))
+				&& purchaseJobPostForm.getDiscountAmt() <= 0) {
+			int total = (int) purchaseJobPostForm.getGrandTotal();
+			double discountAmt = Math.round((total * .15) * 10.0) / 10.0;
+			double grandTotal = total - discountAmt;
+			purchaseJobPostForm.setTotal(total);
+			purchaseJobPostForm.setDiscountAmt(discountAmt);
+			purchaseJobPostForm.setGrandTotal(grandTotal);
+		}
 	}
 	
 	/**
@@ -172,6 +215,9 @@ public class PurchaseJobPostingController {
 		JobPostingsForm cartItem = purchaseJobPostForm.getJobPostingsCart()
 				.get(cartItemIndex);
 		
+		if (purchaseJobPostForm.getDiscountAmt()>0) {
+			purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getTotal());
+		}
 		purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getGrandTotal()
 				- cartItem.getPackageSubTotal());
 		
@@ -190,7 +236,8 @@ public class PurchaseJobPostingController {
 
 		purchaseJobPostForm.setGrandTotal(purchaseJobPostForm
 				.getGrandTotal() + packageSubTotal);
-
+		//calculating the Total amount after deducting the discount 
+		calculateDiscount(purchaseJobPostForm);
 		model.addObject(MMJBCommonConstants.PURCHASE_JOB_POST_FORM, purchaseJobPostForm);
 		model.setViewName(PURCHASE_JOB_POSTINGS);
 		return model;
@@ -206,9 +253,40 @@ public class PurchaseJobPostingController {
 	public ModelAndView proceedToCheckOut(
 			PurchaseJobPostForm purchaseJobPostForm, HttpSession session) {
 		ModelAndView model = new ModelAndView();
+		//calculating the Total amount after deducting the discount 
+		calculateDiscountAmount(purchaseJobPostForm);
 		session.setAttribute(MMJBCommonConstants.PURCHASE_JOB_POST_FORM, purchaseJobPostForm);
 
 		model.setViewName("redirect:/pgiController/callPaymentMethod.html?purchaseType=jobPost");
+		return model;
+	}
+	
+	/**
+	 * This method is added to Calculate discount against the Promotion Code
+	 * @param purchaseJobPostForm
+	 * @param cartItemIndex
+	 * @return model
+	 */
+	@RequestMapping(value = "/calculateDiscount", method = RequestMethod.POST)
+	public ModelAndView calculateDiscount(PurchaseJobPostForm purchaseJobPostForm,BindingResult error,
+			@RequestParam("grandTotalAmt") double grandTotalAmt,@RequestParam("promotionCode") String promotionCode) {
+         
+		ModelAndView model = new ModelAndView();
+		
+		//calculating the Total amount after deducting the discount 
+		if (!promotionCode.isEmpty()
+				&& promotionCode
+						.equalsIgnoreCase(MMJBCommonConstants.PROMOCODE_15ADVOFF)) {
+			int total =  (int) grandTotalAmt;
+			double discountAmt = Math.round((total * .15)*10.0)/10.0;
+			double grandTotal = total - discountAmt;
+			purchaseJobPostForm.setTotal(total);
+			purchaseJobPostForm.setDiscountAmt(discountAmt);
+			purchaseJobPostForm.setGrandTotal(grandTotal);
+			purchaseJobPostForm.setPromotionCode(promotionCode);
+		}
+		model.addObject("purchaseJobPostForm",purchaseJobPostForm);
+		model.setViewName(PURCHASE_JOB_POSTINGS);
 		return model;
 	}
 }

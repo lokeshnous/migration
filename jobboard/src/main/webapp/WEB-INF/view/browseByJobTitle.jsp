@@ -1,46 +1,84 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" 
-                                                  prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <div class="clearfix"></div>
-      <div class="row marginBottom20">
-        <div class="row marginTop5 paddingBottom05"><h1 class="FontSize24">Browse Jobs by Job Title</h1></div>
-         <input type="hidden" name="browseByTitle" id="browseByTitle" value="browseByTitle"/>
-             <div class="browsByColumns browsByColumnsNoBorder">
-             <ul>
-			<c:forEach items="${jbsByTitleList}" var="titleList" begin="0"
-				end="${jbsByTitleList.size()}" step="4">
-				<li><a
-					href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/jobtitle/${fn:replace(fn:trim(fn:split(titleList, '\\(')[0]),' ', '-')}.html"
-					class="link_color2_basic cursor">${titleList}</a></li>
+<div class="row marginBottom20">
+	<div class="row marginTop10 paddingBottom05">
+		<div class="floatLeft">
+			<h1 class="FontSize24">Browse Jobs by Job Title</h1>
+		</div>
+		<div class="NameSelectonArea">
+			<ul>
+				<li><c:forEach items="${firstColPositionList}" var="jobByTitle"
+						varStatus="status">
+						<a class="cursor" onclick="selectEmployerBlock(this.id, '${jobByTitle.key}', ${firstColPositionList.size()+secColPositionList.size()+thirdColPositionList.size()})" id="empKey${status.index}">${jobByTitle.key}</a>
+					</c:forEach>
+					<c:forEach items="${secColPositionList}" var="jobByTitle"
+							varStatus="status">
+							<a class="cursor" onclick="selectEmployerBlock(this.id, '${jobByTitle.key}', ${firstColPositionList.size()+secColPositionList.size()+thirdColPositionList.size()})" id="empKey${status.index+firstColPositionList.size()}">${jobByTitle.key}</a>
+						</c:forEach>
+					<c:forEach items="${thirdColPositionList}" var="jobByTitle"
+							varStatus="status">
+							<a class="cursor" onclick="selectEmployerBlock(this.id, '${jobByTitle.key}', ${firstColPositionList.size()+secColPositionList.size()+thirdColPositionList.size()})" id="empKey${status.index+firstColPositionList.size()+secColPositionList.size()}">${jobByTitle.key}</a>
+						</c:forEach>					
+				</li>
+			</ul>
+		</div>
+	</div>
+	<input type="hidden" name="browseByTitle" id="browseByTitle"
+		value="browseByTitle" />
+	<div class="marginTop10">
+		<div class="LocationNameArea LocationBorderRight threecolumn">
+			<c:forEach items="${firstColPositionList}" var="jobByTitle"
+				varStatus="status" begin="0" end="${firstColPositionList.size()}"
+				>
+				<div class="NameOrderNormal"  key="${jobByTitle.key}"
+				id="empBlockKey${status.index}">${jobByTitle.key}</div>
+				<ul class="MarginBottom10">
+					<c:forEach items="${jobByTitle.value}" var="jobTitle"
+						varStatus="emplyrsStatus">
+						<li><a 
+						href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/search/title/${jobTitle.encodeJobtitle}.html"
+							class="link_color2_basic cursor">${jobTitle.jobtitle}</a></li>
+					</c:forEach>
+				</ul>
 			</c:forEach>
-		</ul>
-     		 </div>
-     		 <div class="browsByColumns browsByColumnsWithBorder">
-     		 <ul>
-	            <c:forEach items="${jbsByTitleList}" var="titleList" begin="1" end="${jbsByTitleList.size()}" step="4">
-	             	<li><a
-					href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/jobtitle/${fn:replace(fn:trim(fn:split(titleList, '\\(')[0]),' ', '-')}.html"
-					class="link_color2_basic cursor">${titleList}</a></li>
-	             </c:forEach>
-	             </ul>
-     		 </div>
-     		 <div class="browsByColumns browsByColumnsWithBorder">
-     		 <ul>
-	            <c:forEach items="${jbsByTitleList}" var="titleList" begin="2" end="${jbsByTitleList.size()}" step="4">
-	             <li><a
-					href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/jobtitle/${fn:replace(fn:trim(fn:split(titleList, '\\(')[0]),' ', '-')}.html"
-					class="link_color2_basic cursor">${titleList}</a></li>
-	             </c:forEach>
-	             </ul>
-     		 </div>
-     		 <div class="browsByColumns browsByColumnsWithBorder">
-     		 <ul>
-	            <c:forEach items="${jbsByTitleList}" var="titleList" begin="3" end="${jbsByTitleList.size()}" step="4">
-	             	<li><a
-					href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/jobtitle/${fn:replace(fn:trim(fn:split(titleList, '\\(')[0]),' ', '-')}.html"
-					class="link_color2_basic cursor">${titleList}</a></li>
-	             </c:forEach>
-	             </ul>
-     		 </div>
-                </div>
+		</div>
+
+		<div
+			class="LocationNameArea LocationBorderRight LocationPaddingLeft threecolumn ">
+			<c:forEach items="${secColPositionList}" var="jobByTitle"
+				varStatus="status" begin="0" end="${secColPositionList.size()}"
+				>
+				<div class="NameOrderNormal"  key="${jobByTitle.key}"
+				id="empBlockKey${status.index+firstColPositionList.size()}"
+				>${jobByTitle.key}</div>
+				<ul class="MarginBottom10">
+					<c:forEach items="${jobByTitle.value}" var="jobTitle"
+						varStatus="emplyrsStatus">
+						<li><a
+						href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/search/title/${jobTitle.encodeJobtitle}.html" 
+							class="link_color2_basic cursor">${jobTitle.jobtitle}</a></li>
+					</c:forEach>
+				</ul>
+			</c:forEach>
+		</div> 
+		<div class="LocationNameArea LocationPaddingLeft threecolumn ">
+			<c:forEach items="${thirdColPositionList}" var="jobByTitle"
+				varStatus="status" begin="0" end="${thirdColPositionList.size()}"
+				>
+				<div class="NameOrderNormal" key="${jobByTitle.key}"
+				id="empBlockKey${status.index+firstColPositionList.size()+secColPositionList.size()}"
+				>${jobByTitle.key}</div>
+				<ul class="MarginBottom10">
+					<c:forEach items="${jobByTitle.value}" var="jobTitle"
+						varStatus="emplyrsStatus">
+						<li><a 
+						href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/search/title/${jobTitle.encodeJobtitle}.html"
+							class="link_color2_basic cursor">${jobTitle.jobtitle}</a></li>
+					</c:forEach>
+				</ul>
+			</c:forEach>
+		</div>
+	</div>
+</div>

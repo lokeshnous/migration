@@ -39,8 +39,8 @@
 					<c:forEach items="${jobByEmployer.value}" var="emplyrsName"
 						varStatus="emplyrsStatus">
 						<li><a 
-						href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/employer/${fn:replace(fn:trim(fn:split(emplyrsName, '\\(')[0]),' ', '-')}.html"
-							class="link_color2_basic cursor">${emplyrsName}</a></li>
+						href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/search/employer/${emplyrsName.empId}/${emplyrsName.encodedEmpName}.html"
+							class="link_color2_basic cursor">${emplyrsName.empName}</a></li>
 					</c:forEach>
 				</ul>
 			</c:forEach>
@@ -58,8 +58,8 @@
 					<c:forEach items="${jobByEmployer.value}" var="emplyrsName"
 						varStatus="emplyrsStatus">
 						<li><a
-						href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/employer/${fn:replace(fn:trim(fn:split(emplyrsName, '\\(')[0]),' ', '-')}.html" 
-							class="link_color2_basic cursor">${emplyrsName}</a></li>
+						href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/search/employer/${emplyrsName.empId}/${emplyrsName.encodedEmpName}.html" 
+							class="link_color2_basic cursor">${emplyrsName.empName}</a></li>
 					</c:forEach>
 				</ul>
 			</c:forEach>
@@ -75,14 +75,11 @@
 					<c:forEach items="${jobByEmployer.value}" var="emplyrsName"
 						varStatus="emplyrsStatus">
 						<li><a 
-						href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/employer/${fn:replace(fn:trim(fn:split(emplyrsName, '\\(')[0]),' ', '-')}.html"
-							class="link_color2_basic cursor">${emplyrsName}</a></li>
+						href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/search/employer/${emplyrsName.empId}/${emplyrsName.encodedEmpName}.html"
+							class="link_color2_basic cursor">${emplyrsName.empName}</a></li>
 					</c:forEach>
 				</ul>
 			</c:forEach>
 		</div>
 	</div>
-</div>
-<div class="ad_wrapper">
-	<img src="images/ads/banner_ad_fpo.png" />
 </div>

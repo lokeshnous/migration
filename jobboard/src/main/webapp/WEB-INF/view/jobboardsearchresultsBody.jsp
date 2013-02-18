@@ -1,8 +1,19 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" 
-                                                  prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/expandCollapse.js"></script>
+<script type="text/javascript">
+function showMessage(){
+	alert("You must be a registered Job-Seeker to apply to jobs");
+}
+function showSaveMessage(){
+	alert("You must be a registered Job-Seeker to save the jobs");
+}
+function showSaveSearchMessage(){
+	alert("You must be a registered Job-Seeker to save the searches");
+}
+</script>
 		<c:choose>
 		<c:when test="${jobTitlePage}">
 			<jsp:include page="browseByJobTitle.jsp"></jsp:include>
@@ -22,13 +33,13 @@
 		</c:when> 		
 		<c:otherwise>
 			<form:form method="POST" action="" commandName="jobSearchResultForm" id="jobSearchResultBodyFormId"> 
-					<div id="connectionStatus" class="FormErrorDisplayText"></div>
+					<!-- <div id="connectionStatus" class="FormErrorDisplayText"></div> -->
 					<div class="row">
 
-						<div class="row marginTop5 paddingBottom05">
-						<div class="row">
-						<div id="errorMsg" class="FormErrorDisplayText"></div>
-						</div>
+						<div class="row paddingBottom05 marginBottom10">
+						
+						<!-- <div class="row"><div id="errorMsg" class="FormErrorDisplayText"></div></div> -->
+						
 							<div class="floatLeft width100P">
 								<h1>
 								<c:if test="${searchedJobCount != null}">
@@ -55,11 +66,22 @@
 										</div>
 									</div>
 								</c:forEach>
+								<security:authorize 
+		access="!hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP') and !hasRole('ROLE_FACILITY_SYSTEM')">
 								<div class="section">
 									<div class="SaveSearchButton">
 										<a  rel="nofollow" href="#" class="btn_sm orange nyroModal" id="saveThisSearchId" onclick="saveThisSearch();">Save This Search</a>
 									</div>
 								</div>
+								</security:authorize>
+								<security:authorize 
+		access="hasRole('ROLE_FACILITY') or hasRole('ROLE_FACILITY_GROUP') or hasRole('ROLE_FACILITY_SYSTEM')">
+								<div class="section">
+									<div class="SaveSearchButton">
+										<a  rel="nofollow" href="#" class="btn_sm orange nyroModal" id="saveThisSearchId" onclick="showSaveSearchMessage()">Save This Search</a>
+									</div>
+								</div>
+								</security:authorize>
 								</c:if>
 							</div>
 							<div class="section">
@@ -137,6 +159,12 @@
 										<ul>
 											<c:forEach items="${company}" var="displayCompany" varStatus="status" >
 											<c:choose>
+											<%-- <c:when test="${sessionMap.get('secondFQParam') != '' and  fn:startsWith(fn:toLowerCase(company[status.index]), fn:split(sessionMap.get('secondFQParam'), '\"')[1])}">
+											<span style="font-weight:bold;"> 
+											<c:choose>
+											<c:when test="${fn:startsWith(fn:toLowerCase(browseByEmployer) , fn:split(sessionMap.get('secondFQParam'), '\"')[1])}">
+												<li>${company[status.index]}</li>
+											</c:when> --%>
 											<c:when test="${sessionMap.get('secondFQParam') != '' and  fn:startsWith(company[status.index], fn:split(sessionMap.get('secondFQParam'), '\"')[1])}">
 											<span style="font-weight:bold;"> 
 											<c:choose>
@@ -168,6 +196,12 @@
 										<ul>
 											<c:forEach items="${state}" var="displayState" varStatus="status">
 											<c:choose>
+											<%-- <c:when test="${sessionMap.get('thirdFQParam') != '' and fn:startsWith(fn:toLowerCase(state[status.index]),fn:split(sessionMap.get('thirdFQParam'), '\"')[1])}">
+											<span style="font-weight:bold;"> 
+											<c:choose>
+											<c:when test="${fn:startsWith(fn:toLowerCase(browseBystate) , fn:split(sessionMap.get('thirdFQParam'), '\"')[1])}">
+												<li>${state[status.index]}</li>
+											</c:when> --%>
 											<c:when test="${sessionMap.get('thirdFQParam') != '' and fn:startsWith(state[status.index],fn:split(sessionMap.get('thirdFQParam'), '\"')[1])}">
 											<span style="font-weight:bold;"> 
 											<c:choose>
@@ -228,7 +262,7 @@
 			<span class="ShareText">Results viewable:</span> <span
 				class="Padding0"> 
 				<select name="noOfPage" id="noOfPage"
-						class="jb_input4 margin0" onchange="applyFilter();">
+						class="jb_input4 margin0 resuViewable" onchange="applyFilter();">
 					<option value="20">20</option>
 					<option value="30">30</option>
 					<option value="40">40</option>
@@ -240,13 +274,13 @@
 
 						<div class="searchResultsNavigationColumn3 ViewNumPage">
 							&nbsp;&nbsp;
-							<c:if test="${searchedJobCount != null and searchedJobCount != 0}">
+							<c:if test="${searchedJobCount != null and searchedJobCount != '0'}">
 							${startRow} &#45; ${endRow} of ${searchedJobCount}&nbsp;
 						</c:if>
 						</div>
 						<div class="searchResultsNavigationColumn2 GetNumPage">
-						<!-- <span>Page:</span> -->
-						<c:if test="${searchedJobCount != null and searchedJobCount != 0}">
+						<span>Page:</span>
+						<c:if test="${searchedJobCount != null and searchedJobCount != '0'}">
 						<c:if test="${currentPage > 10 && noOfPages gt 10}">
 							<td><a class="cursor"
 								onclick="getPrevPages(${begin - 10});">
@@ -305,7 +339,7 @@
 										</c:otherwise>
 									</c:choose>
 									id="searchResultsJobInfo${job.JobId}"
-									onclick="trackClick(${job.JobId});">
+									onclick="trackClick(${job.JobId},'1');">
 									<li class="searchResultsColumn1"><a class="clickableLink">${job.JobTitle}</a></li>
 
 									<li class="searchResultsColumn2"><a class="clickableLink">${job.Company}</a></li>
@@ -326,15 +360,16 @@
 									${job.AdText}
 								</p>
 								</div>
-
+<security:authorize 
+		access="!hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP') and !hasRole('ROLE_FACILITY_SYSTEM')">
 								<div class="searchResultsSubContentButtonArea">
 									<div class="searchResultsSubContentButtons">
-										<a onclick="applyThisJob(${job.JobId});" class="btn_sm white"
+										<a onclick="selectResume(${job.JobId});" class="btn_sm white"
 											id="applyJobid${job.JobId}">Apply</a>
 									</div>
 									<div class="searchResultsSubContentButtons">
-										<a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/jobview/
-										${job.JobId}/${fn:toLowerCase(fn:replace(job.JobTitle, 
+										<a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/search/jobview/
+										${job.JobId}/${fn:toLowerCase(fn:replace(job.JobTitleEncode, 
                                 					' ', '-'))}.html" class="btn_sm white">View
 											Details</a>
 									</div>
@@ -344,14 +379,43 @@
 											class="btn_sm white">Save This Job</a>
 									</div>
 								</div>
+								</security:authorize>
+								
+								<security:authorize 
+		access="hasRole('ROLE_FACILITY') or hasRole('ROLE_FACILITY_GROUP') or hasRole('ROLE_FACILITY_SYSTEM')">
+								<div class="searchResultsSubContentButtonArea">
+									<div class="searchResultsSubContentButtons">
+										<a onclick="showMessage();" class="btn_sm white"
+											id="applyJobid${job.JobId}" style="cursor: default;">Apply</a>
+									</div>
+									<div class="searchResultsSubContentButtons">
+										<a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/search/jobview/
+										${job.JobId}/${fn:toLowerCase(fn:replace(job.JobTitleEncode, 
+                                					' ', '-'))}.html" class="btn_sm white">View
+											Details</a>
+									</div>
+									<div class="searchResultsSubContentButtons">
+										<a onclick="showSaveMessage();"
+											id="saveThisJobId${job.JobId}"
+											class="btn_sm white" style="cursor: default;">Save This Job</a>
+									</div>
+								</div>
+								</security:authorize>
+								
 								<div class="featured_empButton">
 									<c:choose>
 										<c:when test="${job.IsFeatured}">
-											<!-- <a href=""> --><img src="<%=request.getContextPath()%>/resources/images/FeaturedEmp.png"
-												alt="featured emp Button" width="164" height="23"><!-- </a> -->
-										</c:when>
+											<%-- <a href="<%=request.getContextPath()%>/healthcarejobs/featuredemployerdetails.html?id=${job.facilityId}"> <img src="<%=request.getContextPath()%>/resources/images/FeaturedEmp.png"
+												alt="featured emp Button" width="164" height="23"></a> --%>
+									<a
+										href="<%=request.getContextPath()%>/healthcarejobs/featuredemployerdetails.html?id=${job.facilityId}"><img
+										onclick="trackClick(${job.JobId},'6');"
+										src="<%=request.getContextPath()%>/resources/images/FeaturedEmp.png"
+										alt="Featured Employer" width="164" height="23"></img> </a>
+
+								</c:when>
 										<c:otherwise>
-											<img src="<%=request.getContextPath()%>/resources/images/tranBg.png"
+											<img src="${basePath}/resources/images/tranBg.png"
 												alt="featured emp Button" width="164" height="23">
 										</c:otherwise>
 									</c:choose>
@@ -364,17 +428,17 @@
 								</div>
 
 								<div class="ShareSearch" >
-								<div class="ShareText">|&nbsp;&nbsp;Share:&nbsp;</div>
-								<a class="fbook" href="http://www.facebook.com/sharer.php?u=${basePath}/jobsearch/jobview/${job.JobId}/${fn:toLowerCase(fn:replace(job.JobTitle, 
+								<div class="ShareText">&nbsp;&nbsp;Share:&nbsp;</div>
+								<a class="fbook" onclick="trackClick(${job.JobId},'9');" href="http://www.facebook.com/sharer.php?u=${basePath}/search/jobview/${job.JobId}/${fn:toLowerCase(fn:replace(job.JobTitleEncode, 
                                 					' ', '-'))}.html" target="_blank"></a>
-								<a href="https://www.linkedin.com/cws/share?url=${basePath}/jobsearch/jobview/${job.JobId}/${fn:toLowerCase(fn:replace(job.JobTitle, 
+								<a onclick="trackClick(${job.JobId},'9');" href="https://www.linkedin.com/cws/share?url=${basePath}/search/jobview/${job.JobId}/${fn:toLowerCase(fn:replace(job.JobTitleEncode, 
                                 					' ', '-'))}.html" target="_blank"><div class="linkedIn"></div></a>
-								<a href="https://twitter.com/share" class="twitter" data-url="${basePath}/jobsearch/jobview/${job.JobId}/${fn:toLowerCase(fn:replace(job.JobTitle, 
+								<a onclick="trackClick(${job.JobId},'9');" href="https://twitter.com/share" class="twitter" data-url="${basePath}/search/jobview/${job.JobId}/${fn:toLowerCase(fn:replace(job.JobTitleEncode, 
                                 					' ', '-'))}.html" data-count="none" target="_blank"></a>
 								
 							</div>
 							
-							<div class="FormErrorDisplayText row" id="topjobActionInfo${job.JobId}" ></div>
+							<div class="FormErrorDisplayText row margin5" id="topjobActionInfo${job.JobId}" ></div>
 							
 						</div>
 				 <c:if test="${(status.index + 1) % 10 == 0}"> 
@@ -394,7 +458,7 @@
 			<span class="ShareText">Results viewable:</span> <span
 				class="Padding0">
 			 <select name="results" id="noOfPageLower"
-				class="jb_input4 margin0" onchange="applyLowerFilter();">
+				class="jb_input4 margin0 resuViewable" onchange="applyLowerFilter();">
 					<option value="20">20</option>
 					<option value="30">30</option>
 					<option value="40">40</option>
@@ -406,13 +470,13 @@
 
 						<div class="searchResultsNavigationColumn3 ViewNumPage">
 							&nbsp;&nbsp;
-							<c:if test="${searchedJobCount != null and searchedJobCount != 0}">
+							<c:if test="${searchedJobCount != null and searchedJobCount != '0'}">
 							${startRow} &#45; ${endRow} of ${searchedJobCount}&nbsp;
 						</c:if>
 						</div>
 						<div class="searchResultsNavigationColumn2 GetNumPage">
-						<!-- <span>Page: </span> -->
-						<c:if test="${searchedJobCount != null and searchedJobCount != 0}">
+						<span>Page: </span>
+						<c:if test="${searchedJobCount != null and searchedJobCount != '0'}">
 						<c:if test="${currentPage > 10 && noOfPages gt 10}">
 							<td><a class="cursor"
 								onclick="getPrevPages(${begin - 10})">

@@ -1,1 +1,1 @@
-<%response.sendRedirect("healthcarejobs/advanceweb.html"); %>
+<%response.sendRedirect("healthcarejobs/index.html"); %>

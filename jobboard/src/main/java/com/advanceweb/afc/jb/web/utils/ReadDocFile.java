@@ -33,7 +33,7 @@ public class ReadDocFile {
 			readDocumentSummary(doc);
 
 		} catch (Exception e) {
-			LOGGER.info("ERROR");
+			LOGGER.error("ERROR",e);
 		}
 	}
 
@@ -49,7 +49,7 @@ public class ReadDocFile {
 				strbuffer.append(paragraphs[i]);
 			}
 		} catch (Exception e) {
-			LOGGER.info("ERROR");
+			LOGGER.error("ERROR",e);
 		}
 	}
 	public static void readHeader(HWPFDocument doc, int pageNumber) {
@@ -91,7 +91,7 @@ public class ReadDocFile {
 			String mess = extractor.getText();
 			strbuffer.append(mess);
 		} catch (Exception ex) {
-			LOGGER.info("ERROR");
+			LOGGER.error("ERROR",ex);
 		}
 	}
 }

@@ -14,7 +14,9 @@ public class PurchaseJobPostForm {
 	
 	private List<JobPostingsForm> jobPostingsForm;
 	private List<JobPostingsForm> jobPostingsCart = new ArrayList<JobPostingsForm>();
-	private int grandTotal;
+	private double grandTotal;
+	private double total;
+	private double discountAmt;
 	private String promotionCode;
 	private String inventoryPage;
 	
@@ -30,10 +32,10 @@ public class PurchaseJobPostForm {
 	public void setJobPostingsCart(List<JobPostingsForm> jobPostingsCart) {
 		this.jobPostingsCart = jobPostingsCart;
 	}
-	public int getGrandTotal() {
+	public double getGrandTotal() {
 		return grandTotal;
 	}
-	public void setGrandTotal(int grandTotal) {
+	public void setGrandTotal(double grandTotal) {
 		this.grandTotal = grandTotal;
 	}
 	public String getPromotionCode() {
@@ -47,5 +49,29 @@ public class PurchaseJobPostForm {
 	}
 	public void setInventoryPage(String inventoryPage) {
 		this.inventoryPage = inventoryPage;
+	}
+	/**
+	 * @return the total
+	 */
+	public double getTotal() {
+		return total;
+	}
+	/**
+	 * @param total the total to set
+	 */
+	public void setTotal(double total) {
+		this.total = total;
+	}
+	/**
+	 * @return the discountAmt
+	 */
+	public double getDiscountAmt() {
+		return discountAmt;
+	}
+	/**
+	 * @param discountAmt the discountAmt to set
+	 */
+	public void setDiscountAmt(double discountAmt) {
+		this.discountAmt = discountAmt;
 	}
 }

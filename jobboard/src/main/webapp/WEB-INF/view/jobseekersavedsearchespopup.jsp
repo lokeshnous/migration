@@ -75,7 +75,8 @@ $(document).keyup(function(event) {
 								success: function(data){ 
 								    if(data.success != null){
 								    	alert("Data saved successfully!");
-								    	parent.$.nmTop().close();
+								    	//parent.$.nmTop().close();
+								    	parent.window.location.reload();
 								    }
 								    if(data.failure != null){
 			
@@ -102,7 +103,7 @@ function geteditSavedSearch(searchJobId){
 				$.each(data, function(key, val) {
 					 if (key == "searchtype" && val == "basic") {
 						
-						parent.window.location.href = '${pageContext.request.contextPath}/jobsearch/findJobPage.html';
+						parent.window.location.href = '${pageContext.request.contextPath}/search/findJobPage.html';
 						parent.$.nmTop().close();
 					}
 					
@@ -130,7 +131,7 @@ function performSavedSearch(searchJobId){
 			$.each(data, function(key, val) {
 			
 				 if (key == "searchtype" && val == "basic") {
-					parent.window.location.href = '${pageContext.request.contextPath}/jobsearch/findJobPage.html';
+					parent.window.location.href = '${pageContext.request.contextPath}/search/findJobPage.html';
 					parent.$.nmTop().close();
 				}
 				
@@ -157,7 +158,7 @@ var id = searchJobId.replace("viewSavedSearch", "");
 			$.each(data, function(key, val) {
 				
 				 if (key == "searchtype" && val == "basic") {
-					parent.window.location.href = '${pageContext.request.contextPath}/jobsearch/findJobPage.html';
+					parent.window.location.href = '${pageContext.request.contextPath}/search/findJobPage.html';
 					parent.$.nmTop().close();
 				}
 				
@@ -219,7 +220,7 @@ var id = searchJobId.replace("viewSavedSearch", "");
 								
 								<td align="center">
 								<div class="SearchIcons">
-								<a href='#' id="viewSavedSearch${saveSearchdtoList.saveSearchID}" onclick="viewSavedSearch(this.id);" class="newWindow"> <img title="View" src="../resources/images/tranBg.png" class="view"></a>
+								<a href='#' id="viewSavedSearch${saveSearchdtoList.saveSearchID}" onclick="viewSavedSearch(this.id);" class="newWindow"> <img title="Perform Search" src="../resources/images/tranBg.png" class="view"></a>
 								<a href='#' id="editSavedSearch${saveSearchdtoList.saveSearchID}" onclick="geteditSavedSearch(this.id);" class="newWindow"><img title="Edit" src="../resources/images/tranBg.png" class="editFile"></a>
 								<a href="#"><img title="Delete" src="../resources/images/tranBg.png" class="delete"></a>
 								</div>
@@ -230,7 +231,7 @@ var id = searchJobId.replace("viewSavedSearch", "");
 					</table>
 				</div>
 				<div class="popUpButtonRow">
-					<a href="<%=request.getContextPath()%>/jobsearch/findJobPage.html?isNewSearch=true">
+					<a href="<%=request.getContextPath()%>/search/findJobPage.html?isNewSearch=true">
 						<h3>${msg.jsCreateNewSavedSearch}</h3>
 					</a> <em class="lineHeight16">${msg.jsSavedSearchInfo}</em>
 				</div>			

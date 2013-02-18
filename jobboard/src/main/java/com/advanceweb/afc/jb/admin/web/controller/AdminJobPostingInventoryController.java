@@ -27,7 +27,6 @@ import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmpSearchDTO;
 import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.employer.service.ManageFeaturedEmployerProfile;
 import com.advanceweb.afc.jb.employer.web.controller.InventoryForm;
 import com.advanceweb.afc.jb.employer.web.controller.JobPostForm;
 
@@ -52,8 +51,8 @@ public class AdminJobPostingInventoryController {
 	@Autowired
 	private AdminService adminService;
 	
-	@Autowired
-	private ManageFeaturedEmployerProfile manageFeaturedEmployerProfile;
+//	@Autowired
+//	private ManageFeaturedEmployerProfile manageFeaturedEmployerProfile;
 
 	@RequestMapping(value = "/jobPostSearch", method = RequestMethod.GET)
 	public @ResponseBody
@@ -81,7 +80,7 @@ public class AdminJobPostingInventoryController {
 				nsId = Integer.parseInt(netSuiteId);
 				}catch(Exception ex){
 					status = false;
-					LOGGER.info("Excption occurred in jobSearchByComName Netsute Format : "+ex);
+					LOGGER.error("Excption occurred in jobSearchByComName Netsute Format : "+ex);
 					jsonObject.put(ERR_MSG, "Please enter a valid Net Suite Id");
 					jsonObject.put(SUCCESS, status);
 					return jsonObject;
@@ -98,7 +97,7 @@ public class AdminJobPostingInventoryController {
 				}
 			}
 		} catch (Exception e) {
-			LOGGER.info("Excption occurred in jobSearchByComName : "+e);
+			LOGGER.error("Excption occurred in jobSearchByComName : ",e);
 		}
 		jsonObject.put(SUCCESS, status);
 		return jsonObject;
@@ -118,7 +117,7 @@ public class AdminJobPostingInventoryController {
 				.validateCompName(empList);
 		if (dto.getNsId() == 0) {
 			status = false;
-			jsonObject.put(ERR_MSG, "Please enter valid company name");
+			jsonObject.put(ERR_MSG, "Please enter a valid company name");
 			if (netSuiteId.length() != 0) {
 				jsonObject.put(ERR_MSG, "Please enter valid company name OR Net Suite Id");
 				jsonObject.put(SUCCESS, status);
@@ -152,6 +151,8 @@ public class AdminJobPostingInventoryController {
 					.getAttribute(MMJBCommonConstants.NS_CUSTOMER_ID);
 			EmpSearchDTO dto1 = adminService
 					.getUserIdAndFacilityId(nsId);
+			session.setAttribute("nsId", nsId);
+			session.setAttribute("empList", dto1.getCompanyName());
 			int userId = dto1.getUserId();
 			int facilityId = dto1.getFacilityId();
 			List<JobPostingInventoryDTO> inventiryDTOList = adminService
@@ -225,26 +226,9 @@ public class AdminJobPostingInventoryController {
 				
 			ModelAndView model = new ModelAndView();
 			
-			int nsCustomerID = 0;
 			List<DropDownDTO> jobPostingList = null;
 			if(null != session.getAttribute(MMJBCommonConstants.NS_CUSTOMER_ID)){
 				jobPostingList = adminService.listJobPostings();
-				
-				nsCustomerID = Integer.parseInt(String.valueOf(session.getAttribute(MMJBCommonConstants.NS_CUSTOMER_ID)));
-				
-				// Get the list of valid packages purchased by customers from NetSuite
-				List<String> purchasedPackages = manageFeaturedEmployerProfile
-						.getNSCustomerPackages(nsCustomerID);
-				
-				List<DropDownDTO> removeJbPostingList = new ArrayList<DropDownDTO>();
-				//remove the packages which are purchased offline & expired
-				for(DropDownDTO dropDownDTO : jobPostingList){
-					if(!purchasedPackages.contains(dropDownDTO.getNetSuiteId())){
-						removeJbPostingList.add(dropDownDTO);
-					}
-				}
-				
-				jobPostingList.removeAll(removeJbPostingList);
 				model.addObject("jobPostingList", jobPostingList);
 			}
 			

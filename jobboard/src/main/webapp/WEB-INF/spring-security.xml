@@ -8,16 +8,54 @@
 			http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 	<security:http pattern="/resources/**" security="none"/>
 	<security:http pattern="/index.jsp" security="none"/>
-	<security:http pattern="/jobsearch/jobboardSearchesHistory.html" security="none"/>
+	<security:http pattern="/search/jobboardSearchesHistory.html" security="none"/>
 	<security:http pattern="/healthcarejobs/logo.html" security="none"/>
 	<security:http pattern="/healthcarejobs/homeFeaturedEmps.html" security="none"/>
 	<security:http pattern="/healthcarejobs/activeJobs.html" security="none"/>
 	<security:http pattern="/healthcarejobs/viewImage.html" security="none"/>
 	
-	<security:http auto-config="false" use-expressions="true"
-		access-denied-page="/healthcarejobs/advanceweb.html" entry-point-ref="authenticationEntryPoint">
+<security:http pattern="/admin/**" use-expressions="true" auto-config="false" entry-point-ref="adminAuthenticationEntryPoint">
+<security:intercept-url pattern="/admin/adminMenu.html"
+			access="hasRole('ROLE_MERION_ADMIN')"/>
+<security:intercept-url pattern="/admin/login.html"
+			access="hasRole('ROLE_MERION_ADMIN')"/>
+<security:intercept-url pattern="/admin/editJobPosting.html"
+			access="hasRole('ROLE_MERION_ADMIN')"/>
+<security:intercept-url pattern="/admin/employer1/jobInventorypopup.html"
+			access="hasRole('ROLE_MERION_ADMIN')"/>
+<security:intercept-url pattern="/admin/employer1/manageFacilityGroup.html"
+			access="hasRole('ROLE_MERION_ADMIN')"/>												
+			
+<security:custom-filter ref="adminAuthenticationFilter"
+			position="FORM_LOGIN_FILTER"/>
+			<security:logout logout-success-url="/admin/adminMenu.html" invalidate-session="true" logout-url="/admin/logout.html"/>
+</security:http>
 
-		<security:intercept-url pattern="/healthcarejobs/advanceweb.html"
+<bean id="adminAuthenticationFilter"
+		class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter"
+		p:authenticationManager-ref="adminAuthenticationManager"
+		p:authenticationFailureHandler-ref="adminAuthenticationFailureHandler"
+		p:authenticationSuccessHandler-ref="adminAuthenticationSuccessHandler"
+		p:filterProcessesUrl="/admin/authenticateAdmin.html"/>
+
+<bean id="adminAuthenticationManager"
+		class="com.advanceweb.afc.jb.security.AdminAuthenticationManager"/>
+		
+<bean id="adminAuthenticationSuccessHandler" 
+class="com.advanceweb.afc.jb.login.web.controller.AdminLoginManager"/>
+
+<bean id="adminAuthenticationFailureHandler"
+		class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler"
+		p:defaultFailureUrl="/admin/loginPage.html?error=true"/>
+		
+<bean id="adminAuthenticationEntryPoint"
+		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint"
+		p:loginFormUrl="/admin/loginPage.html"/>
+		
+	<security:http auto-config="false" use-expressions="true"
+		access-denied-page="/healthcarejobs/index.html" entry-point-ref="authenticationEntryPoint">
+
+		<security:intercept-url pattern="/healthcarejobs/index.html"
 			access="permitAll" />
 		<security:intercept-url pattern="/commonLogin/login.html"
 			access="permitAll" />
@@ -28,7 +66,7 @@
 		<security:intercept-url
 			pattern="/jobseekerregistration/createJobSeekerCreateYrAcct.html"
 			access="permitAll" />
-		<security:intercept-url pattern="/jobsearch/**"
+		<security:intercept-url pattern="/search/**"
 			access="permitAll" />
 		<security:intercept-url pattern="/jobSeeker/jobSeekerDashBoard.html"
 			access="hasRole('ROLE_JOB_SEEKER')" />
@@ -43,7 +81,7 @@
 		<security:intercept-url pattern="/jobSeekerResume/**"
 			access="hasRole('ROLE_JOB_SEEKER')" />
 		<security:intercept-url pattern="/savedSearches/**"
-			access="permitAll" />
+			access="permitAll"/>
 
 		<!-- Added for SSL Implementation -start -->
 		<security:intercept-url pattern="/pgiController/**"
@@ -58,9 +96,9 @@
 			port must be same. for example server.xml <Connector port="2815" protocol="HTTP/1.1" 
 			connectionTimeout="20000" redirectPort="8443" /> spring-security.xml <security:port-mapping 
 			http="2815" https="8443" /> -start -->
-		<security:port-mappings>
+		<!-- <security:port-mappings>
 			<security:port-mapping http="2815" https="8443" />
-		</security:port-mappings>
+		</security:port-mappings> -->
 		<!-- Added for SSL Implementation -end -->
 
 		<security:logout success-handler-ref="customLogoutSuccessHandler"
@@ -104,7 +142,7 @@
 
 	<bean id="authenticationEntryPoint"
 		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint"
-		p:loginFormUrl="/healthcarejobs/advanceweb.html" />
+		p:loginFormUrl="/healthcarejobs/index.html"/>
 
 	<bean id="rememberMeServices"
 		class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">

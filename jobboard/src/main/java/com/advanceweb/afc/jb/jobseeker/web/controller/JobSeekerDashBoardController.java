@@ -103,13 +103,13 @@ public class JobSeekerDashBoardController extends AbstractController {
 			boolean virusStatus = (Boolean) session.getAttribute("virusStatus");
 			request.setAttribute("virusStatus", virusStatus);
 			session.removeAttribute("virusStatus");
-			LOGGER.info("Virus Status : " + true);
+			LOGGER.debug("Virus Status : " + true);
 		}
 		if (null != session.getAttribute("uploadStatus")) {
 			boolean status = (Boolean) session.getAttribute("uploadStatus");
 			request.setAttribute("uploadStatus", status);
 			session.removeAttribute("uploadStatus");
-			LOGGER.info("UPLOAD Status : " + status);
+			LOGGER.debug("UPLOAD Status : " + status);
 		}
 		// Retrieve Current subscriptions of the user
 		int nUserId = (Integer) session.getAttribute("userId");
@@ -193,7 +193,7 @@ public class JobSeekerDashBoardController extends AbstractController {
 				model.addObject(SearchParamDTO.CITY_STATE, cityState);
 				model.addObject(SearchParamDTO.RADIUS, radius);
 
-				LOGGER.info("Removing from session....");
+				LOGGER.debug("Removing from session....");
 				
 				removeSessionAttr(session, sessionMap);
 			}

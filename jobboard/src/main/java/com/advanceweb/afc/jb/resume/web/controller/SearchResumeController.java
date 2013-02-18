@@ -134,7 +134,7 @@ public class SearchResumeController extends AbstractController {
 			SearchResumeForm searchResumeForm, BindingResult result,
 			HttpServletRequest request) {
 
-		LOGGER.info("Calling Search Resume Controller!!!");
+		LOGGER.debug("Calling Search Resume Controller!!!");
 
 		JSONObject jsonObject = new JSONObject();
 		// removeSession(session);
@@ -256,7 +256,7 @@ public class SearchResumeController extends AbstractController {
 			// jsonObject.put(ajaxMsg, jobSearchValidateKeyword);
 			status = false;
 		} else if ((!searchResumeForm.getRadius().equalsIgnoreCase("0"))
-				&& StringUtils.isEmpty(searchResumeForm.getCityState().trim())) {
+				&& StringUtils.isBlank(searchResumeForm.getCityState().trim())) {
 			// jsonObject.put(ajaxMsg, jobSearchValidateCity);
 			status = false;
 		}
@@ -503,7 +503,7 @@ public class SearchResumeController extends AbstractController {
 	JSONObject searchResumeFromDB(HttpSession session,
 			SearchResumeForm searchResumeForm, BindingResult result,
 			HttpServletRequest request) {
-		LOGGER.info("Calling Search Resume Controller!!!");
+		LOGGER.debug("Calling Search Resume Controller!!!");
 		// session.removeAttribute("resumeDTOList");
 		removeSession(session);
 		session.removeAttribute("jobSrchJsonObj");
@@ -627,7 +627,7 @@ public class SearchResumeController extends AbstractController {
 	 */
 	private void removeSession(HttpSession session) {
 		// TODO :Need to Use sessionMap
-		LOGGER.info("Removing from session....");
+		LOGGER.debug("Removing from session....");
 		session.removeAttribute(MMJBCommonConstants.RESUME_SEARCH_JSON_LIST);
 		session.removeAttribute(MMJBCommonConstants.CITY);
 		session.removeAttribute(MMJBCommonConstants.STATE);
@@ -842,7 +842,7 @@ public class SearchResumeController extends AbstractController {
 			searchResumeForm.setCityState(cityState);
 			searchResumeForm.setRadius(radius);
 			searchResumeForm.setAutoload(true);
-			LOGGER.info("Removing keywords, city,state, autoload from session....");
+			LOGGER.debug("Removing keywords, city,state, autoload from session....");
 			session.removeAttribute(sessionMap.remove(SearchParamDTO.KEYWORDS));
 			session.removeAttribute(sessionMap
 					.remove(SearchParamDTO.CITY_STATE));
@@ -1088,7 +1088,7 @@ public class SearchResumeController extends AbstractController {
 			}
 
 		} catch (Exception e) {
-			LOGGER.info("Save this search ERROR");
+			LOGGER.error("Save this search ERROR");
 		}
 		return jsonObject;
 	}
@@ -1109,7 +1109,7 @@ public class SearchResumeController extends AbstractController {
 		List<String> idList = new ArrayList<String>();
 		idList.add(moveResumeToFolderMsg);
 
-		LOGGER.info("Publish Resume ID and Created date list :"
+		LOGGER.debug("Publish Resume ID and Created date list :"
 				+ resumeIdAndDateArr);
 		String[] resumeIdAndDateArray = resumeIdAndDateArr.split(",");
 
@@ -1117,13 +1117,13 @@ public class SearchResumeController extends AbstractController {
 
 		int userId = (Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID);
-		LOGGER.info("User Id is :" + userId);
+		LOGGER.debug("User Id is :" + userId);
 		boolean status = resumeService.moveResumesToFolder(
 				publishResumeIdArrList, userId);
 		if (status) {
-			LOGGER.info("Successfully Moved the Resumes to the Default Folder.");
+			LOGGER.debug("Successfully Moved the Resumes to the Default Folder.");
 		} else {
-			LOGGER.info("Error occurred while moving the Resumes to the Default Folder.");
+			LOGGER.error("Error occurred while moving the Resumes to the Default Folder.");
 		}
 
 		// modelAndView.setViewName("jobboardsearchresumeresultbody");
@@ -1207,7 +1207,7 @@ public class SearchResumeController extends AbstractController {
 						+ resumeDTO.getFilePath());
 				return model;
 			} catch (Exception e) {
-				LOGGER.info("Error in view resume builder", e);
+				LOGGER.error("Error in view resume builder", e);
 			}
 		} else {
 			model.addObject("createResume", createResume);

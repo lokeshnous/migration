@@ -152,6 +152,7 @@ public class TransformEmployerBrandTemplate {
 				TestimonyForm form = new TestimonyForm();
 				form.setTestimony(dto.getTestimony());
 				form.setTestimonyId(dto.getTestimonyId());
+				form.setItemId(listTestimonyForm.size());
 				listTestimonyForm.add(form);
 			}
 		}
@@ -199,6 +200,7 @@ public class TransformEmployerBrandTemplate {
 				form.setAddImageFileData(dto.getAddImageFileData());
 				form.setMediaPath(dto.getMediaPath());
 				form.setMediaType(dto.getMediaType());
+				form.setItemId(listAddImageForm.size());
 				form.setAddImageId(dto.getAddImageId());
 				listAddImageForm.add(form);
 			}
@@ -246,6 +248,7 @@ public class TransformEmployerBrandTemplate {
 				form.setMediaPath(dto.getMediaPath());
 				form.setMediaType(dto.getMediaType());
 				form.setVideoId(dto.getVideoId());
+				form.setItemId(listVideoForm.size());
 				listVideoForm.add(form);
 			}
 		}

@@ -14,8 +14,23 @@ public class CertificationsForm {
 	private String summary;
 	private String certifyingAuthority;
 	private int builderCertId;
+	private int itemId;
+	private boolean editMode;
 	
 	
+	
+	public boolean isEditMode() {
+		return editMode;
+	}
+	public void setEditMode(boolean editMode) {
+		this.editMode = editMode;
+	}
+	public int getItemId() {
+		return itemId;
+	}
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
 	public String getCertificationName() {
 		return certificationName;
 	}

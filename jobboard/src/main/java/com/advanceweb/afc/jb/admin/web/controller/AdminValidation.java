@@ -32,23 +32,14 @@ public class AdminValidation {
 	 * @return
 	 */
 	public void validateEmail(AdminLoginForm form, Errors errors) {
-		if (StringUtils.isEmpty(form.getEmpOrAgencyEmail())
-				|| StringUtils.isEmpty(form.getPassword())
-				|| StringUtils.isEmpty(form.getUserEmail())) {
-			errors.rejectValue("empOrAgencyEmail", "NotEmpty", "Please enter all the fields");
+		if (StringUtils.isEmpty(form.getEmpOrAgencyEmail())) {
+			errors.rejectValue("empOrAgencyEmail", "NotEmpty", "Please enter Employer / Agency Email address");
 		}
 		if (!StringUtils.isEmpty(form.getEmpOrAgencyEmail())
 				&& !validateEmailPattern(form.getEmpOrAgencyEmail())) {
 			errors.rejectValue("empOrAgencyEmail", "NotEmpty",
 					"Invalid Employer/Agency Email address");
 		}
-		if (!StringUtils.isEmpty(form.getUserEmail())) {
-			if (!validateEmailPattern(form.getUserEmail())) {
-				errors.rejectValue("userEmail", "NotEmpty",
-						"Invalid User Email address");
-			}
-		}
-
 	}
 
 	/**

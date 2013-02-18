@@ -11,7 +11,7 @@
 
 		<!-- JAVASCRIPT FILES -->
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-		<script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
+		<!-- <script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script> -->
 		<script type="text/javascript" src="../resources/js/slider.js"></script>
 		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 
@@ -19,15 +19,50 @@
 		    jQuery(document).ready(function(){
 		    $(".megamenu").megamenu();
 		    
-		    $(".IconsArea a").click(function(){
+		   /*  $(".IconsArea a").click(function(){
 		    	var resumeId = $(this).attr("id");
 		    	if(resumeId == 0){
 		    		alert("Please save the resume before you download/print.");
 		    		return false;
 		    	}
+		    	return true;*/
+		    }); 
+		    
+		    function downloadResume(resumeId){
+		    	//alert('resumeId'+resumeId);
+		    	if(resumeId == 0){
+		    		alert("Please save the resume before you download.");
+		    		return false;
+		    	}	    	
+		    	$.ajax({url : "${pageContext.request.contextPath}/employer/downloadResume.html?resumeId="+resumeId,
+		    		type: "GET",
+					success : function(data) {
+					},
+					error : function(data) {
+					},
+					complete : function(data) {
+					}
+				});
 		    	return true;
-		    });
-		});
+		    }
+		    
+		    function printResume(resumeId){
+		    	if(resumeId == 0){
+		    		alert("Please save the resume before you print.");
+		    		return false;
+		    	}	
+		    		$.ajax({url: "${pageContext.request.contextPath}/employer/printResume.html?resumeId="+resumeId,
+		    		type: "GET",
+					success : function(data) {
+	
+					},
+					error : function(data) {
+					},
+					complete : function(data) {
+					}
+				});
+		    	return true;
+		    }
 		</script>
 		</head>
 
@@ -75,9 +110,11 @@
                     <p class="marginTop3">Available ${createResume.availableDate}</p>
                     </span> </div>
                   <div class="IconsArea">
-                  <a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}" title="Download">
+                  <a onclick="downloadResume(${createResume.uploadResumeId})" id="${createResume.uploadResumeId}" title="Download">
+                  <%-- <a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}" title="Download"> --%>
                   <div class="download"></div></a>&nbsp; 
-                  	<a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${createResume.uploadResumeId}" target="_blank" title="Print">
+                  <a onclick="printResume(${createResume.uploadResumeId})" id="${createResume.uploadResumeId}" title="Print">
+                  <%-- 	<a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${createResume.uploadResumeId}" target="_blank" title="Print"> --%>
                   <div class="printOrange"></div></a>
                   </div>
                 </div>
@@ -352,7 +389,7 @@
            <div class="floatLeft">
            <c:forEach items="${createResume.listRefForm}" var="reference" varStatus="status">    
            <span>
-             <h3 class=" marginLeft10 marginBottom10 FloatLeft width305">Professional References</h3>
+             <h3 class=" marginLeft10 marginBottom10 FloatLeft width305 marginTop10">Professional References</h3>
              </span>
              <div class="clearfix"></div>
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
@@ -375,13 +412,16 @@
               </span><span class="ContactInfoAreaRight"><c:out value="${reference.email}"/></span> </div>
             <div class="ContactInfoArea"> <span class="ContactInfoAreaLeft ">
               <p><strong>Reference Type:</strong></p>
-              </span><span class="ContactInfoAreaRight"><c:out value="${reference.referenceType}"/></span> </div>
+              </span><span class="ContactInfoAreaRight"><c:out value="${reference.referenceType}"/></span></div>
             </c:forEach>
 
               <div class="IconsArea">
-              <a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}" title="Download">
-              <div class="download"></div></a>&nbsp; 
-              <a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${createResume.uploadResumeId}" title="Print" target="_blank"><div class="printOrange"></div></a></div>
+               <a onclick="downloadResume(${createResume.uploadResumeId})" id="${createResume.uploadResumeId}" title="Download">
+                  <%-- <a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}" title="Download"> --%>
+                  <div class="download"></div></a>&nbsp; 
+                  <a onclick="printResume(${createResume.uploadResumeId})" id="${createResume.uploadResumeId}" title="Print">
+                  <%-- 	<a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${createResume.uploadResumeId}" target="_blank" title="Print"> --%>
+                  <div class="printOrange"></div></a></div>
           </div>
                 </div>
 

@@ -19,7 +19,7 @@
 <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
 
 <!-- JAVASCRIPT FILES -->
-		<script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
+		<!-- <script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script> -->
 		<script type="text/javascript" src="../resources/js/slider.js"></script>
 		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
@@ -79,6 +79,14 @@ var options = {
 };
 	jQuery(document).ready(
 			function() {
+				
+				var brandingTemplate=<%= request.getAttribute("brandingTemplate")%>
+				if(brandingTemplate){
+					$("#manageBrandingTemplatePopup").displaypopup(
+							"#manageBrandingTemplatePopup", "775", "252");
+					$('#manageBrandingTemplatePopup').trigger('click');
+				}
+				
 				$("#changePassword").displaypopup("#changePassword", "790",
 						"370");
 				$("#accountSettingpopUp").displaypopup("#accountSettingpopUp",
@@ -218,12 +226,9 @@ var options = {
 												+ "&selEmployerId="
 												+ selEmployerId,
 										success : function(data) {
-											//alert("Data is :::"+data);
-											
-										
-											loadMetricsDetails();
-											
-										},
+											//alert("Data is :::"+data);									
+											loadMetricsDetails();											
+										}
 									});
 						});
 				
@@ -352,20 +357,28 @@ var options = {
 	
 	
 </script>
-<script type="text/javascript" src="javascripts/expandCollapse.js"></script>
+<!-- <script type="text/javascript" src="javascripts/expandCollapse.js"></script> -->
+<style>
+form {
+margin:0;
+padding:0;
+}
+</style> 
+
 </head>
 
 <body class="job_board">
 
 	<form:form commandName="employerDashBoardForm" id="empDashBoard">
 		<div class="EmployerDashboardHeader">
-			<h1><%=(String) session.getAttribute(MMJBCommonConstants.COMPANY_EMP)%>
+			<h1 class="dashboardHeader Padding0"><%=(String) session
+						.getAttribute(MMJBCommonConstants.COMPANY_EMP)%>
 				Dashboard
 			</h1>
 		</div>
 		<div class="MidContent_Wrapper FloatLeft">
 			<div class="dashboardColumns newempdbsub">
-				<div class="dashboardPanal">
+				<div class="dashboardPanal dashboardpanalHightOne">
 					<div class="profile">
 						<img src="../resources/images/tranBg.png" width="30" height="30"
 							alt="User Profile">
@@ -374,20 +387,29 @@ var options = {
 					<div class="dashboardPanalcontent marginTop5">
 						<h2 class="noTopBorder">Profile Management</h2>
 													<c:if
-							test="<%=(session.getAttribute(\"adminLogin\")!=null )%>">
-						<div class="lableTextDashBoard">
+							test="<%=(session.getAttribute(\"adminLogin\") != null)%>">
+								<div class="lableTextDashBoard">
 									<p>
 										<a
 											href="<%=request.getContextPath()%>/employerRegistration/viewEmpAccountProfile.html"
 											id="accountSettingpopUp">Account Settings</a>
 									</p>
 								</div>
+							<div class="lableTextDashBoard">
+										<p>
+											<a id="accessPermissioPopUp"
+												href="<%=request.getContextPath()%>/employer/manageAccessPermission.html">Manage
+												Access Permissions</a>
+										</p>
+									</div>
 								</c:if>
 						
 						<c:if
-							test="<%=!(session.getAttribute(MMJBCommonConstants.FACILITY_POST_EDIT)!=null )%>">
+							test="<%=!(session
+							.getAttribute(MMJBCommonConstants.FACILITY_POST_EDIT) != null)%>">
 							<c:if
-								test="<%=!(session.getAttribute(MMJBCommonConstants.FACILITY_FULL_ACCESS)!=null )%>">
+								test="<%=!(session
+								.getAttribute(MMJBCommonConstants.FACILITY_FULL_ACCESS) != null)%>">
 								<div class="lableTextDashBoard">
 									<p>
 										<a
@@ -396,6 +418,8 @@ var options = {
 
 									</p>
 								</div>
+								<security:authorize
+									access="!hasRole('ROLE_FACILITY_POST_EDIT') ">
 								<div class="lableTextDashBoard">
 									<p>
 										<a
@@ -403,6 +427,7 @@ var options = {
 											id="accountSettingpopUp">Account Settings</a>
 									</p>
 								</div>
+								</security:authorize>
 								<%-- <c:if
 							test="${enableAccess == 'true' && enablePostEditAccess == 'true'}"> --%>
 								<security:authorize
@@ -436,13 +461,13 @@ var options = {
 								</p>
 							</div>
 						</security:authorize>
-						<div class="FormErrorDisplayText">
+<%-- 						<div class="FormErrorDisplayText">
 							${error}<br /> <br />
 						</div>
-					</div>
+ --%>					</div>
 				</div>
 				<!---->
-				<div class="dashboardPanal">
+				<div class="dashboardPanal dashboardpanalHightTwo">
 					<div class="jobPosting">
 						<img src="../resources/images/tranBg.png" width="30" height="30"
 							alt="Job Posting">
@@ -451,7 +476,8 @@ var options = {
 						<h2 class="noTopBorder">Job Posting</h2>
 						<%-- <c:if test="${ enablePostEditAccess eq 'true'}"> --%>
 						<c:if
-							test="<%=!(session.getAttribute(MMJBCommonConstants.FACILITY_POST_EDIT)!=null)%>">
+							test="<%=!(session
+							.getAttribute(MMJBCommonConstants.FACILITY_POST_EDIT) != null)%>">
 							<security:authorize access="!hasRole('ROLE_FACILITY_POST_EDIT')">
 								<div class="lableTextDashBoard">
 									<p>
@@ -500,7 +526,8 @@ var options = {
 					</div>
 				</div>
 				<!---->
-				<div class="dashboardPanal">
+				<div class="comingSoon"></div>
+				<div class="dashboardPanal dashboardpanalHight ">
 					<div class="Applicants">
 						<img src="../resources/images/tranBg.png" width="30" height="30"
 							alt="User Profile">
@@ -508,12 +535,13 @@ var options = {
 					<div class="dashboardPanalcontent marginTop5">
 						<h2 class="noTopBorder">Manage Applicants</h2>
 						<c:if
-							test="<%=!(session.getAttribute(MMJBCommonConstants.FACILITY_POST_EDIT)!=null)%>">
+							test="<%=!(session
+							.getAttribute(MMJBCommonConstants.FACILITY_POST_EDIT) != null)%>">
 							<security:authorize access="!hasRole('ROLE_FACILITY_POST_EDIT')">
 								<%-- 	<c:if test="${enablePostEditAccess eq 'true'}"> --%>
 								<div class="lableTextDashBoard">
 									<p>
-										<a href="#" id="purchaseResumeSearch" title="Coming Soon">Purchase Resume Search
+										<a id="purchaseResumeSearch" title="Coming Soon">Purchase Resume Search
 											Packages</a>
 									</p>
 								</div>
@@ -521,16 +549,15 @@ var options = {
 						</c:if>
 						<div class="lableTextDashBoard">
 							<p>
-								<a href="#" title="Coming Soon">Manage
+								<a title="Coming Soon">Manage
 									Job-Seekers</a>
 							</p>
 						</div>
 						<div class="lableTextDashBoard">
 							<p>
-								<a
-									href="#" title="Coming Soon"> My Saved
-									Resume Searches&nbsp;${msg.commonOpenBrace}<c:out
-										value="${employerDashBoardForm.resumeSearchCount}" />${msg.commonCloseBrace}
+								<a title="Coming Soon"> My Saved
+									Resume Searches&nbsp;<%-- ${msg.commonOpenBrace}<c:out
+										value="${employerDashBoardForm.resumeSearchCount}" />${msg.commonCloseBrace} --%>
 								</a>
 							</p>
 						</div>
@@ -567,8 +594,9 @@ var options = {
 			</div>
 			<!--Right-->
 			<div class="dBEmpRightColumns BorderLeft newempdb"> 
-				<div class="dashboardPanal">
-						<div class="activity">
+				<div class="dashboardPanal" style="border:none;" >
+				<div class="borderTop"></div>
+						<div class="activity" >
 							<img src="../resources/images/tranBg.png" width="30" height="30">
 						</div>
 						<div class="empDBPanalTablecontent">
@@ -602,7 +630,7 @@ var options = {
 							<!--T-->
 							<form:form method="GET" action="" commandName="epform"
 								id="empMetricsForm">
-								<div class="rowBox EDPricec">
+								<div class="rowBox EDPricec margin0 width100P height45" >
 									<div class="floatLeft marginTop3">
 										<strong>&nbsp;&nbsp;&nbsp;Date range</strong>
 									</div>
@@ -649,8 +677,8 @@ var options = {
 								</div>
 							</form:form>
 							<!--T-->
-							<div class="rowBox">
-								<div class="rowBox Padding0 AutoWidth AutoHeight with269">
+							<div class="rowBox ">
+								<div class="rowBox Padding0 AutoWidth AutoHeight with269 negativeMargin16">
 									<div class="EDBoxMinW">
 										<div class="EDBox02">
 											<div class="row borderBottomDotted Height25">

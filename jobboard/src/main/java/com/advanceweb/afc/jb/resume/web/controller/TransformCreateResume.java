@@ -49,8 +49,9 @@ public class TransformCreateResume {
 			resumeDTO.setFilePath(createResume.getFilePath());
 		}
 		if (MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(resumeDTO
-				.getResumeType())) {
-			resumeDTO.setResumeText(createResume.getResumeText());
+				.getResumeType())) {  
+			//resumeDTO.setResumeText(createResume.getResumeText());
+			resumeDTO.setResumeText(createResume.getDescription());
 		}
 		return resumeDTO;
 	}
@@ -260,6 +261,8 @@ public class TransformCreateResume {
 				form.setBuilderPhoneId(dto.getBuilderPhoneId());
 				form.setPhoneNumber(dto.getPhoneNumber());
 				form.setPhoneType(dto.getPhoneType());
+				form.setItemId(dto.getItemId());
+				form.setEditMode(dto.isEditMode());
 				phoneDtls.add(form);
 			}
 		}
@@ -366,6 +369,8 @@ public class TransformCreateResume {
 				form.setLanguage(dto.getLanguage());
 				form.setStartDate(dto.getStartDate());
 				form.setbNotGraduatedYet(dto.isbNotGraduatedYet());
+				form.setItemId(dto.getItemId());
+				form.setEditMode(dto.isEditMode());
 				listEduForms.add(form);
 			}
 		}
@@ -398,6 +403,8 @@ public class TransformCreateResume {
 				form.setName(dto.getName());
 				form.setPhoneNo(dto.getPhoneNo());
 				form.setReferenceType(dto.getRefType());
+				form.setEditMode(dto.isEditMode());
+				form.setItemId(dto.getItemId());
 				listWorkExpForms.add(form);
 			}
 		}
@@ -434,6 +441,8 @@ public class TransformCreateResume {
 				form.setYrsAtPostion(dto.getYrsAtPostion());
 				form.setbCurrentCareerLevel(dto.isbCurrentCareerLevel());
 				form.setbPresent(dto.isbPresent());
+				form.setItemId(dto.getItemId());
+				form.setEditMode(dto.isEditMode());
 				listWorkExpForms.add(form);
 			}
 		}
@@ -463,6 +472,8 @@ public class TransformCreateResume {
 				form.setCertifyingAuthority(dto.getCertifyingAuthority());
 				form.setInstituteName(dto.getInstituteName());
 				form.setSummary(dto.getSummary());
+				form.setEditMode(dto.isEditMode());
+				form.setItemId(dto.getItemId());
 				listCertForms.add(form);
 			}
 		}
@@ -489,6 +500,8 @@ public class TransformCreateResume {
 				form.setExpLvl(dto.getExpLvl());
 				form.setLanguage(dto.getLanguage());
 				form.setnLangId(dto.getnLangId());
+				form.setItemId(dto.getItemId());
+				form.setEditMode(dto.isEditMode());
 				listLangForms.add(form);
 			}
 		}

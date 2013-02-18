@@ -15,8 +15,8 @@
 <!-- JAVASCRIPT FILES -->
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-<script type="text/javascript"
-	src="../resources/js/jquery.cycle.all.min.js"></script>
+<!-- <script type="text/javascript"
+	src="../resources/js/jquery.cycle.all.min.js"></script> -->
 <script type="text/javascript" src="../resources/js/slider.js"></script>
 <script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 <script type="text/javascript">

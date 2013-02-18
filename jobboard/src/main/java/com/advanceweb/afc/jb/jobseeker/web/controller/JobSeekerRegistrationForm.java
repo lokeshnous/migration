@@ -6,33 +6,34 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-public class JobSeekerRegistrationForm extends ContactInfoForm{
+public class JobSeekerRegistrationForm extends ContactInfoForm {
 
 	private String emailId;
 	private String confirmEmailId;
 	private String newsLetterEmailId;
-	@NotEmpty(message="Industry should not be blank.")
-	private String myIndustry="Health Care";
-	@NotEmpty(message="Profession should not be blank.")
+	@NotEmpty(message = "Industry should not be blank.")
+	private String myIndustry = "Healthcare";
+	@NotEmpty(message = "Profession should not be blank.")
 	private String myProfession;
-	@NotEmpty(message="Speciality should not be blank.")
+	@NotEmpty(message = "Speciality should not be blank.")
 	private String mySpeciality;
-	@NotEmpty(message="Job Title should not be blank.")
+	@NotEmpty(message = "Job Title should not be blank.")
 	private String myJobTitle;
 	private String ethenticity;
 	private String gender;
 	private String imCurrentlyIn;
 	private String password;
-	private String currentPassword;	
+	private String currentPassword;
 	private String retypepassword;
-	private String veteranStatus;	
+	private String veteranStatus;
 	private String mobileNo;
 	private String employmentType;
 	private MultipartFile uploadResume;
 	private String[] currentsubs;
-	private String userId;	
+	private String userId;
 	private boolean bReadOnly;
 	private boolean oldUser;
+	private boolean advPassUser;
 	// used for social media sign up
 	private boolean socialSignUp;
 	private String serviceProviderName;
@@ -40,9 +41,25 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 	private List<JobSeekerProfileAttribForm> listProfAttribForms;
 	private String otherProfession;
 	private boolean clickBack;
+
+	private String[] printSub;
+	private String[] digSub;
+	private String[] newsSub;
+	private String[] emailSub;
+	private boolean printCheckbox;
+	private boolean digCheckbox;
+	private boolean enewsCheckbox;
+	private boolean mailCheckbox;
+
 	
-	
-	
+	public boolean isAdvPassUser() {
+		return advPassUser;
+	}
+
+	public void setAdvPassUser(boolean advPassUser) {
+		this.advPassUser = advPassUser;
+	}
+
 	public boolean isOldUser() {
 		return oldUser;
 	}
@@ -61,7 +78,7 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 
 	private CommonsMultipartFile fileData;
 	private String fileName;
-	
+
 	public String getEmailId() {
 		return emailId;
 	}
@@ -157,7 +174,7 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 	public void setVeteranStatus(String veteranStatus) {
 		this.veteranStatus = veteranStatus;
 	}
-	
+
 	public CommonsMultipartFile getFileData() {
 		return fileData;
 	}
@@ -277,6 +294,70 @@ public class JobSeekerRegistrationForm extends ContactInfoForm{
 
 	public void setSocialProfileId(String socialProfileId) {
 		this.socialProfileId = socialProfileId;
-	}	
-	
+	}
+
+	public String[] getPrintSub() {
+		return printSub;
+	}
+
+	public void setPrintSub(String[] printSub) {
+		this.printSub = printSub;
+	}
+
+	public String[] getDigSub() {
+		return digSub;
+	}
+
+	public void setDigSub(String[] digSub) {
+		this.digSub = digSub;
+	}
+
+	public String[] getNewsSub() {
+		return newsSub;
+	}
+
+	public void setNewsSub(String[] newsSub) {
+		this.newsSub = newsSub;
+	}
+
+	public boolean isPrintCheckbox() {
+		return printCheckbox;
+	}
+
+	public void setPrintCheckbox(boolean printCheckbox) {
+		this.printCheckbox = printCheckbox;
+	}
+
+	public boolean isDigCheckbox() {
+		return digCheckbox;
+	}
+
+	public void setDigCheckbox(boolean digCheckbox) {
+		this.digCheckbox = digCheckbox;
+	}
+
+	public boolean isEnewsCheckbox() {
+		return enewsCheckbox;
+	}
+
+	public void setEnewsCheckbox(boolean enewsCheckbox) {
+		this.enewsCheckbox = enewsCheckbox;
+	}
+
+	public boolean isMailCheckbox() {
+		return mailCheckbox;
+	}
+
+	public void setMailCheckbox(boolean mailCheckbox) {
+		this.mailCheckbox = mailCheckbox;
+	}
+
+	public String[] getEmailSub() {
+		return emailSub;
+	}
+
+	public void setEmailSub(String[] emailSub) {
+		this.emailSub = emailSub;
+	}
+
 }

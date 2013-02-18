@@ -9,11 +9,15 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.annotation.Resource;
 import javax.imageio.ImageIO;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -75,11 +79,14 @@ import com.advanceweb.afc.jb.employer.web.controller.TransformEmployerRegistrati
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.service.JobPostInventoryService;
 import com.advanceweb.afc.jb.job.service.JobPostService;
-import com.advanceweb.afc.jb.login.service.LoginService;
+import com.advanceweb.afc.jb.lookup.service.LookupService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
+import com.advanceweb.afc.jb.mail.service.EmailDTO;
+import com.advanceweb.afc.jb.mail.service.MMEmailService;
 import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 import com.advanceweb.afc.jb.pgi.web.controller.BillingAddressForm;
 import com.advanceweb.afc.jb.pgi.web.controller.TransformPaymentMethod;
+import com.advanceweb.afc.jb.search.service.JobSearchService;
 import com.advanceweb.afc.jb.security.DatabaseAuthenticationManager;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
@@ -124,8 +131,6 @@ public class AgencyDashBoardController extends AbstractController {
 	@Autowired
 	private TransformUserubscription userubscription;
 	@Autowired
-	private LoginService loginService;
-	@Autowired
 	private AgencyService agencyService;
 	@Autowired
 	private TransformEmployerRegistration transformEmpReg;
@@ -141,12 +146,15 @@ public class AgencyDashBoardController extends AbstractController {
 
 	@Autowired
 	private AdService adService;
-	
+
 	@Autowired
 	private JobPostService employerJobPost;
-	
+
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private JobSearchService jobSearchService;
 
 	@Value("${requiredField}")
 	private String requiredField;
@@ -158,26 +166,20 @@ public class AgencyDashBoardController extends AbstractController {
 	private String employerAddValidation;
 	@Value("${alreadyAdded}")
 	private String alreadyAdded;
-	@Value("${account_first_name}")
-	private String accountFirstName;
-	@Value("${account_last_name}")
-	private String accountLastName;
-	@Value("${account_company_name}")
-	private String accountCompanyName;
-	@Value("${account_zip_code}")
-	private String accountZipCode;
-	@Value("${account_state}")
-	private String accountState;
-	@Value("${account_country}")
-	private String accountCountry;
-	@Value("${account_city}")
-	private String accountCity;
-	@Value("${js.email.blank}")
-	private String accountEmail;
-	@Value("${account_Street}")
-	private String accountStreet;
 	@Value("${emailInUse}")
 	private String emailInUse;
+	@Value("${advanceWebAddress}")
+	private String advanceWebAddress;
+	@Value("${validateCityState}")
+	private String validateCityState;
+	@Autowired
+	private LookupService lookupService;
+	@Autowired
+	private MMEmailService emailService;
+
+	@Autowired
+	@Resource(name = "emailConfiguration")
+	private Properties emailConfiguration;
 	@RequestMapping("/agencyDashboard")
 	public ModelAndView displayDashBoard(HttpSession session,
 			HttpServletRequest request) {
@@ -206,7 +208,9 @@ public class AgencyDashBoardController extends AbstractController {
 		}
 
 		// Retrieve Current subscriptions of the user
-		List<DropDownDTO> currentSubs = getCurrentSubscriptions(facilityId);
+		int parentFacilityId = userSubService.getParentId(facilityId);
+
+		List<DropDownDTO> currentSubs = getCurrentSubscriptions(parentFacilityId);
 		Set<DropDownDTO> set = new HashSet<DropDownDTO>();
 		for (DropDownDTO dto : currentSubs) {
 			set.add(dto);
@@ -230,11 +234,13 @@ public class AgencyDashBoardController extends AbstractController {
 	@ResponseBody
 	@RequestMapping(value = "/agencyAccountSetting", method = RequestMethod.POST)
 	public String editAccountSetting(EmployeeAccountForm employeeAccountForm,
-			BindingResult result, HttpSession session) {
+			BindingResult result, HttpSession session,HttpServletRequest request) {
 		boolean isUpdated = false;
 		try {
-			if(employeeAccountForm.isAdminLogin()){
-				if(facilityService.getUser(employeeAccountForm.getEmail())!=null || userService.getAdvancePassUser(employeeAccountForm.getEmail())!=null){
+			if (employeeAccountForm.isAdminLogin()) {
+				if (facilityService.getUser(employeeAccountForm.getEmail()) != null
+						|| userService.getAdvancePassUser(employeeAccountForm
+								.getEmail()) != null) {
 					return emailInUse;
 				}
 			}
@@ -243,56 +249,41 @@ public class AgencyDashBoardController extends AbstractController {
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.PRIMARY);
 			if (listProfAttribForms.getCount() > 0) {
 				int admfacilityid = listProfAttribForms.getFacilityContactId();
-				if (!validateEmailPattern(employeeAccountForm.getEmail())) {
-					return MMJBCommonConstants.EMAIL_MESSAGE;
-				} else if (!validatePhonePattern(employeeAccountForm.getPhone())) {
-					return MMJBCommonConstants.PHONE_NO;
-				} else if ((null == employeeAccountForm.getEmail())
-						|| ("".equals(employeeAccountForm.getEmail()))) {
-					return accountEmail;
-				} else if ((null == employeeAccountForm.getPhone())
-						|| ("".equals(employeeAccountForm.getPhone()))) {
-					return MMJBCommonConstants.PHONE_NULL_NO;
-				} else if ((null == employeeAccountForm.getFirstName())
-						|| ("".equals(employeeAccountForm.getFirstName()))) {
-					return accountFirstName;
-				} else if ((null == employeeAccountForm.getLastName())
-						|| ("".equals(employeeAccountForm.getLastName()))) {
-					return accountLastName;
-				} else if ((null == employeeAccountForm.getZipCode())
-						|| ("".equals(employeeAccountForm.getZipCode()))) {
-					return accountZipCode;
-				} else if ((null == employeeAccountForm.getCityOrTown())
-						|| ("".equals(employeeAccountForm.getCityOrTown()))) {
-					return accountCity;
-				} else if ((null == employeeAccountForm.getCompany())
-						|| ("".equals(employeeAccountForm.getCompany()))) {
-					return accountCompanyName;
-				} else if ((null == employeeAccountForm.getCountry())
-						|| ("".equals(employeeAccountForm.getCountry()))) {
-					return accountCountry;
-				} else if ((null == employeeAccountForm.getState())
-						|| ("".equals(employeeAccountForm.getState()))) {
-					return accountState;
+				String errMessage = validateAccountDetails(employeeAccountForm);
+				if (!StringUtils.isEmpty(errMessage)) {
 
-				} else if ((null == employeeAccountForm.getStreetAddress())
-						|| ("".equals(employeeAccountForm.getStreetAddress()))) {
-					return accountStreet;
-				} else if (employerRegistration
-						.validateEmail(employeeAccountForm.getEmail())) {
-					// return MMJBCommonConstants.EMAIL_NULL_MESSAGE;
+					return errMessage;
 				}
+
 				AccountProfileDTO dto = transformEmpReg
 						.transformAccountProfileFormToDto(employeeAccountForm);
 
 				isUpdated = empRegService.editUser(dto, admfacilityid, userId,
 						MMJBCommonConstants.PRIMARY);
+				// send Email after updating the employer email address by Agency through Impersonation 
+				isUpdated = empRegService.editUser(dto, admfacilityid, userId,
+						MMJBCommonConstants.PRIMARY);
+				if(null!=dto.getEmail() && isUpdated){
+					UserDTO userDTO = new UserDTO();
+					userDTO.setUserId(userId);
+					userDTO.setFirstName(dto.getFirstName());
+					userDTO.setLastName(dto.getLastName());
+					userDTO.setCompany(dto.getCompanyName());
+					userDTO.setEmailId(dto.getEmail());
+					try{
+						sendEmployerWelcomeEmail(request, userDTO);
+					}
+					catch(Exception e){
+						LOGGER.error("Mail sending failed : "+e);
+					}
+				}
 				session.setAttribute(MMJBCommonConstants.USER_NAME,
 						employeeAccountForm.getFirstName() + " "
 								+ employeeAccountForm.getLastName());
-				session.setAttribute(MMJBCommonConstants.COMPANY_EMP, employeeAccountForm.getCompany());
+				session.setAttribute(MMJBCommonConstants.COMPANY_EMP,
+						employeeAccountForm.getCompany());
 				if (isUpdated) {
-					LOGGER.info("This is Account Addresss edite option done successfully");
+					LOGGER.debug("This is Account Addresss edite option done successfully");
 				} else {
 					return MMJBCommonConstants.UPDATE_ERROR;
 				}
@@ -301,9 +292,50 @@ public class AgencyDashBoardController extends AbstractController {
 
 		} catch (Exception e) {
 
-			LOGGER.info("This is Account Addresss edite option error");
+			LOGGER.error("This is Account Addresss edite option error");
 		}
 		return "";
+	}
+
+	/**
+	 * @param employeeAccountForm
+	 */
+	private String validateAccountDetails(EmployeeAccountForm employeeAccountForm) {
+		
+		if (StringUtils.isBlank(employeeAccountForm.getEmail())
+				|| StringUtils.isBlank(employeeAccountForm.getPhone())
+				|| StringUtils.isBlank(employeeAccountForm.getFirstName())
+				|| StringUtils.isBlank(employeeAccountForm.getLastName())
+				|| StringUtils.isBlank(employeeAccountForm.getZipCode())
+				|| StringUtils.isBlank(employeeAccountForm.getState())
+				|| StringUtils.isBlank(employeeAccountForm.getStreetAddress())
+				|| StringUtils.isBlank(employeeAccountForm.getCityOrTown())
+				|| (StringUtils.isBlank(employeeAccountForm.getCompany())
+						&& StringUtils.isBlank(employeeAccountForm.getCountry()) && StringUtils
+							.isBlank(employeeAccountForm.getState()))) {
+
+			return "Please fill the required fields";
+		}
+		boolean validateStateCityZip;
+		try {
+			validateStateCityZip = lookupService.validateCityStateZip(
+					employeeAccountForm.getCityOrTown(),
+					employeeAccountForm.getState(),
+					employeeAccountForm.getZipCode());
+
+			if (!validateStateCityZip) {
+				return validateCityState;
+			}
+		} catch (JobBoardServiceException ex) {
+
+			ex.printStackTrace();
+		}
+		if (!validateEmailPattern(employeeAccountForm.getEmail())) {
+			return MMJBCommonConstants.EMAIL_MESSAGE;
+		} else if (!validatePhonePattern(employeeAccountForm.getPhone())) {
+			return MMJBCommonConstants.PHONE_NO;
+		}  
+		return null;
 	}
 
 	/**
@@ -326,56 +358,11 @@ public class AgencyDashBoardController extends AbstractController {
 					.getAttribute(MMJBCommonConstants.FACILITY_ID);
 			AdmFacilityContactDTO listProfAttribForms = empRegService
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.BILLING);
-			if (!validateEmailPattern(employeeBillingForm.getEmail())) {
-				return MMJBCommonConstants.EMAIL_MESSAGE;
-			} else if (!validatePhonePattern(employeeBillingForm.getPhone())) {
-				return MMJBCommonConstants.PHONE_NO;
-			} else if ((null == employeeBillingForm.getEmail())
-					|| ("".equals(employeeBillingForm.getEmail()))) {
-				return accountEmail;
-			} else if ((null == employeeBillingForm.getPhone())
-					|| ("".equals(employeeBillingForm.getPhone()))) {
-				return MMJBCommonConstants.PHONE_NULL_NO;
-			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getFnameForBillingAddr())
-					|| ("".equals(employeeBillingForm.getBillingAddressForm()
-							.getFnameForBillingAddr()))) {
-				return accountFirstName;
-			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getLnameForBillingAddr())
-					|| ("".equals(employeeBillingForm.getBillingAddressForm()
-							.getLnameForBillingAddr()))) {
-				return accountLastName;
-			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getZipCodeForBillingAddr())
-					|| ("".equals(employeeBillingForm.getBillingAddressForm()
-							.getZipCodeForBillingAddr()))) {
-				return accountZipCode;
-			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getCityOrTownForBillingAddr())
-					|| ("".equals(employeeBillingForm.getBillingAddressForm()
-							.getCityOrTownForBillingAddr()))) {
-				return accountCity;
-			} else if ((null == employeeBillingForm.getCompany())
-					|| ("".equals(employeeBillingForm.getCompany()))) {
-				return accountCompanyName;
-			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getCountryForBillingAddr())
-					|| ("".equals(employeeBillingForm.getBillingAddressForm()
-							.getCountryForBillingAddr()))) {
-				return accountCountry;
-			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getStateBillingAddress())
-					|| ("".equals(employeeBillingForm.getBillingAddressForm()
-							.getStateBillingAddress()))) {
-				return accountState;
-			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getStreetForBillingAddr())
-					|| ("".equals(employeeBillingForm.getBillingAddressForm()
-							.getStreetForBillingAddr()))) {
-				return accountStreet;
-			}
+			String errMessage = validateBillingAccDetails(employeeBillingForm);
+			if (!StringUtils.isEmpty(errMessage)) {
 
+				return errMessage;
+			}
 			if (listProfAttribForms.getCount() > 0) {
 				int admfacilityid = listProfAttribForms.getFacilityContactId();
 				AccountProfileDTO dto = transformEmpReg
@@ -399,13 +386,66 @@ public class AgencyDashBoardController extends AbstractController {
 				billingAddressDTO.setCreateDate(new Date());
 				fetchAdmFacilityConatact
 						.saveDataBillingAddress(billingAddressDTO);
-				LOGGER.info("This is Billing Addresss save done successfully");
+				LOGGER.debug("This is Billing Addresss save done successfully");
 			}
 
 		} catch (Exception e) {
-			LOGGER.info("This is Billing Addresss edite or save error");
+			LOGGER.error("This is Billing Addresss edite or save error");
 		}
 		return "";
+	}
+
+	/**
+	 * Validate Billing address details
+	 * @param employeeBillingForm
+	 */
+	private String validateBillingAccDetails(
+			EmployeeAccountForm employeeBillingForm) {
+
+		if (StringUtils.isEmpty(employeeBillingForm.getEmail())
+				|| StringUtils.isBlank(employeeBillingForm.getPhone())
+				|| StringUtils.isBlank(employeeBillingForm
+						.getBillingAddressForm().getFnameForBillingAddr())
+				|| StringUtils.isBlank(employeeBillingForm
+						.getBillingAddressForm().getLnameForBillingAddr())
+				|| StringUtils.isBlank(employeeBillingForm
+						.getBillingAddressForm().getZipCodeForBillingAddr())
+				|| StringUtils.isBlank(employeeBillingForm
+						.getBillingAddressForm().getCityOrTownForBillingAddr())
+				|| StringUtils.isBlank(employeeBillingForm
+						.getBillingAddressForm().getCountryForBillingAddr())
+				|| StringUtils.isEmpty(employeeBillingForm
+						.getBillingAddressForm().getStateBillingAddress())
+				|| (StringUtils.isBlank(employeeBillingForm.getCompany())
+						&& StringUtils.isBlank(employeeBillingForm
+								.getBillingAddressForm()
+								.getStreetForBillingAddr()) && StringUtils
+							.isEmpty(employeeBillingForm.getState()))) {
+
+			return "Please fill the required fields";
+		}
+		boolean validateStateCityZip;
+		try {
+			validateStateCityZip = lookupService.validateCityStateZip(
+					employeeBillingForm.getBillingAddressForm()
+							.getCityOrTownForBillingAddr(), employeeBillingForm
+							.getBillingAddressForm().getStateBillingAddress(),
+					employeeBillingForm.getBillingAddressForm()
+							.getZipCodeForBillingAddr());
+
+			if (!validateStateCityZip) {
+				return validateCityState;
+			}
+		} catch (JobBoardServiceException ex) {
+
+			ex.printStackTrace();
+		}
+		if (!validateEmailPattern(employeeBillingForm.getEmail())) {
+			return MMJBCommonConstants.EMAIL_MESSAGE;
+		} else if (!validatePhonePattern(employeeBillingForm.getPhone())) {
+			return MMJBCommonConstants.PHONE_NO;
+		}
+		return null;
 	}
 
 	/**
@@ -425,7 +465,8 @@ public class AgencyDashBoardController extends AbstractController {
 			employeeBillingForm.setBillingAddressForm(new BillingAddressForm());
 
 			int userId = (Integer) session.getAttribute("userId");
-			// Post/Edit Only users: should NOT be able to change Account Settings
+			// Post/Edit Only users: should NOT be able to change Account
+			// Settings
 			List<UserRoleDTO> roleList = userService.getUserRole(userId);
 			if (null != roleList) {
 				for (UserRoleDTO userRole : roleList) {
@@ -436,7 +477,7 @@ public class AgencyDashBoardController extends AbstractController {
 					}
 				}
 			}
-			if(session.getAttribute("adminLogin")!=null ){
+			if (session.getAttribute("adminLogin") != null) {
 				employeeAccountForm.setAdminLogin(true);
 			}
 			List<CountryDTO> countryList = populateDropdownsService
@@ -505,7 +546,7 @@ public class AgencyDashBoardController extends AbstractController {
 			model.addObject("employeeBillingForm", employeeBillingForm);
 
 		} catch (Exception e) {
-			LOGGER.info("Error For Account Setting Link call in controller class");
+			LOGGER.error("Error For Account Setting Link call in controller class");
 		}
 
 		return model;
@@ -650,6 +691,20 @@ public class AgencyDashBoardController extends AbstractController {
 			if (facility.getFacilityParentId() != -1) {
 				return employerLinked;
 			}
+			boolean validateStateCityZip;
+			try {
+				validateStateCityZip = lookupService.validateCityStateZip(
+						employerRegistrationForm.getCity(),
+						employerRegistrationForm.getState(),
+						employerRegistrationForm.getZipCode());
+
+				if (!validateStateCityZip) {
+					return validateCityState;
+				}
+			} catch (JobBoardServiceException ex) {
+
+				ex.printStackTrace();
+			}
 			FacilityDTO facilityDTO = facilityService
 					.getFacilityByFacilityId(dto.getFacilityId());
 			UserDTO userDTO = agencyService.getNSCustomerDetails(facilityDTO
@@ -746,13 +801,14 @@ public class AgencyDashBoardController extends AbstractController {
 		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
 		authList.add(new SimpleGrantedAuthority(
 				MMJBCommonConstants.ROLE_FACILITY));
-		
-		UserDTO user=userService.getAdvancePassUser(userDTO.getEmailId());
-		
-//		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-//				userDTO.getEmailId(), userDTO.getPassword(), authList);
+
+		UserDTO user = userService.getAdvancePassUser(userDTO.getEmailId());
+
+		// UsernamePasswordAuthenticationToken token = new
+		// UsernamePasswordAuthenticationToken(
+		// userDTO.getEmailId(), userDTO.getPassword(), authList);
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-				user.getEmailId(),user.getPassword(), authList);
+				user.getEmailId(), user.getPassword(), authList);
 		token.setDetails(new WebAuthenticationDetails(request));
 		Authentication authenticatedUser = customAuthenticationManager
 				.authenticate(token);
@@ -785,13 +841,14 @@ public class AgencyDashBoardController extends AbstractController {
 		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
 		authList.add(new SimpleGrantedAuthority(
 				MMJBCommonConstants.ROLE_FACILITY_GROUP));
-		UserDTO user =userService.getAdvancePassUser(userDTO.getEmailId());
-//		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-//				userDTO.getEmailId(), userDTO.getPassword(), authList);
-				UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-						user.getEmailId(), user.getPassword(), authList);
+		UserDTO user = userService.getAdvancePassUser(userDTO.getEmailId());
+		// UsernamePasswordAuthenticationToken token = new
+		// UsernamePasswordAuthenticationToken(
+		// userDTO.getEmailId(), userDTO.getPassword(), authList);
+		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+				user.getEmailId(), user.getPassword(), authList);
 
-				token.setDetails(new WebAuthenticationDetails(request));
+		token.setDetails(new WebAuthenticationDetails(request));
 		Authentication authenticatedUser = customAuthenticationManager
 				.authenticate(token);
 		SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
@@ -828,17 +885,18 @@ public class AgencyDashBoardController extends AbstractController {
 			avaQuantity = avaQuantity + dto.getAvailableQty();
 
 		}
-		downDTOs = populateDropdownsService
-				.populateCompanyNames(facilityId, true);
+		downDTOs = populateDropdownsService.populateCompanyNames(facilityId,
+				true);
 		// active job posting
 		int count = employerJobPost.getEmpJobsCountByStatus(
 				MMJBCommonConstants.POST_NEW_JOB, downDTOs);
-		
+
 		session.setAttribute("count", count);
 		session.setAttribute("avaQuantity", avaQuantity);
 
-		// getting the metrics details		
-		jbPostTotalList = getMetricsDetails(Integer.parseInt(downDTOs.get(0).getOptionId()));
+		// getting the metrics details
+		jbPostTotalList = getMetricsDetails(Integer.parseInt(downDTOs.get(0)
+				.getOptionId()));
 		model.addObject("downDTOs", downDTOs);
 		session.setAttribute(JB_POST_TOTAL_LIST, jbPostTotalList);
 		model.addObject("employerDetails", employerDetails);
@@ -882,67 +940,57 @@ public class AgencyDashBoardController extends AbstractController {
 	 * @return
 	 */
 	private List<MetricsDTO> getMetricsDetails(int facilityId) {
+		long views = 0;
+		long clicks = 0;
+		long applies = 0;
+
 		List<MetricsDTO> jbPostTotalList = new ArrayList<MetricsDTO>();
-		MetricsDTO metricsDTO = new MetricsDTO();
 		// Get the job post details of logged in employer
-		List<MetricsDTO> metricsDTOs = facilityService
-				.getJobPostTotal(facilityId);
+		MetricsDTO metricsDTO = facilityService.getJobPostTotal(facilityId);
+		
+		views = metricsDTO.getViews();
+		clicks = metricsDTO.getClicks();
+		applies = metricsDTO.getApplies();
 
 		// Getting metrics values from look up table
 		List<DropDownDTO> metricsList = populateDropdownsService
 				.populateDropdown("Metrics");
-
-		// jbPostTotalList will be having job post total details for metrics
-		long views = 0;
-		long clicks = 0;
-		long applies = 0;
-		int size = metricsDTOs.size();
-		for (int i = 0; i < metricsDTOs.size(); i++) {
-			MetricsDTO dto = new MetricsDTO();
-			dto = (MetricsDTO) metricsDTOs.get(i);
-			views = views + dto.getViews();
-			clicks = clicks + dto.getClicks();
-			applies = applies + dto.getApplies();
-		}
 		metricsDTO.setMetricsName(metricsList.get(0).getOptionName());
-		metricsDTO.setViews(views);
-		metricsDTO.setClicks(clicks);
-		metricsDTO.setApplies(applies);
+		
+		// jbPostTotalList will be having job post total details for metrics
 		jbPostTotalList.add(0, metricsDTO);
-		metricsDTO = new MetricsDTO();
+		MetricsDTO avgMetricsDTO = new MetricsDTO();
 
 		// Calculating average per job posting
 		long avgViews = 0;
 		long avgClicks = 0;
 		long avgApplies = 0;
-		if (size > 0) {
-			avgViews = Math.round((double) views / size);
-			avgClicks = Math.round((double) clicks / size);
-			avgApplies = Math.round((double) applies / size);
+		long totalJobs = 0;
+
+		totalJobs = facilityService.getJobsByFacility(facilityId);
+		if (totalJobs > 0) {
+			avgViews = Math.round((double) views / totalJobs);
+			avgClicks = Math.round((double) clicks / totalJobs);
+			avgApplies = Math.round((double) applies / totalJobs);
 		}
-		metricsDTO.setMetricsName(metricsList.get(1).getOptionName());
-		metricsDTO.setViews(avgViews);
-		metricsDTO.setClicks(avgClicks);
-		metricsDTO.setApplies(avgApplies);
-		jbPostTotalList.add(1, metricsDTO);
-		metricsDTO = new MetricsDTO();
+		avgMetricsDTO.setMetricsName(metricsList.get(1).getOptionName());
+		avgMetricsDTO.setViews(avgViews);
+		avgMetricsDTO.setClicks(avgClicks);
+		avgMetricsDTO.setApplies(avgApplies);
+		jbPostTotalList.add(1, avgMetricsDTO);
 
 		// Calculating site - wide average per job posting
 		long swAvgViews = 0;
 		long swAvgClicks = 0;
 		long swAvgApplies = 0;
-		long count = 0;
-		try {
-			count = facilityService.getEmployerCount();
-		} catch (JobBoardException e) {
-			LOGGER.info("Error occured while getting the Result from Database");
-		}
+		long activeJobs = 0;
+		activeJobs = jobSearchService.getActiveJobs();
 		MetricsDTO dto = facilityService.getAllJobStats();
 
-		if (count > 0) {
-			swAvgViews = Math.round((double) dto.getViews() / count);
-			swAvgClicks = Math.round((double) dto.getClicks() / count);
-			swAvgApplies = Math.round((double) dto.getApplies() / count);
+		if (activeJobs > 0) {
+			swAvgViews = Math.round((double) dto.getViews() / activeJobs);
+			swAvgClicks = Math.round((double) dto.getClicks() / activeJobs);
+			swAvgApplies = Math.round((double) dto.getApplies() / activeJobs);
 		}
 		dto.setMetricsName(metricsList.get(2).getOptionName());
 		dto.setViews(swAvgViews);
@@ -1077,5 +1125,57 @@ public class AgencyDashBoardController extends AbstractController {
 			LOGGER.error(
 					"Error occurred while getting the html content for Ads", e);
 		}
+	}
+	/**
+	 * @param request
+	 * @param userDTO
+	 */
+	private void sendEmployerWelcomeEmail(HttpServletRequest request,
+			UserDTO userDTO) {
+		InternetAddress[] jsToAddress = new InternetAddress[1];
+
+		try {
+			jsToAddress[0] = new InternetAddress(userDTO.getEmailId());
+		} catch (AddressException jbex) {
+			LOGGER.error(
+					"Error occured while geting InternetAddress reference",
+					jbex);
+		}
+
+		EmployerInfoDTO facilityDetail = facilityService
+				.facilityDetails(userDTO.getUserId());
+		if (null != facilityDetail) {
+			userDTO.setCompany(facilityDetail.getCustomerName());
+		}
+		EmailDTO emailDTO = new EmailDTO();
+		emailDTO.setToAddress(jsToAddress);
+		emailDTO.setFromAddress(advanceWebAddress);
+		emailDTO.setSubject(emailConfiguration.getProperty(
+				"welcome.mail.message").trim());
+		String userName=userDTO.getFirstName()+" " + userDTO.getLastName();
+		String employerWelcomeMailBody = emailConfiguration.getProperty(
+				"employer.welcome.mail.body").trim();
+		String employerloginUrl = request.getRequestURL().toString()
+				.replace(request.getServletPath(), emailConfiguration.getProperty(
+						"agency.email.login.url").trim());
+//				+ dothtmlExtention + agencyPageExtention;
+		employerWelcomeMailBody = employerWelcomeMailBody.replace("?userName",
+				userDTO.getFirstName());
+		employerWelcomeMailBody = employerWelcomeMailBody.replace("?user_name",
+				userName);
+		employerWelcomeMailBody = employerWelcomeMailBody.replace(
+				"?company_name", userDTO.getCompany());
+		employerWelcomeMailBody = employerWelcomeMailBody.replace(
+				"?empdashboardLink", employerloginUrl);
+
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append(emailConfiguration.getProperty(
+				"employer.email.header").trim());
+		stringBuffer.append(employerWelcomeMailBody);
+		stringBuffer.append(emailConfiguration.getProperty("email.footer")
+				.trim());
+		emailDTO.setBody(stringBuffer.toString());
+		emailDTO.setHtmlFormat(true);
+		emailService.sendEmail(emailDTO);
 	}
 }

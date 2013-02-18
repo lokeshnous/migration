@@ -3,10 +3,10 @@
 #if($vars)
 	#set ($separator="")
 	#set ($namespace="c")
-	#set ($params="auid=$auid&cb=INSERT_RANDOM_NUMBER_HERE&#foreach($var in $vars.entrySet())$separator$namespace.$var.key=$esc.url($var.value)#set($separator='&')#end")
+	#set ($params="auid=$auid&amp;cb=$random&amp;#foreach($var in $vars.entrySet())$separator$namespace.$var.key=$esc.url($var.value)#set($separator='&amp;')#end")
 #else
 	#set ($params="") 
 #end
-<a href="http://ox-d.advanceweb.com/w/1.0/rc?&cs=50bff408737b1&$params" >
-	<img src="http://ox-d.advanceweb.com/w/1.0/ai?cs=50bff408737b1&$params" border="0" alt="">
+<a href="http://ox-d.advanceweb.com/w/1.0/rc?&amp;cs=$id&amp;$params" >
+	<img src="http://ox-d.advanceweb.com/w/1.0/ai?cs=$id&amp;$params" border="0" alt="">
 </a>

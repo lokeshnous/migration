@@ -36,16 +36,18 @@
 
 
 						<div class="clearfix"></div>
-						<div class="MidContent_Wrapper FloatLeft marginBottom10">
+						<div class="MidContent_Wrapper FloatLeft ">
 							<div class="ResumeHeader">
 								<%-- <h2 class="noTopBottomBorder "><c:out
 										value="${createResume.resumeName}" /></h2> --%>
 								<div class="clearfix"></div>
 							</div>
 						</div>
-						<div class="rowEvenNewSpacing">
-							<h2 class="noTopBottomBorder ">${createResume.resumeName}</h2>
-							<br> <span>
+						<div class="rowEvenNewSpacing1">
+						    <div style="float:left; width:70%">
+							<h2 class="noTopBottomBorder">${createResume.resumeName}</h2>
+							<br>
+							 <span>
 								<h3 class="marginTop3">
 									<c:out value="${createResume.desiredJobTitle}" />
 								</h3>
@@ -55,6 +57,7 @@
 							<div class="clearfix"></div>
 							<span> <!--  <p class="marginTop3">Available 08/01/2012</p> -->
 							</span>
+							</div>
 							<div class="IconsArea">
 								<a href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}" title="Download"><div
 										class="download"></div></a>&nbsp; <a
@@ -75,7 +78,7 @@
 						<textarea readonly="readonly" cols="120" rows="50">${createResume.resumeText}</textarea>
 						<!-- class="textareaBoxCResume Height255 marginTop5 " -->
 					</div>
-					<div class="IconsArea">
+					<div class="IconsArea marginBottom10">
 								<a href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}" title="Download"><div
 										class="download"></div></a>&nbsp; <a
 									href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${createResume.uploadResumeId}" title="Print" target="_blank"><div
@@ -86,7 +89,7 @@
 			<!--Start:MidContant-->
 			<div class="clearfix"></div>
 			<!-- content_wrapper -->
-			<div class="ad_wrapper">${adPageBottom}</div>
+			<div class="ad_wrapper copyResumeWidth">${adPageBottom}</div>
 			<!-- ad_wrapper -->
 
 		</div>

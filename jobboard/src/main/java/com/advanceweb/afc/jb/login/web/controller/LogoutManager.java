@@ -72,7 +72,7 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 				session.invalidate();
 			}
 			response.sendRedirect(request.getContextPath()
-					+ "/healthcarejobs/advanceweb.html");
+					+ "/healthcarejobs/index.html");
 		} else {
 
 			if (authentication.getAuthorities().contains(
@@ -277,7 +277,7 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 				session.invalidate();
 			}
 			response.sendRedirect(request.getContextPath()
-					+ "/healthcarejobs/advanceweb.html");
+					+ "/healthcarejobs/index.html");
 		} else {
 
 			if (authentication.getAuthorities().contains(
@@ -312,8 +312,10 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 				if (session != null) {
 					session.invalidate();
 				}
+				/*response.sendRedirect(request.getContextPath()
+						+ "/commonLogin/login.html?page=jobSeeker");*/
 				response.sendRedirect(request.getContextPath()
-						+ "/commonLogin/login.html?page=jobSeeker");
+						+ "/healthcarejobs/index.html");
 			} else if (authentication.getAuthorities().contains(
 					new SimpleGrantedAuthority(
 							MMJBCommonConstants.ROLE_FACILITY))
@@ -323,16 +325,20 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 				if (session != null) {
 					session.invalidate();
 				}
+				/*response.sendRedirect(request.getContextPath()
+						+ "/commonLogin/login.html?page=employer");*/
 				response.sendRedirect(request.getContextPath()
-						+ "/commonLogin/login.html?page=employer");
+						+ "/healthcarejobs/index.html");
 			} else if (authentication.getAuthorities().contains(
 					new SimpleGrantedAuthority(
 							MMJBCommonConstants.ROLE_FACILITY_SYSTEM))) {
 				if (session != null) {
 					session.invalidate();
 				}
+				/*response.sendRedirect(request.getContextPath()
+						+ "/commonLogin/login.html?page=agency");*/
 				response.sendRedirect(request.getContextPath()
-						+ "/commonLogin/login.html?page=agency");
+						+ "/healthcarejobs/index.html");
 			}
 
 		}
@@ -352,8 +358,8 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 		StringBuffer stringBuffer = new StringBuffer();
 		String loginPath = navigationPath.substring(2);
 		String jonseekerloginUrl = request.getRequestURL().toString()
-				.replace(request.getServletPath(), loginPath)
-				+ dothtmlExtention + jobseekerPageExtention;
+				.replace(request.getServletPath(), emailConfiguration.getProperty("jobSeeker.email.login.url").trim());
+//				+ dothtmlExtention + jobseekerPageExtention;
 		EmailDTO emailDTO = new EmailDTO();
 		String jobseekerApplyEmailBody = emailConfiguration.getProperty(
 				"jobseeker.apply.email.body").trim();

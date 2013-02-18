@@ -19,21 +19,19 @@
 	<!-- JAVASCRIPT FILES -->
 	<!--  <script type="text/javascript"
 		src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>-->
-	<script type="text/javascript"
+	<!-- <script type="text/javascript"
 		src="javascripts/jquery.cycle.all.min.js"></script>
 	<script type="text/javascript" src="javascripts/slider.js"></script>
-	<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script>
+	<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script> -->
 
 	<!-- <script type="text/javascript" src="jquery-1.3.2.min.js"></script>
 	<script type="text/javascript" src="jquery.autocomplete.min.js"></script>-->
 
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-		if (${keywords} != null){
 			$("#keywords").click(function(event){
 				searchResume();
-			}
-	   }
+	   });
 	});
 	</script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

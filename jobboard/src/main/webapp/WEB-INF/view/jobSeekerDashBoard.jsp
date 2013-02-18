@@ -90,13 +90,13 @@ jQuery(document).ready(
 				<div class="otherContent">
 				<div class="ad_col_right">
 				<div id="adPageRightMiddle"> ${adPageRightMiddle} </div>
-					<div class="follow_us">
+					<div class="follow_us marginTop4">
 						<h2>Follow Us</h2>
 						<p>Stay connected to the latest jobs.</p>
 						<a href="${followuplinkfacebook}" target="_blank"><span class="social facebook_link">Facebook</span></a>
 						<a href="${followuplinktwitter}" target="_blank"><span class="social twitter_link">Twitter</span></a>
 						<a href="${followuplinkyoutube}" target="_blank"><span class="social youTube_link">YouTube</span></a>
-						<a href="${followuplinklinkedin}" target="_blank"><span class="last social linkedIn_link">LinkedIn</span></a>
+						<%-- <a href="${followuplinklinkedin}" target="_blank"><span class="last social linkedIn_link">LinkedIn</span></a> --%>
 					</div>
 					<br class="clearfix" />
 				</div>
@@ -108,7 +108,7 @@ jQuery(document).ready(
 									height="23" alt="My advance  dashboard"></div>
 							</div>
 							<div class="dashboardcolumn1">
-								<div class="dashboardPanal">
+								<div class="dashboardPanal"  style="height: 91px;"> 
 									<div class="profile">
 										<img src="../resources/images/tranBg.png" width="30"
 											height="30" alt="User Profile">
@@ -117,7 +117,7 @@ jQuery(document).ready(
 
 									<div class="dashboardPanalcontent">
 										<h2 class="noTopBorder">${msg.jsUserProfile}</h2>
-										<div class="lableTextDashBoard">
+										<div class="lableTextDashBoard" >
 											<p>
 												<a
 													href="<%=request.getContextPath()%>/jobseekerregistration/viewJobSeekerProfile.html"
@@ -153,7 +153,7 @@ jQuery(document).ready(
 										</div>
 										<div class="lableTextDashBoard">
 											<p>
-												<a href="../jobsearch/findJobPage.html?isNewSearch=true">${msg.jsCreateNewSavedSearch}</a>
+												<a href="../search/findJobPage.html?isNewSearch=true">${msg.jsCreateNewSavedSearch}</a>
 											</p>
 										</div>
 										<div class="lableTextDashBoard">
@@ -190,8 +190,10 @@ jQuery(document).ready(
 										</div>
 										<div class="lableTextDashBoard">
 											<p>
-												 <a href="#" title="Coming Soon"
+												 <a title="Coming Soon"
 													id="profileViewCount">${msg.jsEmployersViewedProfile} </a> 
+												 <%-- <a href="#" title="Coming Soon"
+													id="profileViewCount">${msg.jsEmployersViewedProfile} </a>  --%>
 											</p>
 										</div>
 

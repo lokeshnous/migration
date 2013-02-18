@@ -25,6 +25,7 @@ public class EmployeeAccountForm {
 	private String phone;
 	private boolean adminLogin;
 	private boolean readOnly;
+	private boolean useMyAccountAddr;
 	
 	
 	public boolean isAdminLogin() {
@@ -224,6 +225,12 @@ public class EmployeeAccountForm {
 	 */
 	public void setReadOnly(boolean readOnly) {
 		this.readOnly = readOnly;
+	}
+	public boolean isUseMyAccountAddr() {
+		return useMyAccountAddr;
+	}
+	public void setUseMyAccountAddr(boolean useMyAccountAddr) {
+		this.useMyAccountAddr = useMyAccountAddr;
 	}
 
 }

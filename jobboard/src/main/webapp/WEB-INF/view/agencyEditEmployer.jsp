@@ -32,21 +32,21 @@
 					<span class="lableText3">Employer Name:</span>
 					<form:input disabled="true" path="firstName" class="job_seeker_email disabled-input"
 						id="emplyrNameAutoComplte" />
-					<span class="required">(Required)</span>
+					<!-- <span class="required">(Required)</span> -->
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Street Address:</span>
 					<form:input disabled="true" path="street" id="street" class="job_seeker_email disabled-input" />
-					<span class="required">(Required)</span>
+					<!-- <span class="required">(Required)</span> -->
 				</div>
 
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">City:</span>
 					<form:input disabled="true" path="city" id="city" class="job_seeker_email disabled-input" />
-					<span class="required">(Required)</span>
+					<!-- <span class="required">(Required)</span> -->
 				</div>
-				<c:forEach items="${empRegisterForm.listProfAttribForms}"
-					var="profAttrib" varStatus="status">
+				<%-- <c:forEach items="${empRegisterForm.listProfAttribForms}"
+					var="profAttrib" varStatus="status"> --%>
 					<c:if test="${profAttrib.strLabelName =='State / Province'}">
 						<div class="row">
 							<span class="lableTextSelect marginTop13">State:</span>
@@ -56,9 +56,14 @@
 								<form:options items="${profAttrib.dropdown}"
 									itemValue="optionId" itemLabel="optionName" />
 							</form:select>
-							<span class="required marginTop8">(Required)</span>
+							<!-- <span class="required marginTop8">(Required)</span> -->
 						</div>
 					</c:if>
+					<div class="rowEvenNewSpacing">
+					<span class="lableText3">Zip Code:</span>
+					<form:input disabled="true" id="zipCode" path="zipCode" class="job_seeker_email disabled-input" />
+					<!-- <span class="required">(Required)</span> -->
+				</div>
 					<c:if test="${profAttrib.strLabelName == 'Country'}">
 						<div class="row">
 							<span class="lableTextSelect marginTop13 ">Country:</span>
@@ -69,20 +74,16 @@
 								<form:options items="${profAttrib.dropdown}"
 									itemValue="optionId" itemLabel="optionName"/>
 							</form:select>
-							<span class="required marginTop8">(Required)</span>
+							<!-- <span class="required marginTop8">(Required)</span> -->
 						</div>
 					</c:if>
-				</c:forEach>
-				<div class="rowEvenNewSpacing">
-					<span class="lableText3">Zip Code:</span>
-					<form:input disabled="true" id="zipCode" path="zipCode" class="job_seeker_email disabled-input" />
-					<span class="required">(Required)</span>
-				</div>
+				<%-- </c:forEach> --%>
+				
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Phone:</span>
 					<form:input disabled="true" path="primaryPhone" id="primaryPhone"
 						class="job_seeker_email disabled-input" />
-					<span class="required">(Required)</span>
+					<!-- <span class="required">(Required)</span> -->
 				</div>
 				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">
 					<span class="floatLeft marginTop10"><!-- <input type="button" id="save"

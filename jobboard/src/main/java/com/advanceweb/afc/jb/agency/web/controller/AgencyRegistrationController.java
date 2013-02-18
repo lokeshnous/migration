@@ -47,10 +47,13 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.login.web.controller.LoginManager;
+import com.advanceweb.afc.jb.lookup.service.LookupService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
+import com.advanceweb.afc.jb.user.UserService;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
 import com.advanceweb.common.client.ClientContext;
@@ -92,6 +95,8 @@ public class AgencyRegistrationController extends AbstractController {
 	@Autowired
 	private AdService adService;
 
+	@Autowired
+	private UserService userService;
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
 	@Value("${socialSignupMsg}")
@@ -114,8 +119,6 @@ public class AgencyRegistrationController extends AbstractController {
 
 	@Value("${navigationPath}")
 	private String navigationPath;
-	@Value("${agencyPageExtention}")
-	private String agencyPageExtention;
 	@Autowired
 	private MMEmailService emailService;
 	@Autowired
@@ -123,8 +126,10 @@ public class AgencyRegistrationController extends AbstractController {
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
-	@Value("${dothtmlExtention}")
-	private String dothtmlExtention;
+	@Autowired
+	private LookupService lookupService;
+	@Value("${validateCityState}")
+	private String validateCityState;
 	private final static String AGENCYREG = "addAgencyRegistration";
 
 	/**
@@ -250,12 +255,15 @@ public class AgencyRegistrationController extends AbstractController {
 			@ModelAttribute(AGENCY_REG_FORM) AgencyRegistrationForm agencyRegistrationForm,
 			HttpSession session, HttpServletRequest req,HttpServletResponse response, BindingResult result) {
 		ModelAndView model = new ModelAndView();
-
+		boolean advPassUser=false;
 		populateAds(req, session, model);
-
+		if(userService.checkUserMail(agencyRegistrationForm.getEmailId())){
+			advPassUser=true;
+			agencyRegistrationForm.setAdvPassUser(true);
+		}
 		if (null != agencyRegistrationForm.getListProfAttribForms()) {
 			model.setViewName(AGENCYREG);
-			if (!validateEmpRegForm(agencyRegistrationForm, model, result)) {
+			if (!validateEmpRegForm(agencyRegistrationForm, model, result,req,advPassUser)) {
 				return model;
 			}
 		}
@@ -318,23 +326,24 @@ public class AgencyRegistrationController extends AbstractController {
 			model.setViewName("redirect:/agency/agencyDashboard.html");
 		}
 		authenticateUserAndSetSession(userDTO, req,response);
-		LOGGER.info("Registration is completed.");
+		LOGGER.debug("Registration is completed.");
 		return null;
 	}
 
 	private boolean validateEmpRegForm(
 			AgencyRegistrationForm agencyRegistrationForm, ModelAndView model,
-			BindingResult result) {
+			BindingResult result, HttpServletRequest req,Boolean advPassUser) {
 		boolean status = true;
 
 		if (null != agencyRegistrationForm.getListProfAttribForms()) {
 			model.setViewName(AGENCYREG);
+			String state=null,city=null,zipCode=null;
 			for (AgencyProfileAttribForm form : agencyRegistrationForm
 					.getListProfAttribForms()) {
 
 				// Checking validation for input text box
 				if (form.getRequired() != 0
-						&& StringUtils.isEmpty(form.getStrLabelValue())
+						&& StringUtils.isBlank(form.getStrLabelValue())
 						&& !MMJBCommonConstants.EMAIL_ADDRESS.equals(form
 								.getStrLabelName())) {
 					model.addObject(MESSAGE, reqFields);
@@ -368,6 +377,38 @@ public class AgencyRegistrationController extends AbstractController {
 					model.addObject(MESSAGE, jobseekerRegPhoneMsg);
 					return false;
 				}
+				if (form.getStrLabelName() != null
+						&& form.getStrLabelName().equalsIgnoreCase(
+								MMJBCommonConstants.LABEL_STATE)) {
+					state=form
+					.getStrLabelValue();
+				}
+				if (form.getStrLabelName() != null
+						&& form.getStrLabelName().equalsIgnoreCase(
+								MMJBCommonConstants.CITY_EMP)) {
+					city=form
+					.getStrLabelValue();
+				}
+				if (form.getStrLabelName() != null
+						&& form.getStrLabelName().equalsIgnoreCase(
+								MMJBCommonConstants.ZIP_CODE)) {
+					zipCode=form
+					.getStrLabelValue();
+				}
+				if (null != state && null != city && null != zipCode) {
+					boolean validateStateCityZip;
+					try {
+						validateStateCityZip = lookupService
+								.validateCityStateZip(city, state, zipCode);
+						if (!validateStateCityZip) {
+							model.addObject(MESSAGE, validateCityState);
+							return false;
+						}
+					} catch (JobBoardServiceException e) {
+						e.printStackTrace();
+					}
+
+				}
 			}
 		}
 		registerValidation.validate(agencyRegistrationForm, result);
@@ -378,8 +419,10 @@ public class AgencyRegistrationController extends AbstractController {
 		}
 		if (!agencyRegistrationForm.isbReadOnly()
 				&& agencyRegistration.validateEmail(agencyRegistrationForm
-						.getEmailId())) {
-			result.rejectValue("emailId", "NotEmpty", emailExists);
+						.getEmailId()) && !advPassUser) {
+			result.rejectValue("emailId", "NotEmpty", emailExists.replace(
+					"?ageLoginLink",req.getRequestURL().toString()
+					.replace(req.getServletPath(),"/commonLogin/login.html?page=agency")));
 			// model.setViewName(AGENCYREG);
 			return false;
 		}
@@ -411,7 +454,7 @@ public class AgencyRegistrationController extends AbstractController {
 		loginSuccessManager.onAuthenticationSuccess(request, response,
 				authenticatedUser);
 	} catch (Exception e) {
-		LOGGER.info("Exception while authenticating Agency while registration ("
+		LOGGER.error("Exception while authenticating Agency while registration ("
 				+ e.getMessage() + ")");
 	}
 	}
@@ -446,8 +489,9 @@ public class AgencyRegistrationController extends AbstractController {
 		String employerWelcomeMailBody = emailConfiguration.getProperty(
 				"employer.welcome.mail.body").trim();
 		String employerloginUrl = request.getRequestURL().toString()
-				.replace(request.getServletPath(), loginPath)
-				+ dothtmlExtention + agencyPageExtention;
+				.replace(request.getServletPath(), emailConfiguration.getProperty(
+						"agency.email.login.url").trim());
+//				+ dothtmlExtention + agencyPageExtention;
 		employerWelcomeMailBody = employerWelcomeMailBody.replace("?userName",
 				userDTO.getFirstName());
 		employerWelcomeMailBody = employerWelcomeMailBody.replace("?user_name",

@@ -77,7 +77,7 @@
               </tr>
                  <c:forEach items="${appliedJobDTOList}" var = "dtoList" > 
                <tr>
-                <td><a href='<c:url value="/jobsearch/viewMyJobDetails.html"><c:param name="id" value="${dtoList.getJpJob().getJobId()}"/></c:url>'  rel="0" class="newWindow" >${dtoList.getJobTitle()}</a></td>
+                <td><a href='<c:url value="/search/viewMyJobDetails.html"><c:param name="id" value="${dtoList.getJpJob().getJobId()}"/></c:url>'  rel="0" class="newWindow" >${dtoList.getJobTitle()}</a></td>
                 <td align="left">${dtoList.getFacilityName()}</td>
                 <td align="left">${dtoList.getAppliedDt()}</td>
                 <td align="center"><div class="centerAlignMButton">

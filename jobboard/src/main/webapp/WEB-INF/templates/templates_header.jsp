@@ -2,11 +2,17 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
+	<html lang="en">
+    <head>
+    <link rel='shortcut icon' href='<%=request.getContextPath() %>/resources/images/favicon.ico' type="image/x-icon">
+   <%--  <link href="${canonicalUrl}" rel="canonical" /> --%>
+    </head>
+	
 	<div class="header_wrapper">
 	<c:choose>
 	<c:when test="${isHomePage}">
 		<h1 class="logo">
-		<a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/advanceweb.html" title="Advance Healthcare Jobs">
+		<a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/index.html" title="Advance Healthcare Jobs">
 		<img src="<%=request.getContextPath() %>/resources/images/tranBg.png" alt="Advance Healthcare Jobs" width="397px" height="70px"/>
 		</a>
 		</h1> 
@@ -14,11 +20,29 @@
 	<c:otherwise>
 		<h3 class="logo">
 		<security:authorize 
-		access="!hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP') and !hasRole('ROLE_FACILITY_SYSTEM')">
-		<a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/advanceweb.html" title="Advance Healthcare Jobs">
+		access="hasRole('ROLE_JOB_SEEKER') or hasRole('ROLE_FACILITY') or hasRole('ROLE_FACILITY_GROUP') or hasRole('ROLE_FACILITY_SYSTEM')">
+		<a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/index.html" title="Advance Healthcare Jobs">
 		<img src="<%=request.getContextPath() %>/resources/images/tranBg.png" alt="Advance Healthcare Jobs" width="397px" height="70px"/>
 		</a>
 		</security:authorize>
+		<security:authorize 
+		access="!hasRole('ROLE_JOB_SEEKER') and !hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP') and !hasRole('ROLE_FACILITY_SYSTEM')">
+		<a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/index.html" title="Advance Healthcare Jobs">
+		<img src="<%=request.getContextPath() %>/resources/images/tranBg.png" alt="Advance Healthcare Jobs" width="397px" height="70px"/>
+		</a>
+		</security:authorize>
+		<%-- <security:authorize 
+		access="hasRole('ROLE_FACILITY') or hasRole('ROLE_FACILITY_GROUP')">
+		<a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/employer/employerDashBoard.html" title="Advance Healthcare Jobs">
+		<img src="<%=request.getContextPath() %>/resources/images/tranBg.png" alt="Advance Healthcare Jobs" width="397px" height="70px"/>
+		</a>
+		</security:authorize>
+		<security:authorize 
+		access="hasRole('ROLE_FACILITY_SYSTEM')">
+		<a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/agency/agencyDashboard.html" title="Advance Healthcare Jobs">
+		<img src="<%=request.getContextPath() %>/resources/images/tranBg.png" alt="Advance Healthcare Jobs" width="397px" height="70px"/>
+		</a>
+		</security:authorize> --%>
 		</h3> 
 	</c:otherwise>
 	</c:choose>
@@ -29,21 +53,15 @@
 			<security:authorize access="hasRole('ROLE_JOB_SEEKER')">
 				<div class="headerLoginSection">
 					<div class="headerLoginSectionColumns">
-						<span class="boldText">${msg.jsWelcomeMsg}<%=(String) session.getAttribute("userName")%>
-							${msg.commonExclamationMark}
+						<span class="boldText">${msg.jsWelcomeMsg}<%=(String) session.getAttribute("userName")%>${msg.commonExclamationMark}
 
 						</span><br />
 						<div class="floatRight">
 							<span class="floatLeft"> <a href="<%=request.getContextPath()%>/logout.html">${msg.commonLogOut}</a>
 
-								${msg.commonVerticalBar} <c:choose>
-									<c:when test="${jobSeekerDashBoardForm != null}">
-										<a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html">${msg.commonBackHome}</a>
-									</c:when>
-									<c:otherwise>
+								${msg.commonVerticalBar} 
 										<a href="<%=request.getContextPath()%>/jobSeeker/jobSeekerDashBoard.html">${msg.commonDashboard}</a>
-									</c:otherwise>
-								</c:choose>
+									
 							</span>
 						</div>
 					</div>
@@ -64,8 +82,7 @@
 			<security:authorize access="hasRole('ROLE_FACILITY') or hasRole('ROLE_FACILITY_GROUP')">
 				<div class="headerLoginSection">
 					<div class="headerLoginSectionColumns">
-						<span class="boldText">${msg.jsWelcomeMsg}<%=(String) session.getAttribute("userName")%>
-							${msg.commonExclamationMark}
+						<span class="boldText">${msg.jsWelcomeMsg}<%=(String) session.getAttribute("userName")%>${msg.commonExclamationMark}
 
 						</span><br />
 						<div class="floatRight">
@@ -93,8 +110,7 @@
 			<security:authorize access="hasRole('ROLE_FACILITY_SYSTEM')">
 				<div class="headerLoginSection">
 					<div class="headerLoginSectionColumns">
-						<span class="boldText">${msg.jsWelcomeMsg}<%=(String) session.getAttribute("userName")%>
-							${msg.commonExclamationMark}
+						<span class="boldText">${msg.jsWelcomeMsg}<%=(String) session.getAttribute("userName")%>${msg.commonExclamationMark}
 
 						</span><br />
 						<div class="floatRight">
@@ -173,61 +189,63 @@
         <div class="dropdown_4columns">
             <div class="col_1">
                 <ul>
-                    <li><a href="http://nursing.advanceweb.com/">Nurses</a></li>
-					<li><a href="http://physical-therapy.advanceweb.com/">Physical Therapy and Rehab Medicine</a></li>
-					<li><a href="http://occupational-therapy.advanceweb.com/">Occupational Therapy Practitioners</a></li>
-					<li><a href="http://imaging-radiation-oncology.advanceweb.com/">Imaging &amp; Radiattion Oncology</a></li>
-					<li><a href="http://audiology.advanceweb.com/">Hearing Practice Management</a></li>
+                    <li><a href="http://nursing.advanceweb.com/" target="_blank">Nurses</a></li>
+					<li><a href="http://physical-therapy.advanceweb.com/" target="_blank">Physical Therapy and Rehab Medicine</a></li>
+					<li><a href="http://occupational-therapy.advanceweb.com/" target="_blank">Occupational Therapy Practitioners</a></li>
+					<li><a href="http://imaging-radiation-oncology.advanceweb.com/" target="_blank">Imaging &amp; Radiation Oncology</a></li>
+					<li><a href="http://audiology.advanceweb.com/" target="_blank">Hearing Practice Management</a></li>
                 </ul>   
             </div>
             <div class="col_1">
                 <ul>
-                    <li><a href="http://speech-language-pathology-audiology.advanceweb.com/">Speech-Language Pathologists &amp; Audiologists</a></li>
-					<li><a href="http://respiratory-care-sleep-medicine.advanceweb.com/">Respiratory Care and Sleep Medicine</a></li>
-					<li><a href="http://laboratory-manager.advanceweb.com/">Administrators of the Laboratory</a></li>
-					<li><a href="http://laboratorian.advanceweb.com/">Medical Laboratory Professionals</a></li>
-					<li><a href="http://health-information.advanceweb.com/">Health Information Professionals</a></li>
+                    <li><a href="http://speech-language-pathology-audiology.advanceweb.com/" target="_blank">Speech-Language Pathologists &amp; Audiologists</a></li>
+					<li><a href="http://respiratory-care-sleep-medicine.advanceweb.com/" target="_blank">Respiratory Care and Sleep Medicine</a></li>
+					<li><a href="http://laboratory-manager.advanceweb.com/" target="_blank">Administrators of the Laboratory</a></li>
+					<li><a href="http://laboratorian.advanceweb.com/" target="_blank">Medical Laboratory Professionals</a></li>
+					<li><a href="http://health-information.advanceweb.com/" target="_blank">Health Information Professionals</a></li>
                 </ul>   
             </div>
             <div class="col_1">
                 <ul>
-                    <li><a href="http://long-term-care.advanceweb.com/">Long-Term Care Management</a></li>
-					<li><a href="http://nurse-practitioners-and-physician-assistants.advanceweb.com/">NPs &amp; PAs</a></li>
-					<li><a href="http://healthcare-executive-insight.advanceweb.com/">Executive Insight</a></li>
+                    <li><a href="http://long-term-care.advanceweb.com/" target="_blank">Long-Term Care Management</a></li>
+					<li><a href="http://nurse-practitioners-and-physician-assistants.advanceweb.com/" target="_blank">NPs &amp; PAs</a></li>
+					<li><a href="http://healthcare-executive-insight.advanceweb.com/" target="_blank">Executive Insight</a></li>
                 </ul>   
             </div>
         </div><!-- End 4 columns container -->
     </li>
     
     <li>
-    <security:authorize access="!hasRole('ROLE_JOB_SEEKER') and !hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP') and !hasRole('ROLE_FACILITY_SYSTEM')" >
-				<a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="bodnew">JOB SEARCH</a>
-	</security:authorize>
-	<security:authorize access="hasRole('ROLE_JOB_SEEKER')">
-				<a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="bodnew">JOB SEARCH</a>
+   <%--  <security:authorize access="!hasRole('ROLE_JOB_SEEKER') and !hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP') and !hasRole('ROLE_FACILITY_SYSTEM')" >
+				<a href="<%=request.getContextPath()%>/healthcarejobs/index.html" class="bodnew">JOB SEARCH</a>
+	</security:authorize> --%>
+	<security:authorize access="!(hasRole('ROLE_FACILITY') or hasRole('ROLE_FACILITY_GROUP') or hasRole('ROLE_FACILITY_SYSTEM'))">
+				<a href="<%=request.getContextPath()%>/healthcarejobs/index.html" class="bodnew">JOB SEARCH</a>
+				<div class="dropdown_2columns">
+            <div class="col_2">
+                <ul>
+                    <li><a href="http://www.advancehealthcarejobs.com" target="_blank">Quick Search</a></li>
+					<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/showCareers.html?careerType=resumeBuilder" target="_blank">Resume Builder</a></li>
+					<!-- <li><a href="http://health-care-jobs.advanceweb.com/Salary/Default.aspx">Salary Calculator</a></li> -->
+					<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/showCareers.html?careerType=messanger" target="_blank"><em>ADVANCE</em> Messenger</a></li>
+					<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/showCareers.html?careerType=career" target="_blank">Career Resource Center</a></li>
+					<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"")%>/healthcarejobs/featuredemployers.html" target="_blank">Featured Employers</a></li>
+					<li><a href="http://www.advancehealthcarejobs.com" target="_blank">Home</a></li>
+                </ul>   
+            </div>
+        </div><!-- End 4 columns container -->
 	</security:authorize>
 	<security:authorize access="hasRole('ROLE_FACILITY') or hasRole('ROLE_FACILITY_GROUP') or hasRole('ROLE_FACILITY_SYSTEM')">
 				<a href="#" class="drop bodnew">JOB SEARCH</a>
 	</security:authorize>
-        <div class="dropdown_2columns">
-            <div class="col_2">
-                <ul>
-                    <li><a href="http://health-care-jobs.advanceweb.com/">Quick Search</a></li>
-					<li><a href="http://health-care-jobs.advanceweb.com/ResumeBuilder/Default.aspx">Resume Builder</a></li>
-					<li><a href="http://health-care-jobs.advanceweb.com/Salary/Default.aspx">Salary Calculator</a></li>
-					<li><a href="http://health-care-jobs.advanceweb.com/AdvanceMessenger/Default.aspx"><em>ADVANCE</em> Messenger</a></li>
-					<li><a href="http://health-care-jobs.advanceweb.com/careers/article.aspx?cc=251059">Career Resource Center</a></li>
-					<li><a href="http://health-care-jobs.advanceweb.com/FeaturedFacilities/Default.aspx">Featured Facilities</a></li>
-					<li><a href="http://health-care-jobs.advanceweb.com/Default.aspx">Home</a></li>
-                </ul>   
-            </div>
-        </div><!-- End 4 columns container -->
+	
     </li>
     
-    <li class="css_main_menu_item"><a href="http://www.advanceweb.com/Advertise/CE2.aspx" class="bodnew">EDUCATION</a></li>
-	<li class="css_main_menu_item"><a href="http://events.advanceweb.com/Attendee/Default.aspx" class="bodnew">EVENTS</a></li>
-	<li class="css_main_menu_item"><a href="http://community.advanceweb.com/bloggroups/2/Home.aspx" class="bodnew">COMMUNITY</a></li>
-	<li class="css_main_menu_item"><a href="http://shop.advanceweb.com" class="bodnew">HEALTHCARE SHOP</a></li>
-	<li class="css_main_menu_item"><a href="http://promotions.advanceweb.com" class="bodnew">CUSTOM PROMOTION</a></li>
+    <li class="css_main_menu_item"><a href="http://www.advanceweb.com/Advertise/CE2.aspx" class="bodnew" target="_blank">EDUCATION</a></li>
+	<li class="css_main_menu_item"><a href="http://events.advanceweb.com/Attendee/Default.aspx" class="bodnew" target="_blank">EVENTS</a></li>
+	<li class="css_main_menu_item"><a href="http://community.advanceweb.com" class="bodnew" target="_blank">COMMUNITY</a></li>
+	<li class="css_main_menu_item"><a href="http://shop.advanceweb.com" class="bodnew" target="_blank">HEALTHCARE SHOP</a></li>
+	<li class="css_main_menu_item"><a href="http://promotions.advanceweb.com" class="bodnew" target="_blank">CUSTOM PROMOTIONS</a></li>
 </ul>
+</html>
 	<!--css_nav-->

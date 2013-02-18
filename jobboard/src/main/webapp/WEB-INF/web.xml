@@ -31,7 +31,10 @@
 		<exception-type>java.lang.Exception</exception-type>
 		<location>/healthcarejobs/errorPage.html</location>
 	</error-page>
-
+	
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
 
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>

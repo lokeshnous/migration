@@ -96,14 +96,15 @@
 				float: left;
 }
 
-.SEO_text {
+.Content_Description {
 				border-top: 1px solid #CCCCCC;
 				margin-top: 10px;
 				padding-top: 20px;
 }
 
-.SEO_text p {
-				font-size: 9px;
-				margin-bottom: 10px;
-				line-height: 1.2em;
+.Content_Description p {
+				font-size: 12px;
+				margin:0 20px 10px 20px;
+				/* margin-bottom: 10px; */
+				line-height: 1.5em;
 }

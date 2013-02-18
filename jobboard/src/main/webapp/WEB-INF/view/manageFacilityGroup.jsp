@@ -23,10 +23,10 @@
 	<!-- JAVASCRIPT FILES -->
 	<!--  <script type="text/javascript"
 		src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>-->
-	<script type="text/javascript"
+	<!-- <script type="text/javascript"
 		src="javascripts/jquery.cycle.all.min.js"></script>
 	<script type="text/javascript" src="javascripts/slider.js"></script>
-	<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script>
+	<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script> -->
 
 	<!-- <script type="text/javascript" src="jquery-1.3.2.min.js"></script>
 	<script type="text/javascript" src="jquery.autocomplete.min.js"></script>-->
@@ -105,12 +105,12 @@ function validateFacility() {
 				data:$('#form').serialize(),
 				type:"POST",
 				success: function(data){ 
-				    if(data.success != null){
+				    if(data.failureMsg != null){
+				    	alert(data.failureMsg);
+				    	parent.$.nmTop().close();
+				    }else{
 				    	alert("Data saved successfully!");
 				    	parent.$.nmTop().close();
-				    }
-				   
-				    if(data.failure != null){
 				    }
 				},
 				error: function(response) {
@@ -153,7 +153,7 @@ function validateFacility() {
 </head>
 
 <body class="job_board">
-	<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer"
+	<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer width750"
 		style="display: block">
 		<div class="popupHeader">
 			<h2>MANAGE/EDIT FACILITY</h2>
@@ -171,7 +171,7 @@ function validateFacility() {
 			<div class="row">
 				<span class="splLableText">Company Name: </span>
 				<form:input path="compName" id="empList" name="empList"
-					class="job_seeker_Resume focus" value="${empList}"/>
+					class="job_seeker_Resume focus textBox2" value="${empList}"/>
 						<span class="splLableText FormErrorDisplayText01">&nbsp;&nbsp;OR&nbsp;</span>
 
 				<span class="lableText7">Net Suite ID Number:</span>

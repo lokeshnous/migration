@@ -13,9 +13,9 @@
 <!-- JAVASCRIPT FILES -->
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-<script type="text/javascript" src="javascripts/jquery.cycle.all.min.js"></script>
+<!-- <script type="text/javascript" src="javascripts/jquery.cycle.all.min.js"></script>
 <script type="text/javascript" src="javascripts/slider.js"></script>
-<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script>
+<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script> -->
 <script type="text/javascript">
 function closePopup() {
 	parent.window.location.reload();
@@ -86,15 +86,31 @@ $(document).keyup(function(event) {
 								var="facility" varStatus="status">
 								<form:hidden path="facilityDTOList[${status.index}].facilityId" />
 								<tr id="${facility.facilityId}">
-									<td><a href="<%=request.getContextPath()%>/facility/editFacility.html?facilityId=${facility.facilityId}" class="nyroModal">${facility.name}</a></td>
-									<td>${facility.templateName}</td>
-									<td align="center"><a href="<%=request.getContextPath()%>/facility/editFacility.html?facilityId=${facility.facilityId}" class="nyroModal"><img
-									src="../resources/images/Edit.png" width="20" height="20"
-									alt="" title="Edit"></a>&nbsp;<a href="#">
-									<img
-									src="../resources/images/Delete.png" width="20" height="20"
-									alt="delete" title="Delete"></a></td>
-								</tr>
+
+								<c:choose>
+									<c:when test="${status.index==0}">
+										<td><a href="#">${facility.name}</a></td>
+										<td>${facility.templateName}</td>
+										<td align="center"><a
+											href="<%=request.getContextPath()%>/facility/editFacility.html?facilityId=${facility.facilityId}&readOnly=true"
+											class="nyroModal"><img src="../resources/images/Edit.png"
+												width="20" height="20" alt="" title="Edit"></a>&nbsp;</td>
+									</c:when>
+									<c:otherwise>
+										<td><a
+											href="<%=request.getContextPath()%>/facility/editFacility.html?facilityId=${facility.facilityId}"
+											class="nyroModal">${facility.name}</a></td>
+										<td>${facility.templateName}</td>
+										<td align="center"><a
+											href="<%=request.getContextPath()%>/facility/editFacility.html?facilityId=${facility.facilityId}"
+											class="nyroModal"><img src="../resources/images/Edit.png"
+												width="20" height="20" alt="" title="Edit"></a>&nbsp;<a
+											href="#"> <img src="../resources/images/Delete.png"
+												width="20" height="20" alt="delete" title="Delete"></a></td>
+									</c:otherwise>
+								</c:choose>
+
+							</tr>
 							</c:forEach>
 						
 						

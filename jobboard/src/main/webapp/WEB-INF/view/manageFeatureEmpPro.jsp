@@ -26,7 +26,7 @@
 	        var hasError = true;
 			 if($('#textfield4').val()!=''){
 					var ext = $('#textfield4').val().split('.').pop().toLowerCase();
-					if($.inArray(ext, ['mp4','wmv']) == -1) {
+					if($.inArray(ext, ['mp4','wmv','gif']) == -1) {
 					hasError = false;
 		            $("#promoMediaErrMsg").text('Please select an appropriate video file');
 				}
@@ -150,6 +150,7 @@
 										class="jb_input2Coverletter width300" />
 
 								</div>
+								<span class="required">(Required)</span>
 								<div class="FormErrorDisplayText">
 									<span id="errMsg" ></span>
 								</div>
@@ -209,6 +210,11 @@
 							<div class="FormErrorDisplayText">
 								<span id="promoMediaErrMsg"></span>
 							</div>
+							<label class="MultimediaLabel">
+							<c:if test="${mediaName != null}">
+								You uploaded <Strong>${mediaName}</Strong> as your Video, you can upload a different Video.
+							</c:if>
+							</label>
 						</div>
 					</div>
 					<div class="row marginTop15">
@@ -228,6 +234,11 @@
 							<div class="FormErrorDisplayText">
 								<span id="logoErrMsg"></span>
 							</div>
+							<label class="MultimediaLabel">
+							<c:if test="${logoName != null}">
+								You uploaded <Strong>${logoName}</Strong> as your Logo, you can upload a different Logo.
+							</c:if>
+							</label>
 						</div>
 					</div>
 					<div class="row paddingBottom10">

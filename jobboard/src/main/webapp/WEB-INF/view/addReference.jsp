@@ -10,12 +10,22 @@
 	});		
 </script>
 
-<div class="job_seeker_login leftFormHolderResumepage">
-<p class="borderBottomDotted marginBottom15">&nbsp;</p> 
+<div class="job_seeker_login leftFormHolderResumepage" id="ref${refPositionId}">
+<p class="borderBottomDotted marginBottom15">&nbsp;</p>
+	
 	<div class="rowEvenNewSpacing">
 		<span class="lableText3">Name:</span>
 		<form:input path="createResume.listRefForm[${refPositionId}].name"
-			class="job_seeker_password textBox350 focusElement" />
+			class="job_seeker_password textBox350 focusElement" /><span></span>
+	<div class="floatRight margin0">
+			<p class="floatLeft margin0">Delete this Reference section &nbsp;</p> 
+			<p class="floatRight margin0"><img
+				id="closeCheckOut"
+				onclick="removeRefrences('ref${refPositionId}',${refPositionId})"
+				src="<%= request.getContextPath() %>/resources/images/Close.png"
+				class="cursor" title="Delete" alt="Delete" /></p>
+			
+	</div>	
 	</div>
 
 	<div class="rowEvenNewSpacing">

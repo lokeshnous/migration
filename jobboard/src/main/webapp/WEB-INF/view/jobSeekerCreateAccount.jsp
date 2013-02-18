@@ -25,7 +25,7 @@
 		    jQuery(".megamenu").megamenu();
 		});
 		    function cancelProcess(){
-		    	window.location.href = '${pageContext.request.contextPath}/healthcarejobs/advanceweb.html';
+		    	window.location.href = '${pageContext.request.contextPath}/healthcarejobs/index.html';
 		    }	
 		    
 		    /*var RecaptchaOptions = {
@@ -65,7 +65,7 @@
 	                      <span class="required">(Required)</span> 
 	            </div>
 				<div class="validationMsg">
-					<form:errors path="emailId" /> 
+					<form:errors path="emailId" htmlEscape="false"/> 
 				</div>
 	            <div class="rowEvenNewSpacing"> <span class="lableText3">Confirm Email Address:</span>
 	                      <form:input path="confirmEmailId" class="job_seeker_password textBox350" readonly="${registerForm.bReadOnly}"/>
@@ -101,7 +101,7 @@
 										out.print(c.createRecaptchaHtml(null, null));
 								%>
 								</div>
-									<span class="required">(Required)</span>
+									<!-- <span class="required">(Required)</span> -->
 							</div>
 								<div class="row">
 									<span class="lableText3"></span> <FONT color="red"> <c:if

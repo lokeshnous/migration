@@ -1,4 +1,3 @@
-
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import java.io.BufferedInputStream;
@@ -21,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailParseException;
@@ -72,7 +72,6 @@ public class ManageJobSeekerController {
 	@Autowired
 	private ManageJobSeekerService manageJobSeekerService;
 
-
 	@Autowired
 	private TransformCreateResume transCreateResume;
 	@Autowired
@@ -81,24 +80,18 @@ public class ManageJobSeekerController {
 	private static final String ERRORMSG = "Error occured while Updating Data";
 	private static final String APP_STATUS_LIST = "appStatusList";
 	private static final String RESUMEID = "resumeId";
-	
-	
+
 	@Autowired
 	private MMEmailService emailService;
-
 
 	@Autowired
 	private ResumeService resumeService;
 
-
 	@Autowired
 	private JobSearchValidator jobSearchValidator;
 
-	
 	@Value("${dothtmlExtention}")
 	private String dothtmlExtention;
-
-	
 
 	private @Value("${SUBJECT_OF_SEND_RESUME_MAIL}")
 	String subOfmail;
@@ -127,6 +120,7 @@ public class ManageJobSeekerController {
 	private Properties emailConfiguration;
 	private static final String CURRENT_URL = "currentUrl";
 	private static final String END_TAGS = "</TD></TR>\n";
+
 	/**
 	 * This method is called to display jobs list belonging to a logged in
 	 * employer
@@ -145,10 +139,10 @@ public class ManageJobSeekerController {
 		List<ManageJobSeekerDTO> manageJobSeekerDTOList = new ArrayList<ManageJobSeekerDTO>();
 		List<DropDownDTO> appStatusList = new ArrayList<DropDownDTO>();
 		List<AdmFolderDTO> admFolderDTOList = new ArrayList<AdmFolderDTO>();
-		LOGGER.info("Folder Id:" + folderId);
-		 String next = request.getParameter("next");
-		 int page = 1;
-		 int displayRecordsPerPage=10;
+		LOGGER.debug("Folder Id:" + folderId);
+		String next = request.getParameter("next");
+		int page = 1;
+		int displayRecordsPerPage = 10;
 		if (null != request.getParameter("noOfPage")) {
 			displayRecordsPerPage = Integer.parseInt(request
 					.getParameter("noOfPage"));
@@ -196,9 +190,10 @@ public class ManageJobSeekerController {
 									(page - 1) * recordsPerPage, recordsPerPage);
 					model.setViewName("manageJobSeekers");
 				}
-				noOfRecords = manageJobSeekerService
-						.getTotalNumberOfRecords((Integer) session
-								.getAttribute(MMJBCommonConstants.USER_ID),folderId);
+				noOfRecords = manageJobSeekerService.getTotalNumberOfRecords(
+						(Integer) session
+								.getAttribute(MMJBCommonConstants.USER_ID),
+						folderId);
 				appStatusList = manageJobSeekerService.applicationStatusList();
 				admFolderDTOList = manageJobSeekerService
 						.folderDetailList((Integer) session
@@ -227,7 +222,8 @@ public class ManageJobSeekerController {
 		model.addObject("currentPage", page);
 		model.addObject("begin", (manageJobSeekerForm.getBeginVal() <= 0 ? 1
 				: manageJobSeekerForm.getBeginVal()));
-		session.setAttribute(MMJBCommonConstants.MODULE_STRING, MMJBCommonConstants.MANAGEJOBSEEKER);
+		session.setAttribute(MMJBCommonConstants.MODULE_STRING,
+				MMJBCommonConstants.MANAGEJOBSEEKER);
 		model.addObject(MANAGEJOBSEEKERFORM, manageJobSeekerForm);
 		model.addObject(APP_STATUS_LIST, appStatusList);
 		model.addObject("manageJobSeekerDTOList", manageJobSeekerDTOList);
@@ -252,7 +248,7 @@ public class ManageJobSeekerController {
 			ManageJobSeekerForm manageJobSeekerForm,
 			@RequestParam("appStatus") int appStatus,
 			@RequestParam(RESUMEID) int resumeId) {
-		LOGGER.info("Update Application Status : Process to update the Application Status !");
+		LOGGER.debug("Update Application Status : Process to update the Application Status !");
 		JSONObject warningMessage = new JSONObject();
 		if (appStatus > 0 && resumeId > 0) {
 			try {
@@ -284,30 +280,29 @@ public class ManageJobSeekerController {
 			@RequestParam("rating") int rating,
 			@RequestParam(RESUMEID) int resumeId) {
 
-		LOGGER.info("Update rating : Process to update the rating !");
+		LOGGER.debug("Update rating : Process to update the rating !");
 		ModelAndView model = new ModelAndView();
 		List<DropDownDTO> appStatusList = new ArrayList<DropDownDTO>();
 		List<ManageJobSeekerDTO> manageJobSeekerDTOList = new ArrayList<ManageJobSeekerDTO>();
-		int folderId =0;
-		 int page = 1;
-		int displayRecordsPerPage=10;
+		int folderId = 0;
+		int page = 1;
+		int displayRecordsPerPage = 10;
 		if (null != request.getParameter("noOfPage")) {
 			displayRecordsPerPage = Integer.parseInt(request
 					.getParameter("noOfPage"));
-		}else if(manageJobSeekerForm.getNoOfPage()>0){
-			displayRecordsPerPage=manageJobSeekerForm.getNoOfPage();
+		} else if (manageJobSeekerForm.getNoOfPage() > 0) {
+			displayRecordsPerPage = manageJobSeekerForm.getNoOfPage();
 		}
-		
+
 		manageJobSeekerForm.setNoOfPage(displayRecordsPerPage);
 		manageJobSeekerForm.setNoOfPageLower(displayRecordsPerPage);
 		if (request.getParameter("page") != null) {
 			page = Integer.parseInt(request.getParameter("page"));
 		}
-		
 
 		int noOfRecords = 0;
-		if(null!=request.getParameter("folderId")){
-			folderId =  Integer.parseInt(request.getParameter("folderId"));
+		if (null != request.getParameter("folderId")) {
+			folderId = Integer.parseInt(request.getParameter("folderId"));
 		}
 		if (rating > 0 && resumeId > 0) {
 			try {
@@ -325,16 +320,18 @@ public class ManageJobSeekerController {
 				}
 				appStatusList = manageJobSeekerService.applicationStatusList();
 				model.addObject(APP_STATUS_LIST, appStatusList);
-				noOfRecords = manageJobSeekerService
-						.getTotalNumberOfRecords((Integer) session
-								.getAttribute(MMJBCommonConstants.USER_ID),folderId);
+				noOfRecords = manageJobSeekerService.getTotalNumberOfRecords(
+						(Integer) session
+								.getAttribute(MMJBCommonConstants.USER_ID),
+						folderId);
 			} catch (JobBoardServiceException jbex) {
 				LOGGER.error("Error occured while Updating The Rating", jbex);
 			}
 		}
-		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / displayRecordsPerPage);
+		int noOfPages = (int) Math.ceil(noOfRecords * 1.0
+				/ displayRecordsPerPage);
 
-		 String next = request.getParameter("next");
+		String next = request.getParameter("next");
 		if (null == next || !next.isEmpty()) {
 			manageJobSeekerForm.setBeginVal((page / 10) * 10);
 		} else {
@@ -371,7 +368,7 @@ public class ManageJobSeekerController {
 			@RequestParam("folderId") int folderId,
 			@RequestParam("selectedVal") String selectedVal) {
 
-		LOGGER.info("Move To Folder : Process to Implement Move to Folder Functionality !");
+		LOGGER.debug("Move To Folder : Process to Implement Move to Folder Functionality !");
 		ModelAndView model = new ModelAndView();
 		List<AdmFolderDTO> admFolderDTOList = new ArrayList<AdmFolderDTO>();
 		List<ManageJobSeekerDTO> manageJobSeekerDTOList = new ArrayList<ManageJobSeekerDTO>();
@@ -410,7 +407,8 @@ public class ManageJobSeekerController {
 					manageJobSeekerForm
 							.setManageJobSeekerDTOList(manageJobSeekerDTOList);
 				}
-				model.setViewName("forward:/employer/manageJobSeeker.html?folderId="+folderId+"&compare=true");
+				model.setViewName("forward:/employer/manageJobSeeker.html?folderId="
+						+ folderId + "&compare=true");
 			} else {
 				model.setViewName("manageJobSeekerFolderView");
 			}
@@ -476,7 +474,7 @@ public class ManageJobSeekerController {
 						+ resumeDTO.getFilePath());
 				return model;
 			} catch (Exception e) {
-				LOGGER.info("Error in view resume builder", e);
+				LOGGER.error("Error in view resume builder", e);
 			}
 		} else {
 			model.addObject("createResume", createResume);
@@ -503,7 +501,7 @@ public class ManageJobSeekerController {
 			ManageJobSeekerForm manageJobSeekerForm,
 			@RequestParam(RESUMEID) int resumeId) {
 
-		LOGGER.info("Delete Job Seeker : Process to delete the job seeker !");
+		LOGGER.debug("Delete Job Seeker : Process to delete the job seeker !");
 		JSONObject warningMessage = new JSONObject();
 		if (resumeId > 0) {
 			try {
@@ -533,7 +531,7 @@ public class ManageJobSeekerController {
 			ManageJobSeekerForm manageJobSeekerForm,
 			@RequestParam("folderName") String folderName1) {
 		String folderName = folderName1;
-		LOGGER.info("Add New Folder : Process to Add New Folder !");
+		LOGGER.debug("Add New Folder : Process to Add New Folder !");
 
 		List<DropDownDTO> appStatusList = new ArrayList<DropDownDTO>();
 		List<AdmFolderDTO> admFolderDTOList = new ArrayList<AdmFolderDTO>();
@@ -586,7 +584,7 @@ public class ManageJobSeekerController {
 			@RequestParam("folderName") String folderName,
 			@RequestParam("folderId") int folderId) {
 
-		LOGGER.info("Rename Folder : Process to Rename Folder !");
+		LOGGER.debug("Rename Folder : Process to Rename Folder !");
 		List<AdmFolderDTO> admFolderDTOList = new ArrayList<AdmFolderDTO>();
 		ModelAndView model = new ModelAndView();
 		if (null != folderName) {
@@ -627,7 +625,7 @@ public class ManageJobSeekerController {
 			ManageJobSeekerForm manageJobSeekerForm,
 			@RequestParam("folderName") String folderName1) {
 		String folderName = folderName1;
-		LOGGER.info("Delete Folder : Process to Delete Folder !");
+		LOGGER.debug("Delete Folder : Process to Delete Folder !");
 
 		List<AdmFolderDTO> admFolderDTOList = new ArrayList<AdmFolderDTO>();
 		ModelAndView model = new ModelAndView();
@@ -655,7 +653,7 @@ public class ManageJobSeekerController {
 	}
 
 	/**
-	 * This method is called to download  resume.
+	 * This method is called to download resume.
 	 * 
 	 * @param createResume
 	 * @return model
@@ -667,6 +665,12 @@ public class ManageJobSeekerController {
 		ModelAndView model = new ModelAndView();
 		try {
 			ResumeDTO resumeDTO = resumeService.editResume(resumeId);
+			
+			if (resumeDTO.getResumeText() != null) {
+				String resumeTextParsed = Jsoup.parse(
+						resumeDTO.getResumeText()).text();
+				resumeDTO.setResumeText(resumeTextParsed);
+			}
 
 			// if the resume Type is Upload then we download the Resume as is
 			if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO
@@ -682,11 +686,12 @@ public class ManageJobSeekerController {
 						resumeDTO);
 			}
 		} catch (Exception e) {
-			LOGGER.info("Error in download resume", e);
+			LOGGER.error("Error in download resume", e);
 		}
 		return model;
 
 	}
+
 	/**
 	 * This method is called to print resume.
 	 * 
@@ -700,7 +705,12 @@ public class ManageJobSeekerController {
 		ModelAndView model = new ModelAndView();
 		try {
 			ResumeDTO resumeDTO = resumeService.editResume(resumeId);
-
+			if (resumeDTO.getResumeText() != null) {
+				String resumeTextParsed = Jsoup.parse(
+						resumeDTO.getResumeText()).text();
+				resumeDTO.setResumeText(resumeTextParsed);
+			}
+			
 			// if the resume Type is Upload then we download the Resume as is
 			if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO
 					.getResumeType())) {
@@ -711,11 +721,11 @@ public class ManageJobSeekerController {
 				// if the Resume had been generated through Resume Builder or
 				// CopyPaste
 				// The resulting resume download will produce a PDF format
-				pdfGenerator.generateAndExportResumeAsPdfForPrint(request, response,
-						resumeDTO);
+				pdfGenerator.generateAndExportResumeAsPdfForPrint(request,
+						response, resumeDTO);
 			}
 		} catch (Exception e) {
-			LOGGER.info("Error in download resume", e);
+			LOGGER.error("Error in download resume", e);
 		}
 		return model;
 
@@ -736,7 +746,7 @@ public class ManageJobSeekerController {
 			ManageJobSeekerForm manageJobSeekerForm,
 			@RequestParam("selectedVal") String selectedVal) {
 
-		LOGGER.info("Move To Folder : Process to Implement compare job seeker Functionality !");
+		LOGGER.debug("Move To Folder : Process to Implement compare job seeker Functionality !");
 		ModelAndView model = new ModelAndView();
 		List<ManageJobSeekerDTO> manageJobSeekerDTOList = new ArrayList<ManageJobSeekerDTO>();
 		List<ResumeDTO> resumeDTOList = new ArrayList<ResumeDTO>();
@@ -800,7 +810,8 @@ public class ManageJobSeekerController {
 
 									model.addObject(APP_STATUS_LIST,
 											appStatusList);
-									model.setViewName("forward:/employer/manageJobSeeker.html?folderId="+folderId+"&compare=true");
+									model.setViewName("forward:/employer/manageJobSeeker.html?folderId="
+											+ folderId + "&compare=true");
 									model.addObject(MANAGEJOBSEEKERFORM,
 											manageJobSeekerForm);
 
@@ -840,7 +851,7 @@ public class ManageJobSeekerController {
 			ManageJobSeekerForm manageJobSeekerForm,
 			@RequestParam(RESUMEID) int resumeId) {
 
-		LOGGER.info("Move To Folder : Process to Implement compare job seeker Functionality !");
+		LOGGER.debug("Move To Folder : Process to Implement compare job seeker Functionality !");
 		ModelAndView model = new ModelAndView();
 		List<ManageJobSeekerDTO> manageJobSeekerDTOList = new ArrayList<ManageJobSeekerDTO>();
 		List<ResumeDTO> resumeDTOList = new ArrayList<ResumeDTO>();
@@ -876,6 +887,7 @@ public class ManageJobSeekerController {
 
 		return model;
 	}
+
 	/**
 	 * @param manageJobSeekerForm
 	 * @param resumeId
@@ -888,19 +900,16 @@ public class ManageJobSeekerController {
 			List<ManageJobSeekerDTO> manageJobSeekerDTOList,
 			List<ResumeDTO> resumeDTOList, StringTokenizer tokenize) {
 		int folderResumeId;
-		manageJobSeekerForm
-				.setManageJobSeekerDTOList(manageJobSeekerDTOList);
+		manageJobSeekerForm.setManageJobSeekerDTOList(manageJobSeekerDTOList);
 
 		while (tokenize.hasMoreTokens()) {
 			ResumeDTO resumeDTO = new ResumeDTO();
 			folderResumeId = Integer.valueOf(tokenize.nextToken());
 			for (ManageJobSeekerDTO manageJobSeekerDTO : manageJobSeekerDTOList) {
 
-				if (folderResumeId == manageJobSeekerDTO
-						.getFolderResumeId()) {
-					resumeDTO = resumeService
-							.editResume(manageJobSeekerDTO
-									.getResumeId());
+				if (folderResumeId == manageJobSeekerDTO.getFolderResumeId()) {
+					resumeDTO = resumeService.editResume(manageJobSeekerDTO
+							.getResumeId());
 					if (resumeId != resumeDTO.getUploadResumeId()) {
 						resumeDTOList.add(resumeDTO);
 					}
@@ -925,7 +934,8 @@ public class ManageJobSeekerController {
 	 */
 	@RequestMapping(value = "/sendtofriend", method = RequestMethod.GET)
 	public ModelAndView sendToFriend(SendToFriend sendtofriendmail,
-			BindingResult result, ManageJobSeekerForm manageJobSeekerForm,HttpServletRequest request, Model model) {
+			BindingResult result, ManageJobSeekerForm manageJobSeekerForm,
+			HttpServletRequest request, Model model) {
 
 		try {
 
@@ -933,13 +943,12 @@ public class ManageJobSeekerController {
 			String resumeName = request.getParameter("resumeName");
 			resumeName = resumeName.replace(" ", "-").toLowerCase();
 
-
 			String fullPath = request
 					.getRequestURL()
 					.toString()
 					.replace(
 							request.getServletPath(),
-							"/jobsearch/viewJobDetails/" + resumeId + "/"
+							"/search/viewJobDetails/" + resumeId + "/"
 									+ resumeName + dothtmlExtention);
 			sendtofriendmail.setResumeId(resumeId);
 			sendtofriendmail.setJoburl(fullPath);
@@ -948,7 +957,7 @@ public class ManageJobSeekerController {
 			model.addAttribute(CURRENT_URL, request.getParameter(CURRENT_URL));
 			model.addAttribute("sendtofriendmail", sendtofriendmail);
 		} catch (Exception e) {
-			LOGGER.info("ERROR");
+			LOGGER.error("ERROR",e);
 		}
 
 		return new ModelAndView("jobSeekerSendResumePopUp");
@@ -972,8 +981,9 @@ public class ManageJobSeekerController {
 	@RequestMapping(value = "/sendtofriendpost", method = RequestMethod.POST)
 	public String sendToFriendPost(
 			@ModelAttribute("sendtofriendmail") SendToFriend sendtofriendmail,
-			BindingResult result, HttpServletRequest request, HttpServletResponse response,
-			HttpSession session,ManageJobSeekerForm manageJobSeekerForm) {
+			BindingResult result, HttpServletRequest request,
+			HttpServletResponse response, HttpSession session,
+			ManageJobSeekerForm manageJobSeekerForm) {
 		ModelAndView modelData = new ModelAndView();
 		Boolean status = Boolean.TRUE;
 		String finalmailbody;
@@ -1036,59 +1046,62 @@ public class ManageJobSeekerController {
 				}
 
 				jobSeekerEmailDTO.setSubject(msgSubject);
-				ResumeDTO resumeDTO = resumeService
-						.editResume(sendtofriendmail.getResumeId());
+				ResumeDTO resumeDTO = resumeService.editResume(sendtofriendmail
+						.getResumeId());
 				List<String> attachmentpaths = new ArrayList<String>();
-				
-				if(null !=resumeDTO.getFilePath() && ! resumeDTO.getFilePath().isEmpty()){
+
+				if (null != resumeDTO.getFilePath()
+						&& !resumeDTO.getFilePath().isEmpty()) {
 					// Resume Type Upload
-                MultipartFile file = resumeDTO.getFileData();
-                
-                File upLoadedfile = new File(file.getOriginalFilename());
-                upLoadedfile.createNewFile();
-                FileOutputStream fos = new FileOutputStream(upLoadedfile);
-                fos.write(file.getBytes());
-                fos.close(); 
-                upLoadedfile.deleteOnExit();
-			
-				attachmentpaths.add(upLoadedfile.getAbsolutePath());
-				}else if(null !=resumeDTO.getResumeText() && !resumeDTO.getResumeText().isEmpty()){
+					MultipartFile file = resumeDTO.getFileData();
+
+					File upLoadedfile = new File(file.getOriginalFilename());
+					upLoadedfile.createNewFile();
+					FileOutputStream fos = new FileOutputStream(upLoadedfile);
+					fos.write(file.getBytes());
+					fos.close();
+					upLoadedfile.deleteOnExit();
+
+					attachmentpaths.add(upLoadedfile.getAbsolutePath());
+				} else if (null != resumeDTO.getResumeText()
+						&& !resumeDTO.getResumeText().isEmpty()) {
 					// Resume Type copy paste
-					 File upLoadedfile = new File(resumeDTO.getResumeName());
-		                upLoadedfile.createNewFile();
-		                FileOutputStream fos = new FileOutputStream(upLoadedfile);
-		                fos.write(resumeDTO.getResumeText().getBytes());
-		                fos.close(); 
-		                upLoadedfile.deleteOnExit();					
-						attachmentpaths.add(upLoadedfile.getAbsolutePath());
-				}else{
+					File upLoadedfile = new File(resumeDTO.getResumeName());
+					upLoadedfile.createNewFile();
+					FileOutputStream fos = new FileOutputStream(upLoadedfile);
+					fos.write(resumeDTO.getResumeText().getBytes());
+					fos.close();
+					upLoadedfile.deleteOnExit();
+					attachmentpaths.add(upLoadedfile.getAbsolutePath());
+				} else {
 					String fileName = (null != resumeDTO.getResumeName() ? resumeDTO
 							.getResumeName() : "Profile");
-					pdfGenerator.generateAndExportResumeAsPdfForAttachment(request, response, resumeDTO);
-					 File upLoadedfile = new File(basedirectorypathUpload+fileName+".pdf");
-					 attachmentpaths.add(upLoadedfile.getAbsolutePath());
+					pdfGenerator.generateAndExportResumeAsPdfForAttachment(
+							request, response, resumeDTO);
+					File upLoadedfile = new File(basedirectorypathUpload
+							+ fileName + ".pdf");
+					attachmentpaths.add(upLoadedfile.getAbsolutePath());
 				}
 				jobSeekerEmailDTO.setAttachmentPaths(attachmentpaths);
-				String Subject = subOfmail + " " + jobseekerName+".";
+				String Subject = subOfmail + " " + jobseekerName + ".";
 				mesg = mesg.append(emailConfiguration.getProperty(
 						"jobseeker.email.header").trim());
 				String bodyHead2 = sendtofriendmail.getMessage();
 				String jobUrl = sendtofriendmail.getJoburl();
 				mesg = mesg.append("<TABLE><TR><TD>" + Subject + END_TAGS);
-				mesg = mesg.append("<TR><TD>" + "With the following message :" + "\n"
+				mesg = mesg.append("<TR><TD>" + "With the following message :"
+						+ "\n" + END_TAGS);
+				mesg = mesg.append("<TR><TD>" + bodyHead2 + END_TAGS);
+				mesg = mesg.append("<TR><TD>" + bodyOfMailFirst + "."
 						+ END_TAGS);
-				mesg = mesg.append("<TR><TD>" +  bodyHead2
-						+ END_TAGS);
-				mesg = mesg.append("<TR><TD>" + bodyOfMailFirst + "." 
-						+ END_TAGS);
-				mesg = mesg.append(emailConfiguration.getProperty("email.footer")
-						.trim());
+				mesg = mesg.append(emailConfiguration.getProperty(
+						"email.footer").trim());
 				bodyMesg = mesg.toString();
 				jobSeekerEmailDTO.setBody(bodyMesg);
 				jobSeekerEmailDTO.setHtmlFormat(true);
 				emailService.sendEmail(jobSeekerEmailDTO);
 			} catch (Exception e) {
-				LOGGER.info(errSendingMail);
+				LOGGER.error(errSendingMail,e);
 			}
 
 		} catch (Exception e) {
@@ -1099,8 +1112,10 @@ public class ManageJobSeekerController {
 		return "";
 
 	}
+
 	/**
-	 * This method is called to export an uploaded resume. 
+	 * This method is called to export an uploaded resume.
+	 * 
 	 * @param createResume
 	 * @return model
 	 */
@@ -1140,25 +1155,23 @@ public class ManageJobSeekerController {
 			for (int length = 0; (length = input.read(buffer)) > 0;) {
 				output.write(buffer, 0, length);
 			}
-		} 
-		 catch (Exception e) {
-			LOGGER.info("Error while exporting",e);
-		}
-		finally {
-			if (output != null){
+		} catch (Exception e) {
+			LOGGER.error("Error while exporting", e);
+		} finally {
+			if (output != null) {
 				try {
-						output.close();
-					} catch (IOException ignore) {
-						LOGGER.info("Error while exporting",ignore);
-					}
-			}	
-			if (input != null){
+					output.close();
+				} catch (IOException ignore) {
+					LOGGER.error("Error while exporting", ignore);
+				}
+			}
+			if (input != null) {
 				try {
-						input.close();
-					}catch (IOException ignore) {
-						LOGGER.info("Error while exporting",ignore);
-					}
-			}	
+					input.close();
+				} catch (IOException ignore) {
+					LOGGER.error("Error while exporting", ignore);
+				}
+			}
 		}
 
 	}

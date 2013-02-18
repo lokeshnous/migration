@@ -142,6 +142,7 @@ public class TransformEmployerRegistration {
 		dto.setUserId(form.getUserId());
 		dto.setHelthSystem(form.isHelthSystem());
 		dto.setOldUser(form.isOldUser());
+		dto.setAdvPassUser(form.isAdvPassUser());
 		return dto;
 	}
 
@@ -236,8 +237,12 @@ public class TransformEmployerRegistration {
 			String[] names = manageAccessPermissionForm.getOwnerName().split(
 					" ");
 			SecureRandom random = new SecureRandom();
-			dto.setFirstName(names[1]);
-			dto.setLastName(names[0]);
+			
+			//Commented and Changed according to client change request
+			/*dto.setFirstName(names[1]);
+			dto.setLastName(names[0]);*/
+			dto.setFirstName(names[0]);
+			dto.setLastName(names[1]);
 			dto.setPassword(new BigInteger(130, random).toString(32).substring(0, 12));
 			dto.setEmailId(manageAccessPermissionForm.getOwnerEmail());
 		}

@@ -12,6 +12,7 @@ import com.advanceweb.afc.jb.common.JobSeekerProfileDTO;
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
 import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
+import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.login.web.controller.ChangePasswordForm;
 
@@ -103,6 +104,7 @@ public class TransformJobSeekerRegistration {
 		dto.setUserId(null != form.getUserId() ? Integer.valueOf(form
 				.getUserId()) : 0);
 		dto.setOldUser(form.isOldUser());
+		dto.setAdvPassUser(form.isAdvPassUser());
 		return dto;
 	}
 
@@ -226,11 +228,10 @@ public class TransformJobSeekerRegistration {
 					.getStrLabelName())) {
 				// Modified to set the subscription id for modify subscriptions
 				// link
-				if(form.getSubs() != null){
+				if (form.getSubs() != null) {
 					dto.setStrLabelValue(StringUtils
 							.arrayToCommaDelimitedString(form.getSubs()));
-				}
-				else{
+				} else {
 					dto.setStrLabelValue(form.getStrLabelValue());
 				}
 
@@ -271,5 +272,59 @@ public class TransformJobSeekerRegistration {
 				dto.setStrLabelValue(regForm.getOtherProfession());
 			}
 		}
+	}
+
+	/**
+	 * This method is called to save selected subscriptions
+	 * 
+	 * @param currentSubsList
+	 * @param form
+	 * @param listSubscriptions
+	 * @return
+	 */
+	public List<UserSubscriptionsDTO> jsSubscriptionFormToJobSeekerSubsDTO(
+			JobSeekerRegistrationForm form, int userId) {
+		List<UserSubscriptionsDTO> selSubsList = new ArrayList<UserSubscriptionsDTO>();
+		if ((null != form.getPrintSub()) && (form.getPrintSub().length != 0)) {
+			for (String selSubscription : form.getPrintSub()) {
+				UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
+				dto.setSubscriptionId(MMJBCommonConstants.PRINT_JS_SUBSCRIPTION);
+				dto.setPublicationId(Integer.valueOf(selSubscription));
+				dto.setUserId(userId);
+				dto.setActive(1);
+				selSubsList.add(dto);
+			}
+		}
+		if ((null != form.getDigSub()) && (form.getDigSub().length != 0)) {
+			for (String selSubscription : form.getDigSub()) {
+				UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
+				dto.setSubscriptionId(MMJBCommonConstants.DIGITAL_JS_SUBSCRIPTION);
+				dto.setPublicationId(Integer.valueOf(selSubscription));
+				dto.setUserId(userId);
+				dto.setActive(1);
+				selSubsList.add(dto);
+			}
+		}
+		if ((null != form.getNewsSub()) && (form.getNewsSub().length != 0)) {
+			for (String selSubscription : form.getNewsSub()) {
+				UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
+				dto.setSubscriptionId(MMJBCommonConstants.ENEWS_JS_SUBSCRIPTION);
+				dto.setPublicationId(Integer.valueOf(selSubscription));
+				dto.setUserId(userId);
+				dto.setActive(1);
+				selSubsList.add(dto);
+			}
+		}
+		if ((null != form.getEmailSub()) && (form.getEmailSub().length != 0)) {
+			for (String selSubscription : form.getEmailSub()) {
+				UserSubscriptionsDTO dto = new UserSubscriptionsDTO();
+				dto.setSubscriptionId(MMJBCommonConstants.EMAIL_JS_SUBSCRIPTION);
+				dto.setPublicationId(Integer.valueOf(selSubscription));
+				dto.setUserId(userId);
+				dto.setActive(1);
+				selSubsList.add(dto);
+			}
+		}
+		return selSubsList;
 	}
 }

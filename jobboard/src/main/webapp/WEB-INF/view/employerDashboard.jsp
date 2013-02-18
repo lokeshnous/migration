@@ -8,8 +8,8 @@
 <script type="text/javascript" src="../resources/js/slider.js"></script>
 <link href="../resources/css/jquery-ui.css" rel="stylesheet"
 	type="text/css">
-<script type="text/javascript" language="javascript"
-	src="/media/js/jquery.js"></script>
+<!-- <script type="text/javascript" language="javascript"
+	src="/media/js/jquery.js"></script> -->
 <script src="../resources/js/jquery.dataTables.nightly.js"></script>
 <script src="../resources/js/resumesearchresult.js"></script>
 
@@ -36,7 +36,8 @@
 				<!--Start:MidContant-->
 				<div class="row">
 						<!-- Include the resume header page -->
-						<jsp:include page="jobboardsearchresumeheader.jsp"></jsp:include>
+						<!-- Enable the below jsp in phase 2B -->
+						<%-- <jsp:include page="jobboardsearchresumeheader.jsp"></jsp:include> --%>
 						<div class="searchContent" style="display: none;" id="resumeTableContent">
 							<jsp:include page="jobboardsearchresumeresultbody.jsp"></jsp:include>
 						</div>

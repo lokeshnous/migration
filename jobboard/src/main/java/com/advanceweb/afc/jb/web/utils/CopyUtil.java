@@ -35,7 +35,7 @@ public class CopyUtil {
 				stream.close();
 			}
 		} catch (IOException e) {
-			LOGGER.info("ERROR");
+			LOGGER.error("ERROR",e);
 		}
 	}
 
@@ -70,7 +70,7 @@ public class CopyUtil {
 			afile.delete();
 
 		} catch (IOException e) {
-			LOGGER.info("ERROR");
+			LOGGER.error("ERROR",e);
 		}
 	}
 

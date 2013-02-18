@@ -20,8 +20,8 @@
 <script type="text/javascript" src="../resources/js/slider.js"></script>
 <link href="../resources/css/jquery-ui.css" rel="stylesheet"
 	type="text/css">
-<script type="text/javascript" language="javascript"
-	src="/media/js/jquery.js"></script>
+<!-- <script type="text/javascript" language="javascript"
+	src="/media/js/jquery.js"></script> -->
 <script src="../resources/js/jquery.dataTables.nightly.js"></script>
 <script src="../resources/js/searchResultsdatatable.js"></script>
 <script src="../resources/js/recaptcha_ajax.js"></script>
@@ -32,8 +32,8 @@
 
 <link href="../resources/css/jquery-ui.css" rel="stylesheet"
 	type="text/css">
-<script type="text/javascript" language="javascript"
-	src="/media/js/jquery.js"></script>
+<!-- <script type="text/javascript" language="javascript"
+	src="/media/js/jquery.js"></script> -->
 <script src="../resources/js/jquery.dataTables.nightly.js"></script>
 <script type="text/javascript" src="../resources/js/jquery-ui.min.js"></script>
 <script type="text/javascript">
@@ -49,7 +49,7 @@
 					$("#confirmEmailId").attr("readonly", true);  */
 		}
 		//Auto complete on selecting city
-		$("#cityAutoPopulation").autocomplete({
+		/* $("#cityAutoPopulation").autocomplete({
 			source: '${pageContext.request.contextPath}/employer/getCityList.html',
 			width:500,
 			select: function(event, ui) {
@@ -69,6 +69,9 @@
 						url: '${pageContext.request.contextPath}/employer/getCountry.html?city='+$("#cityAutoPopulation").val()+'&state='+$("#stateDpId").val()+'&postalCode='+$("#zipCode").val(),
 						success : function(country) {
 							$('#countryDpId').val(country);
+							var modCity = $("#cityAutoPopulation").val();
+							modCity = modCity.substring(0,modCity.lastIndexOf(", "));
+							$("#cityAutoPopulation").val(modCity);
 						},
 					}); 						
 				},
@@ -97,11 +100,6 @@
 			}
 		});	
 		
-		$("#stateDpId").change( function(){
-			$('#cityAutoPopulation').val('');
-			$('#zipCode').val('');
-			$('#countryDpId').val('');
-		});
 	$("#zipCode").change(function(){
 		$('#cityAutoPopulation').val("");
 		$('#stateDpId').val("");
@@ -112,20 +110,16 @@
 		$('#zipCode').val("");
 		$('#stateDpId').val("");
 		$('#countryDpId').val("");
-	});
-	$("#countryDpId").change(function(){
-		$('#zipCode').val("");
-		$('#stateDpId').val("");
-		$('#cityAutoPopulation').val("");
-	});
-		
+	}); */
+	//Need to set default country as USA
+	$('#countryDpId').val("USA");	
 	});
 	
 	
 </script>
 <script type="text/javascript">
 	function cancelProcess() {
-		window.location.href = '${pageContext.request.contextPath}/healthcarejobs/advanceweb.html';
+		window.location.href = '${pageContext.request.contextPath}/healthcarejobs/index.html';
 	}
 </script>
 
@@ -206,7 +200,7 @@
 							</div>
 							<div class="row">
 								<FONT class="validationMsgPadding" color="red"><form:errors
-										path="emailId" /></FONT>
+										path="emailId"  htmlEscape="false"/></FONT>
 							</div>
 							<div class="rowEvenNewSpacing">
 								<span class="lableText3">Confirm Email Address:</span>
@@ -402,7 +396,7 @@
 									test="${agencyRegForm.bReadOnly == false}">
 									<input type="button" value="Cancel" onclick="cancelProcess()"
 										class="btn_sm orange cursor" name="Cancel" />
-								</c:if> <%-- <a href="<%=request.getContextPath()%>/healthcarejobs/advanceweb.html" class="btn_sm orange">Cancel</a> --%></span>
+								</c:if> <%-- <a href="<%=request.getContextPath()%>/healthcarejobs/index.html" class="btn_sm orange">Cancel</a> --%></span>
 							<span class="floatLeft marginTop10"><!-- I'll set up my profile
 								later. <a href="#">Continue</a> to the site now. -->
 							</span>

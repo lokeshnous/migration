@@ -21,32 +21,50 @@
 	<!-- JAVASCRIPT FILES -->
 	<!--  <script type="text/javascript"
 		src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>-->
-	<script type="text/javascript"
+	<!-- <script type="text/javascript"
 		src="javascripts/jquery.cycle.all.min.js"></script>
 	<script type="text/javascript" src="javascripts/slider.js"></script>
-	<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script>
+	<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script> -->
 
 	<!-- <script type="text/javascript" src="jquery-1.3.2.min.js"></script>
 	<script type="text/javascript" src="jquery.autocomplete.min.js"></script>-->
 	<script type="text/javascript">
 jQuery(document).ready(function() {
+		$("#bodyPart").hide();
 		$("#SearchJob").click(function(event){		
 			var advJobId = $.trim($("#advJobId").val());
 			$("#ErrorMsg").text("");
 			if(advJobId == ''){
 				$("#ErrorMsg").text("Please enter an Adv Job Id!");
+				$("#bodyPart").hide();
+				return false;
+			}
+			if(!advJobId.match(/^\d+$/)){
+				$("#ErrorMsg").text("Please enter an valid Adv Job Id!");
+				$("#bodyPart").hide();
 				return false;
 			}
 			$.ajax({url: "${pageContext.request.contextPath}/admin/manageEditJobSearch.html?advJobId="+advJobId,
 				success: function(data){ 
+					if(data.record =='scheduleOrDraft'){
+						$("#ErrorMsg").text("Scheduled or Draft job cannot be updated");
+						//loadTable();
+						$("#bodyPart").hide();
+				    }
 					if(data.record =='no record'){
 						$("#ErrorMsg").text("No result found");
+						$("#bodyPart").hide();
 						loadTable();
 				    }
-				 	
-				 	else{
+					if(data.record =='')
+					{
+				 		$("#bodyPart").show();
 				 		loadTable();
-				 	}
+					}
+				 	/* else{
+				 		$("#bodyPart").show();
+				 		loadTable();
+				 	} */
 				},
 				error: function(response) {
 					alert("Server Error : "+response.status);
@@ -80,11 +98,12 @@ jQuery(document).ready(function() {
 		        	$.ajax({url: "${pageContext.request.contextPath}/admin/manageEditJobSearchSave.html?advJobId="+advJobId+"&endDate="+endDate+"&startDate="+startDate,
 						 success: function(data){ 
 							 if(data == ''){
-									alert(advJobId+" successfully changed!");	
+									alert("Successfully changed!");	
 									//loadTable();
 									parent.$.nmTop().close();
 								}else{
 									$("#errmsg").html(data);
+									$("#bodyPart").hide();
 								} 
 						},
 						error: function(response) {
@@ -203,8 +222,11 @@ function loadTable(){
 					</span>
 					<input name="advJobId" id="advJobId" class="job_seeker_email focus" type="text"/>&nbsp;&nbsp;&nbsp;
 					<input type="button" value="Search" name="SearchJob" id="SearchJob" class="btn_sm orange cursor"  />
-					<!-- <div class="toolTip"><span class="classic">Example: Only Job id like 15030</span></div> -->
+					<!-- ${! empty( numList ) }<div class="toolTip"><span class="classic">Example: Only Job id like 15030</span></div> -->
 			</div>
+			<%-- <c:if test="<%=request.getAttribute(\"postedJobList\")!=null%>">
+			<c:if test="${not empty postedJobList}">  --%>
+			<div id="bodyPart">
 			 <jsp:include page="adminEditJobSave.jsp" />
 		 	 <div class="rowEvenNewSpacing marginTop20 paddingBottom10">
 						<span class="floatLeft marginTop10">
@@ -215,7 +237,8 @@ function loadTable(){
 					</div>
 				<div class="clearfix">
 				</div>
-			
+				</div>
+			<%-- </c:if> --%>
 		</div>
 		<div class="clearfix">
 		</div>

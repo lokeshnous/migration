@@ -13,7 +13,8 @@ public class BillingAddressForm {
 	// Billing Address Information
 	private String fnameForBillingAddr;
 	private String lnameForBillingAddr;
-	private String useMyAccountAddr;
+	//private String useMyAccountAddr;
+	private boolean useMyAccountAddr;
 	private String streetForBillingAddr;
 	private String cityOrTownForBillingAddr;
 	private String stateBillingAddress;
@@ -71,18 +72,18 @@ public class BillingAddressForm {
 	/**
 	 * @return the useMyAccountAddr
 	 */
-	public String getUseMyAccountAddr() {
+	/*public String getUseMyAccountAddr() {
 		return useMyAccountAddr;
 	}
 
-	/**
+	*//**
 	 * @param useMyAccountAddr
 	 *            the useMyAccountAddr to set
-	 */
+	 *//*
 	public void setUseMyAccountAddr(String useMyAccountAddr) {
 		this.useMyAccountAddr = useMyAccountAddr;
 	}
-
+*/
 	/**
 	 * @return the streetForBillingAddr
 	 */
@@ -179,5 +180,13 @@ public class BillingAddressForm {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public boolean isUseMyAccountAddr() {
+		return useMyAccountAddr;
+	}
+
+	public void setUseMyAccountAddr(boolean useMyAccountAddr) {
+		this.useMyAccountAddr = useMyAccountAddr;
 	}
 }

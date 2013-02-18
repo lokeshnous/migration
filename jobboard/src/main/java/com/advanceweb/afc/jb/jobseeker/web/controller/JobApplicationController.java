@@ -163,7 +163,7 @@ public class JobApplicationController {
 				attachmentpaths.add(upLoadedfile.getAbsolutePath());
 				toEmployer.setAttachmentPaths(attachmentpaths);
 			} catch (Exception e) {
-				LOGGER.info("Resume not found");
+				LOGGER.error("Resume not found",e);
 				// TODO:Exception Handling
 			}
 			
@@ -180,7 +180,7 @@ public class JobApplicationController {
 					toJobSeeker, jsToAddress);
 		} catch (Exception e) {
 			session.removeAttribute("jobId");
-			model.setViewName("redirect:/jobsearch/findJobPage.html");
+			model.setViewName("redirect:/search/findJobPage.html");
 			return model;
 			// TODO:Exception Handling
 		}
@@ -230,7 +230,7 @@ public class JobApplicationController {
 
 		emailService.sendEmail(toJobSeeker);
 		session.removeAttribute("jobId");
-		model.setViewName("redirect:/jobsearch/findJobPage.html");
+		model.setViewName("redirect:/search/findJobPage.html");
 		// LOGGER.info("Mail has sent to Anonymous User");
 	}
 

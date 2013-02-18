@@ -58,12 +58,14 @@ import com.advanceweb.afc.jb.constants.PageNames;
 import com.advanceweb.afc.jb.employer.service.EmloyerRegistartionService;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.login.web.controller.LoginManager;
+import com.advanceweb.afc.jb.lookup.service.LookupService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
 import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 import com.advanceweb.afc.jb.pgi.web.controller.BillingAddressForm;
 import com.advanceweb.afc.jb.pgi.web.controller.TransformPaymentMethod;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.afc.jb.user.ProfileRegistration;
 import com.advanceweb.afc.jb.user.UserService;
 import com.advanceweb.common.ads.AdPosition;
@@ -119,18 +121,15 @@ public class EmployerRegistrationController extends AbstractController{
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
 
-	@Value("${navigationPath}")
-	private String navigationPath;
-	@Value("${employerPageExtention}")
-	private String employerPageExtention;
 	@Autowired
 	private MMEmailService emailService;
-
-	@Value("${dothtmlExtention}")
-	private String dothtmlExtention;
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
+	@Value("${validateCityState}")
+	private String validateCityState;
+	@Autowired
+	private LookupService lookupService;
 	// @Autowired
 	// private AdmManagePermission admManagePermission;
 
@@ -153,24 +152,6 @@ public class EmployerRegistrationController extends AbstractController{
 	@Value("${ns.validate.user}")
 	private String nsValidateUser;
 
-	@Value("${account_first_name}")
-	private String accountFirstName;
-	@Value("${account_last_name}")
-	private String accountLastName;
-	@Value("${account_company_name}")
-	private String accountCompanyName;
-	@Value("${account_zip_code}")
-	private String accountZipCode;
-	@Value("${account_state}")
-	private String accountState;
-	@Value("${account_country}")
-	private String accountCountry;
-	@Value("${account_city}")
-	private String accountCity;
-	@Value("${js.email.blank}")
-	private String accountEmail;
-	@Value("${account_Street}")
-	private String accountStreet;
 	@Value("${emailInUse}")
 	private String emailInUse;
 	@Autowired
@@ -256,13 +237,17 @@ public class EmployerRegistrationController extends AbstractController{
 			@ModelAttribute(EMPREGFORM) EmployerRegistrationForm empRegForm,
 			Map map, HttpSession session,HttpServletRequest req,
 			BindingResult result, HttpServletRequest request,HttpServletResponse response) {
-		
+		boolean advPassUser=false;
 		ModelAndView model = new ModelAndView();
 		if (null != empRegForm.getListProfAttribForms()) {
 			model.setViewName(EMPLOYERREG);
+			if(userService.checkUserMail(empRegForm.getEmailId())){
+				advPassUser=true;
+				empRegForm.setAdvPassUser(true);
+			}
 			// get the Ads
 			populateAds (request, session, model, PageNames.EMPLOYER_REGISTRATION);
-			if (!validateEmpRegForm(empRegForm, model, result)) {
+			if (!validateEmpRegForm(empRegForm, model, result,req,advPassUser)) {
 				return model;
 			}
 		}
@@ -381,12 +366,12 @@ public class EmployerRegistrationController extends AbstractController{
 		String userName=userDTO.getFirstName()+" " + userDTO.getLastName();
 		emailDTO.setSubject(emailConfiguration.getProperty(
 				"welcome.mail.message").trim());
-		String loginPath = navigationPath.substring(2);
 		String employerWelcomeMailBody = emailConfiguration.getProperty(
 				"employer.welcome.mail.body").trim();
 		String employerloginUrl = request.getRequestURL().toString()
-				.replace(request.getServletPath(), loginPath)
-				+ dothtmlExtention + employerPageExtention;
+				.replace(request.getServletPath(), emailConfiguration.getProperty(
+						"employer.email.login.url").trim());
+//				+ dothtmlExtention + employerPageExtention;
 		employerWelcomeMailBody = employerWelcomeMailBody.replace("?user_name",
 				userName);
 		employerWelcomeMailBody = employerWelcomeMailBody.replace("?userName",
@@ -447,13 +432,14 @@ public class EmployerRegistrationController extends AbstractController{
 	 * @return
 	 */
 	public boolean validateEmpRegForm(EmployerRegistrationForm empRegForm,
-			ModelAndView model, BindingResult result) {
+			ModelAndView model, BindingResult result, HttpServletRequest req,Boolean advPassUser) {
 		boolean status = true;
+		String state=null,city=null,zipCode=null;
 		for (EmployerProfileAttribForm form : empRegForm
 				.getListProfAttribForms()) {
 			// Checking validation for input text box
 			if (form.getRequired() != 0
-					&& StringUtils.isEmpty(form.getStrLabelValue())
+					&& StringUtils.isBlank(form.getStrLabelValue())
 					&& !MMJBCommonConstants.EMAIL_ADDRESS.equals(form
 							.getStrLabelName())) {
 				model.addObject(MESSAGE, reqFields);
@@ -484,11 +470,42 @@ public class EmployerRegistrationController extends AbstractController{
 				model.addObject(MESSAGE, jobseekerRegPhoneMsg);
 				return false;
 			}
+			if (form.getStrLabelName() != null
+					&& form.getStrLabelName().equalsIgnoreCase(
+							MMJBCommonConstants.LABEL_STATE)) {
+				state = form.getStrLabelValue();
+			}
+			if (form.getStrLabelName() != null
+					&& form.getStrLabelName().equalsIgnoreCase(
+							MMJBCommonConstants.CITY_EMP)) {
+				city = form.getStrLabelValue();
+			}
+			if (form.getStrLabelName() != null
+					&& form.getStrLabelName().equalsIgnoreCase(
+							MMJBCommonConstants.ZIP_CODE)) {
+				zipCode = form.getStrLabelValue();
+			}
+			if (null != state && null != city && null != zipCode) {
+				boolean validateStateCityZip;
+				try {
+					validateStateCityZip = lookupService.validateCityStateZip(
+							city, state, zipCode);
+					if (!validateStateCityZip) {
+						model.addObject(MESSAGE, validateCityState);
+						return false;
+					}
+				} catch (JobBoardServiceException ex) {
+					ex.printStackTrace();
+				}
+
+			}
 		}
 		registerValidation.validate(empRegForm, result);
 		if (!empRegForm.isbReadOnly()
-				&& employerRegistration.validateEmail(empRegForm.getEmailId())) {
-			result.rejectValue("emailId", "NotEmpty", emailExists);
+				&& employerRegistration.validateEmail(empRegForm.getEmailId()) && !advPassUser) {
+			result.rejectValue("emailId", "NotEmpty", emailExists.replace(
+					"?empLoginLink",req.getRequestURL().toString()
+					.replace(req.getServletPath(),"/commonLogin/login.html?page=employer")));
 			// model.setViewName(employerReg);
 			return false;
 		}
@@ -522,7 +539,7 @@ public class EmployerRegistrationController extends AbstractController{
 		loginSuccessManager.onAuthenticationSuccess(request, response,
 				authenticatedUser);
 		} catch (Exception e) {
-			LOGGER.info("Exception while authenticating employer while registration ("+ e.getMessage() + ")");
+			LOGGER.error("Exception while authenticating employer while registration ("+ e.getMessage() + ")");
 		}
 	}
 
@@ -547,7 +564,7 @@ public class EmployerRegistrationController extends AbstractController{
 			employerRegistration.changePassword(empDTO);
 			// model.put("jobSeekerRegistrationForm", jsRegistrationForm);
 		} catch (Exception e) {
-			LOGGER.info("Error occurred while changing the password." + e);
+			LOGGER.error("Error occurred while changing the password." + e);
 		}
 		return "registrationsuccess";
 	}
@@ -564,7 +581,7 @@ public class EmployerRegistrationController extends AbstractController{
 	@ResponseBody
 	@RequestMapping(value = "/employeeAccountSetting", method = RequestMethod.POST)
 	public String editAccountSetting(EmployeeAccountForm employeeAccountForm,
-			BindingResult result, HttpSession session) {
+			BindingResult result, HttpSession session,HttpServletRequest request) {
 		boolean isUpdated = false;
 
 		try {
@@ -578,54 +595,39 @@ public class EmployerRegistrationController extends AbstractController{
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.PRIMARY);
 			if (listProfAttribForms.getCount() > 0) {
 				int admfacilityid = listProfAttribForms.getFacilityContactId();
-				if (!validateEmailPattern(employeeAccountForm.getEmail())) {
-					return MMJBCommonConstants.EMAIL_MESSAGE;
-				} else if (!validatePhonePattern(employeeAccountForm.getPhone())) {
-					return MMJBCommonConstants.PHONE_NO;
-				} else if ((null == employeeAccountForm.getEmail())
-						|| ("".equals(employeeAccountForm.getEmail()))) {
-					return accountEmail;
-				} else if ((null == employeeAccountForm.getPhone())
-						|| ("".equals(employeeAccountForm.getPhone()))) {
-					return MMJBCommonConstants.PHONE_NULL_NO;
-				} else if ((null == employeeAccountForm.getFirstName())
-						|| ("".equals(employeeAccountForm.getFirstName()))) {
-					return accountFirstName;
-				} else if ((null == employeeAccountForm.getLastName())
-						|| ("".equals(employeeAccountForm.getLastName()))) {
-					return accountLastName;
-				} else if ((null == employeeAccountForm.getZipCode())
-						|| ("".equals(employeeAccountForm.getZipCode()))) {
-					return accountZipCode;
-				} else if ((null == employeeAccountForm.getCityOrTown())
-						|| ("".equals(employeeAccountForm.getCityOrTown()))) {
-					return accountCity;
-				} else if ((null == employeeAccountForm.getCompany())
-						|| ("".equals(employeeAccountForm.getCompany()))) {
-					return accountCompanyName;
-				} else if ((null == employeeAccountForm.getCountry())
-						|| ("".equals(employeeAccountForm.getCountry()))) {
-					return accountCountry;
-				} else if ((null == employeeAccountForm.getState())
-						|| ("".equals(employeeAccountForm.getState()))) {
-					return accountState;
-				} else if ((null == employeeAccountForm.getStreetAddress())
-						|| ("".equals(employeeAccountForm.getStreetAddress()))) {
-					return accountStreet;
-				} 
+				String errMessage = validateAccountDetails(employeeAccountForm);
+				if (!StringUtils.isEmpty(errMessage)) {
+
+					return errMessage;
+				}
 				AccountProfileDTO dto = transformEmpReg
 						.transformAccountProfileFormToDto(employeeAccountForm);
-				// By passing netsuite call
+				
+				// send Email after updating the employer email address by Agency through Impersonation 
 				isUpdated = empRegService.editUser(dto, admfacilityid, userId,
 						MMJBCommonConstants.PRIMARY);
-
+				if(null!=dto.getEmail() && isUpdated){
+					UserDTO userDTO = new UserDTO();
+					userDTO.setUserId(userId);
+					userDTO.setFirstName(dto.getFirstName());
+					userDTO.setLastName(dto.getLastName());
+					userDTO.setCompany(dto.getCompanyName());
+					userDTO.setEmailId(dto.getEmail());
+					try{
+						sendEmployerWelcomeEmail(request, userDTO);
+					}
+					catch(Exception e){
+						LOGGER.error("Mail sending failed : "+e);
+					}
+				}
+				// By passing netsuite call
 				session.setAttribute(MMJBCommonConstants.USER_NAME,
 						employeeAccountForm.getFirstName() + " "
 								+ employeeAccountForm.getLastName());
 
 				session.setAttribute(MMJBCommonConstants.COMPANY_EMP, employeeAccountForm.getCompany());
 				if (isUpdated) {
-					LOGGER.info("This is Account Addresss edite option done successfully");
+					LOGGER.debug("Account addresss edited successfully.");
 				} else {
 					return MMJBCommonConstants.UPDATE_ERROR;
 				}
@@ -634,9 +636,104 @@ public class EmployerRegistrationController extends AbstractController{
 
 		} catch (Exception e) {
 
-			LOGGER.info("This is Account Addresss edite option error");
+			LOGGER.error("This is Account Addresss edite option error");
 		}
 		return "";
+	}
+	/**
+	 * Validate Billing address details
+	 * @param employeeBillingForm
+	 */
+	private String validateBillingAccDetails(
+			EmployeeAccountForm employeeBillingForm) {
+
+		if (StringUtils.isEmpty(employeeBillingForm.getEmail())
+				|| StringUtils.isBlank(employeeBillingForm.getPhone())
+				|| StringUtils.isBlank(employeeBillingForm
+						.getBillingAddressForm().getFnameForBillingAddr())
+				|| StringUtils.isBlank(employeeBillingForm
+						.getBillingAddressForm().getLnameForBillingAddr())
+				|| StringUtils.isBlank(employeeBillingForm
+						.getBillingAddressForm().getZipCodeForBillingAddr())
+				|| StringUtils.isBlank(employeeBillingForm
+						.getBillingAddressForm().getCityOrTownForBillingAddr())
+				|| StringUtils.isBlank(employeeBillingForm
+						.getBillingAddressForm().getCountryForBillingAddr())
+				|| StringUtils.isEmpty(employeeBillingForm
+						.getBillingAddressForm().getStateBillingAddress())
+				|| (StringUtils.isBlank(employeeBillingForm.getCompany())
+						&& StringUtils.isBlank(employeeBillingForm
+								.getBillingAddressForm()
+								.getStreetForBillingAddr()) && StringUtils
+							.isEmpty(employeeBillingForm.getState()))) {
+
+			return "Please fill the required fields";
+		}
+		boolean validateStateCityZip;
+		try {
+			validateStateCityZip = lookupService.validateCityStateZip(
+					employeeBillingForm.getBillingAddressForm()
+							.getCityOrTownForBillingAddr(), employeeBillingForm
+							.getBillingAddressForm().getStateBillingAddress(),
+					employeeBillingForm.getBillingAddressForm()
+							.getZipCodeForBillingAddr());
+
+			if (!validateStateCityZip) {
+				return validateCityState;
+			}
+		} catch (JobBoardServiceException ex) {
+
+			ex.printStackTrace();
+		}
+		if (!validateEmailPattern(employeeBillingForm.getEmail())) {
+			return MMJBCommonConstants.EMAIL_MESSAGE;
+		} else if (!validatePhonePattern(employeeBillingForm.getPhone())) {
+			return MMJBCommonConstants.PHONE_NO;
+		}
+		return null;
+	}
+
+	/**
+	 *Method to validate account details
+	 * @param employeeAccountForm
+	 * @return
+	 */
+	private String validateAccountDetails(EmployeeAccountForm employeeAccountForm) {
+		
+		if (StringUtils.isBlank(employeeAccountForm.getEmail())
+				|| StringUtils.isBlank(employeeAccountForm.getPhone())
+				|| StringUtils.isBlank(employeeAccountForm.getFirstName())
+				|| StringUtils.isBlank(employeeAccountForm.getLastName())
+				|| StringUtils.isBlank(employeeAccountForm.getZipCode())
+				|| StringUtils.isBlank(employeeAccountForm.getState())
+				|| StringUtils.isBlank(employeeAccountForm.getStreetAddress())
+				|| StringUtils.isBlank(employeeAccountForm.getCityOrTown())
+				|| (StringUtils.isBlank(employeeAccountForm.getCompany())
+						&& StringUtils.isBlank(employeeAccountForm.getCountry()) && StringUtils
+							.isBlank(employeeAccountForm.getState()))) {
+
+			return "Please fill the required fields";
+		}
+		boolean validateStateCityZip;
+		try {
+			validateStateCityZip = lookupService.validateCityStateZip(
+					employeeAccountForm.getCityOrTown(),
+					employeeAccountForm.getState(),
+					employeeAccountForm.getZipCode());
+
+			if (!validateStateCityZip) {
+				return validateCityState;
+			}
+		} catch (JobBoardServiceException ex) {
+
+			ex.printStackTrace();
+		}
+		if (!validateEmailPattern(employeeAccountForm.getEmail())) {
+			return MMJBCommonConstants.EMAIL_MESSAGE;
+		} else if (!validatePhonePattern(employeeAccountForm.getPhone())) {
+			return MMJBCommonConstants.PHONE_NO;
+		}  
+		return null;
 	}
 
 	/**
@@ -659,56 +756,11 @@ public class EmployerRegistrationController extends AbstractController{
 					.getAttribute(MMJBCommonConstants.FACILITY_ID);
 			AdmFacilityContactDTO listProfAttribForms = empRegService
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.BILLING);
-			if (!validateEmailPattern(employeeBillingForm.getEmail())) {
-				return MMJBCommonConstants.EMAIL_MESSAGE;
-			} else if (!validatePhonePattern(employeeBillingForm.getPhone())) {
-				return MMJBCommonConstants.PHONE_NO;
-			} else if ((null == employeeBillingForm.getEmail())
-					|| ("".equals(employeeBillingForm.getEmail()))) {
-				return accountEmail;
-			} else if ((null == employeeBillingForm.getPhone())
-					|| ("".equals(employeeBillingForm.getPhone()))) {
-				return MMJBCommonConstants.PHONE_NULL_NO;
-			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getFnameForBillingAddr())
-					|| ("".equals(employeeBillingForm.getBillingAddressForm()
-							.getFnameForBillingAddr()))) {
-				return accountFirstName;
-			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getLnameForBillingAddr())
-					|| ("".equals(employeeBillingForm.getBillingAddressForm()
-							.getLnameForBillingAddr()))) {
-				return accountLastName;
-			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getZipCodeForBillingAddr())
-					|| ("".equals(employeeBillingForm.getBillingAddressForm()
-							.getZipCodeForBillingAddr()))) {
-				return accountZipCode;
-			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getCityOrTownForBillingAddr())
-					|| ("".equals(employeeBillingForm.getBillingAddressForm()
-							.getCityOrTownForBillingAddr()))) {
-				return accountCity;
-			} else if ((null == employeeBillingForm.getCompany())
-					|| ("".equals(employeeBillingForm.getCompany()))) {
-				return accountCompanyName;
-			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getCountryForBillingAddr())
-					|| ("".equals(employeeBillingForm.getBillingAddressForm()
-							.getCountryForBillingAddr()))) {
-				return accountCountry;
-			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getStateBillingAddress())
-					|| ("".equals(employeeBillingForm.getBillingAddressForm()
-							.getStateBillingAddress()))) {
-				return accountState;
-			} else if ((null == employeeBillingForm.getBillingAddressForm()
-					.getStreetForBillingAddr())
-					|| ("".equals(employeeBillingForm.getBillingAddressForm()
-							.getStreetForBillingAddr()))) {
-				return accountStreet;
-			}
+			String errMessage = validateBillingAccDetails(employeeBillingForm);
+			if (!StringUtils.isEmpty(errMessage)) {
 
+				return errMessage;
+			}
 			if (listProfAttribForms.getCount() > 0) {
 				int admfacilityid = listProfAttribForms.getFacilityContactId();
 				AccountProfileDTO dto = transformEmpReg
@@ -716,7 +768,7 @@ public class EmployerRegistrationController extends AbstractController{
 				isUpdated = empRegService.editUser(dto, admfacilityid, userId,
 						MMJBCommonConstants.BILLING);
 				if (isUpdated) {
-					LOGGER.info("This is Account Addresss edite option done successfully");
+					LOGGER.debug("This is Account Addresss edite option done successfully");
 				} else {
 					return MMJBCommonConstants.UPDATE_ERROR;
 				}
@@ -733,11 +785,11 @@ public class EmployerRegistrationController extends AbstractController{
 				billingAddressDTO.setCreateDate(new Date());
 				fetchAdmFacilityConatact
 						.saveDataBillingAddress(billingAddressDTO);
-				LOGGER.info("This is Billing Addresss save done successfully");
+				LOGGER.debug("This is Billing Addresss save done successfully");
 			}
 
 		} catch (Exception e) {
-			LOGGER.info("This is Billing Addresss edite or save error");
+			LOGGER.error("This is Billing Addresss edite or save error",e);
 		}
 		return "";
 	}
@@ -832,7 +884,7 @@ public class EmployerRegistrationController extends AbstractController{
 			model.addObject("employeeBillingForm", employeeBillingForm);
 
 		} catch (Exception e) {
-			LOGGER.info("Error For Account Setting Link call in controller class");
+			LOGGER.error("Error For Account Setting Link call in controller class",e);
 		}
 
 		return model;

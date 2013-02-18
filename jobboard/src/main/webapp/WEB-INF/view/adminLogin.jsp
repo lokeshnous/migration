@@ -10,6 +10,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
+<link rel='shortcut icon' href='<%=request.getContextPath() %>/resources/images/favicon.ico' type="image/x-icon">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="robots" content="noindex, follow"> 
 <!-- <link rel="stylesheet" type="text/css" href="jquery.autocomplete.css" /> -->
@@ -51,7 +52,7 @@ JAVASCRIPT FILES
 					"790", "360");
 		});
 		</script>
-<script type="text/javascript" src="javascripts/expandCollapse.js"></script>
+<!-- <script type="text/javascript" src="javascripts/expandCollapse.js"></script> -->
 </head>
 
 <body class="job_board">
@@ -66,10 +67,28 @@ JAVASCRIPT FILES
 						<div class="logo"></div>
 					</a>
 					<div class="headerLoginSection">
-						<div class="headerLoginSectionColumns paddingBottom10">
-							<span class="boldText">&nbsp;&nbsp;&nbsp;Admin</span><br>
+						<div class="headerLoginSectionColumns">
+						<span class="boldText">${msg.jsWelcomeMsg}<%=(String) session.getAttribute("userName")%>${msg.commonExclamationMark}
 
+						</span><br />
+						<div class="floatRight">
+							<span class="floatLeft"> <a href="<%=request.getContextPath()%>/admin/logout.html">${msg.commonLogOut}</a>
+
+								${msg.commonVerticalBar} <c:choose>
+									<c:when test="${jobSeekerDashBoardForm != null}">
+										<a href="<%=request.getContextPath()%>/admin/adminMenu.html">${msg.commonBackHome}</a>
+									</c:when>
+									<c:otherwise>
+										<a href="<%=request.getContextPath()%>/admin/adminMenu.html">Admin Home</a>
+									</c:otherwise>
+								</c:choose>
+							</span>
 						</div>
+					</div>
+						
+						
+						
+						
 						<!-- loginHeader -->
 						<!-- loginHeader -->
 						<!-- loginHeader -->
@@ -181,6 +200,7 @@ JAVASCRIPT FILES
 					<div class="AdminLinkAlign"><a id="editJobPosting" class="boldText" href="<%=request.getContextPath()%>/admin/editJobPosting.html">Manage/Edit Job Posting Expire Date</a></div>
 					<div class="AdminLinkAlign"><a id="inventory" class="inventory boldText" href="<%=request.getContextPath()%>/admin/employer1/jobInventorypopup.html">Manage/Edit Job Posting Inventory</a></div>
 					<div class="AdminLinkAlign"><a id="manageFacilityGroupId" class="inventory boldText" href="<%=request.getContextPath()%>/admin/employer1/manageFacilityGroup.html">Manage/Edit Facility Group </a></div>
+					<div class="AdminLinkAlign"><a class="boldText" href="<%=request.getContextPath()%>/admin/title.html">Edit Job Titles SEO Info</a></div>
 				</form:form>
 				<div class="clearfix"></div>
 				<div class="ad_wrapper">

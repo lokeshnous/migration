@@ -26,14 +26,14 @@ function saveRecentSearch(searchJobId){
 				}
 				if (key == "NavigationPath") {
 					$.nmManual(val + '.html');
-					alert("Search saved successfully!.Access saved search criterias using \"My saved searches\" in dashboard.");
+					alert("Search saved successfully! Access saved search criteria using  \"My saved searches\" on your dashboard.");
 					//parent.$.nmTop().close();
 				}
 			}); 
 		},
 		
 		error: function(response) {
-			alert("Server Error : "+response.status);
+			//alert("Server Error : "+response.status);
 		},
 		complete: function() {
 			
@@ -58,6 +58,11 @@ function closePopup() {
 			}
 		 });
 		jQuery(".megamenu").megamenu();
+		$("#searchTitleName").keypress(function (event) {
+			if(event.which == 13){
+				return false;
+			}
+		  });
 		$("#saveData").click(function(event){	
 			var searchName = $.trim($("#searchTitleName").val());
 			
@@ -81,16 +86,16 @@ function closePopup() {
 						}
 						
 						if(key == "success"){
-							alert("Search saved successfully!.Access saved search criterias using \"My saved searches\" in dashboard.");
+							alert("Search saved successfully! Access saved search criteria using  \"My saved searches\" on your dashboard.");
 							if(data.retainSaveSearch != 'undefined'){
-								window.location.reload();
+								//window.location.reload();
 						    }
 						}
 					}); 
 				},
 				
 				error: function(response) {
-					alert("Server Error : "+response.status);
+					//alert("Server Error : "+response.status);
 				},
 				complete: function() {
 					
@@ -112,7 +117,7 @@ function closePopup() {
 	<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer"
 		style="display: block">
 		<div class="popupHeader">
-			<h2>SAVE SEARCHES</h2>
+			<h2>SAVE SEARCH</h2>
 			<a href="#" class="nyroModalClose"><img src="<%= request.getContextPath() %>/resources/images/Close.png" width="19" height="19" title="Close"
 				alt=""></a>
 		</div>

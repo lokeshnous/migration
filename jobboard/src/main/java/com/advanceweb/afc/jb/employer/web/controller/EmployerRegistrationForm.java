@@ -70,9 +70,19 @@ public class EmployerRegistrationForm {
 	private String serviceProviderName;
 	private String socialProfileId;
 	private boolean oldUser;
+	private boolean advPassUser;
 	private boolean helthSystem;
 	
 	
+	
+	public boolean isAdvPassUser() {
+		return advPassUser;
+	}
+
+	public void setAdvPassUser(boolean advPassUser) {
+		this.advPassUser = advPassUser;
+	}
+
 	public boolean isOldUser() {
 		return oldUser;
 	}

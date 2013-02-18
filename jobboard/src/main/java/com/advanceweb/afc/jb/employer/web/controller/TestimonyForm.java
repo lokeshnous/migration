@@ -12,7 +12,21 @@ public class TestimonyForm {
 	private String testimony;
 
 	private int testimonyId;
-	
+	private int itemId;
+	/**
+	 * @return the itemId
+	 */
+	public int getItemId() {
+		return itemId;
+	}
+
+	/**
+	 * @param itemId the itemId to set
+	 */
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
+
 	public int getTestimonyId() {
 		return testimonyId;
 	}

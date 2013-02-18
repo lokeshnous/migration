@@ -13,12 +13,21 @@
     });
 </script>
 
-<div class="job_seeker_login leftFormHolderResumepage" id="addCertDivId">
-<p class="borderBottomDotted marginBottom15">&nbsp;</p> 
+<div class="job_seeker_login leftFormHolderResumepage" id="cert${certPositionId}">
+<p class="borderBottomDotted marginBottom15">&nbsp;</p>
+	
 	<div class="rowEvenNewSpacing">
 		<span class="lableText3">Certification Name:</span>
 		<form:input path="createResume.listCertForm[${certPositionId}].certificationName" class="job_seeker_password textBox350 focusElement" />
-		<span class="required">(Required)</span>
+		<div class="floatRight margin0">
+			<p class="floatLeft margin0">Delete this Certification section &nbsp;</p> 
+			<p class="floatRight margin0"><img
+				id="closeCheckOut"
+				onclick="removeCertification('cert${certPositionId}',${certPositionId})"
+				src="<%= request.getContextPath() %>/resources/images/Close.png"
+				class="cursor" title="Delete" alt="Delete" /></p>
+			
+		</div>
 	</div>
  	<div class="rowEvenNewSpacing">
 		<span class="lableText3">Certifying Authority:</span>
@@ -36,7 +45,7 @@
 				onKeyDown="limitText(this.form.Certslimitedtextarea${certPositionId},this.form.countdownCerts${certPositionId},1000);"
 				onKeyUp="limitText(this.form.Certslimitedtextarea${certPositionId},this.form.countdownCerts${certPositionId},1000);"
 				class="textareaBoxCResume" rows="3" cols="45" />
-			<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdownCerts${certPositionId}" size="3" value="1000">characters remaining.<p>
+			<p class="magrin_top0 floatLeft"><input readonly type="text" class="input2000_width" name="countdownCerts${certPositionId}" size="3" value="1000">characters remaining.</p>
 		</div>
 	</div> 
 </div>

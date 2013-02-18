@@ -10,32 +10,18 @@
 <jsp:include page="common/include.jsp" />
 <title>ADVANCE Healthcare Jobs</title>
 <!-- Common js files  -->
-<script type="text/javascript" src="../resources/js/common/common.js"></script>
+<!-- <script type="text/javascript" src="../resources/js/common/common.js"></script> -->
 
 <!-- JQUERY LIBRARY -->
-<script src="../resources/js/jquery-1.7.1.js"></script>
+<!-- <script src="../resources/js/jquery-1.7.1.js"></script>
 <script src="../resources/js/jquery-1.7.1.min.js"></script>
 <script src="../resources/jquery.nyroModal/js/popup.js"></script>
 <script type="text/javascript"
-	src="../resources/js/jquery.cycle.all.min.js"></script>
-<script type="text/javascript" src="../resources/js/slider.js"></script>
-<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
+	src="../resources/js/jquery.cycle.all.min.js"></script> 
+<script type="text/javascript" src="../resources/js/slider.js"></script> -->
+<!-- <script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script> -->
 <script type="text/javascript" src="../resources/js/jquery.tablesorter.js"></script> 
 
-<!-- js files for modalpopup------------------------------------------------- -->
-<script
-	src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.js"></script>
-<script
-	src="../resources/jquery.nyroModal/js/jquery.nyroModal.custom.min.js"></script>
-<link href="../resources/jquery.nyroModal/styles/nyroModal.css"
-	rel="stylesheet" type="text/css">
-
-<style type="text/css" media="screen">
-@import
-	url("${pageContext.request.contextPath}/resources/jquery.nyroModal/styles/nyroModal.css")
-	;
-</style>
-<!-- -------------------------------------------------------------------------- -->
 <script type="text/javascript">
 	jQuery(document)
 			.ready(
@@ -43,7 +29,9 @@
 						 noOfPageValue=$("#noOfPage").val();
 						 $("#noOfPageId").val(noOfPageValue);
 						 $("#noOfPageLowerId").val(noOfPageValue);
-						 $("#tb_manage_job").tablesorter(); 
+						 
+						 $("#tb_manage_job").tablesorter();
+						
 						$('#deactivated').click(function() {
 							var val = [];
 							$(':checkbox:checked').each(function(i) {
@@ -341,7 +329,7 @@
 								Dashboard</a></span>
 					</div>
 					<div class="clearfix"></div>
-					<div class="manageJobPostingNavigation">
+					<div class="searchResultsNavigation width98P">
 						<div class="searchResultsNavigationColumn1">
 
 							<!--Added Class "marginTop5"-->
@@ -361,7 +349,7 @@
 						<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;&nbsp;
 						</div>
 						<div class="searchResultsNavigationColumn2 floatRight">
-							<!-- <span>Page:</span> -->
+							<span>Page:</span>
 							<%--For displaying Previous link except for the 1st page --%>
 							<c:if test="${currentPage != 1 && noOfPages gt 10}">
 								<td><a href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage-10}&jobStatus=${statusValue}&next=${begin-10}&noOfPage=${jobPostForm.noOfPage}"> <img
@@ -463,15 +451,15 @@
 								<th width="3%" align="center" valign="middle" id="jobViewTab" class="FontSize11 cursor"><strong>Views</strong></th>
 								<th width="4%" align="center" valign="middle" id="jobClicksTab" class="FontSize11 cursor"><strong>Clicks</strong></th>
 								<th width="3%" align="center" valign="middle" id="jobAppliesTab" class="FontSize11 cursor"><strong>Applies</strong></th>
-								<th width="7%" align="center" valign="middle" class="FontSize11 cursor"><strong>Auto<br />
+								<th width="7%" align="center" valign="middle" class="FontSize11 "><strong>Auto<br />
 										Renew
 								</strong></th>
-								<th width="11%" align="center" valign="middle" class="FontSize11 cursor"><strong>Job<br />
+								<th width="11%" align="center" valign="middle" class="FontSize11 "><strong>Job<br />
 										Template
 								</strong></th>
-								<th width="5%" align="center" valign="middle" class="FontSize11 cursor"><strong>Override
+								<th width="5%" align="center" valign="middle" class="FontSize11 "><strong>Override
 								</strong></th>
-								<th width="9%" align="center" valign="middle" class="FontSize11 cursor"><strong>Actions</strong></th>
+								<th width="9%" align="center" valign="middle" class="FontSize11" ><strong>Actions</strong></th>
 							</tr>
 							</thead>
 							<tbody>
@@ -496,23 +484,10 @@
 									<td align="center" valign="middle">${job.clicks}</td>
 									<td align="center" valign="middle">${job.applies}</td>
 									<td align="center" valign="middle">
-									<form:select
-											path="jobPostDTOList[${status.index}].autoRenew"
-											id="selectAutoRenew"
-											class="jb_input3 select100 marginTopBottom0 FontSize10 width50"
-											name="select1" disabled="true">
-											<form:option label="No" value="No" />
-											<form:option label="Yes" value="Yes" />
-										</form:select>
-									<td align="center" valign="middle"><form:select
-											path="jobPostDTOList[${status.index}].brandTemplate"
-											id="selectTemplate"
-											class="jb_input3 select100 marginTopBottom0 width87 FontSize10"
-											name="select" disabled="true">
-											<form:option value="0" label="Select One" />
-											<form:options items="${templateList}" itemLabel="optionName"
-												itemValue="optionId" />
-										</form:select></td>
+									${jobPostForm.jobPostDTOList[status.index].autoRenewVal}
+									</td>
+									<td align="center" valign="middle">${jobPostForm.jobPostDTOList[status.index].templateName}
+											</td>
 										<c:if test="${job.bTemplateOverride eq true}">
 										<td align="center" valign="middle">Yes</td>
 										</c:if>
@@ -553,7 +528,7 @@
 							class="btn_sm white" style="visibility: hidden;" />
 					</div>
 					<div class="clearfix"></div>
-					<div class="manageJobPostingNavigation ">
+					<div class="searchResultsNavigation width98P marginTop20">
 						<div class="searchResultsNavigationColumn1">
 
 							<!--Added Class "marginTop5"-->
@@ -573,7 +548,7 @@
 						<div class="searchResultsNavigationColumn3">&nbsp;&nbsp;&nbsp;
 						</div>
 						<div class="searchResultsNavigationColumn2 floatRight">
-							<!-- <span>Page: </span> -->
+							<span>Page: </span>
 							
 							<%--For displaying Previous link except for the 1st page --%>
 							<c:if test="${currentPage != 1 && noOfPages gt 10}">
@@ -607,14 +582,16 @@
 								</a></c:if></span>
 						</div>
 					</div>
-				</div>
-
-				<!--Start:MidContant-->
 				<div class="clearfix"></div>
-				<!-- content_wrapper -->
 				<div class="ad_wrapper">
 						${adPageBottom }
 				</div>
+				</div>
+
+				<!--Start:MidContant-->
+				
+				<!-- content_wrapper -->
+				
 				<!-- ad_wrapper -->
 
 			</div>

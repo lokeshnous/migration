@@ -28,9 +28,11 @@ import com.advanceweb.afc.common.controller.AbstractController;
 import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.OrderDetailsDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
+import com.advanceweb.afc.jb.common.UserAlertDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
@@ -41,12 +43,14 @@ import com.advanceweb.afc.jb.employer.web.controller.JobPostingsForm;
 import com.advanceweb.afc.jb.employer.web.controller.PurchaseJobPostForm;
 import com.advanceweb.afc.jb.employer.web.controller.PurchaseResumeSearchForm;
 import com.advanceweb.afc.jb.employer.web.controller.ResumeSearchPackageForm;
+import com.advanceweb.afc.jb.lookup.service.LookupService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
 import com.advanceweb.afc.jb.mail.service.MMEmailService;
-import com.advanceweb.afc.jb.netsuite.service.NSCustomerService;
 import com.advanceweb.afc.jb.pgi.AccountAddressDTO;
 import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
+import com.advanceweb.afc.jb.user.UserAlertService;
 import com.advanceweb.afc.jb.user.UserService;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
@@ -97,11 +101,6 @@ public class PaymentGatewayController extends AbstractController{
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
 	@Value("${dothtmlExtention}")
-	private String dothtmlExtention;
-	@Value("${navigationPath}")
-	private String navigationPath;
-	@Value("${employerPageExtention}")
-	private String employerPageExtention;
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
@@ -112,8 +111,11 @@ public class PaymentGatewayController extends AbstractController{
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private NSCustomerService nsCustomerService;
-	private static final String CUSTOMER_STRING = "customer"; 
+	private UserAlertService alertService;
+	@Value("${validateCityState}")
+	private String validateCityState;
+	@Autowired
+	private LookupService lookupService;
 	@RequestMapping(value = "/callPaymentMethod", method = RequestMethod.GET)
 	public ModelAndView callPaymentMethod(@Valid PaymentGatewayForm paymentGatewayForm,
 			HttpSession session,@RequestParam(value = "purchaseType", required = false ) String purchaseType, HttpServletRequest request) {
@@ -289,13 +291,32 @@ public class PaymentGatewayController extends AbstractController{
 		if (result.hasErrors()) {
 			//add country & state list to model
 			addCountryStateList(model);
-			
-			model.setViewName(BILLING_INFO_FORM);
+    		model.setViewName(BILLING_INFO_FORM);
 			// get the Ads
 			populateAds(request, session, model, PageNames.EMPLOYER_PG_BILLING);
 			return model;
 		}
-		
+		// validate city,state,zipcode cmbination
+		boolean validateStateCityZip;
+		try {
+			validateStateCityZip = lookupService.validateCityStateZip(
+					paymentGatewayForm.getBillingAddressForm().getCityOrTownForBillingAddr(),
+					paymentGatewayForm.getBillingAddressForm().getStateBillingAddress(),
+					paymentGatewayForm.getBillingAddressForm().getZipCodeForBillingAddr());
+
+			if (!validateStateCityZip) {
+				//add country & state list to model
+				addCountryStateList(model);
+	    		model.setViewName(BILLING_INFO_FORM);
+				// get the Ads
+				populateAds(request, session, model, PageNames.EMPLOYER_PG_BILLING);
+				model.addObject("errorMessage",validateCityState);		
+				return model;
+			}
+		} catch (JobBoardServiceException ex) {
+
+			ex.printStackTrace();
+		}
 		if(MMJBCommonConstants.CREDIT_CARD.equals(paymentGatewayForm.getPaymentMethod()) 
 				&& null != paymentGatewayForm.getCreditCardInfoForm()){
 			String creditCardNo = paymentGatewayForm.getCreditCardInfoForm().getCreditCardNo();
@@ -389,7 +410,9 @@ public class PaymentGatewayController extends AbstractController{
 			int packageSubTotal = 0, planCreditAmt = 0, addOnCreditAmtTotal = 0;
 			PurchaseJobPostForm purchaseJobPostForm = paymentGatewayForm.getPurchaseJobPostForm();		
 			JobPostingsForm cartItem = purchaseJobPostForm.getJobPostingsCart().get(cartItemIndex);
-			
+			if (purchaseJobPostForm.getDiscountAmt()>0) {
+				purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getTotal());
+			}
 			purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getGrandTotal() - cartItem.getPackageSubTotal());
 			
 			planCreditAmt = Integer.parseInt(cartItem.getJobPostPlanCretitAmt());
@@ -402,6 +425,8 @@ public class PaymentGatewayController extends AbstractController{
 			cartItem.setQuantity(quantity);
 			cartItem.setPackageSubTotal(packageSubTotal);
 			purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getGrandTotal() + packageSubTotal);
+			//calculating the Total amount after deducting the discount
+			calculateDiscount(purchaseJobPostForm);
 		}
 		
 		model.addObject(PAYMENT_GATEWAY_FORM, paymentGatewayForm);
@@ -428,13 +453,33 @@ public class PaymentGatewayController extends AbstractController{
 		else if(MMJBCommonConstants.PURCHASE_JOB_POST.equals(paymentGatewayForm.getPurchaseType())){
 			PurchaseJobPostForm purchaseJobPostForm = paymentGatewayForm.getPurchaseJobPostForm();		
 			JobPostingsForm cartItem = purchaseJobPostForm.getJobPostingsCart().get(cartItemIndex);
+			if (purchaseJobPostForm.getDiscountAmt()>0) {
+				purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getTotal());
+			}
 			purchaseJobPostForm.setGrandTotal(purchaseJobPostForm.getGrandTotal() - cartItem.getPackageSubTotal());
+			//calculating the Total amount after deducting the discount 
+			calculateDiscount(purchaseJobPostForm);
 			purchaseJobPostForm.getJobPostingsCart().remove(cartItemIndex);
 		}
 		
 		model.addObject(PAYMENT_GATEWAY_FORM, paymentGatewayForm);
 		model.setViewName("redirect:/pgiController/backToConfirmOrder.html");
 		return 	model;
+	}
+
+	/**
+	 * calculating the Total amount after deducting the discount 
+	 * @param purchaseJobPostForm
+	 */
+	private void calculateDiscount(PurchaseJobPostForm purchaseJobPostForm) {
+		if (purchaseJobPostForm.getDiscountAmt()>0) {
+			int total =  (int) purchaseJobPostForm.getGrandTotal();
+			double discountAmt = Math.round((total * .15)*10.0)/10.0;
+			double grandTotal = total - discountAmt;
+			purchaseJobPostForm.setTotal(total);
+			purchaseJobPostForm.setDiscountAmt(discountAmt);
+			purchaseJobPostForm.setGrandTotal(grandTotal);
+		}
 	}
 	
 	@RequestMapping(value = "/placeOrder", method = RequestMethod.POST)
@@ -447,9 +492,29 @@ public class PaymentGatewayController extends AbstractController{
 
 		orderDetailsDTO = transformPaymentMethod
 				.transformToOrderDetailsDTO(paymentGatewayForm);
-
+		if(paymentGatewayForm.getPurchaseJobPostForm().getDiscountAmt()>0){
+			orderDetailsDTO.setDiscountItem(MMJBCommonConstants.NS_DISCOUNT_ITEM_ID);
+		}
+		/*int parentFacilityId = facilityService.getFacilityByFacilityId((Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID)).getFacilityParentId();*/
+		int parentFacilityId = facilityService.getFacilityByFacilityId((Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID)).getFacilityParentId();
+		FacilityDTO facilityDao=null;
+		UserDTO parentUserDTO=null;
+		if(parentFacilityId>0){
+		facilityDao=facilityService.getFacilityByFacilityId(parentFacilityId);
+		parentUserDTO = userService.getUserByUserId(facilityService.getfacilityUserId(facilityDao.getFacilityId()));
+		}
+		if(parentFacilityId<0||(facilityDao!=null && facilityDao.getFacilityType().equals(MMJBCommonConstants.FACILITY_SYSTEM))){
 		orderDetailsDTO.setFacilityId((Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID));
+		}else{
+			orderDetailsDTO.setFacilityId(parentFacilityId);
+		}
+	/*if( facilityDao!=null && facilityDao.getFacilityType().equals(MMJBCommonConstants.FACILITY_SYSTEM)){
+		orderDetailsDTO.setFacilityId((Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID));
+	}*/
 		orderDetailsDTO.setUserId((Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID));
 		orderDetailsDTO.setNsCustomeId(paymentGatewayForm.getNsCustomerId());
@@ -466,7 +531,7 @@ public class PaymentGatewayController extends AbstractController{
 		String errorMessage = "";
 
 		if (netSuiteStatus == MMJBCommonConstants.STATUS_CODE_200) {
-			LOGGER.info(statusCode.get(netSuiteStatus));
+			LOGGER.debug(statusCode.get(netSuiteStatus));
 			model.addObject(STATUS_CODE, MMJBCommonConstants.STATUS_CODE_200);
 			paymentGatewayForm = clearSessionFormData(session,
 					paymentGatewayForm);
@@ -478,7 +543,8 @@ public class PaymentGatewayController extends AbstractController{
 				userDTO.setEmailId(merUserdto.getEmailId());
 				userDTO.setFirstName(merUserdto.getFirstName());
 				userDTO.setLastName(merUserdto.getLastName());
-				sendDetailEmail(session, request, userDTO,orderDetailsDTO);
+				sendDetailEmail(session, request, parentUserDTO,
+						userDTO, orderDetailsDTO);				
 			}
 		} else {
 			switch (netSuiteStatus) {
@@ -525,7 +591,7 @@ public class PaymentGatewayController extends AbstractController{
 				errorMessage = MMJBCommonConstants.SERVICE_UNAVAILABLE_503;
 				break;
 			default:
-				LOGGER.info(statusCode.get(netSuiteStatus));
+				LOGGER.debug(statusCode.get(netSuiteStatus));
 				model.addObject(STATUS_CODE,
 						MMJBCommonConstants.STATUS_CODE_DEFAULT);
 				errorMessage = MMJBCommonConstants.DEFAULT_NSERROR_MSG;
@@ -571,29 +637,24 @@ public class PaymentGatewayController extends AbstractController{
 	 * @param userDTO
 	 */
 	private void sendDetailEmail(HttpSession session,
-			HttpServletRequest request, UserDTO userDTO,
+			HttpServletRequest request, UserDTO parentUserDTO,UserDTO userDTO,
 			OrderDetailsDTO orderDetailsDTO) {
 		StringBuffer stringBuffer = new StringBuffer();
 		InternetAddress[] jsToAddress = new InternetAddress[1];
-
-		try {
-			jsToAddress[0] = new InternetAddress(userDTO.getEmailId());
-		} catch (AddressException jbex) {
-			LOGGER.error(
-					"Error occured while geting InternetAddress reference",
-					jbex);
-		}
-
 		EmailDTO emailDTO = new EmailDTO();
-		emailDTO.setToAddress(jsToAddress);
-		emailDTO.setFromAddress(advanceWebAddress);
-		emailDTO.setSubject(emailConfiguration.getProperty(
-				"new.credit.message").trim());
 
-		String loginPath = navigationPath.substring(2);
-		String employerloginUrl = request.getRequestURL().toString()
-				.replace(request.getServletPath(), loginPath)
-				+ dothtmlExtention + employerPageExtention;
+		emailDTO.setFromAddress(advanceWebAddress);
+		emailDTO.setSubject(emailConfiguration
+				.getProperty("new.credit.message").trim());
+
+		String employerloginUrl = request
+				.getRequestURL()
+				.toString()
+				.replace(
+						request.getServletPath(),
+						emailConfiguration.getProperty(
+								"employer.email.login.url").trim());
+
 		if (null != orderDetailsDTO
 				&& null != orderDetailsDTO.getJobPostingPlanDTOList()
 				&& !orderDetailsDTO.getJobPostingPlanDTOList().isEmpty()) {
@@ -601,15 +662,185 @@ public class PaymentGatewayController extends AbstractController{
 			String userName = userDTO.getFirstName() + " "
 					+ userDTO.getLastName();
 			String comapnyName = userDTO.getCompany();
-			// sending mail -New purchase - starts
-			sendPurchageDetailEmail(orderDetailsDTO, stringBuffer, emailDTO,
-					employerloginUrl, userName, comapnyName);
-			// sending mail -New purchase - ends
 
-			// Purchase receipt -send mail -Starts
-			sendPurcahgeReceipt(orderDetailsDTO, emailDTO, employerloginUrl,
-					userName, comapnyName);
-			// Purchase receipt -send mail -end
+			// if Logged in user is a job owner, check whether the admin of that
+			// owner is interested for the mails or not. and send the mail as
+			// per the requirements
+			int facilityIdParent = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
+			int parentUserId = (Integer) session.getAttribute(MMJBCommonConstants.USER_ID);
+			String parentMail = (String) session.getAttribute(MMJBCommonConstants.USER_EMAIL);
+			FacilityDTO mainFacilityDTO = facilityService.getParentFacility(facilityIdParent);
+		    UserDTO mainuserDto = userService.getUserByUserId(mainFacilityDTO
+						.getUserId());
+			
+			//check for job owner and send mail on interest
+			if(facilityIdParent != mainFacilityDTO.getFacilityId()){
+				List<UserAlertDTO> joAlertDTOs = alertService
+						.viewAlerts(parentUserId);
+				try {
+					jsToAddress[0] = new InternetAddress(parentMail);
+				} catch (AddressException e) {
+					LOGGER.error(
+							"Error occured while geting InternetAddress reference",
+							e);
+				}
+				emailDTO.setToAddress(jsToAddress);
+				//send mail if not set any alerts like default set 
+				if(joAlertDTOs.size() == 0){
+					LOGGER.debug("Jobowner has the default job posting credits alerts");
+					// New Job Posting -send mail -Starts
+					sendPurchageDetailEmail(orderDetailsDTO, stringBuffer,
+							emailDTO, employerloginUrl, userName,
+							comapnyName);
+					// Purchase receipt -send mail -Starts
+					sendPurcahgeReceipt(orderDetailsDTO, emailDTO,
+							employerloginUrl, userName, comapnyName);
+				}else{					
+					for (UserAlertDTO palertDTO : joAlertDTOs) {
+						if (palertDTO.getAlertId() > 0
+								&& palertDTO.getAlertId() == MMJBCommonConstants.NEW_JOB_POSTING_CREDITS_AVAILABLE) {
+							// New Job Posting -send mail -Starts
+							sendPurchageDetailEmail(orderDetailsDTO, stringBuffer,
+									emailDTO, employerloginUrl, userName,
+									comapnyName);
+							// New Job Posting -send mail -Ends
+						}else if (palertDTO.getAlertId() > 0
+								&& palertDTO.getAlertId() == MMJBCommonConstants.SALES_RECEIPT) {
+							// Purchase receipt -send mail -Starts
+							sendPurcahgeReceipt(orderDetailsDTO, emailDTO,
+									employerloginUrl, userName, comapnyName);
+							// Purchase receipt -send mail -end
+						}
+					}
+				}
+			}
+			
+			// send mail to employer on interest
+			List<UserAlertDTO> parentAlertDTOs = alertService.viewAlerts(mainuserDto.getUserId());
+			if (null != parentAlertDTOs && (parentAlertDTOs.size() > 0 || parentAlertDTOs.size() == 0)) {				
+				if (null != mainuserDto && null != mainuserDto.getEmailId()
+						&& !mainuserDto.getEmailId().isEmpty()) {
+					try {
+						jsToAddress[0] = new InternetAddress(
+								mainuserDto.getEmailId());
+					} catch (AddressException jbex) {
+						LOGGER.error(
+								"Error occured while geting InternetAddress reference",
+								jbex);
+					}
+					emailDTO.setToAddress(jsToAddress);
+				}
+				//send mail if not set any alerts 
+				if(parentAlertDTOs.size() == 0){
+					LOGGER.debug("Employer has the default administrator alerts");
+					// New Job Posting -send mail -Starts
+					sendPurchageDetailEmail(orderDetailsDTO, stringBuffer,
+							emailDTO, employerloginUrl, userName,
+							comapnyName);
+					// Purchase receipt -send mail -Starts
+					sendPurcahgeReceipt(orderDetailsDTO, emailDTO,
+							employerloginUrl, userName, comapnyName);
+					
+				}else{					
+					for (UserAlertDTO palertDTO : parentAlertDTOs) {
+						if (palertDTO.getAlertId() > 0
+								&& palertDTO.getAlertId() == MMJBCommonConstants.NEW_JOB_POSTING_CREDITS_AVAILABLE) {
+							// New Job Posting -send mail -Starts
+							sendPurchageDetailEmail(orderDetailsDTO, stringBuffer,
+									emailDTO, employerloginUrl, userName,
+									comapnyName);
+							// New Job Posting -send mail -Ends
+						}else if (palertDTO.getAlertId() > 0
+								&& palertDTO.getAlertId() == MMJBCommonConstants.SALES_RECEIPT) {
+							// Purchase receipt -send mail -Starts
+							sendPurcahgeReceipt(orderDetailsDTO, emailDTO,
+									employerloginUrl, userName, comapnyName);
+							// Purchase receipt -send mail -end
+						}
+					}
+				}
+
+			}/*else{
+				if (null != parentUserDTO && null != parentUserDTO.getEmailId()
+						&& !parentUserDTO.getEmailId().isEmpty()) {
+					try {
+						jsToAddress[0] = new InternetAddress(
+								parentUserDTO.getEmailId());
+					} catch (AddressException jbex) {
+						LOGGER.error(
+								"Error occured while geting InternetAddress reference",
+								jbex);
+					}
+					emailDTO.setToAddress(jsToAddress);
+					// New Job Posting -send mail -Starts
+					sendPurchageDetailEmail(orderDetailsDTO, stringBuffer,
+							emailDTO, employerloginUrl, userName,
+							comapnyName);
+					// New Job Posting -send mail -Ends
+					// Purchase receipt -send mail -starts
+					sendPurcahgeReceipt(orderDetailsDTO, emailDTO,
+							employerloginUrl, userName, comapnyName);
+					// Purchase receipt -send mail -end
+				}
+			}*/
+			// if Logged in user is a job owner, check whether the
+			// owner is interested for the mails or not. and send the mail as
+			// per the requirements
+			/*List<UserAlertDTO> alertDTOs = alertService.viewAlerts(userDTO
+					.getUserId());
+			if (null != alertDTOs && alertDTOs.size() > 0) {
+				if (null != userDTO && null != userDTO.getEmailId()
+						&& !userDTO.getEmailId().isEmpty()) {
+					try {
+						jsToAddress[0] = new InternetAddress(
+								userDTO.getEmailId());
+					} catch (AddressException jbex) {
+						LOGGER.error(
+								"Error occured while geting InternetAddress reference",
+								jbex);
+					}
+					emailDTO.setToAddress(jsToAddress);
+				}
+				for (UserAlertDTO alertDTO : alertDTOs) {
+					if (alertDTO.getAlertId() > 0
+							&& alertDTO.getAlertId() == MMJBCommonConstants.NEW_JOB_POSTING_CREDITS_AVAILABLE) {
+						// New Job Posting -send mail -Starts
+						sendPurchageDetailEmail(orderDetailsDTO, stringBuffer,
+								emailDTO, employerloginUrl, userName,
+								comapnyName);
+						// New Job Posting -send mail -Ends
+					}
+					if (alertDTO.getAlertId() > 0
+							&& alertDTO.getAlertId() == MMJBCommonConstants.SALES_RECEIPT) {
+						// Purchase receipt -send mail -Starts
+						sendPurcahgeReceipt(orderDetailsDTO, emailDTO,
+								employerloginUrl, userName, comapnyName);
+						// Purchase receipt -send mail -end
+					}
+				}
+			}else{
+				if (null != userDTO && null != userDTO.getEmailId()
+						&& !userDTO.getEmailId().isEmpty()) {
+					try {
+						jsToAddress[0] = new InternetAddress(
+								userDTO.getEmailId());
+					} catch (AddressException jbex) {
+						LOGGER.error(
+								"Error occured while geting InternetAddress reference",
+								jbex);
+					}
+					emailDTO.setToAddress(jsToAddress);
+					// New Job Posting -send mail -Starts
+					sendPurchageDetailEmail(orderDetailsDTO, stringBuffer,
+							emailDTO, employerloginUrl, userName,
+							comapnyName);
+					// New Job Posting -send mail -Ends
+					// Purchase receipt -send mail -Starts
+					sendPurcahgeReceipt(orderDetailsDTO, emailDTO,
+							employerloginUrl, userName, comapnyName);
+					// Purchase receipt -send mail -end
+				}
+			}*/
 		}
 	}
 
@@ -632,7 +863,14 @@ public class PaymentGatewayController extends AbstractController{
 		salesrcptMailBody = salesrcptMailBody.replace("?companyName",
 				comapnyName);
 		
-		
+		InternetAddress[] ccAddress = new InternetAddress[1];
+		try {
+			ccAddress[0]=new InternetAddress(emailConfiguration.getProperty("rep.email.address").trim());
+		} catch (AddressException jbex) {
+			LOGGER.error(
+					"Error occured while geting InternetAddress reference",
+					jbex);
+		}
 
 		
 		String packageName="";
@@ -664,6 +902,7 @@ public class PaymentGatewayController extends AbstractController{
 								.getTransactionDate()));
 		salesrcptMailBody = salesrcptMailBody.replace("?empdashboardLink",
 				employerloginUrl);
+		emailDTO.setCcAddress(ccAddress);
 		emailDTO.setSubject(emailConfiguration.getProperty(
 				"purchageReceipt").trim().replace("?ordernumber",
 				orderDetailsDTO.getOrderPaymentDTO().getTransactionId()));

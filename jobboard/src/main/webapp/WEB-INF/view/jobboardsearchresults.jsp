@@ -7,39 +7,19 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>${metaTitle}</title>
+<meta name="robots" content="index, follow">
+<%-- <c:if test="${empty staticContent}">
+<meta name="robots" content="noindex, follow"> 
+</c:if> --%>
 <meta name="description" content="${metaDesc}"> 
 <link href="${canonicalUrl}" rel="canonical" />
 <jsp:include page="common/include.jsp" />
 <script src="<%=request.getContextPath()%>/resources/js/FB.Share" type="text/javascript"></script>
 <script src="<%=request.getContextPath()%>/resources/js/in.js" type="text/javascript"></script>
 <script  src="<%=request.getContextPath()%>/resources/js/widgets.js"></script>
-<!-- JAVASCRIPT FILES -->
-<!-- <script type="text/javascript" src="../resources/js/slider.js"></script>
-<link href="../resources/css/jquery-ui.css" rel="stylesheet"
-	type="text/css">
-<script type="text/javascript" language="javascript"
-	src="/media/js/jquery.js"></script> -->
 <script src="<%=request.getContextPath()%>/resources/js/jquery.dataTables.nightly.js"></script>
 <script src="<%=request.getContextPath()%>/resources/js/searchResultsdatatable.js"></script>
-
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery-ui.min.js"></script>
-<!-- <link rel="stylesheet" type="text/css"
-	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" /> -->
-<!-- 	<script type="text/javascript" src="../resources/js/jquery.simplyscroll.js"></script>
-<link rel="stylesheet" href="../resources/css/jquery.simplyscroll.css" media="all" 
-type="text/css">
-	<script type="text/javascript">
-(function($) {
-	$(function() { 
-		$("#scroller").simplyScroll({
-			customClass: 'custom',
-			autoMode: 'loop',
-        	auto: true,
-			speed: 200
-		});
-	});
-})(jQuery);
-</script> -->
 </head>
 
 <body class="job_board">
@@ -57,7 +37,11 @@ type="text/css">
 					<br class="clearfix" />
 					</div>
 				<br class="clearfix" />
-				
+				<c:if test="${not empty staticContent}">
+				<div class="Content_Description">
+						${staticContent}
+					</div>
+					</c:if>
 				<div class="ad_wrapper">
 					${adPageBottom }
 				</div>

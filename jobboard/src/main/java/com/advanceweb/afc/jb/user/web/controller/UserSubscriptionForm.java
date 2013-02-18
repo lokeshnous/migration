@@ -18,6 +18,7 @@ public class UserSubscriptionForm {
 	private String[]  printSub;
 	private String[]  digSub;
 	private String[]  newsSub;
+	private String[]  EmailSub;
 	private boolean printCheckbox;
 	private boolean digCheckbox;
 	private boolean enewsCheckbox;
@@ -116,6 +117,12 @@ public class UserSubscriptionForm {
 	}
 	public void setEnewsCheckbox(boolean enewsCheckbox) {
 		this.enewsCheckbox = enewsCheckbox;
+	}
+	public String[] getEmailSub() {
+		return EmailSub;
+	}
+	public void setEmailSub(String[] emailSub) {
+		EmailSub = emailSub;
 	}
 	
 				

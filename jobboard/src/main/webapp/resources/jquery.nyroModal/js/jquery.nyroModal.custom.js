@@ -37,8 +37,8 @@ jQuery(function($, undefined) {
 			loadFilter: undefined,	// Name of the filter used for loading
 
 			modal: false,	// Indicates if it's a modal window or not
-			closeOnEscape: true,	// Indicates if the modal should close on Escape key
-			closeOnClick: true,	// Indicates if a click on the background should close the modal
+			closeOnEscape: false,	// Indicates if the modal should close on Escape key
+			closeOnClick: false,	// Indicates if a click on the background should close the modal
 			useKeyHandler: false,	// Indicates if the modal has to handle key down event
 
 			showCloseButton: true,	// Indicates if the closeButonn should be added
@@ -207,7 +207,7 @@ jQuery(function($, undefined) {
 				this.keyEvent = e;
 				this._callFilters('keyHandle');
 				this.keyEvent = undefined;
-				delete(this.keyEvent);
+				delete(this.keyEvent);				
 			},
 
 			// Get the internal object

@@ -9,7 +9,8 @@
 <title>ADVANCE Heathcare Jobs</title>
 
 <jsp:include page="common/include.jsp" />
-
+<!-- Common js files  -->
+<script type="text/javascript" src="../resources/js/common/common.js"></script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
@@ -30,6 +31,7 @@
 		});
 		 
 		 $("#update").click(function() {
+			 selectAllElementsInDualList();
 				//validate the required fields
 				var resumeName = $.trim($("#resumeName").val());
 				var resumeId = $.trim($("#uploadResumeId").val());
@@ -58,6 +60,7 @@
 			});
 		 
 		 function updateResume(resumeName, resumeId){
+			 selectAllElementsInDualList();
 			//validate number of resumes
 			//validate if resume name already exist in db
 				$.ajax({url :"${pageContext.request.contextPath}/jobSeekerResume/validateCreateResumePopUp.html?resumeName="+ resumeName+"&resumeId="+resumeId,
@@ -93,6 +96,43 @@
 				 }
 			 return true;
 		 }
+		 $("#searchCompanyName").click(function() {
+				var IdData = new Array();
+		    	var NameData = new Array();
+		    	
+				var empName = $("#searchComapnyName").val();
+				$.ajax({
+			        type: "GET",
+			        url: "${pageContext.request.contextPath}/agency/getFacilityNamesList.html?term="+empName,
+			        dataType: "json",							        
+			        contentType: "application/json; charset=utf-8",
+			        success: function(data) {							        	
+			        								        	
+			        	for (var x = 0; x < data.EmpList.length; x++) {
+			        		
+			               IdData.push(data.EmpList[x].ID);
+			               NameData.push(data.EmpList[x].NAME);
+			               //appends options 
+			               var availableList = document.getElementById("availableList");
+			               var exists = false; 
+			               $('#availableList option').each(function(){
+			            	   
+			                 if ((this.text).toLowerCase() == (data.EmpList[x].NAME).toLowerCase()) {
+			                	 exists=true;
+			                 }
+			               });
+			               if(!exists){
+			            	   availableList.options[availableList.options.length]=new Option(data.EmpList[x].NAME,data.EmpList[x].ID,false,false);
+			               }
+			               	               
+			            }
+			        	        					
+			        },
+			        error: function(XMLHttpRequest, textStatus, errorThrown) {
+			           alert(textStatus);
+			        }
+			    });
+				});
 	});	 
 </script>
 </head>
@@ -175,7 +215,7 @@
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4">Resume Visibility:</span>
 					<div class="redioButtonHolderWidth marginTop5">
-						<form:radiobuttons path="resumeVisibility"
+						<form:radiobuttons path="resumeVisibility" onclick="enableDisableCompanyPanel(this.id);"
 							items="${resumeVisibility}" itemValue="visibilityId"
 							itemLabel="visibilityName" />
 					</div>
@@ -190,7 +230,48 @@
 						<span class="required">(Required)</span>
 					</div>
 				</div>
-				
+				<div id="managePrivacy">
+					<div class="rowEvenNewSpacing" id="searchCompany">
+						<span class="lableText4">Company to block:</span>
+						<form:input path="searchComapnyName"
+							class="job_seeker_password textBox150" />
+						<a id="searchCompanyName" href="#" class="btn_sm orange">Search</a>
+
+					</div>
+
+					<div class="rowEvenNewSpacing" id="selectCompany">
+						<span class="lableText4">&nbsp;</span>
+						<table style="border-style: none; cellspacing: 0; border: none;">
+							<tr>
+								<td colspan="3"
+									style="border: none; font-weight: bold; bottom: -8">Company
+									List</td>
+								<td style="border: none; font-weight: bold; bottom: -8">
+									Blocked Company</td>
+							</tr>
+							<tr>
+								<td><form:select path="availableList" id="availableList"
+										multiple="true" size="5" style="width:150px;">
+										
+									</form:select></td>
+								<td width="3%" />
+								<td width="7%" style="border: none">
+									<button type="button" onclick="addAll();" style="">&gt;&gt;</button>
+									<br>
+									<button type="button" onclick="addAttribute();" style="">&gt;</button>
+									<br>
+									<button type="button" onclick="deleteAttribute();" style="">&lt;</button>
+									<br>
+									<button type="button" onclick="delAll();" style="">&lt;&lt;</button>
+								</td>
+
+								<td width="45%" style="border: none"><form:select
+										path="selectedList" id="selectedeList" multiple="true" items="${blockedCompanies}" itemValue="optionId" itemLabel="optionName"
+										size="5" style="width:150px;">
+									</form:select></td>
+						</table>
+					</div>
+				</div>
 				<div class="popUpButtonRow">
 					 <a id="update" href="#"
 						class="btn_sm orange">Save</a> <a href="<%=request.getContextPath()%>/jobSeekerResume/manageResume.html" class="nyroModal btn_sm orange">Cancel</a>

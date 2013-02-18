@@ -18,20 +18,19 @@
 </c:choose>
 
 <div class="search_info_box1" id="latestRecentListId">
-							<div class="rowPadding borderBottomDotted" id="aaa">
-								
+							<div class="rowPadding" >								
 								<div id="clear">
-									
-								
-							<div class="" id="cleardata">
-							
-							<c:forEach items="${latestRecentList}" var="item" >
-							 <div class="rowPadding borderBottomDotted">
+							<div class="" id="cleardata">			
+										
+							<c:forEach items="${latestRecentList}" var="item" varStatus="status">
+							 <div class="rowPadding 
+							<c:if test="${latestRecentList.size() != (status.index+1)}">
+							 borderBottomDotted
+							 </c:if>	
+							 ">
 							    ${item.createdDate.toLocaleString()}<br> Search by: <a href="#"	id="${item.saveSearchID}"					
 									onclick="loadRecentSearch(${item.saveSearchID})" class="newWindow">${item.recentURL}</a>
-							   
-							   </div>
-									
+							  </div>									
 								</c:forEach>
 								</div>
 								</div>

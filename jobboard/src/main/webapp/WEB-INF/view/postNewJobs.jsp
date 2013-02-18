@@ -11,16 +11,32 @@
 <!-- <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css"> -->
 
 <!-- JAVASCRIPT FILES -->
-<script type="text/javascript"
-	src="../resources/js/jquery.cycle.all.min.js"></script>
+<!-- <script type="text/javascript"
+	src="../resources/js/jquery.cycle.all.min.js"></script> -->
 <script type="text/javascript" src="../resources/js/slider.js"></script>
 <script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
-	<link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" type="text/css" media="screen"
+	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
 <script type="text/javascript">
+tinyMCE.init({
+	mode : "textareas",
+	theme : "advanced",
+	theme_advanced_buttons1 : "mybutton,bold,italic,underline,separator,strikethrough,justifyleft,justifycenter,justifyright, justifyfull,bullist,numlist,undo,redo,link,unlink",
+	theme_advanced_buttons2 : "",
+	theme_advanced_buttons3 : "",
+	theme_advanced_toolbar_location : "top",
+	theme_advanced_toolbar_align : "left",	
+	max_chars : 5000,
+	max_chars_indicator : "characterCounter",
+	/*plugins : 'inlinepopups',*/
+	plugins : "autolink,advlink,maxchars",
+	content_css : "css/mycontent.css"
+});
+
 function validateNumber(event) {
     var keyval = window.event ? event.keyCode : event.which;
 
@@ -33,6 +49,23 @@ function validateNumber(event) {
     }
     else return true;
 };
+
+function appendURL(){
+	var str = $("#applyToURLTSId").val();
+	if(str.indexOf('www')==0 && str.indexOf('.')==3){
+		str = 'http://'+str;
+		$("#applyToURLTSId").val(str);
+	};
+}
+
+function appendURLForATS(){
+	var str = $("#applyToATSIPId").val();
+	if(str.indexOf('www')==0 && str.indexOf('.')==3){
+		str = 'http://'+str;
+		$("#applyToATSIPId").val(str);
+	};
+}
+
 </script>
 <script type="text/javascript">
 	function populateTemplates() {
@@ -150,6 +183,9 @@ function validateNumber(event) {
 						});
 						
 						$("#saveJobPostId").click(function() {
+							$("#saveJobPostId").attr("disable",true);
+							$("#saveJobPostId").hide();
+							$("#saveJobPostId").attr("class","btn_sm white");
 							if (!validateData()) {
 								return false;
 							}
@@ -309,6 +345,9 @@ function validateNumber(event) {
 																						'#countryDpId')
 																						.val(
 																								country);
+																				var modCity = $("#cityAutoPopulation").val();
+																				modCity = modCity.substring(0,modCity.lastIndexOf(", "));
+																				$("#cityAutoPopulation").val(modCity);
 																			},
 																		});
 															},
@@ -317,19 +356,9 @@ function validateNumber(event) {
 										});
 						
 						
-						//Auto complete on selecting state
-						
-										$("#stateDpId").change( function(){
-											$('#cityAutoPopulation').val('');
-											$('#zipCodeITId').val('');
-											$('#countryDpId').val('');
-											});
-						
-									$("#countryDpId").change(function(){
-										$('#zipCodeITId').val("");
-										$('#stateDpId').val("");
-										$('#cityAutoPopulation').val("");
-									});
+									
+									//Need to set default country as USA
+									//$('#countryDpId').val("USA");
 									
 						//Auto complete on selecting zipcode			
 						$("#zipCodeITId")
@@ -400,11 +429,61 @@ function validateNumber(event) {
 						}
 						
 						if ($("#activeOrInactive").val() == 'true') {
+							populateTemplates();
+							callTemplate();
 							if ($("#enableJobTitle").val() == 'true') {
 								$("#jobTitleId").attr("disabled", false);
+								$("#jobOwner").attr("disabled", false);
+								$("#companyAutoPopulation").attr("disabled", false);
+								$("#dispCompNameId").attr("disabled", false);
+								$("#bHideCompName1").attr("disabled", false);
+								$("#applyToEMailId").attr("disabled", false);
+								$("#applyToEMailTSId").attr("disabled", false);
+								$("#applyToATSIPId").attr("disabled", false);
+								$("#applyToURLId").attr("disabled", false);
+								$("#applyToURLTSId").attr("disabled", false);
+								$("#applyToATSId").attr("disabled", false);
+								$("#reqSkillsId").attr("disabled", false);
+								$("#jobDesc").attr("disabled", false);
+								$("#trackPixel").attr("disabled", false);
+								$("#templateId").attr("disabled", false);
+								$("#autoRenew1").attr("disabled", false);
+								$("#autoRenew2").attr("disabled", false);
+								$("#templateOverride").attr("disabled", false);
+								$("#employmentType").attr("disabled", false);
+								$("#jobNumber").attr("disabled", false);
+								$("#cityAutoPopulation").attr("disabled", false);
+								$("#bHideCity1").attr("disabled", false);
+								$("#stateDpId").attr("disabled", false);
+								$("#bHideState1").attr("disabled", false);
+								$("#zipCodeITId").attr("disabled", false);
+								$("#bHideZipCode1").attr("disabled", false);
+								$("#countryDpId").attr("disabled", false);
+								$("#bHideCountry1").attr("disabled", false);
 							}
 							else{
+								populateTemplates();
+								callTemplate();
 								$("#jobTitleId").attr("disabled", true);
+								$("#jobOwner").attr("disabled", false);
+								$("#companyAutoPopulation").attr("disabled", false);
+								$("#dispCompNameId").attr("disabled", false);
+								$("#bHideCompName1").attr("disabled", false);
+								$("#applyToEMailId").attr("disabled", false);
+								$("#applyToEMailTSId").attr("disabled", false);
+								$("#applyToURLId").attr("disabled", false);
+								$("#applyToURLTSId").attr("disabled", false);
+								$("#applyToATSId").attr("disabled", false);
+								$("#applyToATSIPId").attr("disabled", false);
+								$("#reqSkillsId").attr("disabled", false);
+								$("#jobDesc").attr("disabled", false);
+								$("#trackPixel").attr("disabled", false);
+								$("#templateId").attr("disabled", false);
+								$("#autoRenew1").attr("disabled", false);
+								$("#autoRenew2").attr("disabled", false);
+								$("#templateOverride").attr("disabled", false);
+								$("#employmentType").attr("disabled", false);
+								
 							}
 							
 							$("#jobDesc").attr("disabled", false);
@@ -489,7 +568,15 @@ function validateNumber(event) {
 						
 						
 						if ($("#adminLogin").val() == 'true') {
-							$("#jobTitleId").attr("disabled", false);
+							$('#postNewJobFormId').each(
+									function() {
+										$("#postNewJobFormId :input").attr(
+												"disabled", false);
+										$("#postTypeId").attr("disabled", true);
+										$("#customerNo").attr("disabled", true);
+									});
+						 	
+							
 						}
 					});
 	
@@ -517,6 +604,12 @@ function validateNumber(event) {
 	font-weight: bold;
 }
 
+.ui-widget-content {
+	border: 1px solid #aaaaaa;
+	background: #ffffff;
+	color: #222222;
+}
+
 .ui-state-default,.ui-widget-content .ui-state-default {
 	background: #FE9400;
 	border: 1px solid #D3D3D3;
@@ -534,24 +627,27 @@ function validateNumber(event) {
 <body class="job_board">
 	<form:form action="saveNewJob.html" commandName="jobPostForm"
 		id="postNewJobFormId">
-		<div class="ad_page_top">
-			${adPageTop}
-		</div>
+		<div class="ad_page_top">${adPageTop}</div>
 		<div class="main_wrapper_outside">
 			<div class="main_wrapper_inside">
 				<form:hidden path="readOnly" />
 				<form:hidden path="jobId" />
-				<form:hidden path="activeOrInactive"/>
-				<form:hidden path="enableJobTitle"/>
-				<form:hidden path="jobStatus"/>
-				<form:hidden path="adminLogin"/>
+				<form:hidden path="activeOrInactive" />
+				<form:hidden path="enableJobTitle" />
+				<form:hidden path="jobStatus" />
+				<form:hidden path="adminLogin" />
 				<div class="main">
 					<jsp:include page="../templates/templates_header.jsp"></jsp:include>
 					<div class="clearfix"></div>
 					<!--Start:MidContant-->
 					<div class="MidContent_Wrapper floatLeft">
 						<div class="popupHeader Padding0  OrangeBG">
+						<c:if test="${jobPostForm.viewPage == 'false'}">
 							<h2>POST NEW JOB</h2>
+							</c:if>
+							<c:if test="${jobPostForm.viewPage == 'true' }">
+							<h2>VIEW JOB</h2>
+							</c:if>
 							<span class="floatRight marginRight10"><a
 								href="<%=request.getContextPath()%>/employer/manageJobPost.html"
 								class="link_color3_emphasized FontSize12 FontWeight">Back to
@@ -634,7 +730,8 @@ function validateNumber(event) {
 										Type:</span>
 									<div id="postTypeToolTip" title="">
 										<form:select path="jobPostingType"
-											class="jb_input3 jb_input_width3" id="postTypeId" onchange="populateTemplates()">
+											class="jb_input3 jb_input_width3" id="postTypeId"
+											onchange="populateTemplates()">
 											<form:option value="0" label="Select" />
 											<form:options items="${jbPostingTypeList}"
 												itemValue="optionId" itemLabel="optionName" />
@@ -717,7 +814,7 @@ function validateNumber(event) {
 									</span><span class="lableText6">Apply-to URL:</span>
 									<form:input path="applyUrl"
 										class="job_seeker_password textBox350" id="applyToURLTSId"
-										readonly="readonly" />
+										onblur="appendURL()" readonly="readonly" />
 									<span class="required requiredWidth">Enter the URL where
 										you would like to send job-seekers to apply.</span>
 								</div>
@@ -729,7 +826,7 @@ function validateNumber(event) {
 									</span><span class="lableText6">Apply-to ATS :</span>
 									<form:input path="atsUrl"
 										class="job_seeker_password textBox350" id="applyToATSIPId"
-										readonly="readonly" />
+										onblur="appendURLForATS()" readonly="readonly" />
 									<span class="required requiredWidth">Enter the URL to
 										the corresponding job posting or application on your company's
 										website.</span>
@@ -738,8 +835,9 @@ function validateNumber(event) {
 								<div class="paddingBottom05 MarginBottom10 marginTop10"></div>
 								<div class="row marginTop10">
 
-									<h3>Location</h3>
-									<p class="required">(All fields are required)</p>
+									<h3 class="floatLeft">Location</h3>
+									<p class="required margin0 paddingTop0">All fields are required</p>	
+									
 								</div>
 								<div class="rowEvenNewSpacing" id="divCityAutoPopulate">
 									<span class="lableText3">Job City:</span>
@@ -777,7 +875,8 @@ function validateNumber(event) {
 								<div class="rowEvenNewSpacing">
 									<span class="lableText3">Job Zip Code:</span>
 									<form:input path="jobZipCode"
-										class="job_seeker_password textBox350" id="zipCodeITId" maxlength="5" />
+										class="job_seeker_password textBox350" id="zipCodeITId"
+										maxlength="5" />
 									<div class="floatLeft width210">
 										<span class="required marginRight10"> <form:checkbox
 												path="bHideZipCode" />
@@ -843,7 +942,7 @@ function validateNumber(event) {
 								<div class="rowEvenNewSpacing">
 									<span class="lableText3">Job Description :</span>
 									<div class="input_grp6">
-										<form:textarea path="jobDesc"
+										<form:textarea path="jobDesc" id="jobDesc"
 											class="textareaBoxCResume width450" rows="3" cols="45" />
 									</div>
 									<span class="required">(Required)</span>
@@ -865,9 +964,12 @@ function validateNumber(event) {
 											tracking pixel HTML code here.</span>
 									</div>
 								</div>
-								<div class="row"><span class="lableText3"></span><div class="FormErrorDisplayText">
-								<span id="errTrackPixcel"></span>
-							</div></div>
+								<div class="row">
+									<span class="lableText3"></span>
+									<div class="FormErrorDisplayText">
+										<span id="errTrackPixcel"></span>
+									</div>
+								</div>
 								<div class="clearfix"></div>
 								<div class="paddingBottom05 MarginBottom10 marginTop10"></div>
 								<div class="row marginTop10">
@@ -889,15 +991,15 @@ function validateNumber(event) {
 											return to your dashboard.</span>
 									</div>
 									<c:if test="${displayOverride == true}">
-									<div class="floatLeft width210">
-										<span class="required marginRight10"> <form:checkbox
-												path="bTemplateOverride" onchange="populateTemplates()"
-												id="templateOverride" />
-										</span>
-										<div class="Auto">
-											<p>Override Package Template</p>
+										<div class="floatLeft width210">
+											<span class="required marginRight10"> <form:checkbox
+													path="bTemplateOverride" onchange="populateTemplates()"
+													id="templateOverride" />
+											</span>
+											<div class="Auto">
+												<p>Override Package Template</p>
+											</div>
 										</div>
-									</div>
 									</c:if>
 								</div>
 
@@ -908,16 +1010,16 @@ function validateNumber(event) {
 								</div>
 
 								<div class="rowEvenNewSpacing MarginBottom10">
-									<span class="lableText3">Auto Renew:</span> 
-										<div class="required">
-											<form:radiobutton path="autoRenew" value="Yes" />
-											<label class="greyLabel17">Yes</label>
-										</div>
-										<div class="required">
-											<form:radiobutton path="autoRenew" value="No" />
-											<label class="greyLabel17">No</label>
-										</div>
-									 <span class="required"> <%-- <form:radiobutton path="autoRenew" value="No"/><label class="greyLabel">No</label> --%>
+									<span class="lableText3">Auto Renew:</span>
+									<div class="required">
+										<form:radiobutton path="autoRenew" value="Yes" />
+										<label class="greyLabel17">Yes</label>
+									</div>
+									<div class="required">
+										<form:radiobutton path="autoRenew" value="No" />
+										<label class="greyLabel17">No</label>
+									</div>
+									<span class="required"> <%-- <form:radiobutton path="autoRenew" value="No"/><label class="greyLabel">No</label> --%>
 									</span>
 									<div class="toolTip colorPkrAreaToolTip">
 										<span class="classic">Select 'Yes' if you would like
@@ -942,9 +1044,9 @@ function validateNumber(event) {
 										<form:input path="" class="job_seeker_password" id="endDate"
 											readonly="true" />
 									</div>
-									<div class="rowEvenNewSpacing">  
-				              	  		<div id="errMsgDialog" class="validationMsg"> </div>
-				              	  	</div>
+									<div class="rowEvenNewSpacing">
+										<div id="errMsgDialog" class="validationMsg"></div>
+									</div>
 								</div>
 
 								<div class="clearfix"></div>
@@ -963,35 +1065,48 @@ function validateNumber(event) {
 
 					<!--Test-->
 					<div class="clearfix"></div>
-					<br /> <span class="marginBottom50 FloatLeft"> 
-					<input type="button" value="Post new job" class="btn_sm white cursor" id="postNewJobButId" /> 
-					<input type="button" value="Schedule job" class="btn_sm white cursor" id="scheduleNewJobButId"> 
-					<input type="button" value="Save as draft" class="btn_sm white cursor"	name="SaveAsDraft" id="saveAsDraftJobButId"> 
-					<!-- <input type="submit" value="Cancel" class="btn_sm white" name="Cancel" id="cancel"> -->
-					
-					<c:if test="${jobPostForm.activeOrInactive == true}">
-							<input type="button" value="Save" class="btn_sm white cursor" id="saveJobPostId"/>
-					</c:if>
-					<input type="button" value="Cancel" class="btn_sm white cursor" name="Cancel" id="cancel" onclick="cancelProcess()">
-					<%-- <a href="<%=request.getContextPath()%>/employer/employerDashBoard.html" id="cancel" class="btn_sm white">Cancel</a> --%>
-					<input type="submit" value="Post new job" class="btn_sm white cursor" name="PostNewJob" id="postNewJobButHideId" style="visibility: hidden;" /> 
-					<input type="submit" value="Schedule job" class="btn_sm white cursor" name="ScheduleJob" id="scheduleJobButHideId" style="visibility: hidden;" /> 
-					<input type="submit" value="Save as draft" class="btn_sm white cursor"	name="SaveAsDraft" id="savePostJobButHideId" style="visibility: hidden;" /> <!-- 	              	<a href="#" class="btn_sm white">Post new job</a> 
+					<div class="row marginTopBottom20">
+						<input type="button" value="Post new job"
+							class="btn_sm white cursor" id="postNewJobButId" /> <input
+							type="button" value="Schedule job" class="btn_sm white cursor"
+							id="scheduleNewJobButId"> <input type="button"
+							value="Save as draft" class="btn_sm white cursor"
+							name="SaveAsDraft" id="saveAsDraftJobButId">
+						<!-- <input type="submit" value="Cancel" class="btn_sm white" name="Cancel" id="cancel"> -->
+
+						<c:if test="${jobPostForm.activeOrInactive == true}">
+							<input type="button" value="Save" class="btn_sm white cursor"
+								id="saveJobPostId" />
+						</c:if>
+						<input type="button" value="Cancel" class="btn_sm white cursor"
+							name="Cancel" id="cancel" onclick="cancelProcess()">
+						<%-- <a href="<%=request.getContextPath()%>/employer/employerDashBoard.html" id="cancel" class="btn_sm white">Cancel</a> --%>
+						<input type="submit" value="Post new job"
+							class="btn_sm white cursor" name="PostNewJob"
+							id="postNewJobButHideId" style="visibility: hidden;" /> <input
+							type="submit" value="Schedule job" class="btn_sm white cursor"
+							name="ScheduleJob" id="scheduleJobButHideId"
+							style="visibility: hidden;" /> <input type="submit"
+							value="Save as draft" class="btn_sm white cursor"
+							name="SaveAsDraft" id="savePostJobButHideId"
+							style="visibility: hidden;" />
+						<!-- 	              	<a href="#" class="btn_sm white">Post new job</a> 
 	              	<a href="#" class="btn_sm white">Schedule job</a> 
 	              	<a href="#" class="btn_sm white">save as draft</a> 
 	              	<a href="#" class="btn_sm white">Cancel</a> -->
-					</span>
+					</div>
+					<div class="clearfix"></div>
+					<div class="ad_wrapper">
+						<span class="input_grp5 "> </span> ${adPageBottom}
+					</div>
+					<!-- ad_wrapper -->
 				</div>
 
 
 				<!--Start:MidContant-->
 				<div class="clearfix"></div>
 				<!-- content_wrapper -->
-				<div class="ad_wrapper">
-					<span class="input_grp5 "> </span>
-						${adPageBottom}
-				</div>
-				<!-- ad_wrapper -->
+
 
 			</div>
 			<!-- main -->

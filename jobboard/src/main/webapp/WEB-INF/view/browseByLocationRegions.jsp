@@ -11,8 +11,8 @@
 		<p>
 			<a 
 			<%-- onclick="searchByLocReg('${location}');" --%>
-			href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/location/${fn:replace(location,' ', '-')}.html"
-			>View all jobs in ${location} </a>or click on a metro
+			href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/search/location/${fn:toLowerCase(fn:replace(location,' ', '-'))}.html"
+			>View all jobs in ${stateFullName} </a>or click on a metro
 			area below to browse jobs in a specific part of the state.
 		</p>
 	</div>
@@ -22,25 +22,23 @@
 
 
 		<div class="row width400 paddingLeft15 marginRight10 marginBottom15">
-			<c:forEach items="${areaList}" varStatus="status" begin="0"
-				end="${jbsByLocationList.size()}" step="2">
+			<c:forEach items="${firstColAreasList}" varStatus="status" >
 				<h3 class="marginBottom3 cursor">
 					<a
 						<%-- onclick="searchByLocationRegion('${areaList[status.index]}');" --%>
-					href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/location/${location }/${fn:replace(areaList[status.index],' ', '-')}.html">
-						${areaList[status.index]}</a>
+					href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/search/location/${fn:toLowerCase(location) }/${fn:toLowerCase(firstColAreasList[status.index].encodedArea)}.html">
+						${firstColAreasList[status.index].area}</a>
 				</h3>
 			</c:forEach>
 		</div>
 
 		<div class="row width400 paddingLeft15 BorderLeft marginBottom15">
-			<c:forEach items="${areaList}" varStatus="status" begin="1"
-				end="${jbsByLocationList.size()}" step="2">
+			<c:forEach items="${secColAreasList}" varStatus="status" >
 				<h3 class="marginBottom3 cursor">
 					<a 
-					href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/location/${location }/${fn:replace(areaList[status.index],' ', '-')}.html"
+					href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/search/location/${fn:toLowerCase(location) }/${fn:toLowerCase(secColAreasList[status.index].encodedArea)}.html"
 					>
-						${areaList[status.index]}</a>
+						${secColAreasList[status.index].area}</a>
 				</h3>
 			</c:forEach>
 		</div>

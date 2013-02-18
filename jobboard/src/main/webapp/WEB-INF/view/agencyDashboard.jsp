@@ -16,7 +16,7 @@
 <script type="text/javascript" src="../resources/js/exporting.src.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
 <!-- JAVASCRIPT FILES -->
-		<script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script>
+		<!-- <script type="text/javascript" src="../resources/js/jquery.cycle.all.min.js"></script> -->
 		<script type="text/javascript" src="../resources/js/slider.js"></script>
 		<script type="text/javascript" src="../resources/js/jquery.megamenu.js"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
@@ -53,8 +53,8 @@
 				<div class="clearfix"></div>
 				<!--Start:MidContant-->
 				<div class="MidContent_Wrapper floatLeft">
-					<div class="dashboardHeader">
-						<h1>
+					<div class="EmployerDashboardHeader">
+						<h1 class="dashboardHeader Padding0">
 							<%=(String) session.getAttribute(MMJBCommonConstants.COMPANY_EMP)%> Dashboard
 						</h1>
 					</div>
@@ -77,6 +77,8 @@
 										</p>
 									</div>
 									</c:if>
+									<security:authorize
+									access="!hasRole('ROLE_FACILITY_POST_EDIT') ">
 									<div class="lableTextDashBoard">
 										<p>
 											<a
@@ -84,6 +86,18 @@
 												id="accountSettingpopUp">Account Settings</a>
 										</p>
 									</div>
+									</security:authorize>
+									<c:if test="<%=(session.getAttribute(\"adminLogin\")!=null )%>">
+									<input type="hidden" name="pageValue" value="agePermPage" />
+									<div class="lableTextDashBoard">
+											<p>
+												<a id="accessPermissioPopUp"
+													href="<%=request.getContextPath()%>/employer/manageAccessPermission.html?page=agePermPage">Manage
+													Access Permissions</a>
+
+											</p>
+									</div>
+									</c:if>
 									<c:if test="<%=(session.getAttribute(\"adminLogin\")==null )%>">
 									<security:authorize
 										access="!hasRole('ROLE_FACILITY_FULL_ACCESS') and !hasRole('ROLE_FACILITY_POST_EDIT') ">

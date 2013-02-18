@@ -81,6 +81,7 @@ public class TransformPaymentMethod {
 			billingAddressForm.setFacilityContactId(billingAddressDTO
 					.getFacilityContactId());
 			billingAddressForm.setCreateDate(billingAddressDTO.getCreateDate());
+			billingAddressForm.setPhone(billingAddressDTO.getPhone());
 		}
 		return billingAddressForm;
 
@@ -171,7 +172,7 @@ public class TransformPaymentMethod {
 			
 			orderPaymentDTO.setPaidAmount(String.valueOf(purchaseJobPostForm.getGrandTotal()));
 			
-			orderDetailsDTO.setOrderTotal(purchaseJobPostForm.getGrandTotal());
+			orderDetailsDTO.setOrderTotal((float) purchaseJobPostForm.getGrandTotal());
 		}
 		
 		AccountAddressDTO accountAddressDTO = transformToAccountAddressDTO(paymentGatewayForm.getBillingAddressForm());
@@ -240,6 +241,7 @@ public class TransformPaymentMethod {
 		}
 		if(null != paymentGatewayForm.getInvoiceForm()){
 			salesOrderDTO.setPaymentMethod(paymentGatewayForm.getPaymentMethod());
+			salesOrderDTO.setPurchaseOrderNumber(paymentGatewayForm.getInvoiceForm().getPurchaseOrderNo());
 		}
 		return salesOrderDTO;
 	}

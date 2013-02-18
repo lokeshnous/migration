@@ -17,6 +17,12 @@
 
                 jQuery(document).ready(
                 function() {
+                	if($("#saveSuccess").val() == "true")
+                	{
+                		alert("The template has been saved successfully");
+	                	window.location.href = "${pageContext.request.contextPath}/employer/employerDashBoard.html";
+                	}
+                	
                 	$('#templateName').focus();
 	                	var existingLength = $('#companyOverview').val().length;
 						$('#counterTextID').val(1000 - existingLength);
@@ -57,7 +63,34 @@
                 		});
                 });
                 
-                
+                function removeTestimoni(divID,pID){
+                	
+                	$.ajax({
+                		type : "POST",
+                		url : "${pageContext.request.contextPath}/brandingTemplates/removeTestimonies.html?id="+pID+"&"+$("#brandingTemplateFormId").serialize() ,
+                		success : function(data) {
+                			$("#"+divID).remove();
+                		},
+                	});
+                }
+                function removeImage(divID,pID){
+                	$.ajax({
+                		type : "POST",
+                		url : "${pageContext.request.contextPath}/brandingTemplates/removeImage.html?id="+pID+"&"+$("#brandingTemplateFormId").serialize() ,
+                		success : function(data) {
+                			$("#"+divID).remove();
+                		},
+                	});
+                }
+                function removeVideo(divID,pID){
+                	$.ajax({
+                		type : "POST",
+                		url : "${pageContext.request.contextPath}/brandingTemplates/removeVideo.html?id="+pID+"&"+$("#brandingTemplateFormId").serialize() ,
+                		success : function(data) {
+                			$("#"+divID).remove();
+                		},
+                	});
+                }
                 
              // function start
              
@@ -138,11 +171,11 @@
 				<div class="popupHeader Padding0  OrangeBG marginBottom5">
 					<h2>CREATE JOB POSTING TEMPLATE</h2>
 					<span class="floatRight marginRight10"><a href="<%=request.getContextPath()%>/employer/employerDashBoard.html"
-						class="link_color3_emphasized FontSize12 FontWeight">Back to
+						class="link_color3_emphasized FontSize12 FontWeight" id="empDashBoardId">Back to
 							Dashboard</a></span>
 				</div>
 				<div class="row ">
-					<form:form method="Post" action="createBrandingTemplate.html"	commandName="brandingTemplateForm" enctype="multipart/form-data">
+					<form:form method="Post" action="createBrandingTemplate.html" id="brandingTemplateFormId"	commandName="brandingTemplateForm" enctype="multipart/form-data">
 						<div class="row marginTop15">
 							<div class="lableTextCoverletter width150">Template Name:</div>
 							<div class="input_grp5 ">
@@ -263,10 +296,10 @@
 						
 						<div class="row">
 							<div id="testimonialsSectionDivId">
-								<c:forEach items="${brandingTemplateForm.listTestimony}" var="testimonies" varStatus="status">
+							<c:forEach items="${brandingTemplateForm.listTestimony}" var="testimonies" varStatus="status">
 							
 									<!-- <div class="rowEvenNewSpacing MarginBottom10"> -->
-									<div class="rowEvenNewSpacing">
+									<div class="rowEvenNewSpacing" id="testimoni${testimonies.itemId}">
 									<c:if test="${status.count == 1}">   
 							            <span class="lableTextCoverletter marginTop10 width150">Testimonials:</span> 
 							         </c:if>   
@@ -275,10 +308,22 @@
 							         </c:if>  									         
 									<!-- <div class="floatLeft marginRight10"></div> -->
 									<span class="floatLeft marginRight10">
-									 
 										<form:textarea path="listTestimony[${status.index}].testimony" class="textareaBoxCResumeTemplate" rows="5" cols="30" />
+										
+								<c:if test="${status.count != 1}">  
+													<div class="floatRight margin0">
+														<p class="floatRight margin0">
+															<img id="closeCheckOut"
+																onclick="removeTestimoni('testimoni${testimonies.itemId}',${testimonies.itemId})"
+																src="<%= request.getContextPath() %>/resources/images/Close.png"
+																class="cursor" title="Delete" alt="Delete" />
+														</p>
+													</div>
+												</c:if> 
 									</span>	
+									
 									</div>
+									
 								</c:forEach>
 							</div>								
 							
@@ -292,13 +337,14 @@
 									as text in the interactive gallery.</span>
 							</div>
 						</div>
-							
+						
 						<div class="row">
+						
 							<div id="imagesSectionDivId">
 								<c:forEach items="${brandingTemplateForm.listAddImages}" var="images" varStatus="status">
 							
 									<!-- <div class="rowEvenNewSpacing MarginBottom10"> -->
-									<div class="rowEvenNewSpacing">
+									<div class="rowEvenNewSpacing" id="image${images.itemId}">
 									<c:if test="${status.count == 1}">   
 							            <span class="lableTextCoverletter">Additional Images:</span> 
 							         </c:if>   
@@ -309,10 +355,21 @@
 									<span class="floatLeft marginRight10">
 									 
 										<form:input path="listAddImages[${status.index}].addImageFileData" name="textfield4" type="file" id="textfield4" class="job_seeker_login_email fileType cursor" size="20" />
+										
 									</span>	
+									<div class="clearfix"></div>
 									<label class="MultimediaLabel">
 									<c:if test="${brandingTemplateForm.listAddImages[status.index].chosenAddImage != null and errorMessage==null}">
 										You uploaded <Strong>${brandingTemplateForm.listAddImages[status.index].chosenAddImage}</Strong> as your Additional Image, you can upload a different Additional Image.
+										
+													<div class="floatRight margin0">
+														<p class="floatRight margin0">
+															<img id="closeCheckOut"
+																onclick="removeImage('image${images.itemId}',${images.itemId})"
+																src="<%= request.getContextPath() %>/resources/images/Close.png"
+																class="cursor" title="Delete" alt="Delete" />
+														</p>
+													</div>
 									</c:if>
 									</label>
 									</div>
@@ -337,7 +394,7 @@
 								<c:forEach items="${brandingTemplateForm.listVideos}" var="videos" varStatus="status">
 							
 									<!-- <div class="rowEvenNewSpacing MarginBottom10"> -->
-									<div class="rowEvenNewSpacing">
+									<div class="rowEvenNewSpacing" id="video${videos.itemId}">
 									<c:if test="${status.count == 1}">   
 							            <span class="lableTextCoverletter width150">Videos:</span> 
 							         </c:if>   
@@ -348,12 +405,27 @@
 									<span class="floatLeft marginRight10">
 									 
 										<form:input path="listVideos[${status.index}].videoFileData" name="textfield4" type="file" id="textfield4" class="job_seeker_login_email fileType cursor" size="20" />
+									
 									</span>
+									
+									<div class="clearfix"></div>
+									
+									<span class="floatLeft ">
 									<label class="MultimediaLabel">
 									<c:if test="${brandingTemplateForm.listVideos[status.index].chosenVideo != null and errorMessage==null}">
 										You uploaded <Strong>${brandingTemplateForm.listVideos[status.index].chosenVideo}</Strong> as your Video, you can upload a different Video.
+										
+													<div class="floatRight margin0">
+														<p class="floatRight margin0">
+															<img id="closeCheckOut"
+																onclick="removeVideo('video${videos.itemId}',${videos.itemId})"
+																src="<%= request.getContextPath() %>/resources/images/Close.png"
+																class="cursor" title="Delete" alt="Delete" />
+														</p>
+													</div>
 									</c:if>
-									</label>	
+									</label>
+									</span>	
 									</div>
 								</c:forEach>
 							</div>	
@@ -401,6 +473,7 @@
 								<input type="submit" value="Cancel" class="white cursor" name="Cancel"/>
 								</span>
 						</div>
+						<form:input type="hidden" name="saveSuccess" id="saveSuccess" path="saveSuccess"/>
 						</form:form>
 						</div>
 

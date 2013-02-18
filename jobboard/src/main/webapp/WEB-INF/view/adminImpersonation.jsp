@@ -74,15 +74,15 @@
 						</span>
 						</div>
 						
-						<div class="rowEvenNewSpacing">
+						<%-- <div class="rowEvenNewSpacing">
 						<div class="lableText5">User Email Address :</div>
 						<form:input name="Exclude" path="userEmail" class="job_seeker_email" />
-						</div>
+						</div> --%>
 						
-						<div class="rowEvenNewSpacing">
+						<%-- <div class="rowEvenNewSpacing">
 						<div class="lableText5">Password :</div>
 						<form:password name="Exclude" path="password" class="job_seeker_email" />
-						</div>
+						</div> --%>
 						
 						<div class="rowEvenNewSpacing">
 							<span class="lableText5"></span>

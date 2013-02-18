@@ -10,7 +10,7 @@
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-
+		$('#mailCheckbox').prop('checked', true);
 		$('#save').click(function(){
 			 var digCheckbox = $('#digCheckbox').is(':checked');
 			 var enewsCheckbox = $('#enewsCheckbox').is(':checked');
@@ -30,8 +30,8 @@
 			
 	     }); 
 		
-		modifyDig('${digitalSubList.size()}');
-		modifyNews('${enewSubList.size()}');
+		/* modifyDig('${digitalSubList.size()}');
+		modifyNews('${enewSubList.size()}'); */
 		
 		jQuery(".megamenu").megamenu();		
 	});
@@ -82,43 +82,62 @@
 			<form:form action="../subscriptions/modifyFacilitySubscriptions.html"
 				method="GET" id="subscriptionsId" commandName="facilitySubsForm">
 				<div class="rowEvenNewSpacing marginTop0">
-					<table>
+					<table class="news">
 						<tr class="borderTopNone">
-							<th align="left" scope="col">Subscriptions</th>
+							<div class="row paddingBottom10 marginLeft10">I would like
+								the following sent to me so I can stay up to date with the
+								latest healthcare news and information. The following
+								subscriptions are always a free service.</div>
 						</tr>
 						<tr>
-							<td valign="top"><form:checkbox path="digCheckbox"
-									id="digCheckbox" onchange="modifyDig('${digitalSubList.size()}')" /><label for="checkbox">Digital-Magazine</label>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<td valign="top"><form:hidden path="digCheckbox"
+									id="digCheckbox"/><label for="checkbox"><strong>Digital-Magazine</strong></label>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<c:if test="${!digitalSubList.isEmpty()}">
 									<c:forEach items="${digitalSubList}" var="subscriptionsprint"
 										varStatus="status">
-
+									<div style=" width:170px; padding-left:10px;">
 										<form:checkbox path="digSub"
 											label="${subscriptionsprint.optionName}"
-											value="${subscriptionsprint.optionId}" cssStyle="width:20px"
+											value="${subscriptionsprint.optionId}" cssStyle="width:20px;"
 											id="dig${status.index}" />
-										<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;														
-										       </c:forEach>
+										</div>													
+								</c:forEach>
 								</c:if></td>
 
-							<td valign="top"><form:checkbox path="enewsCheckbox"
-									id="enewsCheckbox" onchange="modifyNews('${enewSubList.size()}')" /><label
-								for="checkbox">E-newsletters</label>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<td valign="top"><form:hidden path="enewsCheckbox"
+									id="enewsCheckbox"/><label
+								for="checkbox"><strong>E-newsletters</strong></label>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<c:if test="${!enewSubList.isEmpty()}">
 									<c:forEach items="${enewSubList}" var="subscriptionsprint"
 										varStatus="status">
-
+										<div style=" width:170px; padding-left:10px;">
 										<form:checkbox path="newsSub"
 											label="${subscriptionsprint.optionName}"
-											value="${subscriptionsprint.optionId}" cssStyle="width:20px"
+											value="${subscriptionsprint.optionId}" cssStyle="width:20px; "
 											id="news${status.index}" />
-										<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;														
-										       </c:forEach>
+										</div>												
+								    </c:forEach>
 								</c:if></td>
 
-							<td valign="top"><form:checkbox path="mailCheckbox"
-									id="mailCheckbox" /><label for="checkbox">E-mailer</label><br />
-							</td>
+							<td valign="top" width="200"><form:hidden class="floatLeft"
+									path="mailCheckbox" id="mailCheckbox" /><label
+								class="floatLeft" for="checkbox"><strong>E-mails</strong></label>
+								<div class="toolTip marginLeft5">
+									<span class="classic">Select this option if you want us
+										to send you emails regarding featured career opportunities</span>
+								</div>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <c:if
+									test="${!listEmailer.isEmpty()}">
+
+									<c:forEach items="${listEmailer}" var="subscriptionsprint"
+										varStatus="status">
+										<div style="width: 120px; padding-left: 10px;">
+											<form:checkbox path="emailSub"
+												label="${subscriptionsprint.optionName}"
+												value="${subscriptionsprint.optionId}"
+												id="news${status.index}" />
+										</div>
+									</c:forEach>
+								</c:if></td>
 
 						</tr>
 					</table>

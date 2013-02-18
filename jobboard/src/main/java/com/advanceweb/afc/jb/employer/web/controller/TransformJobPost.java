@@ -115,6 +115,7 @@ public class TransformJobPost {
 		jobPostform.setbHideZipCode(jobPostDTO.isbHideZipCode());
 		jobPostform.setbTemplateOverride(jobPostDTO.isbTemplateOverride());
 		jobPostform.setFacilityId(jobPostDTO.getFacilityId());
+		jobPostform.setAutoRenew(jobPostDTO.isAutoRenew());
 		return jobPostform;
 		
 	}

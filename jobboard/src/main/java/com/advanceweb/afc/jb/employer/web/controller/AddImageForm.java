@@ -16,6 +16,7 @@ public class AddImageForm {
 	private String mediaPath;
 	private String chosenAddImage;
 	private int addImageId;
+	private int itemId;
 	
 	public CommonsMultipartFile getAddImageFileData() {
 		return addImageFileData;
@@ -55,6 +56,20 @@ public class AddImageForm {
 
 	public void setAddImageId(int addImageId) {
 		this.addImageId = addImageId;
+	}
+
+	/**
+	 * @return the itemId
+	 */
+	public int getItemId() {
+		return itemId;
+	}
+
+	/**
+	 * @param itemId the itemId to set
+	 */
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
 	}
 
 	

@@ -15,8 +15,22 @@ public class ReferenceForm {
 	private String email;
 	private String referenceType;
 	private int builderRefId;
+	private int itemId;
+	private boolean editMode;
 	
 	
+	public boolean isEditMode() {
+		return editMode;
+	}
+	public void setEditMode(boolean editMode) {
+		this.editMode = editMode;
+	}
+	public int getItemId() {
+		return itemId;
+	}
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
 	public String getName() {
 		return name;
 	}

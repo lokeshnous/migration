@@ -1,5 +1,9 @@
 package com.advanceweb.afc.jb.employer.web.controller;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -25,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.advanceweb.afc.common.controller.AbstractController;
 import com.advanceweb.afc.jb.advt.service.AdService;
+import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
@@ -35,12 +40,12 @@ import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
-import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
 import com.advanceweb.afc.jb.employer.service.ManageFeaturedEmployerProfile;
 import com.advanceweb.afc.jb.job.service.JobPostService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
 import com.advanceweb.common.client.ClientContext;
@@ -76,7 +81,8 @@ public class JobPostController extends AbstractController {
 
 	@Autowired
 	private FacilityService facilityService;
-
+	@Value("${validateCityState}")
+	private String validateCityState;
 	@Value("${deleteFail}")
 	private String deleteFailErrMsg;
 	@Value("${repostFail}")
@@ -129,8 +135,8 @@ public class JobPostController extends AbstractController {
 		int nsCustomerID = manageFeaturedEmployerProfile
 				.getNSCustomerIDFromAdmFacility(mainFacilityId);
 		// Get the list of valid packages purchased by customers from NetSuite
-		List<String> purchasedPackages = manageFeaturedEmployerProfile
-				.getNSCustomerPackages(nsCustomerID);
+//		List<String> purchasedPackages = manageFeaturedEmployerProfile
+//				.getNSCustomerPackages(nsCustomerID);
 		
 		// Template List will be populated later based on facility and job
 		// posting package type is selected
@@ -138,20 +144,20 @@ public class JobPostController extends AbstractController {
 		List<DropDownDTO> jbPostingTypeList = populateDropdownsService
 				.populateJobPostingTypeDropdowns(mainFacilityId);
 		
-		List<DropDownDTO> removeJbPostingList = new ArrayList<DropDownDTO>();
+//		List<DropDownDTO> removeJbPostingList = new ArrayList<DropDownDTO>();
 		//remove the packages which are purchased offline & expired
-		for(DropDownDTO dropDownDTO : jbPostingTypeList){
-			if(!purchasedPackages.contains(dropDownDTO.getNetSuiteId())){
-				removeJbPostingList.add(dropDownDTO);
-			}
-		}
+//		for(DropDownDTO dropDownDTO : jbPostingTypeList){
+//			if(!purchasedPackages.contains(dropDownDTO.getNetSuiteId())){
+//				removeJbPostingList.add(dropDownDTO);
+//			}
+//		}
 		
-		jbPostingTypeList.removeAll(removeJbPostingList);
+//		jbPostingTypeList.removeAll(removeJbPostingList);
 		
 		// redirecting from job post inventory to post new job screen
 		if (!StringUtils.isEmpty(jobPostType)) {
 			List<DropDownDTO> jobPostTypeCombo = populateDropdownsService
-					.populateJobPostingTypeDropdown(facilityId,
+					.populateJobPostingTypeDropdown(mainFacilityId,
 							Integer.parseInt(jobPostType));
 			if (null != jobPostTypeCombo && !jobPostTypeCombo.isEmpty()) {
 				for (DropDownDTO dropDown : jbPostingTypeList) {
@@ -488,31 +494,72 @@ public class JobPostController extends AbstractController {
 		UrlValidator urlValidator = new UrlValidator();
 		if (null != form) {
 			if (StringUtils.isEmpty(form.getJobTitle())
-					|| StringUtils.isEmpty(form.getJobCity())
-					|| StringUtils.isEmpty(form.getJobZipCode())
-					|| StringUtils.isEmpty(form.getJobTitle())
+					|| StringUtils.isBlank(form.getJobCity())
+					|| StringUtils.isBlank(form.getJobZipCode())
+					|| StringUtils.isBlank(form.getJobTitle())
 					|| MMJBCommonConstants.ZERO.equals(form.getJobCountry())
 					|| MMJBCommonConstants.ZERO.equals(form.getJobState())
 					|| MMJBCommonConstants.ZERO
 							.equals(form.getJobPostingType())
-					|| StringUtils.isEmpty(form.getJobDesc())
+					|| StringUtils.isBlank(form.getJobDesc())
 					|| (StringUtils.isEmpty(form.getApplyUrl())
-							&& StringUtils.isEmpty(form.getAtsUrl()) && StringUtils
+							&& StringUtils.isBlank(form.getAtsUrl()) && StringUtils
 								.isEmpty(form.getApplyEmail()))) {
 
 				return "Please fill the required fields";
 			}
-
-			// Validating URL
+			boolean validateStateCityZip;
+			try {
+				validateStateCityZip = employerJobPost.validateLocationdetails(
+						form.getJobCity(), form.getJobState(),
+						form.getJobZipCode(), form.getJobCountry());
+				if (!validateStateCityZip) {
+					return validateCityState;
+				}
+			} catch (JobBoardServiceException ex) {
+				ex.printStackTrace();
+			}
+			// Validating URL - starts
 			if ((MMJBCommonConstants.APPLY_TO_URL.equals(form.getApplMethod()) || MMJBCommonConstants.APPLY_TO_ATS
 					.equals(form.getApplMethod()))
 					&& ((!StringUtils.isEmpty(form.getApplyUrl()) && !urlValidator
 							.isValid(form.getApplyUrl())) || (!StringUtils
 							.isEmpty(form.getAtsUrl()) && !urlValidator
 							.isValid(form.getAtsUrl())))) {
+				
 
 				return "Please enter valid URL. (Eg: http://www.google.com)";
 			}
+			// validation to check for proper URL
+			if ((MMJBCommonConstants.APPLY_TO_URL.equals(form.getApplMethod()))
+					&& ((!StringUtils.isEmpty(form.getApplyUrl())))) {
+				try {
+					URL url = new URL(form.getApplyUrl());
+					HttpURLConnection urlConn = (HttpURLConnection) url
+							.openConnection();
+					urlConn.connect();
+
+				} catch (MalformedURLException e) {
+					return "Please enter valid URL. (Eg: http://www.google.com)";
+				} catch (IOException e) {
+					return "Please enter valid URL. (Eg: http://www.google.com)";
+				}
+			}
+			if ((MMJBCommonConstants.APPLY_TO_ATS.equals(form.getApplMethod()))
+					&& ((!StringUtils.isEmpty(form.getAtsUrl())))) {
+				try {
+					URL url = new URL(form.getAtsUrl());
+					HttpURLConnection urlConn = (HttpURLConnection) url
+							.openConnection();
+					urlConn.connect();
+
+				} catch (MalformedURLException e) {
+					return "Please enter valid URL. (Eg: http://www.google.com)";
+				} catch (IOException e) {
+					return "Please enter valid URL. (Eg: http://www.google.com)";
+				}
+			}
+			// Validating URL - Ends
 			// Validating EMail
 			if (MMJBCommonConstants.APPLY_TO_EMAIL.equals(form.getApplMethod())
 					&& (!StringUtils.isEmpty(form.getApplyEmail()) && !validateEmailPattern(form
@@ -533,6 +580,7 @@ public class JobPostController extends AbstractController {
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		List<DropDownDTO> companyList = populateDropdownsService
 				.populateCompanyNames(facilityId, false);
+		int mainFacilityId = facilityService.getParentFacility(facilityId).getFacilityId();
 		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo(
 				(Integer) session.getAttribute(USER_ID), FACILITY_ADMIN);
 		List<DropDownDTO> empTypeList = populateDropdownsService
@@ -547,14 +595,13 @@ public class JobPostController extends AbstractController {
 			templateList = new ArrayList<DropDownDTO>();
 		}
 		List<DropDownDTO> jbPostingTypeList = populateDropdownsService
-				.populateJobPostingTypeDropdowns(employerInfoDTO
-						.getFacilityId());
+				.populateJobPostingTypeDropdowns(mainFacilityId);
 //		List<DropDownDTO> jbOwnerList = populateDropdownsService
 //				.populateJobOwnersDropdown(employerInfoDTO.getFacilityId(),
 //						employerInfoDTO.getUserId(),
 //						employerInfoDTO.getRoleId());
 		List<DropDownDTO> jbOwnerList = populateDropdownsService
-				.populateJobOwnersDropdown(employerInfoDTO.getFacilityId());
+				.populateJobOwnersDropdown(facilityId);
 		List<CountryDTO> countryList = populateDropdownsService
 				.getCountryList();
 		List<StateDTO> stateList = populateDropdownsService.getStateList();
@@ -591,6 +638,7 @@ public class JobPostController extends AbstractController {
 		ModelAndView model = new ModelAndView();
 		if(session.getAttribute("adminLogin")!=null ){
 			jobPostFormP.setAdminLogin(true);
+			jobPostFormP.setEnableJobTitle(true);
 		}
 		String readOnly = request.getParameter("readOnly");
 		String jobStatus = request.getParameter("jobStatus");
@@ -599,6 +647,7 @@ public class JobPostController extends AbstractController {
 		int facilityId = 0;
 		facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		int mainFacilityId = facilityService.getParentFacility(facilityId).getFacilityId();
 		List<DropDownDTO> companyList = populateDropdownsService
 				.populateCompanyNames(facilityId, false);
 
@@ -610,10 +659,19 @@ public class JobPostController extends AbstractController {
 		jobPostDTO.setJobPostingType(String.valueOf(jobPostType));
 		jobPostForm = transformJobPost.transformJobPostDTOToForm(jobPostForm,
 				jobPostDTO);
-
+		boolean flag = false;
+		List<DropDownDTO> jobPostTypeCombo = populateDropdownsService
+				.populateJobPostingTypeDropdown(mainFacilityId, jobPostType);
 		// Populating Job Post Type Drop down
 		List<DropDownDTO> jbPostingTypeList = populateDropDowns(session, jobId,
 				jobPostForm, model, companyList);
+		for (DropDownDTO dropDownDto : jbPostingTypeList) {
+			flag = setJobPostTypeDropDownDefaultVal(jobPostForm, jobStatus,
+					jobPostType, jobPostTypeCombo, dropDownDto);
+		}
+		if (flag) {
+			jbPostingTypeList.add(jobPostTypeCombo.get(0));
+		}
 		// Depending on the job status, enable or disable either whole
 		// form or particular fields in the form
 		if (null != readOnly) {
@@ -624,8 +682,10 @@ public class JobPostController extends AbstractController {
 			// disable the form fields
 			if (readOnly.equalsIgnoreCase("true")) {
 				jobPostForm.setReadOnly(true);
+				jobPostForm.setViewPage(true);
 				model.setViewName(POST_NEW_JOBS);
 			} else if (readOnly.equalsIgnoreCase("false")) {
+				jobPostForm.setViewPage(false);
 				enableJobPostFormFieldsByJobStatus(jobPostForm, model,
 						jobStatus, jobPostType, jbPostingTypeList, facilityId);
 			}
@@ -782,9 +842,9 @@ public class JobPostController extends AbstractController {
 			JobPostForm jobPostForm, ModelAndView model,
 			List<DropDownDTO> companyList) {
 		List<DropDownDTO> templateList;
-		AdmFacility admfacility = facilityService.getParentFacility(jobPostForm.getFacilityId());
+		FacilityDTO facilityDTO = facilityService.getParentFacility(jobPostForm.getFacilityId());
 		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo(
-				facilityService.getfacilityUserId(admfacility.getFacilityId()), FACILITY_ADMIN);
+				facilityService.getfacilityUserId(facilityDTO.getFacilityId()), FACILITY_ADMIN);
 		List<DropDownDTO> empTypeList = populateDropdownsService
 				.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
 
@@ -830,7 +890,7 @@ public class JobPostController extends AbstractController {
 	public List<String> getCityList(@RequestParam("term") String query) {
 
 		List<String> countryList = populateDropdownsService
-				.populateCityAutoComplete(query);
+				.populateCityAutoComplete(query.replace("'", "''"));
 
 		return countryList;
 	}
@@ -860,6 +920,9 @@ public class JobPostController extends AbstractController {
 	public String getPostalCode(@RequestParam("city") String city,
 			@RequestParam("state") String state) {
 
+		if (city.contains(", ")) {
+			city = city.substring(0,city.lastIndexOf(", "));
+		}
 		String postalCode = populateDropdownsService.getPostalCode(city, state);
 
 		return postalCode;
@@ -870,7 +933,10 @@ public class JobPostController extends AbstractController {
 	public String getCountry(@RequestParam("city") String city,
 			@RequestParam("state") String state,
 			@RequestParam("postalCode") String postalCode) {
-
+		
+		if (city.contains(", ")) {
+			city = city.substring(0,city.lastIndexOf(", "));
+		}
 		String country = populateDropdownsService.getCountry(city, state,
 				postalCode);
 
@@ -901,14 +967,27 @@ public class JobPostController extends AbstractController {
 
 		List<DropDownDTO> templateList;
 		int productId = Integer.parseInt(product);
+		int facilityId = 0;
+		int userId;
+		facilityId = (Integer) session
+				.getAttribute(MMJBCommonConstants.FACILITY_ID);
+
+		int mainFacilityId = facilityService.getParentFacility(facilityId)
+				.getFacilityId();
 		EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo(
 				(Integer) session.getAttribute(USER_ID), FACILITY_ADMIN);
+		if (employerInfoDTO.getFacilityId() > 0
+				|| employerInfoDTO.getUserId() > 0) {
+			facilityId = employerInfoDTO.getFacilityId();
+			userId = employerInfoDTO.getUserId();
+		} else {
+			facilityId = mainFacilityId;
+			userId = (Integer) session.getAttribute(USER_ID);
+		}
 
 		if (brandingTemplateService.getBrandPackage(productId) && isChecked) {
 			templateList = populateDropdownsService
-					.populateBrandingTemplateDropdown(
-							employerInfoDTO.getFacilityId(),
-							employerInfoDTO.getUserId());
+					.populateBrandingTemplateDropdown(facilityId, userId);
 		} else {
 			templateList = getTemplate(company, product);
 		}
@@ -931,6 +1010,7 @@ public class JobPostController extends AbstractController {
 		ModelAndView model = new ModelAndView();
 		List<DropDownDTO> templateList = new ArrayList<DropDownDTO>();
 		List<JobPostDTO> postedJobList = new ArrayList<JobPostDTO>();
+		List<JobPostDTO> jobPostList = new ArrayList<JobPostDTO>();
 		String sortBy=null;
 		if (null != request.getParameter("sort")) {
 			if (jobPostform.isSortAsc()) {
@@ -1005,8 +1085,7 @@ public class JobPostController extends AbstractController {
 			}
 
 			// to set the company Id
-
-			EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo(
+         	EmployerInfoDTO employerInfoDTO = employerJobPost.getEmployerInfo(
 					userId, FACILITY_ADMIN);
 
 			if (brandingTemplateService.getBrandPurchaseInfo(employerInfoDTO
@@ -1018,9 +1097,19 @@ public class JobPostController extends AbstractController {
 			} else {
 				templateList = new ArrayList<DropDownDTO>();
 			}
-
-			jobPostform.setJobPostDTOList(postedJobList);
-			for (JobPostDTO jobPostDTO : postedJobList) {
+			// Code changes to display the auto renew value and template name
+			 for(JobPostDTO  jobPostDTO:postedJobList){
+	        	  if(jobPostDTO.getBrandTemplate()>0){
+	        		  BrandingTemplateDTO brandingTemplateDTO= brandingTemplateService.editBrandingTemplate(jobPostDTO.getBrandTemplate());
+	        		  jobPostDTO.setTemplateName(brandingTemplateDTO.getTemplateName());   
+	        	  }else{
+	        		  jobPostDTO.setTemplateName("N/A");  
+	        	  }
+	        	  jobPostDTO.setAutoRenewVal(jobPostDTO.isAutoRenew()?"Yes":"No");
+	        	  jobPostList.add(jobPostDTO);
+	          }
+			jobPostform.setJobPostDTOList(jobPostList);
+			for (JobPostDTO jobPostDTO : jobPostList) {
 				for (DropDownDTO dropDownDTO : companyList) {
 					if (null!=jobPostDTO.getCompanyName() && jobPostDTO.getCompanyName().equalsIgnoreCase(
 							dropDownDTO.getOptionId())) {
@@ -1144,6 +1233,7 @@ public class JobPostController extends AbstractController {
 			JobPostForm jobPostform) {
 		String selectedRows = jobPostform.getSelectedRow();
 		int jobId = 0;
+		String viewName=FORWORD_MANAGE_JOBPOST;
 		StringTokenizer tokenize = new StringTokenizer(selectedRows, ",");
 		ModelAndView model = new ModelAndView();
 		model.addObject(JOB_POST_FORM, jobPostform);
@@ -1154,11 +1244,13 @@ public class JobPostController extends AbstractController {
 							.getAttribute(MMJBCommonConstants.USER_ID));
 			if (!result) {
 				model.addObject(ERROR_MESSAGE, deactivateMsg);
+			}else{
+				viewName=REDIRECT_MANAGE_JOBPOST;
 			}
 		}
 		model.addObject(JOB_POST_FORM, jobPostform);
 
-		model.setViewName(FORWORD_MANAGE_JOBPOST);
+		model.setViewName(viewName);
 		return model;
 	}
 
@@ -1178,6 +1270,7 @@ public class JobPostController extends AbstractController {
 			JobPostForm jobPostform) {
 		String selectedRows = jobPostform.getSelectedRow();
 		int jobId = 0;
+		String viewName=FORWORD_MANAGE_JOBPOST;
 		StringTokenizer tokenize = new StringTokenizer(selectedRows, ",");
 		ModelAndView model = new ModelAndView();
 		int nsCustomerID = manageFeaturedEmployerProfile
@@ -1202,8 +1295,7 @@ public class JobPostController extends AbstractController {
 				return model;
 			}
 			int jobPostType = employerJobPost
-					.getinvDetIdByJobId(jobId, (Integer) session
-							.getAttribute(MMJBCommonConstants.FACILITY_ID),
+					.getinvDetIdByJobId(jobId, jobPostDTO.getFacilityId(),
 							(Integer) session
 									.getAttribute(MMJBCommonConstants.USER_ID));
 			// validate and check the credit Starts
@@ -1213,7 +1305,7 @@ public class JobPostController extends AbstractController {
 						.validateAvailableCredits(
 								jobPostType,
 								(Integer) session
-										.getAttribute(MMJBCommonConstants.FACILITY_ID));
+								.getAttribute(MMJBCommonConstants.FACILITY_ID));
 
 				if (!bValidCredits && jobPostDTO.getJobStatus() != MMJBCommonConstants.POST_JOB_INACTIVE) {
 					model = populateDropdowns(model, session);
@@ -1236,6 +1328,8 @@ public class JobPostController extends AbstractController {
 			if (!result) {
 				model.addObject(ERROR_MESSAGE, repostFail);
 			} else {
+
+				viewName=REDIRECT_MANAGE_JOBPOST;
 				if (jobPostDTO.getJobStatus().equals(
 						MMJBCommonConstants.POST_JOB_INACTIVE)) {
 					model.addObject(ERROR_MESSAGE, repostSuccessInactive);
@@ -1246,7 +1340,7 @@ public class JobPostController extends AbstractController {
 
 		}
 		model.addObject(JOB_POST_FORM, jobPostform);
-		model.setViewName(FORWORD_MANAGE_JOBPOST);
+		model.setViewName(viewName);
 		return model;
 	}
 

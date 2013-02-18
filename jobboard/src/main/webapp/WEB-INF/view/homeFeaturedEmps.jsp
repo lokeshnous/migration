@@ -9,25 +9,25 @@
 									<div class="slider1Frames">
 										<a
 											href="featuredemployerdetails.html?id=${companyProfileDTOList[status.index].facilityid }">
-											<div class="slider1FrameA1">
+											<div class="slider1FrameA1" style="margin-top: -20px;" >
 												<img src="<%=request.getContextPath()%>/healthcarejobs/viewImage.html?id=${companyProfileDTOList[status.index].logoPath}"
 													alt="${companyProfileDTOList[status.index].companyName }"
-													width="125" height="37">
+													class="FeatuEmploy">
 											</div>
 										</a> 
 										<c:if test="${not empty companyProfileDTOList[status.index+1].facilityid }">
 										<a
 											href="featuredemployerdetails.html?id=${companyProfileDTOList[status.index+1].facilityid }">
-											<div class="slider1FrameA2">
+											<div class="slider1FrameA2" style="margin-top: -20px;">
 												<img src="<%=request.getContextPath()%>/healthcarejobs/viewImage.html?id=${companyProfileDTOList[status.index+1].logoPath}"
 													alt="${companyProfileDTOList[status.index+1].companyName }"
-													width="125" height="37">
+													 class="FeatuEmploy">
 											</div>
 										</a>
 										</c:if>
 									</div>
 								</c:forEach>
 									</div>
-									<c:if test="${next != count }">
+									<c:if test="${next < count }">
 							<div id="slider4NextBtn"></div></c:if>
 						

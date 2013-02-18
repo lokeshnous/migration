@@ -12,7 +12,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>ADVANCE Heathcare Jobs</title>
 
-        <script type="text/javascript" src="javascripts/expandCollapse.js"></script>
+        <!-- <script type="text/javascript" src="javascripts/expandCollapse.js"></script> -->
         <script src="../resources/js/resumesearchresult.js"></script>
 		</head>
 		

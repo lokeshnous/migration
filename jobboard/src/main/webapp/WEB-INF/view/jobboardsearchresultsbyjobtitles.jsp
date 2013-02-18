@@ -10,6 +10,7 @@
 <title>${metaTitle}</title>
 <meta name="description" content="${metaDesc}">
 <meta name="robots" content="noindex, follow">
+<link rel='shortcut icon' href='<%=request.getContextPath() %>/resources/images/favicon.ico' type="image/x-icon">
 <c:if test="${page == 1}">
 <link href="${canonicalUrl}" rel="canonical" />
 </c:if>
@@ -104,10 +105,11 @@
 										</c:otherwise>
 									</c:choose>
 												id="searchResultsJobInfo${job.JobId}"
-												onclick="trackClick(${job.JobId});">
+												>
+												<%-- onclick="trackClick(${job.JobId});" --%>
 												<li class="searchResultsColumn1"><a
-													href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/jobview/
-										${job.JobId}/${fn:toLowerCase(fn:replace(job.JobTitle, 
+													href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/search/jobview/
+										${job.JobId}/${fn:toLowerCase(fn:replace(job.JobTitleEncode, 
                                 					' ', '-'))}.html">${job.JobTitle}</a>
 												</li>
 

@@ -9,6 +9,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +20,11 @@ import com.advanceweb.afc.common.controller.AbstractController;
 import com.advanceweb.afc.jb.admin.service.AdminService;
 import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.EmpSearchDTO;
+import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.constants.PageNames;
+import com.advanceweb.afc.jb.employer.service.FacilityService;
+import com.advanceweb.afc.jb.job.service.JobPostInventoryService;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
 import com.advanceweb.common.client.ClientContext;
@@ -43,6 +47,15 @@ public class EditFacilityGroupController extends AbstractController{
 	
 	@Autowired
 	private TransformAdminImpersonation transformAdminImpersonation;
+	
+	@Autowired
+	private JobPostInventoryService inventoryService;
+	
+	@Autowired
+	private FacilityService facilityService;
+	
+	@Value("${adminEditFacilityErrMsg}")
+	private String adminEditFacilityErrMsg;
 
 	@Autowired
 	private AdService adService;
@@ -54,20 +67,24 @@ public class EditFacilityGroupController extends AbstractController{
 		ModelAndView model = new ModelAndView();
 		int nsId = (Integer) session
 				.getAttribute(MMJBCommonConstants.NS_CUSTOMER_ID);
+		EmpSearchDTO dto1 = adminService
+				.getUserIdAndFacilityId(nsId);
+		session.setAttribute("nsId", nsId);
+		session.setAttribute("empList", dto1.getCompanyName());
 		List<EmpSearchDTO> dto = adminService.getEmpdataByNetSuiteId(nsId);
-		model.addObject("facilityList", dto);
+		
 		boolean isHealthSys = false;
-		for (EmpSearchDTO empSearchDTO : dto) {
-			if (empSearchDTO.getFacilityType().equalsIgnoreCase(
+			if (dto.get(0).getFacilityType().equalsIgnoreCase(
 					MMJBCommonConstants.FACILITY_GROUP)) {
 				isHealthSys = true;
+				dto.get(0).setFacilityType(MMJBCommonConstants.FACILITY);
 			}
-		}
+		
+		model.addObject("facilityList", dto);
 		session.setAttribute("isHealthSys", isHealthSys);
 		adminForm.setHealthSystem(isHealthSys);
 		model.addObject("adminForm", adminForm);
 		model.addObject("isHealthLable", "Health System");
-		model.addObject("facilityList", dto);
 		model.addObject("result","result");
 		model.setViewName("manageFacilityGroup");
 		return model;
@@ -79,11 +96,18 @@ public class EditFacilityGroupController extends AbstractController{
 	JSONObject saveEditedFacilty(AdminForm adminForm,
 			HttpSession session, HttpServletRequest request) {
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("success", "success");
 		ModelAndView model = new ModelAndView();
 		boolean isHealthSys = false;
 		
 		populateAds(session, request, model);
+		
+		
+		// validation for any purchase packages
+		if (checkInventoryDetails((Integer) session
+				.getAttribute(MMJBCommonConstants.NS_CUSTOMER_ID))) {
+			jsonObject.put("failureMsg", adminEditFacilityErrMsg);
+			return jsonObject;
+		}
 		
 		if(session.getAttribute("isHealthSys")!=null){
 			isHealthSys =(Boolean) session.getAttribute("isHealthSys");
@@ -100,14 +124,40 @@ public class EditFacilityGroupController extends AbstractController{
 		try{
 		dto = transformAdminImpersonation.convertFormToDTO(adminForm);
 		adminService.saveEditFacilityGroup(dto);
-		LOGGER.info("Data saved successfully");
+		LOGGER.debug("Data saved successfully");
 		}catch(Exception e){
-			LOGGER.info("Exception while saving the edited facility from Admin functionality :"+e.getMessage());
-			jsonObject.remove("success");
+			LOGGER.error("Exception while saving the edited facility from Admin functionality :"+e.getMessage());
 		}
 		model.setViewName("adminLogin");
 		return jsonObject;
 
+	}
+
+	/**
+	 * The method helps to check for inventory details for given user by net suite Id
+	 * 
+	 * @param netSuiteId
+	 * @return - true if inventory detail present
+	 *         - false if not
+	 */
+	private boolean checkInventoryDetails(int netSuiteId) {
+		boolean isInventoryDtlPresent = false;
+		try {
+			List<EmpSearchDTO> empData = adminService
+					.getEmpdataByNetSuiteId(netSuiteId);
+			int userId = empData.get(0).getUserId();
+			int facilityId = empData.get(0).getFacilityId();
+			facilityId = facilityService.getParentFacility(facilityId)
+					.getFacilityId();
+			List<JobPostingInventoryDTO> inventiryDTOList = inventoryService
+					.getInventoryDetails(userId, facilityId);
+			if (!inventiryDTOList.isEmpty()) {
+				isInventoryDtlPresent = true;
+			}
+		} catch (Exception ex) {
+			LOGGER.error(ex.getMessage(), ex);
+		}
+		return isInventoryDtlPresent;
 	}
 
 	/**

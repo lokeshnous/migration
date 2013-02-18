@@ -14,13 +14,23 @@
     });
 </script>
 
-<div class="job_seeker_login leftFormHolderResumepage">
-<p class="borderBottomDotted marginBottom15">&nbsp;</p> 
+<div class="job_seeker_login leftFormHolderResumepage" id="edu${eduPositionId}">
+<p class="borderBottomDotted marginBottom15">&nbsp;</p>
+	
 	<div class="rowEvenNewSpacing">
 		<span class="lableText3">Institution Name:</span>
 		<form:input path="createResume.listEduForm[${eduPositionId}].instituteName"
 			class="job_seeker_password textBox350 focusElement" />
-		<span class="required">(Required)</span>
+		<span class="required">(Required)</span><span></span>
+		<div class="floatRight margin0">
+			<p class="floatLeft margin0">Delete this Education section &nbsp;</p> 
+			<p class="floatRight margin0"><img
+				id="closeCheckOut"
+				onclick="removeEdu('edu${eduPositionId}',${eduPositionId})"
+				src="<%= request.getContextPath() %>/resources/images/Close.png"
+				class="cursor" title="Delete" alt="Delete" /></p>
+			
+		</div>
 	</div>
 	<div class="row">
 		<span class="lableTextSelect">Degree Level:</span>
@@ -73,7 +83,7 @@
 				onKeyDown="limitText(this.form.eduDeglimitedtextarea${eduPositionId},this.form.countdowneduDeg${eduPositionId},2000);"
 				onKeyUp="limitText(this.form.eduDeglimitedtextarea${eduPositionId},this.form.countdowneduDeg${eduPositionId},2000);"
 				class="textareaBoxCResume" rows="3" cols="45" />
-			<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdowneduDeg${eduPositionId}" size="3" value="2000">characters remaining.<p>
+			<p class="magrin_top0 floatLeft"><input readonly type="text" class="input2000_width" name="countdowneduDeg${eduPositionId}" size="3" value="2000">characters remaining.</p>
 		</div>
 	</div>
 	<div class="row MarginBottom10 ">
@@ -85,7 +95,7 @@
 				onKeyDown="limitText(this.form.eduCertlimitedtextarea${eduPositionId},this.form.countdowneduCert${eduPositionId},2000);"
 				onKeyUp="limitText(this.form.eduCertlimitedtextarea${eduPositionId},this.form.countdowneduCert${eduPositionId},2000);"
 				class="textareaBoxCResume" rows="3" cols="45" />
-			<p class="magrin_top0"><input readonly type="text" class="input2000_width" name="countdowneduCert${eduPositionId}" size="3" value="2000">characters remaining.<p>
+			<p class="magrin_top0 floatLeft"><input readonly type="text" class="input2000_width" name="countdowneduCert${eduPositionId}" size="3" value="2000">characters remaining.</p>
 		</div>
 
 	</div>

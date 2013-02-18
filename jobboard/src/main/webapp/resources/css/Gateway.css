@@ -154,3 +154,7 @@ table.gatewayTable tr td span.paymentLineHeight {
     width: auto;
     margin-top: 5px;
 }
+
+input.securityCode {
+	width: 40px !important;
+}

@@ -77,34 +77,42 @@
 			
 			/* $.nmManual('../brandingTemplates/viewImage.html?id='+path); */
 			/* path.preventDefault(); */
-
-			$.nmManual('../brandingTemplates/viewImage.html?id=' + path,  {sizes:{initW: 500, initH: 500, minW: 500, minH: 500,  w: 500, h: 500}});
+              if(path!=''){
+			$.nmManual('../brandingTemplates/viewImage.html?id=' + path,  {closeOnEscape: true, showCloseButton: true, closeOnClick: true, sizes:{initW: 500, initH: 500, minW: 500, minH: 500,  w: 500, h: 500}});
+              }
 
 			}
 
 			function popTestimony(path) {
-
+				if(path!=''){
 				$.nmManual('../brandingTemplates/viewTestimonial.html?id='
-						+ path,  {sizes:{initW: 600, initH: 600, minW: 600, minH: 600,  w: 600, h: 600}});
+						+ path,  {closeOnEscape: true, showCloseButton: true, closeOnClick: true, sizes:{initW: 600, initH: 600, minW: 600, minH: 600,  w: 600, h: 600}});
+				}
 			}
 		</script>
 		</head>
 
 		<body class="job_board">
 
-<div class="main_wrapper_outside marginTop30">
- <div class="main_wrapper_insideRC">
+<div class="main_wrapper_outside ">
+ <div class="main_wrapper_inside">
  <div class="main">
+ <jsp:include page="../templates/templates_header.jsp"></jsp:include>
+ <div class="clearfix"></div>
+ <div class="sectionHeader marginTop20">
+ <div class="floatLeft">
+ <h2 class="TextColor02 floatLeft">NEW BRANDING TEMPLATE PREVIEW</h2>
+ </div>
      		 <div class="floatRight">
-				<span class="floatRight"> <a href="../brandingTemplates/displayTemplate.html?id=${brandingTemplateForm.getBrowsePath()}">Back</a></span>
+				<span class="headerRightLink"> <a href="../brandingTemplates/displayTemplate.html?id=${brandingTemplateForm.getBrowsePath()}">Return to Branding Template</a></span>
 			</div>
-				
+	</div>			
   <div class="row" >
         
          <!--LOGO AREA-->
        	 <div class="row marginTop5">
           <div class="row marginTop16">
-               	<div class="LogoAreaBox" ><img src="<%=request.getContextPath()%>/brandingTemplates/viewImage.html?id=${brandingTemplateForm.getLogoPath()}"  alt="logo" width="335" height="60" border="0" /></div>
+               	<div class="LogoAreaBox" ><img src="<%=request.getContextPath()%>/brandingTemplates/viewImage.html?id=${brandingTemplateForm.getLogoPath()}"  alt="logo" style="min-width:50px; max-width:100%; max-height:100%;" border="0" /></div>
           </div>
           <div class="BoxText" alt="Color" width="500" height="60" border="0" style="color: ${brandingTemplateForm.getColor().substring(4)}"/></div>
          </div>
@@ -113,7 +121,7 @@
           <div class="row">
          	<div class="BannerAreaBox" style="background: ${brandingTemplateForm.getColor().substring(4)}">
                    <div class="BannerAreaInnerBox">
-               <div class="BannerImgBox" > <img src="<%=request.getContextPath()%>/brandingTemplates/viewImage.html?id=${brandingTemplateForm.getMainImagePath()}" width="490" height="319" alt="Main image"></div>
+               <div class="BannerImgBox" > <img class="imgCenter" src="<%=request.getContextPath()%>/brandingTemplates/viewImage.html?id=${brandingTemplateForm.getMainImagePath()}" alt="Main image"></div>
                <div class="BannerTextBoxBlank" style="background: #c0c0c0">
 				                
                        <h1 style="color: ${brandingTemplateForm.getColor().substring(4)}">About This Employer </h1>
@@ -162,13 +170,17 @@
 							<c:forEach var="companyProfileDTO"
 									items="${brandingTemplateForm.listAddImages}" varStatus="status" step="4">
 									<div class="slider1Frames">
+									<c:if test="${not empty brandingTemplateForm.listAddImages[status.index].mediaPath}">
 										<a id="${brandingTemplateForm.listAddImages[status.index].mediaPath}" onclick="popImage(this.id);" >
 											<div class="slider1FrameA1">
 												<img src="<%=request.getContextPath()%>/brandingTemplates/viewImage.html?id=${brandingTemplateForm.listAddImages[status.index].mediaPath}"
 													
 													>
 											</div>
-										</a> <a
+										</a>
+										</c:if>
+										<c:if test="${not empty brandingTemplateForm.listAddImages[status.index+1].mediaPath}">
+										 <a
 											id="${brandingTemplateForm.listAddImages[status.index+1].mediaPath}" onclick="popImage(this.id);">
 											<div class="slider1FrameA1">
 												<img src="<%=request.getContextPath()%>/brandingTemplates/viewImage.html?id=${brandingTemplateForm.listAddImages[status.index+1].mediaPath}"
@@ -176,6 +188,8 @@
 													>
 											</div>
 										</a>
+										</c:if>
+										<c:if test="${not empty brandingTemplateForm.listAddImages[status.index+2].mediaPath}">
 										<a
 											id="${brandingTemplateForm.listAddImages[status.index+2].mediaPath}" onclick="popImage(this.id);">
 											<div class="slider1FrameA1">
@@ -184,6 +198,8 @@
 													>
 											</div>
 										</a>
+										</c:if>
+										<c:if test="${not empty brandingTemplateForm.listAddImages[status.index+3].mediaPath}">
 										<a
 											id="${brandingTemplateForm.listAddImages[status.index+3].mediaPath}" onclick="popImage(this.id);">
 											<div class="slider1FrameA1">
@@ -192,6 +208,7 @@
 													>
 											</div>
 										</a>
+										</c:if>
 									</div>
 								</c:forEach>
 								</div>
@@ -215,7 +232,7 @@
 							<c:forEach var="companyProfileDTO"
 									items="${brandingTemplateForm.listVideos}" varStatus="status" step="4">
 									<div class="slider1Frames">
-									
+									<c:if test="${not empty brandingTemplateForm.listVideos[status.index].mediaPath}">
 									<div class="floatLeft width285 marginLeft10 marginRight10">
 									&nbsp;
 									<div id="mediaspacePath" style="display: none;">${brandingTemplateForm.listVideos[status.index].mediaPath}</div> 
@@ -234,26 +251,28 @@
 										var ply = new jeroenwijering.Player(cnt,src,cfg);
 									</script> 
 									</div>
-									
+									</c:if>
+									<c:if test="${not empty brandingTemplateForm.listVideos[status.index+1].mediaPath}">
 									<div class="floatLeft width285 marginLeft10 marginRight10">
 									&nbsp;
 									<div id="mediaspacePath2" style="display: none;">${brandingTemplateForm.listVideos[status.index+1].mediaPath}</div> 
 									<div id="mediaspace2"></div> 
 									
 									<script type="text/javascript">
-										var cnt2 = document.getElementById("mediaspace2");
-										var src2 = '../resources/MediaFiles/wmvplayer.xaml';
-										var filePath2 = $("#mediaspacePath2").text();
-										var cfg2 = {
-											file: filePath2,
+										var cnt = document.getElementById("mediaspace2");
+										//var src2 = '../resources/MediaFiles/wmvplayer.xaml';
+										var filePath = $("#mediaspacePath2").text();
+										var cfg = {
+											file: filePath,
 											height:'165',
 											width:'260',
 											autostart:'false'
 										};
-										var ply2 = new jeroenwijering.Player(cnt2,src2,cfg2);
+										var ply = new jeroenwijering.Player(cnt,src,cfg);
 									</script> 
 									</div>
-									
+									</c:if>
+									<c:if test="${not empty brandingTemplateForm.listVideos[status.index+2].mediaPath}">
 									<div class="floatLeft width285 marginLeft10 marginRight10">
 									&nbsp;
 									<div id="mediaspacePath3" style="display: none;">${brandingTemplateForm.listVideos[status.index+2].mediaPath}</div> 
@@ -261,7 +280,7 @@
 									
 									<script type="text/javascript">
 										var cnt = document.getElementById("mediaspace3");
-										var src = '../resources/MediaFiles/wmvplayer.xaml';
+										//var src = '../resources/MediaFiles/wmvplayer.xaml';
 										var filePath = $("#mediaspacePath3").text();
 										var cfg = {
 											file: filePath,
@@ -272,7 +291,7 @@
 										var ply = new jeroenwijering.Player(cnt,src,cfg);
 									</script> 
 									</div>
-									
+									</c:if>
 									</div>
 								</c:forEach>
 								</div>
@@ -291,30 +310,38 @@
 								<c:forEach var="companyProfileDTO"
 									items="${brandingTemplateForm.listTestimony}" varStatus="status" step="4">
 									<div class="slider1Frames">
+									<c:if test="${not empty brandingTemplateForm.listTestimony[status.index].testimony}">
 										<a
 											id="${brandingTemplateForm.listTestimony[status.index].testimony}"  onclick="popTestimony(this.id);">
 											<div class="slider1FrameA1">
 												<p class="BannerTextBoxBlankSlide"  >${brandingTemplateForm.listTestimony[status.index].testimony}</p>
 											</div>
-										</a> 
+										</a>
+										</c:if>
+										<c:if test="${not empty brandingTemplateForm.listTestimony[status.index+1].testimony}"> 
 										<a
 											id="${brandingTemplateForm.listTestimony[status.index+1].testimony}" onclick="popTestimony(this.id);" >
 											<div class="slider1FrameA1">
 												<p class="BannerTextBoxBlankSlide" >${brandingTemplateForm.listTestimony[status.index+1].testimony}</p>
 											</div>
 										</a>
+										</c:if>
+										<c:if test="${not empty brandingTemplateForm.listTestimony[status.index+2].testimony}">
 										<a
 											id="${brandingTemplateForm.listTestimony[status.index+2].testimony}" onclick="popTestimony(this.id);">
 											<div class="slider1FrameA1">
 												<p class="BannerTextBoxBlankSlide"  >${brandingTemplateForm.listTestimony[status.index+2].testimony}</p>
 											</div>
 										</a>
+										</c:if>
+										<c:if test="${not empty brandingTemplateForm.listTestimony[status.index+3].testimony}">
 										<a
 											id="${brandingTemplateForm.listTestimony[status.index+3].testimony}" onclick="popTestimony(this.id);">
 											<div class="slider1FrameA1">
 												<p class="BannerTextBoxBlankSlide" >${brandingTemplateForm.listTestimony[status.index+3].testimony}</p>
 											</div>
 										</a>
+										</c:if>
 									</div>
 								</c:forEach>
 								</div>
@@ -374,15 +401,17 @@
                           <h3 class="TextColorA01 FontSize18">Name of Facility</h3>
                           <div class="row marginTop5">
                     <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${brandingTemplateForm.getColor().substring(4)}"><strong>CITY :</strong></h1>
-                    <p>Baltimore</p>
+                    <p>Job City</p>
+                    <!-- <p>Baltimore</p> -->
                   </div>
                           <div class="row marginTop5">
                     <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${brandingTemplateForm.getColor().substring(4)}"><strong>STATE :</strong></h1>
-                    <p>Maryland</p>
+                    <p>Job State</p>
+                    <!-- <p>Maryland</p> -->
                   </div>
                           <div class="row marginTop5">
                     <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${brandingTemplateForm.getColor().substring(4)}"><strong>COUNTRY :</strong></h1>
-                    <p>US</p>
+                    <p>Job Country</p>
                   </div>
                           <div class="row marginTop5">
                     <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${brandingTemplateForm.getColor().substring(4)}"><strong>JOB ID NUMBER :</strong></h1>
@@ -441,13 +470,14 @@
               
               <div class="ContantMiddleRightBox">
                 	<DIV class="row">
-		                <h1 class="HeadText" style="color: ${brandingTemplateForm.getColor().substring(4)}">Manager, Home Care Coordination/Discharge Planning </h1>
+		                <h1 class="HeadText" style="color: ${brandingTemplateForm.getColor().substring(4)}">Job Posting Title</h1>
 		                <br />
 		                <br />
 		                <h3 class="HeadText" style="color: ${brandingTemplateForm.getColor().substring(4)}">JOB  SUMMARY:</h3>
 		                <br />
 		                <div class="lineHeight16">
-		                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+		                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+		                <!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p> -->
 		                <br />
 	               		</div>
                 	</div>
@@ -483,15 +513,18 @@
               
               
               </div>
-              </div>
               
+              </div>
+              <div class="clearfix"></div>
                    
         
         
   </div>             
  </div>        
- </div>       
+  <div class="clearfix"></div>
+  </div>       
 </div>
+<jsp:include page="../templates/templates_footer.jsp"></jsp:include>
               
 
 </body>

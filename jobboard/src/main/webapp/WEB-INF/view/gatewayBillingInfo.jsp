@@ -42,7 +42,7 @@
 		$("#security_code").val("");
 		
 		//Auto complete on selecting city
-		$("#cityTown2").autocomplete({
+	/* 	$("#cityTown2").autocomplete({
 			source: '${pageContext.request.contextPath}/employer/getCityList.html',
 			width:500,
 			select: function(event, ui) {
@@ -62,6 +62,9 @@
 						url: '${pageContext.request.contextPath}/employer/getCountry.html?city='+$("#cityTown2").val()+'&state='+$("#State2").val()+'&postalCode='+$("#zip2").val(),
 						success : function(country) {
 							$('#Country2').val(country);
+							var modCity = $("#cityTown2").val();
+							modCity = modCity.substring(0,modCity.lastIndexOf(", "));
+							$("#cityTown2").val(modCity);
 						},
 					}); 						
 				},
@@ -89,20 +92,12 @@
 				});		
 			}
 		});	
- 		
-		//wrote to clearing the fields the city, zipcode, country fields whiel changing the state
-		$("#State2").change( function(){
-				$('#cityTown2').val('');
-				$('#zip2').val('');
-				$('#Country2').val('');
-		});
-		$("#Country2").change(function(){
-			$('#zip2').val("");
-			$('#State2').val("");
-			$('#cityTown2').val("");
-		});
+		 */
+		//setting value by default as USA
+		$('#Country2').val("USA");
 		
-		$("#zip2").change(function(){
+		//wrote to clearing the fields the city, zipcode, country fields whiel changing the state
+		/* $("#zip2").change(function(){
 			$('#cityTown2').val("");
 			$('#State2').val("");
 			$('#Country2').val("");
@@ -112,16 +107,15 @@
 			$('#zip2').val("");
 			$('#State2').val("");
 			$('#Country2').val("");
-		});
+		}); */
 		
 		
 		
 		
 	});
 	
-	function copyAccToBillingAddr(obj) {
-		var isSelected = obj.value;
-		
+	function copyAccToBillingAddr() {
+		var isSelected = $('#checkId').is(':checked');
 		if (isSelected) {
 			$("#firstname2").val($("#firstName").val());
 			$("#lastname2").val($("#lastname").val());
@@ -131,6 +125,14 @@
 			$("#Country2").val($("#country").val());
 			$("#zip2").val($("#zip").val());
 			$("#phone2").val($("#phone").val());
+		}else{
+			$("#firstname2").val("");
+			$("#lastname2").val("");
+			$("#streetAddress_billing1").val("");
+			$("#cityTown2").val("");
+			$("#State2").val("");
+			$("#zip2").val("");
+			$("#phone2").val("");
 		}
 	}
 	
@@ -229,14 +231,6 @@
 								name="cityTown" readonly="true" id="state"
 								class="job_seeker_password textBox350 " />
 						</div>
-
-						<div class="rowEvenNewSpacing">
-							<span class="lableText3">Country:</span>
-							<form:input path="accountAddressForm.country" type="text"
-								name="cityTown" readonly="true" id="country"
-								class="job_seeker_password textBox350 " />
-						</div>
-
 						<div class="rowEvenNewSpacing">
 							<span class="lableText3">ZIP Code:</span>
 							
@@ -245,6 +239,14 @@
 								class="job_seeker_password textBox350 " />
 								
 						</div>
+						<div class="rowEvenNewSpacing">
+							<span class="lableText3">Country:</span>
+							<form:input path="accountAddressForm.country" type="text"
+								name="cityTown" readonly="true" id="country"
+								class="job_seeker_password textBox350 " />
+						</div>
+
+						
 
 						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Phone:</span>
@@ -257,9 +259,21 @@
 						<div class="clearfix"></div>
 						<!-- Billing Address -->
 
-						<h3 class="gatewayBreadcrumbs main_section">Billing Address</h3>
+						<h3 class="gatewayBreadcrumbs main_section">Billing Address &nbsp;&nbsp;&nbsp;&nbsp;<form:checkbox onclick="copyAccToBillingAddr()"
+								id="checkId" path="billingAddressForm.useMyAccountAddr"
+								name="useAcctAddress" />
+							<label class="headerRightText">Same as account information</label></h3> 
+						
+							
+						
 						<p class="gateway_section_head form_notes">Accounts Payable
 							Contact</p>
+						<div class="rowEvenNewSpacing">
+							<span class="lableText3"> </span>
+							<c:if test="${not empty errorMessage}">
+								<div id="errmsgData" class="FormErrorDisplayText">${errorMessage}</div>
+							</c:if>
+						</div>
 
 						<div class="rowEvenNewSpacing">
 							<span class="lableText3">First Name:</span>
@@ -286,12 +300,7 @@
 							<form:errors path="billingAddressForm.lnameForBillingAddr" /> 
 						</div>
 
-						<div class="rowEvenNewSpacing reuse_address">
-							<form:checkbox onclick="copyAccToBillingAddr(this)"
-								value="false" path="billingAddressForm.useMyAccountAddr"
-								name="useAcctAddress" />
-							<span>Use my account address</span>
-						</div>
+						
 
 						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Street Address:</span>
@@ -330,7 +339,17 @@
 						<div class="validationMsg ">
 							<form:errors path="billingAddressForm.stateBillingAddress" />
 						</div>
-
+						<div class="rowEvenNewSpacing">
+							<span class="lableText3">ZIP Code:</span>
+							<form:input path="billingAddressForm.zipCodeForBillingAddr"
+								type="text" name="zip2" id="zip2"
+								class="job_seeker_password textBox350 " />
+							<span class="required">(Required)</span>
+						</div>
+						
+						<div class="validationMsg ">
+							<form:errors path="billingAddressForm.zipCodeForBillingAddr" />
+						</div>
 						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Country:</span>
 							<form:select name="Country2"
@@ -346,17 +365,7 @@
 							<form:errors path="billingAddressForm.countryForBillingAddr" />
 						</div>
 
-						<div class="rowEvenNewSpacing">
-							<span class="lableText3">ZIP Code:</span>
-							<form:input path="billingAddressForm.zipCodeForBillingAddr"
-								type="text" name="zip2" id="zip2"
-								class="job_seeker_password textBox350 " />
-							<span class="required">(Required)</span>
-						</div>
 						
-						<div class="validationMsg ">
-							<form:errors path="billingAddressForm.zipCodeForBillingAddr" />
-						</div>
 						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Phone:</span>
 							<form:input path="billingAddressForm.phone" type="text" id="phone2"
@@ -448,7 +457,6 @@
 								path="creditCardInfoForm.expYear"
 								class="jb_input3 jb_input_width3 add_L_margin">
 								<form:option value="" selected="selected">-- Select Year --</form:option>yearsList
-								<form:option value="2012">2012</form:option>
 								<form:option value="2013">2013</form:option>
 								<form:option value="2014">2014</form:option>
 								<form:option value="2015">2015</form:option>
@@ -478,7 +486,7 @@
 							<span class="lableText3">Security Code:</span>
 							<form:password path="creditCardInfoForm.securiyCode"
 								name="security_code" id="security_code" 
-								class="job_seeker_password tinyTextBox " maxlength="4"/>
+								class="job_seeker_password tinyTextBox securityCode" maxlength="4"/>
 							<div class="toolTip colorPkrAreaToolTip"><span class="classic">For Visa, MasterCard, and Discover this number is the last 3 digits on back of your card on the signature strip. For American Express this number is the 4 digits above card number at the right on the front of your card.</span></div>	
 							<!-- <span class="floatLeft marginTop6"><img
 								src="../resources/images/Tips_blue_Icon.png" /></span>  -->

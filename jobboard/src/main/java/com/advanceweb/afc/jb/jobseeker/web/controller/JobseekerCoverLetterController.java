@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -87,6 +88,8 @@ public class JobseekerCoverLetterController {
 	@RequestMapping(value = "/jobseekerCoverLetterSub", method = RequestMethod.POST)
 	public String getJobPostDetailsSave(HttpServletRequest request,
 			HttpSession session, ResCoverLetterForm resCoverLetterForm,
+			@RequestParam("coverLetterText") String coverLetterText,
+			@RequestParam("coverLetterName") String coverLetterName,
 			BindingResult result) {
 
 		try {
@@ -96,7 +99,21 @@ public class JobseekerCoverLetterController {
 			 * dto.setName(resCoverLetterForm.getName());
 			 * dto.setCoverletterText(resCoverLetterForm.getCoverletterText());
 			 */
-			if (("".equals(resCoverLetterForm.getName()))
+			if(("".equals(coverLetterName)) || (null == coverLetterName)){
+				return "Please enter the required fields";
+			}else{
+				dto.setName(coverLetterName);
+				resCoverLetterForm.setName(coverLetterName);
+			}
+			
+			if(("".equals(resCoverLetterForm.getDescription())) || (null == resCoverLetterForm.getDescription())){
+				return "Please enter the required fields";
+			}else{
+				dto.setCoverletterText(resCoverLetterForm.getDescription());
+				resCoverLetterForm.setCoverletterText(resCoverLetterForm.getDescription());
+			}
+			
+			/*if (("".equals(resCoverLetterForm.getName()))
 					|| (null == resCoverLetterForm.getName())) {
 				return "Please enter the required fields";
 			} else {
@@ -107,7 +124,7 @@ public class JobseekerCoverLetterController {
 				return "Please enter the required fields";
 			} else {
 				dto.setCoverletterText(resCoverLetterForm.getCoverletterText());
-			}
+			}*/
 			dto.setActive(resCoverLetterForm.getActive());
 			dto.setUserId(userId);
 			// this for first time
@@ -139,8 +156,7 @@ public class JobseekerCoverLetterController {
 			}
 
 		} catch (Exception e) {
-			LOGGER.error("error" , e);
-			LOGGER.info("Manager Edit Job Posting Search Option");
+			LOGGER.error("Manager Edit Job Posting Search Option error" , e);
 		}
 		return "";
 	}
@@ -172,7 +188,7 @@ public class JobseekerCoverLetterController {
 			model.setViewName("jobSeekerManageExitWright");
 		} catch (Exception e) {
 
-			LOGGER.info("This is Account Addresss edit option error");
+			LOGGER.error("This is Account Addresss edit option error");
 		}
 		return model;
 	}
@@ -245,7 +261,7 @@ public class JobseekerCoverLetterController {
 			model.setViewName("viewEditCoverLetter");
 		} catch (Exception e) {
 
-			LOGGER.info("This is Account Addresss edite option error" + e);
+			LOGGER.error("This is Account Addresss edite option error" + e);
 		}
 		return model;
 	}
@@ -283,25 +299,28 @@ public class JobseekerCoverLetterController {
 				resCoverLetterForm.setActive(listOfCoverLetter.getActive());
 				resCoverLetterForm.setCoverletterId(listOfCoverLetter
 						.getCoverletterId());
-				resCoverLetterForm.setCoverletterText(listOfCoverLetter
-						.getCoverletterText());
+				
+				String coverLetterText = Jsoup.parse(listOfCoverLetter
+						.getCoverletterText()).html();
+				
+				resCoverLetterForm.setCoverletterText(coverLetterText);
 				resCoverLetterForm.setName(listOfCoverLetter.getName());
 				resCoverLetterForm.setUserId(listOfCoverLetter.getUserId());
 
 				String fileName = MMJBCommonConstants.EMPTY;
 
 				fileName = listOfCoverLetter.getName();
-				LOGGER.info("Filename:" + fileName);
+				LOGGER.debug("Filename:" + fileName);
 				String fName = fileName;
 				FileOutputStream outputStream = new FileOutputStream(fName);
 				OutputStreamWriter out = new OutputStreamWriter(outputStream);
 				out.write(listOfCoverLetter.getName());
-				out.write(listOfCoverLetter.getCoverletterText());
+				out.write(coverLetterText );
 				response.setContentType("application/msword");
 				response.setHeader("Content-Disposition",
 						"attachment; filename=" + fName + ".doc");
 				//response.setHeader("Cache-Control", "no-cache");
-				byte[] bytesGot = listOfCoverLetter.getCoverletterText()
+				byte[] bytesGot = (coverLetterText)
 						.getBytes();
 				ServletOutputStream outs = response.getOutputStream();
 				outs.write(bytesGot);
@@ -353,7 +372,7 @@ public class JobseekerCoverLetterController {
 
 		} catch (Exception e) {
 
-			LOGGER.info("This is Account Addresss edite option error" + e);
+			LOGGER.error("This is Account Addresss edite option error" + e);
 		}
 
 		return new ModelAndView();
@@ -371,7 +390,9 @@ public class JobseekerCoverLetterController {
 	@ResponseBody
 	@RequestMapping(value = "/jobseekerupdateCoverLetter", method = RequestMethod.POST)
 	public String updateCoverLetter(ResCoverLetterForm resCoverLetterForm,
-			BindingResult result, HttpSession session) {
+			BindingResult result,
+			@RequestParam("coverLetterText") String coverLetterText,
+			HttpSession session) {
 		// boolean isUpdated = false;
 		try {
 			int userId = (Integer) session
@@ -383,11 +404,17 @@ public class JobseekerCoverLetterController {
 			} else {
 				dto.setName(resCoverLetterForm.getName());
 			}
-			if (("".equals(resCoverLetterForm.getCoverletterText()))
+			/*if (("".equals(resCoverLetterForm.getCoverletterText()))
 					|| (null == resCoverLetterForm.getCoverletterText())) {
 				return "Please enter the required fields";
 			} else {
 				dto.setCoverletterText(resCoverLetterForm.getCoverletterText());
+			}*/
+			
+			if(("".equals(resCoverLetterForm.getDescription())) || (null == resCoverLetterForm.getDescription())){
+				return "Please enter the required fields";
+			}else{
+				dto.setCoverletterText(resCoverLetterForm.getDescription());
 			}
 			dto.setActive(resCoverLetterForm.getActive());
 			dto.setCoverletterId(resCoverLetterForm.getCoverletterId());
@@ -414,7 +441,7 @@ public class JobseekerCoverLetterController {
 			}
 
 		} catch (Exception e) {
-			LOGGER.info("This is cover letter update option give error");
+			LOGGER.error("This is cover letter update option give error",e);
 		}
 
 		return "";
@@ -448,8 +475,10 @@ public class JobseekerCoverLetterController {
 				resCoverLetterForm.setActive(listOfCoverLetter.getActive());
 				resCoverLetterForm.setCoverletterId(listOfCoverLetter
 						.getCoverletterId());
-				resCoverLetterForm.setCoverletterText(listOfCoverLetter
-						.getCoverletterText());
+				
+				String coverLetterText = Jsoup.parse(listOfCoverLetter
+						.getCoverletterText()).html();	
+				resCoverLetterForm.setCoverletterText(coverLetterText);
 				resCoverLetterForm.setName(listOfCoverLetter.getName());
 				resCoverLetterForm.setUserId(listOfCoverLetter.getUserId());
 			}
@@ -459,7 +488,7 @@ public class JobseekerCoverLetterController {
 			model.setViewName("printCoverLetter");
 		} catch (Exception e) {
 
-			LOGGER.info("This is Account Addresss edite option error" + e);
+			LOGGER.error("This is Account Addresss edite option error" + e);
 		}
 		return model;
 	}

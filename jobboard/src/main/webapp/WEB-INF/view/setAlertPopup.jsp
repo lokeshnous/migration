@@ -12,12 +12,12 @@
 <title>ADVANCE Heathcare Jobs</title>
 <jsp:include page="common/include.jsp" />
 <script type="text/javascript">
-function cancelProcess(){
-	parent.$.nmTop().close();
+//set the alerts for selected job owner 
+function changeJobOwner(){
+	var queryParams = $('#alertId').serialize();
+	$.nmManual("${pageContext.request.contextPath}/alerts/employer/viewJobOwnerAlerts.html?"+queryParams);
+	
 }
-	function closePopup() {
-		parent.window.location.reload();
-	}
 	jQuery(document).ready(function() {
 		$("#addNewJobOwnerPopUp").displaypopup("#addNewJobOwnerPopUp","770","360");
 		$('#save').click(function(){
@@ -83,10 +83,10 @@ function cancelProcess(){
 
 						<form:select class="jb_input3  marginTop0 width150 marginLeft5"
 							path="selJobOwner" items="${jbOwnerList}" itemValue="optionId"
-							itemLabel="optionName">
+							itemLabel="optionName" onchange="changeJobOwner();">
 						</form:select>
 						<c:if
-							test="${enableAccess == 'true' && enablePostEditAccess == 'true'}">
+							test="${enableAccess eq 'true' && enablePostEditAccess eq 'true'}">
 							<input type="hidden" name="pageValue" value="setAlertPage" />
 							<span class="required paddingTop4"> 
 							<c:if
@@ -97,10 +97,16 @@ function cancelProcess(){
 									access="!hasRole('ROLE_FACILITY_FULL_ACCESS') and !hasRole('ROLE_FACILITY_POST_EDIT') ">
 								<a
 								href="<%=request.getContextPath()%>/employer/addNewJobOwner.html?page=setAlertPage"
-								id="addNewJobOwnerPopUp">Add NewJob Owner</a>
+								id="addNewJobOwnerPopUp">Add New Job Owner</a>
 								</security:authorize>
 							</c:if>
 						</c:if>
+						<security:authorize
+									access="hasRole('ROLE_MERION_ADMIN')">
+								<a
+								href="<%=request.getContextPath()%>/employer/addNewJobOwner.html?page=setAlertPage"
+								id="addNewJobOwnerPopUp">Add New Job Owner</a>
+								</security:authorize>
 							</span>
 						</c:if>
 					</div>

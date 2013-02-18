@@ -7,11 +7,11 @@ package com.advanceweb.afc.jb.resume.web.controller;
  * @Version 1.0
  * @Since 2nd July, 2012
  */
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
 
 public class CreateResume {
@@ -50,6 +50,12 @@ public class CreateResume {
 	private int userId;
 	private Long totalProgress = 0L;
 	private boolean virusFound=false;
+	private String description;
+	private List<String> companyName;
+	private String searchComapnyName;
+	private List<Integer> selectedList;
+	private List<String> availableList;
+	private List<DropDownDTO> selectedLst;
 	//Creating Resume	
 	
 	public String getUploadResumeId() {
@@ -265,5 +271,47 @@ public class CreateResume {
 	 */
 	public void setVirusFound(boolean virusFound) {
 		this.virusFound = virusFound;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public List<String> getCompanyName() {
+		return companyName;
+	}
+	public void setCompanyName(List<String> companyName) {
+		this.companyName = companyName;
+	}
+	public String getSearchComapnyName() {
+		return searchComapnyName;
+	}
+	public void setSearchComapnyName(String searchComapnyName) {
+		this.searchComapnyName = searchComapnyName;
+	}
+	public List<Integer> getSelectedList() {
+		return selectedList;
+	}
+	public void setSelectedList(List<Integer> selectedList) {
+		this.selectedList = selectedList;
+	}
+	public List<String> getAvailableList() {
+		return availableList;
+	}
+	public void setAvailableList(List<String> availableList) {
+		this.availableList = availableList;
+	}
+	/**
+	 * @return the selectedLst
+	 */
+	public List<DropDownDTO> getSelectedLst() {
+		return selectedLst;
+	}
+	/**
+	 * @param selectedLst the selectedLst to set
+	 */
+	public void setSelectedLst(List<DropDownDTO> selectedLst) {
+		this.selectedLst = selectedLst;
 	}
 }

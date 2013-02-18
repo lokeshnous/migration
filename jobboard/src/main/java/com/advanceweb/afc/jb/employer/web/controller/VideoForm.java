@@ -16,7 +16,7 @@ public class VideoForm {
 	private String mediaPath;
 	private String chosenVideo;
 	private int videoId;
-	
+	private int itemId;
 	public CommonsMultipartFile getVideoFileData() {
 		return videoFileData;
 	}
@@ -55,6 +55,20 @@ public class VideoForm {
 
 	public void setVideoId(int videoId) {
 		this.videoId = videoId;
+	}
+
+	/**
+	 * @return the itemId
+	 */
+	public int getItemId() {
+		return itemId;
+	}
+
+	/**
+	 * @param itemId the itemId to set
+	 */
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
 	}
 
 	

@@ -82,8 +82,13 @@ public class EmployerProfileManagementController extends AbstractController{
 
 		ModelAndView model = new ModelAndView();
 		int admFacilityId = Integer.parseInt(session.getAttribute(MMJBCommonConstants.FACILITY_ID).toString());
+		
+		//get parent facility id if logged in user is job owner
+		int parentFacilityId = manageFeaturedEmployerProfile
+				.getParentId((Integer) session
+						.getAttribute(MMJBCommonConstants.FACILITY_ID));
 		// Getting the customer ID from Adm Facility table.
-		int nsCustomerID = manageFeaturedEmployerProfile.getNSCustomerIDFromAdmFacility(admFacilityId);
+		int nsCustomerID = manageFeaturedEmployerProfile.getNSCustomerIDFromAdmFacility(parentFacilityId);
 		// Get the list of valid packages purchased by customers from NetSuite
 		List<String> purchasedPackages = manageFeaturedEmployerProfile
 				.getNSCustomerPackages(nsCustomerID);
@@ -93,8 +98,7 @@ public class EmployerProfileManagementController extends AbstractController{
 				|| purchasedPackages.contains(MMJBCommonConstants.FEATURE_180)
 				|| purchasedPackages.contains(MMJBCommonConstants.FEATURE_365)) {
 			CompanyProfileDTO companyProfileDTO = manageFeaturedEmployerProfile
-					.getEmployerDetails((Integer) session
-							.getAttribute(MMJBCommonConstants.FACILITY_ID));
+					.getEmployerDetails(parentFacilityId);
 			if (null != companyProfileDTO) {
 				employerProfileManagementForm.setCompanyName(companyProfileDTO
 						.getCompanyName());
@@ -112,12 +116,27 @@ public class EmployerProfileManagementController extends AbstractController{
 				employerProfileManagementForm.setLogoPath(companyProfileDTO
 						.getLogoPath());
 				employerProfileManagementForm.setPrimaryColor(companyProfileDTO.getPrimaryColor());
-				/*
-				employerProfileManagementForm.setPositionalMedia(companyProfileDTO.getPositionalMedia());*/
+				
+				/*employerProfileManagementForm.setPositionalMedia(companyProfileDTO.getPositionalMedia());*/
+				employerProfileManagementForm.setPositionalMediaUrl(companyProfileDTO.getPositionalMedia());
+			}
+			String logoName = null;
+			String mediaName = null;
+			if(employerProfileManagementForm.getLogoPath() != null){
+				String[] list = employerProfileManagementForm.getLogoPath().split("_");
+				logoName = employerProfileManagementForm.getLogoPath().replace(list[0]+"_", "")
+						.replace(list[1]+"_", "");
+			}
+			if(employerProfileManagementForm.getPositionalMediaUrl() != null){
+				String[] list = employerProfileManagementForm.getPositionalMediaUrl().split("_");
+				mediaName = employerProfileManagementForm.getPositionalMediaUrl().replace(list[0]+"_", "")
+						.replace(list[1]+"_", "");
 			}
 			model.addObject("employerProfileManagementForm", employerProfileManagementForm);
+			model.addObject("logoName", logoName);
+			model.addObject("mediaName", mediaName);
 		}else{
-			LOGGER.info("Not a Featured Employer.");
+			LOGGER.debug("Not a Featured Employer.");
 			model.addObject("error",isFeaturedEmployerErrorMsg);
 		}
 		model.setViewName("manageFeatureEmpPro");
@@ -171,13 +190,21 @@ public class EmployerProfileManagementController extends AbstractController{
 		ModelAndView model = new ModelAndView();
 		int facilityId = 0;
 		int nsCustomerId = 0;
-		CompanyProfileDTO companyProfileDTO = manageFeaturedEmployerProfile
-				.getEmployerDetails((Integer) session
+		int parentFacilityId = manageFeaturedEmployerProfile
+				.getParentId((Integer) session
 						.getAttribute(MMJBCommonConstants.FACILITY_ID));
-		//companyProfileDTO.setCompanyName(managementForm.getCompanyName());
-		companyProfileDTO.setCompanyOverview(managementForm.getCompanyOverview());
-		
-//		Validate email id
+		/*
+		 * CompanyProfileDTO companyProfileDTO = manageFeaturedEmployerProfile
+		 * .getEmployerDetails((Integer) session
+		 * .getAttribute(MMJBCommonConstants.FACILITY_ID));
+		 */
+		CompanyProfileDTO companyProfileDTO = manageFeaturedEmployerProfile
+				.getEmployerDetails(parentFacilityId);
+		// companyProfileDTO.setCompanyName(managementForm.getCompanyName());
+		companyProfileDTO.setCompanyOverview(managementForm
+				.getCompanyOverview());
+
+		// Validate email id
 		checkEmail(managementForm.getCompanyEmail(), result);
 		/*companyProfileDTO.setFacilityid( (String) session
 						.getAttribute(MMJBCommonConstants.FACILITY_ID));*/
@@ -214,7 +241,7 @@ public class EmployerProfileManagementController extends AbstractController{
 					fileName = promoMedia.getOriginalFilename();
 					String modifiedFileName = featureEmployerPrefix+STR_UNDERSCORE
 							+ random.nextInt(10000) + STR_UNDERSCORE + fileName;
-					companyProfileDTO.setPositionTitle(modifiedFileName);
+					companyProfileDTO.setPositionalMedia(modifiedFileName);
 					filePath = System.getProperty("catalina.home") + appMediaPath + modifiedFileName;
 					File transfer = new File(filePath);
 					promoMedia.transferTo(transfer);

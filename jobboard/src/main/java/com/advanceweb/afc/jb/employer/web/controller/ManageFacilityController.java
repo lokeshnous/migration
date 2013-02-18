@@ -32,6 +32,7 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.job.service.JobPostService;
 import com.advanceweb.afc.jb.job.service.ManageFacilityService;
+import com.advanceweb.afc.jb.lookup.service.LookupService;
 import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
@@ -57,11 +58,14 @@ public class ManageFacilityController {
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
 	private static final String FAILURE_MSG="failure";
-	
+	@Value("${validateCityState}")
+	private String validateCityState;
+	@Autowired
+	private LookupService lookupService;
 	@RequestMapping(value = "/addFacility")
 	public ModelAndView addfacilityDetails(ManageFacilityForm facilityForm,
 			HttpSession session) {
-		LOGGER.info("Facility Details List");
+		LOGGER.debug("Facility Details List");
 		ModelAndView model = new ModelAndView();
 		List<CountryDTO> countryList = populateDropdownsService
 				.getCountryList();
@@ -86,7 +90,7 @@ public class ManageFacilityController {
 	@RequestMapping(value = "/updateFacilityDetail")
 	public ModelAndView updateFacilityDetails(ManageFacilityForm facilityForm,
 			HttpSession session) {
-		LOGGER.info("Facility Details List"
+		LOGGER.debug("Facility Details List"
 				+ (Integer) session
 						.getAttribute(MMJBCommonConstants.FACILITY_ID) + "uid"
 				+ (Integer) session.getAttribute(MMJBCommonConstants.USER_ID));
@@ -123,7 +127,7 @@ public class ManageFacilityController {
 	public @ResponseBody
 	JSONObject saveNewFacility(HttpSession session,
 			ManageFacilityForm facilityFormP, HttpServletRequest request) {
-		LOGGER.info("Save facility : Process to save facility detail Starts !");
+		LOGGER.debug("Save facility : Process to save facility detail Starts !");
 		ManageFacilityForm facilityForm = facilityFormP;
 		JSONObject message = new JSONObject();
 
@@ -155,17 +159,33 @@ public class ManageFacilityController {
 	 */
 	private JSONObject valiadteFacility(ManageFacilityForm facilityForm,
 			JSONObject message) {
-		if (StringUtils.isEmpty(facilityForm.getZipCode())|| StringUtils.isEmpty(facilityForm.getFacilityCountry())
-				||StringUtils.isEmpty(facilityForm.getFacilityState())||StringUtils.isEmpty(facilityForm.getPhoneNumber())){
+		if (StringUtils.isEmpty(facilityForm.getZipCode())
+				|| StringUtils.isBlank(facilityForm.getFacilityCountry())
+				|| StringUtils.isBlank(facilityForm.getFacilityState())
+				|| StringUtils.isBlank(facilityForm.getPhoneNumber())) {
 			message.put(FAILURE_MSG, "Please enter the required fields.");
 			return message;
+		}
+		boolean validateStateCityZip;
+		try {
+			validateStateCityZip = lookupService.validateCityStateZip(
+					facilityForm.getFacilityCity(),
+					facilityForm.getFacilityState(), facilityForm.getZipCode());
+
+			if (!validateStateCityZip) {
+				message.put(FAILURE_MSG, validateCityState);
+				return message;
+			}
+		} catch (JobBoardServiceException ex) {
+
+			ex.printStackTrace();
 		}
 		if (!registerValidation.validateMobileNumberPattern(facilityForm
 				.getPhoneNumber())) {
 			message.put(FAILURE_MSG, jobseekerRegPhoneMsg);
 			return message;
 		}
-		
+
 		return message;
 
 	}
@@ -175,7 +195,7 @@ public class ManageFacilityController {
 	String deleteFacility(HttpSession session,
 			ManageFacilityForm facilityFormP, HttpServletRequest request,
 			@RequestParam("facilityId") int facilityId) {
-		LOGGER.info("Delete facility : Process to save facility detail Starts !");
+		LOGGER.debug("Delete facility : Process to save facility detail Starts !");
 
 		try {
 			facilityService.deleteFacility(facilityId);
@@ -194,9 +214,15 @@ public class ManageFacilityController {
 	ModelAndView editFacility(HttpSession session,
 			ManageFacilityForm facilityFormP, HttpServletRequest request,
 			@RequestParam("facilityId") int facilityId) {
-		LOGGER.info("Edit facility : Process to Edit facility detail Starts !");
+		LOGGER.debug("Edit facility : Process to Edit facility detail Starts !");
 		ManageFacilityDTO facilityDTOs = new ManageFacilityDTO();
 		ManageFacilityForm facilityForm = facilityFormP;
+		if (null != request.getParameter("readOnly")) {
+			String readOnly = request.getParameter("readOnly");
+			if ("true".equalsIgnoreCase(readOnly)) {
+				facilityForm.setReadOnly(true);
+			}
+		}
 
 		try {
 			facilityDTOs = facilityService.getFacilityList(facilityId, false);

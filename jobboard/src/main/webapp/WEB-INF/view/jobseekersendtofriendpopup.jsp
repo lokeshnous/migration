@@ -8,10 +8,16 @@
 	<jsp:include page="common/include.jsp" />
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-		
+		$.nmFilters({
+    	    custom: {
+    	        afterShowCont: function(nm) {
+    	        	$('#EmailAddress').focus();
+    	        }
+    	    }
+    	});
  		$('#send').click(function(){			
  			$("#mailSending").html("<span>Processing...</span>");
-			$.ajax({url:"${pageContext.request.contextPath}/jobsearch/sendtofriendpost.html",
+			$.ajax({url:"${pageContext.request.contextPath}/search/sendtofriendpost.html",
 				data:$('#formid').serialize(),
 				type:"POST",
 				success: function(data) {
@@ -39,7 +45,15 @@
 	           parent.$.nmTop().close();
     	});
 		
-		$("#formid").keypress(function(e){
+		/* $("#formid").keypress(function(e){
+			if (e.which == 13) {
+				e.preventDefault();
+				$('#send').click();
+			    return false;
+			  }
+		}); */
+				
+		$("#EmailAddress").keypress(function(e){
 		    if (e.which == 13) {
 				e.preventDefault();
 				$('#send').click();
@@ -68,7 +82,7 @@
 		</div>
       
 		<div class="popUpContainerWrapper">
-			<form:form method="post" action="../jobsearch/sendtofriendpost.html" commandName="sendtofriendmail" id="formid" >
+			<form:form method="post" action="../search/sendtofriendpost.html" commandName="sendtofriendmail" id="formid" >
 				<form:input type="hidden" name="jobId" id="jobId" path="jobId"/>
 			    <form:input type="hidden" name="joburl" id="joburl" path="joburl"/>
    				<div id="mailSending" class="validationMsg"></div>

@@ -153,7 +153,7 @@ public class BrandingTemplateValidation {
 
 		for (AddImageForm image : brandingTemplateForm.getListAddImages()) {
 
-			if (image.getAddImageFileData().getSize() > 0) {
+			if (null!= image.getAddImageFileData() && image.getAddImageFileData().getSize() > 0) {
 				imageLength = image.getMediaPath().length();
 				fileExtension = image.getMediaPath().substring(imageLength - 4,
 						imageLength);
@@ -186,7 +186,7 @@ public class BrandingTemplateValidation {
 		long imageSize;
 
 		for (AddImageForm image : brandingTemplateForm.getListAddImages()) {
-			if (image.getAddImageFileData().getSize() > 0) {
+			if (null!=image.getAddImageFileData() && image.getAddImageFileData().getSize() > 0) {
 				imageSize = image.getAddImageFileData().getSize();
 				if (imageSize > (imageSizeLimit * MMJBCommonConstants.KILO_BYTE)) {
 					return empBrandAddImageSize;
@@ -211,7 +211,7 @@ public class BrandingTemplateValidation {
 		String fileExtension;
 
 		for (VideoForm video : brandingTemplateForm.getListVideos()) {
-			if (video.getVideoFileData().getSize() > 0) {
+			if (null != video.getVideoFileData() && video.getVideoFileData().getSize() > 0) {
 				videoLength = video.getMediaPath().length();
 				fileExtension = video.getMediaPath().substring(videoLength - 4,
 						videoLength);
@@ -240,7 +240,7 @@ public class BrandingTemplateValidation {
 		long videoSize;
 
 		for (VideoForm video : brandingTemplateForm.getListVideos()) {
-			if (video.getVideoFileData().getSize() > 0) {
+			if (null != video.getVideoFileData() && video.getVideoFileData().getSize() > 0) {
 				videoSize = video.getVideoFileData().getSize();
 				if (videoSize > (videoSizeLimit * MMJBCommonConstants.MEGA_BYTE)) {
 					return empBrandVideoSize;

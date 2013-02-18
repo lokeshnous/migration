@@ -17,8 +17,8 @@
 <!-- <link rel="stylesheet" type="text/css" media="screen"
 	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
  -->
- <link href="../resources/css/jquery-auto-ui.css" rel="stylesheet"
-	type="text/css">
+ <!-- <link href="../resources/css/jquery-auto-ui.css" rel="stylesheet"
+	type="text/css"> -->
  <link rel="stylesheet" type="text/css" href="jquery.autocomplete.css" />
 </head>
 <body>
@@ -26,7 +26,13 @@
 		jQuery(document)
 				.ready(
 						function() {	
-							
+							$.nmFilters({
+					    	    custom: {
+					    	        afterShowCont: function(nm) {
+					    	        	$('#emplyrNameAutoComplte').focus();
+					    	        }
+					    	    }
+					    	});
 							var IdData = new Array();
 				        	var NameData = new Array();
 				        	
@@ -57,7 +63,8 @@
 											
 											$.ajax({
 												url: '${pageContext.request.contextPath}/agency/getSelectedFacility.html?facilityId='+IdVal,
-												success : function(data) {															
+												success : function(data) {	
+													$('#emplyrNameAutoComplte').val(data.name);
 													$('#city').val(data.city);
 													$('#street').val(data.street);		
 													$('#zipCode').val(data.postcode);
@@ -143,35 +150,35 @@
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Street Address:</span> <input readonly
-						type="text" name="street" id="street" class="job_seeker_email" /> <!-- <span
+						type="text" name="street" id="street" class="job_seeker_email disabled-input" /> <!-- <span
 						class="required">(Required)</span> -->
 				</div>
 
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">City:</span> <input readonly type="text"
-						name="city" id="city" class="job_seeker_email" /> <!-- <span class="required">(Required)</span> -->
+						name="city" id="city" class="job_seeker_email disabled-input" /> <!-- <span class="required">(Required)</span> -->
 				</div>				
-
+					
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">State:</span> <input readonly type="text"
-						name="state" id="state" class="job_seeker_email" /> <!-- <span
+						name="state" id="state" class="job_seeker_email disabled-input" /> <!-- <span
 						class="required">(Required)</span> -->
 				</div>
-
-				<div class="rowEvenNewSpacing">
-					<span class="lableText3">Country:</span> <input readonly
-						type="text" id="country" name="country" class="job_seeker_email" /> <!-- <span
-						class="required">(Required)</span> -->
-				</div>
-
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Zip Code:</span> <input readonly
-						type="text" id="zipCode" name="zipCode" class="job_seeker_email" /> <!-- <span
+						type="text" id="zipCode" name="zipCode" class="job_seeker_email disabled-input" /> <!-- <span
 						class="required">(Required)</span> -->
 				</div>
 				<div class="rowEvenNewSpacing">
+					<span class="lableText3">Country:</span> <input readonly
+						type="text" id="country" name="country" class="job_seeker_email disabled-input" /> <!-- <span
+						class="required">(Required)</span> -->
+				</div>
+
+				
+				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Phone:</span> <input readonly type="text"
-						name="primaryPhone" id="phone" class="job_seeker_email" /> <!-- <span
+						name="primaryPhone" id="phone" class="job_seeker_email disabled-input" /> <!-- <span
 						class="required">(Required)</span> -->
 				</div>
 				<div class="rowEvenNewSpacing marginTop10 paddingBottom10">

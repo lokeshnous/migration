@@ -19,7 +19,7 @@
 		    	
 				val=$(this).attr("id");
 				if (val != ""
-					&& confirm("Are your sure you want to delete?")){
+					&& confirm("Are you sure you want to delete?")){
 					
 					$.ajax({url : "${pageContext.request.contextPath}/employer/deleteJobOwner.html?userId="+ val,
 		    			data:$('#manageAcceccPermissionForm').serialize(),
@@ -45,7 +45,7 @@
 					success : function(dataFound) {	
 						var listSize=$('#totalSize').val();
 						if(listSize>0){
-						alert("Permissions changed successfully!");
+						alert("Permission Settings saved successfully!");
 						 //$("#manageAccessPerm").click();
 						parent.$.nmTop().close();
 						};
@@ -99,7 +99,7 @@
 								<td width="31%" align="left">
 								<div class="required"><form:radiobutton id="radio1" path="manageAccessPermissiondetails[${status.index}].typeOfAccess" value="6" /><label class="greyLabel">Post / Edit Only</label></div> 
 								</td>
-								<td align="left"><a id="${job.ownerId}" href="#"> Delete User</a></td> 
+								<td align="left"><a id="${job.ownerId}" href="#" ><img title="Delete" src="../resources/images/tranBg.png" width="20" height="20" alt="delete" class="delete marginLeft10"></a></td> 
 							</tr>
 						</c:forEach>
 

@@ -26,7 +26,9 @@
 								<th width="8%" align="center" valign="middle" class="FontSize11"><strong>Job
 										Status
 								</strong></th>
-								<th width="8%" align="center" valign="middle" class="FontSize11"><strong>Start
+								<th width="35%" align="center" valign="middle" class="FontSize11"><strong>E-Mail
+								</strong></th>
+								<th width="10%" align="center" valign="middle" class="FontSize11"><strong>Start
 										Date
 								</strong></th>
 								<th width="8%" align="center" valign="middle" class="FontSize11"><strong>End
@@ -45,6 +47,7 @@
 									<td align="center" valign="middle">${job.disCompanyName}</td>
 									<td align="center" valign="middle">${job.location}</td>
 									<td align="center" valign="middle">${job.jobStatus}</td>
+									<td align="center" valign="middle">${job.emailId}</td>
 									<td align="center" valign="middle">${job.startDt}</td>
 									<td align="right" valign="middle"><input type="text" class="InputTextRight jb_input75 Heightf5" name="endDt" id="endDt" value='<c:out value="${job.endDt}"></c:out>'>
 													

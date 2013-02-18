@@ -2,6 +2,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" 
                                                   prefix="fn" %>
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -26,8 +28,21 @@
 		    jQuery(document).ready(function(){
 		    	jQuery(".megamenu").megamenu();
 		    	popUpIds();
+		    	$("#descriptionText a").live("click", function() {     
+                    trackClick('${jobDetail.jobId}','8');        
+					if($(this).attr("target")== null || $(this).attr("target")=="_self"){
+						$(this).attr("target","_blank");
+					}
+            	});
 		});
 		    
+		    function showMessage(){
+		    	alert("You must be a registered Job-Seeker to apply to jobs");
+		    }
+		    
+		    function showSaveMessage(){
+		    	alert("You must be a registered Job-Seeker to save the jobs");
+		    }
 		    function popUpIds()
 		    {
 			    
@@ -81,22 +96,24 @@
 		</script>
 		<script type="text/javascript">
 		function popImage(path) {
-			
-			$.nmManual('<%= request.getContextPath() %>/jobsearch/viewImage.html?id='+path ,  {sizes:{initW: 500, initH: 500, minW: 500, minH: 500,  w: 500, h: 500}});
+			if(path!=''){
+			$.nmManual('<%= request.getContextPath() %>/search/viewImage.html?id='+path ,  {closeOnEscape: true, showCloseButton: true, closeOnClick: true, sizes:{initW: 500, initH: 500, minW: 500, minH: 500,  w: 500, h: 500}});
+			}
 		}
 		
 		function popTestimony(path) {
-			
-			$.nmManual('<%= request.getContextPath() %>/jobsearch/viewTestimonial.html?id='+path,  {sizes:{initW: 600, initH: 600, minW: 600, minH: 600,  w: 600, h: 600}});
+			if(path!=''){
+			$.nmManual('<%= request.getContextPath() %>/search/viewTestimonial.html?id='+path,  {closeOnEscape: true, showCloseButton: true, closeOnClick: true, sizes:{initW: 600, initH: 600, minW: 600, minH: 600,  w: 600, h: 600}});
+			}
 		}
 		</script>
   
 </head>
     
     <body class="job_board">    
-        <div class="ad_page_top">
+        <%-- <div class="ad_page_top">
 			${adPageTop}
-        </div>
+        </div> --%>
         
 <div class="main_wrapper_outside">
  <div class="main_wrapper_inside">
@@ -106,15 +123,16 @@
 
                 <!-- <div class="content_wrapper"> -->
 
-		    <!-- <div class="jobDetails"> -->
+		    <div class="jobDetails"> 
 			<div class="jobDetailsEyebrow">
 			<div class="floatLeft"> <h3 class="jobDetailsEyebrowHeader">Job Details </h3> </div> 
 			<div class="floatRight">
 				<c:choose><c:when test="${returnResults != 'null'}">
-                   <a href='<%= request.getContextPath() %>/jobsearch/findJobPage.html' class="link_color2_emphasized">Return to Search Results &nbsp; </a>
+                   <a href='<%= request.getContextPath() %>/search/findJobPage.html' class="link_color2_emphasized">Return to Search Results &nbsp; </a>
                 </c:when>
                 <c:otherwise></c:otherwise>
                 </c:choose>
+			</div>
 			</div>
 			</div>
 			
@@ -125,7 +143,7 @@
          <!--LOGO AREA-->
        	 <div class="row marginTop5">
           <div class="row marginTop16">
-               	<div class="LogoAreaBox" ><img src="<%=request.getContextPath()%>/jobsearch/viewImage.html?id=${jobDetail.getLogo()}"  alt="logo" width="335" height="60" border="0" /></div>
+               	<div class="LogoAreaBox" ><img src="<%=request.getContextPath()%>/search/viewImage.html?id=${jobDetail.getLogo()}"  alt="logo" width="335" height="60" border="0" /></div>
           </div>
           <div class="BoxText" alt="Color" width="500" height="60" border="0" style="color: ${jobDetail.getColor().substring(4)}"/></div>
          </div>
@@ -135,7 +153,7 @@
           <input value="<%=request.getContextPath()%>" type="hidden" id="contextPath">
          	<div class="BannerAreaBox" style="background: ${jobDetail.getColor().substring(4)}">
                    <div class="BannerAreaInnerBox">
-               <div class="BannerImgBox" > <img src="<%=request.getContextPath()%>/jobsearch/viewImage.html?id=${jobDetail.getImagePath()}" width="490" height="319" alt="Main image"></div>
+               <div class="BannerImgBox" > <img src="<%=request.getContextPath()%>/search/viewImage.html?id=${jobDetail.getImagePath()}" width="490" height="319" alt="Main image"></div>
                <div class="BannerTextBoxBlank" style="background: #c0c0c0">
 				                
                        <h1 style="color: ${jobDetail.getColor().substring(4)}">About This Employer </h1>
@@ -185,36 +203,44 @@
 									items="${jobDetail.listAddImages}" varStatus="status" step="4">
 									
 									<div class="slider1Frames">
+									<c:if test="${not empty jobDetail.listAddImages[status.index].mediaPath}">
 										<a id="${jobDetail.listAddImages[status.index].mediaPath}" onclick="popImage(this.id);" >
 											<div class="slider1FrameA1">
-												<img src="<%=request.getContextPath()%>/jobsearch/viewImage.html?id=${jobDetail.listAddImages[status.index].mediaPath}"
-													
-													>
-											</div>
-										</a> <a
-											id="${jobDetail.listAddImages[status.index+1].mediaPath}" onclick="popImage(this.id);">
-											<div class="slider1FrameA1">
-												<img src="<%=request.getContextPath()%>/jobsearch/viewImage.html?id=${jobDetail.listAddImages[status.index+1].mediaPath}"
+												<img src="<%=request.getContextPath()%>/search/viewImage.html?id=${jobDetail.listAddImages[status.index].mediaPath}"
 													
 													>
 											</div>
 										</a>
+										</c:if>
+										<c:if test="${not empty jobDetail.listAddImages[status.index+1].mediaPath}"> <a
+											id="${jobDetail.listAddImages[status.index+1].mediaPath}" onclick="popImage(this.id);">
+											<div class="slider1FrameA1">
+												<img src="<%=request.getContextPath()%>/search/viewImage.html?id=${jobDetail.listAddImages[status.index+1].mediaPath}"
+													
+													>
+											</div>
+										</a>
+										</c:if>
+										<c:if test="${not empty jobDetail.listAddImages[status.index+2].mediaPath}">
 										<a
 											id="${jobDetail.listAddImages[status.index+2].mediaPath}" onclick="popImage(this.id);">
 											<div class="slider1FrameA1">
-												<img src="<%=request.getContextPath()%>/jobsearch/viewImage.html?id=${jobDetail.listAddImages[status.index+2].mediaPath}"
+												<img src="<%=request.getContextPath()%>/search/viewImage.html?id=${jobDetail.listAddImages[status.index+2].mediaPath}"
 													
 													>
 											</div>
 										</a>
+										</c:if>
+										<c:if test="${not empty jobDetail.listAddImages[status.index+3].mediaPath}">
 										<a
 											id="${jobDetail.listAddImages[status.index+3].mediaPath}" onclick="popImage(this.id);">
 											<div class="slider1FrameA1">
-												<img src="<%=request.getContextPath()%>/jobsearch/viewImage.html?id=${jobDetail.listAddImages[status.index+3].mediaPath}"
+												<img src="<%=request.getContextPath()%>/search/viewImage.html?id=${jobDetail.listAddImages[status.index+3].mediaPath}"
 													
 													>
 											</div>
 										</a>
+										</c:if>
 									</div>
 								</c:forEach>
 								</div>
@@ -236,10 +262,10 @@
 							<!-- Photo -->
 							<div id="slider2">
 							<c:forEach var="companyProfileDTO"
-									items="${videoList}" varStatus="status" step="1">
+									items="${videoList}" varStatus="status" step="3">
 									
 									<div class="slider1Frames">
-									
+									<c:if test="${not empty videoList[status.index]}">
 										<div class="floatLeft width285 marginLeft10 marginRight10">
 										&nbsp;
 										<div id="mediaspacePath" style="display: none;">${videoList[status.index]}</div> 
@@ -259,7 +285,45 @@
 											var ply = new jeroenwijering.Player(cnt,src,cfg);
 										</script> 
 										</div>
+										</c:if>
+										<c:if test="${not empty videoList[status.index+1]}">
+										<div class="floatLeft width285 marginLeft10 marginRight10">
+										&nbsp;
+										<div id="mediaspacePath1" style="display: none;">${videoList[status.index+1]}</div> 
+										<div id="mediaspace1"></div> 
 										
+										<script type="text/javascript">
+											var cnt = document.getElementById("mediaspace1");
+											var filePath = $("#mediaspacePath1").text();
+											var cfg = {
+												file: filePath,
+												height:'165',
+												width:'260',
+												autostart:'false'
+											};
+											var ply = new jeroenwijering.Player(cnt,src,cfg);
+										</script> 
+										</div>
+										</c:if>
+										<c:if test="${not empty videoList[status.index+2]}">
+										<div class="floatLeft width285 marginLeft10 marginRight10">
+										&nbsp;
+										<div id="mediaspacePath2" style="display: none;">${videoList[status.index+2]}</div> 
+										<div id="mediaspace2"></div> 
+										
+										<script type="text/javascript">
+											var cnt = document.getElementById("mediaspace2");
+											var filePath = $("#mediaspacePath2").text();
+											var cfg = {
+												file: filePath,
+												height:'165',
+												width:'260',
+												autostart:'false'
+											};
+											var ply = new jeroenwijering.Player(cnt,src,cfg);
+										</script> 
+										</div>
+										</c:if>
 									</div>
 								</c:forEach>
 								</div>
@@ -278,30 +342,38 @@
 								<c:forEach var="companyProfileDTO"
 									items="${jobDetail.listTestimony}" varStatus="status" step="4">
 									<div class="slider1Frames">
+									<c:if test="${not empty jobDetail.listTestimony[status.index].testimony}">
 										<a
 											id="${jobDetail.listTestimony[status.index].testimony}"  onclick="popTestimony(this.id);">
 											<div class="slider1FrameA1">
 												<p class="BannerTextBoxBlankSlide" >${jobDetail.listTestimony[status.index].testimony}</p>
 											</div>
 										</a> 
+										</c:if>
+									<c:if test="${not empty jobDetail.listTestimony[status.index+1].testimony}">
 										<a
 											id="${jobDetail.listTestimony[status.index+1].testimony}" onclick="popTestimony(this.id);" >
 											<div class="slider1FrameA1">
 												<p class="BannerTextBoxBlankSlide" >${jobDetail.listTestimony[status.index+1].testimony}</p>
 											</div>
 										</a>
+										</c:if>
+									<c:if test="${not empty jobDetail.listTestimony[status.index+2].testimony}">
 										<a
 											id="${jobDetail.listTestimony[status.index+2].testimony}" onclick="popTestimony(this.id);">
 											<div class="slider1FrameA1">
 												<p class="BannerTextBoxBlankSlide" >${jobDetail.listTestimony[status.index+2].testimony}</p>
 											</div>
 										</a>
+										</c:if>
+									<c:if test="${not empty jobDetail.listTestimony[status.index+3].testimony}">
 										<a
 											id="${jobDetail.listTestimony[status.index+3].testimony}" onclick="popTestimony(this.id);">
 											<div class="slider1FrameA1">
 												<p class="BannerTextBoxBlankSlide" >${jobDetail.listTestimony[status.index+3].testimony}</p>
 											</div>
 										</a>
+										</c:if>
 									</div>
 								</c:forEach>
 								</div>
@@ -329,9 +401,19 @@
             
                 <div class="ContantMiddleLeftLink">
                           <div class="row">
-                    <div class="rowEvenButSpacing paddingBottom10"> <span class="floatLeft marginTop10">
-                    <a class="btn_smB ColorButton cursor" style="background-color: ${jobDetail.getColor().substring(4)}" onclick="applyThisJob(${jobDetail.jobId});" >Apply now</a> 
-                    <a class="btn_smC white01 cursor" style="color: ${jobDetail.getColor().substring(4)}" onclick="saveThisJob(${jobDetail.jobId});" id="btsaveThisJobId" >save this job</a></span> </div>
+                    <div class="rowEvenButSpacing paddingBottom10">
+                    <security:authorize	access=" !hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP') and !hasRole('ROLE_FACILITY_SYSTEM')">
+                     <span class="floatLeft marginTop10">
+                    <a class="btn_smB ColorButton cursor" style="background-color: ${jobDetail.getColor().substring(4)}" onclick="selectResume(${jobDetail.jobId});" >Apply now</a> 
+                    <a class="btn_smC white01 cursor" style="color: ${jobDetail.getColor().substring(4)}" onclick="saveThisJob(${jobDetail.jobId});" id="btsaveThisJobId" >save this job</a></span> 
+                    </security:authorize>
+                    
+                    <security:authorize	access="hasRole('ROLE_FACILITY') or hasRole('ROLE_FACILITY_GROUP') or hasRole('ROLE_FACILITY_SYSTEM')">
+                     <span class="floatLeft marginTop10">
+                    <a class="btn_smB ColorButton cursor" style="background-color: ${jobDetail.getColor().substring(4)}" onclick="showMessage();" >Apply now</a> 
+                    <a class="btn_smC white01 cursor" style="color: ${jobDetail.getColor().substring(4)}" onclick="showSaveMessage();" id="btsaveThisJobId" >save this job</a></span> 
+                    </security:authorize>
+                    </div>
                  <br/><br/>
 			    <div class="FormErrorDisplayText" id="topjobActionInfo" ></div><br/><br/><br/>
                   </div>
@@ -342,17 +424,17 @@
                     </div>
                     <div class="ShareArea">
                     <div class="ShareText">|&nbsp;&nbsp;Share:&nbsp;</div>
-                    <a class="fbook" href="http://www.facebook.com/sharer.php?u=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitle, 
+                    <a class="fbook" onclick="trackClick(${jobDetail.jobId},'9');" href="http://www.facebook.com/sharer.php?u=${basePath}/search/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitleEncode, 
                                 					' ', '-'))}.html" target="_blank"></a>
-				   <a href="https://www.linkedin.com/cws/share?url=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitle, 
+				   <a onclick="trackClick(${jobDetail.jobId},'9');" href="https://www.linkedin.com/cws/share?url=${basePath}/search/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitleEncode, 
                                 					' ', '-'))}.html" target="_blank"><div class="linkedIn"></div></a>
-				   <a href="https://twitter.com/share?url=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitle, 
-                                					' ', '-'))}.html" class="twitter" data-url="${basePath}/jobsearch/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitle, 
+				   <a onclick="trackClick(${jobDetail.jobId},'9');" href="https://twitter.com/share?url=${basePath}/search/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitleEncode, 
+                                					' ', '-'))}.html" class="twitter" data-url="${basePath}/search/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitleEncode, 
                                 					' ', '-'))}.html" data-count="none" target="_blank"></a>
                     </div>
                     <div class="ShareArea">
                     <div class="ShareText">|&nbsp;&nbsp;Print:&nbsp;</div>
-                     <a href="" onclick="window.print();">
+                     <a href="" onclick="trackPrint(${jobDetail.jobId},'3');">
                      <div class="printJBdetail"></div></a>
                     </div>
                   </div>
@@ -391,8 +473,47 @@
                   </c:if>
                           <div class="row marginTop5">
                     <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>JOB ID NUMBER :</strong></h1>
-                    <p>${jobDetail.jobId}</p>
+                    <p>${jobDetail.jobNumber}</p>
                   </div>
+                  
+                  
+                  
+                  <div class="row marginTop5">
+                    <c:if test="${not empty jobDetail.url and not empty jobDetail.urlDisplay and jobDetail.urlDisplay!='None' and jobDetail.url!='None'}">
+									<h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>WEB SITE :</strong></h1>
+										<p><a class="color2" target="_blank" onclick="trackClick(${jobDetail.jobId},'7');" href="${jobDetail.url}">${jobDetail.urlDisplay}</a></p>
+										<%-- <span class="specs">Web Site:</span>&nbsp;&nbsp;<a class="color2" target="_blank" href="${jobDetail.url}">${jobDetail.urlDisplay}</a>&nbsp;&nbsp;|&nbsp;&nbsp; --%>
+					</c:if>
+					<c:if test="${not empty jobDetail.url and  empty jobDetail.urlDisplay and jobDetail.url!='None' and fn:containsIgnoreCase(urlString, 'http')}">
+									<h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>WEB SITE :</strong></h1>
+										
+										<p><a class="color2" target="_blank" onclick="trackClick(${jobDetail.jobId},'7');" href="${jobDetail.url}">${jobDetail.url}</a></p>
+										<!-- <span class="specs">Web Site:</span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; -->
+					</c:if>
+					<c:if test="${not empty jobDetail.url and  empty jobDetail.urlDisplay and jobDetail.url!='None' and !fn:containsIgnoreCase(urlString, 'http')}">
+									<h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>WEB SITE :</strong></h1>
+										<p><a class="color2" target="_blank" onclick="trackClick(${jobDetail.jobId},'7');" href=" http://${jobDetail.url}">${jobDetail.url}</a></p>
+										<!-- <span class="specs">Web Site:</span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; -->
+					</c:if>
+                  </div>
+                  
+                    <div class="row marginTop5">
+                    <c:if test="${not empty jobDetail.email and not empty jobDetail.emailDisplay and jobDetail.emailDisplay!='None' and jobDetail.email!='None'}">
+										<%-- <span class="specs">Email:</span>&nbsp;&nbsp;<a class="color2" target="_blank" href="mailto: ${jobDetail.email}?subject=Apply%20via%20email">${jobDetail.emailDisplay}</a> --%>
+										<h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>EMAIL :</strong></h1>
+										<p><a class="color2" target="_blank" onclick="trackClick(${jobDetail.jobId},'5');" href="mailto: ${jobDetail.email}?subject=Apply%20via%20email">${jobDetail.emailDisplay}</a></p>
+					</c:if>
+					<c:if test="${not empty jobDetail.email and empty jobDetail.emailDisplay and jobDetail.email!='None'}">
+										<%-- <span class="specs">Email:</span>&nbsp;&nbsp;<a class="color2" href="mailto: ${jobDetail.email}?subject=Apply%20via%20email">${jobDetail.email}</a> --%>
+										<h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>EMAIL :</strong></h1>
+										<p><a class="color2"  onclick="trackClick(${jobDetail.jobId},'5');" href="mailto: ${jobDetail.email}?subject=Apply%20via%20email">${jobDetail.email}</a></p>
+					</c:if>
+                    </div>
+                  
+                  
+                  
+                  
+                  
                  </div>
                  
                  <c:if test="${jobDetail.getPackageId()==3}">
@@ -410,10 +531,10 @@
                  </div>
                	 </div>
                  
-                 
+                 <c:if test="${not empty newsDTOList}">
 	             <div class="row marginTop15">
 	             <div class="LeftBoxLink" style="border-top: 5px solid ${jobDetail.getColor().substring(4)};">
-                    <div class="BlueBoxContA"> <a href="<%= request.getContextPath() %>/jobsearch/getPlatinumNewsList.html" target="_blank" class="UnderLineNone">
+                    <div class="BlueBoxContA"> <a href="<%= request.getContextPath() %>/search/getPlatinumNewsList.html?jobId=${jobDetail.jobId}" target="_blank" class="UnderLineNone">
                       <h2 class="more_link noTopBottomBorder more_link02">News From This Employer<span>More</span></h2>
                       </a> </div>
                        <c:forEach items="${newsDTOList}" var="newsDTO">   
@@ -423,6 +544,7 @@
                       </c:forEach> 
 	             </div>
 	             </div>
+	             </c:if>
                  </c:if>
               </div>
               
@@ -433,26 +555,107 @@
 		                <br />
 		                <h2 class="sectionSubHeader MarginBottom10">${jobDetail.companyNameDisp}</h2>
 		                <br />
+		                
+			            <%-- <c:if test="${not empty jobDetail.getHeadLine() and jobDetail.getHeadLine()!='none'}">
+			            <h3 style="color: ${jobDetail.getColor().substring(4)}">${jobDetail.getHeadLine()}</h3>
+			            </c:if>
+			            <c:if test="${not empty jobDetail.getPositionLevel() and jobDetail.getPositionLevel()!='none'}">
+			            <h3 style="color: ${jobDetail.getColor().substring(4)}">${jobDetail.getPositionLevel()}</h3>
+			            </c:if>
+			            <c:if test="${not empty jobDetail.getPositionType() and jobDetail.getPositionType()!='none'}">
+			            <h3 style="color: ${jobDetail.getColor().substring(4)}">${jobDetail.getPositionType()}</h3>
+			            </c:if> --%>
+			            
+			            
+			            
+			            <c:if test="${not empty jobDetail.headLine}">
+			            
+			            
+			            <div class="rowPadding">
+								<p> <span class="detailHeaderOrange" style="color: ${jobDetail.getColor().substring(4)}">HEADLINE:&nbsp;</span>
+								
+								${jobDetail.headLine}</p>
+								</div>
+			            
+			            
+			           <%--  <h3 class="HeadText" style="color: ${jobDetail.getColor().substring(4)}">HEADLINE:</h3>
+		               
+		                <div class="lineHeight16">
+		                <!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p> -->
+		                <p class="article">${jobDetail.headLine}</p>
+		                <br />
+	               		</div> --%>
+			           
+								</c:if>
+								<c:if test="${not empty jobDetail.positionLevel}">
+								<div class="rowPadding">
+								<p> <span class="detailHeaderOrange" style="color: ${jobDetail.getColor().substring(4)}">POSITION LEVEL:&nbsp;</span>
+								
+								${jobDetail.positionLevel}</p>
+								</div>
+								
+								
+								<%-- <h3 class="HeadText" style="color: ${jobDetail.getColor().substring(4)}">POSITION LEVEL:</h3>
+		                
+		                <div class="lineHeight16">
+		                <!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p> -->
+		                <p class="article">${jobDetail.positionLevel}</p>
+		                <br />
+	               		</div> --%>
+								</c:if>
+								<c:if test="${not empty jobDetail.positionType}">
+								<div class="rowPadding">
+								
+									<p> <span class="detailHeaderOrange" style=" color: ${jobDetail.getColor().substring(4)}">POSITION TYPE:&nbsp;</span>
+									
+								
+								${jobDetail.positionType}</p>
+								</div>
+								
+								 <%-- <h3 class="HeadText" style="color: ${jobDetail.getColor().substring(4)}">POSITION TYPE:</h3>
+		                <div class="lineHeight16">
+		                <!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p> -->
+		                <p class="article">${jobDetail.positionType}</p>
+		                <br />
+	               		</div> --%>
+								</c:if>
+			            
+			           <div class="rowPadding"> 
+		                <span class="detailHeaderOrange marginTop5" style="color: ${jobDetail.getColor().substring(4)}">JOB  SUMMARY:</span>
 		                <div class="JobDetailHeaderRightView">
 				            <c:if test="${isFeatureEmployer}">
-				            <img src="<%= request.getContextPath() %>/resources/images/FeaturedEmp.png" width="164" height="23" alt="Featured Employer">
+				            <a	href="<%=request.getContextPath()%>/healthcarejobs/featuredemployerdetails.html?id=${jobDetail.facilityId}"><img
+									onclick="trackClick(${jobDetail.jobId},'6');"
+									src="<%=request.getContextPath()%>/resources/images/FeaturedEmp.png"
+									alt="Featured Employer" width="164" height="23"></img> </a>
 			            </c:if> 
 			            </div>
-		                <h3 class="HeadText" style="color: ${jobDetail.getColor().substring(4)}">JOB  SUMMARY:</h3>
+		                <br />
 		                <br />
 		                <div class="lineHeight16">
 		                <!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p> -->
-		                <p class="article">${jobDetail.adText}</p>
+		                <div id="descriptionText" class="article">${jobDetail.adText}</div>
 		                <br />
 	               		</div>
                 	</div>
                 
 	                <div class="ContantMiddleLeftLink marginBottom20">
 	                          <div class="row">
-	                    <div class="rowEvenButSpacing paddingBottom10"> <span class="floatLeft marginTop10">
-	                    <a class="btn_smB ColorButton cursor" style="background-color: ${jobDetail.getColor().substring(4)}" onclick="btapplyThisJob(${jobDetail.jobId});" >Apply now</a> 
+	                    <div class="rowEvenButSpacing paddingBottom10"> 
+	                    <security:authorize	access=" !hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP') and !hasRole('ROLE_FACILITY_SYSTEM')">
+	                    <span class="floatLeft marginTop10">
+	                    <a class="btn_smB ColorButton cursor" style="background-color: ${jobDetail.getColor().substring(4)}" onclick="bottomSelectResume(${jobDetail.jobId});" >Apply now</a> 
 	                    <a class="btn_smC white01 cursor" style="color: ${jobDetail.getColor().substring(4)}" onclick="btsaveThisJob(${jobDetail.jobId});" id="btsaveThisJobId">save this job</a>
-	                    </span> </div>
+	                    </span> 
+	                    </security:authorize>
+	                    
+	                    <security:authorize	access="hasRole('ROLE_FACILITY') or hasRole('ROLE_FACILITY_GROUP') or hasRole('ROLE_FACILITY_SYSTEM')">
+	                    <span class="floatLeft marginTop10">
+	                    <a class="btn_smB ColorButton cursor" style="background-color: ${jobDetail.getColor().substring(4)}" onclick="showMessage();" >Apply now</a> 
+	                    <a class="btn_smC white01 cursor" style="color: ${jobDetail.getColor().substring(4)}" onclick="showSaveMessage();" id="btsaveThisJobId">save this job</a>
+	                    </span> 
+	                    </security:authorize>
+	                    </div>
 	                     <br/><br/>
 			     <div class="FormErrorDisplayText" id="bottomjobActionInfo" ></div><br/><br/><br/>
 	                  </div>
@@ -466,25 +669,25 @@
                     <div class="ShareArea">
                     <span>
                     <div class="ShareText">|&nbsp;&nbsp;Share:&nbsp;</div>
-                    <a class="fbook" href="http://www.facebook.com/sharer.php?u=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitle, 
+                    <a class="fbook" onclick="trackClick(${jobDetail.jobId},'9');" href="http://www.facebook.com/sharer.php?u=${basePath}/search/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitle, 
                                 					' ', '-'))}.html" target="_blank"></a>
-				   <a href="https://www.linkedin.com/cws/share?url=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitle, 
+				   <a onclick="trackClick(${jobDetail.jobId},'9');" href="https://www.linkedin.com/cws/share?url=${basePath}/search/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitle, 
                                 					' ', '-'))}.html" target="_blank"><div class="linkedIn"></div></a>
-				   <a href="https://twitter.com/share?url=${basePath}/jobsearch/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitle, 
-                                					' ', '-'))}.html" class="twitter" data-url="${basePath}/jobsearch/jobview/${jobDetail.jobId}/${jobDetail.jobTitle}.html" data-count="none" target="_blank"></a>
+				   <a onclick="trackClick(${jobDetail.jobId},'9');" href="https://twitter.com/share?url=${basePath}/search/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitle, 
+                                					' ', '-'))}.html" class="twitter" data-url="${basePath}/search/jobview/${jobDetail.jobId}/${jobDetail.jobTitle}.html" data-count="none" target="_blank"></a>
                       </span>
                     </div>
                     <div class="ShareArea">
                     <span>
                     <div class="ShareText">|&nbsp;&nbsp;Print:&nbsp;</div>
-                    <a href="" onclick="window.print();" ><div class="printJBdetail"></div></a>
+                    <a href="" onclick="trackPrint(${jobDetail.jobId},'3');" ><div class="printJBdetail"></div></a>
                     </span>
                     </div>
 	                  </div>
 	                </div>
               </div>
               
-              
+              </div>
               </div>
               </div>
         
@@ -499,9 +702,10 @@
                 <!-- </div> -->
                 <!-- content_wrapper -->
 
-                <div class="ad_wrapper">
+                <%-- <div class="ad_wrapper">
 					${adPageBottom}
-                </div><!-- ad_wrapper -->
+                </div> --%>
+                <!-- ad_wrapper -->
 
  </div><!-- main -->
  </div> <!-- end main_wrapper_inside -->   

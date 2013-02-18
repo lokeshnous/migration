@@ -21,16 +21,7 @@
 		jQuery(".megamenu").megamenu();
 		$("#guestUser").displaypopup("#guestUser", "790",
 		"355");
-		$("#loginButton")
-		.click(
-				function(event) {
-					if (validate()) {
-						$("form").attr("action","../j_spring_security_check");
-						$("#loginForm").submit();
-					}
-				});
 	});
-	
 	function validate() {
 		var userName = $.trim($("#j_username").val());
 		var userPassword = $.trim($("#j_password").val());
@@ -41,6 +32,9 @@
 			$("#error").text("The Username/Password you have entered is invalid, please enter the correct Username/Password");
 			$("#error").show();
 			$("#error1").hide();
+			$("#j_username").val('');
+			$("#j_password").val('');
+			$('#j_username').focus();
 			result = false;
 		} 
 		
@@ -48,6 +42,9 @@
 			$("#error").text("The Username/Password you have entered is invalid, please enter the correct Username/Password");
 			$("#error").show();
 			$("#error1").hide();
+			$("#j_username").val('');
+			$("#j_password").val('');
+			$('#j_username').focus();
 			result = false;
 		}
 		if (x == -1 || y == -1 || (x + 2) >= y) {
@@ -55,6 +52,9 @@
 					.text("The Username/Password you have entered is invalid, please enter the correct Username/Password");
 			$("#error").show();
 			$("#error1").hide();
+			$("#j_username").val('');
+			$("#j_password").val('');
+			$('#j_username').focus();
 			result = false;
 		} 
 		
@@ -81,7 +81,7 @@
 				<div class="ad_col_right">
                     <div id="adPageRightTop"> ${adPageRightTop} </div>
 
-		    <br class="clearfix" />
+		    
 
                 </div><!-- ad_col_right -->
 
@@ -89,12 +89,12 @@
             
 		    <div class="job_seeker_login">
 			<h2 class="noTopBottomBorder">Login</h2>
-			<div class="FormErrorDisplayText">
+			<div class="FormErrorDisplayText paddingBottom10">
 			<div id="error1">${error}</div>
 			<div id="error" style=" display: none"></div>
 			</div>
 			
-			<form method="post" id="loginForm" action="../j_spring_security_check">
+			<form method="post" id="loginForm" action="../j_spring_security_check" onsubmit="return validate();">
 			    <div class="rowEvenSpacingMargin0">
 				<span class="lableText1">Email Address:</span> <input type="text" id="j_username" name="j_username" class="job_seeker_email" />
 			    </div>
@@ -109,7 +109,7 @@
 				</div>		    
 				<div class="rowEvenNewSpacing">
 							
-				    	<input type="button" id="loginButton" class="orange cursor" value="Login"/>				    
+				    	<input type="submit" class="orange cursor" value="Login"/>				    
 										
                     	<a href="forgrtPasswordLogin.html?page=jobSeeker" id="forgrtpassword">Forgot your password?</a>
 			
@@ -117,11 +117,16 @@
 				<div class="row">
 				    <p><span class="bold">Not a member?</span> <a href="<%=request.getContextPath()%>/jobseekerregistration/createJobSeekerCreateYrAcct.html">Sign up now!</a></p>
 				</div>
-				<c:if test="<%=session.getAttribute(\"jobId\")!=null%>">
+				<%-- <c:if test="<%=session.getAttribute(\"jobId\")!=null%>">
 				<div class="rowEvenNewSpacing ">
 			      <span class="bold">Or </span> <a id="guestUser" class="nyroModal"  href="<%=request.getContextPath()%>/anonymoususerjobapply/anonymousUser.html">continue as a guest.</a>
 			     </div>
-			     </c:if>
+			     </c:if> --%>
+			    <%--  <c:if test="<%=session.getAttribute(\"applyLink\")!=null%>">
+				<div class="rowEvenNewSpacing ">
+			      <span class="bold">Or </span> <a id="guestUser" class="nyroModal"  href="<%=session.getAttribute(\"applyLink\").toString();%>">continue as a guest.</a>
+			     </div>
+			     </c:if> --%>
                   <div class="clearfix"></div>
 			    </div>
 			</form>

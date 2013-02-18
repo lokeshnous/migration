@@ -3,6 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" 
                                                   prefix="fn" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -44,6 +45,11 @@
 								Employers</a></span>
 					</div>
 					<div class="featuredEmployerLeft" style="background: ${employerProfileManagementForm.primaryColor}">
+						<c:choose>
+							<c:when test="${fn:containsIgnoreCase(windowmediaplayerfilepath,'.gif')}">
+								<img src="${windowmediaplayerfilepath}" height="165" width="260" />
+							</c:when>
+							<c:otherwise>
 						<div class="featuredEmployerVideo">
 							&nbsp;
 							<div id="mediaspacePath" style="display: none;">${windowmediaplayerfilepath}</div> 
@@ -63,6 +69,8 @@
 		var ply = new jeroenwijering.Player(cnt,src,cfg);
 	</script> 
 						</div>
+						</c:otherwise>
+							</c:choose>
 						<div class="featuredEmployerLinks">
 							<div class="row marginBottom10">
 								<span class="labelHolder1">Website:</span> <a
@@ -75,8 +83,8 @@
 								${employerProfileManagementForm.companyEmail } </a>
 						</div>
 						<a class="cursor"
-						 href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobsearch/employer/${fn:replace(fn:trim(fn:split(employerProfileManagementForm.companyName, '\\(')[0]),' ', '-')}.html"
-						 ><div class="featuredEmployerViewAllJobLink">
+						 href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/search/employer/${employerProfileManagementForm.facilityId}/${fn:toLowerCase(fn:replace(fn:trim(fn:split(companyNameEncoded, '\\(')[0]),' ', '-'))}.html"
+						 ><div class="featuredEmployerViewAllJobLink" style="color : ${employerProfileManagementForm.primaryColor}">
 								View all job postings from this Employer</div></a>
 <%-- 						<a class="cursor" onclick="getSearchByCompany('${employerProfileManagementForm.companyName}');"><div class="featuredEmployerViewAllJobLink">
 								View all job postings from this Employer</div></a> --%>
@@ -91,15 +99,15 @@
 								</div>
 								
 						</div>
-						<div class="row borderTopRed">
+						<div class="row" style="border-top: 1px solid ${employerProfileManagementForm.primaryColor};">
 							<p class="marginTop15">
-								<span class="featuredEmployerSectionHeader">Company
+								<span class="featuredEmployerSectionHeader" style="color : ${employerProfileManagementForm.primaryColor}">Company
 									Overview</span><br>
 								${employerProfileManagementForm.companyOverview }
 							</p>
 
 							<p class="marginTop15">
-								<span class="featuredEmployerSectionHeader">Company News</span><br>
+								<span class="featuredEmployerSectionHeader" style="color : ${employerProfileManagementForm.primaryColor}">Company News</span><br>
 								${employerProfileManagementForm.companyNews }
 							</p>
 						</div>

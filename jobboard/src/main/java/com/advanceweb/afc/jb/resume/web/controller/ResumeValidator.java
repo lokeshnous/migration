@@ -1,17 +1,22 @@
 package com.advanceweb.afc.jb.resume.web.controller;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.advanceweb.afc.jb.common.CommonUtil;
 import com.advanceweb.afc.jb.common.util.DateUtils;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
+import com.advanceweb.afc.jb.lookup.service.LookupService;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 /**
  * 
@@ -28,9 +33,11 @@ public class ResumeValidator {
 	private @Value("${jsWorkExpDateCompare}")
 	String jsWorkExpDateCompare;
 
-	private @Value("${jsEducateDateCompare}")
-	String jsEducateDateCompare;
-	
+
+	@Autowired
+	private LookupService lookupService;
+	@Value("${validateCityState}")
+	private String validateCityState;
 	/**
 	 * Validating resume builder
 	 * 
@@ -60,9 +67,32 @@ public class ResumeValidator {
 		validationMessage = validateWorkExperience(createResume
 				.getListWorkExpForm());
 		if (!StringUtils.isEmpty(validationMessage))
-			{return validationMessage;}
-		validationMessage = validateReferences(createResume.getListRefForm());*/
+			{return validationMessage;}*/
+		validationMessage = validateWorkExperience(createResume
+				.getListWorkExpForm());
+		if(null == validationMessage){
+			validationMessage = validateReferences(createResume.getListRefForm());
+		}
+		boolean validateStateCityZip = false;
+		if ((null != createResume.getContactInfoForm().getCity() && !createResume
+				.getContactInfoForm().getCity().isEmpty())
+				&& (null != createResume.getContactInfoForm().getState() && !createResume
+						.getContactInfoForm().getState().isEmpty())
+				&& (null != createResume.getContactInfoForm().getPostalCode() && !createResume
+						.getContactInfoForm().getPostalCode().isEmpty())) {
 
+			try {
+				validateStateCityZip = lookupService.validateCityStateZip(
+						createResume.getContactInfoForm().getCity(),
+						createResume.getContactInfoForm().getState(),
+						createResume.getContactInfoForm().getPostalCode());
+			} catch (JobBoardServiceException e) {
+				e.printStackTrace();
+			}
+			if (!validateStateCityZip) {
+				validationMessage = validateCityState;
+			}
+		}
 		return validationMessage;
 	}
 
@@ -74,17 +104,22 @@ public class ResumeValidator {
 	 */
 	private String validateContactInfo(ContactInfoForm form) {
 
-		if (StringUtils.isEmpty(form.getFirstName())
-				|| StringUtils.isEmpty(form.getLastName())
-				|| StringUtils.isEmpty(form.getAddressLine1())
-				|| StringUtils.isEmpty(form.getCity())
-				|| (StringUtils.isEmpty(form.getState()) || MMJBCommonConstants.ZERO
+		if (StringUtils.isBlank(form.getFirstName())
+				|| StringUtils.isBlank(form.getLastName())
+				|| StringUtils.isBlank(form.getAddressLine1())
+				|| StringUtils.isBlank(form.getCity())
+				|| (StringUtils.isBlank(form.getState()) || MMJBCommonConstants.ZERO
 						.equals(form.getState()))
-				|| (StringUtils.isEmpty(form.getCountry()) || MMJBCommonConstants.ZERO
+				|| (StringUtils.isBlank(form.getCountry()) || MMJBCommonConstants.ZERO
 						.equals(form.getCountry()))
-				|| StringUtils.isEmpty(form.getPostalCode())) {
+				|| StringUtils.isBlank(form.getPostalCode())) {
 
 			return "Please fill the required fields";
+		}
+		
+		if (!StringUtils.isEmpty(form.getPhoneNo())
+				&& !validateMobileNumberPattern(form.getPhoneNo())) {
+			return "Please enter the valid phone format (xxx) xxx-xxxx.";
 		}
 
 		if (!StringUtils.isEmpty(form.getPostalCode())
@@ -100,16 +135,16 @@ public class ResumeValidator {
 	 * @param createResume
 	 * @return
 	 */
-	private String validatePhoneNumbers(CreateResume createResume) {
+	public String validatePhoneNumbers(CreateResume createResume) {
 
 		if (null != createResume.getListPhoneDtlForm()) {
 			for (PhoneDetailForm form : createResume.getListPhoneDtlForm()) {
 				if (StringUtils.isEmpty(form.getPhoneType())
-						&& StringUtils.isEmpty(form.getPhoneNumber())) {
+						&& StringUtils.isBlank(form.getPhoneNumber())) {
 					return "Please fill the required fields";
 				}
 				if (!validateMobileNumberPattern(form.getPhoneNumber())) {
-					return "Please enter the valid phone format(xxx) xxx-xxxx.";
+					return "Please enter the valid phone format (xxx) xxx-xxxx.";
 				}
 			}
 		}
@@ -146,10 +181,48 @@ public class ResumeValidator {
 	 * @param workExpList
 	 * @return
 	 */
-	private String validateWorkExperience(List<WorkExpForm> workExpList) {
+	public String validateWorkExperience(List<WorkExpForm> workExpList) {
 
 		if (null != workExpList) {
 			for (WorkExpForm form : workExpList) {
+				if (!StringUtils.isEmpty(form.getYrsAtPostion())) {
+					if ((!StringUtils.isEmpty(form.getYrsAtPostion()) && !validateNumericsPattern(form
+							.getYrsAtPostion()))) {
+						return "Years at Position should contain only numeric values";
+					}
+					if (!StringUtils.isEmpty(form.getStartDate())
+							&& !StringUtils.isEmpty(form.getEndDate())) {
+						Date startDate = CommonUtil.convtStringToSQLDate(form
+								.getStartDate());
+						Date endDate = CommonUtil.convtStringToSQLDate(form
+								.getEndDate());
+						Calendar startDt = Calendar.getInstance();
+						Calendar endDt = Calendar.getInstance();
+
+						endDt.setTime(endDate);
+						startDt.setTime(startDate);
+						int yearDiff = endDt.get(Calendar.YEAR) - startDt.get(Calendar.YEAR);
+						if(yearDiff<0){
+							return "Start date should be less than end date";
+						}
+						int yearAtPosition = Integer.valueOf(form
+								.getYrsAtPostion());
+						if (yearAtPosition > yearDiff) {
+							return "Years at position should be less than the specified start and end date difference";
+						}
+
+					}
+				}
+				if(StringUtils.isEmpty(form.getJobTitle()) ||
+						 StringUtils.isEmpty(form.getEmployerName()) ||
+						 MMJBCommonConstants.ZERO.equals(form.getEmploymentType()) ||
+						 StringUtils.isEmpty(form.getStartDate()) ||
+						 (!form.isbPresent() &&
+						 StringUtils.isEmpty(form.getEndDate())) ||
+						 StringUtils.isEmpty(form.getYrsAtPostion()) ||
+						 MMJBCommonConstants.ZERO.equals(form.getCurrentCareerLvl())){
+						 return "Please fill the required fields"; }
+			}
 				/*
 				 * if(StringUtils.isEmpty(form.getJobTitle()) ||
 				 * StringUtils.isEmpty(form.getEmployerName()) ||
@@ -161,7 +234,7 @@ public class ResumeValidator {
 				 * MMJBCommonConstants.ZERO.equals(form.getCurrentCareerLvl())){
 				 * return "Please fill the required fields"; }
 				 */
-				if ((!StringUtils.isEmpty(form.getYrsAtPostion()) && !validateNumericsPattern(form
+				/*if ((!StringUtils.isEmpty(form.getYrsAtPostion()) && !validateNumericsPattern(form
 						.getYrsAtPostion()))) {
 					return "Years at Position should contain only numeric values";
 				}
@@ -180,7 +253,7 @@ public class ResumeValidator {
 				{
 					return errorMsg;
 				}
-			}
+			}*/
 		}
 		return null;
 	}
@@ -210,15 +283,19 @@ public class ResumeValidator {
 	 * @param eduList
 	 * @return
 	 */
-	private String validateEducation(List<EducationForm> eduList) {
+	public String validateEducation(List<EducationForm> eduList) {
 		if (null != eduList) {
 			for (EducationForm form : eduList) {
+				if (StringUtils.isEmpty(form.getInstituteName())
+						|| MMJBCommonConstants.ZERO.equals(form.getDegreeLvl())) {
+					return "Please fill the required fields";
+				}
 				/*
 				 * if(StringUtils.isEmpty(form.getInstituteName()) ||
 				 * MMJBCommonConstants.ZERO.equals(form.getDegreeLvl())){ return
 				 * "Please fill the required fields"; }
 				 */
-				if ((!StringUtils.isEmpty(form.getStartDate()) && !validateDatePattern(form
+				/*if ((!StringUtils.isEmpty(form.getStartDate()) && !validateDatePattern(form
 						.getStartDate()))
 						|| (!StringUtils.isEmpty(form.getEndDate()) && !validateDatePattern(form
 								.getEndDate()))) {
@@ -227,7 +304,7 @@ public class ResumeValidator {
 				if (!StringUtils.isEmpty(form.getStartDate()) && !StringUtils.isEmpty(form.getEndDate()) 
 						&& compareDates(form.getStartDate(), form.getEndDate())) {
 					return jsEducateDateCompare;
-				}
+				}*/
 			}
 
 		}
@@ -240,17 +317,17 @@ public class ResumeValidator {
 	 * @param certsList
 	 * @return
 	 */
-	private String validateCertifications(List<CertificationsForm> certsList) {
+	public String validateCertifications(List<CertificationsForm> certsList) {
 		if (null != certsList) {
 			for (CertificationsForm form : certsList) {
-				/*
-				 * if(StringUtils.isEmpty(form.getCertificationName())){ return
-				 * "Please fill the required fields"; }
-				 */
-				if (!StringUtils.isEmpty(form.getDateOfReceipt())
+				 if(StringUtils.isEmpty(form.getCertificationName())){ 
+					 return "Please fill the required fields"; 
+					 }
+				 
+				/*if (!StringUtils.isEmpty(form.getDateOfReceipt())
 						&& !validateDatePattern(form.getDateOfReceipt())) {
 					return "Please enter valid date format";
-				}
+				}*/
 			}
 		}
 		return null;
@@ -267,7 +344,7 @@ public class ResumeValidator {
 			for (ReferenceForm form : refList) {
 				if (!StringUtils.isEmpty(form.getPhoneNo())
 						&& !validateMobileNumberPattern(form.getPhoneNo())) {
-					return "Please enter the valid phone format(xxx) xxx-xxxx.";
+					return "Please enter the valid phone format (xxx) xxx-xxxx.";
 				}
 				if (!StringUtils.isEmpty(form.getEmail())
 						&& !validateEmailPattern(form.getEmail())) {

@@ -4,28 +4,39 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class AdminLoginForm {
 
-	@NotEmpty
-	private String userEmail;
+	/*@NotEmpty
+	private String userEmail;*/
 
 	@NotEmpty
 	private String empOrAgencyEmail;
 
-	@NotEmpty
-	private String password;
+	private int adminUserId;
+	
+	
+	/*@NotEmpty
+	private String password;*/
 
 	/**
 	 * @return the userEmail
 	 */
-	public String getUserEmail() {
+	/*public String getUserEmail() {
 		return userEmail;
 	}
-
+*/
 	/**
 	 * @param userEmail
 	 *            the userEmail to set
 	 */
-	public void setUserEmail(String userEmail) {
+	/*public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
+	}*/
+
+	public int getAdminUserId() {
+		return adminUserId;
+	}
+
+	public void setAdminUserId(int adminUserId) {
+		this.adminUserId = adminUserId;
 	}
 
 	/**
@@ -44,17 +55,17 @@ public class AdminLoginForm {
 
 	/**
 	 * @return the password
-	 */
+	 *//*
 	public String getPassword() {
 		return password;
 	}
 
-	/**
+	*//**
 	 * @param password
 	 *            the password to set
-	 */
+	 *//*
 	public void setPassword(String password) {
 		this.password = password;
-	}
+	}*/
 
 }

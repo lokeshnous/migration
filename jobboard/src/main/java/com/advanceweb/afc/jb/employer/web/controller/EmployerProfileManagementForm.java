@@ -10,6 +10,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
  * @Since 2nd July, 2012
  */
 public class EmployerProfileManagementForm {
+	private int facilityId;
 	private String companyName;
 	private String companyOverview;
 	private String companyWebsite;
@@ -22,6 +23,18 @@ public class EmployerProfileManagementForm {
 	private CommonsMultipartFile positionalMedia;
 	private String positionalMediaUrl;
 
+	/**
+	 * @return the facilityId
+	 */
+	public int getFacilityId() {
+		return facilityId;
+	}
+	/**
+	 * @param facilityId the facilityId to set
+	 */
+	public void setFacilityId(int facilityId) {
+		this.facilityId = facilityId;
+	}
 	public String getLogoPath() {
 		return logoPath;
 	}

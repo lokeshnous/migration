@@ -76,17 +76,18 @@
 	});
 </script>
 </head>
-<c:if test="${!isBrandPurchased}">
+<%-- <c:if test="${!isBrandPurchased}">
 	<body class="job_board">
 	        <div id="jobSeekerRegister1" class="job_seeker_login popUpContainer" style="display:block">
 	          <div class="popupHeader">
-	            <h2>${errorMessage}</h2>
+	          	<h2>MANAGE JOB POSTING BRANDING TEMPLATES </h2>
 	            <img src="../resources/images/Close.png" width="19" class="nyroModalClose cursor" title="Close"
 					height="19" alt="Close"></div>
+					<div class="FormErrorDisplayText">  ${errorMessage}</div>
 	        </div>
 	</body>
-</c:if>
-<c:if test="${isBrandPurchased}">
+</c:if> --%>
+<%-- <c:if test="${isBrandPurchased}"> --%>
 
 		<body class="job_board">
         <div id="jobSeekerRegister1" class="job_seeker_login popUpContainer" style="display:block">
@@ -135,7 +136,7 @@
 <%--               <a href="<%=request.getContextPath()%>/brandingTemplates/newBrandingTemplate.html" class="btn_sm orange">New  Branding TEMPLATE</a> 
               <a href="<%=request.getContextPath()%>/brandingTemplates/cancelBrandTemp.html" class="btn_sm orange">Cancel</a>
  --%>
-              <a class="btn_sm orange" href="<%=request.getContextPath()%>/brandingTemplates/newBrandingTemplate.html">New  Branding TEMPLATE</a> 
+              <a class="btn_sm orange" href="<%=request.getContextPath()%>/brandingTemplates/newBrandingTemplate.html">Create New  Branding TEMPLATE</a> 
               <a class="nyroModalClose btn_sm orange" href="#">Cancel</a>	
 
               </div>
@@ -144,5 +145,5 @@
           <div class="clearfix"></div>
         </div>
 </body>
-</c:if>
+<%-- </c:if> --%>
 </html>

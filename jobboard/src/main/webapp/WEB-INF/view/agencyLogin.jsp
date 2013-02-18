@@ -18,14 +18,7 @@
 		
 		$("#forgrtpassword").displaypopup("#forgrtpassword", "790", "252");
 		jQuery(".megamenu").megamenu();
-		$("#loginButton")
-		.click(
-				function(event) {
-					if (validate()) {
-						$("form").attr("action","../j_spring_security_check");
-						$("#loginForm").submit();
-					}
-				});
+		
 	});
 	
 	function validate() {
@@ -38,6 +31,9 @@
 			$("#error").text("The Username/Password you have entered is invalid, please enter the correct Username/Password");
 			$("#error").show();
 			$("#error1").hide();
+			$("#j_username").val('');
+			$("#j_password").val('');
+			$('#j_username').focus();
 			result = false;
 		} 
 		
@@ -45,6 +41,9 @@
 			$("#error").text("The Username/Password you have entered is invalid, please enter the correct Username/Password");
 			$("#error").show();
 			$("#error1").hide();
+			$("#j_username").val('');
+			$("#j_password").val('');
+			$('#j_username').focus();
 			result = false;
 		}
 		if (x == -1 || y == -1 || (x + 2) >= y) {
@@ -52,6 +51,9 @@
 					.text("The Username/Password you have entered is invalid, please enter the correct Username/Password");
 			$("#error").show();
 			$("#error1").hide();
+			$("#j_username").val('');
+			$("#j_password").val('');
+			$('#j_username').focus();
 			result = false;
 		} 
 		
@@ -76,18 +78,18 @@
 <jsp:include page="../templates/templates_header.jsp"></jsp:include>
 				<div class="ad_col_right">
                     ${adPageRightTop}
-		    <br class="clearfix" />
+		    
                 </div><!-- ad_col_right -->
 
                 <div class="content_wrapper">
 
 		    <div class="job_seeker_login">
 			<h2 class="noTopBottomBorder ">Ad Agency Login</h2>
-			<div class="FormErrorDisplayText">
+			<div class="FormErrorDisplayText paddingBottom10">
 			<div id="error1">${error}</div>
 			<div id="error" style=" display: none"></div>
 			</div>
-			<form method="post" id="loginForm" action="../j_spring_security_check">
+			<form method="post" id="loginForm" action="../j_spring_security_check" onsubmit="return validate();">
 			    <div class="rowEvenSpacingMargin0">
 				<span class="lableText1">Email Address:</span> <input type="text" id="j_username" name="j_username" class="job_seeker_email" />
 			    </div>
@@ -102,7 +104,7 @@
 				</div>		    
 				<div class="rowEvenNewSpacing">
 							
-				    	<input type="button" id="loginButton" class="orange cursor" value="Login"/>				    
+				    	<input type="submit" class="orange cursor" value="Login"/>				    
 										
                     	<a href="forgrtPasswordLogin.html?page=agency" id="forgrtpassword">Forgot your password?</a>
 			

@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.user.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -45,10 +46,10 @@ public class UserSubscriptionsController {
 
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
-	
+
 	@Autowired
 	private ProfileRegistration profileRegistration;
-	
+
 	@Autowired
 	private TransformJobSeekerRegistration transformJobSeekerRegistration;
 
@@ -87,6 +88,10 @@ public class UserSubscriptionsController {
 				.getSubscriptionsletter(Integer.valueOf(String.valueOf(session
 						.getAttribute("userId"))));
 
+		List<DropDownDTO> listEmailer = userSubService
+				.getSubscriptionsEmailer(Integer.valueOf(String.valueOf(session
+						.getAttribute("userId"))));
+
 		// Get the subscription list which selected during registration for
 		// logged in user
 		List<UserSubscriptionsDTO> getSelectedSub = userSubService
@@ -96,6 +101,7 @@ public class UserSubscriptionsController {
 		boolean digSubscription = false;
 		boolean enewsSubscription = false;
 		boolean emailSubscription = false;
+
 		// Call to service layer
 		JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileRegistration
 				.viewProfile((Integer) session
@@ -106,36 +112,40 @@ public class UserSubscriptionsController {
 			if (profileForm.getStrLabelValue() != null
 					&& profileForm.getStrLabelName().equalsIgnoreCase(
 							MMJBCommonConstants.COUNTRY)) {
-				if(profileForm.getStrLabelValue().equalsIgnoreCase(MMJBCommonConstants.COUNTRY_USA)){
-					printSubscription = true;
-				}else if(profileForm.getStrLabelValue().equalsIgnoreCase(MMJBCommonConstants.COUNTRY_CA)){
-					printSubscription = true;
-					digSubscription = true;
-					enewsSubscription = true;
-					emailSubscription = true;
+				if (profileForm.getStrLabelValue().equalsIgnoreCase(
+						MMJBCommonConstants.COUNTRY_USA)) {
+					/*
+					 * printSubscription = true; digSubscription = true;
+					 * enewsSubscription = true; emailSubscription = true;
+					 */
+					model.addObject("listpublicationprint",
+							listpublicationprint);
+				} else if (profileForm.getStrLabelValue().equalsIgnoreCase(
+						MMJBCommonConstants.COUNTRY_CA)) {
+					// printSubscription = true;
+					listpublicationprint = new ArrayList<DropDownDTO>();
+					model.addObject("listpublicationprint",
+							listpublicationprint);
 				}
 			}
 		}
-		/*if (null != getSelectedSub) {
-			for (UserSubscriptionsDTO subscriptionsDTO : getSelectedSub) {
-				if (subscriptionsDTO.getSubscriptionId() == MMJBCommonConstants.PRINT_JS_SUBSCRIPTION) {
-					printSubscription = true;
-				}
-				if (subscriptionsDTO.getSubscriptionId() == MMJBCommonConstants.DIGITAL_JS_SUBSCRIPTION) {
-					digSubscription = true;
-				}
-				if (subscriptionsDTO.getSubscriptionId() == MMJBCommonConstants.ENEWS_JS_SUBSCRIPTION) {
-					enewsSubscription = true;
-				}
-				if (subscriptionsDTO.getSubscriptionId() == MMJBCommonConstants.EMAIL_JS_SUBSCRIPTION) {
-					emailSubscription = true;
-				}
-			}
-		}*/
+		/*
+		 * if (null != getSelectedSub) { for (UserSubscriptionsDTO
+		 * subscriptionsDTO : getSelectedSub) { if
+		 * (subscriptionsDTO.getSubscriptionId() ==
+		 * MMJBCommonConstants.PRINT_JS_SUBSCRIPTION) { printSubscription =
+		 * true; } if (subscriptionsDTO.getSubscriptionId() ==
+		 * MMJBCommonConstants.DIGITAL_JS_SUBSCRIPTION) { digSubscription =
+		 * true; } if (subscriptionsDTO.getSubscriptionId() ==
+		 * MMJBCommonConstants.ENEWS_JS_SUBSCRIPTION) { enewsSubscription =
+		 * true; } if (subscriptionsDTO.getSubscriptionId() ==
+		 * MMJBCommonConstants.EMAIL_JS_SUBSCRIPTION) { emailSubscription =
+		 * true; } } }
+		 */
 		model.addObject("jobSubscriptionsList", listSubscriptions);
-		model.addObject("listpublicationprint", listpublicationprint);
 		model.addObject("listpublicationdigital", listpublicationdigital);
 		model.addObject("listnewsletter", listnewsletter);
+		model.addObject("listEmailer", listEmailer);
 		model.addObject("printSubscription", printSubscription);
 		model.addObject("digSubscription", digSubscription);
 		model.addObject("enewsSubscription", enewsSubscription);
@@ -196,9 +206,13 @@ public class UserSubscriptionsController {
 		List<DropDownDTO> listSubscriptions = populateDropdownsService
 				.getFacilitySubList();
 
+		// If logged in user is job owner then get his parent facility id to get
+		// his parent subscriptions
+		int parentFacilityId = userSubService.getParentId(facilityId);
+
 		// Get current subscription and publication list
 		List<UserSubscriptionsDTO> currentSubsList = userSubService
-				.getCurrentFacilitySub(facilityId);
+				.getCurrentFacilitySub(parentFacilityId);
 
 		// Getting list of digital magazine and e-news letter
 		// publications which are applicable for each subscription
@@ -206,6 +220,7 @@ public class UserSubscriptionsController {
 				.getDigitalSubList();
 		List<UserSubscriptionsDTO> enewsSubList = userSubService
 				.getEnewsLetterSubList();
+		List<DropDownDTO> listEmailer = userSubService.getSubEmailerList();
 
 		List<DropDownDTO> digSubscriptionList = userubscription
 				.jsSubDTOToDropDownDTO(digitalSubList, subscriptform);
@@ -218,6 +233,7 @@ public class UserSubscriptionsController {
 		model.addObject("facilitySubList", listSubscriptions);
 		model.addObject("digitalSubList", digSubscriptionList);
 		model.addObject("enewSubList", enewSubList);
+		model.addObject("listEmailer", listEmailer);
 		model.addObject("facilitySubsForm", subscriptform);
 		model.setViewName("employerModifySubscriptionsPopup");
 		return model;
@@ -241,10 +257,16 @@ public class UserSubscriptionsController {
 			@RequestParam("mailCheckbox") boolean mailCheckbox) {
 		try {
 
+			int facilityId = (Integer) session
+					.getAttribute(MMJBCommonConstants.FACILITY_ID);
+
 			subscriptform.setUserId(Integer.valueOf(String.valueOf(session
 					.getAttribute(MMJBCommonConstants.USER_ID))));
-			subscriptform.setFacilityId(Integer.valueOf(String.valueOf(session
-					.getAttribute(MMJBCommonConstants.FACILITY_ID))));
+
+			// If logged in user is job owner then need to get his parent
+			// facility id
+			facilityId = userSubService.getParentId(facilityId);
+			subscriptform.setFacilityId(facilityId);
 
 			List<UserSubscriptionsDTO> listSubsDTO = userubscription
 					.jsSubscriptionFormToUserSubsDTO(subscriptform,
