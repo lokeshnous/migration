@@ -8,6 +8,7 @@ import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 import com.advanceweb.afc.jb.common.SchedulerDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityJpAudit;
+import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 
 
 /**
@@ -92,4 +93,7 @@ public interface JobPostDAO {
 	List<SchedulerDTO> retreiveActiveJobsExpireSoon();
 	
 	List<SchedulerDTO> executeExpireJobs();
+	public boolean checkDraftAndSchedule(int avdSearchId);
+	boolean validateCityStateZip(String city, String state, String zip,String country) throws JobBoardDataException;
+	
 }

@@ -38,14 +38,18 @@ import com.advanceweb.afc.jb.common.ResumeVisibilityDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.VeteranStatusDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
+import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmInventoryDetail;
 import com.advanceweb.afc.jb.data.entities.AdmSubscription;
+import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.JpAttribList;
 import com.advanceweb.afc.jb.data.entities.JpJobTypeCombo;
+import com.advanceweb.afc.jb.data.entities.JpLocation;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
 import com.advanceweb.afc.jb.data.entities.MerLocation;
 import com.advanceweb.afc.jb.data.entities.MerUser;
+import com.advanceweb.afc.jb.data.entities.ResBlockedCompanies;
 import com.advanceweb.afc.jb.data.entities.ResDegreeEdu;
 import com.advanceweb.afc.jb.data.entities.ResPrivacy;
 import com.advanceweb.afc.jb.data.entities.ResResumeAttrib;
@@ -64,6 +68,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	private static final String FIND_EDU_DEGREES = "from ResDegreeEdu edu";
 	private static final String FIND_INVENTORY_DETAILS = "select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) group by dtl.productType,dtl.productId";
 	private static final String FIND_JOB_TYPE_COMBO = "select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.invDetailId = ? and inv.admFacility in(from AdmFacility fac where fac.facilityId=?)";
+	private static final String FIND_BLOCKED_BOMPANIES = "from ResBlockedCompanies rbc where rbc.resumeId=?";
 	// private static final String
 	// FIND_JOB_OWNERS="from AdmFacility adm where adm.admFacility=?";
 
@@ -453,9 +458,10 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	@Override
 	public List<DropDownDTO> populateJobOwnersDropdown(int facilityId) {
 		List<DropDownDTO> dropdownList = new ArrayList<DropDownDTO>();
-		try {	
-			
-			AdmFacility admFacility = hibernateTemplate.get(AdmFacility.class, facilityId);
+		try {
+
+			AdmFacility admFacility = hibernateTemplate.get(AdmFacility.class,
+					facilityId);
 			int facilityParentId = admFacility.getFacilityParentId();
 			if (MMJBCommonConstants.ZERO_INT < facilityParentId) {
 				AdmFacility parentAdmFacility = hibernateTemplate.get(
@@ -467,10 +473,29 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 					facilityId = facilityParentId;
 				}
 			}
+
+			// Add employer name also in job owners list
+			List<AdmUserFacility> userFacilities = hibernateTemplate.find(
+					"from AdmUserFacility m where m.facilityPK.facilityId=?",
+					facilityId);
+			AdmUserFacility facility = new AdmUserFacility();
+			if (null != userFacilities && !userFacilities.isEmpty()) {
+				DropDownDTO dropdownDTO = new DropDownDTO();
+				facility = userFacilities.get(0);
+				int userId = facility.getFacilityPK().getUserId();
+				MerUser merUser = hibernateTemplateTracker.get(MerUser.class,
+						userId);
+				dropdownDTO.setOptionId(String.valueOf(userId));
+				dropdownDTO.setOptionName(merUser.getFirstName() + " "
+						+ merUser.getLastName());
+				dropdownList.add(dropdownDTO);
+
+			}
+			
 			// Get the list of job owners of employee
-			List<AdmFacility> admFacilityList = hibernateTemplate
-					.find("from AdmFacility adm where adm.facilityParentId=?",
-							facilityId);
+			List<AdmFacility> admFacilityList = hibernateTemplate.find(
+					"from AdmFacility adm where adm.facilityParentId=?",
+					facilityId);
 			for (AdmFacility jobOwner : admFacilityList) {
 				if (jobOwner.getAdmUserFacilities() != null
 						&& !jobOwner.getAdmUserFacilities().isEmpty()) {
@@ -482,12 +507,19 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 						// Get the job owner details
 						MerUser merUser = hibernateTemplateTracker.get(
 								MerUser.class, jobownerUserId);
-						if(merUser!=null && merUser.getDeleteDt()==null){
-						DropDownDTO dropdownDTO = new DropDownDTO();
-						dropdownDTO.setOptionId(String.valueOf(jobownerUserId));
-						dropdownDTO.setOptionName(merUser.getLastName() + " "
-								+ merUser.getFirstName());
-						dropdownList.add(dropdownDTO);
+						if (merUser != null && merUser.getDeleteDt() == null) {
+							DropDownDTO dropdownDTO = new DropDownDTO();
+							dropdownDTO.setOptionId(String
+									.valueOf(jobownerUserId));
+
+							// Modified based on new changes
+							/*
+							 * dropdownDTO.setOptionName(merUser.getLastName() +
+							 * " " + merUser.getFirstName());
+							 */
+							dropdownDTO.setOptionName(merUser.getFirstName()
+									+ " " + merUser.getLastName());
+							dropdownList.add(dropdownDTO);
 						}
 					}
 				}
@@ -553,9 +585,11 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		if (!invList.isEmpty()) {
 			for (AdmInventoryDetail inv : invList) {
 				dto = new DropDownDTO();
-				
-				JpJobTypeCombo combo = (JpJobTypeCombo)DataAccessUtils.uniqueResult(hibernateTemplate
-						.find("from JpJobTypeCombo combo where combo.comboId=?",inv.getProductId()));
+
+				JpJobTypeCombo combo = (JpJobTypeCombo) DataAccessUtils
+						.uniqueResult(hibernateTemplate
+								.find("from JpJobTypeCombo combo where combo.comboId=?",
+										inv.getProductId()));
 				if (null != combo) {
 					dto.setOptionId(String.valueOf(inv.getInvDetailId()));
 					dto.setOptionName(combo.getAddons());
@@ -569,42 +603,40 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	@Override
 	public List<String> populateCityAutoComplete(String city) {
 
-		List<String> locationList = new ArrayList<String>();
+		List<LocationDTO> locationDtoList = new ArrayList<LocationDTO>();
+		List<String> locationStringList = new ArrayList<String>();
 
 		try {
-			List<Object> jpLocationList = hibernateTemplate
-					.find("select distinct jloc.city from  JpLocation jloc WHERE  jloc.city like '"
-							+ city + "%' ORDER BY  jloc.city ASC");
+			List<JpLocation> jpLocationList = hibernateTemplate
+					.find("select distinct jloc.city, jloc.state from  JpLocation jloc WHERE  jloc.city like '"
+							+ city + "%' ORDER BY  jloc.city, jloc.state ASC");
 
 			if (jpLocationList != null) {
-				for (Object obj : jpLocationList) {
-					locationList.add((String) obj);
+				Iterator<?> itr = jpLocationList.iterator();
+				while (itr.hasNext()) {
+					Object[] locObj = (Object[]) itr.next();
+					LocationDTO locDTO = new LocationDTO();
+					locDTO.setCity(String.valueOf(locObj[0]));
+					locDTO.setState(String.valueOf(locObj[1]));
+					locationDtoList.add(locDTO);
 				}
+				locationStringList = MMUtils.convertToCityStateStringList(locationDtoList);
 			}
 		} catch (DataAccessException e) {
 
 			LOGGER.error(e);
 		}
-		return locationList;
+		return locationStringList;
 	}
 
 	@Override
-	public String populateStateAutoComplete(String city) {
-
-		try {
-			List<Object> jpLocationList = hibernateTemplate
-					.find("select distinct jloc.state from  JpLocation jloc WHERE  jloc.city='"
-							+ city + "' ORDER BY  jloc.state ASC");
-
-			if (jpLocationList != null && !jpLocationList.isEmpty()) {
-				return (String) jpLocationList.get(0);
-			}
-		} catch (DataAccessException e) {
-
-			LOGGER.error(e);
+	public String populateStateAutoComplete(String cityState) {
+		String state = MMJBCommonConstants.EMPTY;
+		if (cityState.contains(MMJBCommonConstants.COMMASPACE)) {
+			state = cityState.substring(cityState.lastIndexOf(MMJBCommonConstants.COMMASPACE)+2);
 		}
 
-		return null;
+		return state;
 	}
 
 	@Override
@@ -638,8 +670,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		int facilityParentId = -1;
 		List<DropDownDTO> companyNames = new ArrayList<DropDownDTO>();
 		try {
-			AdmFacility admFacility = hibernateTemplate.load(AdmFacility.class, facilityId);
-			
+			AdmFacility admFacility = hibernateTemplate.load(AdmFacility.class,
+					facilityId);
+
 			facilityParentId = admFacility.getFacilityParentId();
 			// Check for employer facility and facility group
 			if (admFacility.getFacilityType().equalsIgnoreCase(
@@ -649,7 +682,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 					MMJBCommonConstants.FACILITY_GROUP)) {
 				isEmployerGroup = true;
 			}
-			
+
 			// For job owner login
 			if (MMJBCommonConstants.ZERO_INT < facilityParentId) {
 				AdmFacility parentAdmFacility = hibernateTemplate.get(
@@ -659,11 +692,12 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 					isEmployer = false;
 					isEmployerGroup = true;
 					mainFacilityId = facilityParentId;
-				}else{
+				} else if (parentAdmFacility.getFacilityType()
+						.equalsIgnoreCase(MMJBCommonConstants.FACILITY)) {
 					admFacility = parentAdmFacility;
 				}
 			}
-			
+
 			// Add the facilities for employer
 			if (isEmployer) {
 				DropDownDTO dto = new DropDownDTO();
@@ -711,11 +745,14 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			if (admFacilityList != null && !admFacilityList.isEmpty()) {
 				AdmFacility facility = admFacilityList.get(0);
 				templateId = facility.getTemplateId();
-				if (0 == templateId && 0 == facility.getFacilityParentId()) {
+				if (-1 == templateId && -1 == facility.getFacilityParentId()) {
 					return populateBrandingTemplateDropdown(facilityId, 0);
 				}
 			}
 
+			if (-1 == templateId) {
+				return templateList;
+			}
 			List<Object> jpTemplateList = hibernateTemplate
 					.find("select distinct jtem.templateName from  JpTemplate jtem WHERE jtem.deleteDt is null and jtem.templateId=?",
 							templateId);
@@ -740,6 +777,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	public String getPostalCode(String city, String state) {
 
 		try {
+			city = city.replaceAll("'", "''");
 			List<Object> jpLocationList = hibernateTemplate
 					.find("select distinct jloc.postcode from  JpLocation jloc WHERE  jloc.state='"
 							+ state
@@ -762,6 +800,7 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	public String getCountry(String city, String state, String postalCode) {
 
 		try {
+			city = city.replaceAll("'", "''");
 			List<Object> jpLocationList = hibernateTemplate
 					.find("select distinct jloc.country from  JpLocation jloc WHERE jloc.state='"
 							+ state
@@ -843,13 +882,37 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		try {
 			List<AdmSubscription> subsList = hibernateTemplate.find(
 					FIND_USER_SUBSCRIPTIONS, "FACILITY");
-//			Map<String, String> facilityMap = new HashMap<String, String>();
+			// Map<String, String> facilityMap = new HashMap<String, String>();
 			return dropdownHelper.convertAdmSubscriptionToDropDownDTO(subsList);
 		} catch (DataAccessException e) {
 			LOGGER.error("Error occurred while getting data for subscriptions"
 					+ e);
 		}
 
+		return null;
+	}
+
+	@Override
+	public List<DropDownDTO> getBlockedCompanyList(int resumeId) {
+		try {
+			List<ResBlockedCompanies> BlockedCompanies = hibernateTemplate
+					.find(FIND_BLOCKED_BOMPANIES, resumeId);
+			DropDownDTO dropDownDTO = null;
+			List<DropDownDTO> list = new ArrayList<DropDownDTO>();
+
+			for (ResBlockedCompanies company : BlockedCompanies) {
+				dropDownDTO = new DropDownDTO();
+				AdmFacility admFacility = hibernateTemplate.get(
+						AdmFacility.class, company.getCompanyId());
+				dropDownDTO.setOptionId(String.valueOf(company.getCompanyId()));
+				dropDownDTO.setOptionName(admFacility.getName());
+				list.add(dropDownDTO);
+			}
+			return list;
+		} catch (DataAccessException e) {
+			LOGGER.error("Error occurred while getting data for subscriptions"
+					+ e);
+		}
 		return null;
 	}
 }

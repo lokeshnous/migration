@@ -8,6 +8,7 @@ import com.advanceweb.afc.jb.common.LanguageDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
+import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 
 
 /**
@@ -36,7 +37,7 @@ public interface ResumeDao {
 	boolean addLanguage(List<LanguageDTO> listLangExp);
 	boolean addCertifications(List<CertificationDTO> listLangExp);
 	
-	ResumeDTO fetchPublicResumeByUserId(long jobSeekerId);
+	ResumeDTO fetchPublicResumeByUserId(long jobSeekerId,int uploadResumeId);
 	int findResumeCount(int userId);
 	boolean checkDuplicateResumeName(String resumeId, String resumeName,int userId);
 	
@@ -46,5 +47,6 @@ public interface ResumeDao {
 	 * @return boolean
 	 */
 	boolean moveResumesToFolder(List<String> publishResumeIdArrList, int userId);
+	boolean saveBlockedCompanydetails(ResumeDTO resumeDTO) throws JobBoardDataException;
 	
 }

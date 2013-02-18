@@ -30,6 +30,7 @@ public class FacilityConversionHelper {
 			FacilityDTO dto=new FacilityDTO();
 			dto.setFacilityId(admFacility.getFacilityId());
 			dto.setAdminUserId(admFacility.getAdminUserId());
+			dto.setCreateUserId(admFacility.getCreateUserId());
 			dto.setCity(admFacility.getCity());
 			dto.setCountry(admFacility.getCountry());
 			dto.setCreateDt(admFacility.getCreateDt());
@@ -37,6 +38,9 @@ public class FacilityConversionHelper {
 			dto.setFacilityParentId(admFacility.getFacilityParentId());
 			dto.setName(admFacility.getName());
 			dto.setState(admFacility.getState());
+			
+			// set the userId 
+			dto.setUserId(admFacility.getAdmUserFacilities().get(0).getFacilityPK().getUserId());
 			facilityDTO.add(dto);
 		}
 		return facilityDTO;

@@ -25,6 +25,7 @@ import com.advanceweb.afc.jb.data.entities.MerUserProfilePK;
 import com.advanceweb.afc.jb.data.entities.WebMembership;
 import com.advanceweb.afc.jb.data.entities.WebMembershipEmail;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
+import com.mysql.jdbc.StringUtils;
 
 @SuppressWarnings("unchecked")
 @Transactional
@@ -96,7 +97,7 @@ public class UserDaoImpl implements UserDao {
 		return userDTO;
 	}
 
-	private boolean isAdmin(int userId) {
+	public boolean isAdmin(int userId) {
 		boolean result = false;
 		List<AdmUserRole> user = hibernateTemplate.find(
 				"from AdmUserRole adm where adm.rolePK.userId=?", userId);
@@ -289,6 +290,41 @@ public class UserDaoImpl implements UserDao {
 			}
 		} catch (Exception e) {
 			LOGGER.error("Exception occur while fetching the username and password from Advance Pass DB"+e.getMessage());
+		}
+		return userDTO;
+	}
+
+	@Override
+	public boolean checkUserMail(String email) {
+		try {
+			if (!StringUtils.isEmptyOrWhitespaceOnly(email)) {
+				List<MerUser> usersList = hibernateTemplateTracker.find("from MerUser e where e.email = ?",email);
+				List<WebMembershipEmail> webMembershipEmails = hibernateTemplateAdvancePass.find("from WebMembershipEmail e where e.email = ? and e.deleteDate is NULL", email);
+				
+				if(!webMembershipEmails.isEmpty() && usersList.isEmpty()){
+					return true;
+				}
+			}
+		} catch (HibernateException e) {
+			LOGGER.error(e);
+		}
+		return false;
+	}
+
+	@Override
+	public UserDTO getAdminInfo(String email) {
+		UserDTO userDTO = null;
+		MerUser user = (MerUser)DataAccessUtils
+				.uniqueResult(hibernateTemplateTracker
+						.find(" from  MerUser user where user.email=? and deleteDt is null",
+								email));
+		if (user != null) {
+			userDTO = new UserDTO();
+			userDTO.setEmailId(user.getEmail());
+			userDTO.setFirstName(user.getFirstName());
+			userDTO.setLastName(user.getLastName());
+			userDTO.setUserId(user.getUserId());
+//			userDTO.setPassword(user.getPassword());
 		}
 		return userDTO;
 	}

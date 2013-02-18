@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmSaveSearch;
 import com.advanceweb.afc.jb.jobseeker.helper.SaveSearchConversionHelper;
 
@@ -40,7 +41,9 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 		// Transforming the saveSearchedJobsDTO to Save Search Entity
 		AdmSaveSearch searchResults = saveSearchConversionHelper
 				.transformSaveSearch(saveSearchedJobsDTO);
-		
+		if(null == searchResults.getEmailFrequency() || searchResults.getEmailFrequency().isEmpty() ){
+			searchResults.setEmailFrequency(MMJBCommonConstants.DAILY_ALERT);
+		}
 		hibernateTemplate.save(searchResults);
 		
 		List<AdmSaveSearch> admSaveSearchs = new ArrayList<AdmSaveSearch>();

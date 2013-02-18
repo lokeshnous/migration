@@ -131,13 +131,14 @@ public class EmployerRegistrationConversionHelper {
 		admFacility.setCompanyNews(companyProfileDTO.getCompanyNews());
 		admFacility.setCompanyOverview(companyProfileDTO.getCompanyOverview());
 		admFacility.setLogoPath(companyProfileDTO.getLogoPath());
-		admFacility.setPromoMediaPath(companyProfileDTO.getPositionTitle());
+		admFacility.setPromoMediaPath(companyProfileDTO.getPositionalMedia());
 		admFacility.setUrlDisplay(companyProfileDTO.getCompanyWebsite());
 		admFacility.setEmailDisplay(companyProfileDTO.getCompanyEmail());
 		admFacility.setColorPalette(companyProfileDTO.getPrimaryColor());
 		admFacility.setFeStartDt(companyProfileDTO.getFeaturedStartDate());
 		admFacility.setFeEndDt(companyProfileDTO.getFeaturedEndDate());
-
+		admFacility.setFeaturedEmp((byte)1);
+		
 		return admFacility;
 
 	}
@@ -618,8 +619,12 @@ public class EmployerRegistrationConversionHelper {
 							.valueOf(MMJBCommonConstants.MANAGEEDITACCESS)))) {
 				ManageAccessPermissionDTO manageAccessPermissionDTO = new ManageAccessPermissionDTO();
 				manageAccessPermissionDTO.setOwnerId(merUser.getUserId());
-				manageAccessPermissionDTO.setOwnerName(merUser.getLastName()
-						+ " " + merUser.getFirstName());
+				
+				//Below line commented and added newly according to new change by client
+				/*manageAccessPermissionDTO.setOwnerName(merUser.getLastName()
+				+ " " + merUser.getFirstName());*/
+				manageAccessPermissionDTO.setOwnerName(merUser.getFirstName()
+						+ " " + merUser.getLastName());
 
 				manageAccessPermissionDTO
 						.setTypeOfAccess(roleId.get(roleIndex));

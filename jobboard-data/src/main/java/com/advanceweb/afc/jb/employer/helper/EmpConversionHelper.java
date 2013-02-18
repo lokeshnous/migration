@@ -169,8 +169,13 @@ public class EmpConversionHelper {
 		for (MerUser merUser : merUsers) {
 			ManageAccessPermissionDTO manageAccessPermissionDTO = new ManageAccessPermissionDTO();
 			manageAccessPermissionDTO.setOwnerId(merUser.getUserId());
-			manageAccessPermissionDTO.setOwnerName(merUser.getLastName() + " "
-					+ merUser.getFirstName());
+			// Modified based on new changes
+			/*
+			 * manageAccessPermissionDTO.setOwnerName(merUser.getLastName() +
+			 * " " + merUser.getFirstName());
+			 */
+			manageAccessPermissionDTO.setOwnerName(merUser.getFirstName() + " "
+					+ merUser.getLastName());
 			if (roleId.size() > roleIndex && null != roleId.get(roleIndex)) {
 				manageAccessPermissionDTO
 						.setTypeOfAccess(roleId.get(roleIndex));
@@ -194,16 +199,21 @@ public class EmpConversionHelper {
 		for (MerUser merUser : merUsers) {
 			ManageAccessPermissionDTO manageAccessPermissionDTO = new ManageAccessPermissionDTO();
 			manageAccessPermissionDTO.setOwnerId(merUser.getUserId());
-			manageAccessPermissionDTO.setOwnerName(merUser.getLastName() + " "
-					+ merUser.getFirstName());
+			/*
+			 * manageAccessPermissionDTO.setOwnerName(merUser.getLastName() +
+			 * " " + merUser.getFirstName());
+			 */
+
+			manageAccessPermissionDTO.setOwnerName(merUser.getFirstName() + " "
+					+ merUser.getLastName());
 			manageAccessPermissionDTOList.add(manageAccessPermissionDTO);
 		}
 		return manageAccessPermissionDTOList;
 	}
 
 	/**
-	 * The method helps to get all list of facilities of employer and mark as star for
-	 * main facility
+	 * The method helps to get all list of facilities of employer and mark as
+	 * star for main facility
 	 * 
 	 * @param facilityList
 	 * @param admFacility
@@ -215,14 +225,14 @@ public class EmpConversionHelper {
 		DropDownDTO dto = new DropDownDTO();
 		if (admFacility.getFacilityType().equals(MMJBCommonConstants.FACILITY)) {
 			dto.setOptionId(admFacility.getFacilityId().toString());
-				dto.setOptionName("*" + " " + admFacility.getName());
+			dto.setOptionName("*" + " " + admFacility.getName());
 			downDTOs.add(dto);
 		} else {
 			for (int i = 0; i < facilityList.size(); i++) {
 				dto = new DropDownDTO();
 				dto.setOptionId(facilityList.get(i).getFacilityId().toString());
 				if (i == 0) {
-						dto.setOptionName("*" + " " + facilityList.get(i).getName());
+					dto.setOptionName("*" + " " + facilityList.get(i).getName());
 				} else {
 					dto.setOptionName(facilityList.get(i).getName());
 				}
@@ -231,5 +241,31 @@ public class EmpConversionHelper {
 			}
 		}
 		return downDTOs;
+	}
+
+	/**
+	 * The method helps to get transform admfacilityalert to dto class
+	 * 
+	 * @param userFacilities
+	 * @return
+	 */
+	public List<UserAlertDTO> transformAdmFacilityAlertToAdmFacilityAlertDTO(
+			List<AdmFacilityAlert> userFacilities) {
+		List<UserAlertDTO> userAlertDTOs = new ArrayList<UserAlertDTO>();
+		for (AdmFacilityAlert facility : userFacilities) {
+			UserAlertDTO alertDTO = new UserAlertDTO();
+			alertDTO.setAlertId(facility.getAdmAlert().getAlertId());
+			alertDTO.setAlertType(facility.getAdmAlert().getName());
+			alertDTO.setFacilityAlertId(facility.getFacilityAlertId());
+			alertDTO.setFacilityId(facility.getFacilityId());
+			alertDTO.setJobOwner(String.valueOf(facility.getUserId()));
+			alertDTO.setUserId(facility.getUserId());
+			alertDTO.setSetDate(CommonUtil
+					.convertSQLDateToStdDateString(facility.getCreateDt()
+							.toString()));
+			// alertDTO.setSetDate(dateufacility.getCreateDt());
+			userAlertDTOs.add(alertDTO);
+		}
+		return userAlertDTOs;
 	}
 }

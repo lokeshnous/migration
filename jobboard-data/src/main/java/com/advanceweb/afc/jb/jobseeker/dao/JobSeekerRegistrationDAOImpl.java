@@ -93,10 +93,11 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 				hibernateTemplate.saveOrUpdateAll(merUserProfiles);
 			}
 			
-			List<AdmUserSubscription> admUserSubs = registrationConversionHelper.transformMerUserDTOToAdmUserSubs(jsDTO, merUser);
+			//Commenting here but we are saving subscription along with publications later
+			/*List<AdmUserSubscription> admUserSubs = registrationConversionHelper.transformMerUserDTOToAdmUserSubs(jsDTO, merUser);
 			if (admUserSubs != null) {
 				hibernateTemplateCareers.saveOrUpdateAll(admUserSubs);
-			}
+			}*/
 			
 			List<AdmRole> roleList = hibernateTemplateCareers.find(FIND_JOBSEEKER_ROLE_ID,"jobseeker");
 			if(null != roleList && !roleList.isEmpty()){
@@ -109,15 +110,15 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 				userRole.setRolePK(admUserRolePK);
 				hibernateTemplateCareers.saveOrUpdate(userRole);
 			}
-			UserDTO userDTO=registrationConversionHelper.transformMerUserToUserDTO(merUser,jsDTO.getMerUserDTO().isOldUser());
+			UserDTO userDTO=registrationConversionHelper.transformMerUserToUserDTO(merUser,jsDTO.getMerUserDTO().isOldUser(),jsDTO.getMerUserDTO().isAdvPassUser());
 			jsDTO.setMerUserDTO(userDTO);
-			if(!userDTO.isOldUser()){
+			if(!userDTO.isOldUser() && !userDTO.isAdvPassUser()){
 			saveAdvancePassDetails(jsDTO);
 			}
 			else{
 				updateAdvancePassDetails(jsDTO);
 			}
-			return registrationConversionHelper.transformMerUserToUserDTO(merUser,jsDTO.getMerUserDTO().isOldUser());
+			return registrationConversionHelper.transformMerUserToUserDTO(merUser,jsDTO.getMerUserDTO().isOldUser(),jsDTO.getMerUserDTO().isAdvPassUser());
 			
 		} catch (HibernateException e) {
 			LOGGER.error(e);

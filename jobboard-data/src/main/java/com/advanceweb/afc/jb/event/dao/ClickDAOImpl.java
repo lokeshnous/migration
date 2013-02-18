@@ -12,10 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
-import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
-import com.advanceweb.afc.jb.data.entities.JpJobStat;
 import com.advanceweb.afc.jb.data.entities.ResPublishResumeStat;
 import com.advanceweb.afc.jb.data.entities.ResUploadResume;
+import com.advanceweb.afc.jb.data.entities.VstClickthroughNew;
+import com.advanceweb.afc.jb.data.entities.VstClickthroughNewPK;
+import com.advanceweb.afc.jb.data.entities.VstClickthroughType;
+import com.advanceweb.afc.jb.data.entities.VstSearchResultNew;
+import com.advanceweb.afc.jb.data.entities.VstSearchResultNewPK;
 
 @Transactional
 @Repository("clickDAO")
@@ -23,43 +26,52 @@ public class ClickDAOImpl implements ClickDAO {
 
 	private HibernateTemplate hibernateTemplate;
 
+	private HibernateTemplate hibernateTemplateTracker;
+	
 	private static final Logger LOGGER = Logger.getLogger(ClickDAOImpl.class);
 
 	@Autowired
-	public void setHibernateTemplate(SessionFactory sessionFactory) {
+	public void setHibernateTemplate(
+			SessionFactory sessionFactoryMerionTracker,
+			SessionFactory sessionFactory) {
+		this.hibernateTemplateTracker = new HibernateTemplate(
+				sessionFactoryMerionTracker);
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
 	}
 
 	@Override
 	public void saveClickEvent(int jobId, String type) {
-		JpJobStat jobStat;
-		synchronized (this) {
-			try {
-				jobStat = hibernateTemplate.get(JpJobStat.class, jobId);
+		VstClickthroughNew clickthroughNew;
+		try {
+		VstClickthroughType clickthroughType;
+		clickthroughType = hibernateTemplateTracker.get(VstClickthroughType.class,
+				Integer.parseInt(type));
 
-				if (null == jobStat) {
-					jobStat = new JpJobStat();
-				}
+		VstClickthroughNewPK clickthroughNewPK = new VstClickthroughNewPK();
+		clickthroughNewPK.setClickthroughDt(new Date());
+		clickthroughNewPK.setKeyId(jobId);
+		clickthroughNewPK.setVstClickthroughType(clickthroughType);
 
-				if (jobId != 0) {
-					jobStat.setJobId(jobId);
-					if (type.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_CLICK)) {
-						jobStat.setClicks(jobStat.getClicks() + 1);
-					} else if (type
-							.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_APPLY)) {
-						jobStat.setApplies(jobStat.getApplies() + 1);
-					} else if (type
-							.equalsIgnoreCase(MMJBCommonConstants.CLICKTYPE_VIEW)) {
-						jobStat.setViews(jobStat.getViews() + 1);
-					}
-					jobStat.setStatsDt(new Date());
-					hibernateTemplate.saveOrUpdate(jobStat);
-				}
+		// synchronized (this) {
+		
+			clickthroughNew = hibernateTemplateTracker.get(VstClickthroughNew.class,
+					clickthroughNewPK);
 
-			} catch (Exception e) {
-				LOGGER.error("Error occured while saving job click event", e);
+			if (null == clickthroughNew) {
+				clickthroughNew = new VstClickthroughNew();
+				clickthroughNew.setClickthroughNewPK(clickthroughNewPK);
 			}
+
+			if (jobId > 0) {
+				clickthroughNew
+						.setClickCount(clickthroughNew.getClickCount() + 1);
+				hibernateTemplateTracker.saveOrUpdate(clickthroughNew);
+			}
+
+		} catch (Exception e) {
+			LOGGER.error("Error occured while saving job click event", e);
 		}
+		// }
 	}
 
 	/**
@@ -71,24 +83,24 @@ public class ClickDAOImpl implements ClickDAO {
 	public void saveJobViews(List<JobDTO> jobDTOList) {
 		if (null != jobDTOList) {
 			for (JobDTO dto : jobDTOList) {
-				JpJobStat jobStat = new JpJobStat();
+				VstSearchResultNew searchResult;
+				VstSearchResultNewPK searchResultPK = new VstSearchResultNewPK();
 				int jobId = 0;
 				jobId = dto.getJobId();
-				synchronized (jobStat) {
+//				synchronized (searchResultPK) {
 					try {
-						jobStat = hibernateTemplate.get(JpJobStat.class, jobId);
+						searchResultPK.setResult(jobId);
+						searchResultPK.setSearchDate(new Date());
+						searchResult = hibernateTemplateTracker.get(VstSearchResultNew.class, searchResultPK);
 
-						if (null == jobStat) {
-							jobStat = new JpJobStat();
+						if (null == searchResult) {
+							searchResult = new VstSearchResultNew();
+							searchResult.setSearchResultNewPK(searchResultPK);
 						}
 
-						if (jobId != 0) {
-							jobStat.setJobId(jobId);
-							jobStat.setClicks(jobStat.getClicks());
-							jobStat.setApplies(jobStat.getApplies());
-							jobStat.setViews(jobStat.getViews() + 1);
-							jobStat.setStatsDt(new Date());
-							hibernateTemplate.saveOrUpdate(jobStat);
+						if (jobId > 0) {
+							searchResult.setResultCount(searchResult.getResultCount()+1);
+							hibernateTemplateTracker.saveOrUpdate(searchResult);
 						}
 
 					} catch (Exception e) {
@@ -96,7 +108,7 @@ public class ClickDAOImpl implements ClickDAO {
 								"Error occured while saving List of job views",
 								e);
 					}
-				}
+//				}
 			}
 		}
 	}

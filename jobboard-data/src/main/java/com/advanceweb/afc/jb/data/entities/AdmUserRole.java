@@ -31,72 +31,66 @@ public class AdmUserRole implements Serializable {
 	private Date createDt;
 
 	@Column(name="create_user_id")
-	private int createUserId;
+	private Integer createUserId;
 
     @Temporal( TemporalType.TIMESTAMP)
 	@Column(name="delete_dt")
 	private Date deleteDt;
 
 	@Column(name="delete_user_id")
-	private int deleteUserId;
+	private Integer deleteUserId;
 
 	//bi-directional many-to-one association to AdmRole
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="role_id", insertable=false, updatable=false)
 	private AdmRole admRole;
 
+	public AdmUserRolePK getRolePK() {
+		return rolePK;
+	}
+
+	public void setRolePK(AdmUserRolePK rolePK) {
+		this.rolePK = rolePK;
+	}
+
 	public Date getCreateDt() {
-		return this.createDt;
+		return createDt;
 	}
 
 	public void setCreateDt(Date createDt) {
 		this.createDt = createDt;
 	}
 
-	public int getCreateUserId() {
-		return this.createUserId;
+	public Integer getCreateUserId() {
+		return createUserId;
 	}
 
-	public void setCreateUserId(int createUserId) {
+	public void setCreateUserId(Integer createUserId) {
 		this.createUserId = createUserId;
 	}
 
 	public Date getDeleteDt() {
-		return this.deleteDt;
+		return deleteDt;
 	}
 
 	public void setDeleteDt(Date deleteDt) {
 		this.deleteDt = deleteDt;
 	}
 
-	public int getDeleteUserId() {
-		return this.deleteUserId;
+	public Integer getDeleteUserId() {
+		return deleteUserId;
 	}
 
-	public void setDeleteUserId(int deleteUserId) {
+	public void setDeleteUserId(Integer deleteUserId) {
 		this.deleteUserId = deleteUserId;
 	}
 
 	public AdmRole getAdmRole() {
-		return this.admRole;
+		return admRole;
 	}
 
 	public void setAdmRole(AdmRole admRole) {
 		this.admRole = admRole;
 	}
 
-	/**
-	 * @return the rolePK
-	 */
-	public AdmUserRolePK getRolePK() {
-		return rolePK;
-	}
-
-	/**
-	 * @param rolePK the rolePK to set
-	 */
-	public void setRolePK(AdmUserRolePK rolePK) {
-		this.rolePK = rolePK;
-	}
-	
 }

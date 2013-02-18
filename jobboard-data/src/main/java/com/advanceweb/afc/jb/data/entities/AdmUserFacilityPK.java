@@ -15,30 +15,30 @@ public class AdmUserFacilityPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name="user_id")
-	private int userId;
+	private Integer userId;
 
 	@Column(name="role_id")
-	private int roleId;
+	private Integer roleId;
 
 	@Column(name="facility_id")
-	private int facilityId;
+	private Integer facilityId;
 
-	public int getUserId() {
+	public Integer getUserId() {
 		return this.userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	public int getRoleId() {
+	public Integer getRoleId() {
 		return this.roleId;
 	}
-	public void setRoleId(int roleId) {
+	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
 	}
-	public int getFacilityId() {
+	public Integer getFacilityId() {
 		return this.facilityId;
 	}
-	public void setFacilityId(int facilityId) {
+	public void setFacilityId(Integer facilityId) {
 		this.facilityId = facilityId;
 	}
 

@@ -50,6 +50,14 @@ public interface UserAlertDAO {
 	 * @return
 	 */
 	boolean saveAlerts(int userId, List<UserAlertDTO> alertDTOs);
+	
+	/**
+	 * This method is called to view the job owner alerts
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	List<UserAlertDTO> viewAlerts(int userId);
 
 	/**
 	 * To get the job owner list for logged in user

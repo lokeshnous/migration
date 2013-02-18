@@ -95,6 +95,9 @@ public class LocationDAOImpl implements LocationDAO {
 			if (jpLocationList != null) {
 				for (JpLocation locObj : jpLocationList) {
 					LocationDTO locDTO = new LocationDTO();
+					locDTO.setCity(locObj.getCity());
+					locDTO.setState(locObj.getState());
+					locDTO.setCountry(locObj.getCountry());
 					locDTO.setLatitude(locObj.getLatitude());
 					locDTO.setLongitude(locObj.getLongitude());
 					latLonList.add(locDTO);
@@ -192,6 +195,50 @@ public class LocationDAOImpl implements LocationDAO {
 		return locationList;
 
 	}
+	
+	/**
+	 * This method gets the City and State from the JPLocation table.
+	 * 
+	 * @param String
+	 *            postcode
+	 * @return List<LocationDTO> of city and state
+	 */
+
+	public List<LocationDTO> getCityAndStateLocationByKeyword(String keywords) {
+
+		LOGGER.info("The value of passes keyword is " + keywords);
+		String[] data = keywords.split(",");
+		List<LocationDTO> locationList = new ArrayList<LocationDTO>();
+
+		@SuppressWarnings("unchecked")
+		Query query = hibernateTemplate
+				.getSessionFactory()
+				.getCurrentSession()
+				.createQuery(
+						"select distinct jloc.city, jloc.state from  JpLocation jloc WHERE  replace(jloc.city, ' ', '') like '"
+								+ data[0]
+								+ "%' AND jloc.state like '"+data[1]+"' ORDER BY  jloc.city, jloc.state  ASC");
+		// query.setMaxResults(10);
+		List<JpLocation> jpLocationList = query.list();
+
+		if (jpLocationList != null) {
+			Iterator<?> itr = jpLocationList.iterator();
+			while (itr.hasNext()) {
+				Object[] locObj = (Object[]) itr.next();
+				LocationDTO locDTO = new LocationDTO();
+				locDTO.setCity(String.valueOf(locObj[0]));
+				locDTO.setState(String.valueOf(locObj[1]));
+				locationList.add(locDTO);
+
+			}
+
+		}
+
+		LOGGER.info("Location List size after city state search is "
+				+ locationList.size());
+		return locationList;
+
+	}
 
 	/**
 	 * This method gets the State full name by short name in JPLocation table.
@@ -215,7 +262,7 @@ public class LocationDAOImpl implements LocationDAO {
 
 		List<JpLocation> jpLocationList = query.list();
 
-		if (jpLocationList != null) {
+		if (jpLocationList != null && !jpLocationList.isEmpty()) {
 			JpLocation jpLocation = jpLocationList.get(0);
 			stateFullName = jpLocation.getStateFullname();
 		}
@@ -250,4 +297,27 @@ public class LocationDAOImpl implements LocationDAO {
 		return dto;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean validateCityStateZip(String city,String state,String zipCode) throws JobBoardDataException {
+		boolean valied=false;
+		try {
+			
+			Object[] inputs = { city,state,zipCode};
+			List<JpLocation> jpLocationList = hibernateTemplate
+					.find("from JpLocation loc where loc.city=? and loc.state=? and  loc.postcode=?",
+							inputs);
+			if(jpLocationList.size()>0){
+				valied=true;
+			}
+		} catch (HibernateException e) {
+			LOGGER.debug(e);
+			throw new JobBoardDataException(
+					"Error while fetching the latitude and longitude By CityState from the Database..."
+							+ e);
+		}
+		return valied;
+	}
+
+	
 }

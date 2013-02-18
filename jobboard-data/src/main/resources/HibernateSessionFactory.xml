@@ -55,6 +55,7 @@
 					<value>com.advanceweb.afc.jb.data.entities.MerProfileAttrib</value>
 					<value>com.advanceweb.afc.jb.data.entities.MerProfileAttribList</value>
 					<value>com.advanceweb.afc.jb.data.entities.MerPublication</value>
+					<value>com.advanceweb.afc.jb.data.entities.MerPublicationProfession</value>
 					<value>com.advanceweb.afc.jb.data.entities.MerUser</value>
 					<!-- <value>com.advanceweb.afc.jb.data.entities.MerUserAlerts</value> -->
 					 <!-- <value>com.advanceweb.afc.jb.data.entities.MerUserAlert</value>  -->
@@ -65,12 +66,16 @@
 					<value>com.advanceweb.afc.jb.data.entities.StgSessionEvent</value>
 					<value>com.advanceweb.afc.jb.data.entities.StgSessioninfo</value> 
 					<value>com.advanceweb.afc.jb.data.entities.VstClickthrough</value>
+					<value>com.advanceweb.afc.jb.data.entities.VstClickthroughNew</value>
+					<value>com.advanceweb.afc.jb.data.entities.VstClickthroughNewPK</value>
 					<value>com.advanceweb.afc.jb.data.entities.VstClickthroughType</value>
 					<value>com.advanceweb.afc.jb.data.entities.VstEventType</value>
 					<value>com.advanceweb.afc.jb.data.entities.VstInfoType</value>
 					<value>com.advanceweb.afc.jb.data.entities.VstSearch</value>
 					<value>com.advanceweb.afc.jb.data.entities.VstSearchResult</value>
 					<value>com.advanceweb.afc.jb.data.entities.VstSearchResultPK</value>
+					<value>com.advanceweb.afc.jb.data.entities.VstSearchResultNew</value>
+					<value>com.advanceweb.afc.jb.data.entities.VstSearchResultNewPK</value>
 					<value>com.advanceweb.afc.jb.data.entities.VstSessionEvent</value>
 					<value>com.advanceweb.afc.jb.data.entities.VstSessionEventInfo</value>
 					<value>com.advanceweb.afc.jb.data.entities.VstSessionEventInfoPK</value>
@@ -85,7 +90,7 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${db.hibernate.dialect}</prop>
-				 <prop key="hibernate.show_sql">true</prop>
+				 <prop key="hibernate.show_sql">false</prop>
 			</props>
 		</property>
 		<property name="annotatedClasses">
@@ -132,7 +137,9 @@
 					<value>com.advanceweb.afc.jb.data.entities.JpJobLocationPK</value>
 					<value>com.advanceweb.afc.jb.data.entities.JpTypeAddonXref</value>
 					<!-- <value>com.advanceweb.afc.jb.data.entities.JpJobLocationBckup</value> -->
+					<value>com.advanceweb.afc.jb.data.entities.JpJobSeoInfo</value>
 					<value>com.advanceweb.afc.jb.data.entities.JpJobStat</value>
+					<value>com.advanceweb.afc.jb.data.entities.JpJobTitle</value>
 					<value>com.advanceweb.afc.jb.data.entities.JpJobTemp</value>
 					<value>com.advanceweb.afc.jb.data.entities.JpJobType</value>
 					<value>com.advanceweb.afc.jb.data.entities.JpJobTypeCombo</value>
@@ -177,6 +184,7 @@
 					<value>com.advanceweb.afc.jb.data.entities.AdmFolder</value>
 					<value>com.advanceweb.afc.jb.data.entities.AdmFolderResume</value>
 					<value>com.advanceweb.afc.jb.data.entities.AdmPackage</value>
+					<value>com.advanceweb.afc.jb.data.entities.ResBlockedCompanies</value>
 			</list>
 		</property>
 	</bean>
@@ -189,7 +197,7 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${db.hibernate.sqlServer.dialect}</prop>
-				 <prop key="hibernate.show_sql">true</prop>
+				 <prop key="hibernate.show_sql">false</prop>
 			</props>
 		</property>
 		 <property name="annotatedClasses">

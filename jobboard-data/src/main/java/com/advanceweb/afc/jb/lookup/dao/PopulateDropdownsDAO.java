@@ -221,4 +221,6 @@ public interface PopulateDropdownsDAO {
 	 */
 	List<DropDownDTO> getFacilitySubList();
 
+	List<DropDownDTO> getBlockedCompanyList(int resumeId);
+
 }

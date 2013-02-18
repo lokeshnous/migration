@@ -31,14 +31,14 @@ public class AdmUserFacility implements Serializable {
 	private Date createDt;
 
 	@Column(name="create_user_id")
-	private int createUserId;
+	private Integer createUserId;
 
     @Temporal( TemporalType.TIMESTAMP)
 	@Column(name="delete_dt")
 	private Date deleteDt;
 
 	@Column(name="delete_user_id")
-	private int deleteUserId;
+	private Integer deleteUserId;
 
 	//bi-directional many-to-one association to AdmRole
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -50,66 +50,60 @@ public class AdmUserFacility implements Serializable {
 	@JoinColumn(name="facility_id", insertable=false, updatable=false)
 	private AdmFacility admFacility;
 
-	/**
-	 * @return the facilityPK
-	 */
 	public AdmUserFacilityPK getFacilityPK() {
 		return facilityPK;
 	}
 
-	/**
-	 * @param facilityPK the facilityPK to set
-	 */
 	public void setFacilityPK(AdmUserFacilityPK facilityPK) {
 		this.facilityPK = facilityPK;
 	}
-	
+
 	public Date getCreateDt() {
-		return this.createDt;
+		return createDt;
 	}
 
 	public void setCreateDt(Date createDt) {
 		this.createDt = createDt;
 	}
 
-	public int getCreateUserId() {
-		return this.createUserId;
+	public Integer getCreateUserId() {
+		return createUserId;
 	}
 
-	public void setCreateUserId(int createUserId) {
+	public void setCreateUserId(Integer createUserId) {
 		this.createUserId = createUserId;
 	}
 
 	public Date getDeleteDt() {
-		return this.deleteDt;
+		return deleteDt;
 	}
 
 	public void setDeleteDt(Date deleteDt) {
 		this.deleteDt = deleteDt;
 	}
 
-	public int getDeleteUserId() {
-		return this.deleteUserId;
+	public Integer getDeleteUserId() {
+		return deleteUserId;
 	}
 
-	public void setDeleteUserId(int deleteUserId) {
+	public void setDeleteUserId(Integer deleteUserId) {
 		this.deleteUserId = deleteUserId;
 	}
 
 	public AdmRole getAdmRole() {
-		return this.admRole;
+		return admRole;
 	}
 
 	public void setAdmRole(AdmRole admRole) {
 		this.admRole = admRole;
 	}
-	
+
 	public AdmFacility getAdmFacility() {
-		return this.admFacility;
+		return admFacility;
 	}
 
 	public void setAdmFacility(AdmFacility admFacility) {
 		this.admFacility = admFacility;
 	}
-	
+
 }

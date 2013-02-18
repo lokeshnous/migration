@@ -11,6 +11,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,6 +22,7 @@ import com.advanceweb.afc.jb.common.AdminDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmpSearchDTO;
 import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
+import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
@@ -30,6 +32,8 @@ import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.JpJobTypeCombo;
 import com.advanceweb.afc.jb.data.entities.MerUser;
+import com.advanceweb.afc.jb.data.entities.WebMembership;
+import com.advanceweb.afc.jb.data.entities.WebMembershipEmail;
 
 @Transactional
 @Repository("adminDAO")
@@ -44,7 +48,7 @@ public class AdminDAOImpl implements AdminDAO {
 	private static final String GET_EMAIL = "from MerUser e where e.email = ?";
 	private static final String USER_ROLE = "from AdmUserRole aur where aur.rolePK.userId = ?";
 	private static final String FACILITY_ID = "from AdmUserFacility auf where auf.facilityPK.userId =?";
-	private static final String VALIDATE_ADMIN = "from MerUser e where e.email=? and e.password=?";
+	private static final String VALIDATE_ADMIN = "from MerUser e where e.email=?";
 	private static final String VALIDATE_ADM_USERID = "from AdmFacility af where af.adminUserId =?";
 	private static final String GET_ADM_FACILITY_BY_NS_ID = "from AdmFacility af1 where af1.nsCustomerID =? and af1.facilityType in ('FACILITY','FACILITY_GROUP') and af1.deleteDt is NULL";
 	private static final String GET_NS_ID_BY_COMPNAME = "from AdmFacility af1 where af1.name =? and af1.facilityType in ('FACILITY','FACILITY_GROUP') and af1.deleteDt is NULL";
@@ -54,14 +58,16 @@ public class AdminDAOImpl implements AdminDAO {
 	private HibernateTemplate hibernateTemplateTracker;
 
 	private HibernateTemplate hibernateTemplateCareers;
+	private HibernateTemplate hibernateTemplateAdvancePass;
 
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
-			SessionFactory sessionFactory) {
+			SessionFactory sessionFactory, SessionFactory sessionFactoryAdvancePass) {
 		this.hibernateTemplateTracker = new HibernateTemplate(
 				sessionFactoryMerionTracker);
 		this.hibernateTemplateCareers = new HibernateTemplate(sessionFactory);
+		this.hibernateTemplateAdvancePass = new HibernateTemplate(sessionFactoryAdvancePass);
 	}
 
 	@Override
@@ -91,25 +97,36 @@ public class AdminDAOImpl implements AdminDAO {
 	@Override
 	public boolean validateAdminCredentials(String email, String password) {
 		boolean status = false;
+		boolean advancePassValidation=false;
 		try {
-//			if (!StringUtils.isEmptyOrWhitespaceOnly(email)
-//					&& !StringUtils.isEmptyOrWhitespaceOnly(password)) {
+			
+				WebMembershipEmail webMembershipEmail = (WebMembershipEmail) DataAccessUtils
+						.uniqueResult(hibernateTemplateAdvancePass.find(
+								"from WebMembershipEmail where email = ?", email));
+				if (webMembershipEmail != null) {
+					WebMembership membership = hibernateTemplateAdvancePass.get(
+							WebMembership.class, webMembershipEmail
+									.getWebMembership().getWebMembershipID());
+					if (membership != null) {
+						advancePassValidation=membership.getPassword().equals(password)?true:false;
+					}
+				}
+			if(advancePassValidation){
 				List<MerUser> usersList = hibernateTemplateTracker.find(
-						VALIDATE_ADMIN, email, password);
+						VALIDATE_ADMIN, email);
 
 				if (null != usersList && !usersList.isEmpty()) {
 					MerUser user = usersList.get(0);
 					List<AdmUserRole> useList = hibernateTemplateCareers.find(
 							USER_ROLE, user.getUserId());
 					if (null != useList && !useList.isEmpty() && useList.get(0).getAdmRole().getRoleId() == 1) {
-//						if (useList.get(0).getAdmRole().getRoleId() == 1) {
 							status = true;
 						}
 					}
-//				}
-//			}
+			}
+				
 		} catch (HibernateException e) {
-			LOGGER.error(e);
+			LOGGER.error("Exception while Authenticating the Admin user"+e.getMessage());
 		}
 		return status;
 	}
@@ -119,40 +136,20 @@ public class AdminDAOImpl implements AdminDAO {
 	public boolean impersonateUser(AdminDTO adminDTO) {
 		boolean status = true;
 		try {
-			// getting Admin User Id
-			List<MerUser> usersList = hibernateTemplateTracker.find(GET_EMAIL,
-					adminDTO.getUserEmail());
-			int admUserId = 0;
-			if (null != usersList && !usersList.isEmpty()) {
-				MerUser user = usersList.get(0);
-				admUserId = user.getUserId();
-			}
-			// getting user Id for emp / agency
 			List<MerUser> usersList1 = hibernateTemplateTracker.find(GET_EMAIL,
 					adminDTO.getEmpOrAgencyEmail());
-			//int facilityId = 0;
-			//AdmUserFacility facility = null;
 			AdmFacility admfacility = null;
 			if (null != usersList1 && !usersList1.isEmpty()) {
 				MerUser user1 = usersList1.get(0);
 				List<AdmUserFacility> facilityList = hibernateTemplateCareers
 						.find(FACILITY_ID, user1.getUserId());
 				if (null != facilityList && !facilityList.isEmpty()) {
-					//facility = facilityList.get(0);
-					//facilityId = facility.getFacilityPK().getFacilityId();
 					admfacility = facilityList.get(0).getAdmFacility();
 				}
 			}
-
-			// List<AdmFacility> admFacilityList =
-			// hibernateTemplateCareers.find(
-			// ADM_FACILITY, facilityId);
-			// AdmFacility admfacility = //admFacilityList.get(0);
-			// AdmFacility admfacility = facilityList.get(0).getAdmFacility();
-
 			List<AdmFacility> admList = hibernateTemplateCareers.find(
-					VALIDATE_ADM_USERID, admUserId);
-			admfacility.setAdminUserId(admUserId);
+					VALIDATE_ADM_USERID, adminDTO.getAdminUserId());
+			admfacility.setAdminUserId(adminDTO.getAdminUserId());
 			if (!admList.isEmpty()) {
 				AdmFacility fac = admList.get(0);
 				fac.setAdminUserId(0);
@@ -162,6 +159,7 @@ public class AdminDAOImpl implements AdminDAO {
 
 		} catch (Exception e) {
 			LOGGER.error(e);
+			return false;
 		}
 		return status;
 
@@ -218,6 +216,7 @@ public class AdminDAOImpl implements AdminDAO {
 			AdmFacility af = facility.get(0);
 			facId = af.getFacilityId();
 			dto.setFacilityId(facId);
+			dto.setCompanyName(af.getName());
 		}
 		List<AdmUserFacility> userFacility = hibernateTemplateCareers.find(
 				GET_USERID_BY_FAC_ID, facId);
@@ -246,7 +245,7 @@ public class AdminDAOImpl implements AdminDAO {
 				hibernateTemplateCareers.saveOrUpdate(list);
 			}
 		} catch (HibernateException e) {
-			LOGGER.error("ERROR" + e);
+			LOGGER.error(e.getMessage() , e);
 		}
 		return true;
 	}
@@ -258,10 +257,25 @@ public class AdminDAOImpl implements AdminDAO {
 			if (nsId != 0) {
 				List<AdmFacility> usersList = hibernateTemplateCareers.find(
 						GET_ADM_FACILITY_BY_NS_ID, nsId);
-				emplist = adminConversionHelper.convertEntityTodDTO(usersList);
+				// facility without job owners
+				List<AdmFacility> facilityList = new ArrayList<AdmFacility>();
+				boolean isFacilityGrp = usersList.get(0).getFacilityType()
+						.equalsIgnoreCase(MMJBCommonConstants.FACILITY_GROUP);
+				for (AdmFacility adm : usersList) {
+					if (adm.getAdmUserFacilities().isEmpty()) {
+						facilityList.add(adm);
+					}
+				}
+				if(!isFacilityGrp){
+					facilityList.addAll(usersList);
+				}
+				emplist = adminConversionHelper.convertEntityTodDTO(facilityList);
+				if(isFacilityGrp){
+					emplist.get(0).setFacilityType(MMJBCommonConstants.FACILITY_GROUP);
+				}
 			}
 		} catch (HibernateException e) {
-			LOGGER.info("ERROR" + e);
+			LOGGER.error(e.getMessage(), e);
 		}
 		return emplist;
 	}
@@ -347,6 +361,9 @@ public class AdminDAOImpl implements AdminDAO {
 		}
 	}
 
+	/**
+	 * Method helps to edit the facility type changes by admin
+	 */
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public boolean saveEditFacilityGroup(EmpSearchDTO dto) {
@@ -354,44 +371,80 @@ public class AdminDAOImpl implements AdminDAO {
 		boolean healthSys = dto.isHealthSystem();
 		try {
 			if (healthSys) {
-				List<AdmFacility> usersList = hibernateTemplateCareers.find(
-						GET_ADM_FACILITY_BY_NS_ID, nsId);
-				if (usersList != null && !usersList.isEmpty()) {
-					AdmFacility facility = usersList.get(0);
-					facility.setFacilityType(MMJBCommonConstants.FACILITY_GROUP);
-					facility.setFacilityParentId(Integer
-							.parseInt(MMJBCommonConstants.ZERO));
-					hibernateTemplateCareers.update(facility);
-					saveFacility(nsId);
-				}
+				// convert Facility to Facility Group
+				AdmFacility usersList = (AdmFacility) hibernateTemplateCareers
+						.find(GET_ADM_FACILITY_BY_NS_ID, nsId).get(0);
+
+				AdmFacility childFacility = new AdmFacility();
+				childFacility.setEmail(usersList.getEmail());
+				childFacility.setStreet(usersList.getStreet());
+				childFacility.setCity(usersList.getCity());
+				childFacility.setState(usersList.getState());
+				childFacility.setPostcode(usersList.getPostcode());
+				childFacility.setCountry(usersList.getCountry());
+				childFacility.setName(usersList.getName());
+				childFacility.setFacilityType(MMJBCommonConstants.FACILITY);
+				childFacility.setFacilityParentId(usersList.getFacilityId());
+				childFacility.setNsCustomerID(usersList.getNsCustomerID());
+				childFacility.setCreateDt(new Date());
+				childFacility.setCreateUserId(usersList.getCreateUserId());
+				hibernateTemplateCareers.save(childFacility);
+				AdmFacilityContact childFacilityContact = new AdmFacilityContact();
+				AdmFacilityContact contact = usersList.getAdmFacilityContacts()
+						.get(0);
+				childFacilityContact.setEmail(contact.getEmail());
+				childFacilityContact.setStreet(contact.getStreet());
+				childFacilityContact.setCity(contact.getCity());
+				childFacilityContact.setState(contact.getState());
+				childFacilityContact.setPostcode(contact.getPostcode());
+				childFacilityContact.setCountry(contact.getCountry());
+				childFacilityContact.setFirstName(contact.getFirstName());
+				childFacilityContact.setLastName(contact.getLastName());
+				childFacilityContact.setMiddleName(contact.getMiddleName());
+				childFacilityContact.setCompany(contact.getCompany());
+				childFacilityContact.setJobTitle(contact.getJobTitle());
+				childFacilityContact.setPhone(contact.getPhone());
+				childFacilityContact.setPhone2(contact.getPhone2());
+				childFacilityContact
+						.setContactType(MMJBCommonConstants.PRIMARY);
+				childFacilityContact.setCreateDt(new Date());
+				// childFacilityContact.setEmail(dto.getMerUserDTO().getEmailId());
+				childFacilityContact.setActive(1);
+				childFacilityContact.setAdmFacility(childFacility);
+				hibernateTemplateCareers.save(childFacilityContact);
+				// Update the facility to facility group
+				usersList.setFacilityType(MMJBCommonConstants.FACILITY_GROUP);
+				hibernateTemplateCareers.saveOrUpdate(usersList);
+
 			} else {
+				// Get the facility group details
 				List<AdmFacility> usersList = hibernateTemplateCareers.find(
-						GET_ADM_FACILITY_BY_NS_ID, nsId);
-				for (AdmFacility admFacility : usersList) {
+						GET_ADM_FACILITY_BY_NS_ID, nsId);// by date
 
-					if (admFacility.getFacilityType().equalsIgnoreCase(
-							MMJBCommonConstants.FACILITY_GROUP)) {
-						admFacility
-								.setFacilityType(MMJBCommonConstants.FACILITY);
-						hibernateTemplateCareers.update(admFacility);
-					} else {
-						// get facility contact by facility & delete
-						List<AdmFacilityContact> facilityContacts = hibernateTemplateCareers
-								.find(GET_FACILITY_CONTACT_BY_FAC_ID,
-										admFacility.getFacilityId());
-						AdmFacilityContact facilityContact = null;
-						if(facilityContacts!=null && !facilityContacts.isEmpty()){
-						facilityContact = facilityContacts
-								.get(0);
-						}
-						hibernateTemplateCareers.delete(facilityContact);
-						hibernateTemplateCareers.delete(admFacility);
-
+				// delete the sub facilities of parent facility & contacts by
+				// ignoring job owners
+				int size = usersList.size();
+				List<AdmFacility> subFacility = usersList.subList(1, size);
+				AdmFacility mainFacilities = usersList.get(0);
+				for (AdmFacility admFacility : subFacility) {
+					List<AdmFacilityContact> facilityContacts = hibernateTemplateCareers
+							.find(GET_FACILITY_CONTACT_BY_FAC_ID,
+									admFacility.getFacilityId());
+					for (AdmFacilityContact admFacilityContact : facilityContacts) {
+						admFacilityContact.setDeleteDt(new Date());
+						hibernateTemplateCareers
+								.saveOrUpdate(admFacilityContact);
 					}
+					admFacility.setDeleteDt(new Date());
+					hibernateTemplateCareers.saveOrUpdate(admFacility);
 				}
+
+				// convert Facility Group to Facility
+				mainFacilities.setFacilityType(MMJBCommonConstants.FACILITY);
+				hibernateTemplateCareers.saveOrUpdate(mainFacilities);
 			}
 		} catch (HibernateException e) {
-			LOGGER.error("ERROR" + e);
+			LOGGER.error(e.getMessage(), e);
 		}
 		return false;
 	}

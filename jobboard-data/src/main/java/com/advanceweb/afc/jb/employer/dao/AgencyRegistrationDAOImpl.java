@@ -149,7 +149,7 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 			hibernateTemplateCareers.save(userfacility);
 			//saveAdvancePassDetails(facility.getFacilityId(),merUser);
 			
-			if(!agencyDTO.getMerUserDTO().isOldUser()){
+			if(!agencyDTO.getMerUserDTO().isOldUser() && !agencyDTO.getMerUserDTO().isAdvPassUser()){
 				saveAdvancePassDetails(facility.getFacilityId(),merUser);
 				}
 			else{

@@ -43,10 +43,10 @@ import com.advanceweb.afc.jb.data.entities.JpTypeAddonXref;
 public class JobPostConversionHelper<JobPostForm> {
 	private static final Logger LOGGER = Logger
 			.getLogger(JobPostConversionHelper.class);
-	 public JpJob  transformJobDtoToJpJob(JobPostDTO dto, 
+	 public JpJob  transformJobDtoToJpJob(JpJob jpJob, JobPostDTO dto, 
 			 JpTemplate template, AdmFacility admFacility){
 		
-		 JpJob jpJob=new JpJob();
+		 
 		 //Post New Job
 		 if(dto.getJobId()>0){
 			 jpJob.setJobId(dto.getJobId());
@@ -77,8 +77,10 @@ public class JobPostConversionHelper<JobPostForm> {
 		 jpJob.setSkills(dto.getReqSkills());
 		 jpJob.setTrackingPixel(dto.getTrackPixel());
 		 jpJob.setAdtext(dto.getJobDesc());
+		 if(!dto.getScheduleStartDt().isEmpty() && !dto.getScheduleExpiryDt().isEmpty()){
 		 jpJob.setStartDt(CommonUtil.convtStringToSQLDate(dto.getScheduleStartDt()));
 		 jpJob.setEndDt(CommonUtil.convtStringToSQLDate(dto.getScheduleExpiryDt()));
+		 }
 		 jpJob.setPositionType(dto.getEmploymentType());
 		 if(null != template && template.getTemplateId() !=0 ){
 			 jpJob.setJpTemplate(template);
@@ -89,7 +91,7 @@ public class JobPostConversionHelper<JobPostForm> {
 		 //Auto Renew
 		 jpJob.setAutoRenew(dto.isAutoRenew()?1:0);				
 		 
-		if (MMJBCommonConstants.POST_NEW_JOB.equals(dto.getJobStatus())) {
+		if (MMJBCommonConstants.POST_NEW_JOB.equals(dto.getJobStatus()) && jpJob.getJobId()<=0) {
 			jpJob.setStartDt(new Date());
 		}
 		if ((dto.getJobId() > 0 && dto.isbActive()) && (MMJBCommonConstants.POST_JOB_SCHEDULED.equals(dto.getJobStatus())
@@ -107,6 +109,9 @@ public class JobPostConversionHelper<JobPostForm> {
 		 jpJob.setFeatured(dto.isbFeatured()?(byte)1:0);
 		 jpJob.setCreateUserId(dto.getUserId());
 		 
+		 if (MMJBCommonConstants.POST_JOB_INACTIVE.equals(dto.getJobStatus())) {
+			 jpJob.setActive((byte)0); 
+		 }
 		 
 		if (dto.getJobCountry().equals("USA")) {
 			jpJob.setIsNational((byte) 1);
@@ -132,6 +137,7 @@ public class JobPostConversionHelper<JobPostForm> {
 		 jobLocation.setHideState(dto.isbHideState()?1:0);
 		 jobLocation.setJpLocation(location);
 		 jobLocation.setLocationPK(pKey);
+		 jobLocation.setJpJob(jpJob);
 		 locList.add(jobLocation);
 		 
 		return locList;
@@ -141,6 +147,9 @@ public class JobPostConversionHelper<JobPostForm> {
 		 //Application Method
 		 List<JpJobApply> jobList = new ArrayList<JpJobApply>();
 		 JpJobApply jobApply = new JpJobApply();
+		 if(jpJob.getJpJobApplies()!=null){
+		 jobApply.setJobApplyId(jpJob.getJpJobApplies().get(0).getJobApplyId());
+		 }
 		 jobApply.setApplyMethod(dto.getApplicationMethod());
 		 jobApply.setJpJob(jpJob);
 		 if(null != dto.getApplyEmail() && dto.getApplyEmail().length() != 0)
@@ -185,6 +194,8 @@ public class JobPostConversionHelper<JobPostForm> {
 				jobPostDTO.setDisCompanyName(job.getFacility());
 				jobPostDTO.setJobNumber(job.getJobNumber());
 				jobPostDTO.setAutoRenew(job.getAutoRenew() == 0 ? false : true);
+				jobPostDTO.setbActive(job.getActive()== 0 ? false : true);
+				jobPostDTO.setStartDt(job.getStartDt()==null?null:job.getStartDt().toString());
 				//jobPostDTO.setJobPostingType(job.getJpJobType().getName());
 				if (null != job.getJpTemplate()) {
 					jobPostDTO.setBrandTemplate(job
@@ -199,13 +210,6 @@ public class JobPostConversionHelper<JobPostForm> {
 								+ jobLocation.getJpLocation().getState();
 						jobPostDTO.setLocation(location);
 					}
-				}
-				if (null != job.getJpJobStat()) {
-
-					jobPostDTO.setViews(job.getJpJobStat().getViews());
-					jobPostDTO.setApplies(job.getJpJobStat().getApplies());
-					jobPostDTO.setClicks(job.getJpJobStat().getClicks());
-
 				}
 				jobPostDTO.setFacilityId(job.getAdmFacility().getFacilityId());
 				jobPostDTO
@@ -248,9 +252,10 @@ public class JobPostConversionHelper<JobPostForm> {
 				jobPostDTO.setEndDt(formatter.format(job.getEndDt()));
 				// End date with out time
 				endDt.setTime(job.getEndDt());
-				endDt.add(Calendar.HOUR, 24);
-				endDt.add(Calendar.MINUTE, 59);
-				endDt.add(Calendar.SECOND, 59);
+				
+				//endDt.add(Calendar.HOUR, 24);
+				//endDt.add(Calendar.MINUTE, 59);
+				//endDt.add(Calendar.SECOND, 59);
 
 				if (job.getActive() == 1
 						&& endDt.getTime().before(currentDate.getTime())) {
@@ -295,6 +300,7 @@ public class JobPostConversionHelper<JobPostForm> {
 		jobPostDTO.setCompanyName(jpJob.getName());
 		//jobPostDTO.setCustomerNo(jpJob.getJobNumber());
 		jobPostDTO.setJobNumber(jpJob.getJobNumber());
+		jobPostDTO.setAutoRenew(jpJob.getAutoRenew()== 1?true:false);
 		jobPostDTO.setDisCompanyName(jpJob.getFacility());
 		jobPostDTO.setJobOwner(String.valueOf(jpJob.getAdminUserId()));
 		jobPostDTO.setJobTitle(jpJob.getJobtitle());

@@ -3,6 +3,8 @@ package com.advanceweb.afc.jb.user.helper;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -363,7 +365,9 @@ public class RegistrationConversionHelper {
 			dropDownDTO.setOptionName((String) merUtility);
 			list.add(dropDownDTO);
 		}
+		Collections.sort(list, new DropDownDTOComparable());
 		return list;
+		
 	}
 
 	/**
@@ -393,7 +397,7 @@ public class RegistrationConversionHelper {
 	 * @param user
 	 * @return
 	 */
-	public UserDTO transformMerUserToUserDTO(MerUser user,Boolean oldUser) {
+	public UserDTO transformMerUserToUserDTO(MerUser user,Boolean oldUser,Boolean advPassUser) {
 
 		UserDTO userDTO = new UserDTO();
 		if (null != user) {
@@ -406,6 +410,10 @@ public class RegistrationConversionHelper {
 			if(oldUser)
 			{
 				userDTO.setOldUser(true);
+			}
+			if(advPassUser)
+			{
+				userDTO.setAdvPassUser(true);
 			}
 		}
 
@@ -440,6 +448,13 @@ public class RegistrationConversionHelper {
 		}
 
 		return userDTO;
+	}
+	
+	class DropDownDTOComparable implements Comparator<DropDownDTO>{
+	    @Override
+	    public int compare(DropDownDTO obj1, DropDownDTO obj2) {
+	        return obj1.getOptionName().compareTo(obj2.getOptionName());
+	    }
 	}
 	
 }

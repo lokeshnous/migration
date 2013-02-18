@@ -140,10 +140,11 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 		if (manageFacilityDTO.getFacilityId() > 0) {
 			facility = hibernateTemplateCareers.get(AdmFacility.class,
 					manageFacilityDTO.getFacilityId());
+		}else{
+			facility.setCreateDt(new Date());
 		}
 		facility.setFacilityType(MMJBCommonConstants.FACILITY);
 		facility.setFacilityParentId(facilityIdParent);
-		facility.setCreateDt(new Date());
 		// facility.setCreateUserId(userIdp);
 		if (facilityP != null) {
 			facility.setEmail(facilityP.getEmail());
@@ -167,6 +168,8 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 			facility.setCompanyOverview(facilityP.getCompanyOverview());
 			facility.setNsCustomerID(facilityP.getNsCustomerID());
 			facility.setTemplateId(Integer.parseInt(manageFacilityDTO.getTemplateId()));
+			facility.setFeStartDt(facilityP.getFeStartDt());
+			facility.setFeEndDt(facilityP.getFeEndDt());
 
 		}
 

@@ -364,8 +364,10 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpJobApply.java 
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpJobLocation.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpJobLocationBckup.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpJobLocationPK.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpJobSeoInfo.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpJobStat.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpJobTemp.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpJobTitle.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpJobType.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpJobTypeCombo.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/JpLocation.java -text
@@ -381,6 +383,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerLocation.java
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerProfileAttrib.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerProfileAttribList.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerPublication.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerPublicationProfession.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUser.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUserAlerts.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MerUserApplication.java -text
@@ -392,6 +395,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MetaSearchInput.
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MetaSearchParam.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MetaSearchQueryHistory.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/MetaSearchType.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/ResBlockedCompanies.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/ResBuilderAttribList.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/ResBuilderCertification.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/ResBuilderEdu.java -text
@@ -417,11 +421,15 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/SaveSearchResult
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/StgSessionEvent.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/StgSessioninfo.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstClickthrough.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstClickthroughNew.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstClickthroughNewPK.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstClickthroughType.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstEventType.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstInfoType.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstSearch.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstSearchResult.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstSearchResultNew.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstSearchResultNewPK.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstSearchResultPK.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstSessionEvent.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/VstSessionEventInfo.java -text

@@ -122,6 +122,17 @@ public class UserAlertDAOImpl implements UserAlertDAO {
 		try {
 
 			if (userId != 0) {
+				// delete the alerts of 
+				List<AdmFacilityAlert> facilityAlerts = (List<AdmFacilityAlert>) hibernateTemplate
+						.find("from AdmFacilityAlert where userId = ? and deleteDt is null",
+								userId);
+				/*for (AdmFacilityAlert admFacilityAlert : facilityAlerts) {
+					admFacilityAlert.setDeleteDt(new Date());
+				}*/
+				if(!facilityAlerts.isEmpty()){
+					hibernateTemplate.deleteAll(facilityAlerts);
+				}
+				
 				AdmUserFacility userFacility = (AdmUserFacility) hibernateTemplate
 						.find("from AdmUserFacility e where e.facilityPK.userId =?",
 								userId).get(0);
@@ -136,12 +147,38 @@ public class UserAlertDAOImpl implements UserAlertDAO {
 				hibernateTemplate.saveOrUpdateAll(userAlerts);
 			}
 		} catch (DataAccessException e) {
-			LOGGER.info("not able to assign the alerts to the facility");
+			LOGGER.error("not able to assign the alerts to the facility", e);
 		}
 
 		return true;
 	}
 
+	/**
+	 * This method is called to view the job owner alerts
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public List<UserAlertDTO> viewAlerts(int userId) {
+		List<UserAlertDTO> userAlertDTOs = null;
+		try {
+			
+			if (userId != 0) {
+				List<AdmFacilityAlert> userFacility = (List<AdmFacilityAlert>) hibernateTemplate
+						.find("from AdmFacilityAlert e where e.userId =? and deleteDt is null",
+								userId);
+				userAlertDTOs = conversionHelper
+						.transformAdmFacilityAlertToAdmFacilityAlertDTO(userFacility);
+				
+			}
+		} catch (DataAccessException e) {
+			LOGGER.error(e.getMessage(), e);
+		}
+		
+		return userAlertDTOs;
+	}
+	
 	/**
 	 * To get the job owner list for logged in user
 	 * 

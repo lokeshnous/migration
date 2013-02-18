@@ -116,27 +116,27 @@ public class ResBuilderResume implements Serializable {
 	private int userId;
 
 	//bi-directional many-to-one association to ResBuilderCertification
-	@OneToMany(mappedBy=RES_BUILDER_RESUME, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy=RES_BUILDER_RESUME, cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<ResBuilderCertification> resBuilderCertifications;
 
 	//bi-directional many-to-one association to ResBuilderEdu
-	@OneToMany(mappedBy=RES_BUILDER_RESUME, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy=RES_BUILDER_RESUME, cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<ResBuilderEdu> resBuilderEdus;
 
 	//bi-directional many-to-one association to ResBuilderEmployment
-	@OneToMany(mappedBy=RES_BUILDER_RESUME, cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	@OneToMany(mappedBy=RES_BUILDER_RESUME, cascade=CascadeType.ALL,fetch=FetchType.EAGER, orphanRemoval=true)
 	private List<ResBuilderEmployment> resBuilderEmployments;
 
 	//bi-directional many-to-one association to ResBuilderLanguage
-	@OneToMany(mappedBy=RES_BUILDER_RESUME, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy=RES_BUILDER_RESUME, cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<ResBuilderLanguage> resBuilderLanguages;
 
 	//bi-directional many-to-one association to ResBuilderPhone
-	@OneToMany(mappedBy=RES_BUILDER_RESUME, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy=RES_BUILDER_RESUME, cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<ResBuilderPhone> resBuilderPhones;
 
 	//bi-directional many-to-one association to ResBuilderReference
-	@OneToMany(mappedBy=RES_BUILDER_RESUME, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy=RES_BUILDER_RESUME, cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<ResBuilderReference> resBuilderReferences;
 
 	//bi-directional many-to-one association to ResPublishResume

@@ -111,7 +111,7 @@ public class ResumeConversionHelper {
 			resumeDTO.setSkills(builderSkill.getSkillName());
 		}
 		
-		resumeDTO.setListCertDTO(transformResBldResToCertDTO(resumeBuilder));
+		resumeDTO.setListCertDTO(transformResBldResToCertDTO(resumeBuilder));//11
 		resumeDTO.setListEduDTO(transformResEduRefToEduDTO(resumeBuilder));
 		resumeDTO.setListRefDTO(transformResBldRefToRefDTO(resumeBuilder));
 		resumeDTO.setListWorkExpDTO(transformResEmpRefToWorkExpDTO(resumeBuilder));
@@ -137,6 +137,8 @@ public class ResumeConversionHelper {
 				dto.setCertifyingAuthority(entity.getCertifyingAuthority());
 				dto.setDateOfReceipt(CommonUtil.convertSQLDateToStdDateString(String.valueOf(entity.getEarnedDt())));
 				dto.setSummary(entity.getDescription());
+				dto.setItemId(listCertDTO.size());
+				dto.setEditMode(true);
 				listCertDTO.add(dto);
 			}
 		}
@@ -161,7 +163,8 @@ public class ResumeConversionHelper {
 				dto.setPhoneNo(entity.getWorkPhone());
 				dto.setEmail(entity.getEmail());
 				dto.setRefType(entity.getReferenceType());
-				
+				dto.setItemId(listRefDTO.size());
+				dto.setEditMode(true);
 				listRefDTO.add(dto);
 			}
 		}
@@ -221,7 +224,8 @@ public class ResumeConversionHelper {
 				 dto.setDegrees(entity.getDegrees());
 				 dto.setCertifications(entity.getCertifications());				 		 
 				 dto.setbNotGraduatedYet(entity.getIsGraduated() != 0);
-				 
+				 dto.setItemId(listEduDTO.size());
+				 dto.setEditMode(true);
 				listEduDTO.add(dto);
 			}
 		}
@@ -269,7 +273,8 @@ public class ResumeConversionHelper {
 				 dto.setCity(entity.getResBuilderResume().getCity());
 				 dto.setCountry(resumeBuilder.getCountry());
 				 dto.setStillEmployed(entity.getStillEmployed());
-				 
+				 dto.setItemId(listWorkExpDTO.size());
+				 dto.setEditMode(true);
 				 listWorkExpDTO.add(dto);
 			}
 		}
@@ -319,6 +324,8 @@ public class ResumeConversionHelper {
 		resUploadResume.setResumeType(resumeDTO.getResumeType());
 		resUploadResume.setResumeName(resumeDTO.getResumeName());
     	resUploadResume.setCreateDt(new Timestamp(new Date().getTime()));
+    	
+    	resUploadResume.setUpdateDt(new Timestamp(new Date().getTime()));
     	resUploadResume.setActive(Integer.parseInt(resumeDTO.getResumeVisibility()));
     	resUploadResume.setIsPublished(Integer.parseInt(resumeDTO.getResumeVisibility()));
     	if(MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO.getResumeType())){
@@ -619,6 +626,8 @@ public class ResumeConversionHelper {
 				dto.setExpLvl(entity.getExpLevel().equalsIgnoreCase(MMJBCommonConstants.ZERO)?"":entity.getExpLevel());
 				dto.setLanguage(entity.getLanguageName());
 				dto.setnLangId(entity.getBuilderLanguageId());
+				dto.setItemId(langList.size());
+				dto.setEditMode(true);
 				langList.add(dto);
 			}
 		}
@@ -666,7 +675,9 @@ public class ResumeConversionHelper {
 				PhoneDetailDTO dto = new PhoneDetailDTO();
 				dto.setBuilderPhoneId(entity.getBuilderPhoneId());
 				dto.setPhoneNumber(entity.getPhoneNumber());
-				dto.setPhoneType(entity.getPhoneType());		
+				dto.setPhoneType(entity.getPhoneType());
+				dto.setItemId(phoneDtlList.size());
+				dto.setEditMode(true);
 				phoneDtlList.add(dto);
 			}
 		}

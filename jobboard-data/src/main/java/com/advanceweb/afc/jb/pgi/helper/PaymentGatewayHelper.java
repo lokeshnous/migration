@@ -73,6 +73,7 @@ public class PaymentGatewayHelper {
 			billingAddressDTO.setZipCode(entity.getPostcode());
 			billingAddressDTO.setFacilityContactId(entity.getFacilityContactId());
 			billingAddressDTO.setCreateDate(entity.getCreateDt());
+			billingAddressDTO.setPhone(entity.getPhone());
 		}
 
 		return billingAddressDTO;
@@ -226,7 +227,7 @@ public class PaymentGatewayHelper {
 		admOrderPayment.setMethod(orderPaymentDTO.getMethod());
 		
 		if(MMJBCommonConstants.INVOICE.equals(admOrderPayment.getMethod())){
-			admOrderPayment.setPaymentNumber(Integer.parseInt(orderPaymentDTO.getPaymentNumber()));
+			admOrderPayment.setPaymentNumber(orderPaymentDTO.getPaymentNumber());
 		}
 		
 		if(MMJBCommonConstants.STATUS_CODE_200 == orderStatus){

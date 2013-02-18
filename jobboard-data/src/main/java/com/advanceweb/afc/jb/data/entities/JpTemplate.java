@@ -74,11 +74,11 @@ public class JpTemplate implements Serializable {
 	private AdmFacility admFacility;
 
 	//bi-directional many-to-one association to JpTemplateMedia
-	@OneToMany(mappedBy="jpTemplate",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="jpTemplate",cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<JpTemplateMedia> jpTemplateMedias;
 
 	//bi-directional many-to-one association to JpTemplateTestimonial
-	@OneToMany(mappedBy="jpTemplate",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="jpTemplate",cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<JpTemplateTestimonial> jpTemplateTestimonials;
 
 //    public JpTemplate() {

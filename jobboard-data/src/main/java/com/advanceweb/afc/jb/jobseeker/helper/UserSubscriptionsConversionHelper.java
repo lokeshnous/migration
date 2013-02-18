@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
 import com.advanceweb.afc.jb.common.UserSubscriptionsDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacilitySubscription;
@@ -115,10 +116,12 @@ public class UserSubscriptionsConversionHelper {
 			res.setActive(merUser.getActive());
 			res.setName(merUser.getName());
 			res.setCoverletterId(merUser.getCoverletterId());
-			res.setCreateDt(dateToStringConveter(merUser.getCreateDt()));
+			// res.setCreateDt(dateToStringConveter(merUser.getCreateDt()));
 			res.setCoverletterText(merUser.getCoverletterText());
-			if(merUser.getUpdateDt() != null){
+			if (merUser.getUpdateDt() != null) {
 				res.setUpdateDt(dateToStringConveter(merUser.getUpdateDt()));
+			} else {
+				res.setUpdateDt(dateToStringConveter(merUser.getCreateDt()));
 			}
 			res.setUserId(merUser.getUserId());
 			manageCoverLetterDTOList.add(res);
@@ -186,6 +189,26 @@ public class UserSubscriptionsConversionHelper {
 			}
 		}
 		return listDTOs;
+	}
+
+	/**
+	 * Method to get email subscriptions for employer and agency
+	 * @param emailSubList
+	 * @return
+	 */
+	public List<DropDownDTO> transferEmailSubToSubDTO(
+			List<MerPublication> emailSubList) {
+		List<DropDownDTO> downDTOs = new ArrayList<DropDownDTO>();
+		if (null != emailSubList) {
+			for (MerPublication publication : emailSubList) {
+				DropDownDTO downDTO = new DropDownDTO();
+				downDTO.setOptionId(Integer.toString(publication
+						.getPublicationId()));
+				downDTO.setOptionName(publication.getPublicationName());
+				downDTOs.add(downDTO);
+			}
+		}
+		return downDTOs;
 	}
 
 	/**

@@ -3,10 +3,10 @@ package com.advanceweb.afc.jb.admin.helper;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.EmpSearchDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 
 /**
@@ -15,9 +15,6 @@ import com.advanceweb.afc.jb.data.entities.AdmFacility;
  */
 @Repository("adminConversionHelper")
 public class AdminConversionHelper {
-
-	private static final Logger LOGGER = Logger
-			.getLogger("AdminConversionHelper.class");
 
 	public List<EmpSearchDTO> convertEntityTodDTO(List<AdmFacility> userFacility) {
 		EmpSearchDTO searchDto = null;
@@ -29,9 +26,16 @@ public class AdminConversionHelper {
 			searchDto.setFacParentId(admFacility.getFacilityParentId());
 			searchDto.setFacilityType(admFacility.getFacilityType());
 			searchDto.setNsId(admFacility.getNsCustomerID());
+			// set facility group
+			if (admFacility.getFacilityType().equalsIgnoreCase(
+					MMJBCommonConstants.FACILITY_GROUP)) {
+				searchDto.setHealthSystem(true);
+			} else {
+				searchDto.setHealthSystem(false);
+			}
+			
 			dto.add(searchDto);
 		}
-		LOGGER.info("convertEntityTodDTO");
 		return dto;
 
 	}

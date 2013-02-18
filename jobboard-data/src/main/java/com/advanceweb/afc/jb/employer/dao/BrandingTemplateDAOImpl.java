@@ -1,6 +1,5 @@
 package com.advanceweb.afc.jb.employer.dao;
 
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -12,6 +11,7 @@ import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -43,10 +43,9 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 			.getLogger(BrandingTemplateDAOImpl.class);
 
 	private HibernateTemplate hibernateTemplateCareer;
-	
+
 	private @Value("${templateLimit}")
 	int templateLimit;
-
 
 	@Autowired
 	public void setHibernateTemplate(
@@ -103,15 +102,16 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 		Boolean status = null;
 		try {
 
-			JpTemplate jpTemplate = brandTemplateConversionHelper.convertToJPTemplate(brandingTemplatesDTO);
-			
-			hibernateTemplateCareer.saveOrUpdate(jpTemplate);
+			JpTemplate jpTemplate = brandTemplateConversionHelper
+					.convertToJPTemplate(brandingTemplatesDTO);
+
+			hibernateTemplateCareer.merge(jpTemplate);
 
 			status = Boolean.TRUE;
 		} catch (HibernateException e) {
 			status = Boolean.FALSE;
 			// logger call
-			LOGGER.info("ERROR2"+e);
+			LOGGER.info("ERROR2" + e);
 		}
 		return status;
 
@@ -184,7 +184,7 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 		}
 		return status;
 	}
-	
+
 	/**
 	 * This method checks if any active job is using the template
 	 * 
@@ -228,8 +228,7 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 				List<JpTemplate> brandingTemplateList = hibernateTemplateCareer
 						.find("from  JpTemplate where admFacility.facilityId=? and deleteDt is null",
 								facilityId);
-				if(brandingTemplateList.size() < templateLimit)
-				{
+				if (brandingTemplateList.size() < templateLimit) {
 					return true;
 				}
 			}
@@ -240,7 +239,7 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * This method checks if the template Name already exists
 	 * 
@@ -251,9 +250,9 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 	 */
 	@Override
 	public boolean checkTemplateName(int facilityId, String templateName) {
-		List<JpTemplate> listTemplate = hibernateTemplateCareer.find(
-				"from JpTemplate jpt where jpt.admFacility.facilityId=? and deleteDt is NULL",
-				facilityId);
+		List<JpTemplate> listTemplate = hibernateTemplateCareer
+				.find("from JpTemplate jpt where jpt.admFacility.facilityId=? and deleteDt is NULL",
+						facilityId);
 
 		if (null != listTemplate && !listTemplate.isEmpty()) {
 			for (JpTemplate template : listTemplate) {
@@ -264,7 +263,7 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public int getBrandingInformation(int facilityId) {
 		int packageId = 0;
@@ -315,9 +314,9 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 		return admFacilityDTOList;
 	}
 
-	
 	/**
 	 * This method is used the get the Branding Template Purchase information
+	 * 
 	 * @param facilityId
 	 * @return boolean
 	 */
@@ -347,6 +346,7 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 
 	/**
 	 * This method is used the get the Branding Template Package information
+	 * 
 	 * @param facilityId
 	 * @return boolean
 	 */
@@ -367,8 +367,7 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 
 		return false;
 	}
-	
-	
+
 	/**
 	 * This method checks if the user has purchased Branding Template based on
 	 * Branding Template package present in jp_jobtype_combo table
@@ -382,5 +381,47 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 				|| productId == 8 || productId == 10 || productId == 13
 				|| productId == 14 || productId == 16);
 
+	}
+
+	@Override
+	public int getParentId(int facilityId) {
+		int roleId = 0;
+		List<AdmUserFacility> userFacility = new ArrayList<AdmUserFacility>();
+		List<AdmFacility> facilities = new ArrayList<AdmFacility>();
+		AdmUserFacility facility = new AdmUserFacility();
+		AdmFacility admFacility = new AdmFacility();
+		try {
+			userFacility = hibernateTemplateCareer.find(
+					"from AdmUserFacility a where a.facilityPK.facilityId=?",
+					facilityId);
+			facility = userFacility.get(0);
+			roleId = facility.getFacilityPK().getRoleId();
+			if (roleId == 5 || roleId == 6) {
+				facilities = hibernateTemplateCareer.find(
+						"from AdmFacility a where a.facilityId=?", facilityId);
+				admFacility = facilities.get(0);
+				facilityId = admFacility.getFacilityParentId();
+			}
+		} catch (DataAccessException e) {
+			LOGGER.error(e);
+		}
+		return facilityId;
+	}
+
+	@Override
+	public int getParentUserId(int userId, int parentFacilityId) {
+		List<AdmUserFacility> userFacility = new ArrayList<AdmUserFacility>();
+		AdmUserFacility facility = new AdmUserFacility();
+		try {
+			userFacility = hibernateTemplateCareer.find(
+					"from AdmUserFacility a where a.facilityPK.facilityId=?",
+					parentFacilityId);
+			facility = userFacility.get(0);
+			userId = facility.getFacilityPK().getUserId();
+		} catch (DataAccessException e) {
+			LOGGER.error(e);
+		}
+
+		return userId;
 	}
 }

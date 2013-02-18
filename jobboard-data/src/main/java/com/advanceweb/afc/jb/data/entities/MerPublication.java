@@ -43,7 +43,10 @@ public class MerPublication implements Serializable {
 	private int isEnewsletter;
 
 	@Column(name = "is_regional")
-	private int isRegional;
+	private int isRegional;  
+	
+	@Column(name = "is_email")
+	private int isEmail;
 
 	@Column(name = "active")
 	private int active;
@@ -133,6 +136,14 @@ public class MerPublication implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public int getIsEmail() {
+		return isEmail;
+	}
+
+	public void setIsEmail(int isEmail) {
+		this.isEmail = isEmail;
 	}
 
 }

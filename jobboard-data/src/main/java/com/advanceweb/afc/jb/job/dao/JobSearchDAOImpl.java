@@ -1,5 +1,6 @@
 package com.advanceweb.afc.jb.job.dao;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,22 +9,25 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.advanceweb.afc.jb.common.AdminSeoDTO;
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
 import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.JobTitleDTO;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
-import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpJobApply;
+import com.advanceweb.afc.jb.data.entities.JpJobSeoInfo;
+import com.advanceweb.afc.jb.data.entities.JpJobTitle;
 import com.advanceweb.afc.jb.data.entities.MerApplication;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.entities.VstSessioninfo;
@@ -61,6 +65,9 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 	@Autowired
 	private JobSeekerJobDetailConversionHelper jobSeekerJobDetailConversionHelper;
 
+	@Autowired
+	private SessionFactory sessionFactory;
+	
 	/**
 	 * implementation of viewJobDetails
 	 */
@@ -76,16 +83,16 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 				jobDetail = jobSearchConversionHelper
 						.transformJpJobToJobDTO(jpJob);
 				// Added code to support migrated old data, where in the jp_jpb table the email column is blank or empty
-				if(null==jobDetail.getEmail() || jobDetail.getEmail().isEmpty()){
-					if(jobDetail.getFacilityId()>0){
-						List<AdmUserFacility> admFacility = hibernateTemplate
-								.find("from AdmUserFacility a where a.facilityPK.facilityId=?",
-										jobDetail.getFacilityId());
-						int userId = admFacility.get(0).getFacilityPK().getUserId();
-						MerUser merUser = hibernateTemplateTracker.get(MerUser.class, userId);
-						jobDetail.setEmail(merUser.getEmail());
-					}
-				}
+//				if(null==jobDetail.getEmail() || jobDetail.getEmail().isEmpty()){
+//					if(jobDetail.getFacilityId()>0){
+//						List<AdmUserFacility> admFacility = hibernateTemplate
+//								.find("from AdmUserFacility a where a.facilityPK.facilityId=?",
+//										jobDetail.getFacilityId());
+//						int userId = admFacility.get(0).getFacilityPK().getUserId();
+//						MerUser merUser = hibernateTemplateTracker.get(MerUser.class, userId);
+//						jobDetail.setEmail(merUser.getEmail());
+//					}
+//				}
 			}
 		} catch (HibernateException e) {
 			// logger call
@@ -97,6 +104,42 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 		return jobDetail;
 	}
 
+	
+	/**
+	 * This method provides the total active job count
+	 * 
+	 * @return jobCount
+	 */
+	@Override
+	public long getActiveJobs() {
+		long jobCount = 0;
+		try {
+			
+			Query getActiveJobs = hibernateTemplate
+					.getSessionFactory()
+					.getCurrentSession()
+					.createSQLQuery(
+							"select count(*) from jp_job j where " +
+							"current_timestamp >= coalesce(j.start_dt,current_timestamp) and " +
+							"coalesce(j.end_dt,date_add(current_timestamp,interval 1 day)) >= current_timestamp and " +
+							"j.delete_dt is null and j.featured_ad = 0 and j.active = 1");
+			List<BigInteger> jobsList = getActiveJobs.list();
+			if (null != jobsList && !jobsList.isEmpty()) {
+				jobCount = jobsList.get(0).longValue();
+			}
+			
+//			List<Long> listJobCount = hibernateTemplate
+//					.find("select count(*) from JpJob where active=1 and deleteDt is NULL");
+//			if (null != listJobCount && !listJobCount.isEmpty()) {
+//				jobCount = listJobCount.get(0);
+//			}
+		} catch (Exception e) {
+			LOGGER.error(e);
+			return jobCount;
+		}
+		return jobCount;
+	}
+	
 	/**
 	 * This method will fetch the last five job details based on posted date for
 	 * the selected employer.
@@ -252,25 +295,6 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 	}
 
 	/**
-	 * This method is used to get the total number of Active jobs.
-	 * 
-	 * @return long
-	 */
-
-	public long getTotalActiveJobs() {
-		long totalNoOfActiveJobs = 0L;
-		try {
-			totalNoOfActiveJobs = DataAccessUtils.intResult(hibernateTemplate
-					.find("select count(*) from JpJob where active=1"));
-			LOGGER.info("Total number of Active Job is " + totalNoOfActiveJobs);
-		} catch (HibernateException he) {
-			LOGGER.info("Error occured while getting the Total Active Jobs from Database"
-					+ he);
-		}
-		return totalNoOfActiveJobs;
-	}
-
-	/**
 	 * This method is used to remove the data in database
 	 * 
 	 * @return
@@ -334,7 +358,68 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 		}
 
 	}
+	
+	/**
+	 * The method is used to save the SEO info for job title
+	 * 
+	 * @return
+	 */
+	@Override
+	public boolean saveJobTitleSeoInfo(AdminSeoDTO seoDTO) {
+		boolean status = false;
+		try{
+			JpJobSeoInfo jobSeoInfo = jobSearchConversionHelper.transformDtoTOJpJobSeoInfo(seoDTO);
+			hibernateTemplate.saveOrUpdate(jobSeoInfo);
+			status = true;
+		}catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+		}		
+		return status;
+	}
 
+	/**
+	 * The method is used to get the SEO info by job title
+	 * 
+	 * @return AdminSeoDTO
+	 */
+	@Override
+	public AdminSeoDTO getSeoJobInfoByTitle(String title) {		
+		AdminSeoDTO adminSeoDTO = null;
+		try{
+			List<JpJobSeoInfo> jobSeoInfos =(List<JpJobSeoInfo>) hibernateTemplate.find("from JpJobSeoInfo info where info.jobtitle = ?"
+					, title);
+			if(!jobSeoInfos.isEmpty()){
+				List<AdminSeoDTO> adminSeoDTOs  = jobSearchConversionHelper.transformJpJobSeoInfoTODto(jobSeoInfos);
+				adminSeoDTO = adminSeoDTOs.get(0);
+			}
+		}catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+		}		
+		return adminSeoDTO;
+	}
+	
+	/**
+	 * The method is used to get the job title list
+	 * 
+	 * @return List<JobTitleDTO>
+	 */
+	@Override
+	public List<JobTitleDTO> getJobTitleList() {
+		List<JobTitleDTO> jobTitleDTOs = null;
+		Session session = sessionFactory.openSession();
+		try {
+			List<JpJobTitle> jpJobTitles = session.createCriteria(JpJobTitle.class).list();
+//			List<JpJobTitle> jpJobTitles = (List<JpJobTitle>) hibernateTemplate
+//					.find("from JpJobTitle");
+			if (!jpJobTitles.isEmpty()) {
+				jobTitleDTOs = jobSearchConversionHelper
+						.transformJpJobTitleTODto(jpJobTitles);
+			}
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+		}
+		return jobTitleDTOs;
+	}
 	
 	//here implementation work after descsion
 	/*@Override

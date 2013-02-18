@@ -26,6 +26,7 @@ import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFolder;
 import com.advanceweb.afc.jb.data.entities.AdmFolderResume;
+import com.advanceweb.afc.jb.data.entities.ResBlockedCompanies;
 import com.advanceweb.afc.jb.data.entities.ResBuilderCertification;
 import com.advanceweb.afc.jb.data.entities.ResBuilderEdu;
 import com.advanceweb.afc.jb.data.entities.ResBuilderEmployment;
@@ -37,6 +38,7 @@ import com.advanceweb.afc.jb.data.entities.ResBuilderSkill;
 import com.advanceweb.afc.jb.data.entities.ResResumeAttrib;
 import com.advanceweb.afc.jb.data.entities.ResResumeProfile;
 import com.advanceweb.afc.jb.data.entities.ResUploadResume;
+import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.resume.helper.ResumeConversionHelper;
 
 /**
@@ -243,6 +245,7 @@ public class ResumeDaoImpl implements ResumeDao {
 				.transformResumeDTOToResUploadResume(resumeDTO);
 		try {
 			hibernateTemplate.save(resUploadResume);
+			resumeDTO.setUploadResumeId(resUploadResume.getUploadResumeId());
 			List<ResResumeAttrib> resumeAttrib = hibernateTemplate
 					.find("from ResResumeAttrib");
 			List<ResResumeProfile> resumeProfileList = resumeConversionHelper
@@ -340,7 +343,7 @@ public class ResumeDaoImpl implements ResumeDao {
 		builderResume.setResBuilderPhones(builderPhoneList);
 		builderResume.setResBuilderSkills(builderSkillSet);
 		try {
-			hibernateTemplate.saveOrUpdate(builderResume);
+			hibernateTemplate.merge(builderResume);
 			return true;
 		} catch (HibernateException e) {
 			LOGGER.info("Error in create Resume Builder", e);
@@ -424,11 +427,11 @@ public class ResumeDaoImpl implements ResumeDao {
 	 * @return ResumeDTO
 	 */
 	@Override
-	public ResumeDTO fetchPublicResumeByUserId(long jobSeekerId) {
+	public ResumeDTO fetchPublicResumeByUserId(long jobSeekerId,int uploadResumeId) {
 		List<ResUploadResume> resumes = hibernateTemplate
 				.find("from ResUploadResume where userId = " + jobSeekerId
-						+ " AND active = "
-						+ MMJBCommonConstants.VISIBILITY_PUBLIC
+						+ " AND uploadResumeId = "
+						+ uploadResumeId
 						+ "and deleteDt is null");
 		// ResumeDTO resumeDTO = resumeConversionHelper
 		// .transformResUploadResumeToResumeDTO(resumes.get(0), null);
@@ -543,6 +546,33 @@ public class ResumeDaoImpl implements ResumeDao {
 		}
 
 		return status;
+	}
+
+	@Override
+	public boolean saveBlockedCompanydetails(ResumeDTO resumeDTO)
+			throws JobBoardDataException {
+		int resumeId = resumeDTO.getUploadResumeId();
+		//if already some company are blocked, delete those and insert the newly added company list
+		List<ResBlockedCompanies> resBlockedCompaniesList = hibernateTemplate
+				.find("select rbc from  ResBlockedCompanies rbc where rbc.resumeId="
+						+ resumeId);
+		if (null != resBlockedCompaniesList
+				&& resBlockedCompaniesList.size() > 0) {
+			hibernateTemplate.deleteAll(resBlockedCompaniesList);
+		}
+		if (null != resumeDTO.getSelectedList()
+				&& resumeDTO.getSelectedList().size() > 0) {
+			List<Integer> blockedCompnyList = resumeDTO.getSelectedList();
+			
+			for (Integer blockedCompany : blockedCompnyList) {
+				ResBlockedCompanies blockedCompanies = new ResBlockedCompanies();
+				blockedCompanies.setCompanyId(blockedCompany);
+				blockedCompanies.setResumeId(resumeId);
+				blockedCompanies.setCreateDt(new Date());
+				hibernateTemplate.saveOrUpdate(blockedCompanies);
+			}
+		}
+		return true;
 	}
 
 }

@@ -78,7 +78,7 @@ public class JobSeekerJobDetailConversionHelper {
 				appliedJobDTO.setFacilityName(job.getFacilityName());
 				appliedJobDTO.setJobTitle(job.getJobtitle());
 				appliedJobDTO.setJobAge(getJobAge(date,
-						job.getCreateDt()));
+						job.getJpJob().getCreateDt()));
 				appliedJobDTO.setJpJob(jobPostConversionHelper
 						.transformToJpJobDTO(job.getJpJob()));
 				appliedJobDTO.setAppliedDt(String.valueOf(job.getAppliedDt()));

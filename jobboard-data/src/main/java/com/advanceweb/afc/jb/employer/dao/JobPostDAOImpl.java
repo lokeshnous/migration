@@ -44,6 +44,8 @@ import com.advanceweb.afc.jb.data.entities.JpJobTypeCombo;
 import com.advanceweb.afc.jb.data.entities.JpLocation;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
 import com.advanceweb.afc.jb.data.entities.JpTypeAddonXref;
+import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
+import com.advanceweb.afc.jb.employer.helper.FacilityConversionHelper;
 import com.advanceweb.afc.jb.employer.helper.JobPostConversionHelper;
 import com.advanceweb.afc.jb.user.dao.UserDao;
 
@@ -60,7 +62,7 @@ import com.advanceweb.afc.jb.user.dao.UserDao;
 public class JobPostDAOImpl implements JobPostDAO {
 
 	private static final String FIND_ADM_USER_FACILITY = "select facility from AdmUserFacility facility, AdmRole role where role.roleId=facility.id.roleId and facility.id.userId=? and role.name=?";
-	private static final String FIND_EXPIRED_JOBS = "from JpJob job where job.active='1' and date_format(job.endDt, '%Y-%m-%d') = ?";
+	private static final String FIND_EXPIRED_JOBS = "from JpJob job where job.active='1' and job.autoRenew='0' and date_format(job.endDt, '%Y-%m-%d') = ?";
 	private static final String FIND_EXPIRED_JOBS_FOR_RENEWAL = "from JpJob job where job.active='1'and job.autoRenew='1' and date_format(job.endDt, '%Y-%m-%d') = ?";
 	private static final String FIND_SCHEDULED_JOBS = "from JpJob job where date_format(job.startDt, '%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') and job.active='0'";
 	private static final String FIND_INVENTORY_DETAILS = "select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 "
@@ -82,18 +84,26 @@ public class JobPostDAOImpl implements JobPostDAO {
 			"and date_format(job.startDt, '%Y-%m-%d') <= CURRENT_DATE and date_format(job.endDt, '%Y-%m-%d') >= CURRENT_DATE " +
 			"and (job.deleteDt is null) and DATEDIFF(date_format(job.endDt, '%Y-%m-%d'),CURRENT_DATE) <= 2";*/
 	
-	private static final String FIND_ACTIVE_JOBS_EXPIRE_SOON = "select job.job_id,job.facility_id,facility.user_id,fec.name,job.end_dt from jp_job job join adm_user_facility facility join adm_facility fec where job.facility_id=facility.facility_id and job.facility_id=fec.facility_id and job.active = 1 and date_format(job.start_dt, '%Y-%m-%d') <= CURRENT_DATE and date_format(job.end_dt, '%Y-%m-%d') >= CURRENT_DATE and (job.delete_dt is null) and DATEDIFF(date_format(job.end_dt, '%Y-%m-%d'),CURRENT_DATE) <= 3";
+	private static final String FIND_ACTIVE_JOBS_EXPIRE_SOON = "select job.job_id,job.facility_id,facility.user_id,fec.name,job.end_dt,job.create_user_id from jp_job job join adm_user_facility facility join adm_facility fec where job.facility_id=facility.facility_id and job.facility_id=fec.facility_id and job.active = 1 and date_format(job.start_dt, '%Y-%m-%d') <= CURRENT_DATE and date_format(job.end_dt, '%Y-%m-%d') >= CURRENT_DATE and (job.delete_dt is null) and DATEDIFF(date_format(job.end_dt, '%Y-%m-%d'),CURRENT_DATE) <= 3";
 	
 	private static final Logger LOGGER = Logger.getLogger(JobPostDAOImpl.class);
 	
 	private HibernateTemplate hibernateTemplate;
 	
+	private HibernateTemplate hibernateTemplateTracker;
+	
 	@Autowired
 	private JobPostConversionHelper<?> jobPostConversionHelper;
+	@Autowired
+	private FacilityConversionHelper facilityConversionHelper;
 
 	@Autowired
-	public void setHibernateTemplate(SessionFactory sessionFactory) {
+	public void setHibernateTemplate(
+			SessionFactory sessionFactoryMerionTracker,
+			SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
+		this.hibernateTemplateTracker = new HibernateTemplate(
+				sessionFactoryMerionTracker);
 	}
 
 	@Autowired
@@ -195,9 +205,14 @@ public class JobPostDAOImpl implements JobPostDAO {
 			JpJobType jobType = getJobTypeDetails(dto);
 			AdmFacility admFacility = hibernateTemplate.get(AdmFacility.class,
 					Integer.valueOf(dto.getFacilityId()));
-			
-
-			JpJob jpJob = jobPostConversionHelper.transformJobDtoToJpJob(dto,
+			JpJob job;
+			if(dto.getJobId()>0){
+             job = hibernateTemplate.get(JpJob.class, dto.getJobId());
+             hibernateTemplate.deleteAll(hibernateTemplate.find("from JpJobLocation jp where jp.locationPK.jobId=?",dto.getJobId()));
+			}else{
+				job=new JpJob();
+			}
+			JpJob jpJob = jobPostConversionHelper.transformJobDtoToJpJob(job,dto,
 					template, admFacility);
 			jpJob.setJpJobType(jobType);
 
@@ -245,11 +260,12 @@ public class JobPostDAOImpl implements JobPostDAO {
 			}
 			List<JpJobApply> applyJobList = jobPostConversionHelper
 					.transformJobPostDTOToJpJobApply(dto, jpJob);
-			hibernateTemplate.saveOrUpdateAll(applyJobList);
-			List<JpJobLocation> locList = jobPostConversionHelper
-					.transformJobPostDTOToJpJbLocation(dto, jpJob, location);
-			hibernateTemplate.saveOrUpdateAll(locList);
-			
+			hibernateTemplate.merge(applyJobList.get(0));
+			if (null != location) {
+				List<JpJobLocation> locList = jobPostConversionHelper
+						.transformJobPostDTOToJpJbLocation(dto, jpJob, location);
+				hibernateTemplate.merge(locList.get(0));
+			}
 			
 		
 			
@@ -319,6 +335,8 @@ public class JobPostDAOImpl implements JobPostDAO {
 			int offset, int noOfRecords, String sortBy) {
 
 		List<JpJob> jobs = new ArrayList<JpJob>();
+		List<JobPostDTO> listJobPostDto = new ArrayList<JobPostDTO>();
+		List<JobPostDTO> modListJobPostDto = new ArrayList<JobPostDTO>();
 		try {
 			Query query = hibernateTemplate.getSessionFactory()
 					.getCurrentSession().createQuery(FIND_EMP_JP_JOB + sortBy);
@@ -331,10 +349,37 @@ public class JobPostDAOImpl implements JobPostDAO {
 			query.setFirstResult(offset);
 			query.setMaxResults(noOfRecords);
 			jobs = query.list();
+			listJobPostDto = jobPostConversionHelper
+					.transformJpJobListToJobPostDTOList(jobs);
+
+			for (JobPostDTO jobPostDto : listJobPostDto) {
+				List<Long> viewsList = hibernateTemplateTracker
+						.find("select sum(resultCount) as views from VstSearchResultNew srn where srn.searchResultNewPK.result = ?",
+								jobPostDto.getJobId());
+				if (null != viewsList && !viewsList.isEmpty() && !viewsList.contains(null)) {
+					jobPostDto.setViews(viewsList.get(0).longValue());
+				}
+				List<Long> clicksList = hibernateTemplateTracker
+						.find("select sum(clickCount) as clicks from VstClickthroughNew ctn where ctn.clickthroughNewPK.keyId=? " +
+								"and ctn.clickthroughNewPK.vstClickthroughType.clickthroughTypeId in (1,2,3,6,9,10)",
+								jobPostDto.getJobId());
+				if (null != clicksList && !clicksList.isEmpty() && !clicksList.contains(null)) {
+					jobPostDto.setClicks(clicksList.get(0).longValue());
+				}
+				List<Long> appliesList = hibernateTemplateTracker
+						.find("select sum(clickCount) as clicks from VstClickthroughNew ctn where ctn.clickthroughNewPK.keyId=? " +
+								"and ctn.clickthroughNewPK.vstClickthroughType.clickthroughTypeId in (4,5,7,8)",
+								jobPostDto.getJobId());
+				if (null != appliesList && !appliesList.isEmpty() && !appliesList.contains(null)) {
+					jobPostDto.setApplies(appliesList.get(0).longValue());
+				}
+				modListJobPostDto.add(jobPostDto);
+			}
 		} catch (DataAccessException e) {
 			LOGGER.error(e.getMessage(), e);
+			return modListJobPostDto;
 		}
-		return jobPostConversionHelper.transformJpJobListToJobPostDTOList(jobs);
+		return modListJobPostDto;
 
 	}
 
@@ -403,7 +448,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 						|| (job.getActive() == MMJBCommonConstants.INACTIVE && (startDt
 								.before(currentDt) || startDt.equals(currentDt)))) {
 					// System deletes the job postings which are in "inactive"
-					// or “Expired” status
+					// or "Expired" status
 					job.setDeleteDt(new Timestamp(new Date().getTime()));
 					hibernateTemplate.save(job);
 					bDelete = true;
@@ -431,7 +476,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			int jobId, int userId) {
 		JpJob job = hibernateTemplate.get(JpJob.class, jobId);
 		try {
-			// System deletes the job postings which are in “Expired” status
+			// System deletes the job postings which are in "Expired" status
 			job.setUpdateDt(new Timestamp(new Date().getTime()));
 			job.setAutoRenew(autoRenew ? 1 : 0);
 			JpTemplate template = null;
@@ -463,7 +508,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			JpJob job = hibernateTemplate.get(JpJob.class, jobId);
 			if (job.getActive() == MMJBCommonConstants.ACTIVE) {
 				// System should deactivate the job posting which are in
-				// “Active”
+				// "Active"
 				// status
 				Date startDt = job.getStartDt();
 				Date endtDt = job.getEndDt();
@@ -515,9 +560,14 @@ public class JobPostDAOImpl implements JobPostDAO {
 				// Expired Job deduct the credit and change the start date to
 				// current date
 				// and end date to current date + 30days
-				if (!validateAndDecreaseAvailableCredits(Integer.valueOf(job
+				Integer facilityId=getParentFacility(job
+						.getAdmFacility().getFacilityId()).getFacilityId();
+				
+				List<AdmFacilityJpAudit>jpAudList=hibernateTemplate.find("from AdmFacilityJpAudit jpAudit where id.jobId=?",job.getJobId());
+			/*	if (!validateAndDecreaseAvailableCredits(Integer.valueOf(job
 						.getJpJobType().getJobTypeId()), job.getAdmFacility()
-						.getFacilityId())) {
+						.getFacilityId())) {*/
+				if (jpAudList!=null &&!validateAndDecreaseAvailableCredits(jpAudList.get(0).getId().getInventoryDetailId(), facilityId)) {
 					return false;
 				}
 				job.setStartDt(Calendar.getInstance().getTime());
@@ -546,6 +596,8 @@ public class JobPostDAOImpl implements JobPostDAO {
 	public List<JobPostDTO> retrieveAllJobByStatus(String jobStatus,
 			List<DropDownDTO> companyList, int offset, int noOfRecords) {
 		List<JpJob> jobs = new ArrayList<JpJob>();
+		List<JobPostDTO> listJobPostDto = new ArrayList<JobPostDTO>();
+		List<JobPostDTO> modListJobPostDto = new ArrayList<JobPostDTO>();
 		Query query = null;
 
 		Session session = hibernateTemplate.getSessionFactory()
@@ -598,10 +650,37 @@ public class JobPostDAOImpl implements JobPostDAO {
 			query.setFirstResult(offset);
 			query.setMaxResults(noOfRecords);
 			jobs = query.list();
+			listJobPostDto = jobPostConversionHelper
+					.transformJpJobListToJobPostDTOList(jobs);
+
+			for (JobPostDTO jobPostDto : listJobPostDto) {
+				List<Long> viewsList = hibernateTemplateTracker
+						.find("select sum(resultCount) as views from VstSearchResultNew srn where srn.searchResultNewPK.result = ?",
+								jobPostDto.getJobId());
+				if (null != viewsList && !viewsList.isEmpty() && !viewsList.contains(null)) {
+					jobPostDto.setViews(viewsList.get(0).longValue());
+				}
+				List<Long> clicksList = hibernateTemplateTracker
+						.find("select sum(clickCount) as clicks from VstClickthroughNew ctn where ctn.clickthroughNewPK.keyId=? " +
+								"and ctn.clickthroughNewPK.vstClickthroughType.clickthroughTypeId in (1,2,3,6,9,10)",
+								jobPostDto.getJobId());
+				if (null != clicksList && !clicksList.isEmpty() && !clicksList.contains(null)) {
+					jobPostDto.setClicks(clicksList.get(0).longValue());
+				}
+				List<Long> appliesList = hibernateTemplateTracker
+						.find("select sum(clickCount) as clicks from VstClickthroughNew ctn where ctn.clickthroughNewPK.keyId=? " +
+								"and ctn.clickthroughNewPK.vstClickthroughType.clickthroughTypeId in (4,5,7,8)",
+								jobPostDto.getJobId());
+				if (null != appliesList && !appliesList.isEmpty() && !appliesList.contains(null)) {
+					jobPostDto.setApplies(appliesList.get(0).longValue());
+				}
+				modListJobPostDto.add(jobPostDto);
+			}
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
+			return modListJobPostDto;
 		}
-		return jobPostConversionHelper.transformJpJobListToJobPostDTOList(jobs);
+		return modListJobPostDto;
 	}
 
 	@Override
@@ -686,32 +765,87 @@ public class JobPostDAOImpl implements JobPostDAO {
 	 * This method is called to retreive all the scheduled jobs
 	 */
 	public List<JobPostDTO> retreiveAllScheduledJobs() {
+		List<JobPostDTO> listJobPostDto = new ArrayList<JobPostDTO>();
+		List<JobPostDTO> modListJobPostDto = new ArrayList<JobPostDTO>();
 		// Schedule Jobs
 		try {
 			List<JpJob> scheduledJobs = hibernateTemplate
 					.find(FIND_SCHEDULED_JOBS);
-			return jobPostConversionHelper
+			listJobPostDto = jobPostConversionHelper
 					.transformJpJobListToJobPostDTOList(scheduledJobs);
+
+			for (JobPostDTO jobPostDto : listJobPostDto) {
+				List<Long> viewsList = hibernateTemplateTracker
+						.find("select sum(resultCount) as views from VstSearchResultNew srn where srn.searchResultNewPK.result = ?",
+								jobPostDto.getJobId());
+				if (null != viewsList && !viewsList.isEmpty() && !viewsList.contains(null)) {
+					jobPostDto.setViews(viewsList.get(0).longValue());
+				}
+				List<Long> clicksList = hibernateTemplateTracker
+						.find("select sum(clickCount) as clicks from VstClickthroughNew ctn where ctn.clickthroughNewPK.keyId=? " +
+								"and ctn.clickthroughNewPK.vstClickthroughType.clickthroughTypeId in (1,2,3,6,9,10)",
+								jobPostDto.getJobId());
+				if (null != clicksList && !clicksList.isEmpty() && !clicksList.contains(null)) {
+					jobPostDto.setClicks(clicksList.get(0).longValue());
+				}
+				List<Long> appliesList = hibernateTemplateTracker
+						.find("select sum(clickCount) as clicks from VstClickthroughNew ctn where ctn.clickthroughNewPK.keyId=? " +
+								"and ctn.clickthroughNewPK.vstClickthroughType.clickthroughTypeId in (4,5,7,8)",
+								jobPostDto.getJobId());
+				if (null != appliesList && !appliesList.isEmpty() && !appliesList.contains(null)) {
+					jobPostDto.setApplies(appliesList.get(0).longValue());
+				}
+				modListJobPostDto.add(jobPostDto);
+			}
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
+			return modListJobPostDto;
 		}
-		return null;
+		return modListJobPostDto;
 	}
 
 	/**
 	 * This method is called to retreive all the expired jobs
 	 */
 	public List<JobPostDTO> retreiveAllExpiredJobs() {
+		List<JobPostDTO> listJobPostDto = new ArrayList<JobPostDTO>();
+		List<JobPostDTO> modListJobPostDto = new ArrayList<JobPostDTO>();
 		// Schedule Jobs
 		try {
 			List<JpJob> scheduledJobs = hibernateTemplate.find(
 					FIND_EXPIRED_JOBS_FOR_RENEWAL, getOneDayBeforeDate());
-			return jobPostConversionHelper
+			
+			listJobPostDto = jobPostConversionHelper
 					.transformJpJobListToJobPostDTOList(scheduledJobs);
+
+			for (JobPostDTO jobPostDto : listJobPostDto) {
+				List<Long> viewsList = hibernateTemplateTracker
+						.find("select sum(resultCount) as views from VstSearchResultNew srn where srn.searchResultNewPK.result = ?",
+								jobPostDto.getJobId());
+				if (null != viewsList && !viewsList.isEmpty() && !viewsList.contains(null)) {
+					jobPostDto.setViews(viewsList.get(0).longValue());
+				}
+				List<Long> clicksList = hibernateTemplateTracker
+						.find("select sum(clickCount) as clicks from VstClickthroughNew ctn where ctn.clickthroughNewPK.keyId=? " +
+								"and ctn.clickthroughNewPK.vstClickthroughType.clickthroughTypeId in (1,2,3,6,9,10)",
+								jobPostDto.getJobId());
+				if (null != clicksList && !clicksList.isEmpty() && !clicksList.contains(null)) {
+					jobPostDto.setClicks(clicksList.get(0).longValue());
+				}
+				List<Long> appliesList = hibernateTemplateTracker
+						.find("select sum(clickCount) as clicks from VstClickthroughNew ctn where ctn.clickthroughNewPK.keyId=? " +
+								"and ctn.clickthroughNewPK.vstClickthroughType.clickthroughTypeId in (4,5,7,8)",
+								jobPostDto.getJobId());
+				if (null != appliesList && !appliesList.isEmpty() && !appliesList.contains(null)) {
+					jobPostDto.setApplies(appliesList.get(0).longValue());
+				}
+				modListJobPostDto.add(jobPostDto);
+			}
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
+			return modListJobPostDto;
 		}
-		return null;
+		return modListJobPostDto;
 	}
 	
 	/**
@@ -732,6 +866,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 				schedulerDTO.setUserId(Integer.parseInt(String.valueOf(obj[2])));
 				schedulerDTO.setCompanyName(String.valueOf(obj[3]));
 				schedulerDTO.setExpireDate(String.valueOf(obj[4]));
+				schedulerDTO.setCreateUserId(Integer.parseInt(String.valueOf(obj[5])));
 				
 				//get the user details from the mer_user table using the user id with which job has been posted
 				UserDTO userDTO = userDAO.getUserByUserId(schedulerDTO.getUserId());
@@ -764,8 +899,8 @@ public class JobPostDAOImpl implements JobPostDAO {
 
 			for (JpJob job : expiredJobs) {
 				try {
-					job.setActive((byte) 0);
-					hibernateTemplate.saveOrUpdate(job);
+					//job.setActive((byte) 0);
+					//hibernateTemplate.saveOrUpdate(job);
 					//get the user details to send the mail
 					getUserDetails(schedulerDTOList, job);
 					
@@ -814,10 +949,12 @@ public class JobPostDAOImpl implements JobPostDAO {
 					AdmFacilityJpAudit audit = jpAuditList.get(0);
 
 					// Checking for available credits
+					Integer facilityId=getParentFacility(job
+							.getAdmFacility().getFacilityId()).getFacilityId();
+					
 					if (!dto.isXmlStartEndDateEnabled()
 							&& !validateAndDecreaseAvailableCredits(audit
-									.getId().getInventoryDetailId(), job
-									.getAdmFacility().getFacilityId())) {
+									.getId().getInventoryDetailId(), facilityId)) {
 						LOGGER.error(job.getName()
 								+ " Doesn't have sufficient credits to post the job "
 								+ job.getJobId());
@@ -859,16 +996,22 @@ public class JobPostDAOImpl implements JobPostDAO {
 	private void getUserDetails(List<SchedulerDTO> schedulerDTOList, JpJob job) {
 		SchedulerDTO schedulerDTO;
 		UserDTO userDTO;
-		userDTO = userDAO.getUserByUserId(facilityDAO.getfacilityUserId(job.getAdmFacility().getFacilityId()));
-		schedulerDTO = new SchedulerDTO();
-		schedulerDTO.setUserId(userDTO.getUserId());
-		schedulerDTO.setJobId(job.getJobId());
-		schedulerDTO.setFirstName(userDTO.getFirstName());
-		schedulerDTO.setLastName(userDTO.getLastName());
-		schedulerDTO.setEmailId(userDTO.getEmailId());
-		schedulerDTO.setCompanyName(job.getAdmFacility().getName());
-		schedulerDTO.setExpireDate(String.valueOf(job.getEndDt()));
-		schedulerDTOList.add(schedulerDTO);
+		userDTO = userDAO.getUserByUserId(facilityDAO.getfacilityUserId(job
+				.getAdmFacility().getFacilityId()));
+		if (null != userDTO) {
+			schedulerDTO = new SchedulerDTO();
+			schedulerDTO.setUserId(userDTO.getUserId());
+			schedulerDTO.setCreateUserId(job.getCreateUserId());
+			schedulerDTO.setJobId(job.getJobId());
+			schedulerDTO.setFirstName(userDTO.getFirstName());
+			schedulerDTO.setLastName(userDTO.getLastName());
+			schedulerDTO.setEmailId(userDTO.getEmailId());
+			schedulerDTO.setCompanyName(job.getAdmFacility().getName());
+			schedulerDTO.setExpireDate(String.valueOf(job.getEndDt()));
+			schedulerDTO.setFacilityId(job
+					.getAdmFacility().getFacilityId());
+			schedulerDTOList.add(schedulerDTO);
+		}
 	}
 
 	@Override
@@ -892,10 +1035,12 @@ public class JobPostDAOImpl implements JobPostDAO {
 				if (!jpAuditList.isEmpty()) {
 					AdmFacilityJpAudit audit = jpAuditList.get(0);
 					// Checking for available credits
+					Integer facilityId=getParentFacility(job
+								.getAdmFacility().getFacilityId()).getFacilityId();
+				
 					if (!dto.isXmlStartEndDateEnabled()
 							&& !validateAndDecreaseAvailableCredits(audit
-									.getId().getInventoryDetailId(), job
-									.getAdmFacility().getFacilityId())) {
+									.getId().getInventoryDetailId(), facilityId)) {
 						LOGGER.error(job.getName()
 								+ " Doesn't have sufficient credits to post the job "
 								+ job.getJobId());
@@ -953,6 +1098,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			if (!invDtlList.isEmpty()) {
 				AdmInventoryDetail invDtl = invDtlList.get(0);
 				Object[] inputs = { invDtl.getProductId(), facilityId };
+			/*	Object[] inputs = { 11, 4544 };*/
 				
 				//check if the job type purchased is offline. If so then use order id = 0
 				List<AdmInventoryDetail> invDtls = null; 
@@ -1018,20 +1164,43 @@ public class JobPostDAOImpl implements JobPostDAO {
 	public List<JobPostDTO> retrieveAllJobPostByADvSearch(int advSearchId) {
 
 		List<JpJob> jobs = new ArrayList<JpJob>();
+		List<JobPostDTO> listJobPostDto = new ArrayList<JobPostDTO>();
+		List<JobPostDTO> modListJobPostDto = new ArrayList<JobPostDTO>();
 		try {
-			Query query = hibernateTemplate
-					.getSessionFactory()
-					.getCurrentSession()
-					.createQuery(
-							"SELECT a from JpJob a where a.jobId='"
-									+ advSearchId
-									+ "' and (a.startDt is not NULL and a.endDt is not null) ");
-			jobs = query.list();
+			jobs=hibernateTemplate.find("from JpJob a where a.jobId=?",advSearchId);
+			
+			listJobPostDto = jobPostConversionHelper
+					.transformJpJobListToJobPostDTOList(jobs);
+
+			for (JobPostDTO jobPostDto : listJobPostDto) {
+				List<Long> viewsList = hibernateTemplateTracker
+						.find("select sum(resultCount) as views from VstSearchResultNew srn where srn.searchResultNewPK.result = ?",
+								jobPostDto.getJobId());
+				if (null != viewsList && !viewsList.isEmpty() && !viewsList.contains(null)) {
+					jobPostDto.setViews(viewsList.get(0).longValue());
+				}
+				List<Long> clicksList = hibernateTemplateTracker
+						.find("select sum(clickCount) as clicks from VstClickthroughNew ctn where ctn.clickthroughNewPK.keyId=? " +
+								"and ctn.clickthroughNewPK.vstClickthroughType.clickthroughTypeId in (1,2,3,6,9,10)",
+								jobPostDto.getJobId());
+				if (null != clicksList && !clicksList.isEmpty() && !clicksList.contains(null)) {
+					jobPostDto.setClicks(clicksList.get(0).longValue());
+				}
+				List<Long> appliesList = hibernateTemplateTracker
+						.find("select sum(clickCount) as clicks from VstClickthroughNew ctn where ctn.clickthroughNewPK.keyId=? " +
+								"and ctn.clickthroughNewPK.vstClickthroughType.clickthroughTypeId in (4,5,7,8)",
+								jobPostDto.getJobId());
+				if (null != appliesList && !appliesList.isEmpty() && !appliesList.contains(null)) {
+					jobPostDto.setApplies(appliesList.get(0).longValue());
+				}
+				modListJobPostDto.add(jobPostDto);
+			}
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
+			return modListJobPostDto;
 		}
-
-		return jobPostConversionHelper.transformJpJobListToJobPostDTOList(jobs);
+/*if(jobs.get(0).getEndDt()){}*/
+		return modListJobPostDto;
 
 	}
 
@@ -1091,7 +1260,12 @@ public class JobPostDAOImpl implements JobPostDAO {
 			} else{
 				//mer.setJobStatus(MMJBCommonConstants.STATUS_EXPIRED);
 			}
-			mer.setEndDt(endDate);
+			Calendar endDt= Calendar.getInstance();
+			endDt.setTime(endDate);
+			endDt.set(Calendar.HOUR_OF_DAY, 23);
+			endDt.set(Calendar.MINUTE, 59);
+			endDt.set(Calendar.SECOND, 59);
+			mer.setEndDt(endDt.getTime());
 			hibernateTemplate.update(mer);
 			isUpdate = true;
 			LOGGER.info("Job Status Save is done by Admin");
@@ -1209,5 +1383,70 @@ public class JobPostDAOImpl implements JobPostDAO {
 		now.add(Calendar.DAY_OF_MONTH, extendDays);
 		return now.getTime();
 	}
+public boolean checkDraftAndSchedule(int avdSearchId){
+	boolean result=false;
+	List<JpJob>scheduleJobs=hibernateTemplate.find("from JpJob a where a.jobId=? and a.active = 0 and DATE_FORMAT(a.startDt, '%Y-%m-%d') > CURRENT_DATE",avdSearchId);
+	List<JpJob>draftJobs=hibernateTemplate.find("from JpJob a where a.jobId=? and a.active = 0 and a.startDt is NULL and a.endDt is NULL",avdSearchId);
+	if(!scheduleJobs.isEmpty() || !draftJobs.isEmpty()){
+		result=true;
+	}
+	return result;
+}
 
+	/**
+	 * The method helps to get main facility. If job owner login then method
+	 * retrieves the main facility group.
+	 * 
+	 * @param currentFacilityId
+	 * @return
+	 */
+
+	public FacilityDTO getParentFacility(int currentFacilityId) {
+		AdmFacility admFacility = (AdmFacility) hibernateTemplate.find(
+				"from AdmFacility e where e.facilityId=?", currentFacilityId)
+				.get(0);
+		int facilityParentId = admFacility.getFacilityParentId();
+
+		if (facilityParentId > 0) {
+			AdmFacility parentAdmFacility = hibernateTemplate.get(
+					AdmFacility.class, facilityParentId);
+			if (parentAdmFacility.getFacilityType().equalsIgnoreCase(
+					MMJBCommonConstants.FACILITY_GROUP)
+					|| parentAdmFacility.getFacilityType().equalsIgnoreCase(
+							MMJBCommonConstants.FACILITY)) {
+				// For job owner login
+				admFacility = parentAdmFacility;
+			}
+		}
+		FacilityDTO facilityDTO = null;
+		if (admFacility != null) {
+			List<AdmFacility> admFacilities = new ArrayList<AdmFacility>();
+			admFacilities.add(admFacility);
+			facilityDTO = facilityConversionHelper.transformToFacilityDTO(
+					admFacilities).get(0);
+		}
+		return facilityDTO;
+	}
+
+	@Override
+	public boolean validateCityStateZip(String city, String state, String zipCode,
+			String country) throws JobBoardDataException {
+		boolean valied=false;
+		try {
+			
+			Object[] inputs = { city,state,zipCode,country};
+			List<JpLocation> jpLocationList = hibernateTemplate
+					.find("from JpLocation loc where loc.city=? and loc.state=? and  loc.postcode=? and loc.country=?",
+							inputs);
+			if(jpLocationList.size()>0){
+				valied=true;
+			}
+		} catch (HibernateException e) {
+			LOGGER.debug(e);
+			throw new JobBoardDataException(
+					"Error while fetching the latitude and longitude By CityState from the Database..."
+							+ e);
+		}
+		return valied;
+	}
 }

@@ -1,10 +1,6 @@
 package com.advanceweb.afc.jb.login.dao;
 
-import java.util.Date;
-import java.util.List;
-
 import com.advanceweb.afc.jb.common.LoginDTO;
-import com.advanceweb.afc.jb.common.MetricsDTO;
 
 /**
  * 
@@ -30,18 +26,6 @@ public interface LoginFormDAO {
 	 * @return
 	 */
 	LoginDTO getUserEmailDetails(String emailAddress);
-
-	/**
-	 * This method is to get all list of Dates
-	 * 
-	 * @param startFrom
-	 *            ,endFrom,facilityId
-	 * @return
-	 * @throws JobBoardServiceException
-	 */
-
-	List<MetricsDTO> employerMetrics(Date startFrom, Date endFrom,
-			int selEmployerId);
 
 	/**
 	 * This method is to get active job Posting

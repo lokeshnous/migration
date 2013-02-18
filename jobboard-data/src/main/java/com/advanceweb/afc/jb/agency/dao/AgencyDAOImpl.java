@@ -169,7 +169,7 @@ public class AgencyDAOImpl implements AgencyDAO {
 							+ "%' and adm.facilityType!='FACILITY_SYSTEM' and adm.facilityParentId='-1'");
 			for (AdmFacility adm : facility) {
 				FacilityDTO dto = new FacilityDTO();
-				dto.setName(adm.getName());
+				dto.setName(adm.getName()+", "+adm.getCity()+", "+adm.getState());
 				dto.setFacilityId(adm.getFacilityId());
 				emplyrNamesList.add(dto);
 			}

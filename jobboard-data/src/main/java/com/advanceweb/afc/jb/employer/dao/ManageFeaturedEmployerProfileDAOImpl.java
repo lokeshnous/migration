@@ -9,8 +9,10 @@ import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -19,7 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
 import com.advanceweb.afc.jb.common.FacilityDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
+import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.employer.helper.EmployerRegistrationConversionHelper;
 
 /**
@@ -58,6 +62,7 @@ public class ManageFeaturedEmployerProfileDAOImpl implements
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
+	@SuppressWarnings("unchecked")
 	public boolean saveEmployerProfile(CompanyProfileDTO companyProfileDTO) {
 
 		AdmFacility facility = hibernateTemplateCareers.get(AdmFacility.class,
@@ -68,6 +73,18 @@ public class ManageFeaturedEmployerProfileDAOImpl implements
 		try {
 			if (companyProfileDTO != null) {
 				hibernateTemplateCareers.saveOrUpdate(facility);
+				if (null != facility
+						&& facility.getFacilityType().equals(
+								MMJBCommonConstants.FACILITY_GROUP)) {
+					List<AdmFacility> admFacilityList = hibernateTemplateCareers
+							.find("from AdmFacility where facilityParentId=?",
+									facility.getFacilityId());
+					for (AdmFacility fac : admFacilityList) {
+						fac.setFeStartDt(facility.getFeStartDt());
+						fac.setFeEndDt(facility.getFeEndDt());
+						hibernateTemplateCareers.saveOrUpdate(fac);
+					}
+				}
 			}
 
 		} catch (HibernateException e) {
@@ -91,7 +108,8 @@ public class ManageFeaturedEmployerProfileDAOImpl implements
 			List<AdmFacility> admFacilityList = session
 					.createCriteria(AdmFacility.class)
 					.add(Restrictions.le("feStartDt", new Date()))
-					.add(Restrictions.ge("feEndDt", new Date())).list();
+					.add(Restrictions.ge("feEndDt", new Date()))
+					.add(Restrictions.eq("featuredEmp", (byte)1)).list();
 
 			for (Iterator<?> iterator = admFacilityList.iterator(); iterator
 					.hasNext();) {
@@ -228,6 +246,7 @@ public class ManageFeaturedEmployerProfileDAOImpl implements
 					.createCriteria(AdmFacility.class)
 					.add(Restrictions.le("feStartDt", new Date()))
 					.add(Restrictions.ge("feEndDt", new Date()))
+					.add(Restrictions.eq("featuredEmp", (byte)1))
 					.setFirstResult(startRow).setMaxResults(endRow).list();
 			
 			for (Iterator<?> iterator = admFacilityList.iterator(); iterator
@@ -262,18 +281,19 @@ public class ManageFeaturedEmployerProfileDAOImpl implements
 	public Long getEmployerListCount() {
 		Long employerListCount = 0L;
 		try {
-			//Session session = sessionFactory.openSession();
+			Session session = sessionFactory.openSession();
 			// modified to bring all facility groups in futured employer list.
-			employerListCount =(Long) hibernateTemplateCareers
+			/*employerListCount =(Long) hibernateTemplateCareers
 					.getSessionFactory()
 					.getCurrentSession()
 					.createQuery(
 							"SELECT count(a) from AdmFacility a where a.facilityParentId = -1")
-					.uniqueResult(); 
-			/*employerListCount = (Long) session
+					.uniqueResult(); */
+			employerListCount = (Long) session
 					.createCriteria(AdmFacility.class)
 					.add(Restrictions.le("feStartDt", new Date()))
-					.add(Restrictions.ge("feEndDt", new Date())).setProjection(Projections.rowCount()).uniqueResult();*/
+					.add(Restrictions.eq("featuredEmp", (byte)1))
+					.add(Restrictions.ge("feEndDt", new Date())).setProjection(Projections.rowCount()).uniqueResult();
 					
 		} catch (HibernateException e) {
 			LOGGER.error(e);
@@ -281,5 +301,90 @@ public class ManageFeaturedEmployerProfileDAOImpl implements
 
 		return employerListCount;
 	}
+	
+	@Override
+	public int getParentId(int facilityId) {
+		int roleId = 0;
+		List<AdmUserFacility> userFacility = new ArrayList<AdmUserFacility>();
+		List<AdmFacility> facilities = new ArrayList<AdmFacility>();
+		AdmUserFacility facility = new AdmUserFacility();
+		AdmFacility admFacility = new AdmFacility();
+		try {
+			userFacility = hibernateTemplateCareers.find(
+					"from AdmUserFacility a where a.facilityPK.facilityId=?",
+					facilityId);
+			facility = userFacility.get(0);
+			roleId = facility.getFacilityPK().getRoleId();
+			if (roleId == 5 || roleId == 6) {
+				facilities = hibernateTemplateCareers.find(
+						"from AdmFacility a where a.facilityId=?", facilityId);
+				admFacility = facilities.get(0);
+				facilityId = admFacility.getFacilityParentId();
+			}
+		} catch (DataAccessException e) {
+			LOGGER.error(e);
+		}
+		return facilityId;
+	}
+	
+	/**
+	 * This method returns the facilityId of FACILITY_GROUP if the facility
+	 * belongs to FACILITY_GROUP
+	 * 
+	 * @param facilityId
+	 * @return facilityId
+	 */
+	@Override
+	public int getParentGroup(int facilityId) {
+		int facilityModId = facilityId;
+		AdmFacility facility;
+		try {
+			facility = hibernateTemplateCareers.get(AdmFacility.class,
+					facilityModId);
+			if (null != facility
+					&& facility.getFacilityType().equals(
+							MMJBCommonConstants.FACILITY)
+					&& facility.getFacilityParentId() > 0) {
+				facility = hibernateTemplateCareers.get(AdmFacility.class,
+						facility.getFacilityParentId());
+				if (null != facility
+						&& facility.getFacilityType().equals(
+								MMJBCommonConstants.FACILITY_GROUP)) {
+					facilityModId = facility.getFacilityId();
+				}
+			}
+		} catch (Exception e) {
+			LOGGER.error(e);
+			return facilityModId;
+		}
+		return facilityModId;
+	}
+	
+	/**
+	 * The method helps to validate featured employer start and end dates
+	 * if expires then method return false otherwise true.
+	 */
+	/*public boolean validateFeaturedEmp(int facilityId){
+		boolean status = false;
+		Session session = sessionFactory.openSession();
+
+		try {
+
+			@SuppressWarnings("unchecked")
+			List<AdmFacility> admFacilityList = session
+					.createCriteria(AdmFacility.class)
+					.add(Restrictions.le("feStartDt", new Date()))
+					.add(Restrictions.ge("feEndDt", new Date()))
+					.add(Restrictions.eq("", facilityId)).list();
+
+			if(!admFacilityList.isEmpty()){
+				status = true;
+			}
+		} catch (HibernateException e) {
+			LOGGER.error(e.getMessage(), e);
+		}
+		
+		return status;
+	}*/
 
 }

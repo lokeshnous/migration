@@ -1,9 +1,6 @@
 package com.advanceweb.afc.jb.jobseeker.helper;
 
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -56,11 +53,11 @@ public class SaveSearchConversionHelper {
 			saveSearchedJobsDTO.setEmailFrequency(admSaveSearch.getEmailFrequency());
 			saveSearchedJobsDTO.setUserID(admSaveSearch.getUserId());
 			
-			
-			Format formatter= new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss Z");
-			saveSearchedJobsDTO.setCreatedDate(new Date(formatter.format(admSaveSearch.getCreateDt())));
+			saveSearchedJobsDTO.setCreatedDate(admSaveSearch.getCreateDt());
 			if(admSaveSearch.getModifyDt() != null){
 				saveSearchedJobsDTO.setModifyDate(CommonUtil.convertSQLDateToStdDateString(admSaveSearch.getModifyDt().toString()));
+			}else{
+				saveSearchedJobsDTO.setModifyDate(CommonUtil.convertSQLDateToStdDateString(admSaveSearch.getCreateDt().toString()));
 			}
 			saveSearchedJobsDTO.setDeletedDate(admSaveSearch.getDeleteDt());	
 			saveSearchedJobsDTO.setRecentURL(getSplitURL(admSaveSearch.getUrl()));

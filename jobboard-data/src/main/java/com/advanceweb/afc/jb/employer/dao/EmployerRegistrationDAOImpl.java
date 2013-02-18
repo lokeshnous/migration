@@ -184,7 +184,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 				// saving the data in the adm_user_facility
 				setUserFacility(facility, merUser.getUserId(), roleId);
 			}
-			if(!empDTO.getMerUserDTO().isOldUser()){
+			if(!empDTO.getMerUserDTO().isOldUser() && !empDTO.getMerUserDTO().isAdvPassUser()){
 			saveAdvancePassDetails(facility.getFacilityId(),merUser);
 			}else{
 				AccountProfileDTO apDto=empHelper.transformToAccountProfileDTO(empDTO);

@@ -3,7 +3,6 @@ package com.advanceweb.afc.jb.search.dao;
 import java.util.List;
 
 import com.advanceweb.afc.jb.common.LocationDTO;
-import com.advanceweb.afc.jb.data.entities.JpLocation;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 
 public interface LocationDAO {
@@ -47,6 +46,16 @@ public interface LocationDAO {
 	 */
 
 	List<LocationDTO> getCityStateLocationByKeyword(String keywords);
+	
+	/**
+	 * This method gets the City and State from the JPLocation table.
+	 * 
+	 * @param String
+	 *            postcode
+	 * @return List<LocationDTO> of city and state
+	 */
+
+	List<LocationDTO> getCityAndStateLocationByKeyword(String keywords);
 
 	/**
 	 * Get the state full name by short or alias name of state.
@@ -65,4 +74,13 @@ public interface LocationDAO {
 	 */
 
 	List<LocationDTO> findAll();
+
+	/**
+	 * 
+	 * @param city
+	 * @return
+	 */
+	boolean validateCityStateZip(String city,String state,String zip) throws JobBoardDataException;
+
+	
 }

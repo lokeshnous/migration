@@ -1,11 +1,7 @@
 package com.advanceweb.afc.jb.login.dao;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
-import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -14,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.LoginDTO;
-import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
@@ -131,45 +126,6 @@ public class LoginFormDAOImpl implements LoginFormDAO {
 
 		}
 		return userDetailsDTO;
-	}
-
-	/**
-	 * Get the Date range specific data
-	 * 
-	 * @param startFrom
-	 * @param endFrom
-	 * @param selEmployerId
-	 * 
-	 * @return
-	 */
-
-	public List<MetricsDTO> employerMetrics(Date startFrom, Date endFrom,
-			int selEmployerId) {
-		// TODO Auto-generated method stub
-
-		Query getMetricsDateData = hibernateTemplate.getSessionFactory()
-				.getCurrentSession()
-				.createSQLQuery(" { call GetMetricsDateData(?,?,?) }");
-
-		getMetricsDateData.setDate(0, startFrom);
-		getMetricsDateData.setDate(1, endFrom);
-
-		getMetricsDateData.setInteger(2, selEmployerId);
-
-		List<?> metricsDeatil = getMetricsDateData.list();
-		Iterator<?> iterator = metricsDeatil.iterator();
-		List<MetricsDTO> listmetricsTotal = new ArrayList<MetricsDTO>();
-
-		while (iterator.hasNext()) {
-			MetricsDTO dto = new MetricsDTO();
-			Object[] row = (Object[]) iterator.next();
-			dto.setViews((Integer) row[0]);
-			dto.setClicks((Integer) row[1]);
-			dto.setApplies((Integer) row[2]);
-			listmetricsTotal.add(dto);
-		}
-
-		return listmetricsTotal;
 	}
 
 	/**

@@ -42,4 +42,7 @@ public interface UserDao {
 	
 	public List<SchedulerDTO> getAllJobSeekerList();
 	public UserDTO getAdvancePassUser(String email);
+	public boolean checkUserMail(String email);
+	public boolean isAdmin(int userId);
+	public UserDTO getAdminInfo(String email);
 }

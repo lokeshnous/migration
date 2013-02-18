@@ -130,7 +130,7 @@ public interface UserSubscriptionsDAO {
 	 * @param jobSeekerId
 	 * @return
 	 */
-	ResCoverLetterDTO fetchPublicCoverLetter(long jobSeekerId);
+	ResCoverLetterDTO fetchPublicCoverLetter(long jobSeekerId,String coverLetterId);
 
 	/**
 	 * To get current subscription List for Facility
@@ -153,6 +153,8 @@ public interface UserSubscriptionsDAO {
 	 * @return
 	 */
 	List<UserSubscriptionsDTO> getEnewsLetterSubList();
+	
+	List<DropDownDTO> getSubEmailerList();
 
 	/**
 	 * Method to save the selected facility subscriptions to the DB
@@ -169,6 +171,8 @@ public interface UserSubscriptionsDAO {
 	List<DropDownDTO> getSubscriptionsdigital(int userId);
 
 	List<DropDownDTO> getSubscriptionsletter(int userId);
+	
+	List<DropDownDTO> getSubscriptionsEmailer(int userId);
 
 	/**
 	 * Get the subscription list which selected during registration for logged
@@ -178,4 +182,14 @@ public interface UserSubscriptionsDAO {
 	 * @return
 	 */
 	List<UserSubscriptionsDTO> getSelectedSub(int userId);
+	
+	int getParentId(int facilityId);
+	
+	/**
+	 * This method is to get the publications based on the profession
+	 * 
+	 * @param professionId
+	 * @return
+	 */
+	List<List<DropDownDTO>> getPublications(int professionId);
 }

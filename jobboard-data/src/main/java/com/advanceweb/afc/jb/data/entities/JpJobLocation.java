@@ -28,16 +28,16 @@ public class JpJobLocation implements Serializable {
 	private Timestamp createDt;
 
 	@Column(name="hide_city")
-	private int hideCity;
+	private Integer hideCity;
 
 	@Column(name="hide_country")
-	private int hideCountry;
+	private Integer hideCountry;
 
 	@Column(name="hide_postcode")
-	private int hidePostcode;
+	private Integer hidePostcode;
 
 	@Column(name="hide_state")
-	private int hideState;
+	private Integer hideState;
 
 	//bi-directional many-to-one association to JpJob
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -49,74 +49,70 @@ public class JpJobLocation implements Serializable {
 	@JoinColumn(name="location_id", insertable=false, updatable=false)
 	private JpLocation jpLocation;
 
+	public JpJobLocationPK getLocationPK() {
+		return locationPK;
+	}
+
+	public void setLocationPK(JpJobLocationPK locationPK) {
+		this.locationPK = locationPK;
+	}
+
 	public Timestamp getCreateDt() {
-		return this.createDt;
+		return createDt;
 	}
 
 	public void setCreateDt(Timestamp createDt) {
 		this.createDt = createDt;
 	}
 
-	public int getHideCity() {
-		return this.hideCity;
+	public Integer getHideCity() {
+		return hideCity;
 	}
 
-	public void setHideCity(int hideCity) {
+	public void setHideCity(Integer hideCity) {
 		this.hideCity = hideCity;
 	}
 
-	public int getHideCountry() {
-		return this.hideCountry;
+	public Integer getHideCountry() {
+		return hideCountry;
 	}
 
-	public void setHideCountry(int hideCountry) {
+	public void setHideCountry(Integer hideCountry) {
 		this.hideCountry = hideCountry;
 	}
 
-	public int getHidePostcode() {
-		return this.hidePostcode;
+	public Integer getHidePostcode() {
+		return hidePostcode;
 	}
 
-	public void setHidePostcode(int hidePostcode) {
+	public void setHidePostcode(Integer hidePostcode) {
 		this.hidePostcode = hidePostcode;
 	}
 
-	public int getHideState() {
-		return this.hideState;
+	public Integer getHideState() {
+		return hideState;
 	}
 
-	public void setHideState(int hideState) {
+	public void setHideState(Integer hideState) {
 		this.hideState = hideState;
 	}
 
 	public JpJob getJpJob() {
-		return this.jpJob;
+		return jpJob;
 	}
 
 	public void setJpJob(JpJob jpJob) {
 		this.jpJob = jpJob;
 	}
-	
+
 	public JpLocation getJpLocation() {
-		return this.jpLocation;
+		return jpLocation;
 	}
 
 	public void setJpLocation(JpLocation jpLocation) {
 		this.jpLocation = jpLocation;
 	}
 
-	/**
-	 * @return the locationPK
-	 */
-	public JpJobLocationPK getLocationPK() {
-		return locationPK;
-	}
-
-	/**
-	 * @param locationPK the locationPK to set
-	 */
-	public void setLocationPK(JpJobLocationPK locationPK) {
-		this.locationPK = locationPK;
-	}
+	
 	
 }

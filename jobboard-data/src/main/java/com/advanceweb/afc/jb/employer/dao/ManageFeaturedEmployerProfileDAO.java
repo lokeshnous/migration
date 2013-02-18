@@ -38,5 +38,16 @@ public interface ManageFeaturedEmployerProfileDAO {
 	 */
 	List<FacilityDTO> getNSCustomerIDFromAdmFacility(int admFacilityID);
 	
+	int getParentId(int facilityId);
+	
+	/**
+	 * This method returns the facilityId of FACILITY_GROUP if the facility
+	 * belongs to FACILITY_GROUP
+	 * 
+	 * @param facilityId
+	 * @return facilityId
+	 */
+	int getParentGroup(int facilityId);
+	
 
 }

@@ -1,6 +1,8 @@
 package com.advanceweb.afc.jb.lookup.helper;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -33,6 +35,7 @@ import com.advanceweb.afc.jb.data.entities.JpTemplate;
 import com.advanceweb.afc.jb.data.entities.MerPublication;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.entities.MerUserProfile;
+import com.advanceweb.afc.jb.data.entities.ResBlockedCompanies;
 import com.advanceweb.afc.jb.data.entities.ResDegreeEdu;
 import com.advanceweb.afc.jb.data.entities.ResPrivacy;
 import com.advanceweb.afc.jb.data.entities.ResResumeAttribList;
@@ -70,7 +73,16 @@ public class PopulateDropdownConversionHelper {
 			countryDTO.setCountryValue((String) merUtility);
 			list.add(countryDTO);
 		}
+		//Sort the country list
+		Collections.sort(list, new CountryDTOComparable());
 		return list;
+	}
+
+	class CountryDTOComparable implements Comparator<CountryDTO> {
+		@Override
+		public int compare(CountryDTO obj1, CountryDTO obj2) {
+			return obj1.getCountryValue().compareTo(obj2.getCountryValue());
+		}
 	}
 
 	public List<EmploymentInfoDTO> convertMerUtilityToEmploymentInfoDTO(
@@ -580,6 +592,19 @@ public class PopulateDropdownConversionHelper {
 			}
 		}
 		return dtos;
+	}
+	public List<DropDownDTO> convertBlockedCompaniesToDropDownDTO(
+			List<ResBlockedCompanies> BlockedCompanies) {
+
+		DropDownDTO dropDownDTO = null;
+		List<DropDownDTO> list = new ArrayList<DropDownDTO>();
+
+		for (ResBlockedCompanies company : BlockedCompanies) {
+			dropDownDTO = new DropDownDTO();
+			dropDownDTO.setOptionId(String.valueOf(company.getCompanyId()));
+			list.add(dropDownDTO);
+		}
+		return list;
 	}
 
 }

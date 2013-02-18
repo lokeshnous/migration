@@ -9,16 +9,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import com.advanceweb.afc.jb.common.AdminSeoDTO;
 import com.advanceweb.afc.jb.common.AppliedJobDTO;
 import com.advanceweb.afc.jb.common.CommonUtil;
 import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
 import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.JobTitleDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
 import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.data.entities.JpJobApply;
 import com.advanceweb.afc.jb.data.entities.JpJobLocation;
+import com.advanceweb.afc.jb.data.entities.JpJobSeoInfo;
+import com.advanceweb.afc.jb.data.entities.JpJobTitle;
 import com.advanceweb.afc.jb.data.entities.JpLocation;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
 import com.advanceweb.afc.jb.employer.helper.BrandTemplateConversionHelper;
@@ -54,6 +59,9 @@ public class JobSearchConversionHelper {
 		if (entity != null) {
 			// get detail from JpJob entity
 			jobDTO.setJobTitle(entity.getJobtitle());
+			jobDTO.setJobTitleEncode(entity.getJobtitle().replaceAll(
+					MMJBCommonConstants.IGNORE_SPECIAL_CHAR_PATTERN,
+					""));
 			jobDTO.setAdText(entity.getAdtext());
 			jobDTO.setJobId(entity.getJobId());
 			jobDTO.setFeatured(entity.getFeatured() == 1 ? true
@@ -67,8 +75,11 @@ public class JobSearchConversionHelper {
 			if (blindAd == 0) {
 				jobDTO.setCompanyNameDisp(entity.getFacility());
 			}
-
-			transformJpLocationtojobDTO(entity, jobDTO);
+			try{
+				transformJpLocationtojobDTO(entity, jobDTO);
+			}catch (Exception e) {
+				LOGGER.error(e.getMessage(), e);
+			}
 
 			// get the template details
 //			jobDTO.setCompanyOverview(entity.getKeywords());
@@ -101,7 +112,14 @@ public class JobSearchConversionHelper {
 			
 			jobDTO.setEmail(entity.getEmail());
 			
-
+			// for feeds and scrapes
+			jobDTO.setPositionType(entity.getPositionType());
+			jobDTO.setPositionLevel(entity.getPositionLevel());
+			jobDTO.setHeadLine(entity.getHeadline());
+			jobDTO.setUrl(entity.getUrl());
+			jobDTO.setUrlDisplay(entity.getUrlDisplay());
+			jobDTO.setEmailDisplay(entity.getEmailDisplay());
+			jobDTO.setJobNumber(null == entity.getJobNumber()?MMJBCommonConstants.EMPTY:entity.getJobNumber());
 		}
 		return jobDTO;
 	}
@@ -128,19 +146,19 @@ public class JobSearchConversionHelper {
 			hideState = jobJobLocation.getHideState();
 			hideCountry = jobJobLocation.getHideCountry();
 			hidePosCode= jobJobLocation.getHidePostcode();
+			if(null != jpLocation){
+				jobDTO.setCity(jpLocation.getCity());
+				jobDTO.setState(jpLocation.getState());
+				jobDTO.setCountry(jpLocation.getCountry());
+				jobDTO.setPostCode(jpLocation.getPostcode());
+			}
+			jobDTO.setHideCity(hideCity);
+			jobDTO.setHideState(hideState);
+			jobDTO.setHideCountry(hideCountry);
+			jobDTO.setHidePostcode(hidePosCode);
 		}catch (Exception e) {
-			LOGGER.info("Locations not found for Job Id :"+jobDTO.getJobId());
+			LOGGER.error("Locations not found for Job Id :"+jobDTO.getJobId(), e);
 		}
-		if(null != jpLocation){
-		jobDTO.setCity(jpLocation.getCity());
-		jobDTO.setState(jpLocation.getState());
-		jobDTO.setCountry(jpLocation.getCountry());
-		jobDTO.setPostCode(jpLocation.getPostcode());
-		}
-		jobDTO.setHideCity(hideCity);
-		jobDTO.setHideState(hideState);
-		jobDTO.setHideCountry(hideCountry);
-		jobDTO.setHidePostcode(hidePosCode);
 	}
 
 	/**
@@ -229,4 +247,62 @@ public class JobSearchConversionHelper {
 		return jobApplyTypeDTOs;
 	}
 
+	/**
+	 * This method is called to convert JpJobApply entity to JpJobApply DTO
+	 * 
+	 * @param jpJobApplys
+	 * @return List<JobApplyTypeDTO>
+	 */
+	public JpJobSeoInfo transformDtoTOJpJobSeoInfo (
+			AdminSeoDTO adminSeoDTO) {
+		JpJobSeoInfo jobSeoInfo= new JpJobSeoInfo();
+		jobSeoInfo.setSeoInfoId(adminSeoDTO.getSeoInfoId());
+		jobSeoInfo.setJobtitle(adminSeoDTO.getJobTitle());
+		jobSeoInfo.setMetaDesc(adminSeoDTO.getMetaDesc());
+		jobSeoInfo.setMetaTitle(adminSeoDTO.getMetaTitle());
+		jobSeoInfo.setStaticContent(adminSeoDTO.getStaticContent());
+		jobSeoInfo.setMetaKeywords(adminSeoDTO.getMetaKeywords());
+		return jobSeoInfo;
+	}
+	
+	/**
+	 * This method is called to convert JpJobApply entity to JpJobApply DTO
+	 * 
+	 * @param jpJobApplys
+	 * @return List<JobApplyTypeDTO>
+	 */
+	public List<AdminSeoDTO> transformJpJobSeoInfoTODto (
+			List<JpJobSeoInfo> jobSeoInfos) {
+		List<AdminSeoDTO>  adminSeoDTOs = new ArrayList<AdminSeoDTO>();
+		for (JpJobSeoInfo jobSeoInfo : jobSeoInfos) {
+			AdminSeoDTO adminSeoDTO = new AdminSeoDTO();
+			adminSeoDTO.setSeoInfoId(jobSeoInfo.getSeoInfoId());
+			adminSeoDTO.setJobTitle(jobSeoInfo.getJobtitle());
+			adminSeoDTO.setMetaDesc(jobSeoInfo.getMetaDesc());
+			adminSeoDTO.setMetaTitle(jobSeoInfo.getMetaTitle());
+			adminSeoDTO.setStaticContent(jobSeoInfo.getStaticContent());
+			adminSeoDTO.setMetaKeywords(jobSeoInfo.getMetaKeywords());
+			adminSeoDTOs.add(adminSeoDTO);
+		}
+		return adminSeoDTOs;
+	}
+	
+	/**
+	 * This method is called to convert JpJobApply entity to JpJobApply DTO
+	 * 
+	 * @param jpJobApplys
+	 * @return List<JobApplyTypeDTO>
+	 */
+	public List<JobTitleDTO> transformJpJobTitleTODto (
+			List<JpJobTitle> jobSeoInfos) {
+		List<JobTitleDTO> jobTitleDTOs = new ArrayList<JobTitleDTO>();
+		for (JpJobTitle jobSeoInfo : jobSeoInfos) {
+			JobTitleDTO jobTitleDTO = new JobTitleDTO();
+			jobTitleDTO.setJobTitleId(jobSeoInfo.getJobTitleId());
+			jobTitleDTO.setJobtitle(jobSeoInfo.getJobtitle());
+			jobTitleDTOs.add(jobTitleDTO);
+		}
+		return jobTitleDTOs;
+	}
+	
 }

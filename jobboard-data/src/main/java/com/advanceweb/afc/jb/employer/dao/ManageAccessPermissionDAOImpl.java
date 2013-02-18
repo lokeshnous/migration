@@ -44,6 +44,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 			.getLogger(ManageAccessPermissionDAOImpl.class);
 	private static final String FIND_ADM_FACILITY = "from AdmFacility where facilityId=?";
 	private static final String VERIFY_EMAIL_ADVANCEPASS = "from WebMembershipEmail e where e.email = ? and e.deleteDate is NULL";
+	private static final String VERIFY_EMAILID = "from WebMembershipEmail e where e.email = ?";
 	private HibernateTemplate hibernateTemplateTracker;
 
 	private HibernateTemplate hibernateTemplateCareers;
@@ -81,6 +82,8 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 					merUser.setUserId(empDTO.getMerUserDTO().getUserId());
 					// saving employer credentials
 					hibernateTemplateTracker.saveOrUpdate(merUser);
+					
+					saveAdvancePassDetails(facilityIdP, merUser);
 					
 				} else {
 					if (null != merUser) {
@@ -144,10 +147,22 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 		AdmFacility facility = (AdmFacility) hibernateTemplateCareers.find(
 				FIND_ADM_FACILITY, facilityIdP).get(0);
 		Timestamp timestamp = new Timestamp(new Date().getTime());
-		WebMembership webMembership = new WebMembership();
-		WebMembershipEmail membershipEmail = new WebMembershipEmail();
-		// setting data into webmemberwhipinfo table
-		WebMembershipInfo membershipInfo = new WebMembershipInfo();
+		List<WebMembershipEmail> webMembershipEmails = hibernateTemplateAdvancePass
+				.find(VERIFY_EMAILID, merUser.getEmail());
+		WebMembershipEmail membershipEmail = null;
+		WebMembership webMembership = null;
+		WebMembershipInfo membershipInfo = null;
+		if (null != webMembershipEmails && !webMembershipEmails.isEmpty()) {
+			membershipEmail = webMembershipEmails.get(0);
+			membershipEmail.setDeleteDate(null);
+			webMembership = membershipEmail.getWebMembership();
+			membershipInfo = webMembership.getWebMembershipInfo();
+		} else {
+			webMembership = new WebMembership();
+			membershipEmail = new WebMembershipEmail();
+			// setting data into webmemberwhipinfo table
+			membershipInfo = new WebMembershipInfo();
+		}
 		membershipInfo.setFirstName(merUser.getFirstName());
 		membershipInfo.setLastName(merUser.getLastName());
 		membershipInfo.setCreateDate(timestamp);

@@ -33,7 +33,7 @@ public class AdmOrderPayment implements Serializable{
 	private String method;
 	
 	@Column(name = "payment_number")
-	private int paymentNumber;
+	private String paymentNumber;
 	
 	@Column(name = "paid_amt")
 	private float paidAmt;
@@ -83,14 +83,14 @@ public class AdmOrderPayment implements Serializable{
 	/**
 	 * @return the paymentNumber
 	 */
-	public int getPaymentNumber() {
+	public String getPaymentNumber() {
 		return paymentNumber;
 	}
 
 	/**
 	 * @param paymentNumber the paymentNumber to set
 	 */
-	public void setPaymentNumber(int paymentNumber) {
+	public void setPaymentNumber(String paymentNumber) {
 		this.paymentNumber = paymentNumber;
 	}
 

@@ -114,6 +114,10 @@ public class AdmFacility implements Serializable {
 	@Column(name="fe_end_dt")
 	private Date feEndDt;
 	
+//	Featured Employer 
+	@Column(name="featured_employer")
+	private byte featuredEmp;
+	
 	//bi-directional many-to-one association to AdmFacility
 //	@OneToMany(mappedBy="admFacility")
 //	private List<AdmFacility> admFacilities;
@@ -266,6 +270,14 @@ public class AdmFacility implements Serializable {
 	 */
 	public void setFeEndDt(Date feEndDt) {
 		this.feEndDt = feEndDt;
+	}
+
+	public byte getFeaturedEmp() {
+		return featuredEmp;
+	}
+
+	public void setFeaturedEmp(byte featuredEmp) {
+		this.featuredEmp = featuredEmp;
 	}
 
 	public Date getDeleteDt() {

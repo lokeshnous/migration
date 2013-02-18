@@ -7,8 +7,9 @@ package com.advanceweb.afc.jb.employer.dao;
  * @since 3rd Oct 2012
  */
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -33,6 +34,7 @@ import com.advanceweb.afc.jb.data.entities.AdmRole;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.employer.helper.EmpConversionHelper;
+import com.advanceweb.afc.jb.employer.helper.FacilityConversionHelper;
 import com.advanceweb.afc.jb.user.dao.UserDao;
 
 @Transactional
@@ -44,8 +46,13 @@ public class FacilityDAOImpl implements FacilityDAO {
 
 	private HibernateTemplate hibernateTemplate;
 
+	private HibernateTemplate hibernateTemplateTracker;
+	
 	@Autowired
 	private EmpConversionHelper conversionHelper;
+	
+	@Autowired
+	private FacilityConversionHelper facilityConversionHelper;
 	
 	@Autowired
 	private UserDao userDAO;
@@ -54,6 +61,7 @@ public class FacilityDAOImpl implements FacilityDAO {
 			SessionFactory sessionFactoryMerionTracker,
 			SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
+		this.hibernateTemplateTracker = new HibernateTemplate(sessionFactoryMerionTracker);
 	}
 	
 	/**
@@ -89,24 +97,68 @@ public class FacilityDAOImpl implements FacilityDAO {
 	 * @return metricsDTO
 	 */
 	@Override
-	public List<MetricsDTO> getJobPostTotal(int facilityId) {
+	@SuppressWarnings("unchecked")
+	public MetricsDTO getJobPostTotal(int facilityId) {
 
-		Query getMetricsData = hibernateTemplate.getSessionFactory()
-				.getCurrentSession()
-				.createSQLQuery(" { call GetMetricsData(?) }");
-		getMetricsData.setInteger(0, facilityId);
-		List<?> metricsDeatil = getMetricsData.list();
-		Iterator<?> iterator = metricsDeatil.iterator();
-		List<MetricsDTO> DTOs = new ArrayList<MetricsDTO>();
-		while (iterator.hasNext()) {
-			MetricsDTO dto = new MetricsDTO();
-			Object[] row = (Object[]) iterator.next();
-			dto.setViews((Integer) row[0]);
-			dto.setClicks((Integer) row[1]);
-			dto.setApplies((Integer) row[2]);
-			DTOs.add(dto);
+		long views = 0;
+		long clicks = 0;
+		long applies = 0;
+		MetricsDTO metricsDto = new MetricsDTO();
+		try {
+			Query getMetricsViews = hibernateTemplateTracker
+					.getSessionFactory().getCurrentSession()
+					.createSQLQuery(" { call getViews(?) }");
+			getMetricsViews.setInteger(0, facilityId);
+			List<BigDecimal> viewsList = getMetricsViews.list();
+			if (null != viewsList && !viewsList.isEmpty() && !viewsList.contains(null)) {
+				views = viewsList.get(0).longValue();
+			}
+
+			Query getMetricsClicks = hibernateTemplateTracker
+					.getSessionFactory().getCurrentSession()
+					.createSQLQuery(" { call getClicks(?) }");
+			getMetricsClicks.setInteger(0, facilityId);
+			List<BigDecimal> clicksList = getMetricsClicks.list();
+			if (null != clicksList && !clicksList.isEmpty() && !clicksList.contains(null)) {
+				clicks = clicksList.get(0).longValue();
+			}
+
+			Query getMetricsApplies = hibernateTemplateTracker
+					.getSessionFactory().getCurrentSession()
+					.createSQLQuery(" { call getApplies(?) }");
+			getMetricsApplies.setInteger(0, facilityId);
+			List<BigDecimal> appliesList = getMetricsApplies.list();
+			if (null != appliesList && !appliesList.isEmpty() && !appliesList.contains(null)) {
+				applies = appliesList.get(0).longValue();
+			}
+
+			metricsDto.setViews(views);
+			metricsDto.setClicks(clicks);
+			metricsDto.setApplies(applies);
+		} catch (Exception e) {
+			LOGGER.error(e);
+			return metricsDto;
 		}
-		return DTOs;
+		return metricsDto;
+	}
+	
+	/**
+	 * This method returns total number of active jobs posted by the employer
+	 * 
+	 * @param facilityId
+	 * @return long
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public long getJobsByFacility(int facilityId) {
+		long jobCount = 0;
+		List<Long> jobCountList = hibernateTemplate
+				.find("select count(*) from JpJob where admFacility.facilityId=? and active=1 and deleteDt is NULL",
+						facilityId);
+		if (null != jobCountList && !jobCountList.isEmpty()) {
+			jobCount = jobCountList.get(0).longValue();
+		}
+		return jobCount;
 	}
 
 	/**
@@ -115,18 +167,89 @@ public class FacilityDAOImpl implements FacilityDAO {
 	 * @return metricsDTO
 	 */
 	@Override
+	@SuppressWarnings("unchecked")
 	public MetricsDTO getAllJobStats() {
-		List<?> metricsDeatil= (List<?>) hibernateTemplate
-				.find("select sum(views), sum(clicks), sum(applies) from JpJobStat");
-		Iterator<?> iterator = metricsDeatil.iterator();
-		Object[] row = (Object[]) iterator.next();
+		long sumViews = 0;
+		long sumClicks = 0;
+		long sumApplies = 0;
 		MetricsDTO metricsDTO = new MetricsDTO();
-		metricsDTO.setViews((Long) row[0]);
-		metricsDTO.setClicks((Long) row[1]);
-		metricsDTO.setApplies((Long) row[2]);
+		try {
+			List<Long> sumViewsList = hibernateTemplateTracker
+					.find("select sum(resultCount) from VstSearchResultNew");
+			if (null != sumViewsList && !sumViewsList.isEmpty()) {
+				sumViews = sumViewsList.get(0).longValue();
+			}
+
+			List<Long> sumClicksList = hibernateTemplateTracker
+					.find("select sum(clickCount) from VstClickthroughNew where clickthroughNewPK.vstClickthroughType.clickthroughTypeId in (1,2,3,6,9,10)");
+			if (null != sumClicksList && !sumClicksList.isEmpty()) {
+				sumClicks = sumClicksList.get(0).longValue();
+			}
+
+			List<Long> sumAppliesList = hibernateTemplateTracker
+					.find("select sum(clickCount) from VstClickthroughNew where clickthroughNewPK.vstClickthroughType.clickthroughTypeId in (4,5,7,8)");
+			if (null != sumAppliesList && !sumAppliesList.isEmpty()) {
+				sumApplies = sumAppliesList.get(0).longValue();
+			}
+
+			metricsDTO.setViews(sumViews);
+			metricsDTO.setClicks(sumClicks);
+			metricsDTO.setApplies(sumApplies);
+		} catch (Exception e) {
+			LOGGER.error(e);
+			return metricsDTO;
+		}
 		return metricsDTO;
 	}
 
+	/**
+	 * This method is used to get date wise jobs stats for Site – wide average
+	 * per job posting
+	 * 
+	 * @param startDate
+	 * @param endDate
+	 * 
+	 * @return metricsDTO
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public MetricsDTO getDateJobStats(Date startDate, Date endDate) {
+		long sumViews = 0;
+		long sumClicks = 0;
+		long sumApplies = 0;
+		MetricsDTO metricsDTO = new MetricsDTO();
+		try {
+			List<Long> sumViewsList = hibernateTemplateTracker
+					.find("select sum(resultCount) from VstSearchResultNew where searchResultNewPK.searchDate >= ? and searchResultNewPK.searchDate <= ?",
+							startDate, endDate);
+			if (null != sumViewsList && !sumViewsList.isEmpty()) {
+				sumViews = sumViewsList.get(0).longValue();
+			}
+
+			List<Long> sumClicksList = hibernateTemplateTracker
+					.find("select sum(clickCount) from VstClickthroughNew where clickthroughNewPK.vstClickthroughType.clickthroughTypeId in (1,2,3,6,9,10) and clickthroughNewPK.clickthroughDt >= ? and clickthroughNewPK.clickthroughDt <= ?",
+							startDate, endDate);
+			if (null != sumClicksList && !sumClicksList.isEmpty()) {
+				sumClicks = sumClicksList.get(0).longValue();
+			}
+
+			List<Long> sumAppliesList = hibernateTemplateTracker
+					.find("select sum(clickCount) from VstClickthroughNew where clickthroughNewPK.vstClickthroughType.clickthroughTypeId in (4,5,7,8) and clickthroughNewPK.clickthroughDt >= ? and clickthroughNewPK.clickthroughDt <= ?",
+							startDate, endDate);
+			if (null != sumAppliesList && !sumAppliesList.isEmpty()) {
+				sumApplies = sumAppliesList.get(0).longValue();
+			}
+
+			metricsDTO.setViews(sumViews);
+			metricsDTO.setClicks(sumClicks);
+			metricsDTO.setApplies(sumApplies);
+		} catch (Exception e) {
+			LOGGER.error(e);
+			return metricsDTO;
+		}
+		return metricsDTO;
+	}
+	
 	/**
 	 * This method is used to get the total count of employer
 	 * 
@@ -148,6 +271,68 @@ public class FacilityDAOImpl implements FacilityDAO {
 	}
 
 	/**
+	 * Get the Date range specific data
+	 * 
+	 * @param startFrom
+	 * @param endFrom
+	 * @param selEmployerId
+	 * 
+	 * @return MetricsDTO
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public MetricsDTO employerDateMetrics(Date startFrom, Date endFrom,
+			int selEmployerId) {
+		long views = 0;
+		long clicks = 0;
+		long applies = 0;
+		MetricsDTO metricsDTO = new MetricsDTO();
+		try {
+			Query getMetricsDateViews = hibernateTemplateTracker
+					.getSessionFactory().getCurrentSession()
+					.createSQLQuery(" { call getViewsDate(?,?,?) }");
+			getMetricsDateViews.setDate(0, startFrom);
+			getMetricsDateViews.setDate(1, endFrom);
+			getMetricsDateViews.setInteger(2, selEmployerId);
+			List<BigDecimal> viewsList = getMetricsDateViews.list();
+			if (null != viewsList && !viewsList.isEmpty() && !viewsList.contains(null)) {
+				views = viewsList.get(0).longValue();
+			}
+
+			Query getMetricsDateClicks = hibernateTemplateTracker
+					.getSessionFactory().getCurrentSession()
+					.createSQLQuery(" { call getClicksDate(?,?,?) }");
+			getMetricsDateClicks.setDate(0, startFrom);
+			getMetricsDateClicks.setDate(1, endFrom);
+			getMetricsDateClicks.setInteger(2, selEmployerId);
+			List<BigDecimal> clicksList = getMetricsDateClicks.list();
+			if (null != clicksList && !clicksList.isEmpty() && !clicksList.contains(null)) {
+				clicks = clicksList.get(0).longValue();
+			}
+
+			Query getMetricsDateApplies = hibernateTemplateTracker
+					.getSessionFactory().getCurrentSession()
+					.createSQLQuery(" { call getAppliesDate(?,?,?) }");
+			getMetricsDateApplies.setDate(0, startFrom);
+			getMetricsDateApplies.setDate(1, endFrom);
+			getMetricsDateApplies.setInteger(2, selEmployerId);
+			List<BigDecimal> appliesList = getMetricsDateApplies.list();
+			if (null != appliesList && !appliesList.isEmpty() && !appliesList.contains(null)) {
+				applies = appliesList.get(0).longValue();
+			}
+
+			metricsDTO.setViews(views);
+			metricsDTO.setClicks(clicks);
+			metricsDTO.setApplies(applies);
+
+		} catch (Exception e) {
+			LOGGER.error(e);
+			return metricsDTO;
+		}
+
+		return metricsDTO;
+	}
+	/**
 	 * This method is to get the parent id of logged in facility
 	 * 
 	 * @return
@@ -167,6 +352,7 @@ public class FacilityDAOImpl implements FacilityDAO {
 		dto.setLogoPath(facility.getLogoPath());
 		dto.setNsCustomerID(facility.getNsCustomerID());
 		dto.setFacilityType(facility.getFacilityType());
+		dto.setUserId(facility.getAdmUserFacilities().get(0).getFacilityPK().getUserId());
 		return dto;
 	}
 
@@ -208,15 +394,23 @@ public class FacilityDAOImpl implements FacilityDAO {
 		return conversionHelper.transformFacilityToDropDownDTO(facilityList,
 				admFacility);
 	}
-
+	@SuppressWarnings("unchecked")
 	public int getfacilityUserId(int facilityId) {
+		FacilityDTO facilityDto = getParentFacility(facilityId);
+		if (null != facilityDto) {
+			facilityId = facilityDto.getFacilityId();
+		}
 		AdmRole role = (AdmRole) DataAccessUtils.uniqueResult(hibernateTemplate
-				.find("from AdmRole role where role.name=?", MMJBCommonConstants.FACILITY_ADMIN));
-		AdmUserFacility facility = (AdmUserFacility) DataAccessUtils
-				.uniqueResult(hibernateTemplate
-						.find("from AdmUserFacility af where af.facilityPK.roleId=? and af.facilityPK.facilityId=?",
-								role.getRoleId(), facilityId));
-		return facility.getFacilityPK().getUserId();
+				.find("from AdmRole role where role.name=?",
+						MMJBCommonConstants.FACILITY_ADMIN));
+		List<AdmUserFacility> facility = hibernateTemplate
+				.find("from AdmUserFacility af where af.facilityPK.roleId=? and af.facilityPK.facilityId=?",
+						role.getRoleId(), facilityId);
+		if (null != facility && facility.size()>0) {
+			return facility.get(0).getFacilityPK().getUserId();
+		} else {
+			return 0;
+		}
 	}
 	
 	/**
@@ -236,9 +430,11 @@ public class FacilityDAOImpl implements FacilityDAO {
 				if(userDTO!=null){
 					schedulerDTO.setCompanyName(admUserFacility.getAdmFacility().getName());
 					schedulerDTO.setUserId(userDTO.getUserId());
+//					schedulerDTO.setCreateUserId(userDTO.getUserId());
 					schedulerDTO.setFirstName(userDTO.getFirstName());
 					schedulerDTO.setLastName(userDTO.getLastName());
 					schedulerDTO.setEmailId(userDTO.getEmailId());
+					schedulerDTO.setFacilityId(admUserFacility.getFacilityPK().getFacilityId());
 					schedulerDTOList.add(schedulerDTO);
 				}
 			}
@@ -257,7 +453,7 @@ public class FacilityDAOImpl implements FacilityDAO {
 	 * @return
 	 */
 	@Override
-	public AdmFacility getParentFacility(int currentFacilityId) {
+	public FacilityDTO getParentFacility(int currentFacilityId) {
 		AdmFacility admFacility = (AdmFacility) hibernateTemplate.find(
 				"from AdmFacility e where e.facilityId=?", currentFacilityId).get(0);
 		int facilityParentId = admFacility.getFacilityParentId();
@@ -266,16 +462,19 @@ public class FacilityDAOImpl implements FacilityDAO {
 			AdmFacility parentAdmFacility = hibernateTemplate.get(
 					AdmFacility.class, facilityParentId);
 			if (parentAdmFacility.getFacilityType().equalsIgnoreCase(
-					MMJBCommonConstants.FACILITY_GROUP)) {
-				// For job owner login
-				admFacility = parentAdmFacility;
-			}else if (parentAdmFacility.getFacilityType().equalsIgnoreCase(
-					MMJBCommonConstants.FACILITY)) {
+					MMJBCommonConstants.FACILITY_GROUP) || parentAdmFacility.getFacilityType().equalsIgnoreCase(
+							MMJBCommonConstants.FACILITY)) {
 				// For job owner login
 				admFacility = parentAdmFacility;
 			}
 		}
-		return admFacility;
+		FacilityDTO facilityDTO = null;
+		if(admFacility != null){
+			List<AdmFacility> admFacilities = new ArrayList<AdmFacility>();
+			admFacilities.add(admFacility);
+			facilityDTO = facilityConversionHelper.transformToFacilityDTO(admFacilities).get(0);
+		}		
+		return facilityDTO;
 	}
 	
 	/**
