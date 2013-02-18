@@ -14,7 +14,21 @@ public class SchedulerDTO {
 	private int jobId;
 	private String companyName;
 	private String expireDate;
+	private int facilityId;
+	private int createUserId;
 	
+	/**
+	 * @return the createUserId
+	 */
+	public int getCreateUserId() {
+		return createUserId;
+	}
+	/**
+	 * @param createUserId the createUserId to set
+	 */
+	public void setCreateUserId(int createUserId) {
+		this.createUserId = createUserId;
+	}
 	public int getUserId() {
 		return userId;
 	}
@@ -56,5 +70,17 @@ public class SchedulerDTO {
 	}
 	public void setExpireDate(String expireDate) {
 		this.expireDate = expireDate;
+	}
+	/**
+	 * @return the facilityId
+	 */
+	public int getFacilityId() {
+		return facilityId;
+	}
+	/**
+	 * @param facilityId the facilityId to set
+	 */
+	public void setFacilityId(int facilityId) {
+		this.facilityId = facilityId;
 	}
 }

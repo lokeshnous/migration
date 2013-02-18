@@ -25,6 +25,7 @@ public class OrderDetailsDTO {
 	private float orderTotal;
 	private int orderStatus;
 	private String purchaseType;
+	private String discountItem;
 	
 	public int getUserId() {
 		return userId;
@@ -99,5 +100,17 @@ public class OrderDetailsDTO {
 	}
 	public void setPurchaseType(String purchaseType) {
 		this.purchaseType = purchaseType;
+	}
+	/**
+	 * @return the discountItem
+	 */
+	public String getDiscountItem() {
+		return discountItem;
+	}
+	/**
+	 * @param discountItem the discountItem to set
+	 */
+	public void setDiscountItem(String discountItem) {
+		this.discountItem = discountItem;
 	}
 }

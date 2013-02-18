@@ -18,6 +18,7 @@ public interface MMJBCommonConstants {
 	String RESUME_TYPE_RESUME_BUILDER = "ADVANCE Resume Builder";
 	String RESUME_TYPE_UPLOAD = "Upload Existing Resume";
 	String RESUME_TYPE_COPY_PASTE = "Copy and Paste";
+	String IGNORE_SPECIAL_CHAR_PATTERN = "[^a-zA-Z\\s]+";
 	// For DropDowns
 	String RESUME_TYPE = "ResumeType";
 	String DESIRED_JOB_TITLE = "JobTitle";
@@ -63,18 +64,21 @@ public interface MMJBCommonConstants {
 	String USER = "admin";
 	// String SELECT_SLASH_QUESTIONMARK = "select/?";
 	String COMMA = ",";
+	String COMMASPACE = ", ";
 
 	String AUTOLOAD = "autoload";
 	String SAVE_SEARCH_ID = "saveSearchId";
 	String RETAIN_SEARCH = "retainSaveSearch";
-	
+	String DAILY_ALERT = "3";
 	String CITY = "city";
 	String STATE = "state";
 	String COMPANY = "company";
+	String COMPANY_ID_NAME = "companyIdName";
 
 	String AD_TEXT = "AdText";
 	String CAP_COMPANY = "Company";
 	String JOB_TITLE = "JobTitle";
+	String JOB_TITLE_ENCODE = "JobTitleEncode";
 	String CAP_CITY = "City";
 	String POSTED_DATE = "PostedDate";
 	String APPLY_ONLINE = "ApplyOnline";
@@ -119,16 +123,21 @@ public interface MMJBCommonConstants {
 
 	// Solr param
 	String SORT_PARAM = "sortParam";
+	String IS_FQ_PARAM_LOWERCASE = "isFqParamLowercase";
 	String FIRST_FQ_PARAM = "firstFQParam";
 	String SECOND_FQ_PARAM = "secondFQParam";
 	String THIRD_FQ_PARAM = "thirdFQParam";
 	String FOURTH_FQ_PARAM = "fouthFQParam";
 	String FIFTH_FQ_PARAM = "fifthFQParam";
+	String FacilityId_NAME_FQ_PARAM = "facilityIdNameFQParam";
+	String FacilityId_FQ_PARAM = "facilityIdFQParam";
+//	String POSTED_DT = "score";
 	String POSTED_DT = "posted_dt";
 	String SORT_ORDER = "sortOrder";
 	String DESC_STR = "desc";
 	String ASC_STR = "asc";
 	String COUNT_STR = "count";
+	String INDEX_STR = "index";
 	String FACET_SORT = "facetSort";
 	// Solr Date pattern
 	String JSON_DATE_FORMAT = "MMM-dd-yyyy";
@@ -146,9 +155,17 @@ public interface MMJBCommonConstants {
 	String ERROR_STRING = "error";
 	String OK_STRING = "ok";
 
-	String CLICKTYPE_VIEW = "view";
-	String CLICKTYPE_APPLY = "apply";
-	String CLICKTYPE_CLICK = "click";
+	String CLICKTYPE_JOBVIEW = "1";
+	String CLICKTYPE_EMAILFRIEND = "2";
+	String CLICKTYPE_PRINTJOB = "3";
+	String CLICKTYPE_APPLYNOW = "4";
+	String CLICKTYPE_APPLYEMAIL = "5";
+	String CLICKTYPE_COMPANYNAME = "6";
+	String CLICKTYPE_WEBSITEURL = "7";
+	String CLICKTYPE_JOBSUMLINKS = "8";
+	String CLICKTYPE_SOCIALSHARE = "9";
+	String CLICKTYPE_SAVEJOB = "10";
+	
 	String DROP_DOWN = "Dropdown";
 	String CHECK_BOX = "CheckBox";
 	String RADIO_BUTTON = "Radio";
@@ -189,7 +206,7 @@ public interface MMJBCommonConstants {
 
 	// latest searches count
 	int LATEST_SEARCHES_LIMIT = 3;
-	
+
 	// For User Roles
 	String MERION_ADMIN = "merion_admin";
 	String JOBSEEKER = "jobseeker";
@@ -266,7 +283,7 @@ public interface MMJBCommonConstants {
 	String PACKAGE_STJOBPOSTING = "stJobPosting";
 	String PACKAGE_SILVER = "silver";
 
-	//For offline purchased packages
+	// For offline purchased packages
 	String GOLD_90 = "4809";
 	String GOLD_180 = "4864";
 	String GOLD_365 = "4808";
@@ -286,7 +303,7 @@ public interface MMJBCommonConstants {
 	String XML_90 = "4872";
 	String XML_180 = "963";
 	String XML_365 = "976";
-	
+
 	// for Branding template
 	String IMAGE_TYPE_JPG = ".jpg";
 	String IMAGE_TYPE_GIF = ".gif";
@@ -317,7 +334,7 @@ public interface MMJBCommonConstants {
 	// For Job search results
 	int DEFAULT_PAGE_SIZE = 20;
 	int JOBSEACRH_DEFAULT_PAGE_SIZE = 20;
-	int JOBSEACRH_FAST_FORWARD = 10;	
+	int JOBSEACRH_FAST_FORWARD = 10;
 	int JOBSEARCH_GRID_PAGES_COUNT = 10;
 	String FAST_FORWARD = "fastforward";
 	String SEARCH_RESULTS_LIST = "searchResultsList";
@@ -339,12 +356,12 @@ public interface MMJBCommonConstants {
 	String PREV_JOB_SEARCH_KEYWORDS = "prevJobSearchKeywords";
 	String RECORDS_PER_PAGE = "displayRecordsPerPage";
 	String RECORDS_COUNT = "totalNoOfRecords";
-	
+
 	// Kartik Add many Variable for account setting and Mail send
 	String WEB_MAIL_SERVER = "merion@nousinfosystems.com";
 	String EMAIL_MESSAGE = "Please enter correct Email address.";
 	String EMAIL_NULL_MESSAGE = "Email address already Exists!";
-	String PHONE_NO = "Please enter the valid phone number in the following format(xxx) xxx-xxxx.";
+	String PHONE_NO = "Please enter the valid phone number in the following format (xxx) xxx-xxxx.";
 	String PHONE_NULL_NO = "Please enter the phone number.";
 	String EMAIL_MESSAGE_BLANK = "Please enter a required field.";
 	String UPDATE_ERROR = " Error occurred. Please contact administrator.";
@@ -430,7 +447,7 @@ public interface MMJBCommonConstants {
 	String COMAPNY_NAME_HEADING = "Company name:";
 	String URL_LINK_FIRST = "<a href=?";
 	String URL_LINK_SECOND = "><b>View this job now</b></a> to learn more and submit your application.";
-	String URL_REDIRECT_MAIL = "redirect:/healthcarejobs/advanceweb.html";
+	String URL_REDIRECT_MAIL = "redirect:/healthcarejobs/index.html";
 	String ERROR_SENDING_MAIL = "ERROR For sending mail option of SendToFriend method";
 
 	// For Refine Search
@@ -441,9 +458,13 @@ public interface MMJBCommonConstants {
 	String FQ_REFINE_KEYWORD2 = "\"";
 	String FQ_JOB_POSITION = "jobposition:\"";
 	String FQ_COMPANY = "company:\"";
+	String FQ_FACILITY_ID = "facility_id:\"";
 	String FQ_STATE = "state:\"";
+	String FQ_STATE_LOWER_CASE = "state2:\"";
 	String FQ_CITY = "city:\"";
+	String FQ_CITY_LOWER_CASE = "city2:\"";
 	String FQ_AREA = "area:\"";
+	String FQ_AREA_LOWER_CASE = "area2:\"";
 	String REFINED = "refined";
 	String REFINERADIUS = "refineRadius";
 	String RADIUS = "radius";
@@ -469,7 +490,7 @@ public interface MMJBCommonConstants {
 	String EXPERIENCE = "Experience";
 	String UPLOAD_RESUME_ID = "UploadResumeId";
 	String PUBLISH_RESUME_ID = "PublishResumeId";
-	
+
 	String RESUME_SEARCH_JSON_LIST = "resSrchJsonList";
 
 	// for browseByJobs
@@ -495,29 +516,48 @@ public interface MMJBCommonConstants {
 	String JOBTITLES_NEXT_PAGE_URL = "nextPageUrl";
 	String JOBTITLES_PREV_PAGE_URL = "prevPageUrl";
 	int JOB_SEARCH_MAX_AREAS = 100;
-	//Email Scheduler constants
+	// Email Scheduler constants
 
 	String SCHEDULER_DAY = "30DayEmailSch";
-	String SOLR_PARAM_FQ="posted_dt:[NOW-?dayDAY TO NOW]";
-	int DAILY_SCHEDULER=3;
-	int MONTHLY_SCHEDULER=6;
-	int WEEKLY_SCHEDULER=4;
-	int BIWEEKLY_SCHEDULER=5;
-	int YEARLY_SCHEDULER=7;
-	String SCHEDULE_BIWEEKLY="15";
-	String SCHEDULE_WEEKLY="7";
-	String SCHEDULE_MONTHLY="30";
-	String SCHEDULE_YEARLY="365";
-	String SCHEDULE_DAILY="1";
-	
+	String SOLR_PARAM_FQ = "posted_dt:[NOW-?dayDAY TO NOW]";
+	int DAILY_SCHEDULER = 3;
+	int MONTHLY_SCHEDULER = 6;
+	int WEEKLY_SCHEDULER = 4;
+	int BIWEEKLY_SCHEDULER = 5;
+	int YEARLY_SCHEDULER = 7;
+	String SCHEDULE_BIWEEKLY = "15";
+	String SCHEDULE_WEEKLY = "7";
+	String SCHEDULE_MONTHLY = "30";
+	String SCHEDULE_YEARLY = "365";
+	String SCHEDULE_DAILY = "1";
+
 	// variables to populate the ads
 	String ADPAGETOP = "adPageTop";
 	String ADPAGEBOTTOM = "adPageBottom";
 	String ADPGRIGHT_TOP = "adPageRightTop";
 	String ADPGRIGHT_MIDDLE = "adPageRightMiddle";
+	String ADPGRIGHT_TOP_MIDDLE = "adPageRightTopMiddle";
 	String ADPGCENTER_MIDDLE_LIST = "adPageCenterMiddleList";
 	String COUNTRY_USA = "USA";
 	String COUNTRY_CA = "CA";
 	int COUNTRY_USA_VAL = 182;
 	int COUNTRY_CA_VAL = 32;
+
+	String SUBSCRIPTION_SUBTYPE_PRINT = "PRINT";
+	String SUBSCRIPTION_SUBTYPE_DIG = "DIGITAL";
+	String SUBSCRIPTION_SUBTYPE_NEWS = "ENEWSLETTER";
+	String SUBSCRIPTION_SUBTYPE_EMAIL = "EMAILER";
+
+	// Alert Constant	
+	int ADMINISTRATOR_CHANGES=1;
+    int YOUR_JOB_LISTING_FAILED_TO_AUTO_RENEW =2;
+	int NEW_JOB_POSTING_CREDITS_AVAILABLE=3;
+	int JOB_POSTING_EXPIRING_SOON=4;
+	int SALES_RECEIPT=5;
+	int YOUR_JOB_HAS_EXPIRED=6;
+	int NO_ACTIVE_POSTINGS_ON_ADVANCE =7;
+	
+	// promotion codes	
+	String PROMOCODE_15ADVOFF = "15ADVoff";
+	String NS_DISCOUNT_ITEM_ID="5724";
 }

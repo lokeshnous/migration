@@ -53,6 +53,8 @@ public class JobDTO implements Serializable{
 	
 	private String jobTitle;
 	
+	private String jobTitleEncode;
+
 	private String postCode;
 	
 	private Date postedDate;
@@ -99,7 +101,47 @@ public class JobDTO implements Serializable{
 	private Date createdDate;
 	private int userID;
 	private int count;
+	private String positionType;
+	private String positionLevel;
+	private String headLine;
+	private String companyUrl;
 	
+	
+	
+	
+	
+	public String getPositionType() {
+		return positionType;
+	}
+
+	public void setPositionType(String positionType) {
+		this.positionType = positionType;
+	}
+
+	public String getPositionLevel() {
+		return positionLevel;
+	}
+
+	public void setPositionLevel(String positionLevel) {
+		this.positionLevel = positionLevel;
+	}
+
+	public String getHeadLine() {
+		return headLine;
+	}
+
+	public void setHeadLine(String headLine) {
+		this.headLine = headLine;
+	}
+
+	public String getCompanyUrl() {
+		return companyUrl;
+	}
+
+	public void setCompanyUrl(String companyUrl) {
+		this.companyUrl = companyUrl;
+	}
+
 	public int getTemplateId() {
 		return templateId;
 	}
@@ -474,6 +516,14 @@ public class JobDTO implements Serializable{
 
 	public void setCount(int count) {
 		this.count = count;
+	}
+
+	public String getJobTitleEncode() {
+		return jobTitleEncode;
+	}
+
+	public void setJobTitleEncode(String jobTitleEncode) {
+		this.jobTitleEncode = jobTitleEncode;
 	}
 
 }

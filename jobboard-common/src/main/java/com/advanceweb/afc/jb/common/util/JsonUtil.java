@@ -30,11 +30,11 @@ public class JsonUtil {
 			jsonString = mapper.writeValueAsString(obj);
 
 		} catch (JsonGenerationException e) {
-			LOGGER.info(e);
+			LOGGER.error(e);
 		} catch (JsonMappingException e) {
-			LOGGER.info(e);
+			LOGGER.error(e);
 		} catch (IOException e) {
-			LOGGER.info(e);
+			LOGGER.error(e);
 		}
 
 		
@@ -57,11 +57,11 @@ public class JsonUtil {
 			obj = mapper.readValue(jsonString, clazz);
 
 		} catch (JsonParseException e) {
-			LOGGER.info(e);
+			LOGGER.error(e);
 		} catch (JsonMappingException e) {
-			LOGGER.info(e);
+			LOGGER.error(e);
 		} catch (IOException e) {
-			LOGGER.info(e);
+			LOGGER.error(e);
 		}
 
 		// Displaying the DTO attributes

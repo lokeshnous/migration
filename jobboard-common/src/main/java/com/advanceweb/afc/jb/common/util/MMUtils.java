@@ -17,9 +17,8 @@ import com.advanceweb.afc.jb.common.LocationDTO;
 
 public class MMUtils {
 
-	private static final Logger LOGGER = Logger
-			.getLogger(MMUtils.class);
-	
+	private static final Logger LOGGER = Logger.getLogger(MMUtils.class);
+
 	/**
 	 * This method checks whether the String parameter is int or not.
 	 * 
@@ -36,12 +35,33 @@ public class MMUtils {
 		return true;
 	}
 
+	/**
+	 * This method checks whether the string is alpha numeric
+	 * 
+	 * @param s
+	 * @return
+	 */
+	public static boolean isAlphaNumeric(String s) {
+		boolean containsDigit = false;
+
+	    if(s != null){
+	        for(char c : s.toCharArray()){
+	            if(Character.isDigit(c)){
+	                containsDigit = true;
+	                break;
+	            }
+	        }
+	    }
+
+	    return containsDigit;
+	}
+
 	public static List<String> convertToCityStateStringList(
 			List<LocationDTO> locationDTOList) {
 
 		List<String> list = new ArrayList<String>();
 		for (LocationDTO locDTO : locationDTOList) {
-			list.add(locDTO.getCity() + "," + locDTO.getState());
+			list.add(locDTO.getCity() + ", " + locDTO.getState());
 		}
 		return list;
 	}
@@ -138,32 +158,35 @@ public class MMUtils {
 		try {
 			date = parser.parse(dateFormat.format(date));
 		} catch (ParseException e) {
-			LOGGER.info("Exception while getting Current Date And Time");
+			LOGGER.error("Exception while getting Current Date And Time",e);
 		}
 		return date;
 
 	}
-	
+
 	/**
-	 * This method is called to compare the current date with the given date range
-	 * So that for that particular user we don't need to decrease the credits
-	 * and can post unlimited jobs with in the range.
+	 * This method is called to compare the current date with the given date
+	 * range So that for that particular user we don't need to decrease the
+	 * credits and can post unlimited jobs with in the range.
+	 * 
 	 * @param xmlFeedStartDate
 	 * @param xmlFeedEndDate
 	 * @return
 	 */
-	public static boolean compareDateRangeWithCurrentDate(Date xmlFeedStartDate, Date xmlFeedEndDate){
-		
-		if(null != xmlFeedStartDate && null != xmlFeedEndDate){
+	public static boolean compareDateRangeWithCurrentDate(
+			Date xmlFeedStartDate, Date xmlFeedEndDate) {
+
+		if (null != xmlFeedStartDate && null != xmlFeedEndDate) {
 			Date date = new Date();
-			if(date.compareTo(xmlFeedStartDate) >= 0 && date.compareTo(xmlFeedEndDate) <=0){
+			if (date.compareTo(xmlFeedStartDate) >= 0
+					&& date.compareTo(xmlFeedEndDate) <= 0) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * This method converts the date in string format to required format for
 	 * displaying it in the job search result page.
@@ -178,4 +201,66 @@ public class MMUtils {
 		return formatter.format(date);
 	}
 	
+	/**
+	 * The method helps to encode the given string value by replacing the special 
+	 * characters to valid strings.
+	 * 
+	 * @param encodingStr
+	 * @return
+	 */
+	public static String encodeString(String encodingStr) {
+		/*String encodedStr = encodingStr;
+		encodedStr = encodingStr.replace("/", "U8sl");
+		encodedStr = encodedStr.replace("\\", "U8bsl");
+		try {
+			encodedStr = URLEncoder.encode(encodedStr, "UTF-8");
+		} catch (UnsupportedEncodingException ex) {
+			LOGGER.error(ex.getMessage(), ex);
+		}catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+		}*/
+		String encodedStr;
+		/*encodedStr = encodingStr.replace("/", "u82f");
+		encodedStr = encodedStr.replace("\\", "u85c");
+		encodedStr = encodedStr.replace("-", "u82d");
+		encodedStr = encodedStr.replace("#", "u823");
+		encodedStr = encodedStr.replace(";", "u83b");*/
+		encodedStr = encodingStr.replace(" ", "-");
+		encodedStr = encodedStr.replace("/", "-and-");
+		return encodedStr;
+	}
+
+	/**
+	 * The method helps to decode the given string value by replacing valid strings
+	 * to special characters.
+	 * 
+	 * @param decodingStr
+	 * @return
+	 */
+	public static String decodeString(String decodingStr) {
+		/*String decodedStr = decodingStr;
+		decodedStr = decodingStr.replace("U8sl", "/");
+		decodedStr = decodedStr.replace("U8bsl", "\\");
+		try {
+			decodedStr = URLDecoder.decode(decodedStr, "UTF-8");
+		} catch (UnsupportedEncodingException ex) {
+			LOGGER.error(ex.getMessage(), ex);
+		}catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+		}*/
+		/*String decodedStr;
+		decodedStr = decodingStr.replace("u82f", "/");
+		decodedStr = decodedStr.replace("u85c", "\\");
+		decodedStr = decodedStr.replace("-", " ");
+		decodedStr = decodedStr.replace("u82d", "-");
+		decodedStr = decodedStr.replace("u823", "#");
+		decodedStr = decodedStr.replace("u83b", ";");*/
+		String decodedStr;
+		decodedStr = decodingStr.replace("-and-", "/");
+		decodedStr = decodedStr.replace("-", " ");
+		return decodedStr;
+	}
+	
+	
+
 }

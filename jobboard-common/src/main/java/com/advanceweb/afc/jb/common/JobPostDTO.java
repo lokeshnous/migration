@@ -55,9 +55,9 @@ public class JobPostDTO implements Serializable {
 	
 	private String scheduleStartDt;
 	private String scheduleExpiryDt;
-	private int applies;
-	private int clicks;
-	private int views;
+	private long applies;
+	private long clicks;
+	private long views;
 	private int facilityId;
 	private int mainFacilityId;
 
@@ -68,6 +68,9 @@ public class JobPostDTO implements Serializable {
     private int userId;
     
     private boolean bActive;
+    private String templateName;
+    private String autoRenewVal;
+    private String emailId;
    /* private String brandTemplateVal;
     private String autoRenewVal="No";*/
 	public int getJobId() {
@@ -369,42 +372,42 @@ public class JobPostDTO implements Serializable {
 	/**
 	 * @return the applies
 	 */
-	public int getApplies() {
+	public long getApplies() {
 		return applies;
 	}
 
 	/**
 	 * @param applies the applies to set
 	 */
-	public void setApplies(int applies) {
+	public void setApplies(long applies) {
 		this.applies = applies;
 	}
 
 	/**
 	 * @return the clicks
 	 */
-	public int getClicks() {
+	public long getClicks() {
 		return clicks;
 	}
 
 	/**
 	 * @param clicks the clicks to set
 	 */
-	public void setClicks(int clicks) {
+	public void setClicks(long clicks) {
 		this.clicks = clicks;
 	}
 
 	/**
 	 * @return the views
 	 */
-	public int getViews() {
+	public long getViews() {
 		return views;
 	}
 
 	/**
 	 * @param views the views to set
 	 */
-	public void setViews(int views) {
+	public void setViews(long views) {
 		this.views = views;
 	}
 
@@ -482,6 +485,48 @@ public class JobPostDTO implements Serializable {
 
 	public void setMainFacilityId(int mainFacilityId) {
 		this.mainFacilityId = mainFacilityId;
+	}
+
+	/**
+	 * @return the templateName
+	 */
+	public String getTemplateName() {
+		return templateName;
+	}
+
+	/**
+	 * @param templateName the templateName to set
+	 */
+	public void setTemplateName(String templateName) {
+		this.templateName = templateName;
+	}
+
+	/**
+	 * @return the autoRenewVal
+	 */
+	public String getAutoRenewVal() {
+		return autoRenewVal;
+	}
+
+	/**
+	 * @param autoRenewVal the autoRenewVal to set
+	 */
+	public void setAutoRenewVal(String autoRenewVal) {
+		this.autoRenewVal = autoRenewVal;
+	}
+
+	/**
+	 * @return the emailId
+	 */
+	public String getEmailId() {
+		return emailId;
+	}
+
+	/**
+	 * @param emailId the emailId to set
+	 */
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
 	}
 
 /*	*//**

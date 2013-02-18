@@ -66,9 +66,25 @@ public class FacilityDTO {
 	
 	private int roleId;
 	
+	private int userId;
+	
 	private String phone;
 
 	private String templateName;
+	
+	/**
+	 * @return the userId
+	 */
+	public int getUserId() {
+		return userId;
+	}
+
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 	
 	public String getPhone() {
 		return phone;

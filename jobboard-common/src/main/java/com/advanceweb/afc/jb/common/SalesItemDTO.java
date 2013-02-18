@@ -12,6 +12,8 @@ public class SalesItemDTO {
 	private String item;
 	
 	private String quantity;
+	
+	private String purchaseOrderNumber;
 
 	public String getItem() {
 		return item;
@@ -28,4 +30,13 @@ public class SalesItemDTO {
 	public void setQuantity(String quantity) {
 		this.quantity = quantity;
 	}
+
+	public String getPurchaseOrderNumber() {
+		return purchaseOrderNumber;
+	}
+
+	public void setPurchaseOrderNumber(String purchaseOrderNumber) {
+		this.purchaseOrderNumber = purchaseOrderNumber;
+	}
+	
 }

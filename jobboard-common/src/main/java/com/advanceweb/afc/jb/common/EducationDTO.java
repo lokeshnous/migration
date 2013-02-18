@@ -19,7 +19,22 @@ public class EducationDTO {
 	private boolean bNotGraduatedYet;
 	private int builderEduId;
 	private EducationDegreeDTO eduDegreeDTO;
+	private int itemId;
+	private boolean editMode;
 	
+	
+	public int getItemId() {
+		return itemId;
+	}
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
+	public boolean isEditMode() {
+		return editMode;
+	}
+	public void setEditMode(boolean editMode) {
+		this.editMode = editMode;
+	}
 	public String getDegreeLvl() {
 		return degreeLvl;
 	}

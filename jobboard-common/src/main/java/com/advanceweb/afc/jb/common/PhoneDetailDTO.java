@@ -12,8 +12,23 @@ public class PhoneDetailDTO {
 	private int builderPhoneId;
 	private String phoneNumber;
 	private String phoneType;
+	private int itemId;
+	private boolean editMode;
 	
 	
+	
+	public boolean isEditMode() {
+		return editMode;
+	}
+	public void setEditMode(boolean editMode) {
+		this.editMode = editMode;
+	}
+	public int getItemId() {
+		return itemId;
+	}
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
 	public int getBuilderPhoneId() {
 		return builderPhoneId;
 	}

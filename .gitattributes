@@ -9,6 +9,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AddressDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AdmFacilityContactDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AdmFolderDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AdminDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AdminSeoDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AgencyProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AlertsListDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/AppliedJobDTO.java -text
@@ -44,6 +45,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobPostingInventoryDT
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobPostingPlanDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSeekerProfileDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobSeekerRegistrationDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/JobTitleDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/LanguageDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/LocationDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/LoginDTO.java -text

@@ -8,6 +8,7 @@ public class SearchFacetDTO implements Serializable {
 	public static final String FACET_CITY = "city";
 	public static final String FACET_STATE = "state";
 	public static final String FACET_COMPANY = "company";
+	public static final String FACET_COMPANY_ID_NAME = "facility_id_name";
 	public static final String FACET_POSTED_DATE = "posted_dt";
 	public static final String FACET_RADIUS = "radius";
 	public static final String FACET_AREA = "area";

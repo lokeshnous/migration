@@ -12,7 +12,24 @@ public class ContactInformationDTO {
 	private String lastName;
 	private AddressDTO addressDTO;
 	private String email;
+	private int itemId;
+	private boolean editMode;
 	
+	public int getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
+
+	public boolean isEditMode() {
+		return editMode;
+	}
+
+	public void setEditMode(boolean editMode) {
+		this.editMode = editMode;
+	}
 
 	public String getFirstName() {
 		return firstName;

@@ -15,4 +15,15 @@ public class JobSearchResultDTO extends SearchResultDTO<JobDTO> implements
 
 	private static final long serialVersionUID = 1L;
 
+	// This String holds the location entered by user
+	private String universalLocation;
+
+	public String getUniversalLocation() {
+		return universalLocation;
+	}
+
+	public void setUniversalLocation(String universalLocation) {
+		this.universalLocation = universalLocation;
+	}
+	
 }

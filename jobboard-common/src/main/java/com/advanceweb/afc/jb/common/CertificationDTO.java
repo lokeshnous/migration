@@ -14,7 +14,22 @@ public class CertificationDTO {
 	private String summary;
 	private String certifyingAuthority;
 	private int builderCertId;
+	private int itemId;
+	private boolean editMode;
 	
+	
+	public int getItemId() {
+		return itemId;
+	}
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
+	public boolean isEditMode() {
+		return editMode;
+	}
+	public void setEditMode(boolean editMode) {
+		this.editMode = editMode;
+	}
 	public String getCertificationName() {
 		return certificationName;
 	}

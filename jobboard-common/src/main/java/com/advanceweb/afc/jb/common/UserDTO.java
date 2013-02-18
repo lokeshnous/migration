@@ -48,8 +48,16 @@ public class UserDTO implements Serializable{
 	private boolean helthSystem;
 	private boolean admin;
 	private boolean oldUser;
+	private boolean advPassUser;
+	private String discountItem;
 	
 	
+	public boolean isAdvPassUser() {
+		return advPassUser;
+	}
+	public void setAdvPassUser(boolean advPassUser) {
+		this.advPassUser = advPassUser;
+	}
 	public boolean isOldUser() {
 		return oldUser;
 	}
@@ -289,5 +297,17 @@ public class UserDTO implements Serializable{
 	}
 	public void setNsStatusCode(Map<Integer, String> nsStatusCode) {
 		this.nsStatusCode = nsStatusCode;
+	}
+	/**
+	 * @return the discountItem
+	 */
+	public String getDiscountItem() {
+		return discountItem;
+	}
+	/**
+	 * @param discountItem the discountItem to set
+	 */
+	public void setDiscountItem(String discountItem) {
+		this.discountItem = discountItem;
 	}
 }

@@ -20,6 +20,7 @@ public class UserSubscriptionsDTO {
 	private int publicationId;
 	private String publicationName;
 	private int facilityId;
+	private int roleId;
 	
 	public int getSubscriptionId() {
 		return subscriptionId;
@@ -56,5 +57,11 @@ public class UserSubscriptionsDTO {
 	}
 	public void setFacilityId(int facilityId) {
 		this.facilityId = facilityId;
+	}
+	public int getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
 }

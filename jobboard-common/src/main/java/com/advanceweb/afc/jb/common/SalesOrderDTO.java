@@ -21,6 +21,7 @@ public class SalesOrderDTO {
 	private String securiyCode;
 	private String ccZipcode;
 	private String ccStreet;
+	private String purchaseOrderNumber;
 	
 	
 	public List<SalesItemDTO> getSalesItemDTOList() {
@@ -76,5 +77,11 @@ public class SalesOrderDTO {
 	}
 	public void setSecuriyCode(String securiyCode) {
 		this.securiyCode = securiyCode;
+	}
+	public String getPurchaseOrderNumber() {
+		return purchaseOrderNumber;
+	}
+	public void setPurchaseOrderNumber(String purchaseOrderNumber) {
+		this.purchaseOrderNumber = purchaseOrderNumber;
 	}
 }

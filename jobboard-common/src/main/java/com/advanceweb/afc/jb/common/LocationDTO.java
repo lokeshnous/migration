@@ -108,4 +108,15 @@ public class LocationDTO {
 		this.stateFullname = stateFullname;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("[city=");
+		builder.append(city);
+		builder.append(", state=");
+		builder.append(state);
+		builder.append("]");
+		return builder.toString();
+	}
+
 }

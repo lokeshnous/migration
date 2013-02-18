@@ -58,9 +58,9 @@ public class ResumeDTO extends ProfileDTO implements Serializable{
 	private Date postDt;
 	private String state;
 	private int experience;
-	private int publishResumeId;
-	
+	private int publishResumeId;	
 
+	private List<Integer> selectedList;
 	public int getPublishResumeId() {
 		return publishResumeId;
 	}
@@ -473,6 +473,16 @@ public class ResumeDTO extends ProfileDTO implements Serializable{
 
 	public void setAvailableDate(String availableDate) {
 		this.availableDate = availableDate;
+	}
+
+
+	public List<Integer> getSelectedList() {
+		return selectedList;
+	}
+
+
+	public void setSelectedList(List<Integer> selectedList) {
+		this.selectedList = selectedList;
 	}
 	
 }

@@ -44,7 +44,7 @@ public class AVScannerHelper {
 	 */
 	public boolean scanFile(String uploadedFilePath, String fileName) {
 		Vector<ScanEngineInfo> scanEnginesForScanning = new Vector<ScanEngineInfo>();
-		LOGGER.info("Uploaded file Path : " + uploadedFilePath);
+		LOGGER.debug("Uploaded file Path : " + uploadedFilePath);
 
 		/*// TEST ONLY --DELETE
 		if (uploadedFilePath == null) {
@@ -53,7 +53,7 @@ public class AVScannerHelper {
 		}*/
 
 		ScanEngine.ScanEngineInfo scanEngTobeUsed = new ScanEngine.ScanEngineInfo(
-				"192.168.31.230", 1344);
+				"10.0.16.170", 1344);
 		scanEnginesForScanning.add(scanEngTobeUsed);
 
 		FileOutputStream output = null;
@@ -106,45 +106,45 @@ public class AVScannerHelper {
 
 	private void printResult(Result result) {
 
-		LOGGER.info("----------------------------------------------------------------------");
-		LOGGER.info("Scanning file ........................................................");
-		LOGGER.info("----------------------------------------------------------------------");
-		LOGGER.info("Results ..............................................................");
-		LOGGER.info("----------------------------------------------------------------------");
-		LOGGER.info("File Scanned		: "
+		LOGGER.debug("----------------------------------------------------------------------");
+		LOGGER.debug("Scanning file ........................................................");
+		LOGGER.debug("----------------------------------------------------------------------");
+		LOGGER.debug("Results ..............................................................");
+		LOGGER.debug("----------------------------------------------------------------------");
+		LOGGER.debug("File Scanned		: "
 				+ "C:\\Users\\deviprasadm\\Desktop\\AResumeText.docx");
-		LOGGER.info("Scan Policy		: " + scPolicy);
-		LOGGER.info("File Status		: " + result.getStatus());
-		LOGGER.info("Total Infection		: " + result.getTotalInfection());
-		LOGGER.info("Virus Def Date		: " + result.getDefinitionDate());
-		LOGGER.info("Virus Def Revision No	: "
+		LOGGER.debug("Scan Policy		: " + scPolicy);
+		LOGGER.debug("File Status		: " + result.getStatus());
+		LOGGER.debug("Total Infection		: " + result.getTotalInfection());
+		LOGGER.debug("Virus Def Date		: " + result.getDefinitionDate());
+		LOGGER.debug("Virus Def Revision No	: "
 				+ result.getDefinitionRevNumber());
 
-		LOGGER.info("Result = " + result.getThreatInfo().length);
+		LOGGER.debug("Result = " + result.getThreatInfo().length);
 		ThreatInfo[] virusIn = result.getThreatInfo();
 		for (int i = 0; i < virusIn.length; i++) {
 
-			LOGGER.info("File Name               : " + virusIn[i].getFileName());
-			LOGGER.info("Violation Name          : "
+			LOGGER.debug("File Name               : " + virusIn[i].getFileName());
+			LOGGER.debug("Violation Name          : "
 					+ virusIn[i].getViolationName());
 			if (virusIn[i].getThreatCategory().length() > 0) {
-				LOGGER.info("Non Viral Threat Category : "
+				LOGGER.debug("Non Viral Threat Category : "
 						+ virusIn[i].getThreatCategory());
 			}
-			LOGGER.info("Violation Id            : "
+			LOGGER.debug("Violation Id            : "
 					+ virusIn[i].getViolationId());
-			LOGGER.info("Disposition	        : " + virusIn[i].getDisposition());
-			LOGGER.info("File Unscannable		: "
+			LOGGER.debug("Disposition	        : " + virusIn[i].getDisposition());
+			LOGGER.debug("File Unscannable		: "
 					+ virusIn[i].getFileunscannable());
 		}
 
 		ConnectionAttempt[] conTry = result.getIPTries();
 		for (int x = 0; x < conTry.length; x++) {
-			LOGGER.info("Symantec Protection Engine IP		: "
+			LOGGER.debug("Symantec Protection Engine IP		: "
 					+ conTry[x].getIPAddress());
-			LOGGER.info("Symantec Protection Engine Port	: "
+			LOGGER.debug("Symantec Protection Engine Port	: "
 					+ conTry[x].getPortNumber());
-			LOGGER.info("Symantec Protection Engine Port	: "
+			LOGGER.debug("Symantec Protection Engine Port	: "
 					+ conTry[x].getErrString());
 		}
 

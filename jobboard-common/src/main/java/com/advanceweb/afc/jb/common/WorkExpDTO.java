@@ -26,7 +26,23 @@ public class WorkExpDTO {
 	private boolean bCurrentCareerLevel;
 	private boolean bPresent;
 	private int builderEmpId;
+	private int itemId;
+	private boolean editMode;
 	
+	
+	
+	public int getItemId() {
+		return itemId;
+	}
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
+	public boolean isEditMode() {
+		return editMode;
+	}
+	public void setEditMode(boolean editMode) {
+		this.editMode = editMode;
+	}
 	public String getJobTitle() {
 		return jobTitle;
 	}
