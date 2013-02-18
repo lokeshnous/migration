@@ -33,7 +33,7 @@
 	<!-- Spring Quartz framework for schedulers -->
 	<context:annotation-config />
 	<import resource="classpath:jobboard-scheduler.xml" />
-	<aop:aspectj-autoproxy ></aop:aspectj-autoproxy> 
+	<!--<aop:aspectj-autoproxy ></aop:aspectj-autoproxy> --> 
 	<!-- Logging Aspect --> 
 	<!-- <bean id="loggingAspect" class="com.advanceweb.afc.jb.logging.LoggingAspect" /> -->
 
