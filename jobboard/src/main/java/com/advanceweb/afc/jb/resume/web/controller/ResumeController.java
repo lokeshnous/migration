@@ -270,7 +270,6 @@ public class ResumeController extends AbstractController {
 		transCreateResume.transformResumeDTOToCreateResume(createResume,
 				resumeDTO);
 		ModelAndView model = populateResumeDropDowns();
-		ModelAndView model = populateResumeDropDowns();	
 		List<DropDownDTO> blockedCompanies = new ArrayList<DropDownDTO>();
 		if(null!=createResume.getUploadResumeId()){
 			 blockedCompanies = populateDropdownsService
@@ -326,8 +325,7 @@ public class ResumeController extends AbstractController {
 		} catch (JobBoardServiceException jbex) {
 			LOGGER.error("Error occured while saving Blocked Company Details",
 					jbex);
-		}
-		JSONObject deleteStatusJson = new JSONObject();		
+		}	
 		if (deleteStatus) {
 			deleteStatusJson.put("success", resumeDeleteSuccess);
 			return deleteStatusJson;
