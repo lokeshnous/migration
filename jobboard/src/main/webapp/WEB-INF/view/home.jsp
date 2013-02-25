@@ -42,8 +42,8 @@
 					<div class="ad_col_right">
 						<div id="adPageRightMiddle"> ${adPageRightMiddle} </div>
 						<div class="follow_us">
-							<h2>Follow Us</h2>
-							<p>Stay connected to the latest jobs.</p>
+							<h2>Stay Connected</h2>
+							<!-- <p>Stay connected to the latest jobs.</p> -->
 							<a href="${followuplinkfacebook}" target="_blank"><span class="social facebook_link">Facebook</span></a> 
 							<a href="${followuplinktwitter}" target="_blank"><span class="social twitter_link">Twitter</span></a> 
 							<a href="${followuplinkyoutube}" target="_blank"><span class="social youTube_link">YouTube</span></a>
@@ -85,7 +85,7 @@
 										<a class="cursor" onclick="showCareersPart('resumeBuilder')" id="mainResumeBuilderId">
 											<img src="../resources/images/CareerTools_A.jpg" />
 											<div class="toolsTextHolder">
-												<span class="jb">ADVANCE Resume Builder:</span><br /> Create or
+												<span class="jb"><i>ADVANCE</i> Resume Builder:</span><br /> Create or
 												upload an online resume and apply to jobs in healthcare instantly.
 								 			</div>
 										</a>
@@ -94,8 +94,7 @@
 										<a class="cursor" onclick="showCareersPart('messanger')" id="mainMessaangerId">
 										<img src="../resources/images/CareerTools_C.jpg" />
 											<div class="toolsTextHolder">
-												<span class="jb">ADVANCE Messenger:</span><br /> Save customized
-												job and event searches as well as e-mail notifications.
+												<span class="jb"><i>ADVANCE</i> Messenger:</span><br /> Save custom job searches and get email notifications.
 											</div>
 										</a>		
 										</li>
@@ -143,12 +142,12 @@
             <div class="normalList">Career Resource Center</div>
             </div>
             <div class="LeftContantLinks" id="resumeBuilderId">
-            <a class="cursor" onclick="showCareersSubPart('resumeBuilder')">ADVANCE Resume Builder</a>
-            <div class="normalList">ADVANCE Resume Builder</div>
+            <a class="cursor" onclick="showCareersSubPart('resumeBuilder')"><i>ADVANCE</i> Resume Builder</a>
+            <div class="normalList"><i>ADVANCE</i> Resume Builder</div>
             </div>
             <div class="LeftContantLinks" id="messaangerId">            
-            <a class="cursor" onclick="showCareersSubPart('messanger')">ADVANCE Messenger</a>   
-            <div class="normalList">ADVANCE Messenger</div>         
+            <a class="cursor" onclick="showCareersSubPart('messanger')"><i>ADVANCE</i> Messenger</a>   
+            <div class="normalList"><i>ADVANCE</i> Messenger</div>         
             </div>
           <!-- LeftContantLinksActive -->
           </div>

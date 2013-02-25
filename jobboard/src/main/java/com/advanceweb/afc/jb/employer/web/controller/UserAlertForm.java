@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.util.Date;
@@ -11,15 +18,34 @@ import java.util.Date;
 
 public class UserAlertForm {
 
+	/** The alert id. */
 	private int alertId;
+	
+	/** The alert t ype. */
 	private String alertTYpe;
+	
+	/** The job owner. */
 	private String jobOwner;
+	
+	/** The set date. */
 	private Date setDate;
+	
+	/** The user id. */
 	private int userId;
+	
+	/** The facility id. */
 	private int facilityId;
+	
+	/** The selected alerts. */
 	private String[] selectedAlerts;
+	
+	/** The sel job owner. */
 	private String selJobOwner;
+	
+	/** The sel jb owner id. */
 	private int selJbOwnerId;
+	
+	/** The facility alert id. */
 	private int facilityAlertId;
 
 	/**

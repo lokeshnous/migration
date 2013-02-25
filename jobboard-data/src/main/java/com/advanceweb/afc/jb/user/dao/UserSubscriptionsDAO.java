@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.user.dao;
 
 import java.util.List;
@@ -154,6 +161,11 @@ public interface UserSubscriptionsDAO {
 	 */
 	List<UserSubscriptionsDTO> getEnewsLetterSubList();
 	
+	/**
+	 * Gets the sub emailer list.
+	 *
+	 * @return the sub emailer list
+	 */
 	List<DropDownDTO> getSubEmailerList();
 
 	/**
@@ -166,12 +178,36 @@ public interface UserSubscriptionsDAO {
 	boolean saveFacilitySubscription(List<UserSubscriptionsDTO> listSubsDTO,
 			int facilityId);
 
+	/**
+	 * Gets the subscriptionscheck.
+	 *
+	 * @param userId the user id
+	 * @return the subscriptionscheck
+	 */
 	List<DropDownDTO> getSubscriptionscheck(int userId);
 
+	/**
+	 * Gets the subscriptionsdigital.
+	 *
+	 * @param userId the user id
+	 * @return the subscriptionsdigital
+	 */
 	List<DropDownDTO> getSubscriptionsdigital(int userId);
 
+	/**
+	 * Gets the subscriptionsletter.
+	 *
+	 * @param userId the user id
+	 * @return the subscriptionsletter
+	 */
 	List<DropDownDTO> getSubscriptionsletter(int userId);
 	
+	/**
+	 * Gets the subscriptions emailer.
+	 *
+	 * @param userId the user id
+	 * @return the subscriptions emailer
+	 */
 	List<DropDownDTO> getSubscriptionsEmailer(int userId);
 
 	/**
@@ -183,6 +219,12 @@ public interface UserSubscriptionsDAO {
 	 */
 	List<UserSubscriptionsDTO> getSelectedSub(int userId);
 	
+	/**
+	 * Gets the parent id.
+	 *
+	 * @param facilityId the facility id
+	 * @return the parent id
+	 */
 	int getParentId(int facilityId);
 	
 	/**

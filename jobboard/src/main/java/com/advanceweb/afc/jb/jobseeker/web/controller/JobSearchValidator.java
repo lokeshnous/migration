@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import java.util.List;
@@ -32,29 +39,38 @@ import com.advanceweb.afc.jb.lookup.service.LookupService;
 @Component("jobSearchValidator")
 public class JobSearchValidator {
 	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(JobSearchValidator.class);
 
+	/** The Constant CURRENT_URL. */
 	private static final String CURRENT_URL = "currentUrl";
 
+	/** The ajax msg. */
 	@Value("${ajaxMsg}")
 	private String ajaxMsg;
 
+	/** The dothtml extention. */
 	@Value("${dothtmlExtention}")
 	private String dothtmlExtention;
 
+	/** The ajax navigation path. */
 	@Value("${ajaxNavigationPath}")
 	private String ajaxNavigationPath;
 
+	/** The jb search val keyword. */
 	@Value("${jobSearchValidateKeyword}")
 	private String jbSearchValKeyword;
 
+	/** The jb search val city. */
 	@Value("${jobSearchValidateCity}")
 	private String jbSearchValCity;
 
+	/** The jb searh val city state. */
 	@Value("${jobSearchValidateCityState}")
 	private String jbSearhValCityState;
 	
+	/** The lookup service. */
 	@Autowired
 	private LookupService lookupService;
 
@@ -78,7 +94,18 @@ public class JobSearchValidator {
 								MMJBCommonConstants.APPLY_TO_URL))) {
 			status = false;
 			jsonObject.put("applyMethod", jobApplyTypeDTO.getApplyMethod());
-			jsonObject.put("applyLink", jobApplyTypeDTO.getApplyLink());
+			boolean httpsStatus = false;
+			String finalUrl = jobApplyTypeDTO.getApplyLink();
+			if (jobApplyTypeDTO.getApplyLink().startsWith("https://")) {
+				httpsStatus = true;
+
+			} else if (jobApplyTypeDTO.getApplyLink().startsWith("http://")) {
+				httpsStatus = true;
+			}
+			if (!httpsStatus) {
+				finalUrl = "http://" + jobApplyTypeDTO.getApplyLink();
+			}
+			jsonObject.put("applyLink", finalUrl);
 		}
 		return status;
 	}

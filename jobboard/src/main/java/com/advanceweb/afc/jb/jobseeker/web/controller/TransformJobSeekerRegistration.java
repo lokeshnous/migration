@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import java.util.ArrayList;
@@ -144,6 +151,13 @@ public class TransformJobSeekerRegistration {
 		return dto;
 	}
 
+	/**
+	 * Transform dto to profile attrib form.
+	 *
+	 * @param registerDTO the register dto
+	 * @param userDTO the user dto
+	 * @return the list
+	 */
 	public List<JobSeekerProfileAttribForm> transformDTOToProfileAttribForm(
 			JobSeekerRegistrationDTO registerDTO, UserDTO userDTO) {
 

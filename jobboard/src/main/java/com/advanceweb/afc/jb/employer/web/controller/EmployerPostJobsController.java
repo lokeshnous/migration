@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.util.Date;
@@ -30,32 +37,49 @@ import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 @RequestMapping("/employerPostJobs")
 public class EmployerPostJobsController {
 	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(EmployerPostJobsController.class);
 
+	/** The advance web address. */
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
 	
+	/** The sales web address. */
 	@Value("${salesWebAddress}")
 	private String salesWebAddress;
 
+	/** The gold or platinum pricing req body. */
 	@Value("${goldOrPlatinumPricingReqBody}")
 	private String goldOrPlatinumPricingReqBody;
 
+	/** The gold or platinum pricing req sub. */
 	@Value("${goldOrPlatinumPricingReqSub}")
 	private String goldOrPlatinumPricingReqSub;
 
+	/** The email service. */
 	@Autowired
 	private MMEmailService emailService;
 
+	/** The fetch adm facility conatact. */
 	@Autowired
 	private PaymentGatewayService fetchAdmFacilityConatact;
 	
+	/** The Constant COMPANYNAME. */
 	private static final String COMPANYNAME = "?Companyname";
+	
+	/** The email configuration. */
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
 
+	/**
+	 * Send email for gold.
+	 *
+	 * @param session the session
+	 * @param packageId the package id
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/sendEmailForGold")
 	public ModelAndView sendEmailForGold(HttpSession session,
 			@RequestParam("package") String packageId) {
@@ -163,6 +187,16 @@ public class EmployerPostJobsController {
 		return model;
 	}
 
+	/**
+	 * Send email for platinum.
+	 *
+	 * @param employerEmailDTO the employer email dto
+	 * @param companyName the company name
+	 * @param phoneNo the phone no
+	 * @param userName the user name
+	 * @param userEmail the user email
+	 * @throws AddressException the address exception
+	 */
 	private void sendEmailForPlatinum(EmailDTO employerEmailDTO,
 			String companyName, String phoneNo, String userName,
 			String userEmail) throws AddressException {

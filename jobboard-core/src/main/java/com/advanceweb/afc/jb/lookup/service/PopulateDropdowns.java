@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.lookup.service;
 
 import java.util.List;
@@ -166,26 +173,87 @@ public interface PopulateDropdowns {
 	 */
 	List<DropDownDTO> populateDropdown(String dropDownName);
 
+	/**
+	 * Populate resume dropdown.
+	 *
+	 * @param dropdownName the dropdown name
+	 * @return the list
+	 */
 	List<ResumeAttribListDTO> populateResumeDropdown(String dropdownName);
 
+	/**
+	 * Populate resume builder dropdowns.
+	 *
+	 * @param dropdownName the dropdown name
+	 * @return the list
+	 */
 	List<DropDownDTO> populateResumeBuilderDropdowns(String dropdownName);
 
+	/**
+	 * Populate education degrees dropdowns.
+	 *
+	 * @return the list
+	 */
 	List<DropDownDTO> populateEducationDegreesDropdowns();
 
+	/**
+	 * Populate job owners dropdown.
+	 *
+	 * @param facilityId the facility id
+	 * @return the list
+	 */
 	List<DropDownDTO> populateJobOwnersDropdown(int facilityId);
 
+	/**
+	 * Populate branding template dropdown.
+	 *
+	 * @param facilityId the facility id
+	 * @param userId the user id
+	 * @return the list
+	 */
 	List<DropDownDTO> populateBrandingTemplateDropdown(int facilityId,
 			int userId);
 
+	/**
+	 * Populate job posting type dropdowns.
+	 *
+	 * @param facilityId the facility id
+	 * @return the list
+	 */
 	List<DropDownDTO> populateJobPostingTypeDropdowns(int facilityId);
 
+	/**
+	 * Populate job posting type dropdown.
+	 *
+	 * @param facilityId the facility id
+	 * @param jobPostType the job post type
+	 * @return the list
+	 */
 	List<DropDownDTO> populateJobPostingTypeDropdown(int facilityId,
 			int jobPostType);
 
+	/**
+	 * Populate city auto complete.
+	 *
+	 * @param city the city
+	 * @return the list
+	 */
 	List<String> populateCityAutoComplete(String city);
 
+	/**
+	 * Populate state auto complete.
+	 *
+	 * @param city the city
+	 * @return the string
+	 */
 	String populateStateAutoComplete(String city);
 
+	/**
+	 * Populate postal code auto complete.
+	 *
+	 * @param postalCode the postal code
+	 * @return the list
+	 */
 	List<String> populatePostalCodeAutoComplete(String postalCode);
 
 	/**
@@ -197,14 +265,46 @@ public interface PopulateDropdowns {
 	 */
 	List<DropDownDTO> populateCompanyNames(int facilityid, boolean isHighlightFacility);
 
+	/**
+	 * Populate template auto complete.
+	 *
+	 * @param company the company
+	 * @return the list
+	 */
 	List<DropDownDTO> populateTemplateAutoComplete(String company);
 
+	/**
+	 * Gets the postal code.
+	 *
+	 * @param city the city
+	 * @param state the state
+	 * @return the postal code
+	 */
 	String getPostalCode(String city, String state);
 
+	/**
+	 * Gets the country.
+	 *
+	 * @param city the city
+	 * @param state the state
+	 * @param postalCode the postal code
+	 * @return the country
+	 */
 	String getCountry(String city, String state, String postalCode);
 
+	/**
+	 * Populate location.
+	 *
+	 * @param postalCode the postal code
+	 * @return the location dto
+	 */
 	LocationDTO populateLocation(String postalCode);
 
+	/**
+	 * Gets the job status list.
+	 *
+	 * @return the job status list
+	 */
 	Map<String, String> getJobStatusList();
 
 	/**

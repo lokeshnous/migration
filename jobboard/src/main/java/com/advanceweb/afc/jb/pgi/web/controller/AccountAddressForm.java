@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.pgi.web.controller;
 
 /**
@@ -9,16 +16,37 @@ package com.advanceweb.afc.jb.pgi.web.controller;
 public class AccountAddressForm {
 
 	// Account Address information
+	/** The first name. */
 	private String firstName;
+	
+	/** The middle name. */
 	private String middleName;
+	
+	/** The last name. */
 	private String lastName;
+	
+	/** The email. */
 	private String email;
+	
+	/** The company. */
 	private String company;
+	
+	/** The street address. */
 	private String streetAddress;
+	
+	/** The city or town. */
 	private String cityOrTown;
+	
+	/** The state. */
 	private String state;
+	
+	/** The country. */
 	private String country;
+	
+	/** The zip code. */
 	private String zipCode;
+	
+	/** The phone. */
 	private String phone;
 	
 	

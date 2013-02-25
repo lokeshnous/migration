@@ -233,7 +233,7 @@ var id = searchJobId.replace("viewSavedSearch", "");
 				<div class="popUpButtonRow">
 					<a href="<%=request.getContextPath()%>/search/findJobPage.html?isNewSearch=true">
 						<h3>${msg.jsCreateNewSavedSearch}</h3>
-					</a> <em class="lineHeight16">${msg.jsSavedSearchInfo}</em>
+					</a> <em class="lineHeight16">You can create up to 5 saved searches</em>
 				</div>			
 			<div class="popUpButtonRow">
 			 <c:if test="${not empty saveSearchedJobsDTOList}">

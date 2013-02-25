@@ -18,6 +18,12 @@ import com.advanceweb.afc.jb.data.entities.AdmPackage;
 @Component("resumePackageConvertionHelper")
 public class ResumePackageConvertionHelper {
 	
+	/**
+	 * Transform to resume search package dto list.
+	 *
+	 * @param admPackageList the adm package list
+	 * @return the list
+	 */
 	public List<ResumePackageDTO> transformToResumeSearchPackageDTOList(List<AdmPackage> admPackageList){
 		List<ResumePackageDTO> resSearchPackageDTOList = new ArrayList<ResumePackageDTO>();
 		ResumePackageDTO resSearchPackageDTO = null;

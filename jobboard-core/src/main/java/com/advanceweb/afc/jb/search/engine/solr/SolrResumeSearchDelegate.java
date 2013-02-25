@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.search.engine.solr;
 
 import java.util.ArrayList;
@@ -25,17 +32,26 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 public class SolrResumeSearchDelegate extends AbstractSolrSearchDelegate
 		implements ResumeSearchDelegate {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(SolrResumeSearchDelegate.class);
 	
+	/** The Constant POSITION_STRING. */
 	private static final String POSITION_STRING = "position";
 	
+	/** The location dao. */
 	@Autowired
 	private LocationDAO locationDAO;
 	
+	/** The resume search dao. */
 	@Autowired
 	private ResumeSearchDAO resumeSearchDAO;
 	
+	/**
+	 * Instantiates a new solr resume search delegate.
+	 *
+	 * @param searchIndex the search index
+	 */
 	public SolrResumeSearchDelegate(SearchIndex searchIndex) {
 		super(searchIndex);
 	}
@@ -66,7 +82,7 @@ public class SolrResumeSearchDelegate extends AbstractSolrSearchDelegate
 		 * Check whether all the parameters coming from the UI is blank or not.
 		 */
 		if (validateInputParams(inputParams)) {
-			LOGGER.info("Empty Search criteria. Please enter a search criteria to search resumes.");
+			LOGGER.debug("Empty Search criteria. Please enter a search criteria to search resumes.");
 			return null;
 		}
 
@@ -91,7 +107,7 @@ public class SolrResumeSearchDelegate extends AbstractSolrSearchDelegate
 				inputParams, SolrResumeDTO.class);
 
 		if (searchResult == null) {
-			LOGGER.info("Resume not Found...");
+			LOGGER.debug("Resume not Found...");
 			return null;
 
 		} else {
@@ -138,10 +154,10 @@ public class SolrResumeSearchDelegate extends AbstractSolrSearchDelegate
 	private boolean validateInputParams(final Map<String, String> inputParams) {
 
 		/*if (StringUtils.isEmpty(inputParams.get(SearchParamDTO.SEARCH_SEQ))) {
-			LOGGER.info(" Sequence ID is not present in the Search query.");
+			LOGGER.debug(" Sequence ID is not present in the Search query.");
 		}*/
 
-		LOGGER.info("Validating search inputs"
+		LOGGER.debug("Validating search inputs"
 				+ inputParams.get(SearchParamDTO.KEYWORDS) + ","
 				+ inputParams.get(SearchParamDTO.CITY_STATE) + ","
 				+ inputParams.get(SearchParamDTO.RADIUS));
@@ -240,7 +256,7 @@ public class SolrResumeSearchDelegate extends AbstractSolrSearchDelegate
 									+ e);
 				}
 			} else {
-				LOGGER.info("Please Enter City and State by provinding comma(,) in between them. ");
+				LOGGER.debug("Please Enter City and State by provinding comma(,) in between them. ");
 			}
 
 		}

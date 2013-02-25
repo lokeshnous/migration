@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.service.impl;
 
 import java.util.List;
@@ -23,9 +30,11 @@ import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 
+	/** The branding template dao. */
 	@Autowired
 	private BrandingTemplateDAO brandingTemplateDAO;
 
+	/** The branding template delegate. */
 	@Autowired
 	private BrandingTemplateDelegate brandingTemplateDelegate;
 
@@ -157,11 +166,17 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 		return brandingTemplateDAO.getBrandPackage(productId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.service.BrandingTemplateService#getParentId(int)
+	 */
 	@Override
 	public int getParentId(int facilityId) {
 		return brandingTemplateDAO.getParentId(facilityId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.service.BrandingTemplateService#getParentUserId(int, int)
+	 */
 	@Override
 	public int getParentUserId(int userId, int parentFacilityId) {
 		return brandingTemplateDAO.getParentUserId(userId, parentFacilityId);

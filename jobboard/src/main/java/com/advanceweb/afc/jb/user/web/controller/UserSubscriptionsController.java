@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.user.web.controller;
 
 import java.util.ArrayList;
@@ -36,20 +43,28 @@ import com.advanceweb.afc.jb.user.UserSubscriptionService;
 @Controller
 @RequestMapping("/subscriptions")
 public class UserSubscriptionsController {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(UserSubscriptionsController.class);
+	
+	/** The userubscription. */
 	@Autowired
 	private TransformUserubscription userubscription;
 
+	/** The user sub service. */
 	@Autowired
 	private UserSubscriptionService userSubService;
 
+	/** The populate dropdowns service. */
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
 
+	/** The profile registration. */
 	@Autowired
 	private ProfileRegistration profileRegistration;
 
+	/** The transform job seeker registration. */
 	@Autowired
 	private TransformJobSeekerRegistration transformJobSeekerRegistration;
 

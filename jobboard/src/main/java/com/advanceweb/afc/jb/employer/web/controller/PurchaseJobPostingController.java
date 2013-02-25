@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.io.IOException;
@@ -35,14 +42,21 @@ import com.advanceweb.afc.jb.job.service.JobPostService;
 @SessionAttributes("purchaseJobPostForm")
 public class PurchaseJobPostingController {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(PurchaseJobPostingController.class);
+	
+	/** The Constant PURCHASE_JOB_POSTINGS. */
 	private static final String PURCHASE_JOB_POSTINGS = "empPurchaseJobPostingsPopup";
+	
+	/** The Constant _JOBPOST_JSON. */
 	private static final String _JOBPOST_JSON = "jobPostJson";
 
+	/** The employer job post. */
 	@Autowired
 	private JobPostService employerJobPost;
 
+	/** The transform job post. */
 	@Autowired
 	private TransformJobPost transformJobPost;
 	

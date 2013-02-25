@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.search.dao;
 
 import java.util.ArrayList;
@@ -28,11 +35,18 @@ import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 @Repository("locationDAO")
 public class LocationDAOImpl implements LocationDAO {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(LocationDAOImpl.class);
 
+	/** The hibernate template. */
 	private HibernateTemplate hibernateTemplate;
 
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactory the new hibernate template
+	 */
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
@@ -84,7 +98,7 @@ public class LocationDAOImpl implements LocationDAO {
 	public List<LocationDTO> getLocationByCityState(String city, String state)
 			throws JobBoardDataException {
 
-		LOGGER.info("City=[" + city + "], State=[" + state + "]");
+		LOGGER.debug("City=[" + city + "], State=[" + state + "]");
 		List<LocationDTO> latLonList = new ArrayList<LocationDTO>();
 		try {
 			@SuppressWarnings("unchecked")
@@ -105,7 +119,7 @@ public class LocationDAOImpl implements LocationDAO {
 			}
 
 		} catch (HibernateException e) {
-			LOGGER.debug(e);
+			LOGGER.error(e);
 			throw new JobBoardDataException(
 					"Error while fetching the latitude and longitude By CityState from the Database..."
 							+ e);
@@ -124,7 +138,7 @@ public class LocationDAOImpl implements LocationDAO {
 
 	public List<LocationDTO> getPostcodeLocationByKeyword(String keywords) {
 
-		LOGGER.info("The value of passes keyword is " + keywords);
+		LOGGER.debug("The value of passes keyword is " + keywords);
 		List<LocationDTO> locationList = new ArrayList<LocationDTO>();
 
 		Query query = hibernateTemplate
@@ -148,7 +162,7 @@ public class LocationDAOImpl implements LocationDAO {
 			}
 
 		}
-		LOGGER.info("Location List size after Post code search is "
+		LOGGER.debug("Location List size after Post code search is "
 				+ locationList.size());
 		return locationList;
 	}
@@ -163,7 +177,7 @@ public class LocationDAOImpl implements LocationDAO {
 
 	public List<LocationDTO> getCityStateLocationByKeyword(String keywords) {
 
-		LOGGER.info("The value of passes keyword is " + keywords);
+		LOGGER.debug("The value of passes keyword is " + keywords);
 		List<LocationDTO> locationList = new ArrayList<LocationDTO>();
 
 		@SuppressWarnings("unchecked")
@@ -190,7 +204,7 @@ public class LocationDAOImpl implements LocationDAO {
 
 		}
 
-		LOGGER.info("Location List size after city state search is "
+		LOGGER.debug("Location List size after city state search is "
 				+ locationList.size());
 		return locationList;
 
@@ -206,7 +220,7 @@ public class LocationDAOImpl implements LocationDAO {
 
 	public List<LocationDTO> getCityAndStateLocationByKeyword(String keywords) {
 
-		LOGGER.info("The value of passes keyword is " + keywords);
+		LOGGER.debug("The value of passes keyword is " + keywords);
 		String[] data = keywords.split(",");
 		List<LocationDTO> locationList = new ArrayList<LocationDTO>();
 
@@ -234,7 +248,7 @@ public class LocationDAOImpl implements LocationDAO {
 
 		}
 
-		LOGGER.info("Location List size after city state search is "
+		LOGGER.debug("Location List size after city state search is "
 				+ locationList.size());
 		return locationList;
 
@@ -249,7 +263,7 @@ public class LocationDAOImpl implements LocationDAO {
 	 */
 	@Override
 	public String getStateFullName(String stateShortForm) {
-		LOGGER.info("The short form of state is :" + stateShortForm);
+		LOGGER.debug("The short form of state is :" + stateShortForm);
 		String stateFullName = null;
 
 		Query query = hibernateTemplate
@@ -267,10 +281,13 @@ public class LocationDAOImpl implements LocationDAO {
 			stateFullName = jpLocation.getStateFullname();
 		}
 
-		LOGGER.info(" The state full name is :" + stateFullName);
+		LOGGER.debug(" The state full name is :" + stateFullName);
 		return stateFullName;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.search.dao.LocationDAO#findAll()
+	 */
 	@Override
 	public List<LocationDTO> findAll() {
 		List<JpLocation> entityList = hibernateTemplate
@@ -282,6 +299,12 @@ public class LocationDAOImpl implements LocationDAO {
 		return dtoList;
 	}
 
+	/**
+	 * Convert location entity.
+	 *
+	 * @param entity the entity
+	 * @return the location dto
+	 */
 	private LocationDTO convertLocationEntity(JpLocation entity) {
 		LocationDTO dto = new LocationDTO();
 		dto.setArea(entity.getArea());
@@ -297,6 +320,9 @@ public class LocationDAOImpl implements LocationDAO {
 		return dto;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.search.dao.LocationDAO#validateCityStateZip(java.lang.String, java.lang.String, java.lang.String)
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean validateCityStateZip(String city,String state,String zipCode) throws JobBoardDataException {

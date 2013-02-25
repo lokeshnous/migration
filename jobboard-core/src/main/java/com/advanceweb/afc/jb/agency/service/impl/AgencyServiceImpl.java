@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.agency.service.impl;
 
 import java.util.List;
@@ -21,15 +28,22 @@ import com.advanceweb.afc.jb.user.dao.UserDao;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 public class AgencyServiceImpl implements AgencyService {
 
+	/** The user dao. */
 	@Autowired
 	private UserDao userDAO;
 
+	/** The agency delegate. */
 	@Autowired
 	private AgencyDelegate agencyDelegate;
+	
+	/** The agency dao. */
 	@Autowired
 	private AgencyDAO agencyDAO;
 
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.agency.service.AgencyService#getUserByUserId(int)
+	 */
 	@Override
 	public UserDTO getUserByUserId(int userId) {
 		return userDAO.getUserByUserId(userId);

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.dao;
 
 import java.util.ArrayList;
@@ -24,6 +31,7 @@ import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmUserFacility;
+import com.advanceweb.afc.jb.data.entities.JpJob;
 import com.advanceweb.afc.jb.employer.helper.EmployerRegistrationConversionHelper;
 
 /**
@@ -40,15 +48,29 @@ import com.advanceweb.afc.jb.employer.helper.EmployerRegistrationConversionHelpe
 public class ManageFeaturedEmployerProfileDAOImpl implements
 		ManageFeaturedEmployerProfileDAO {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(ManageFeaturedEmployerProfileDAOImpl.class);
+
+	/** The session factory. */
 	@Autowired
 	private SessionFactory sessionFactory;
+
+	/** The employer registration conversion helper. */
 	@Autowired
 	private EmployerRegistrationConversionHelper employerRegistrationConversionHelper;
 
+	/** The hibernate template careers. */
 	private HibernateTemplate hibernateTemplateCareers;
 
+	/**
+	 * Sets the hibernate template.
+	 * 
+	 * @param sessionFactoryMerionTracker
+	 *            the session factory merion tracker
+	 * @param sessionFactory
+	 *            the session factory
+	 */
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
@@ -109,7 +131,7 @@ public class ManageFeaturedEmployerProfileDAOImpl implements
 					.createCriteria(AdmFacility.class)
 					.add(Restrictions.le("feStartDt", new Date()))
 					.add(Restrictions.ge("feEndDt", new Date()))
-					.add(Restrictions.eq("featuredEmp", (byte)1)).list();
+					.add(Restrictions.eq("featuredEmp", (byte) 1)).list();
 
 			for (Iterator<?> iterator = admFacilityList.iterator(); iterator
 					.hasNext();) {
@@ -139,6 +161,12 @@ public class ManageFeaturedEmployerProfileDAOImpl implements
 		return companyProfileDTOList;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageFeaturedEmployerProfileDAO#
+	 * getEmployerDetails(long)
+	 */
 	@Override
 	public CompanyProfileDTO getEmployerDetails(long employerId) {
 		CompanyProfileDTO companyProfileDTO = new CompanyProfileDTO();
@@ -181,6 +209,12 @@ public class ManageFeaturedEmployerProfileDAOImpl implements
 		return companyProfileDTO;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageFeaturedEmployerProfileDAO#
+	 * getEmployerAccountDetails(long)
+	 */
 	@Override
 	public List<EmployerProfileDTO> getEmployerAccountDetails(long employerId) {
 		List<EmployerProfileDTO> employerProfileDTOs = new ArrayList<EmployerProfileDTO>();
@@ -235,6 +269,12 @@ public class ManageFeaturedEmployerProfileDAOImpl implements
 		return admFacilityDTOList;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageFeaturedEmployerProfileDAO#
+	 * getEmployerList(int, int)
+	 */
 	@Override
 	public List<CompanyProfileDTO> getEmployerList(int startRow, int endRow) {
 		List<CompanyProfileDTO> companyProfileDTOList = new ArrayList<CompanyProfileDTO>();
@@ -246,9 +286,9 @@ public class ManageFeaturedEmployerProfileDAOImpl implements
 					.createCriteria(AdmFacility.class)
 					.add(Restrictions.le("feStartDt", new Date()))
 					.add(Restrictions.ge("feEndDt", new Date()))
-					.add(Restrictions.eq("featuredEmp", (byte)1))
+					.add(Restrictions.eq("featuredEmp", (byte) 1))
 					.setFirstResult(startRow).setMaxResults(endRow).list();
-			
+
 			for (Iterator<?> iterator = admFacilityList.iterator(); iterator
 					.hasNext();) {
 
@@ -277,31 +317,44 @@ public class ManageFeaturedEmployerProfileDAOImpl implements
 		return companyProfileDTOList;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageFeaturedEmployerProfileDAO#
+	 * getEmployerListCount()
+	 */
 	@Override
 	public Long getEmployerListCount() {
 		Long employerListCount = 0L;
 		try {
 			Session session = sessionFactory.openSession();
 			// modified to bring all facility groups in futured employer list.
-			/*employerListCount =(Long) hibernateTemplateCareers
-					.getSessionFactory()
-					.getCurrentSession()
-					.createQuery(
-							"SELECT count(a) from AdmFacility a where a.facilityParentId = -1")
-					.uniqueResult(); */
+			/*
+			 * employerListCount =(Long) hibernateTemplateCareers
+			 * .getSessionFactory() .getCurrentSession() .createQuery(
+			 * "SELECT count(a) from AdmFacility a where a.facilityParentId = -1"
+			 * ) .uniqueResult();
+			 */
 			employerListCount = (Long) session
 					.createCriteria(AdmFacility.class)
 					.add(Restrictions.le("feStartDt", new Date()))
-					.add(Restrictions.eq("featuredEmp", (byte)1))
-					.add(Restrictions.ge("feEndDt", new Date())).setProjection(Projections.rowCount()).uniqueResult();
-					
+					.add(Restrictions.eq("featuredEmp", (byte) 1))
+					.add(Restrictions.ge("feEndDt", new Date()))
+					.setProjection(Projections.rowCount()).uniqueResult();
+
 		} catch (HibernateException e) {
 			LOGGER.error(e);
 		}
 
 		return employerListCount;
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageFeaturedEmployerProfileDAO#
+	 * getParentId(int)
+	 */
 	@Override
 	public int getParentId(int facilityId) {
 		int roleId = 0;
@@ -326,7 +379,7 @@ public class ManageFeaturedEmployerProfileDAOImpl implements
 		}
 		return facilityId;
 	}
-	
+
 	/**
 	 * This method returns the facilityId of FACILITY_GROUP if the facility
 	 * belongs to FACILITY_GROUP
@@ -359,32 +412,45 @@ public class ManageFeaturedEmployerProfileDAOImpl implements
 		}
 		return facilityModId;
 	}
-	
+
 	/**
-	 * The method helps to validate featured employer start and end dates
-	 * if expires then method return false otherwise true.
+	 * This method is to get the facilityId of job
+	 * 
+	 * @param jobId
+	 * @return
 	 */
-	/*public boolean validateFeaturedEmp(int facilityId){
-		boolean status = false;
-		Session session = sessionFactory.openSession();
-
+	@Override
+	public int getFaciliyId(int jobId) {
+		int facilityId = 0;
 		try {
-
-			@SuppressWarnings("unchecked")
-			List<AdmFacility> admFacilityList = session
-					.createCriteria(AdmFacility.class)
-					.add(Restrictions.le("feStartDt", new Date()))
-					.add(Restrictions.ge("feEndDt", new Date()))
-					.add(Restrictions.eq("", facilityId)).list();
-
-			if(!admFacilityList.isEmpty()){
-				status = true;
-			}
-		} catch (HibernateException e) {
-			LOGGER.error(e.getMessage(), e);
+			JpJob job = hibernateTemplateCareers.get(JpJob.class, jobId);
+			facilityId = job.getAdmFacility().getFacilityId();
+		} catch (DataAccessException e) {
+			LOGGER.error("Error occured while getting facilityId for job", e);
 		}
-		
-		return status;
-	}*/
+		return facilityId;
+	}
+
+	/**
+	 * The method helps to validate featured employer start and end dates if
+	 * expires then method return false otherwise true.
+	 */
+	/*
+	 * public boolean validateFeaturedEmp(int facilityId){ boolean status =
+	 * false; Session session = sessionFactory.openSession();
+	 * 
+	 * try {
+	 * 
+	 * @SuppressWarnings("unchecked") List<AdmFacility> admFacilityList =
+	 * session .createCriteria(AdmFacility.class)
+	 * .add(Restrictions.le("feStartDt", new Date()))
+	 * .add(Restrictions.ge("feEndDt", new Date())) .add(Restrictions.eq("",
+	 * facilityId)).list();
+	 * 
+	 * if(!admFacilityList.isEmpty()){ status = true; } } catch
+	 * (HibernateException e) { LOGGER.error(e.getMessage(), e); }
+	 * 
+	 * return status; }
+	 */
 
 }

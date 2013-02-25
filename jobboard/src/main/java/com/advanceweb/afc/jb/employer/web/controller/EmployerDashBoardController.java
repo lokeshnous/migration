@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.io.FileInputStream;
@@ -80,47 +87,75 @@ import com.advanceweb.common.client.ClientContext;
 @RequestMapping("/employer")
 public class EmployerDashBoardController extends AbstractController {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(EmployerDashBoardController.class);
 
+	/** The facility service. */
 	@Autowired
 	private FacilityService facilityService;
 
+	/** The resume search service. */
 	@Autowired
 	private ResumeSearchService resumeSearchService;
 
+	/** The populate dropdowns service. */
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
 
+	/** The user sub service. */
 	@Autowired
 	private UserSubscriptionService userSubService;
 
+	/** The ad service. */
 	@Autowired
 	private AdService adService;
 
+	/** The userubscription. */
 	@Autowired
 	private TransformUserubscription userubscription;
 
+	/** The inventory service. */
 	@Autowired
 	private JobPostInventoryService inventoryService;
 	
+	/** The employer job post. */
 	@Autowired
 	private JobPostService employerJobPost;
 
+	/** The login service. */
 	@Autowired
 	private LoginService loginService;
 	
+	/** The job search service. */
 	@Autowired
 	private JobSearchService jobSearchService;
 	
+	/** The funnel chart path. */
 	private @Value("${funnelChartPath}")
 	String funnelChartPath;
 	
+	/** The Constant EMPLOYERDASHBOARDFORM. */
 	private static final String EMPLOYERDASHBOARDFORM = "employerDashBoardForm";
+	
+	/** The Constant JBPOSTTOTALLIST. */
 	private static final String JBPOSTTOTALLIST = "jbPostTotalList";
+	
+	/** The Constant COUNT. */
 	private static final String COUNT = "count";
+	
+	/** The Constant AVAQUANTITY. */
 	private static final String AVAQUANTITY = "avaQuantity";
 
+	/**
+	 * Display dash board.
+	 *
+	 * @param employerDashBoardForm the employer dash board form
+	 * @param session the session
+	 * @param request the request
+	 * @return the model and view
+	 * @throws JobBoardServiceException the job board service exception
+	 */
 	@RequestMapping("/employerDashBoard")
 	public ModelAndView displayDashBoard(
 			@ModelAttribute(EMPLOYERDASHBOARDFORM) MetricsForm employerDashBoardForm,
@@ -344,6 +379,18 @@ public class EmployerDashBoardController extends AbstractController {
 		return jbPostTotalList;
 	}
 
+	/**
+	 * Employer metrics.
+	 *
+	 * @param session the session
+	 * @param startDate the start date
+	 * @param endDate the end date
+	 * @param selEmployerId the sel employer id
+	 * @param employerDashBoardForm the employer dash board form
+	 * @param result the result
+	 * @return the model and view
+	 * @throws JobBoardException the job board exception
+	 */
 	@RequestMapping(value = "/showMertics", method = RequestMethod.GET)
 	public ModelAndView employerMetrics(
 			HttpSession session,
@@ -480,6 +527,19 @@ public class EmployerDashBoardController extends AbstractController {
 
 	}
 
+	/**
+	 * Gets the xls.
+	 *
+	 * @param request the request
+	 * @param response the response
+	 * @param session the session
+	 * @param workbook the workbook
+	 * @return the xls
+	 * @throws ClassNotFoundException the class not found exception
+	 * @throws ServletRequestBindingException the servlet request binding exception
+	 * @throws JobBoardServiceException the job board service exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@RequestMapping("/getExcelSheet")
 	public ModelAndView getXLS(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session,

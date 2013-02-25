@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.jobseeker.service;
 
 import org.apache.log4j.Logger;
@@ -23,10 +30,17 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 public class JobSeekerRegistration implements ProfileRegistration {
 
+	/** The job seeker profile dto. */
 	public JobSeekerProfileDTO jobSeekerProfileDTO;
+	
+	/** The job seeker registration dao. */
 	@Autowired
 	public JobSeekerRegistrationDAO jobSeekerRegistrationDAO;
+	
+	/** The resume dto. */
 	public ResumeDTO resumeDTO;
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(JobSeekerRegistration.class);
 
@@ -79,29 +93,44 @@ public class JobSeekerRegistration implements ProfileRegistration {
 		return jobSeekerRegistrationDAO.getJobSeekerDetails(jobseekerId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.ProfileRegistration#changePassword(com.advanceweb.afc.jb.common.ProfileDTO)
+	 */
 	@Override
 	public boolean changePassword(ProfileDTO profileDTO) {
 		JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileDTO;
 		return jobSeekerRegistrationDAO.jsChangePassword(jsRegistrationDTO);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.ProfileRegistration#validatePassword(com.advanceweb.afc.jb.common.ProfileDTO)
+	 */
 	@Override
 	public boolean validatePassword(ProfileDTO profileDTO) {
 		JobSeekerRegistrationDTO jsRegistrationDTO = (JobSeekerRegistrationDTO) profileDTO;
 		return jobSeekerRegistrationDAO.validatePassword(jsRegistrationDTO);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.ProfileRegistration#validateEmail(java.lang.String)
+	 */
 	@Override
 	public boolean validateEmail(String email) {
 		return jobSeekerRegistrationDAO.validateEmail(email);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.ProfileRegistration#getProfileAttributes()
+	 */
 	@Override
 	public ProfileDTO getProfileAttributes() {
 
 		return jobSeekerRegistrationDAO.getProfileAttributes();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.ProfileRegistration#validateProfileAttributes(int)
+	 */
 	public boolean validateProfileAttributes(int jobseekerId) {
 		return jobSeekerRegistrationDAO.validateProfileAttributes(jobseekerId);
 	}

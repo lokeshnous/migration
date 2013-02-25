@@ -1,9 +1,17 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.security;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -18,19 +26,25 @@ import org.springframework.stereotype.Service;
 @Service("authenticationDelegate")
 public class DatabaseAuthenticationDelegateImpl implements
 		DatabaseAuthenticationDelegate {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(DatabaseAuthenticationDelegateImpl.class);
 	
+	/** The advancepass url. */
 	private @Value("${advancepass.authentication.url}")
 	String advancepassUrl;
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.security.DatabaseAuthenticationDelegate#validateUser(java.lang.String, java.lang.String)
+	 */
 	@Override
 	public boolean validateUser(String email, String password) {
 		URLConnection connection=null;
 		String cookieValue=null;
 		boolean returnValue=false;
 		try {
-		connection = getConnection(email, password);
+		connection = getConnection(email, URLEncoder.encode(password,"UTF-8"));
 		} catch (Exception e) {
 			LOGGER.debug("Exception while creating the URLConnection for authentication"+e.getMessage());
 		}
@@ -41,6 +55,9 @@ public class DatabaseAuthenticationDelegateImpl implements
 		return returnValue;
 		}
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.security.DatabaseAuthenticationDelegate#getCookieValue(java.net.URLConnection)
+	 */
 	public String getCookieValue(URLConnection connection){
 		String cookieValue=null;
 		if(connection!=null){
@@ -60,6 +77,10 @@ public class DatabaseAuthenticationDelegateImpl implements
 		}
 	return cookieValue;
 }
+	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.security.DatabaseAuthenticationDelegate#getConnection(java.lang.String, java.lang.String)
+	 */
 	public URLConnection getConnection(String email, String password)
 			throws IOException, MalformedURLException {
 		URLConnection connection=null;

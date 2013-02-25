@@ -1,10 +1,19 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common;
 
 public class AdminDTO {
 //	private String userEmail;
-	private String empOrAgencyEmail;
+	/** The emp or agency email. */
+private String empOrAgencyEmail;
 //	private String password;
-	private int adminUserId;
+	/** The admin user id. */
+private int adminUserId;
 	
 	/**
 	 * @return the userEmail
@@ -25,6 +34,11 @@ public class AdminDTO {
 		return adminUserId;
 	}
 
+	/**
+	 * Sets the admin user id.
+	 *
+	 * @param adminUserId the new admin user id
+	 */
 	public void setAdminUserId(int adminUserId) {
 		this.adminUserId = adminUserId;
 	}

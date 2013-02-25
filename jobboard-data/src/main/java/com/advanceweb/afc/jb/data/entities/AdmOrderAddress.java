@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
@@ -20,52 +27,68 @@ import javax.persistence.Table;
 @Table(name="adm_order_address")
 public class AdmOrderAddress implements Serializable{
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
+	/** The order address id. */
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="order_address_id")
 	private Integer orderAddressId;
 	
+	/** The address type. */
 	@Column(name="address_type")
 	private String addressType;
 	
+	/** The first name. */
 	@Column(name="first_name")
 	private String firstName;
 	
+	/** The middle name. */
 	@Column(name="middle_name")
 	private String middleName;
 	
+	/** The last name. */
 	@Column(name="last_name")
 	private String lastName;
 	
+	/** The street. */
 	@Column(name="street")
 	private String street;
 	
+	/** The street2. */
 	@Column(name="street2")
 	private String street2;
 	
+	/** The city. */
 	@Column(name="city")
 	private String city;
 	
+	/** The postcode. */
 	@Column(name="postcode")
 	private String postcode;
 	
+	/** The state. */
 	@Column(name="state")
 	private String state;
 	
+	/** The country. */
 	@Column(name="country")
 	private String country;
 	
+	/** The phone. */
 	@Column(name="phone")
 	private String phone;
 	
+	/** The company. */
 	@Column(name="company")
 	private String company;
 	
+	/** The email. */
 	@Column(name="email")
 	private String email;
 	
+	/** The adm order header. */
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="order_id")
 	private AdmOrderHeader admOrderHeader;

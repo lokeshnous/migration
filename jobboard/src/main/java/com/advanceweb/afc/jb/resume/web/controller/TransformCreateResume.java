@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.resume.web.controller;
 
 import java.util.ArrayList;
@@ -27,6 +34,12 @@ import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
 @Repository("transCreateResume")
 public class TransformCreateResume {
 
+	/**
+	 * Transform create resume to resume dto.
+	 *
+	 * @param createResume the create resume
+	 * @return the resume dto
+	 */
 	public ResumeDTO transformCreateResumeToResumeDTO(CreateResume createResume) {
 		ResumeDTO resumeDTO = new ResumeDTO();
 		if (!StringUtils.isEmpty(createResume.getUploadResumeId())) {
@@ -56,6 +69,12 @@ public class TransformCreateResume {
 		return resumeDTO;
 	}
 
+	/**
+	 * Transform resume dto to create resume.
+	 *
+	 * @param createResume the create resume
+	 * @param resumeDTO the resume dto
+	 */
 	public void transformResumeDTOToCreateResume(CreateResume createResume,
 			ResumeDTO resumeDTO) {
 		createResume.setUploadResumeId(String.valueOf(resumeDTO

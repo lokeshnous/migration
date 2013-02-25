@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.common.ads;
 
 /**
@@ -48,25 +55,47 @@ package com.advanceweb.common.ads;
  */
 
 public enum AdPosition {
+	
+	/** The top. */
 	TOP, // Top of page
-	MIDDLE,//
-	BOTTOM, //
-	LEFT, //
-	CENTER, //
-	RIGHT, //
-	TOP_LEFT, //
-	TOP_CENTER, //
-	TOP_RIGHT, //
-	LEFT_TOP, //
-	LEFT_MIDDLE, //
-	LEFT_BOTOM, //
-	CENTER_TOP, //
-	CENTER_MIDDLE, //
-	CENTER_BOTOM, //
-	RIGHT_TOP, //
-	RIGHT_MIDDLE, //
-	RIGHT_BOTOM, //
-	BOTTOM_LEFT, //
-	BOTTOM_CENTER, //
-	BOTTOM_RIGHT //
+	/** The middle. */
+ MIDDLE,//
+	/** The bottom. */
+BOTTOM, //
+	/** The left. */
+ LEFT, //
+	/** The center. */
+ CENTER, //
+	/** The right. */
+ RIGHT, //
+	/** The top left. */
+ TOP_LEFT, //
+	/** The top center. */
+ TOP_CENTER, //
+	/** The top right. */
+ TOP_RIGHT, //
+	/** The left top. */
+ LEFT_TOP, //
+	/** The left middle. */
+ LEFT_MIDDLE, //
+	/** The left botom. */
+ LEFT_BOTOM, //
+	/** The center top. */
+ CENTER_TOP, //
+	/** The center middle. */
+ CENTER_MIDDLE, //
+	/** The center botom. */
+ CENTER_BOTOM, //
+	/** The right top. */
+ RIGHT_TOP, //
+	/** The right middle. */
+ RIGHT_MIDDLE, //
+	/** The right botom. */
+ RIGHT_BOTOM, //
+	/** The bottom left. */
+ BOTTOM_LEFT, //
+	/** The bottom center. */
+ BOTTOM_CENTER, //
+	/** The bottom right. */
+ BOTTOM_RIGHT //
 }

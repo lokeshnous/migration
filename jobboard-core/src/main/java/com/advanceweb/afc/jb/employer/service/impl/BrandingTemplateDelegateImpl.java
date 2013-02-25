@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.service.impl;
 
 import java.util.ArrayList;
@@ -19,15 +26,19 @@ import com.advanceweb.afc.jb.service.exception.JobBoardNetSuiteServiceException;
 public class BrandingTemplateDelegateImpl implements BrandingTemplateDelegate{
 
 	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(BrandingTemplateDelegateImpl.class);
 	
+	/** The Constant CUSTOMER_STRING. */
 	private static final String CUSTOMER_STRING = "customer";
 	
+	/** The ns customer service. */
 	@Autowired
 	private NSCustomerService nsCustomerService;
 	
 	
+	/** The branding template dao. */
 	@Autowired
 	private BrandingTemplateDAO brandingTemplateDAO;
 	

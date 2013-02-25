@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.common.index.lucene;
 
 import java.io.File;
@@ -26,16 +33,29 @@ import org.apache.lucene.util.Version;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 
 public class LuceneIndex {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger(LuceneIndex.class);
 
+	/** The Constant LUCENE_VERSION. */
 	private static final Version LUCENE_VERSION = Version.LUCENE_36;
 
+	/** The indexer. */
 	private LuceneIndexer indexer;
 
+	/** The query builder. */
 	private LuceneQueryBuilder queryBuilder;
 
+	/** The index directory. */
 	private Directory indexDirectory;
 
+	/**
+	 * Instantiates a new lucene index.
+	 *
+	 * @param indexer the indexer
+	 * @param queryBuilder the query builder
+	 * @param indexPath the index path
+	 */
 	public LuceneIndex(LuceneIndexer indexer, LuceneQueryBuilder queryBuilder,
 			String indexPath) {
 		this.indexer = indexer;
@@ -65,6 +85,9 @@ public class LuceneIndex {
 		}
 	}
 
+	/**
+	 * Reindex.
+	 */
 	private void reindex() {
 		LOGGER.trace("LuceneIndex init:");
 
@@ -87,6 +110,13 @@ public class LuceneIndex {
 		}
 	}
 
+	/**
+	 * Search.
+	 *
+	 * @param params the params
+	 * @return the list
+	 * @throws JobBoardServiceException the job board service exception
+	 */
 	public List<LuceneResult> search(Map<String, String> params)
 			throws JobBoardServiceException {
 

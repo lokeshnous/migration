@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.job.service.impl;
 
 import java.util.List;
@@ -29,9 +36,11 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 public class JobPostServiceImpl implements JobPostService {
 	
+	/** The employer job post dao. */
 	@Autowired
 	private JobPostDAO employerJobPostDAO;
 	
+	/** The job post delegate. */
 	@Autowired
 	private JobPostDelegate jobPostDelegate;
 	
@@ -87,28 +96,43 @@ public class JobPostServiceImpl implements JobPostService {
 				companyList, offset, noOfRecords, sortBy);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.JobPostService#retrieveJobById(int)
+	 */
 	@Override
 	public JobPostDTO retrieveJobById(int jobId) {
 		return employerJobPostDAO.retrieveJobById(jobId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.JobPostService#deleteJob(int, int)
+	 */
 	@Override
 	public boolean deleteJob(int jobId, int userId) {
 		return employerJobPostDAO.deleteJob(jobId, userId);
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.JobPostService#updateManageJob(boolean, int, int, int)
+	 */
 	@Override
 	public boolean updateManageJob(boolean autoRenew, int brandTemplate,
 			int jobId, int userId) {
 		return employerJobPostDAO.updateManageJob(autoRenew,brandTemplate,jobId, userId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.JobPostService#deactivateJob(int, int)
+	 */
 	@Override
 	public boolean deactivateJob(int jobId, int userId) {
 		return employerJobPostDAO.deactivateJob(jobId, userId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.JobPostService#repostJob(int, int)
+	 */
 	@Override
 	public boolean repostJob(int jobId, int extendDays) {
 		return employerJobPostDAO.repostJob(jobId, extendDays);
@@ -126,22 +150,34 @@ public class JobPostServiceImpl implements JobPostService {
 				offset, noOfRecords);
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.JobPostService#getJobPostingPlans()
+	 */
 	@Override
 	public List<JobPostingPlanDTO> getJobPostingPlans() {
 		return employerJobPostDAO.getJobPostingPlans();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.JobPostService#getEmpJobsCount(java.util.List)
+	 */
 	@Override
 	public int getEmpJobsCount(List<DropDownDTO> companyList) {
 		return employerJobPostDAO.getEmpJobsCount(companyList);
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.JobPostService#getEmpJobsCountByStatus(java.lang.String, java.util.List)
+	 */
 	@Override
 	public int getEmpJobsCountByStatus(String jobStatus, List<DropDownDTO> companyList) {
 		return employerJobPostDAO.getEmpJobsCountByStatus(jobStatus, companyList);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.JobPostService#validateAndDecreaseAvailableCredits(int, int)
+	 */
 	@Override
 	public boolean validateAndDecreaseAvailableCredits(int invDtlId, int facilityId) {
 
@@ -160,20 +196,33 @@ public class JobPostServiceImpl implements JobPostService {
 		return  jobPostDelegate.getNSCustomerDetails(nsCustomerID);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.JobPostService#retrieveAllJobPostByADvSearch(int)
+	 */
 	@Override
 	public List<JobPostDTO> retrieveAllJobPostByADvSearch(int advSearchId){
 		return employerJobPostDAO.retrieveAllJobPostByADvSearch(advSearchId);
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.JobPostService#jobSaveByAdmin(com.advanceweb.afc.jb.common.JobPostDTO, int)
+	 */
 	@Override
 	public boolean jobSaveByAdmin(JobPostDTO apd, int jobId){
 		return employerJobPostDAO.jobSaveByAdmin(apd,jobId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.JobPostService#validateAvailableCredits(int, int)
+	 */
 	@Override
 	public boolean validateAvailableCredits(int invDtlId, int facilityId) {
 		return employerJobPostDAO.validateAvailableCredits(invDtlId, facilityId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.JobPostService#getinvDetIdByJobId(int, int, int)
+	 */
 	@Override
 	public int getinvDetIdByJobId(int jobId, int facilityId, int userId) {
 
@@ -181,15 +230,25 @@ public class JobPostServiceImpl implements JobPostService {
 	}
 
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.JobPostService#getinvDtlByJobId(int)
+	 */
 	@Override
 	public AdmFacilityJpAudit getinvDtlByJobId(int jobId) {
 		return employerJobPostDAO.getinvDtlByJobId(jobId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.JobPostService#checkDraftAndSchedule(int)
+	 */
 	@Override
 	public boolean checkDraftAndSchedule(int avdSearchId) {
 		return employerJobPostDAO.checkDraftAndSchedule(avdSearchId);
 	} 
+	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.JobPostService#validateLocationdetails(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
 	@Override
 	public boolean validateLocationdetails(String city,String state,String zip,String country) throws JobBoardServiceException{
 		boolean valied=false;

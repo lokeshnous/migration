@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.netsuite.service.impl;
 
 import java.util.Map;
@@ -25,11 +32,19 @@ import com.advanceweb.afc.jb.netsuite.service.NetSuiteMethod;
 public class NetSuiteMethodImpl implements NetSuiteMethod{
 
 	
+	/** The Constant AUTHORIZATION_STRING. */
 	private static final String AUTHORIZATION_STRING = "Authorization";
+	
+	/** The Constant CONTENT_TYPE_STRING. */
 	private static final String CONTENT_TYPE_STRING = "Content-Type";
+	
+	/** The Constant CONTENT_TYPE_VALUE. */
 	private static final String CONTENT_TYPE_VALUE = "application/json";
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger(NetSuiteMethodImpl.class);
 	
+	/** The net suite credential. */
 	@Autowired
 	private NetSuiteCredential netSuiteCredential;
 
@@ -91,8 +106,8 @@ public class NetSuiteMethodImpl implements NetSuiteMethod{
 		client.header(AUTHORIZATION_STRING, authorization);
 		client.header(CONTENT_TYPE_STRING, CONTENT_TYPE_VALUE);
 		
-		LOGGER.info("Web Client=>"+client);
-		LOGGER.info("Web Client=>"+client.getCurrentURI());
+		LOGGER.debug("Web Client=>"+client);
+		LOGGER.debug("Web Client=>"+client.getCurrentURI());
 		
 		return client;
 	}

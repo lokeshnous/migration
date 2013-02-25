@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common;
 
 /**
@@ -6,12 +13,25 @@ package com.advanceweb.afc.jb.common;
  */
 public class EmpSearchDTO {
 	
+	/** The company name. */
 	private String companyName;
+	
+	/** The user id. */
 	private int userId;
+	
+	/** The facility id. */
 	private int facilityId;
+	
+	/** The ns id. */
 	private int nsId;
+	
+	/** The fac parent id. */
 	private int facParentId;
+	
+	/** The facility type. */
 	private String facilityType;
+	
+	/** The health system. */
 	private boolean healthSystem; 
 
 

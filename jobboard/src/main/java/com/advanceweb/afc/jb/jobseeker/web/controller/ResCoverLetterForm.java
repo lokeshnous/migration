@@ -11,14 +11,32 @@ package com.advanceweb.afc.jb.jobseeker.web.controller;
   *
   */
 public class ResCoverLetterForm {
+	
+	/** The coverletter id. */
 	private int coverletterId;
+	
+	/** The name. */
 	private String name;
+	
+	/** The coverletter text. */
 	private String coverletterText;
+	
+	/** The create dt. */
 	private String createDt;
+	
+	/** The update dt. */
 	private String updateDt;
+	
+	/** The delete dt. */
 	private String deleteDt;
+	
+	/** The user id. */
 	private int userId;
+	
+	/** The active. */
 	private int active;
+	
+	/** The description. */
 	private String description;
 	
 	/**
@@ -118,6 +136,11 @@ public class ResCoverLetterForm {
 		this.active = active;
 	}
 	
+	/**
+	 * Gets the description.
+	 *
+	 * @return the description
+	 */
 	public String getDescription() {
 		return description;
 	}

@@ -37,7 +37,7 @@
 			var quantity = $("#quantity").val();
 			var jobType = $("#jbTypeId").val();
 			if(isNaN(quantity) || quantity <= 0 || isPositiveInt(quantity) || isNaN(jobType)){
-				alert("Please enter quantity in numerics( > 0)");
+				alert("You have to select an item and enter a valid quantity to add it to your cart.");
 				return;
 			}
 			else{

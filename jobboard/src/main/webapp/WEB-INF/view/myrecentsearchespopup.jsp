@@ -32,7 +32,7 @@
 			success: function(data){ 
 				$.each(data, function(key, val) {
 					if (key == "NavigationPath") {
-						$.nmManual(val+ '.html');
+						$.nmManual(val+ '.html',{closeOnEscape: false, showCloseButton: false, closeOnClick: false});
 					}
 					
 					/*if (key == "LoggedInNavigationPath") {
@@ -83,7 +83,7 @@
 				<!--  <a href="" ></a>Clear All&nbsp;&nbsp;|&nbsp;&nbsp;<a href="" ></a>See All </li>-->
 				<c:forEach items="${recentSearchList}" var="item">
 					<div class="rowPadding borderBottomDotted" id="searchdata">
-						<li>${item.createdDate.toLocaleString()}, Search by: 
+						<li>${item.createdDate.toLocaleString()}, Criteria: 
 						<span class="jb">
 						<a
 								href="#" onclick="loadRecentSearch(${item.saveSearchID})">${item.recentURL}</a>

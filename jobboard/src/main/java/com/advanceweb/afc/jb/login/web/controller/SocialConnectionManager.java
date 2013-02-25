@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.login.web.controller;
 
 import java.io.Serializable;
@@ -14,6 +21,8 @@ import org.springframework.social.connect.ConnectionFactoryLocator;
  */
 
 public class SocialConnectionManager implements Serializable {
+	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 2029671162112256788L;
 	/**
 	 * Name of the session attribute SocialConnectionManager instances are
@@ -22,10 +31,18 @@ public class SocialConnectionManager implements Serializable {
 	public static final String SESSION_ATTRIBUTE = SocialConnectionManager.class
 			.getName();
 
+	/** The connection data. */
 	private final ConnectionData connectionData;
 
+	/** The connection factory locator. */
 	private final ConnectionFactoryLocator connectionFactoryLocator;
 
+	/**
+	 * Instantiates a new social connection manager.
+	 *
+	 * @param connection the connection
+	 * @param connectionFactoryLocator the connection factory locator
+	 */
 	public SocialConnectionManager(Connection<?> connection,
 			ConnectionFactoryLocator connectionFactoryLocator) {
 		this.connectionData = connection.createData();

@@ -43,11 +43,11 @@ $(document).ready(function(){
 	
     $("#slider4PrevBtn").click(function() {
 		$.ajax({
-			url : $("#contextPath").val()+'/healthcarejobs/featuredEmplist.html?moveBy=prev',
+			url : $("#contextPath").val()+'/healthcare/featuredEmplist.html?moveBy=prev',
 			data : ({}),						
 			success : function(data) {
 				$.ajax({
-					url : $("#contextPath").val()+'/healthcarejobs/homeFeaturedEmps.html',
+					url : $("#contextPath").val()+'/healthcare/homeFeaturedEmps.html',
 					data : ({}),
 					
 					success : function(data) {
@@ -69,11 +69,11 @@ $(document).ready(function(){
     });
     $("#slider4NextBtn").click(function() {
 		$.ajax({
-			url : $("#contextPath").val()+'/healthcarejobs/featuredEmplist.html?moveBy=next',
+			url : $("#contextPath").val()+'/healthcare/featuredEmplist.html?moveBy=next',
 			data : ({}),						
 			success : function(data) {
 				$.ajax({
-					url : $("#contextPath").val()+'/healthcarejobs/homeFeaturedEmps.html',
+					url : $("#contextPath").val()+'/healthcare/homeFeaturedEmps.html',
 					data : ({}),
 					
 					success : function(data) {

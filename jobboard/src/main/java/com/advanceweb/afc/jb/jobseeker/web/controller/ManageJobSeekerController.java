@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import java.io.BufferedInputStream;
@@ -66,59 +73,91 @@ import com.advanceweb.afc.jb.web.utils.PDFGenerator;
 @RequestMapping("/employer")
 public class ManageJobSeekerController {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(ManageJobSeekerController.class);
 
+	/** The manage job seeker service. */
 	@Autowired
 	private ManageJobSeekerService manageJobSeekerService;
 
+	/** The trans create resume. */
 	@Autowired
 	private TransformCreateResume transCreateResume;
+	
+	/** The pdf generator. */
 	@Autowired
 	private PDFGenerator pdfGenerator;
+	
+	/** The Constant MANAGEJOBSEEKERFORM. */
 	private static final String MANAGEJOBSEEKERFORM = "manageJobSeekerForm";
+	
+	/** The Constant ERRORMSG. */
 	private static final String ERRORMSG = "Error occured while Updating Data";
+	
+	/** The Constant APP_STATUS_LIST. */
 	private static final String APP_STATUS_LIST = "appStatusList";
+	
+	/** The Constant RESUMEID. */
 	private static final String RESUMEID = "resumeId";
 
+	/** The email service. */
 	@Autowired
 	private MMEmailService emailService;
 
+	/** The resume service. */
 	@Autowired
 	private ResumeService resumeService;
 
+	/** The job search validator. */
 	@Autowired
 	private JobSearchValidator jobSearchValidator;
 
+	/** The dothtml extention. */
 	@Value("${dothtmlExtention}")
 	private String dothtmlExtention;
 
+	/** The sub ofmail. */
 	private @Value("${SUBJECT_OF_SEND_RESUME_MAIL}")
 	String subOfmail;
 
+	/** The body of mail first. */
 	private @Value("${BODY_OF_SEND_RESUME_MAIL}")
 	String bodyOfMailFirst;
 
+	/** The url redirect mail. */
 	private @Value("${URL_REDIRECT_MAIL}")
 	String urlRedirectMail;
 
+	/** The err sending mail. */
 	private @Value("${ERROR_SENDING_MAIL}")
 	String errSendingMail;
 
+	/** The email msg. */
 	private @Value("${EMAIL_MESSAGE}")
 	String emailMsg;
 
+	/** The web mail server. */
 	private @Value("${WEB_MAIL_SERVER}")
 	String webMailServer;
 
+	/** The email msg blank. */
 	private @Value("${EMAIL_MESSAGE_BLANK}")
 	String emailMsgBlank;
+	
+	/** The basedirectorypath upload. */
 	private @Value("${basedirectorypathUpload}")
 	String basedirectorypathUpload;
+	
+	/** The email configuration. */
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
+	
+	/** The Constant CURRENT_URL. */
 	private static final String CURRENT_URL = "currentUrl";
+	
+	/** The Constant END_TAGS. */
 	private static final String END_TAGS = "</TD></TR>\n";
 
 	/**

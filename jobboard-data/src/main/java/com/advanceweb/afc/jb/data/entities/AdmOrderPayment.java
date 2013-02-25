@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
@@ -22,31 +29,40 @@ import javax.persistence.Table;
 @Table(name="adm_order_payment")
 public class AdmOrderPayment implements Serializable{
 	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** The order payment id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "order_payment_id")
 	private int orderPaymentId;
 	
+	/** The method. */
 	@Column(name = "method")
 	private String method;
 	
+	/** The payment number. */
 	@Column(name = "payment_number")
 	private String paymentNumber;
 	
+	/** The paid amt. */
 	@Column(name = "paid_amt")
 	private float paidAmt;
 	
+	/** The transaction id. */
 	@Column(name = "transaction_id")
 	private String transactionId;
 	
+	/** The tran response. */
 	@Column(name = "transaction_response")
 	private String tranResponse;
 	
+	/** The trans date. */
 	@Column(name = "transaction_dt")
 	private Date transDate;
 	
+	/** The adm order header. */
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="order_id")
 	private AdmOrderHeader admOrderHeader;

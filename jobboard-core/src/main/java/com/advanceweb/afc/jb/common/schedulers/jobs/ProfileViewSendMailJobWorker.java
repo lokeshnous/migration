@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common.schedulers.jobs;
 
 import java.util.List;
@@ -25,21 +32,38 @@ import com.advanceweb.afc.jb.user.dao.UserDao;
 @Service
 @Qualifier("profileViewSendMailJobWorker")
 public class ProfileViewSendMailJobWorker implements JobWorker {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(ProfileViewSendMailJobWorker.class);
+	
+	/** The Constant JOB_NAME. */
 	private static final String JOB_NAME = "SEND_MAIL";
+	
+	/** The job seeker job detail service. */
 	@Autowired
 	private JobSeekerJobDetailService jobSeekerJobDetailService;
+	
+	/** The user dao. */
 	@Autowired
 	private UserDao userDAO;
+	
+	/** The email service. */
 	@Autowired
 	private MMEmailService emailService;
+	
+	/** The advance web address. */
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
+	
+	/** The email configuration. */
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.common.schedulers.jobs.JobWorker#executeJob()
+	 */
 	@Override
 	public void executeJob() {
 		List<SchedulerDTO> jobSeekerList = userDAO.getAllJobSeekerList();
@@ -101,6 +125,9 @@ public class ProfileViewSendMailJobWorker implements JobWorker {
 		LOGGER.info("ProfileViewSendMailJobWorker.-> Executed Job Successfully.....");
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.common.schedulers.jobs.JobWorker#getJobName()
+	 */
 	@Override
 	public String getJobName() {
 		return JOB_NAME;

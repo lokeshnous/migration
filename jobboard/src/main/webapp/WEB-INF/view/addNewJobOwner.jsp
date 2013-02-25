@@ -32,10 +32,10 @@
 							$("#jobOwnerErrorMsg").html("<span>Please enter the required fields.</span>");
 						
 						}else if($('#ownerName').val().split(' ').length < 2) {		
-							$("#jobOwnerErrorMsg").html("<span>Name field should contain both first and last name.</span>");
+							$("#jobOwnerErrorMsg").html("<span>Please enter the person's first name and last name separated by a space.</span>");
 							
 						}else if($('#ownerName').val().split(' ')[1] == "") {		
-							$("#jobOwnerErrorMsg").html("<span>Name field should contain both first and last name.</span>");
+							$("#jobOwnerErrorMsg").html("<span>Please enter the person's first name and last name separated by a space.</span>");
 							
 						}else if(!email_regex.test(ownerEmail)){
 							$("#jobOwnerErrorMsg").html("<span>Please enter the correct email address.</span>");	
@@ -76,13 +76,12 @@
 
 		<div class="popUpContainerWrapper">
 		<span class="lableText3"></span>
-		<div id="jobOwnerErrorMsg" class="FormErrorDisplayText"></div>
+		<div id="jobOwnerErrorMsg" class="FormErrorDisplayText paddingleft0" ></div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">Job Owner Name:</span> <form:input path="ownerName"
 						name="EmailAddress" class="job_seeker_email width300" />
 					<div class="toolTip colorPkrAreaToolTip">
-						<span class="classic">Please type the First Name followed by
-							a space and then type the Last Name</span>
+						<span class="classic">Enter the person's first name and last name separated by a space.</span>
 					</div>
 				</div>
 				<div class="rowEvenNewSpacing">

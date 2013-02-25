@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.jobseeker.helper;
 
 import java.sql.Date;
@@ -40,12 +47,15 @@ import com.advanceweb.afc.jb.employer.helper.BrandTemplateConversionHelper;
 @Repository("jobSearchConversionHelper")
 public class JobSearchConversionHelper {
 	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(JobSearchConversionHelper.class);
 
+	/** The default color. */
 	private @Value("${defaultColor}")
 	String defaultColor;
 	
+	/** The brand template conversion helper. */
 	@Autowired
 	private BrandTemplateConversionHelper brandTemplateConversionHelper;
 	/**
@@ -66,6 +76,7 @@ public class JobSearchConversionHelper {
 			jobDTO.setJobId(entity.getJobId());
 			jobDTO.setFeatured(entity.getFeatured() == 1 ? true
 					: false);
+			jobDTO.setTrackingPixel(entity.getTrackingPixel());
 
 			// get detail from admFacility entity
 			AdmFacility admFacility = entity.getAdmFacility();
@@ -75,6 +86,7 @@ public class JobSearchConversionHelper {
 			if (blindAd == 0) {
 				jobDTO.setCompanyNameDisp(entity.getFacility());
 			}
+			jobDTO.setBlindAd(entity.getBlindAd());
 			try{
 				transformJpLocationtojobDTO(entity, jobDTO);
 			}catch (Exception e) {

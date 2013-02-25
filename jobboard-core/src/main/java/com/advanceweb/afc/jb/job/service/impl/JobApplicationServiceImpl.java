@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.job.service.impl;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -14,6 +21,7 @@ import com.advanceweb.afc.jb.job.service.JobApplicationService;
 @Service
 public class JobApplicationServiceImpl implements JobApplicationService {
 	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(JobApplicationServiceImpl.class);
 
@@ -35,7 +43,7 @@ public class JobApplicationServiceImpl implements JobApplicationService {
 			//result=anonymousUserJobApplyDAO.applyJobAnonymousUser(dto);
 			return result;
 		} catch (Exception e) {
-			LOGGER.info("Error in applyJobAnonymousUser:",e);
+			LOGGER.error("Error in applyJobAnonymousUser:",e);
 		}
 		return result;
 	}

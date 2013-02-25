@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.home.web.controller;
 
 /**
@@ -62,71 +69,108 @@ import com.advanceweb.common.ads.AdSize;
 import com.advanceweb.common.client.ClientContext;
 
 @Controller
-@RequestMapping(value = "/healthcarejobs")
+@RequestMapping(value = "/healthcare")
 public class HomeController extends AbstractController {
 
+	/** The Constant FEATURED_EMPS_COUNT. */
 	private static final String FEATURED_EMPS_COUNT = "count";
+
+	/** The Constant PREV_FEATURED_EMP. */
 	private static final String PREV_FEATURED_EMP = "prev";
+
+	/** The Constant NEXT_FEATURED_EMP. */
 	private static final String NEXT_FEATURED_EMP = "next";
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger(HomeController.class);
 
+	/** The basedirectorypath. */
 	@Value("${basedirectorypath}")
 	private String basedirectorypath;
 
+	/** The directory. */
 	@Value("${directory}")
 	private String directory;
 
+	/** The career images directory. */
 	@Value("${careerImagesDirectory}")
 	private String careerImagesDirectory;
 
+	/** The healthcarenewsfilename. */
 	@Value("${healthcarenewsfilename}")
 	private String healthcarenewsfilename;
 
+	/** The careertoolfilename. */
 	@Value("${careertoolfilename}")
 	private String careertoolfilename;
 
+	/** The logo path. */
 	@Value("${logoPath}")
 	private String logoPath;
 
+	/** The media path. */
 	@Value("${mediaPath}")
 	private String mediaPath;
 
+	/** The followuplinkfacebook. */
 	@Value("${followuplinkfacebook}")
 	private String followuplinkfacebook;
 
+	/** The followuplinktwitter. */
 	@Value("${followuplinktwitter}")
 	private String followuplinktwitter;
 
+	/** The followuplinkyoutube. */
 	@Value("${followuplinkyoutube}")
 	private String followuplinkyoutube;
 
+	/** The followuplinklinkedin. */
 	@Value("${followuplinklinkedin}")
 	private String followuplinklinkedin;
 
+	/** The manage feature employer profile. */
 	@Autowired
 	private ManageFeaturedEmployerProfile manageFeatureEmployerProfile;
 
+	/** The ad service. */
 	@Autowired
 	private AdService adService;
-	
+
+	/** The employer news feed service. */
 	@Autowired
 	private EmployerNewsFeedService employerNewsFeedService;
-	
+
+	/** The Constant NEWS_LIST. */
 	private static final String NEWS_LIST = "HomePageNewsList";
-	
+
+	/** The check session map. */
 	@Autowired
 	private CheckSessionMap checkSessionMap;
 
+	/** The seo configuration. */
 	@Autowired
 	@Resource(name = "seoConfiguration")
 	private Properties seoConfiguration;
 
+	/**
+	 * Gets the html contents.
+	 * 
+	 * @param request
+	 *            the request
+	 * @param model
+	 *            the model
+	 * @param session
+	 *            the session
+	 * @param jobSearchResultForm
+	 *            the job search result form
+	 * @return the html contents
+	 */
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String gethtmlContents(HttpServletRequest request, Model model,
-			HttpSession session, @ModelAttribute JobSearchResultForm jobSearchResultForm) {
-		if(request.getQueryString() != null){
-			
+			HttpSession session,
+			@ModelAttribute JobSearchResultForm jobSearchResultForm) {
+		if (request.getQueryString() != null) {
+
 			Map<String, String> sessionMap = checkSessionMap
 					.getSearchSessionMap(session);
 			sessionMap.put(MMJBCommonConstants.SEARCH_TYPE,
@@ -223,9 +267,9 @@ public class HomeController extends AbstractController {
 		}
 		return "home";
 	}
-	
+
 	/**
-	 *  The method generate the site map for application.
+	 * The method generate the site map for application.
 	 * 
 	 * @param request
 	 * @param model
@@ -233,88 +277,67 @@ public class HomeController extends AbstractController {
 	 * @return
 	 */
 	@RequestMapping(value = "/generateSiteMap", method = RequestMethod.GET)
-	/*public ModelAndView startSiteMapGeneratot(HttpServletRequest request, Model model,
-			HttpSession session){
-		ModelAndView modelAndView = new ModelAndView();
-		File myDir = new File("C:\\");
-		WebSitemapGenerator wsg;
-		try {
-			String websiteAdd = "http://"+request.getRequestURL().toString()
-					.replace(request.getServletPath(), "");
-			wsg = new WebSitemapGenerator(websiteAdd, myDir);
-			JobSearchResultDTO jobSearchResultDTO = null;
-			JobSearchResultForm jobSearchResultForm = new JobSearchResultForm();
-
-			// Set the search type for SOLR facets
-			String searchName = MMJBCommonConstants.KEYWORD_SEARCH;
-			jobSearchResultForm.setSearchName(searchName);
-			jobSearchResultForm.setSearchtype(MMJBCommonConstants.BASIC_SEARCH_TYPE);
-
-			// merge the parameters
-			int searchSeq = MMJBCommonConstants.ZERO_INT;
-			String sessionId = "";
-			Map<String, String> paramMap = new HashMap<String, String>();
-			paramMap.put(SearchParamDTO.KEYWORDS, "*");
-			paramMap.put(SearchParamDTO.SESSION_ID, sessionId.trim());
-			paramMap.put(SearchParamDTO.SEARCH_SEQ,
-					String.valueOf(searchSeq + 1));
-			paramMap.put(SearchParamDTO.SEARCH_NAME, searchName.trim());
-
-			// For testing. Remove it while committing
-			paramMap.put(MMJBCommonConstants.SORT_PARAM, MMJBCommonConstants.POSTED_DT);
-			paramMap.put(MMJBCommonConstants.FIRST_FQ_PARAM,
-					MMJBCommonConstants.EMPTY);
-			paramMap.put(MMJBCommonConstants.SECOND_FQ_PARAM,
-					MMJBCommonConstants.EMPTY);
-			paramMap.put(MMJBCommonConstants.THIRD_FQ_PARAM,
-					MMJBCommonConstants.EMPTY);
-			paramMap.put(MMJBCommonConstants.FOURTH_FQ_PARAM,
-					MMJBCommonConstants.EMPTY);
-			paramMap.put(MMJBCommonConstants.FIFTH_FQ_PARAM,
-					MMJBCommonConstants.EMPTY);
-			paramMap.put(MMJBCommonConstants.SORT_ORDER,
-					MMJBCommonConstants.DESC_STR);
-			paramMap.put(MMJBCommonConstants.FACET_SORT,
-					MMJBCommonConstants.INDEX_STR);
-
-			try {
-				for(int i = 1 ; i<20 ; i++){
-					long start = (i - 1) * 3000;
-					long rows = 3000;
-					jobSearchResultDTO = jobSearchService.jobSearch(
-							paramMap, start, rows);
-					List<JobDTO> jobDTOList = jobSearchResultDTO.getResultList();
-					WebSitemapUrl url = null;
-					String title = null;
-					String jobId = null;
-					for (JobDTO jobDTO : jobDTOList) {
-						title = MMUtils.isNull(jobDTO.getJobTitle());
-						jobId = MMUtils.isNull(String.valueOf(jobDTO.getJobId()));
-						if (!title.isEmpty()) {
-							title = title
-									.replaceAll(
-											MMJBCommonConstants.IGNORE_SPECIAL_CHAR_PATTERN,
-											"");
-						} 
-						url = new WebSitemapUrl.Options(websiteAdd+"/search/jobview/"+jobId+"/"+title+".html")
-						.lastMod(new Date()).priority(1.0).changeFreq(ChangeFreq.HOURLY).build();
-						wsg.addUrl(url);
-
-					}
-					
-				}
-			} catch (JobBoardException e) {
-				LOGGER.debug("Error occured while getting the Job Search Result from SOLR...");
-			}
-			wsg.write();
-		} catch (MalformedURLException e1) {
-			e1.printStackTrace();
-		}catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);
-		}
-		return modelAndView;
-	}*/
-	
+	/*
+	 * public ModelAndView startSiteMapGeneratot(HttpServletRequest request,
+	 * Model model, HttpSession session){ ModelAndView modelAndView = new
+	 * ModelAndView(); File myDir = new File("C:\\"); WebSitemapGenerator wsg;
+	 * try { String websiteAdd = "http://"+request.getRequestURL().toString()
+	 * .replace(request.getServletPath(), ""); wsg = new
+	 * WebSitemapGenerator(websiteAdd, myDir); JobSearchResultDTO
+	 * jobSearchResultDTO = null; JobSearchResultForm jobSearchResultForm = new
+	 * JobSearchResultForm();
+	 * 
+	 * // Set the search type for SOLR facets String searchName =
+	 * MMJBCommonConstants.KEYWORD_SEARCH;
+	 * jobSearchResultForm.setSearchName(searchName);
+	 * jobSearchResultForm.setSearchtype(MMJBCommonConstants.BASIC_SEARCH_TYPE);
+	 * 
+	 * // merge the parameters int searchSeq = MMJBCommonConstants.ZERO_INT;
+	 * String sessionId = ""; Map<String, String> paramMap = new HashMap<String,
+	 * String>(); paramMap.put(SearchParamDTO.KEYWORDS, "*");
+	 * paramMap.put(SearchParamDTO.SESSION_ID, sessionId.trim());
+	 * paramMap.put(SearchParamDTO.SEARCH_SEQ, String.valueOf(searchSeq + 1));
+	 * paramMap.put(SearchParamDTO.SEARCH_NAME, searchName.trim());
+	 * 
+	 * // For testing. Remove it while committing
+	 * paramMap.put(MMJBCommonConstants.SORT_PARAM,
+	 * MMJBCommonConstants.POSTED_DT);
+	 * paramMap.put(MMJBCommonConstants.FIRST_FQ_PARAM,
+	 * MMJBCommonConstants.EMPTY);
+	 * paramMap.put(MMJBCommonConstants.SECOND_FQ_PARAM,
+	 * MMJBCommonConstants.EMPTY);
+	 * paramMap.put(MMJBCommonConstants.THIRD_FQ_PARAM,
+	 * MMJBCommonConstants.EMPTY);
+	 * paramMap.put(MMJBCommonConstants.FOURTH_FQ_PARAM,
+	 * MMJBCommonConstants.EMPTY);
+	 * paramMap.put(MMJBCommonConstants.FIFTH_FQ_PARAM,
+	 * MMJBCommonConstants.EMPTY); paramMap.put(MMJBCommonConstants.SORT_ORDER,
+	 * MMJBCommonConstants.DESC_STR);
+	 * paramMap.put(MMJBCommonConstants.FACET_SORT,
+	 * MMJBCommonConstants.INDEX_STR);
+	 * 
+	 * try { for(int i = 1 ; i<20 ; i++){ long start = (i - 1) * 3000; long rows
+	 * = 3000; jobSearchResultDTO = jobSearchService.jobSearch( paramMap, start,
+	 * rows); List<JobDTO> jobDTOList = jobSearchResultDTO.getResultList();
+	 * WebSitemapUrl url = null; String title = null; String jobId = null; for
+	 * (JobDTO jobDTO : jobDTOList) { title =
+	 * MMUtils.isNull(jobDTO.getJobTitle()); jobId =
+	 * MMUtils.isNull(String.valueOf(jobDTO.getJobId())); if (!title.isEmpty())
+	 * { title = title .replaceAll(
+	 * MMJBCommonConstants.IGNORE_SPECIAL_CHAR_PATTERN, ""); } url = new
+	 * WebSitemapUrl
+	 * .Options(websiteAdd+"/search/jobview/"+jobId+"/"+title+".html")
+	 * .lastMod(new Date()).priority(1.0).changeFreq(ChangeFreq.HOURLY).build();
+	 * wsg.addUrl(url);
+	 * 
+	 * }
+	 * 
+	 * } } catch (JobBoardException e) {
+	 * LOGGER.debug("Error occured while getting the Job Search Result from SOLR..."
+	 * ); } wsg.write(); } catch (MalformedURLException e1) {
+	 * e1.printStackTrace(); }catch (Exception e) { LOGGER.error(e.getMessage(),
+	 * e); } return modelAndView; }
+	 */
 	/**
 	 * populate the ads for home ,featured employers list and featured employer
 	 * detail page
@@ -383,13 +406,24 @@ public class HomeController extends AbstractController {
 		String metaDesc = seoConfiguration.getProperty(
 				"homepage.meta.description").trim();
 		// merge the parameters
-		String metaTitle = seoConfiguration
-				.getProperty("homepage.meta.title").trim();
+		String metaTitle = seoConfiguration.getProperty("homepage.meta.title")
+				.trim();
 		model.addAttribute("metaDesc", metaDesc);
 		model.addAttribute("metaTitle", metaTitle);
 		model.addAttribute("canonicalUrl", request.getRequestURL());
 	}
 
+	/**
+	 * Gets the featuredemployerslist.
+	 * 
+	 * @param request
+	 *            the request
+	 * @param model
+	 *            the model
+	 * @param session
+	 *            the session
+	 * @return the featuredemployerslist
+	 */
 	@RequestMapping(value = "/featuredemployers", method = RequestMethod.GET)
 	public String getfeaturedemployerslist(HttpServletRequest request,
 			Model model, HttpSession session) {
@@ -444,19 +478,42 @@ public class HomeController extends AbstractController {
 		String path = request.getRequestURL().toString()
 				.replace(request.getRequestURI(), MMJBCommonConstants.EMPTY);
 
+		/*
+		 * String path = null; try { path = InetAddress.getByName(
+		 * request.getServerName()).getHostAddress().toString();
+		 * if(request.getLocalPort() != 80){ path = path + ":" +
+		 * request.getLocalPort(); } } catch (UnknownHostException e) {
+		 * LOGGER.debug(e.getMessage(), e); }
+		 */
 		path = path + mediaPath + companyProfileDTO.getPositionalMedia();
 		model.addAttribute("windowmediaplayerfilepath", path);
 		model.addAttribute("employerProfileManagementForm",
 				employerProfileManagementForm);
-		model.addAttribute("companyNameEncoded",
-				MMUtils.encodeString(employerProfileManagementForm.getCompanyName().trim().replaceAll(
-						MMJBCommonConstants.IGNORE_SPECIAL_CHAR_PATTERN,
-						"").trim()).toLowerCase());
+		model.addAttribute(
+				"companyNameEncoded",
+				MMUtils.encodeString(
+						employerProfileManagementForm
+								.getCompanyName()
+								.trim()
+								.replaceAll(
+										MMJBCommonConstants.IGNORE_SPECIAL_CHAR_PATTERN,
+										"").trim()).toLowerCase());
 		// populate the Ads
 		populateAds(request, session, model, PageNames.FEATURED_EMP);
 		return "featuredemployerdetails";
 	}
 
+	/**
+	 * Gets the photo.
+	 * 
+	 * @param id
+	 *            the id
+	 * @param response
+	 *            the response
+	 * @param request
+	 *            the request
+	 * @return the photo
+	 */
 	@RequestMapping("/logo")
 	public void getPhoto(@RequestParam("id") Long id,
 			HttpServletResponse response, HttpServletRequest request) {
@@ -477,6 +534,17 @@ public class HomeController extends AbstractController {
 		}
 	}
 
+	/**
+	 * Gets the image.
+	 * 
+	 * @param imageId
+	 *            the image id
+	 * @param response
+	 *            the response
+	 * @param request
+	 *            the request
+	 * @return the image
+	 */
 	@RequestMapping("/viewImage")
 	public void getImage(@RequestParam("id") String imageId,
 			HttpServletResponse response, HttpServletRequest request) {
@@ -499,6 +567,13 @@ public class HomeController extends AbstractController {
 		}
 	}
 
+	/**
+	 * Handle get my bytes request.
+	 * 
+	 * @param imageInByte
+	 *            the image in byte
+	 * @return the response entity
+	 */
 	public ResponseEntity<byte[]> handleGetMyBytesRequest(byte[] imageInByte) {
 		// Get bytes from somewhere...
 		byte[] byteData = imageInByte;
@@ -572,6 +647,14 @@ public class HomeController extends AbstractController {
 	 * 
 	 * return resizedImage; }
 	 */
+	/**
+	 * Write.
+	 * 
+	 * @param response
+	 *            the response
+	 * @param bao
+	 *            the bao
+	 */
 	public void write(HttpServletResponse response, ByteArrayOutputStream bao) {
 
 		try {
@@ -609,6 +692,15 @@ public class HomeController extends AbstractController {
 		}
 	}
 
+	/**
+	 * Copy html files.
+	 * 
+	 * @param request
+	 *            the request
+	 * @param model
+	 *            the model
+	 * @return the string
+	 */
 	@RequestMapping(value = "/copyhtmltolocal", method = RequestMethod.GET)
 	public String copyHtmlFiles(HttpServletRequest request, Model model) {
 		try {
@@ -710,7 +802,7 @@ public class HomeController extends AbstractController {
 					for (Element element : link) {
 						String linkSrc = element.attr("src");
 						element.attr("src", request.getContextPath()
-								+ "/healthcarejobs/viewImage.html?id="
+								+ "/healthcare/viewImage.html?id="
 								+ basedirectorypath + directory
 								+ careerImagesDirectory + "/" + linkSrc);
 					}
@@ -789,7 +881,7 @@ public class HomeController extends AbstractController {
 					for (Element element : link) {
 						String linkSrc = element.attr("src");
 						element.attr("src", request.getContextPath()
-								+ "/healthcarejobs/viewImage.html?id="
+								+ "/healthcare/viewImage.html?id="
 								+ basedirectorypath + directory
 								+ careerImagesDirectory + linkSrc);
 					}
@@ -862,17 +954,74 @@ public class HomeController extends AbstractController {
 
 		session.setAttribute("showCareersType", careerType);
 		if (careerType.equalsIgnoreCase("career")) {
-			modelAndView
-					.setViewName("redirect:/healthcarejobs/index.html");
+			modelAndView.setViewName("redirect:/healthcare/index.html");
 		} else if (careerType.equalsIgnoreCase("messanger")) {
-			modelAndView
-					.setViewName("redirect:/healthcarejobs/index.html");
+			modelAndView.setViewName("redirect:/healthcare/index.html");
 		} else if (careerType.equalsIgnoreCase("resumeBuilder")) {
-			modelAndView
-					.setViewName("redirect:/healthcarejobs/index.html");
+			modelAndView.setViewName("redirect:/healthcare/index.html");
 		}
 
 		return modelAndView;
+	}
+
+	/**
+	 * This Method called to get the featured employer details by job Id from
+	 * search grid
+	 * 
+	 * @param employerProfileManagementForm
+	 * @param request
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/featuredempJobDetails", method = RequestMethod.GET)
+	public String featuredempJobDetails(
+			EmployerProfileManagementForm employerProfileManagementForm,
+			@RequestParam("id") int jobId, HttpServletRequest request,
+			Model model, HttpSession session) {
+		int facilityId = manageFeatureEmployerProfile.getFaciliyId(jobId);
+		CompanyProfileDTO companyProfileDTO = manageFeatureEmployerProfile
+				.getEmployerDetails(facilityId);
+		employerProfileManagementForm.setCompanyName(companyProfileDTO
+				.getCompanyName());
+		employerProfileManagementForm.setCompanyNews(companyProfileDTO
+				.getCompanyNews());
+		employerProfileManagementForm.setCompanyOverview(companyProfileDTO
+				.getCompanyOverview());
+		employerProfileManagementForm.setCompanyWebsite(companyProfileDTO
+				.getCompanyWebsite());
+		employerProfileManagementForm.setCompanyEmail(companyProfileDTO
+				.getCompanyEmail());
+		employerProfileManagementForm.setPositionTitle(companyProfileDTO
+				.getPositionTitle());
+		employerProfileManagementForm.setLogoPath(companyProfileDTO
+				.getLogoPath());
+		employerProfileManagementForm.setFacilityId(facilityId);
+		if (null != companyProfileDTO.getPrimaryColor()) {
+			employerProfileManagementForm.setPrimaryColor(companyProfileDTO
+					.getPrimaryColor().replace("HEX #", "#"));
+		}
+		// TODO: Remove the hard codes used to check video : file server is not
+		// fully maintained
+		String path = request.getRequestURL().toString()
+				.replace(request.getRequestURI(), MMJBCommonConstants.EMPTY);
+
+		path = path + mediaPath + companyProfileDTO.getPositionalMedia();
+		model.addAttribute("windowmediaplayerfilepath", path);
+		model.addAttribute("employerProfileManagementForm",
+				employerProfileManagementForm);
+		model.addAttribute(
+				"companyNameEncoded",
+				MMUtils.encodeString(
+						employerProfileManagementForm
+								.getCompanyName()
+								.trim()
+								.replaceAll(
+										MMJBCommonConstants.IGNORE_SPECIAL_CHAR_PATTERN,
+										"").trim()).toLowerCase());
+		// populate the Ads
+		populateAds(request, session, model, PageNames.FEATURED_EMP);
+		return "featuredemployerdetails";
 	}
 
 }

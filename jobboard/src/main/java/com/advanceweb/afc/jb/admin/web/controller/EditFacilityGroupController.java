@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.admin.web.controller;
 
 import java.util.List;
@@ -39,27 +46,41 @@ import com.advanceweb.common.client.ClientContext;
 @RequestMapping("/impersonationForFacility")
 public class EditFacilityGroupController extends AbstractController{
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger("AdminManageFacilitiesContorller.class");
 
+	/** The admin service. */
 	@Autowired
 	private AdminService adminService;
 	
+	/** The transform admin impersonation. */
 	@Autowired
 	private TransformAdminImpersonation transformAdminImpersonation;
 	
+	/** The inventory service. */
 	@Autowired
 	private JobPostInventoryService inventoryService;
 	
+	/** The facility service. */
 	@Autowired
 	private FacilityService facilityService;
 	
+	/** The admin edit facility err msg. */
 	@Value("${adminEditFacilityErrMsg}")
 	private String adminEditFacilityErrMsg;
 
+	/** The ad service. */
 	@Autowired
 	private AdService adService;
 	
+	/**
+	 * Job search bycompany name.
+	 *
+	 * @param adminForm the admin form
+	 * @param session the session
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/jobSearchBycompanyName")
 	public ModelAndView jobSearchBycompanyName(
 			@ModelAttribute("adminForm") AdminForm adminForm,
@@ -80,7 +101,7 @@ public class EditFacilityGroupController extends AbstractController{
 				dto.get(0).setFacilityType(MMJBCommonConstants.FACILITY);
 			}
 		
-		model.addObject("facilityList", dto);
+		model.addObject("facilityList", dto1.getCompanyName());
 		session.setAttribute("isHealthSys", isHealthSys);
 		adminForm.setHealthSystem(isHealthSys);
 		model.addObject("adminForm", adminForm);
@@ -91,6 +112,14 @@ public class EditFacilityGroupController extends AbstractController{
 
 	}
 
+	/**
+	 * Save edited facilty.
+	 *
+	 * @param adminForm the admin form
+	 * @param session the session
+	 * @param request the request
+	 * @return the jSON object
+	 */
 	@RequestMapping(value = "/saveEditedFacilty")
 	public@ResponseBody
 	JSONObject saveEditedFacilty(AdminForm adminForm,

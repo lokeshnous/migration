@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.service.impl;
 
 import java.util.List;
@@ -30,12 +37,15 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 @Service("employerDelegate")
 public class EmployerDelegateImpl implements EmployerDelegate {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(EmployerDelegateImpl.class);
 
+	/** The employer registration dao. */
 	@Autowired
 	public EmployerRegistrationDAO employerRegistrationDAO;
 
+	/** The ns customer service. */
 	@Autowired
 	private NSCustomerService nsCustomerService;
 

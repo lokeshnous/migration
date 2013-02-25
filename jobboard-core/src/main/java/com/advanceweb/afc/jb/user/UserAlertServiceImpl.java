@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.user;
 
 import java.util.ArrayList;
@@ -24,9 +31,11 @@ import com.advanceweb.afc.jb.user.dao.UserAlertDAO;
 @Service("alertService")
 public class UserAlertServiceImpl implements UserAlertService {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(UserAlertServiceImpl.class);
 
+	/** The alert dao. */
 	@Autowired
 	private UserAlertDAO alertDAO;
 

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.admin.web.controller;
 
 import java.util.ArrayList;
@@ -8,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
@@ -25,10 +33,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.advanceweb.afc.jb.admin.service.AdminService;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmpSearchDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.web.controller.InventoryForm;
 import com.advanceweb.afc.jb.employer.web.controller.JobPostForm;
+import com.advanceweb.afc.jb.exception.JobBoardException;
 
 /**
  * 
@@ -41,20 +51,36 @@ import com.advanceweb.afc.jb.employer.web.controller.JobPostForm;
 @RequestMapping("/admininventory")
 public class AdminJobPostingInventoryController {
 
+	/** The Constant SUCCESS. */
 	private static final String SUCCESS = "success";
 
+	/** The Constant ERR_MSG. */
 	private static final String ERR_MSG = "errMsg";
-
+	
+	/** The Constant FACILITY_ID. */
+	private static final String FACILITY_ID = "facilityId";
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(AdminJobPostingInventoryController.class);
 
+	/** The admin service. */
 	@Autowired
 	private AdminService adminService;
 	
 //	@Autowired
 //	private ManageFeaturedEmployerProfile manageFeaturedEmployerProfile;
 
-	@RequestMapping(value = "/jobPostSearch", method = RequestMethod.GET)
+	/**
+ * Job search by com name.
+ *
+ * @param request the request
+ * @param session the session
+ * @param jobPostform the job postform
+ * @param result the result
+ * @return the jSON object
+ */
+@RequestMapping(value = "/jobPostSearch", method = RequestMethod.GET)
 	public @ResponseBody
 	JSONObject jobSearchByComName(HttpServletRequest request,
 			HttpSession session, JobPostForm jobPostform, BindingResult result) {
@@ -72,29 +98,36 @@ public class AdminJobPostingInventoryController {
 				return jsonObject;
 			}
 			int nsId = 0;
-			if (empList.length() != 0) {
-				return validate(empList,netSuiteId,session);
-			}
+			
 			if (netSuiteId.length() != 0) {
-				try{
-				nsId = Integer.parseInt(netSuiteId);
-				}catch(Exception ex){
+				try {
+					nsId = Integer.parseInt(netSuiteId);
+				} catch (Exception ex) {
 					status = false;
-					LOGGER.error("Excption occurred in jobSearchByComName Netsute Format : "+ex);
-					jsonObject.put(ERR_MSG, "Please enter a valid Net Suite Id");
+					LOGGER.error("Excption occurred in jobSearchByComName Netsute Format : "
+							+ ex);
+					jsonObject
+							.put(ERR_MSG, "Please enter a valid Net Suite Id");
 					jsonObject.put(SUCCESS, status);
 					return jsonObject;
 				}
+				/*
+				 * if (empList.length() != 0) { return
+				 * validate(empList,netSuiteId,session); }
+				 */
 				boolean val = adminService.validateNetSuitId(nsId);
 				if (val) {
 					session.setAttribute(MMJBCommonConstants.NS_CUSTOMER_ID,
 							nsId);
 				} else {
 					status = false;
-					jsonObject.put(ERR_MSG, "Please enter a valid Net Suite Id");
+					jsonObject
+							.put(ERR_MSG, "Please enter a valid Net Suite Id");
 					jsonObject.put(SUCCESS, status);
 					return jsonObject;
 				}
+			} else if (empList.length() != 0) {
+				return validate(empList, netSuiteId, session);
 			}
 		} catch (Exception e) {
 			LOGGER.error("Excption occurred in jobSearchByComName : ",e);
@@ -174,6 +207,7 @@ public class AdminJobPostingInventoryController {
 					dto.setQuantity(postingInventoryDTO.getQuantity());
 					dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
 					dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
+					dto.setInventoryId(postingInventoryDTO.getInventoryId());
 					jbPostList.add(dto);
 				}else if (MMJBCommonConstants.JOB_POSTING_SLOT.equalsIgnoreCase(postingInventoryDTO.getJbType())) {
 					dto.setAddon(postingInventoryDTO.getAddon());
@@ -181,6 +215,7 @@ public class AdminJobPostingInventoryController {
 					dto.setQuantity(postingInventoryDTO.getQuantity());
 					dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
 					dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
+					dto.setInventoryId(postingInventoryDTO.getInventoryId());
 					jbSlotList.add(dto);
 				}
 			}
@@ -191,6 +226,15 @@ public class AdminJobPostingInventoryController {
 		return model;
 	}
 
+	/**
+	 * Save avail job qty.
+	 *
+	 * @param request the request
+	 * @param response the response
+	 * @param session the session
+	 * @param stringObjNew the string obj new
+	 * @return true, if successful
+	 */
 	@RequestMapping(value = "/saveAvailJobQty", method = RequestMethod.GET)
 	public @ResponseBody
 	boolean saveAvailJobQty(HttpServletRequest request,
@@ -221,6 +265,13 @@ public class AdminJobPostingInventoryController {
 		return saveStatusJson;
 	}
 	
+	/**
+	 * Adds the job posting.
+	 *
+	 * @param inventoryForm the inventory form
+	 * @param session the session
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/addJobPosting", method = RequestMethod.GET)
 	public ModelAndView addJobPosting(@ModelAttribute("inventoryForm") InventoryForm inventoryForm,HttpSession session) {
 				
@@ -237,6 +288,13 @@ public class AdminJobPostingInventoryController {
 			return model;
 	}
 	
+	/**
+	 * Update job post inventory.
+	 *
+	 * @param inventoryForm the inventory form
+	 * @param session the session
+	 * @return the jSON object
+	 */
 	@RequestMapping(value = "/updateJobPostInventory", method = RequestMethod.POST)
 	public @ResponseBody
 	JSONObject updateJobPostInventory(
@@ -258,6 +316,56 @@ public class AdminJobPostingInventoryController {
 			jsonObject.put("status", "Failed to update the inventory for this empoyer");
 		}
 		return jsonObject;
+	}
+	
+	/**
+	 * Gets the facility names list.
+	 *
+	 * @param name the name
+	 * @return the facility names list
+	 */
+	@RequestMapping(value = "/getFacilityNamesList", method = RequestMethod.GET, headers = "Accept=*/*")
+	public @ResponseBody
+	JSONObject getFacilityNamesList(@RequestParam("term") String name) {
+		List<FacilityDTO> dtoList;
+		JSONObject jsonObject = new JSONObject();
+		try {
+			dtoList = adminService.getFacilityNames(name);
+			JSONArray jsonRows = new JSONArray();
+			for (FacilityDTO dto : dtoList) {
+				JSONObject jsonObj = new JSONObject();
+				jsonObj.put("value", dto.getName());
+				jsonObj.put("ID", dto.getFacilityId());
+				jsonObj.put("NAME", dto.getName());
+				jsonRows.add(jsonObj);
+			}
+			jsonObject.put("EmpList", jsonRows);
+		} catch (JobBoardException e) {
+			LOGGER.debug("Error while getting the Facility List Details based on the Facility Name"
+					+ e);
+		}
+
+		return jsonObject;
+	}
+
+	/**
+	 * Gets the selected facility.
+	 *
+	 * @param facilityId the facility id
+	 * @return the selected facility
+	 */
+	@RequestMapping(value = "/getSelectedFacility")
+	@ResponseBody
+	public FacilityDTO getSelectedFacility(
+			@RequestParam(FACILITY_ID) int facilityId) {
+		FacilityDTO facilityDTO = null;
+		try {
+			facilityDTO = adminService.getLinkedFacilityDetails(facilityId);
+		} catch (JobBoardException e) {
+			LOGGER.debug("Error while getting the Facility Details based on the facilityId"
+					+ e);
+		}
+		return facilityDTO;
 	}
 
 }

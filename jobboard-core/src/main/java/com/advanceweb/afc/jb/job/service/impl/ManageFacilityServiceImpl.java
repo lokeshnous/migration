@@ -27,8 +27,11 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 public class ManageFacilityServiceImpl implements ManageFacilityService {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(ManageFacilityServiceImpl.class);
+	
+	/** The manage facility dao. */
 	@Autowired
 	public ManageFacilityDAO manageFacilityDAO;
 	/* (non-Javadoc)
@@ -48,6 +51,10 @@ public class ManageFacilityServiceImpl implements ManageFacilityService {
 		}
 		return manageFacilityDTO;
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.ManageFacilityService#getFacilityListByGroup(int)
+	 */
 	@Override
 	public List<FacilityDTO> getFacilityListByGroup(int facilityId)
 			throws JobBoardServiceException {

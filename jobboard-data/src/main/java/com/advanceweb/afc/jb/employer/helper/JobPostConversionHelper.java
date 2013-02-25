@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.helper;
 
 import java.sql.Timestamp;
@@ -41,9 +48,21 @@ import com.advanceweb.afc.jb.data.entities.JpTypeAddonXref;
  */
 @Repository("jobPostConversionHelper")
 public class JobPostConversionHelper<JobPostForm> {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(JobPostConversionHelper.class);
-	 public JpJob  transformJobDtoToJpJob(JpJob jpJob, JobPostDTO dto, 
+	 
+ 	/**
+ 	 * Transform job dto to jp job.
+ 	 *
+ 	 * @param jpJob the jp job
+ 	 * @param dto the dto
+ 	 * @param template the template
+ 	 * @param admFacility the adm facility
+ 	 * @return the jp job
+ 	 */
+ 	public JpJob  transformJobDtoToJpJob(JpJob jpJob, JobPostDTO dto, 
 			 JpTemplate template, AdmFacility admFacility){
 		
 		 
@@ -122,7 +141,15 @@ public class JobPostConversionHelper<JobPostForm> {
 		 return jpJob;
 	 }
 	 
-	 public List<JpJobLocation> transformJobPostDTOToJpJbLocation(JobPostDTO dto, 
+	 /**
+ 	 * Transform job post dto to jp jb location.
+ 	 *
+ 	 * @param dto the dto
+ 	 * @param jpJob the jp job
+ 	 * @param location the location
+ 	 * @return the list
+ 	 */
+ 	public List<JpJobLocation> transformJobPostDTOToJpJbLocation(JobPostDTO dto, 
 			 JpJob jpJob, JpLocation location){
 		 List<JpJobLocation> locList = new ArrayList<JpJobLocation>();
 		 
@@ -143,7 +170,14 @@ public class JobPostConversionHelper<JobPostForm> {
 		return locList;
 	 }
 	 
-	 public List<JpJobApply> transformJobPostDTOToJpJobApply(JobPostDTO dto, JpJob jpJob){
+	 /**
+ 	 * Transform job post dto to jp job apply.
+ 	 *
+ 	 * @param dto the dto
+ 	 * @param jpJob the jp job
+ 	 * @return the list
+ 	 */
+ 	public List<JpJobApply> transformJobPostDTOToJpJobApply(JobPostDTO dto, JpJob jpJob){
 		 //Application Method
 		 List<JpJobApply> jobList = new ArrayList<JpJobApply>();
 		 JpJobApply jobApply = new JpJobApply();
@@ -164,7 +198,13 @@ public class JobPostConversionHelper<JobPostForm> {
 	 }
 	 
 	 
-	 public JobPostDTO  transformToJpJobDTO(JpJob dto){
+	 /**
+ 	 * Transform to jp job dto.
+ 	 *
+ 	 * @param dto the dto
+ 	 * @return the job post dto
+ 	 */
+ 	public JobPostDTO  transformToJpJobDTO(JpJob dto){
 			
 		 JobPostDTO jobPostDTO=new JobPostDTO();
 		 jobPostDTO.setCompanyName(dto.getFacility());
@@ -420,6 +460,14 @@ public class JobPostConversionHelper<JobPostForm> {
 		return addOnDTO;
 	}
 	
+	/**
+	 * Transform xref to jp job.
+	 *
+	 * @param xrefList the xref list
+	 * @param jpJob the jp job
+	 * @param dto the dto
+	 * @return the list
+	 */
 	public List<JpJobAddon> transformXrefToJpJob(
 			List<JpTypeAddonXref> xrefList, JpJob jpJob, JobPostDTO dto) {
 

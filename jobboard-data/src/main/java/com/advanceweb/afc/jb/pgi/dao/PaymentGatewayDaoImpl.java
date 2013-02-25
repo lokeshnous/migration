@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.pgi.dao;
 
 import java.util.ArrayList;
@@ -41,27 +48,43 @@ import com.advanceweb.afc.jb.pgi.helper.PaymentGatewayHelper;
  */
 @Repository("paymentGatewayDao")
 public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(PaymentGatewayDaoImpl.class);
 
+	/** The Constant ORDER_STATUS_FAILURE. */
 	private static final String ORDER_STATUS_FAILURE = "FAILURE";
 
+	/** The Constant ORDER_STATUS_APPROVED. */
 	private static final String ORDER_STATUS_APPROVED = "APPROVED";
 	
+	/** The Constant FIND_LAST_RESUME_PACKAGE_PURCHASED. */
 	private static final String FIND_LAST_RESUME_PACKAGE_PURCHASED = "from AdmFacilityInventory admInv where admInv.expireDt in (select max(inv.expireDt) from AdmFacilityInventory inv, AdmInventoryDetail admInvDetail where admInvDetail.productType = ? and inv.admFacility = ?) group by order_id";
 	
+	/** The hibernate template. */
 	private HibernateTemplate hibernateTemplate;
 
+	/** The Constant BLANK. */
 	private static final String BLANK = "BLANK";
 
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactory the new hibernate template
+	 */
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
 	}
 
+	/** The payment gateway helper. */
 	@Autowired
 	private PaymentGatewayHelper paymentGatewayHelper;
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.pgi.dao.PaymentGatewayDao#getAccountAddressByFacilityId(int)
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
@@ -82,14 +105,17 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 			}
 		} catch (HibernateException e) {
 			// logger call
-			LOGGER.info("getAccountAddressByFacilityId ERROR");
+			LOGGER.error("getAccountAddressByFacilityId ERROR",e);
 		} catch (Exception ex) {
 			// logger call
-			LOGGER.info(ex);
+			LOGGER.error(ex);
 		}
 		return contactDTO;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.pgi.dao.PaymentGatewayDao#getBillingAddressByFacilityId(int)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public AccountAddressDTO getBillingAddressByFacilityId(int facilityId) {
@@ -111,14 +137,17 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 			}
 		} catch (HibernateException e) {
 			// logger call
-			LOGGER.info("getBillingAddressByFacilityId ERROR");
+			LOGGER.error("getBillingAddressByFacilityId ERROR",e);
 		} catch (Exception ex) {
 			// logger call
-			LOGGER.info("ex-ERROR");
+			LOGGER.error("ex-ERROR",ex);
 		}
 		return billingAddressDTO;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.pgi.dao.PaymentGatewayDao#saveBillingAddress(com.advanceweb.afc.jb.pgi.AccountAddressDTO)
+	 */
 	@Override
 	@Transactional(readOnly = false)
 	public boolean saveBillingAddress(AccountAddressDTO billingAddressDTO) {
@@ -150,12 +179,15 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 
 			}
 		} catch (HibernateException e) {
-			LOGGER.info("ex-ERROR");
+			LOGGER.error("ex-ERROR",e);
 		}
 
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.pgi.dao.PaymentGatewayDao#saveDataBillingAddress(com.advanceweb.afc.jb.common.AccountBillingDTO)
+	 */
 	@Override
 	@Transactional(readOnly = false)
 	public boolean saveDataBillingAddress(AccountBillingDTO billingAddressDTO) {
@@ -172,7 +204,7 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 				hibernateTemplate.save(admFacilityContact);
 			}
 		} catch (HibernateException e) {
-			LOGGER.info("ex-ERROR");
+			LOGGER.error("ex-ERROR",e);
 		}
 
 		return false;
@@ -362,6 +394,9 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 		return admInventoryDetail;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.pgi.dao.PaymentGatewayDao#createJobPostOrderItems(com.advanceweb.afc.jb.common.OrderDetailsDTO)
+	 */
 	@Override
 	public void createJobPostOrderItems(OrderDetailsDTO orderDetailsDTO) {
 		

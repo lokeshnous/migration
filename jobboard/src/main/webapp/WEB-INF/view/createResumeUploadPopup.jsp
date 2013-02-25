@@ -178,7 +178,7 @@
 					<span class="lableText4">Upload Resume:</span>
 					<form:input path="fileData" class="floatLeft" type="file" />
 					<div class="toolTip marginTop8">
-						<span class="classic">Select the resume you want to upload. Accepted file types are .doc, .docx and PDF only</span>
+						<span class="classic">Select the resume you want to upload. Accepted file types include .doc, .docx and .pdf.</span>
 					</div>
 					<span class="required paddingTop0 marginTop5">(Required)</span>
             	</div>

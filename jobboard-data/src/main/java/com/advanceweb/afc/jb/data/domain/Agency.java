@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.data.domain;
 
 
@@ -10,6 +17,7 @@ import com.advanceweb.afc.jb.employer.dao.AgencyRegistrationDAO;
  */
 public class Agency {
 
+	/** The registration dao. */
 	public AgencyRegistrationDAO registrationDAO;
 
 

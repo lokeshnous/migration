@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.job.service.impl;
 
 import java.util.ArrayList;
@@ -25,11 +32,18 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 public class ManageAccessPermissionServiceImpl implements
 		ManageAccessPermissionService {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(ManageAccessPermissionServiceImpl.class);
+	
+	/** The access permission dao. */
 	@Autowired
 	public ManageAccessPermissionDAO accessPermissionDAO;
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.ManageAccessPermissionService#createJobOwner(com.advanceweb.afc.jb.common.EmployerProfileDTO, int, int)
+	 */
 	@Override
 	public UserDTO createJobOwner(EmployerProfileDTO profileDTO,
 			int facilityIdP, int userIdP) throws JobBoardServiceException {
@@ -47,6 +61,9 @@ public class ManageAccessPermissionServiceImpl implements
 		return userDTO;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.ManageAccessPermissionService#deleteJobOwner(int)
+	 */
 	@Override
 	public boolean deleteJobOwner(int ownerId) throws JobBoardServiceException {
 		try {
@@ -58,6 +75,9 @@ public class ManageAccessPermissionServiceImpl implements
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.ManageAccessPermissionService#updateJobOwner(java.util.List)
+	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public boolean updateJobOwner(
@@ -74,6 +94,9 @@ public class ManageAccessPermissionServiceImpl implements
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.ManageAccessPermissionService#getJobOwnerList(int, int)
+	 */
 	@Override
 	public List<ManageAccessPermissionDTO> getJobOwnerList(int facilityId,
 			int userId) throws JobBoardServiceException {

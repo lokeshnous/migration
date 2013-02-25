@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.resume;
 
 import java.util.List;
@@ -27,8 +34,10 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 public class ResumeServiceImpl implements ResumeService {
 
 	
+	/** The resume dto. */
 	public ResumeDTO resumeDTO;
 	
+	/** The resume dao. */
 	@Autowired
 	public ResumeDao resumeDao;
 
@@ -73,30 +82,45 @@ public class ResumeServiceImpl implements ResumeService {
 		return resumeDao.deleteResume(resumeId, userId);
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.ResumeService#createResume(com.advanceweb.afc.jb.common.ResumeDTO)
+	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public ResumeDTO createResume(ResumeDTO resumeDTO) {
 		return resumeDao.createResume(resumeDTO);
 		
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.ResumeService#createResumeCopyPaste(com.advanceweb.afc.jb.common.ResumeDTO)
+	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public boolean createResumeCopyPaste(ResumeDTO resumeDTO) {
 		return resumeDao.createResumeCopyPaste(resumeDTO);
 		
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.ResumeService#createResumeUpload(com.advanceweb.afc.jb.common.ResumeDTO)
+	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public ResumeDTO createResumeUpload(ResumeDTO resumeDTO) {
 		return resumeDao.createResumeUpload(resumeDTO);
 		
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.ResumeService#updateResumeUpload(com.advanceweb.afc.jb.common.ResumeDTO)
+	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public boolean updateResumeUpload(ResumeDTO resumeDTO) {
 		return resumeDao.updateResumeUpload(resumeDTO);
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.ResumeService#createResumeBuilder(com.advanceweb.afc.jb.common.ResumeDTO)
+	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public boolean createResumeBuilder(ResumeDTO resumeDTO) {
@@ -104,6 +128,9 @@ public class ResumeServiceImpl implements ResumeService {
 		return resumeDao.createResumeBuilder(resumeDTO);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.ResumeService#addWorkExp(java.util.List)
+	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public boolean addWorkExp(List<WorkExpDTO> listWorkExp) {
@@ -111,24 +138,36 @@ public class ResumeServiceImpl implements ResumeService {
 		return resumeDao.addWorkExp(listWorkExp);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.ResumeService#addReference(java.util.List)
+	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public boolean addReference(List<ReferenceDTO> listRefExp) {		
 		return resumeDao.addReference(listRefExp);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.ResumeService#addEducation(java.util.List)
+	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public boolean addEducation(List<EducationDTO> listEduExp) {		
 		return resumeDao.addEducation(listEduExp);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.ResumeService#addLanguage(java.util.List)
+	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public boolean addLanguage(List<LanguageDTO> listLangExp) {
 		return resumeDao.addLanguage(listLangExp);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.ResumeService#addCertifications(java.util.List)
+	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public boolean addCertifications(List<CertificationDTO> listLangExp) {
@@ -146,16 +185,25 @@ public class ResumeServiceImpl implements ResumeService {
 		return resumeDao.fetchPublicResumeByUserId(jobSeekerId,uploadResumeId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.ResumeService#findResumeCount(int)
+	 */
 	@Override
 	public int findResumeCount(int userId) {
 		return resumeDao.findResumeCount(userId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.ResumeService#checkDuplicateResumeName(java.lang.String, java.lang.String, int)
+	 */
 	@Override
 	public boolean checkDuplicateResumeName(String resumeId, String resumeName, int userId) {
 		return resumeDao.checkDuplicateResumeName(resumeId, resumeName, userId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.ResumeService#updateResumeCopyPaste(com.advanceweb.afc.jb.common.ResumeDTO)
+	 */
 	@Override
 	public boolean updateResumeCopyPaste(ResumeDTO resumeDTO) {
 		return resumeDao.updateResumeCopyPaste(resumeDTO);

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.common.ads.location.service.impl;
 
 import java.util.ArrayList;
@@ -26,9 +33,11 @@ import com.advanceweb.common.index.lucene.LuceneResult;
 @Service
 public class LocationIndexServiceImpl implements LocationIndexService {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(LocationIndexServiceImpl.class);
 
+	/** The location index. */
 	@Autowired
 	private LuceneIndex locationIndex;
 
@@ -118,6 +127,14 @@ public class LocationIndexServiceImpl implements LocationIndexService {
 	 * 
 	 */
 	private static class DocUtil {
+		
+		/**
+		 * Gets the float value.
+		 *
+		 * @param doc the doc
+		 * @param fieldName the field name
+		 * @return the float value
+		 */
 		private static Float getFloatValue(Document doc, String fieldName) {
 			String value = doc.getFieldable(fieldName).stringValue();
 			try {
@@ -127,6 +144,13 @@ public class LocationIndexServiceImpl implements LocationIndexService {
 			}
 		}
 
+		/**
+		 * Gets the integer value.
+		 *
+		 * @param doc the doc
+		 * @param fieldName the field name
+		 * @return the integer value
+		 */
 		private static Integer getIntegerValue(Document doc, String fieldName) {
 			String value = doc.getFieldable(fieldName).stringValue();
 			try {

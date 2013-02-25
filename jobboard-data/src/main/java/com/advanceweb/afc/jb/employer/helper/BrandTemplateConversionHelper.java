@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.helper;
 
 import java.util.ArrayList;
@@ -89,6 +96,9 @@ public class BrandTemplateConversionHelper {
 			
 			jpBrandTemp.setJpTemplateTestimonials(listTestimonyEntity);
 			jpBrandTemp.setJpTemplateMedias(listMediaEntity);
+		}else{
+			jpBrandTemp.setJpTemplateTestimonials(new ArrayList<JpTemplateTestimonial>());
+			jpBrandTemp.setJpTemplateMedias(new ArrayList<JpTemplateMedia>());
 		}
 		
 		return jpBrandTemp;

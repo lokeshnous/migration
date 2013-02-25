@@ -165,7 +165,7 @@
 						class="required">(Required)</span> -->
 				</div>
 				<div class="rowEvenNewSpacing">
-					<span class="lableText3">Zip Code:</span> <input readonly
+					<span class="lableText3">ZIP Code:</span> <input readonly
 						type="text" id="zipCode" name="zipCode" class="job_seeker_email disabled-input" /> <!-- <span
 						class="required">(Required)</span> -->
 				</div>

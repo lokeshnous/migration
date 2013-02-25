@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.common.template;
 
 import java.io.IOException;
@@ -19,10 +26,18 @@ import org.mvel2.templates.TemplateRuntime;
  * 
  */
 public class MvelTemplate implements AdvanceTemplate {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger(MvelTemplate.class);
 
+	/** The template name. */
 	private String templateName;
 
+	/**
+	 * Instantiates a new mvel template.
+	 *
+	 * @param templateName the template name
+	 */
 	public MvelTemplate(String templateName) {
 		this.templateName = templateName;
 	}

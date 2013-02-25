@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.login.web.controller;
 
 import java.io.IOException;
@@ -16,9 +23,13 @@ import org.springframework.security.web.util.UrlUtils;
 /*AuthenticationProcessingFilterEntryPoint*/
 public class AdminAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoint {
 	
+	/** The redirect strategy. */
 	private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
 	
+    /* (non-Javadoc)
+     * @see org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint#commence(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.security.core.AuthenticationException)
+     */
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
             throws IOException, ServletException {
 

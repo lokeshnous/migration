@@ -37,6 +37,9 @@
 				$("#accessPermissioPopUp").displaypopup(
 						"#accessPermissioPopUp", "770", "360");
 				$("#modifySubs").displaypopup("#modifySubs", "770", "360");
+				if($('#advanceUserMsgId').val()!=''){
+					alert('You are an existing Advance application user! Your existing credentials are used to register. Please use your old credentials to access Job Board application.');
+				}
 				jQuery(".megamenu").megamenu();
 			});
 </script>
@@ -58,6 +61,7 @@
 							<%=(String) session.getAttribute(MMJBCommonConstants.COMPANY_EMP)%> Dashboard
 						</h1>
 					</div>
+					<input type="hidden" value="${advUserMessg}" id="advanceUserMsgId">
 					<div class="MidContent_Wrapper FloatLeft">
 						<div class="dashboardcolumn1">
 							<div class="dashboardPanal">
@@ -123,7 +127,7 @@
 								</div>
 
 								<div class="dashboardPanalAGCcontent ">
-									<h2 class="noTopBorder">Current Subscriptions</h2>
+									<h2 class="noTopBorder">Subscriptions</h2>
 									<div>
 										<c:forEach items="${currentSubs}" var="subscription"
 											varStatus="index">
@@ -156,7 +160,7 @@
 									<div class="lableTextDashBoard">
 										<p>
 											<a target="_blank" href="${msg.agencyMediaKitURL}"><em>ADVANCE</em>
-												Recruitment Solutions Media Kit</a>
+												Online Media Kit</a>
 										</p>
 									</div>
 								</div>

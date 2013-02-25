@@ -29,6 +29,11 @@
 	<!-- <script type="text/javascript" src="jquery-1.3.2.min.js"></script>
 	<script type="text/javascript" src="jquery.autocomplete.min.js"></script>-->
 	<script type="text/javascript">
+	$("#advJobId").keypress(function (event) {
+		if(event.which == 13){
+			return false;
+		}
+	  });
 jQuery(document).ready(function() {
 		$("#bodyPart").hide();
 		$("#SearchJob").click(function(event){		
@@ -85,7 +90,7 @@ jQuery(document).ready(function() {
 		        var convStartDate = new Date(startDate);
 		        var convEndDate = new Date(endDate);
 		        if(convEndDate < convStartDate){
-		        	$("#ErrorMsg").text("Please enter end date greater than start date!");
+		        	$("#ErrorMsg").text("Your starting date must take place before your ending date.");
 					return false;
 		        }
 		        if(postedJobListId != 'true'){

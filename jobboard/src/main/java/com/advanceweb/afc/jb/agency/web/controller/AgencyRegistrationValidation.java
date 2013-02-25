@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.agency.web.controller;
 
 import java.util.regex.Matcher;
@@ -13,33 +20,53 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 @Component("agencyRegistrationValidation")
 public class AgencyRegistrationValidation {
 	
+	/** The email blank. */
 	@Value("${age.email.blank}")
 	private String emailBlank;
 	
+	/** The conform email blank. */
 	@Value("${age.conformEmail.blank}")
 	private String conformEmailBlank;
 	
+	/** The invalid email. */
 	@Value("${age.invalid.email}")
 	private String invalidEmail;
 	
+	/** The email match. */
 	@Value("${age.email.match}")
 	private String emailMatch;
 	
+	/** The pwd empty. */
 	@Value("${age.password.empty}")
 	private String pwdEmpty;
 	
+	/** The conform pass empty. */
 	@Value("${age.conform.pass.empty}")
 	private String conformPassEmpty;
 	
+	/** The pwd hint. */
 	@Value("${age.pwd.hint}")
 	private String pwdHint;
 	
+	/** The pwd not equal. */
 	@Value("${age.pwd.not.equal}")
 	private String pwdNotEqual;
 
+	/** The pattern. */
 	private Pattern pattern;
+	
+	/** The matcher. */
 	private Matcher matcher;
+    
+    /** The Constant NOT_EMPTY. */
     private static final String NOT_EMPTY= "NotEmpty";
+	
+	/**
+	 * Supports.
+	 *
+	 * @param form the form
+	 * @return true, if successful
+	 */
 	public boolean supports(Class<?> form) {
 		return AgencyRegistrationForm.class.isAssignableFrom(form);
 	}

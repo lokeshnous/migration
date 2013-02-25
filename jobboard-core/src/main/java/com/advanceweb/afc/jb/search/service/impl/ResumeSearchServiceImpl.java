@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.search.service.impl;
 
 import java.util.List;
@@ -17,9 +24,11 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 @Service("resumeSearchService")
 public class ResumeSearchServiceImpl implements ResumeSearchService {
 
+	/** The resume search delegate. */
 	@Autowired
 	private ResumeSearchDelegate resumeSearchDelegate;
 	
+	/** The resume search dao. */
 	@Autowired
 	private ResumeSearchDAO resumeSearchDAO;
 	
@@ -60,6 +69,9 @@ public class ResumeSearchServiceImpl implements ResumeSearchService {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.search.service.ResumeSearchService#editSavedResumeSearch(int)
+	 */
 	@Override
 	public List<SaveSearchedJobsDTO> editSavedResumeSearch(int searchId) {
 		return resumeSearchDAO.editSavedResumeSearch(searchId);
@@ -78,34 +90,52 @@ public class ResumeSearchServiceImpl implements ResumeSearchService {
 
 	
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.search.service.ResumeSearchService#saveModifiedData(java.util.List)
+	 */
 	@Override
 	public boolean saveModifiedData(List<SaveSearchedJobsDTO> searchedJobsDTOs) {
 		return resumeSearchDAO.saveModifiedData(searchedJobsDTOs);
 	}
 
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.search.service.ResumeSearchService#validateSearchName(java.lang.String, int)
+	 */
 	@Override
 	public boolean validateSearchName(String searchName, int userId) {
 		return resumeSearchDAO.validateSearchName(searchName, userId);
 	}
 
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.search.service.ResumeSearchService#viewMySavedSearches(int)
+	 */
 	@Override
 	public List<SaveSearchedJobsDTO> viewMySavedSearches(int userId) {
 		return resumeSearchDAO.viewMySavedSearches(userId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.search.service.ResumeSearchService#deleteFirstSearch(int)
+	 */
 	@Override
 	public boolean deleteFirstSearch(int userId) {
 		return resumeSearchDAO.deleteFirstSearch(userId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.search.service.ResumeSearchService#saveSearchedResumes(com.advanceweb.afc.jb.common.SaveSearchedJobsDTO)
+	 */
 	@Override
 	public void saveSearchedResumes(SaveSearchedJobsDTO searchedJobsDTO) {
 		resumeSearchDAO.saveSearchedResumes(searchedJobsDTO);
 	}
 
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.search.service.ResumeSearchService#updateSearchDetails(com.advanceweb.afc.jb.common.SaveSearchedJobsDTO)
+	 */
 	@Override
 	public boolean updateSearchDetails(SaveSearchedJobsDTO searchedJobsDTO) {
 		return resumeSearchDAO.updateSearchDetails(searchedJobsDTO);

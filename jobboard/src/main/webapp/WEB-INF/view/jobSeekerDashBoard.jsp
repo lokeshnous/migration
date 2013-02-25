@@ -64,7 +64,9 @@ jQuery(document).ready(
 					"#retainThisJobId", "790", "252");
 			$("#createResumePopupUpload").displaypopup("#createResumePopupUpload",
 					"790", "350");
-			
+			if($('#advanceUserMsgId').val()!=''){
+				alert('You are an existing Advance application user! Your existing credentials are used to register. Please use your old credentials to access Job Board application.');
+			}
 			var status = <%= session.getAttribute(MMJBCommonConstants.RETAIN_SEARCH)%>
 			if(status)
 			{
@@ -107,6 +109,7 @@ jQuery(document).ready(
 								<div class="advanceDashBoardHeader"><img src="../resources/images/myadvance.png" width="288"
 									height="23" alt="My advance  dashboard"></div>
 							</div>
+							<input type="hidden" value="${advUserMessg}" id="advanceUserMsgId">
 							<div class="dashboardcolumn1">
 								<div class="dashboardPanal"  style="height: 91px;"> 
 									<div class="profile">
@@ -287,7 +290,7 @@ jQuery(document).ready(
 															<table>
 																<tr class="borderTopNone">
 																	<th class="borderTopNone" width="46%" align="left"
-																		scope="col">Current Subscriptions</th>
+																		scope="col">Subscriptions</th>
 																</tr>
 																<c:forEach items="${currentSubs}"
 																	var="subscription" varStatus="index">

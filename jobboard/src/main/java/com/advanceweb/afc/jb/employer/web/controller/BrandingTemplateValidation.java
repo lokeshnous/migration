@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.util.Locale;
@@ -21,51 +28,73 @@ import com.advanceweb.afc.jb.employer.service.BrandingTemplateService;
 @Component("brandingTemplateValidation")
 public class BrandingTemplateValidation {
 
+	/** The image size limit. */
 	private @Value("${imageSizeLimit}")
 	long imageSizeLimit;
 
+	/** The video size limit. */
 	private @Value("${videoSizeLimit}")
 	long videoSizeLimit;
 
+	/** The emp brand main image. */
 	private @Value("${empBrandMainImage}")
 	String empBrandMainImage;
 
+	/** The emp brand main image size. */
 	private @Value("${empBrandMainImageSize}")
 	String empBrandMainImageSize;
 
+	/** The emp brand logo. */
 	private @Value("${empBrandLogo}")
 	String empBrandLogo;
 
+	/** The emp brand logo size. */
 	private @Value("${empBrandLogoSize}")
 	String empBrandLogoSize;
 
+	/** The emp brand add image. */
 	private @Value("${empBrandAddImage}")
 	String empBrandAddImage;
 
+	/** The emp brand add image size. */
 	private @Value("${empBrandAddImageSize}")
 	String empBrandAddImageSize;
 
+	/** The emp brand video. */
 	private @Value("${empBrandVideo}")
 	String empBrandVideo;
 
+	/** The emp brand video size. */
 	private @Value("${empBrandVideoSize}")
 	String empBrandVideoSize;
 
+	/** The emp brand template name. */
 	private @Value("${empBrandTemplateName}")
 	String empBrandTemplateName;
 
+	/** The emp brand template exists. */
 	private @Value("${empBrandTemplateExists}")
 	String empBrandTemplateExists;
 	
+	/** The branding template service. */
 	@Autowired
 	private BrandingTemplateService brandingTemplateService;
 	
+	/** The Constant STR_NOTEMPTY. */
 	private static final String STR_NOTEMPTY = "NotEmpty";
 	
+	/** The Constant MAIN_IMAGE_FILE. */
 	private static final String MAIN_IMAGE_FILE = "mainImageFileData";
 	
+	/** The Constant LOGO_FILE. */
 	private static final String LOGO_FILE = "logoFileData";
 
+	/**
+	 * Supports.
+	 *
+	 * @param form the form
+	 * @return true, if successful
+	 */
 	public boolean supports(Class<?> form) {
 		return BrandingTemplateValidation.class.isAssignableFrom(form);
 	}

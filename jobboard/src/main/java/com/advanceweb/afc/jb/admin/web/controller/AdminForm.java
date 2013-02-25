@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.admin.web.controller;
 
 /**
@@ -6,8 +13,13 @@ package com.advanceweb.afc.jb.admin.web.controller;
  */
 public class AdminForm {
 	
+	/** The health system. */
 	private boolean healthSystem;
+	
+	/** The comp name. */
 	private String compName;
+	
+	/** The ns id. */
 	private String nsId;
 	
 

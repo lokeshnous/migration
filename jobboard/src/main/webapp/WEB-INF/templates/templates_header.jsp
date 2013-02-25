@@ -12,7 +12,7 @@
 	<c:choose>
 	<c:when test="${isHomePage}">
 		<h1 class="logo">
-		<a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/index.html" title="Advance Healthcare Jobs">
+		<a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcare/index.html" title="Advance Healthcare Jobs">
 		<img src="<%=request.getContextPath() %>/resources/images/tranBg.png" alt="Advance Healthcare Jobs" width="397px" height="70px"/>
 		</a>
 		</h1> 
@@ -21,13 +21,13 @@
 		<h3 class="logo">
 		<security:authorize 
 		access="hasRole('ROLE_JOB_SEEKER') or hasRole('ROLE_FACILITY') or hasRole('ROLE_FACILITY_GROUP') or hasRole('ROLE_FACILITY_SYSTEM')">
-		<a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/index.html" title="Advance Healthcare Jobs">
+		<a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcare/index.html" title="Advance Healthcare Jobs">
 		<img src="<%=request.getContextPath() %>/resources/images/tranBg.png" alt="Advance Healthcare Jobs" width="397px" height="70px"/>
 		</a>
 		</security:authorize>
 		<security:authorize 
 		access="!hasRole('ROLE_JOB_SEEKER') and !hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP') and !hasRole('ROLE_FACILITY_SYSTEM')">
-		<a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/index.html" title="Advance Healthcare Jobs">
+		<a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcare/index.html" title="Advance Healthcare Jobs">
 		<img src="<%=request.getContextPath() %>/resources/images/tranBg.png" alt="Advance Healthcare Jobs" width="397px" height="70px"/>
 		</a>
 		</security:authorize>
@@ -139,10 +139,10 @@
 				<div class="headerLoginSectionColumns width205">
 					<span class="boldText">Job Seeker:</span><br />
 					<div class="PopUpToolTip">
-						<a href="#" rel="nofollow,noindex">Why <strong>advance</strong>?
+						<a href="#" rel="nofollow,noindex">Why <strong>ADVANCE </strong>?
 						</a> <div class="classic01">
 							<p class="FontWeight marginBottom10">When you sign up,
-								ADVANCE gives you:</p>
+								<i>ADVANCE</i> gives you:</p>
 							<p class="FontWeight FontSize12 OrangeDot FontBlack">
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Access to thousands of
 								healthcare job opportunities</p>
@@ -217,19 +217,19 @@
     
     <li>
    <%--  <security:authorize access="!hasRole('ROLE_JOB_SEEKER') and !hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP') and !hasRole('ROLE_FACILITY_SYSTEM')" >
-				<a href="<%=request.getContextPath()%>/healthcarejobs/index.html" class="bodnew">JOB SEARCH</a>
+				<a href="<%=request.getContextPath()%>/healthcare/index.html" class="bodnew">JOB SEARCH</a>
 	</security:authorize> --%>
 	<security:authorize access="!(hasRole('ROLE_FACILITY') or hasRole('ROLE_FACILITY_GROUP') or hasRole('ROLE_FACILITY_SYSTEM'))">
-				<a href="<%=request.getContextPath()%>/healthcarejobs/index.html" class="bodnew">JOB SEARCH</a>
+				<a href="<%=request.getContextPath()%>/healthcare/index.html" class="bodnew">JOB SEARCH</a>
 				<div class="dropdown_2columns">
             <div class="col_2">
                 <ul>
                     <li><a href="http://www.advancehealthcarejobs.com" target="_blank">Quick Search</a></li>
-					<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/showCareers.html?careerType=resumeBuilder" target="_blank">Resume Builder</a></li>
+					<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcare/showCareers.html?careerType=resumeBuilder" target="_blank">Resume Builder</a></li>
 					<!-- <li><a href="http://health-care-jobs.advanceweb.com/Salary/Default.aspx">Salary Calculator</a></li> -->
-					<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/showCareers.html?careerType=messanger" target="_blank"><em>ADVANCE</em> Messenger</a></li>
-					<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/showCareers.html?careerType=career" target="_blank">Career Resource Center</a></li>
-					<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"")%>/healthcarejobs/featuredemployers.html" target="_blank">Featured Employers</a></li>
+					<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcare/showCareers.html?careerType=messanger" target="_blank"><em>ADVANCE</em> Messenger</a></li>
+					<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcare/showCareers.html?careerType=career" target="_blank">Career Resource Center</a></li>
+					<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"")%>/healthcare/featuredemployers.html" target="_blank">Featured Employers</a></li>
 					<li><a href="http://www.advancehealthcarejobs.com" target="_blank">Home</a></li>
                 </ul>   
             </div>

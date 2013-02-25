@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.login.web.controller;
 
 import java.io.IOException;
@@ -33,22 +40,34 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
 import com.advanceweb.afc.jb.user.UserService;
 
 public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
+	
+	/** The user service. */
 	@Autowired
 	private UserService userService;
 
+	/** The facility service. */
 	@Autowired
 	private FacilityService facilityService;
 
+	/** The profile registration. */
 	@Autowired
 	private ProfileRegistration profileRegistration;
 	
+	/** The authentication delegate. */
 	@Autowired
 	private DatabaseAuthenticationDelegate authenticationDelegate;
 	
+	/** The dothtml extention. */
 	@Value("${dothtmlExtention}")
 	private String dothtmlExtention;
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(LoginManager.class);
+	
+	/* (non-Javadoc)
+	 * @see org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler#onAuthenticationSuccess(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.security.core.Authentication)
+	 */
 	public void onAuthenticationSuccess(HttpServletRequest request,
 			HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {
@@ -352,6 +371,13 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 
 	}
 	
+	/**
+	 * Creates the cookie.
+	 *
+	 * @param userName the user name
+	 * @param password the password
+	 * @return the cookie
+	 */
 	private Cookie createCookie(String userName,String password){
 		Cookie cookie= null;
 		try {
@@ -366,6 +392,12 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 		}
 		return cookie;
 	}
+	
+	/**
+	 * Delete cookie.
+	 *
+	 * @return the cookie
+	 */
 	private Cookie deleteCookie(){
 		Cookie cookie=new Cookie(".ASPXAUTH","Deleted cookie");
 			cookie.setDomain(".advanceweb.com");
@@ -374,6 +406,11 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 		return cookie;
 	}
 	
+	/**
+	 * Gets the cookie max age.
+	 *
+	 * @return the cookie max age
+	 */
 	private int getCookieMaxAge(){
 		Calendar cal = Calendar.getInstance();
 		int time=(int)(TimeUnit.SECONDS.convert(cal.getTimeInMillis(), TimeUnit.MILLISECONDS)+TimeUnit.SECONDS.convert(30, TimeUnit.MINUTES));

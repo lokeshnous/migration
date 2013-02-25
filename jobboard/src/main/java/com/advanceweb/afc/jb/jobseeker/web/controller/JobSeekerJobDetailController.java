@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import java.util.List;
@@ -27,9 +34,12 @@ import com.advanceweb.afc.jb.jobseeker.service.JobSeekerJobDetailService;
 @Controller
 @RequestMapping(value = "/jobSeekerJobDetail")
 public class JobSeekerJobDetailController {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(JobSeekerJobDetailController.class);
 
+	/** The job seeker job detail service. */
 	@Autowired
 	private JobSeekerJobDetailService jobSeekerJobDetailService;
 

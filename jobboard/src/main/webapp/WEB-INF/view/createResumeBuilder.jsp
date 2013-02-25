@@ -297,7 +297,7 @@ function removeRefrences(divID,pID){
 				},
 			});
 		});
-		
+				
 		//$('[id^=zipCode]').keypress(validateNumber);
 		$(".megamenu").megamenu();
 		$('.focus').focus();
@@ -521,7 +521,7 @@ function removeRefrences(divID,pID){
 												path="contactInfoForm.state" /></FONT>
 									</div>
 									<div class="rowEvenNewSpacing">
-										<span class="lableText3">Zip Code:</span>
+										<span class="lableText3">ZIP Code:</span>
 										
 										<form:input path="contactInfoForm.postalCode"
 											type="text" name="zipCode" id="zipCode"
@@ -613,7 +613,7 @@ function removeRefrences(divID,pID){
 
 									<!-- <div id="phNoAjaxCallId"> -->
 										<p class="floatLeft">
-											<a href="#" class="link_color1_emphasized" id="phNoAjaxCallIdButton">Save and add another phone number</a> 
+											<a href="#nogo" class="link_color1_emphasized" id="phNoAjaxCallIdButton">Save and add another phone number</a> 
 										</p>									
 									</div>
 									</div>
@@ -725,7 +725,7 @@ function removeRefrences(divID,pID){
 											<span class="required">(Required)</span>
 										</div>
 										<div class="rowEvenNewSpacing">
-											<span class="lableText3">Years at Position:</span>
+											<span class="lableText3">Years in Position:</span>
 											<form:input onkeypress="return validateNumber(event);"
 												path="listWorkExpForm[${status.index}].yrsAtPostion"
 												class="job_seeker_Resume" maxlength="2" />
@@ -777,7 +777,7 @@ function removeRefrences(divID,pID){
 											<span class="required "></span>
 										</div>
 										<div class="row MarginBottom10 ">
-											<div class="lableText3">Summary / Job Description:</div>
+											<div class="lableText3">Job Responsibilities and Accomplishments:</div>
 											<div class="input_grp5 ">
 												<form:textarea id="workExplimitedtextarea${status.index}"
 													onKeyDown="limitText(this.form.workExplimitedtextarea${status.index},this.form.countdownworkexp${status.index},2000);"
@@ -939,7 +939,7 @@ function removeRefrences(divID,pID){
 						</div>
 						<div id="workExpAjaxCallId">
 							<p class="floatLeft">
-								<a href="#" class="link_color1_emphasized"
+								<a href="#nogo" class="link_color1_emphasized"
 									id="workExpAjaxCallIdButton">Save and add another work
 									experience</a>
 							</p>
@@ -1144,7 +1144,7 @@ function removeRefrences(divID,pID){
 								</div>
 								<div id="eduAjaxCallId">
 									<p class="floatLeft">
-										<a href="#" class="link_color1_emphasized" id="eduAjaxCallIdButton">Save and add another institution</a> 
+										<a href="#nogo" class="link_color1_emphasized" id="eduAjaxCallIdButton">Save and add another institution</a> 
 									</p>									
 								</div>
 							</div>
@@ -1262,7 +1262,7 @@ function removeRefrences(divID,pID){
 								<div id="certAjaxCallId">
 <!-- 									<input type="button" value="Save and add another certification"
 										class="orange" id="certAjaxCallIdButton" /> -->
-									 <p class="floatLeft"><a href="#" class="link_color1_emphasized" id="certAjaxCallIdButton" >Save and add another certification</a></p> 
+									 <p class="floatLeft"><a href="#nogo" class="link_color1_emphasized" id="certAjaxCallIdButton" >Save and add another certification</a></p> 
 								</div>
 							</div>
 
@@ -1284,7 +1284,7 @@ function removeRefrences(divID,pID){
 									<div class="rowEvenNewSpacing">
 										<span class="lableText3">Skill:</span> 
 										<input type="text" name="skill" class="job_seeker_password textBox350" id="skillId" maxlength="50"/> 
-										<span class="required"><a href="#" class="btn_sm orange" id="skillRefId">Add</a></span>
+										<span class="required"><a href="#nogo" class="btn_sm orange" id="skillRefId">Add</a></span>
 										<div class="toolTip marginTop8 marginLeft5">
 											<span class="classic">Show potential employers what
 												your strengths are by entering up to 50 special skills in
@@ -1399,7 +1399,7 @@ function removeRefrences(divID,pID){
 								</div>
 								<div id="langAjaxCallId">
 									<p class="floatLeft">
-										<a href="#" class="link_color1_emphasized" id="langAjaxCallIdButton">Save and add another language</a> 
+										<a href="#nogo" class="link_color1_emphasized" id="langAjaxCallIdButton">Save and add another language</a> 
 									</p>									
 								</div>
 							</div>
@@ -1627,7 +1627,7 @@ function removeRefrences(divID,pID){
 								</div>
 								<div id="refAjaxCallId" class="floatLeft">
 									<p >
-										<a href="#" class="link_color1_emphasized" id="refAjaxCallIdButton">Save and add another reference</a> 
+										<a href="#nogo" class="link_color1_emphasized" id="refAjaxCallIdButton">Save and add another reference</a> 
 									</p>									
 								</div>
 							</div>

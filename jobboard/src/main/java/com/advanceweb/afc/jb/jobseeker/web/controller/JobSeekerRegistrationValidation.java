@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import java.util.regex.Matcher;
@@ -20,37 +27,55 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 @Component("registerValidation")
 public class JobSeekerRegistrationValidation {
 	
+	/** The email blank. */
 	@Value("${js.email.blank}")
 	private String emailBlank;
 	
+	/** The conform email blank. */
 	@Value("${js.conformEmail.blank}")
 	private String conformEmailBlank;
 	
+	/** The invalid email. */
 	@Value("${js.invalid.email}")
 	private String invalidEmail;
 	
+	/** The email match. */
 	@Value("${js.email.match}")
 	private String emailMatch;
 	
+	/** The pwd empty. */
 	@Value("${js.password.empty}")
 	private String pwdEmpty;
 	
+	/** The conform pass empty. */
 	@Value("${js.conform.pass.empty}")
 	private String conformPassEmpty;
 	
+	/** The pwd hint. */
 	@Value("${js.pwd.hint}")
 	private String pwdHint;
 	
+	/** The pwd not equal. */
 	@Value("${js.pwd.not.equal}")
 	private String pwdNotEqual;
 	
+	/** The pattern. */
 	private Pattern pattern;
+	
+	/** The matcher. */
 	private Matcher matcher;
 	
+	/** The Constant NOTEMPTY. */
 	private static final String NOTEMPTY = "NotEmpty";
 	
 	
-	  public boolean supports(Class<?> form) {
+	  /**
+  	 * Supports.
+  	 *
+  	 * @param form the form
+  	 * @return true, if successful
+  	 */
+  	public boolean supports(Class<?> form) {
 		    return JobSeekerRegistrationForm.class.isAssignableFrom(form);
 		  }
 	

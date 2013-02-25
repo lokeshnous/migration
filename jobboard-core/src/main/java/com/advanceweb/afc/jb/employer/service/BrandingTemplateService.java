@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.service;
 
 import java.util.List;
@@ -112,8 +119,21 @@ public interface BrandingTemplateService {
 	 */
 	boolean getBrandPackage(int productId);
 	
+	/**
+	 * Gets the parent id.
+	 *
+	 * @param facilityId the facility id
+	 * @return the parent id
+	 */
 	int getParentId(int facilityId);
 	
+	/**
+	 * Gets the parent user id.
+	 *
+	 * @param userId the user id
+	 * @param parentFacilityId the parent facility id
+	 * @return the parent user id
+	 */
 	int getParentUserId(int userId,int parentFacilityId);
 	
 }

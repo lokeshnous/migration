@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.util.regex.Matcher;
@@ -17,39 +24,66 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 @Component("employerRegistrationValidation")
 public class EmployerRegistrationValidation {
 	
+	/** The email blank. */
 	@Value("${emp.email.blank}")
 	private String emailBlank;
 	
+	/** The conform email blank. */
 	@Value("${emp.conformEmail.blank}")
 	private String conformEmailBlank;
 	
+	/** The invalid email. */
 	@Value("${emp.invalid.email}")
 	private String invalidEmail;
 	
+	/** The email match. */
 	@Value("${emp.email.match}")
 	private String emailMatch;
 	
+	/** The pwd empty. */
 	@Value("${emp.password.empty}")
 	private String pwdEmpty;
 	
+	/** The conform pass empty. */
 	@Value("${emp.conform.pass.empty}")
 	private String conformPassEmpty;
 	
+	/** The pwd hint. */
 	@Value("${emp.pwd.hint}")
 	private String pwdHint;
 	
+	/** The pwd not equal. */
 	@Value("${emp.pwd.not.equal}")
 	private String pwdNotEqual;
 	
+	/** The pattern. */
 	private Pattern pattern;
+	
+	/** The matcher. */
 	private Matcher matcher;
 	
+	/** The Constant NOTEMPTY. */
 	private static final String NOTEMPTY = "NotEmpty";
+	
+	/** The Constant EMAILID. */
 	private static final String EMAILID = "emailId";
 
+	/**
+	 * Supports.
+	 *
+	 * @param form the form
+	 * @return true, if successful
+	 */
 	public boolean supports(Class<?> form) {
 		return EmployerRegistrationForm.class.isAssignableFrom(form);
 	}
+	
+	/**
+	 * Support.
+	 *
+	 * @param form the form
+	 * @return true, if successful
+	 */
 	public boolean support(Class<?> form) {
 		return EmployeeAccountForm.class.isAssignableFrom(form);
 	}

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.user.dao;
 
 import java.util.ArrayList;
@@ -31,12 +38,27 @@ import com.mysql.jdbc.StringUtils;
 @Transactional
 @Repository("userDAO")
 public class UserDaoImpl implements UserDao {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(UserDaoImpl.class);
+	
+	/** The hibernate template tracker. */
 	private HibernateTemplate hibernateTemplateTracker;
+	
+	/** The hibernate template. */
 	private HibernateTemplate hibernateTemplate;
+	
+	/** The hibernate template advance pass. */
 	private HibernateTemplate hibernateTemplateAdvancePass;
 
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactoryMerionTracker the session factory merion tracker
+	 * @param sessionFactory the session factory
+	 * @param sessionFactoryAdvancePass the session factory advance pass
+	 */
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
@@ -49,6 +71,9 @@ public class UserDaoImpl implements UserDao {
 				sessionFactoryAdvancePass);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.dao.UserDao#getUser(java.lang.String)
+	 */
 	@Override
 	public UserDTO getUser(String email) {
 		UserDTO userDTO = null;
@@ -97,6 +122,9 @@ public class UserDaoImpl implements UserDao {
 		return userDTO;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.dao.UserDao#isAdmin(int)
+	 */
 	public boolean isAdmin(int userId) {
 		boolean result = false;
 		List<AdmUserRole> user = hibernateTemplate.find(
@@ -108,6 +136,9 @@ public class UserDaoImpl implements UserDao {
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.dao.UserDao#getUserRole(int)
+	 */
 	@Override
 	public List<UserRoleDTO> getUserRole(int userId) {
 		List<AdmUserRole> roleList = hibernateTemplate.find(
@@ -137,6 +168,10 @@ public class UserDaoImpl implements UserDao {
 
 		return userRoleDTOList;
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.dao.UserDao#getUserByUserId(int)
+	 */
 	@Override
 	public UserDTO getUserByUserId(int userId) {
 		UserDTO userDTO = null;
@@ -186,6 +221,9 @@ public class UserDaoImpl implements UserDao {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.dao.UserDao#updateSocialProfileId(int, java.lang.String, int)
+	 */
 	@Override
 	public void updateSocialProfileId(int userId, String profileId,int profileAttrId)throws JobBoardDataException{
 		MerUserProfile userProfile=new MerUserProfile();
@@ -205,6 +243,9 @@ public class UserDaoImpl implements UserDao {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.dao.UserDao#getUserBySocialProfileId(java.lang.String)
+	 */
 	@Override
 	public UserDTO getUserBySocialProfileId(String socialProfileId)throws JobBoardDataException{
 		UserDTO userDTO=null;
@@ -271,6 +312,9 @@ public class UserDaoImpl implements UserDao {
 		return schedulerDTOList;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.dao.UserDao#getAdvancePassUser(java.lang.String)
+	 */
 	@Override
 	public UserDTO getAdvancePassUser(String email) {
 		UserDTO userDTO=null;
@@ -294,6 +338,9 @@ public class UserDaoImpl implements UserDao {
 		return userDTO;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.dao.UserDao#checkUserMail(java.lang.String)
+	 */
 	@Override
 	public boolean checkUserMail(String email) {
 		try {
@@ -311,6 +358,9 @@ public class UserDaoImpl implements UserDao {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.dao.UserDao#getAdminInfo(java.lang.String)
+	 */
 	@Override
 	public UserDTO getAdminInfo(String email) {
 		UserDTO userDTO = null;

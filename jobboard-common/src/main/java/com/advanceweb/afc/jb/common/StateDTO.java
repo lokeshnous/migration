@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common;
 
 import java.io.Serializable;
@@ -11,10 +18,16 @@ import java.io.Serializable;
 public class StateDTO implements Serializable {
 
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
+	/** The state id. */
 	private int stateId;
+	
+	/** The state key. */
 	private String stateKey;
+	
+	/** The state value. */
 	private String stateValue;
 	
 	/**
@@ -41,9 +54,21 @@ public class StateDTO implements Serializable {
 	public void setStateValue(String stateValue) {
 		this.stateValue = stateValue;
 	}
+	
+	/**
+	 * Gets the state key.
+	 *
+	 * @return the state key
+	 */
 	public String getStateKey() {
 		return stateKey;
 	}
+	
+	/**
+	 * Sets the state key.
+	 *
+	 * @param stateKey the new state key
+	 */
 	public void setStateKey(String stateKey) {
 		this.stateKey = stateKey;
 	}

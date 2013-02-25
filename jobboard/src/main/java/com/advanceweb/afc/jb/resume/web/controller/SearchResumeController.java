@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.resume.web.controller;
 
 import java.util.ArrayList;
@@ -69,52 +76,69 @@ import com.advanceweb.common.client.ClientContext;
 @RequestMapping("/employerSearchResume")
 public class SearchResumeController extends AbstractController {
 
+	/** The Constant CREATE_RESUME_SEARCH. */
 	private static final String CREATE_RESUME_SEARCH = "createResumeSearch";
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(SearchResumeController.class);
 
+	/** The check session map. */
 	@Autowired
 	private CheckSessionMap checkSessionMap;
 
+	/** The resume search service. */
 	@Autowired
 	private ResumeSearchService resumeSearchService;
 
+	/** The lookup service. */
 	@Autowired
 	private LookupService lookupService;
 
+	/** The populate dropdowns service. */
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
 
+	/** The saved searchs limit. */
 	@Value("${savedSearchsLimit}")
 	private String savedSearchsLimit;
 	
+	/** The move resume to folder msg. */
 	@Value("${moveResumeToFolderMsg}")
 	private String moveResumeToFolderMsg;
 
+	/** The navigation path. */
 	private String navigationPath;
 
+	/** The save this search err msg. */
 	@Value("${saveThisSearchErrMsg}")
 	private String saveThisSearchErrMsg;
 
+	/** The resume service. */
 	@Autowired
 	private ResumeService resumeService;
 
+	/** The click service. */
 	@Autowired
 	private ClickService clickService;
 
+	/** The trans create resume. */
 	@Autowired
 	private TransformCreateResume transCreateResume;
 
+	/** The ad service. */
 	@Autowired
 	private AdService adService;
 	
+	/** The resume search validator. */
 	@Autowired
 	private ResumeSearchValidator resumeSearchValidator;
 	
+	/** The resume package service. */
 	@Autowired
 	private ResumePackageService resumePackageService;
 
+	/** The Constant STR_SRCH_RES_FORM. */
 	private static final String STR_SRCH_RES_FORM = "searchResumeForm";
 
 	/**NOT IN USE
@@ -463,6 +487,14 @@ public class SearchResumeController extends AbstractController {
 		}
 	}
 
+	/**
+	 * My saved resume searches.
+	 *
+	 * @param searchResumeForm the search resume form
+	 * @param result the result
+	 * @param session the session
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/mySavedResumeSearches", method = RequestMethod.GET)
 	public ModelAndView mySavedResumeSearches(
 			@ModelAttribute(STR_SRCH_RES_FORM) SearchResumeForm searchResumeForm,

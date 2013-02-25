@@ -174,7 +174,7 @@ var options = {
 							var convStartDate = new Date(startDate);
 					        var convEndDate = new Date(endDate);
 					        if(convEndDate < convStartDate){
-					        	$("#showMetricsErr").html("Please enter end date greater than start date!");
+					        	$("#showMetricsErr").html("Your starting date must take place before your ending date.");
 								//$("#container").css("width", "550px");
 								//$("#container").css("text-align", "center");
 								//$("#container").css("color", "#FF0000");

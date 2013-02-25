@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.agency.helper;
 
 import java.io.IOException;
@@ -27,6 +34,8 @@ import com.advanceweb.afc.jb.data.entities.MerUserProfilePK;
 
 @Repository("agencyHelper")
 public class AgencyRegistrationConversionHelper {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger("AgencyRegistrationConversionHelper.class");
 	/**
@@ -59,6 +68,14 @@ public class AgencyRegistrationConversionHelper {
 
 	}
 
+	/**
+	 * Creates the mer user.
+	 *
+	 * @param entity the entity
+	 * @param dto the dto
+	 * @param userDTO the user dto
+	 * @return the mer user
+	 */
 	private MerUser createMerUser(MerUser entity, AgencyProfileDTO dto,
 			UserDTO userDTO) {
 
@@ -210,6 +227,12 @@ public class AgencyRegistrationConversionHelper {
 
 	}
 
+	/**
+	 * Transform mer user to user dto.
+	 *
+	 * @param merUser the mer user
+	 * @return the user dto
+	 */
 	public UserDTO transformMerUserToUserDTO(MerUser merUser) {
 		UserDTO userDTO = new UserDTO();
 		if (null != merUser) {
@@ -327,7 +350,7 @@ public class AgencyRegistrationConversionHelper {
 				labels.add(entries.getProperty((String) itr.next()));
 			}
 		} catch (IOException e) {
-			LOGGER.info("Error in transforming profile attribute",e);
+			LOGGER.error("Error in transforming profile attribute",e);
 		}
 		Properties profileAttributes = null;
 		List<String> profileAttribs = new ArrayList<String>();
@@ -339,7 +362,7 @@ public class AgencyRegistrationConversionHelper {
 					profileAttribs.add(profileAttributes.getProperty((String) itr.next())); 
 				}
 		} catch (IOException e) {
-			LOGGER.info("Error in transforming profile attribute",e);
+			LOGGER.error("Error in transforming profile attribute",e);
 		}
 		
 		AgencyProfileDTO registerDTO = new AgencyProfileDTO();
@@ -380,6 +403,13 @@ public class AgencyRegistrationConversionHelper {
 		registerDTO.setAttribList(listDTO);
 		return registerDTO;
 	}
+	
+	/**
+	 * Transform to account profile dto.
+	 *
+	 * @param dto the dto
+	 * @return the account profile dto
+	 */
 	public AccountProfileDTO transformToAccountProfileDTO(AgencyProfileDTO dto) {
 		AccountProfileDTO aPDto=new AccountProfileDTO();
 		if (null != dto.getAttribList()) {

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.common.client;
 
 import java.util.LinkedHashMap;
@@ -125,6 +132,7 @@ public class ClientContext {
 	 */
 	public static final String USER_ID = "user.id";
 
+	/** The params. */
 	private Map<String, String> params;
 
 	/**
@@ -177,6 +185,9 @@ public class ClientContext {
 		params.put(key, value);
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

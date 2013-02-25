@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.pgi.web.controller;
 
 import java.util.regex.Matcher;
@@ -16,12 +23,18 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
  */
 @Component("paymentGatewayValidation")
 public class PaymentGatewayValidation {
+	
+	/** The Constant NOTEMPTY. */
 	private static final String NOTEMPTY = "NotEmpty";
 	
+	/** The jobseeker reg phone msg. */
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
 	
+	/** The pattern. */
 	private Pattern pattern;
+	
+	/** The matcher. */
 	private Matcher matcher;
 	/**
 	 * @param form
@@ -49,6 +62,12 @@ public class PaymentGatewayValidation {
 		
 	}
 
+	/**
+	 * Validate card type security code.
+	 *
+	 * @param form the form
+	 * @param errors the errors
+	 */
 	private void validateCardTypeSecurityCode(CreditCardInfoForm form,
 			Errors errors) {
 		

@@ -8,13 +8,29 @@ package com.advanceweb.afc.jb.common;
  *
  */
 public class ResCoverLetterDTO {
+	
+	/** The coverletter id. */
 	private int coverletterId;
+	
+	/** The name. */
 	private String name;
+	
+	/** The coverletter text. */
 	private String coverletterText;
+	
+	/** The create dt. */
 	private String createDt;
+	
+	/** The update dt. */
 	private String updateDt;
+	
+	/** The delete dt. */
 	private String deleteDt;
+	
+	/** The user id. */
 	private int userId;
+	
+	/** The active. */
 	private int active;
 	/**
 	 * @return the coverletterId

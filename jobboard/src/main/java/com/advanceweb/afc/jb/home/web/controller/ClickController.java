@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.home.web.controller;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,12 +24,23 @@ import com.advanceweb.afc.jb.event.service.ClickService;
 @Controller
 public class ClickController {
 
+	/** The click service. */
 	@Autowired
 	private ClickService clickService;
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger("ClickController.class");
 
+	/**
+	 * Gets the clickevent.
+	 *
+	 * @param jobId the job id
+	 * @param type the type
+	 * @param request the request
+	 * @param response the response
+	 * @return the clickevent
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/clickevent", method = RequestMethod.GET)
 	public String getclickevent(@RequestParam("jobid") int jobId,

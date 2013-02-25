@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import java.io.File;
@@ -43,39 +50,51 @@ import com.advanceweb.afc.jb.search.service.JobSearchService;
 @RequestMapping("/anonymoususerjobapply")
 public class JobApplicationController {
 
+	/** The job search service. */
 	@Autowired
 	private JobSearchService jobSearchService;
 
+	/** The email service. */
 	@Autowired
 	private  MMEmailService emailService;
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger("JobApplicationController.class");
 
+	/** The advance web address. */
 	@Value("${advanceWebAddress}")
 	private  String advanceWebAddress;
 
+	/** The emp job app sub. */
 	@Value("${employeJobApplicationSub}")
 	private  String empJobAppSub;
 
+	/** The emp job app body. */
 	@Value("${employeJobApplicationBody}")
 	private  String empJobAppBody;
 
+	/** The navigation path. */
 	@Value("${navigationPath}")
 	private  String navigationPath;
 
+	/** The dothtml extention. */
 	@Value("${dothtmlExtention}")
 	private  String dothtmlExtention;
 	
+	/** The employer page extention. */
 	@Value("${employerPageExtention}")
 	private String employerPageExtention;
 	
+	/** The job app sub. */
 	@Value("${jobseekerJobApplicationSub}")
 	private String jobAppSub;
 
+	/** The job app body. */
 	@Value("${anonymousJobApplicationBody}")
 	private  String jobAppBody;
 
+	/** The email configuration. */
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
@@ -84,7 +103,13 @@ public class JobApplicationController {
 	 //transformAnonymousUserJobApply;
 	 
 
-	@RequestMapping(value = "/anonymousUser", method = RequestMethod.GET)
+	/**
+ 	 * Show ano user form.
+ 	 *
+ 	 * @param model the model
+ 	 * @return the model and view
+ 	 */
+ 	@RequestMapping(value = "/anonymousUser", method = RequestMethod.GET)
 	public ModelAndView showAnoUserForm(Map<String, JobApplicationForm> model) {
 
 		model.put("jobApplicationForm", new JobApplicationForm());

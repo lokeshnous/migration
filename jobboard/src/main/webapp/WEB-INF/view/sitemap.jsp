@@ -24,12 +24,12 @@
 <div class="row job_seeker_login_width">
 <div class="NameOrderNormal"><h3 class="color2 TextAlignL">&nbsp;Job Searching</h3></div>
 <ul>
-<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/index.html" target="_blank">Advance Healthcare Jobs Homepage</a></li>
+<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcare/index.html" target="_blank">Advance Healthcare Jobs Homepage</a></li>
 <%-- <li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/search/advanceSearch.html">	Advance Search</a></li> --%>
 <li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/search/title.html" target="_blank">Search by Job Title</a></li>
 <li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/search/employer.html" target="_blank">Search by Employer</a></li>
 <li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/search/location.html" target="_blank">Search by Location</a></li>
-<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/featuredemployers.html" target="_blank">Featured Employers</a></li>
+<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcare/featuredemployers.html" target="_blank">Featured Employers</a></li>
 <li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobs/alljobs.html" target="_blank">View All Jobs</a></li>
 </ul>
 <%-- <div class="NameOrderNormal"><h3 class="color2 TextAlignL">&nbsp;My Account Info</h3></div>
@@ -49,22 +49,22 @@
 
 <%-- <div class="NameOrderNormal"><h3 class="color2 TextAlignL">&nbsp;About Advance Healthcare Jobs</h3></div>
 <ul>
-<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/index.html">	About Us</a></li>
-<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/index.html">	Contact Us</a></li>
-<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/index.html">	Advertise with Us</a></li>
-<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/index.html">	Work for Us</a></li>
-<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/index.html">	Privacy Policy</a></li>
-<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/index.html">	Terms of Service</a></li>
-<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/index.html">	Help</a></li>
+<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcare/index.html">	About Us</a></li>
+<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcare/index.html">	Contact Us</a></li>
+<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcare/index.html">	Advertise with Us</a></li>
+<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcare/index.html">	Work for Us</a></li>
+<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcare/index.html">	Privacy Policy</a></li>
+<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcare/index.html">	Terms of Service</a></li>
+<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcare/index.html">	Help</a></li>
 </ul> --%>
 </div>
 <div class="row job_seeker_login_width">
 <div class="NameOrderNormal"><h3 class="color2 TextAlignL">&nbsp;Career Resources</h3></div>
 <ul>
-<%-- <li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/index.html">	Salary Calculator</a></li> --%> 
-<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/showCareers.html?careerType=messanger" target="_blank"> ADVANCE Messenger </a></li>
-<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/showCareers.html?careerType=career" target="_blank">	Career Resource Center</a></li> 
-<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcarejobs/featuredemployers.html" target="_blank">	Featured Employers </a></li>
+<%-- <li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcare/index.html">	Salary Calculator</a></li> --%> 
+<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcare/showCareers.html?careerType=messanger" target="_blank"> ADVANCE Messenger </a></li>
+<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcare/showCareers.html?careerType=career" target="_blank">	Career Resource Center</a></li> 
+<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcare/featuredemployers.html" target="_blank">	Featured Employers </a></li>
 </ul>
 </div>			
 				</div>

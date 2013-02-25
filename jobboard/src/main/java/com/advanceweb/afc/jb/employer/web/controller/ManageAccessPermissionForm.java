@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.util.List;
@@ -12,15 +19,32 @@ import com.advanceweb.afc.jb.common.ManageAccessPermissionDTO;
  * @Purpose: This class will act as a Form Bean for the Manage Access Permission
  */
 public class ManageAccessPermissionForm {
+	
+	/** The owner id. */
 	private int ownerId;
+	
+	/** The owner name. */
 	private String ownerName;
+	
+	/** The owner email. */
 	private String ownerEmail;
+	
+	/** The full access. */
 	private String fullAccess;
+	
+	/** The post edit access. */
 	private String postEditAccess;
+	
+	/** The set alert page. */
 	private String setAlertPage;
+	
+	/** The total size. */
 	private int totalSize;
+	
+	/** The age perm page. */
 	private String agePermPage;
 	
+	/** The manage access permissiondetails. */
 	private List<ManageAccessPermissionDTO> manageAccessPermissiondetails; 
 	/**
 	 * @return the ownerName
@@ -122,9 +146,21 @@ public class ManageAccessPermissionForm {
 	public void setTotalSize(int totalSize) {
 		this.totalSize = totalSize;
 	}
+	
+	/**
+	 * Gets the age perm page.
+	 *
+	 * @return the age perm page
+	 */
 	public String getAgePermPage() {
 		return agePermPage;
 	}
+	
+	/**
+	 * Sets the age perm page.
+	 *
+	 * @param agePermPage the new age perm page
+	 */
 	public void setAgePermPage(String agePermPage) {
 		this.agePermPage = agePermPage;
 	}

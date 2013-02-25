@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.login.web.controller;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -35,19 +42,39 @@ import com.advanceweb.afc.jb.security.DatabaseAuthenticationManager;
 import com.advanceweb.afc.jb.user.UserService;
 
 public class PreAuthenticationManager extends AbstractPreAuthenticatedProcessingFilter{
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(PreAuthenticationManager.class);
-	  private AuthenticationDetailsSource ads = new WebAuthenticationDetailsSource();
-	  @Autowired
+	  
+  	/** The ads. */
+  	private AuthenticationDetailsSource ads = new WebAuthenticationDetailsSource();
+	  
+  	/** The authentication manager. */
+  	@Autowired
 	  private DatabaseAuthenticationManager authenticationManager;
-	  @Autowired
+	  
+  	/** The user service. */
+  	@Autowired
 	  private UserService userService;
-	  @Autowired
+	  
+  	/** The login manager. */
+  	@Autowired
 	  private LoginManager loginManager;
-	  private Authentication authentication ;
-	  UserDTO user=null;
-	  private @Value("${advancepass.interpreter.url}")
+	  
+  	/** The authentication. */
+  	private Authentication authentication ;
+	  
+  	/** The user. */
+  	UserDTO user=null;
+	  
+  	/** The advancepass interpreter url. */
+  	private @Value("${advancepass.interpreter.url}")
 		String advancepassInterpreterUrl;
+	
+	/* (non-Javadoc)
+	 * @see org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter#getPreAuthenticatedPrincipal(javax.servlet.http.HttpServletRequest)
+	 */
 	@Override
 	protected Object getPreAuthenticatedPrincipal(HttpServletRequest request) {
 		LOGGER.debug("getPreAuthenticatedPrincipal=======>");
@@ -130,15 +157,21 @@ public class PreAuthenticationManager extends AbstractPreAuthenticatedProcessing
 		    return  authentication != null ?authentication.getPrincipal():null;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter#getPreAuthenticatedCredentials(javax.servlet.http.HttpServletRequest)
+	 */
 	@Override
 	protected Object getPreAuthenticatedCredentials(HttpServletRequest request) {
 		LOGGER.debug("getPreAuthenticatedCredentials");
 		return authentication != null ?authentication.getCredentials():null;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter#successfulAuthentication(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.security.core.Authentication)
+	 */
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, Authentication authResult) {
 		 try {
-			 LOGGER.info("in successfulAuthentication of pre auth");
+			 LOGGER.debug("in successfulAuthentication of pre auth");
 			SecurityContextHolder.getContext().setAuthentication(authResult);
 			loginManager.onAuthenticationSuccess(request, response, authResult);
 		} catch (Exception e) {

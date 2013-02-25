@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.job.web.controller;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -9,9 +16,17 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
    @Purpose: This class will act as a Form Bean for the  Anonymous User to apply for the job
  */
 public class JobApplicationForm {
+	
+	/** The user name. */
 	private String userName;
+	
+	/** The user email. */
 	private String userEmail;
+	
+	/** The file path. */
 	private String filePath;
+	
+	/** The file content. */
 	private CommonsMultipartFile fileContent;
 	
 	/**

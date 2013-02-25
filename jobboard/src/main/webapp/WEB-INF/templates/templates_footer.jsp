@@ -31,7 +31,7 @@
 				<li><a href="#">Buyers Guide</a></li>
 				<li><a href="#">Community</a></li>
 				<li><a href="#">Downloads</a></li>
-				<li><a href="<%=request.getContextPath()%>/healthcarejobs/sitemap.html">Site Map</a></li>
+				<li><a href="<%=request.getContextPath()%>/healthcare/sitemap.html">Site Map</a></li>
 			</ul>
 		</div> --%>
 		<!-- end container2 -->
@@ -50,7 +50,7 @@
 				<li><a href="http://promotions.advanceweb.com" target="_blank">Order Promotional Items</a></li>
 				<security:authorize 
 		         access="!hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP') and !hasRole('ROLE_FACILITY_SYSTEM') and !hasRole('ROLE_MERION_ADMIN')">					
-				<li><a href="<%=request.getContextPath()%>/healthcarejobs/sitemap.html" target="_blank">Site Map</a></li>
+				<li><a href="<%=request.getContextPath()%>/healthcare/sitemap.html" target="_blank">Site Map</a></li>
 				</security:authorize>
 			</ul>
 		</div>

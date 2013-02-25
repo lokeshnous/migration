@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common.schedulers.jobs;
 
 
@@ -17,11 +24,14 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
  */
 public class JobBoardCronTrigger extends CronTriggerBean {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(JobBoardCronTrigger.class);
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** The cron exp. */
 	private String cronExp;
 
 	/**

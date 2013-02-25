@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common;
 import java.io.Serializable;
 
@@ -66,6 +73,14 @@ public class AccountProfileDTO implements Serializable{
 	 */	
 	private int facilityContactId;
 	
+	private String password;
+	
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	/**
 	 * @return the firstName
 	 */

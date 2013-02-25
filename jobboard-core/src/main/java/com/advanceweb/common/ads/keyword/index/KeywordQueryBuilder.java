@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.common.ads.keyword.index;
 
 import java.util.Map;
@@ -22,6 +29,7 @@ import com.advanceweb.common.index.lucene.LuceneQueryBuilder;
 @Component
 public class KeywordQueryBuilder implements LuceneQueryBuilder {
 
+	/** The Constant KEYWORD_FIELD_BOOST. */
 	private static final float KEYWORD_FIELD_BOOST = 1.25F;
 
 	/**

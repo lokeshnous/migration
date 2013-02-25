@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.job.service.impl;
 
 import org.apache.log4j.Logger;
@@ -22,10 +29,13 @@ import com.advanceweb.afc.jb.service.exception.JobBoardNetSuiteServiceException;
 @Service("jobPostDelegate")
 public class JobPostDelegateImpl implements JobPostDelegate{
 	
+	/** The Constant CUSTOMER_STRING. */
 	private static final String CUSTOMER_STRING = "customer"; 
 	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger(JobPostDAOImpl.class);
 	
+	/** The ns customer service. */
 	@Autowired
 	private NSCustomerService nsCustomerService;
 	
@@ -46,7 +56,7 @@ public class JobPostDelegateImpl implements JobPostDelegate{
 			userDTO = nsCustomerService.getNSCustomerDetails(userDTO);
 			
 		} catch (JobBoardNetSuiteServiceException jbns) {
-			LOGGER.info("Error occurred while getting the Customer details from net suite..Please contact your administrator."
+			LOGGER.error("Error occurred while getting the Customer details from net suite..Please contact your administrator."
 					+ jbns);
 		}
 		return userDTO;

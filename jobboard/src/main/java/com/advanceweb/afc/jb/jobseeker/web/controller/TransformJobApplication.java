@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import com.advanceweb.afc.jb.common.JobApplicationDTO;
@@ -11,6 +18,12 @@ import com.advanceweb.afc.jb.job.web.controller.JobApplicationForm;
  */
 public class TransformJobApplication {
 
+/**
+ * Transform anonymous user job apply dto.
+ *
+ * @param anoUserForm the ano user form
+ * @return the job application dto
+ */
 public JobApplicationDTO transformAnonymousUserJobApplyDTO(final JobApplicationForm anoUserForm){
 		
 		

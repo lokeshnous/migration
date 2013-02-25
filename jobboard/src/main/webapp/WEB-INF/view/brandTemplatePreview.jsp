@@ -78,16 +78,14 @@
 			/* $.nmManual('../brandingTemplates/viewImage.html?id='+path); */
 			/* path.preventDefault(); */
               if(path!=''){
-			$.nmManual('../brandingTemplates/viewImage.html?id=' + path,  {closeOnEscape: true, showCloseButton: true, closeOnClick: true, sizes:{initW: 500, initH: 500, minW: 500, minH: 500,  w: 500, h: 500}});
+			$.nmManual('../brandingTemplates/viewImage.html?id=' + path,  {closeOnEscape: true, showCloseButton: true, sizes:{initW: 100, initH: 100, minW: 150, minH: 150,  w: 500, h: 500}});
               }
 
 			}
 
-			function popTestimony(path) {
-				if(path!=''){
+			function popTestimony(index) {
 				$.nmManual('../brandingTemplates/viewTestimonial.html?id='
-						+ path,  {closeOnEscape: true, showCloseButton: true, closeOnClick: true, sizes:{initW: 600, initH: 600, minW: 600, minH: 600,  w: 600, h: 600}});
-				}
+						+index,  {closeOnEscape: true, showCloseButton: true, sizes:{initW: 100, initH: 50, minW: 200, minH: 100,  w: 600, h: 600}});
 			}
 		</script>
 		</head>
@@ -217,6 +215,9 @@
 	                   </div>	
 	               </div>
 	               <!--Video Area  -->
+	                <script type="text/javascript">
+								var src = '<%= request.getContextPath() %>/resources/MediaFiles/wmvplayer.xaml';
+							</script>
 	               <div id="VideoSlideContant" >
 	               	<div class="row">
 	                   	<!-- <div class="LeftSlidNav"><a href="#"><img src="images/Multimedia_ArrowLeft.png" alt="icon" width="21" height="30" border="0"></a></div>
@@ -230,18 +231,19 @@
 							<!-- Photo -->
 							<div id="slider2">
 							<c:forEach var="companyProfileDTO"
-									items="${brandingTemplateForm.listVideos}" varStatus="status" step="4">
+									items="${brandingTemplateForm.listVideos}" varStatus="status" step="3">
 									<div class="slider1Frames">
 									<c:if test="${not empty brandingTemplateForm.listVideos[status.index].mediaPath}">
 									<div class="floatLeft width285 marginLeft10 marginRight10">
 									&nbsp;
-									<div id="mediaspacePath" style="display: none;">${brandingTemplateForm.listVideos[status.index].mediaPath}</div> 
-									<div id="mediaspace"></div> 
+									<div id="mediaspacePath${status.index}" style="display: none;">${brandingTemplateForm.listVideos[status.index].mediaPath}</div> 
+									<div id="mediaspace${status.index}"></div> 
 									
 									<script type="text/javascript">
-										var cnt = document.getElementById("mediaspace");
-										var src = '../resources/MediaFiles/wmvplayer.xaml';
-										var filePath = $("#mediaspacePath").text();
+									var statusIndex = parseInt('${status.index}');
+										var cnt = document.getElementById("mediaspace"+statusIndex);
+										//var src = '../resources/MediaFiles/wmvplayer.xaml';
+										var filePath = $("#mediaspacePath"+statusIndex).text();
 										var cfg = {
 											file: filePath,
 											height:'165',
@@ -255,13 +257,14 @@
 									<c:if test="${not empty brandingTemplateForm.listVideos[status.index+1].mediaPath}">
 									<div class="floatLeft width285 marginLeft10 marginRight10">
 									&nbsp;
-									<div id="mediaspacePath2" style="display: none;">${brandingTemplateForm.listVideos[status.index+1].mediaPath}</div> 
-									<div id="mediaspace2"></div> 
+									<div id="mediaspacePath${status.index+1}" style="display: none;">${brandingTemplateForm.listVideos[status.index+1].mediaPath}</div> 
+									<div id="mediaspace${status.index+1}"></div> 
 									
 									<script type="text/javascript">
-										var cnt = document.getElementById("mediaspace2");
+									    var statusIndex = parseInt('${status.index+1}');
+										var cnt = document.getElementById("mediaspace"+statusIndex);
 										//var src2 = '../resources/MediaFiles/wmvplayer.xaml';
-										var filePath = $("#mediaspacePath2").text();
+										var filePath = $("#mediaspacePath"+statusIndex).text();
 										var cfg = {
 											file: filePath,
 											height:'165',
@@ -275,13 +278,14 @@
 									<c:if test="${not empty brandingTemplateForm.listVideos[status.index+2].mediaPath}">
 									<div class="floatLeft width285 marginLeft10 marginRight10">
 									&nbsp;
-									<div id="mediaspacePath3" style="display: none;">${brandingTemplateForm.listVideos[status.index+2].mediaPath}</div> 
-									<div id="mediaspace3"></div> 
+									<div id="mediaspacePath${status.index+2}" style="display: none;">${brandingTemplateForm.listVideos[status.index+2].mediaPath}</div> 
+									<div id="mediaspace${status.index+2}"></div> 
 									
 									<script type="text/javascript">
-										var cnt = document.getElementById("mediaspace3");
+									var statusIndex = parseInt('${status.index+2}');
+										var cnt = document.getElementById("mediaspace"+statusIndex);
 										//var src = '../resources/MediaFiles/wmvplayer.xaml';
-										var filePath = $("#mediaspacePath3").text();
+										var filePath = $("#mediaspacePath"+statusIndex).text();
 										var cfg = {
 											file: filePath,
 											height:'165',
@@ -311,32 +315,32 @@
 									items="${brandingTemplateForm.listTestimony}" varStatus="status" step="4">
 									<div class="slider1Frames">
 									<c:if test="${not empty brandingTemplateForm.listTestimony[status.index].testimony}">
-										<a
-											id="${brandingTemplateForm.listTestimony[status.index].testimony}"  onclick="popTestimony(this.id);">
+										<a class="cursor"
+											id="${brandingTemplateForm.listTestimony[status.index].testimonyId}"  onclick="popTestimony(${status.index});">
 											<div class="slider1FrameA1">
 												<p class="BannerTextBoxBlankSlide"  >${brandingTemplateForm.listTestimony[status.index].testimony}</p>
 											</div>
 										</a>
 										</c:if>
 										<c:if test="${not empty brandingTemplateForm.listTestimony[status.index+1].testimony}"> 
-										<a
-											id="${brandingTemplateForm.listTestimony[status.index+1].testimony}" onclick="popTestimony(this.id);" >
+										<a class="cursor"
+											id="${brandingTemplateForm.listTestimony[status.index+1].testimonyId}" onclick="popTestimony(${status.index+1});" >
 											<div class="slider1FrameA1">
 												<p class="BannerTextBoxBlankSlide" >${brandingTemplateForm.listTestimony[status.index+1].testimony}</p>
 											</div>
 										</a>
 										</c:if>
 										<c:if test="${not empty brandingTemplateForm.listTestimony[status.index+2].testimony}">
-										<a
-											id="${brandingTemplateForm.listTestimony[status.index+2].testimony}" onclick="popTestimony(this.id);">
+										<a class="cursor"
+											id="${brandingTemplateForm.listTestimony[status.index+2].testimonyId}" onclick="popTestimony(${status.index+2});">
 											<div class="slider1FrameA1">
 												<p class="BannerTextBoxBlankSlide"  >${brandingTemplateForm.listTestimony[status.index+2].testimony}</p>
 											</div>
 										</a>
 										</c:if>
 										<c:if test="${not empty brandingTemplateForm.listTestimony[status.index+3].testimony}">
-										<a
-											id="${brandingTemplateForm.listTestimony[status.index+3].testimony}" onclick="popTestimony(this.id);">
+										<a class="cursor"
+											id="${brandingTemplateForm.listTestimony[status.index+3].testimonyId}" onclick="popTestimony(${status.index+3});">
 											<div class="slider1FrameA1">
 												<p class="BannerTextBoxBlankSlide" >${brandingTemplateForm.listTestimony[status.index+3].testimony}</p>
 											</div>

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.common.ads;
 
 import java.util.LinkedHashMap;
@@ -24,8 +31,10 @@ import java.util.LinkedHashMap;
  */
 public class AdLocationCache {
 
+	/** The max size. */
 	private int maxSize = 100;
 
+	/** The cache. */
 	private LinkedHashMap<String, String> cache = new LinkedHashMap<String, String>();
 
 	/**

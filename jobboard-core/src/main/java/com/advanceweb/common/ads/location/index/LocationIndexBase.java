@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.common.ads.location.index;
 
 import org.apache.log4j.Logger;
@@ -16,10 +23,15 @@ import org.apache.lucene.spatial.tier.projections.SinusoidalProjector;
  */
 @SuppressWarnings("deprecation")
 public class LocationIndexBase {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(LocationIndexBase.class);
 
+	/** The min tier. */
 	protected int minTier;
+	
+	/** The max tier. */
 	protected int maxTier;
 
 	/**

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.agency.web.controller;
 
 import java.util.ArrayList;
@@ -69,67 +76,107 @@ import com.advanceweb.common.client.ClientContext;
 @Scope("session")
 public class AgencyRegistrationController extends AbstractController {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(AgencyRegistrationController.class);
+	
+	/** The Constant AGENCY_REG_FORM. */
 	private static final String AGENCY_REG_FORM = "agencyRegForm";
+	
+	/** The Constant MESSAGE. */
 	private static final String MESSAGE = "message";
 
+	/** The agency registration. */
 	@Autowired
 	private ProfileRegistration agencyRegistration;
 
+	/** The transform agency registration. */
 	@Autowired
 	private TransformAgencyRegistration transformAgencyRegistration;
 
+	/** The facility service. */
 	@Autowired
 	private FacilityService facilityService;
 
+	/** The populate dropdowns service. */
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
 
+	/** The register validation. */
 	@Autowired
 	private AgencyRegistrationValidation registerValidation;
 
+	/** The custom authentication manager. */
 	@Autowired
 	protected AuthenticationManager customAuthenticationManager;
 
+	/** The ad service. */
 	@Autowired
 	private AdService adService;
 
+	/** The user service. */
 	@Autowired
 	private UserService userService;
+	
+	/** The jobseeker reg phone msg. */
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
+	
+	/** The social signup msg. */
 	@Value("${socialSignupMsg}")
 	private String socialSignupMsg;
 
+	/** The req fields. */
 	@Value("${age.all.req.fields}")
 	private String reqFields;
 
+	/** The email exists. */
 	@Value("${age.email.exists}")
 	private String emailExists;
 
+	/** The ns validate user. */
 	@Value("${ns.validate.user}")
 	private String nsValidateUser;
 
+	/** The recaptcha response. */
 	private String recaptchaResponse;
+	
+	/** The recaptcha challenge. */
 	private String recaptchaChallenge;
+	
+	/** The remote addr. */
 	private String remoteAddr;
+	
+	/** The advance web address. */
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
 
+	/** The navigation path. */
 	@Value("${navigationPath}")
 	private String navigationPath;
+	
+	/** The email service. */
 	@Autowired
 	private MMEmailService emailService;
+	
+	/** The login success manager. */
 	@Autowired
 	private LoginManager loginSuccessManager;
+	
+	/** The email configuration. */
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
+	
+	/** The lookup service. */
 	@Autowired
 	private LookupService lookupService;
+	
+	/** The validate city state. */
 	@Value("${validateCityState}")
 	private String validateCityState;
+	
+	/** The Constant AGENCYREG. */
 	private final static String AGENCYREG = "addAgencyRegistration";
 
 	/**
@@ -296,6 +343,12 @@ public class AgencyRegistrationController extends AbstractController {
 		List<ProfileAttribDTO> attribLists = transformAgencyRegistration
 				.transformProfileAttribFormToDTO(agencyRegistrationForm);
 		empDTO.setAttribList(attribLists);
+		if(agencyRegistrationForm.isAdvPassUser()){
+			UserDTO advUser=userService.getAdvancePassUser(agencyRegistrationForm.getEmailId());
+			if(advUser!=null){
+			userDTO.setPassword(advUser.getPassword());
+			}
+		}
 		empDTO.setMerUserDTO(userDTO);
 		userDTO = agencyRegistration.createUser(empDTO);
 		// send welcome e-mail- starts
@@ -323,6 +376,9 @@ public class AgencyRegistrationController extends AbstractController {
 					infoDTO.getFacilityId());
 			session.setAttribute(MMJBCommonConstants.COMPANY_EMP,
 					infoDTO.getCustomerName());
+			if(agencyRegistrationForm.isAdvPassUser()){
+				session.setAttribute("advancePassUser","advancePassUser");
+				}
 			model.setViewName("redirect:/agency/agencyDashboard.html");
 		}
 		authenticateUserAndSetSession(userDTO, req,response);
@@ -330,6 +386,16 @@ public class AgencyRegistrationController extends AbstractController {
 		return null;
 	}
 
+	/**
+	 * Validate emp reg form.
+	 *
+	 * @param agencyRegistrationForm the agency registration form
+	 * @param model the model
+	 * @param result the result
+	 * @param req the req
+	 * @param advPassUser the adv pass user
+	 * @return true, if successful
+	 */
 	private boolean validateEmpRegForm(
 			AgencyRegistrationForm agencyRegistrationForm, ModelAndView model,
 			BindingResult result, HttpServletRequest req,Boolean advPassUser) {

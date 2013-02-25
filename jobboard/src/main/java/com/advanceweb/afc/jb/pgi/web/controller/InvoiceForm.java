@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.pgi.web.controller;
 
 /**
@@ -9,15 +16,27 @@ package com.advanceweb.afc.jb.pgi.web.controller;
  */
 public class InvoiceForm {
 
+	/** The invoice enabled. */
 	private boolean invoiceEnabled;
 	
 	// For invoice information
+	/** The purchase order no. */
 	private String purchaseOrderNo;
 	
+	/**
+	 * Checks if is invoice enabled.
+	 *
+	 * @return true, if is invoice enabled
+	 */
 	public boolean isInvoiceEnabled() {
 		return invoiceEnabled;
 	}
 
+	/**
+	 * Sets the invoice enabled.
+	 *
+	 * @param invoiceEnabled the new invoice enabled
+	 */
 	public void setInvoiceEnabled(boolean invoiceEnabled) {
 		this.invoiceEnabled = invoiceEnabled;
 	}

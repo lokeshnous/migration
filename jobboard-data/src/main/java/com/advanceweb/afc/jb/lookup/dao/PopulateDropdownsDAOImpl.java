@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.lookup.dao;
 
 import java.util.ArrayList;
@@ -57,32 +64,55 @@ import com.advanceweb.afc.jb.data.entities.ResResumeAttribList;
 import com.advanceweb.afc.jb.lookup.helper.PopulateDropdownConversionHelper;
 
 @Repository("populateDropdownsDAO")
-@SuppressWarnings("unchecked")
 public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(PopulateDropdownsDAOImpl.class);
 
+	/** The Constant FIND_USER_SUBSCRIPTIONS. */
 	private static final String FIND_USER_SUBSCRIPTIONS = "from AdmSubscription sub where sub.subscriptionType=?";
+	
+	/** The Constant FIND_RESBUILDER_DROPDOWNS. */
 	private static final String FIND_RESBUILDER_DROPDOWNS = "from ResResumeAttrib attrib where attrib.name=?";
+	
+	/** The Constant FIND_EDU_DEGREES. */
 	private static final String FIND_EDU_DEGREES = "from ResDegreeEdu edu";
+	
+	/** The Constant FIND_INVENTORY_DETAILS. */
 	private static final String FIND_INVENTORY_DETAILS = "select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) group by dtl.productType,dtl.productId";
+	
+	/** The Constant FIND_JOB_TYPE_COMBO. */
 	private static final String FIND_JOB_TYPE_COMBO = "select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.invDetailId = ? and inv.admFacility in(from AdmFacility fac where fac.facilityId=?)";
 	private static final String FIND_BLOCKED_BOMPANIES = "from ResBlockedCompanies rbc where rbc.resumeId=?";
 	// private static final String
 	// FIND_JOB_OWNERS="from AdmFacility adm where adm.admFacility=?";
 
+	/** The dropdown helper. */
 	@Autowired
 	private PopulateDropdownConversionHelper dropdownHelper;
 
+	/** The hibernate template. */
 	private HibernateTemplate hibernateTemplate;
+	
+	/** The hibernate template tracker. */
 	private HibernateTemplate hibernateTemplateTracker;
 
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactory the new hibernate template
+	 */
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
 	}
 
+	/**
+	 * Sets the hibernate template tracker.
+	 *
+	 * @param sessionFactoryMerionTracker the new hibernate template tracker
+	 */
 	@Autowired
 	public void setHibernateTemplateTracker(
 			SessionFactory sessionFactoryMerionTracker) {
@@ -90,6 +120,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 				sessionFactoryMerionTracker);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#getCountryList()
+	 */
 	@Override
 	public List<CountryDTO> getCountryList() {
 		try {
@@ -108,6 +141,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#getEmployementInfoList()
+	 */
 	@Override
 	public List<EmploymentInfoDTO> getEmployementInfoList() {
 
@@ -123,6 +159,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#getSubscriptionsList()
+	 */
 	@Override
 	public List<DropDownDTO> getSubscriptionsList() {
 
@@ -138,6 +177,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#getGenderList()
+	 */
 	@Override
 	public List<GenderDTO> getGenderList() {
 
@@ -152,6 +194,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#getVeteranStatusList()
+	 */
 	@Override
 	public List<VeteranStatusDTO> getVeteranStatusList() {
 
@@ -169,6 +214,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#getEthenticityList()
+	 */
 	@Override
 	public List<EthenticityDTO> getEthenticityList() {
 
@@ -348,6 +396,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#getJobAlertsList()
+	 */
 	@Override
 	public List<JobAlertsDTO> getJobAlertsList() {
 
@@ -361,6 +412,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#getMagazinesList()
+	 */
 	@Override
 	public List<MagazinesDTO> getMagazinesList() {
 		try {
@@ -387,6 +441,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return dropdownHelper.convertMerLookupToLookUpDTO(merLookupList);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#populateResumeDropdown(java.lang.String)
+	 */
 	@Override
 	public List<ResumeAttribListDTO> populateResumeDropdown(String dropdownName) {
 		List<ResumeAttribListDTO> resumeAttribListDTOList = new ArrayList<ResumeAttribListDTO>();
@@ -422,6 +479,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 				.transformResPrivacyToVisibilityDTO(resPrivacyList);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#populateResumeBuilderDropdowns(java.lang.String)
+	 */
 	@Override
 	public List<DropDownDTO> populateResumeBuilderDropdowns(String dropdownName) {
 
@@ -440,6 +500,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#populateEducationDegreesDropdowns()
+	 */
 	@Override
 	public List<DropDownDTO> populateEducationDegreesDropdowns() {
 
@@ -455,6 +518,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#populateJobOwnersDropdown(int)
+	 */
 	@Override
 	public List<DropDownDTO> populateJobOwnersDropdown(int facilityId) {
 		List<DropDownDTO> dropdownList = new ArrayList<DropDownDTO>();
@@ -530,6 +596,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return dropdownList;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#populateBrandingTemplateDropdown(int, int)
+	 */
 	@Override
 	public List<DropDownDTO> populateBrandingTemplateDropdown(int facilityId,
 			int userId) {
@@ -549,6 +618,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#populateJobPostingTypeDropdown(int, int)
+	 */
 	@Override
 	public List<DropDownDTO> populateJobPostingTypeDropdown(int facilityId,
 			int jobPostType) {
@@ -564,6 +636,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#populateJobPostingTypeDropdowns(int)
+	 */
 	@Override
 	public List<DropDownDTO> populateJobPostingTypeDropdowns(int facilityId) {
 
@@ -579,6 +654,13 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 	}
 
+	/**
+	 * Gets the job posting combo list.
+	 *
+	 * @param jbPostings the jb postings
+	 * @param invList the inv list
+	 * @return the job posting combo list
+	 */
 	private void getJobPostingComboList(List<DropDownDTO> jbPostings,
 			List<AdmInventoryDetail> invList) {
 		DropDownDTO dto = null;
@@ -600,6 +682,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#populateCityAutoComplete(java.lang.String)
+	 */
 	@Override
 	public List<String> populateCityAutoComplete(String city) {
 
@@ -629,6 +714,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return locationStringList;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#populateStateAutoComplete(java.lang.String)
+	 */
 	@Override
 	public String populateStateAutoComplete(String cityState) {
 		String state = MMJBCommonConstants.EMPTY;
@@ -639,6 +727,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return state;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#populatePostalCodeAutoComplete(java.lang.String)
+	 */
 	@Override
 	public List<String> populatePostalCodeAutoComplete(String postalCode) {
 		List<String> postalCodeList = new ArrayList<String>();
@@ -661,6 +752,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#populateCompanyNames(int, boolean)
+	 */
 	@Override
 	public List<DropDownDTO> populateCompanyNames(int facilityId,
 			boolean isHighlightFacility) {
@@ -730,6 +824,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return companyNames;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#populateTemplateAutoComplete(java.lang.String)
+	 */
 	@Override
 	public List<DropDownDTO> populateTemplateAutoComplete(String company) {
 		int facilityId = 0;
@@ -745,7 +842,21 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 			if (admFacilityList != null && !admFacilityList.isEmpty()) {
 				AdmFacility facility = admFacilityList.get(0);
 				templateId = facility.getTemplateId();
-				if (-1 == templateId && -1 == facility.getFacilityParentId()) {
+				int parentId = facility.getFacilityParentId(); 
+				if(-1 != parentId){
+					//Chk for agency in parent Id
+					List<AdmFacility> admFacilityList1 = hibernateTemplate.find(
+							"from AdmFacility adm where adm.facilityId=?", parentId);
+					if (null != admFacilityList1 && !admFacilityList1.isEmpty()
+							&& admFacilityList1
+									.get(0)
+									.getFacilityType()
+									.equalsIgnoreCase(
+											MMJBCommonConstants.FACILITY_SYSTEM)) {
+						parentId = -1;
+					}
+				}
+				if (-1 == templateId && -1 == parentId) {
 					return populateBrandingTemplateDropdown(facilityId, 0);
 				}
 			}
@@ -773,6 +884,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return templateList;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#getPostalCode(java.lang.String, java.lang.String)
+	 */
 	@Override
 	public String getPostalCode(String city, String state) {
 
@@ -796,6 +910,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#getCountry(java.lang.String, java.lang.String, java.lang.String)
+	 */
 	@Override
 	public String getCountry(String city, String state, String postalCode) {
 
@@ -819,6 +936,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#populateLocation(java.lang.String)
+	 */
 	@Override
 	public LocationDTO populateLocation(String postalCode) {
 
@@ -844,6 +964,9 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO#getJobStatusList()
+	 */
 	@Override
 	public Map<String, String> getJobStatusList() {
 		try {

@@ -11,5 +11,12 @@ import com.advanceweb.afc.jb.common.UserDTO;
  *
  */
 public interface PaymentGatewayDelegate {
+	
+	/**
+	 * Creates the order.
+	 *
+	 * @param orderDetailsDTO the order details dto
+	 * @return the user dto
+	 */
 	UserDTO createOrder(OrderDetailsDTO orderDetailsDTO); 
 }

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.job.service;
 
 import com.advanceweb.afc.jb.common.JobApplicationDTO;
@@ -9,5 +16,12 @@ import com.advanceweb.afc.jb.common.JobApplicationDTO;
    @Purpose: This will work as a service interface for  Anonymous User for applying job
  */
 public interface JobApplicationService {
+ 
+ /**
+  * Apply job anonymous user.
+  *
+  * @param dto the dto
+  * @return true, if successful
+  */
  boolean applyJobAnonymousUser(JobApplicationDTO dto);
 }

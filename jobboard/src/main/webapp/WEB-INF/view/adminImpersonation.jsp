@@ -9,6 +9,13 @@
 <jsp:include page="common/include.jsp" />
 <title>ADVANCE Heathcare Jobs</title>
 <script type="text/javascript">
+
+$("#empOrAgencyEmail").keypress(function (event) {
+	if(event.which == 13){
+		return false;
+	}
+  });
+  
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
 		$.nmFilters({
@@ -66,7 +73,7 @@
 						</div>
 						<div class="rowEvenNewSpacing">
 							<div class="lableText5">Email Address of Employer / Agency:</div>
-							<form:input path="empOrAgencyEmail" name="Exclude" class="job_seeker_email focus" />
+							<form:input path="empOrAgencyEmail" id="empOrAgencyEmail" name="Exclude" class="job_seeker_email focus" />
 						</div>
 						<div class="row">
 						<span class="validationMsgPadding">

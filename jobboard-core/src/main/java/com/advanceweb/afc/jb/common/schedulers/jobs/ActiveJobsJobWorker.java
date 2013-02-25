@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common.schedulers.jobs;
 
 import java.util.List;
@@ -35,36 +42,57 @@ import com.advanceweb.afc.jb.user.UserService;
 @Qualifier("activeJobsJobWorker")
 public class ActiveJobsJobWorker implements JobWorker {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger(ActiveJobsJobWorker.class);
+	
+	/** The Constant JOB_NAME. */
 	private final static String JOB_NAME = "ACTIVE_JOBS";
+	
+	/** The Constant Q_USERNAME. */
 	private final static String Q_USERNAME = "?userName";
+	
+	/** The Constant Q_JOBID. */
 	private final static String Q_JOBID = "?jobId";
+	
+	/** The Constant Q_COMPANYNAME. */
 	private final static String Q_COMPANYNAME = "?companyName";
 
+	/** The advance web address. */
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
 	
+	/** The email configuration. */
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
 	
+	/** The employer job post dao. */
 	@Autowired
 	private JobPostDAO employerJobPostDAO;
 	
+	/** The email service. */
 	@Autowired
 	private MMEmailService emailService;
 	
+	/** The manage featured employer profile. */
 	@Autowired
 	private ManageFeaturedEmployerProfile manageFeaturedEmployerProfile;
+	
+	/** The alert service. */
 	@Autowired
 	private UserAlertService alertService;
 	
+	/** The facility service. */
 	@Autowired
 	private FacilityService facilityService;
 	
+	/** The user service. */
 	@Autowired
 	private UserService userService;
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.common.schedulers.jobs.JobWorker#executeJob()
+	 */
 	@Override
 	public void executeJob() {
 		
@@ -80,6 +108,9 @@ public class ActiveJobsJobWorker implements JobWorker {
 		LOGGER.info("ActiveJobsJobWorker.-> Executed Job Successfully.....");
 	}
 
+	/**
+	 * Auto renew scheduled jobs.
+	 */
 	private void autoRenewScheduledJobs() {
 		//Retreive all the schedulded jobs to validate with net suite data 
 		List<JobPostDTO> jobsList = employerJobPostDAO.retreiveAllScheduledJobs();	
@@ -176,6 +207,11 @@ public class ActiveJobsJobWorker implements JobWorker {
 		}
 	}
 
+	/**
+	 * Expire eligible jobs.
+	 *
+	 * @return true, if successful
+	 */
 	private boolean expireEligibleJobs() {
 		// expire the jobs if eligible to expire
 		List<SchedulerDTO> schedulerDTOList = employerJobPostDAO
@@ -306,6 +342,10 @@ public class ActiveJobsJobWorker implements JobWorker {
 		emailDTO.setHtmlFormat(true);
 		emailService.sendEmail(emailDTO);
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.common.schedulers.jobs.JobWorker#getJobName()
+	 */
 	@Override
 	public String getJobName() {
 		return JOB_NAME;

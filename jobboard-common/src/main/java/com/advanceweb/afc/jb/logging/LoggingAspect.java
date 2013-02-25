@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.logging;
 
 /**
@@ -21,18 +28,29 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoggingAspect {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger(LoggingAspect.class);
 	
+	/** The Constant ENTERED. */
 	private static final String ENTERED = "Entered Into ";
 	
+	/** The Constant EXCEPTION_OCCURED. */
 	private static final String EXCEPTION_OCCURED = "An exception has been thrown in ";
 	
+	/** The Constant MESSAGE. */
 	private static final String MESSAGE = "Error Message is: ";
 	
+	/** The Constant DOT. */
 	private static final String DOT = ".";
 	
+	/** The Constant BRACES. */
 	private static final String BRACES = "()";
 
+	/**
+	 * Log before.
+	 *
+	 * @param joinPoint the join point
+	 */
 	@Before("logController() || logDAO()")
 	public void logBefore(JoinPoint joinPoint) {
 		LOGGER.trace(ENTERED
@@ -57,7 +75,13 @@ public class LoggingAspect {
 //	}
 
 //	@AfterThrowing(pointcut = "execution(* com.advanceweb.afc.jb.*.*(..))", throwing = "error")
-	@AfterThrowing(pointcut="logController() || logDAO()", throwing = "error")
+	/**
+ * Log after throwing.
+ *
+ * @param joinPoint the join point
+ * @param error the error
+ */
+@AfterThrowing(pointcut="logController() || logDAO()", throwing = "error")
 	public void logAfterThrowing(JoinPoint joinPoint, Throwable error) {
 
 		LOGGER.trace(EXCEPTION_OCCURED
@@ -75,6 +99,9 @@ public class LoggingAspect {
 	 */
 
 //	 @Pointcut("within(com.advanceweb.afc.jb..*) AND execution(* *(..))")
+	/**
+	 * Log controller.
+	 */
 	@Pointcut("within(com.advanceweb.afc.jb.employer.web.controller.*) || " +
 			"within(com.advanceweb.afc.jb.jobseeker.web.controller.*) || " +
 			"within(com.advanceweb.afc.jb.agency.web.controller.*) || " +
@@ -84,6 +111,9 @@ public class LoggingAspect {
 		 
 	 }
 	 
+	/**
+	 * Log dao.
+	 */
 	@Pointcut("within(com.advanceweb.afc.jb.employer.dao.*) || " +
 			"within(com.advanceweb.afc.jb.jobseeker.dao.*) || " +
 			"within(com.advanceweb.afc.jb.agency.dao.*) || " +

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.advt.openx;
 
 import java.security.SecureRandom;
@@ -61,6 +68,7 @@ import com.advanceweb.common.template.AdvanceTemplate;
 @Component
 public class OpenxAdServiceDelegate implements AdServiceDelegate {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(OpenxAdServiceDelegate.class);
 
@@ -73,39 +81,53 @@ public class OpenxAdServiceDelegate implements AdServiceDelegate {
 	 */
 	private static final Float[] RADIUS_VECTOR = { 0F, 5F, 10F, 20F, 40F, 80F,
 			100.0F };
+	
+	/** The Constant LOCATION_PARAM_COUNT. */
 	private static final int LOCATION_PARAM_COUNT = 5;
 
+	/** The Constant LOCATION_CACHE_SIZE. */
 	private static final int LOCATION_CACHE_SIZE = 100;
 	
+	/** The Constant TID_PARAM_COUNT. */
 	private static final int TID_PARAM_COUNT = 10;
 
+	/** The openx properties. */
 	@Resource(name = "openxConfiguration")
 	@Autowired
 	private Properties openxProperties;
 
+	/** The js ad template. */
 	@Autowired
 	private AdvanceTemplate jsAdTemplate;
 
+	/** The iframe ad template. */
 	@Autowired
 	private AdvanceTemplate iframeAdTemplate;
 
+	/** The image ad template. */
 	@Autowired
 	private AdvanceTemplate imageAdTemplate;
 
+	/** The default ad template. */
 	@Autowired
 	private AdvanceTemplate defaultAdTemplate;
 
+	/** The keyword index service. */
 	@Autowired
 	private KeywordIndexService keywordIndexService;
 
+	/** The location index service. */
 	@Autowired
 	private LocationIndexService locationIndexService;
 
+	/** The location dao. */
 	@Autowired
 	private LocationDAO locationDao;
 
+	/** The location cache. */
 	private AdLocationCache locationCache = new AdLocationCache(100);
 
+	/** The random. */
 	private SecureRandom random = new SecureRandom();
 
 	/**
@@ -276,6 +298,12 @@ public class OpenxAdServiceDelegate implements AdServiceDelegate {
 	}
 
 	// TODO Refactor once the logic is finalized
+	/**
+	 * Gets the location.
+	 *
+	 * @param context the context
+	 * @return the location
+	 */
 	private String getLocation(ClientContext context) {
 
 		String[] locationString = {
@@ -345,6 +373,12 @@ public class OpenxAdServiceDelegate implements AdServiceDelegate {
 		return location;
 	}
 
+	/**
+	 * Gets the full state name.
+	 *
+	 * @param shortStateName the short state name
+	 * @return the full state name
+	 */
 	private String getFullStateName(String shortStateName) {
 		String state = locationDao.getStateFullName(shortStateName.trim());
 		if (state == null) {
@@ -398,6 +432,14 @@ public class OpenxAdServiceDelegate implements AdServiceDelegate {
 		return result;
 	}
 
+	/**
+	 * Gets the client location.
+	 *
+	 * @param city the city
+	 * @param state the state
+	 * @return the client location
+	 * @throws JobBoardServiceException the job board service exception
+	 */
 	private LocationDTO getClientLocation(String city, String state)
 			throws JobBoardServiceException {
 		// Find the coordinates

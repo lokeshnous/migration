@@ -85,8 +85,8 @@
 			<form:form method="post" action="../search/sendtofriendpost.html" commandName="sendtofriendmail" id="formid" >
 				<form:input type="hidden" name="jobId" id="jobId" path="jobId"/>
 			    <form:input type="hidden" name="joburl" id="joburl" path="joburl"/>
-   				<div id="mailSending" class="validationMsg"></div>
-				<div class="rowEvenNewSpacing">
+   				<div class="validationMsg"><div id="mailSending" ></div><div id="errmsg" ></div></div>
+   					<div class="rowEvenNewSpacing">
 					<span class="lableText3">
 						Your Friend's Email Address:
 					</span>
@@ -94,9 +94,19 @@
 					<span class="required">
 					(Required)
 					</span>
-					<div class="toolTip colorPkrAreaToolTip"><span class="classic">Example: John@yahoo.com;Dave@yahoo.com.</span></div>
+					<div class="toolTip01 colorPkrAreaToolTip"><span class="classic">You can send this to multiple people at once by entering their email addresses in this format: john@yahoo.com;dave@yahoo.com.</span></div>
 				</div>
-				<div id="errmsg" class="validationMsg"></div>
+				
+				<div class="rowEvenNewSpacing">
+					<span class="lableText3">
+						Your Name:
+					</span>
+					<form:input path="name" name="name" id="name" class="job_seeker_email" type="text"/>
+					<span class="required">
+					(Required)
+					</span>
+				</div>
+							
 				<div class="rowEvenNewSpacing">
 					<span class="lableText3">
 						Message:

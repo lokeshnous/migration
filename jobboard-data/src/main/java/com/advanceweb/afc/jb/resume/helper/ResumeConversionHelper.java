@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.resume.helper;
 
 import java.sql.Timestamp;
@@ -90,6 +97,13 @@ public class ResumeConversionHelper {
 		return resumeDTO;
 	}
 
+	/**
+	 * Transform res builder resume to resume dto.
+	 *
+	 * @param resumeDTO the resume dto
+	 * @param resumeBuilder the resume builder
+	 * @return the resume dto
+	 */
 	public ResumeDTO transformResBuilderResumeToResumeDTO(ResumeDTO resumeDTO,
 			ResBuilderResume resumeBuilder) {
 
@@ -123,6 +137,12 @@ public class ResumeConversionHelper {
 
 	}
 
+	/**
+	 * Transform res bld res to cert dto.
+	 *
+	 * @param resumeBuilder the resume builder
+	 * @return the list
+	 */
 	public List<CertificationDTO> transformResBldResToCertDTO(
 			ResBuilderResume resumeBuilder) {
 
@@ -146,6 +166,12 @@ public class ResumeConversionHelper {
 		return listCertDTO;
 	}
 
+	/**
+	 * Transform res bld ref to ref dto.
+	 *
+	 * @param resumeBuilder the resume builder
+	 * @return the list
+	 */
 	public List<ReferenceDTO> transformResBldRefToRefDTO(
 			ResBuilderResume resumeBuilder) {
 
@@ -172,6 +198,12 @@ public class ResumeConversionHelper {
 		return listRefDTO;
 	}
 
+	/**
+	 * Transform res builder to contact info dto.
+	 *
+	 * @param resumeBuilder the resume builder
+	 * @return the contact information dto
+	 */
 	public ContactInformationDTO transformResBuilderToContactInfoDTO(
 			ResBuilderResume resumeBuilder) {
 
@@ -188,6 +220,12 @@ public class ResumeConversionHelper {
 		return dto;
 	}
 
+	/**
+	 * Transform res builder to address dto.
+	 *
+	 * @param resumeBuilder the resume builder
+	 * @return the address dto
+	 */
 	public AddressDTO transformResBuilderToAddressDTO(
 			ResBuilderResume resumeBuilder) {
 
@@ -206,6 +244,12 @@ public class ResumeConversionHelper {
 		return dto;
 	}
 
+	/**
+	 * Transform res edu ref to edu dto.
+	 *
+	 * @param resumeBuilder the resume builder
+	 * @return the list
+	 */
 	public List<EducationDTO> transformResEduRefToEduDTO(
 			ResBuilderResume resumeBuilder) {
 
@@ -233,6 +277,13 @@ public class ResumeConversionHelper {
 		return listEduDTO;
 	}
 
+	/**
+	 * Transform edu degree to edu dto.
+	 *
+	 * @param eduDTO the edu dto
+	 * @param entity the entity
+	 * @return the education dto
+	 */
 	public EducationDTO transformEduDegreeToEduDTO(EducationDTO eduDTO,
 			ResBuilderEdu entity) {
 
@@ -246,6 +297,12 @@ public class ResumeConversionHelper {
 		return eduDTO;
 	}
 
+	/**
+	 * Transform res emp ref to work exp dto.
+	 *
+	 * @param resumeBuilder the resume builder
+	 * @return the list
+	 */
 	public List<WorkExpDTO> transformResEmpRefToWorkExpDTO(
 			ResBuilderResume resumeBuilder) {
 

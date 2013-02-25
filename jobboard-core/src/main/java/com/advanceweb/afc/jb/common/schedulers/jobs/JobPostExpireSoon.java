@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common.schedulers.jobs;
 
 import java.util.List;
@@ -28,29 +35,43 @@ import com.advanceweb.afc.jb.user.UserService;
 @Service
 @Qualifier("jobPostExpireSoon")
 public class JobPostExpireSoon implements JobWorker{
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(JobPostExpireSoon.class);
 	
+	/** The advance web address. */
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
 	
+	/** The employer job post dao. */
 	@Autowired
 	private JobPostDAO employerJobPostDAO;
 	
+	/** The email configuration. */
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
+	
+	/** The email service. */
 	@Autowired
 	private MMEmailService emailService;
+	
+	/** The alert service. */
 	@Autowired
 	private UserAlertService alertService;
 	
+	/** The user service. */
 	@Autowired
 	private UserService userService;
 	
+	/** The facility service. */
 	@Autowired
 	private FacilityService facilityService;
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.common.schedulers.jobs.JobWorker#executeJob()
+	 */
 	@Override
 	public void executeJob() {
 		List<SchedulerDTO> schedulerDTOList = employerJobPostDAO.retreiveActiveJobsExpireSoon();
@@ -223,6 +244,9 @@ public class JobPostExpireSoon implements JobWorker{
 		emailService.sendEmail(emailDTO);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.common.schedulers.jobs.JobWorker#getJobName()
+	 */
 	@Override
 	public String getJobName() {
 		return null;

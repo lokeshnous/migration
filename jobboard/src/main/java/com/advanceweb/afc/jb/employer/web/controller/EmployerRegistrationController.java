@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.util.ArrayList;
@@ -87,83 +94,126 @@ import com.advanceweb.common.client.ClientContext;
 @Scope("session")
 public class EmployerRegistrationController extends AbstractController{
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(EmployerRegistrationController.class);
 	// private static final String _FORM_VIEW = "employerDashboard";
 
+	/** The employer registration. */
 	@Autowired
 	private ProfileRegistration employerRegistration;
 
+	/** The transform emp reg. */
 	@Autowired
 	private TransformEmployerRegistration transformEmpReg;
 
+	/** The populate dropdowns service. */
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
 
+	/** The fetch adm facility conatact. */
 	@Autowired
 	private PaymentGatewayService fetchAdmFacilityConatact;
 
+	/** The facility service. */
 	@Autowired
 	private FacilityService facilityService;
 	
+	/** The ad service. */
 	@Autowired
 	private AdService adService;
 
+	/** The register validation. */
 	@Autowired
 	private EmployerRegistrationValidation registerValidation;
 
+	/** The custom authentication manager. */
 	@Autowired
 	protected AuthenticationManager customAuthenticationManager;
 
+	/** The emp reg service. */
 	@Autowired
 	private EmloyerRegistartionService empRegService;
 
+	/** The advance web address. */
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
 
+	/** The email service. */
 	@Autowired
 	private MMEmailService emailService;
+	
+	/** The email configuration. */
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
+	
+	/** The validate city state. */
 	@Value("${validateCityState}")
 	private String validateCityState;
+	
+	/** The lookup service. */
 	@Autowired
 	private LookupService lookupService;
 	// @Autowired
 	// private AdmManagePermission admManagePermission;
 
+	/** The transform payment method. */
 	@Autowired
 	private TransformPaymentMethod transformPaymentMethod;
 
+	/** The jobseeker reg phone msg. */
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
+	
+	/** The social signup msg. */
 	@Value("${socialSignupMsg}")
 	private  String socialSignupMsg;
+	
+	/** The req fields. */
 	@Value("${emp.all.req.fields}")
 	private String reqFields;
 
+	/** The email exists. */
 	@Value("${emp.email.exists}")
 	private String emailExists;
 
+	/** The view media url. */
 	@Value("${view.media.kit.url}")
 	private String viewMediaUrl;
 
+	/** The ns validate user. */
 	@Value("${ns.validate.user}")
 	private String nsValidateUser;
 
+	/** The email in use. */
 	@Value("${emailInUse}")
 	private String emailInUse;
+	
+	/** The user service. */
 	@Autowired
 	private UserService userService;
 	// Spring ReCaptcha
+	/** The login success manager. */
 	@Autowired
 	private LoginManager loginSuccessManager;
+	
+	/** The recaptcha response. */
 	private String recaptchaResponse;
+	
+	/** The recaptcha challenge. */
 	private String recaptchaChallenge;
+	
+	/** The remote addr. */
 	private String remoteAddr;
+	
+	/** The Constant EMPLOYERREG. */
 	private final static String EMPLOYERREG = "employerregistration";
+	
+	/** The Constant EMPREGFORM. */
 	private final static String EMPREGFORM = "empRegisterForm";
+	
+	/** The Constant MESSAGE. */
 	private final static String MESSAGE = "message";
 
 	/**
@@ -287,9 +337,15 @@ public class EmployerRegistrationController extends AbstractController{
 		List<ProfileAttribDTO> attribLists = transformEmpReg
 				.transformProfileAttribFormToDTO(empRegForm);
 		empDTO.setAttribList(attribLists);
+		if(empRegForm.isAdvPassUser()){
+			UserDTO advUser=userService.getAdvancePassUser(empRegForm.getEmailId());
+			if(advUser!=null){
+			userDTO.setPassword(advUser.getPassword());
+			}
+		}
 		empDTO.setMerUserDTO(userDTO);
 		userDTO = employerRegistration.createUser(empDTO);
-		
+				
 		// send welcome e-mail- starts
 		try{
 			sendEmployerWelcomeEmail(request, userDTO);
@@ -316,6 +372,9 @@ public class EmployerRegistrationController extends AbstractController{
 					infoDTO.getFacilityId());
 			session.setAttribute(MMJBCommonConstants.COMPANY_EMP,
 					infoDTO.getCustomerName());
+			if(empRegForm.isAdvPassUser()){
+			session.setAttribute("advancePassUser","advancePassUser");
+			}
 			model.addObject("viewMediaUrl", viewMediaUrl);
 			model.setViewName("jobBoardEmployerPostJobs01");
 			String role = MMJBCommonConstants.ROLE_FACILITY;
@@ -329,12 +388,24 @@ public class EmployerRegistrationController extends AbstractController{
 		}
 
 	}
+	
+	/**
+	 * Redirect to add page.
+	 *
+	 * @param session the session
+	 * @param req the req
+	 * @param res the res
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/redirectToAddPage")
 	public ModelAndView redirectToAddPage(HttpSession session,HttpServletRequest req,HttpServletResponse res){
 		ModelAndView model = new ModelAndView();
 		EmployerRegistrationForm empRegForm=new EmployerRegistrationForm();
 		model.addObject(EMPREGFORM, empRegForm);
 		model.addObject("viewMediaUrl", viewMediaUrl);
+		if(session.getAttribute("advancePassUser")!=null){
+			model.addObject("advUserMessg", "advancePassUser");
+		}
 		model.setViewName("jobBoardEmployerPostJobs01");
 		return model;
 	}

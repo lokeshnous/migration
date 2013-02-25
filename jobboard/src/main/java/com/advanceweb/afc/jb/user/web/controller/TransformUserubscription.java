@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.user.web.controller;
 
 import java.util.ArrayList;
@@ -101,13 +108,13 @@ public class TransformUserubscription {
 			if (selSubList != null && !selSubList.isEmpty()) {
 				for (DropDownDTO downDTO : selSubList) {
 					if (downDTO.getOptionName().equalsIgnoreCase(
-							"Print-Magazine")) {
+							"Print Magazine")) {
 						form.setPrintCheckbox(true);
 						form.setPrintSub(currPrintList
 								.toArray(new String[currPrintList.size()]));
 					}
 					if (downDTO.getOptionName().equalsIgnoreCase(
-							"Digital-Magazine")) {
+							"Digital Magazine")) {
 						form.setDigCheckbox(true);
 						form.setDigSub(currDigList
 								.toArray(new String[currDigList.size()]));
@@ -118,7 +125,7 @@ public class TransformUserubscription {
 						form.setNewsSub(currNewsList
 								.toArray(new String[currNewsList.size()]));
 					}
-					if (downDTO.getOptionName().equalsIgnoreCase("E-mails")) {
+					if (downDTO.getOptionName().equalsIgnoreCase("Emails")) {
 						form.setMailCheckbox(true);
 						form.setEmailSub(currEmailList
 								.toArray(new String[currEmailList.size()]));
@@ -278,6 +285,13 @@ public class TransformUserubscription {
 		return currentSubs;
 	}
 
+	/**
+	 * Js sub dto to drop down dto.
+	 *
+	 * @param digitalSubList the digital sub list
+	 * @param subscriptform the subscriptform
+	 * @return the list
+	 */
 	public List<DropDownDTO> jsSubDTOToDropDownDTO(
 			List<UserSubscriptionsDTO> digitalSubList,
 			UserSubscriptionForm subscriptform) {
@@ -389,7 +403,7 @@ public class TransformUserubscription {
 			if (selSubList != null && !selSubList.isEmpty()) {
 				for (DropDownDTO downDTO : selSubList) {
 					if (downDTO.getOptionName().equalsIgnoreCase(
-							"Digital-Magazine")) {
+							"Digital Magazine")) {
 						form.setDigCheckbox(true);
 						form.setDigSub(currDigList
 								.toArray(new String[currDigList.size()]));
@@ -400,7 +414,7 @@ public class TransformUserubscription {
 						form.setNewsSub(currNewsList
 								.toArray(new String[currNewsList.size()]));
 					}
-					if (downDTO.getOptionName().equalsIgnoreCase("E-mails")) {
+					if (downDTO.getOptionName().equalsIgnoreCase("Emails")) {
 						form.setMailCheckbox(true);
 						form.setEmailSub(currEmailList
 								.toArray(new String[currEmailList.size()]));

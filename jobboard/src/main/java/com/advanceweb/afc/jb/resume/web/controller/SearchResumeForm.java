@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.resume.web.controller;
 
 import java.util.List;
@@ -6,21 +13,52 @@ import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 
 public class SearchResumeForm {
 
+	/** The keywords. */
 	private String keywords;
+	
+	/** The rows. */
 	private String rows;
+	
+	/** The start. */
 	private String start;
+	
+	/** The city state. */
 	private String cityState;
+	
+	/** The radius. */
 	private String radius;
+	
+	/** The searchtype. */
 	private String searchtype;
+	
+	/** The phrase. */
 	private String phrase;
+	
+	/** The user id. */
 	private int userID;
+	
+	/** The save searched jobs dto list. */
 	private List<SaveSearchedJobsDTO> saveSearchedJobsDTOList;
+	
+	/** The save search name. */
 	private String saveSearchName;
+	
+	/** The autoload. */
 	private boolean autoload;
+	
+	/** The refined. */
 	private boolean refined;
+	
+	/** The job title page. */
 	private String jobTitlePage;
+	
+	/** The employer page. */
 	private String employerPage;
+	
+	/** The location page. */
 	private String locationPage;
+	
+	/** The browse by. */
 	private boolean browseBy;
 	
 	//private String saveSearchName;
@@ -153,58 +191,128 @@ public class SearchResumeForm {
 		this.userID = userID;
 	}
 
+	/**
+	 * Gets the phrase.
+	 *
+	 * @return the phrase
+	 */
 	public String getPhrase() {
 		return phrase;
 	}
 
+	/**
+	 * Sets the phrase.
+	 *
+	 * @param phrase the new phrase
+	 */
 	public void setPhrase(String phrase) {
 		this.phrase = phrase;
 	}
 
+	/**
+	 * Gets the searchtype.
+	 *
+	 * @return the searchtype
+	 */
 	public String getSearchtype() {
 		return searchtype;
 	}
 
+	/**
+	 * Sets the searchtype.
+	 *
+	 * @param searchtype the new searchtype
+	 */
 	public void setSearchtype(String searchtype) {
 		this.searchtype = searchtype;
 	}
 
+	/**
+	 * Gets the radius.
+	 *
+	 * @return the radius
+	 */
 	public String getRadius() {
 		return radius;
 	}
 
+	/**
+	 * Sets the radius.
+	 *
+	 * @param radius the new radius
+	 */
 	public void setRadius(String radius) {
 		this.radius = radius;
 	}
 
+	/**
+	 * Gets the city state.
+	 *
+	 * @return the city state
+	 */
 	public String getCityState() {
 		return cityState;
 	}
 
+	/**
+	 * Sets the city state.
+	 *
+	 * @param cityState the new city state
+	 */
 	public void setCityState(String cityState) {
 		this.cityState = cityState;
 	}
 
+	/**
+	 * Gets the rows.
+	 *
+	 * @return the rows
+	 */
 	public String getRows() {
 		return rows;
 	}
 
+	/**
+	 * Sets the rows.
+	 *
+	 * @param rows the new rows
+	 */
 	public void setRows(String rows) {
 		this.rows = rows;
 	}
 
+	/**
+	 * Gets the start.
+	 *
+	 * @return the start
+	 */
 	public String getStart() {
 		return start;
 	}
 
+	/**
+	 * Sets the start.
+	 *
+	 * @param start the new start
+	 */
 	public void setStart(String start) {
 		this.start = start;
 	}
 
+	/**
+	 * Gets the keywords.
+	 *
+	 * @return the keywords
+	 */
 	public String getKeywords() {
 		return keywords;
 	}
 
+	/**
+	 * Sets the keywords.
+	 *
+	 * @param keywords the new keywords
+	 */
 	public void setKeywords(String keywords) {
 		this.keywords = keywords;
 	}

@@ -202,7 +202,7 @@ var options = {
 							var convStartDate = new Date(startDate);
 					        var convEndDate = new Date(endDate);
 					        if(convEndDate < convStartDate){
-					        	$("#showMetricsErr").html("Please enter end date greater than start date!");
+					        	$("#showMetricsErr").html("Your starting date must take place before your ending date.");
 								//$("#showMetricsErr").css("width", "550px");
 								//$("#showMetricsErr").css("text-align", "center");
 								//$("#showMetricsErr").css("color", "#FF0000");
@@ -549,8 +549,7 @@ padding:0;
 						</c:if>
 						<div class="lableTextDashBoard">
 							<p>
-								<a title="Coming Soon">Manage
-									Job-Seekers</a>
+								<a title="Coming Soon">Manage Job Seekers</a>
 							</p>
 						</div>
 						<div class="lableTextDashBoard">
@@ -570,7 +569,7 @@ padding:0;
 							alt="Subscription">
 					</div>
 					<div class="dashboardPanalcontent marginTop5">
-						<h2 class="noTopBorder">Current Subscriptions</h2>
+						<h2 class="noTopBorder">Subscriptions</h2>
 						<div>
 							<c:forEach items="${currentSubs}" var="subscription"
 								varStatus="index">
@@ -746,8 +745,8 @@ padding:0;
 									<h2 class="noTopBorder">Solutions</h2>
 									<div class="lableTextDashBoard">
 										<p>
-											<a target="_blank" href="${msg.employerMediaKitURL}"><em>ADVANCE </em>Recruitment
-												Solutions Media Kit</a>
+											<a target="_blank" href="${msg.employerMediaKitURL}"><em>ADVANCE </em>
+												Online Media Kit</a>
 										</p>
 									</div>
 								</div>

@@ -44,7 +44,7 @@
 							</div>
 							<div class="toolTip">
 								<div class="classic"><p>Enter the city and state or
-										zip code of the location you want to search. Then select a
+										ZIP Code of the location you want to search. Then select a
 										radius to expand your search up to 100 miles from your
 										starting point.</p></div>
 							</div>
@@ -89,18 +89,18 @@
 					<security:authorize access="!hasRole('ROLE_JOB_SEEKER')">
 						<div class="search_info_box1">
 							<p class="search_message">
-								JOIN THE <span>ADVANCE</span> NETWORK
+								JOIN THE <span><i>ADVANCE</i></span> NETWORK
 							</p>
 							<ul>
 								<li>Apply to jobs faster</li>
-								<li>Post a resume to be found by registered employers</li>
-								<li>Create a Job Alert and more for free</li>
+								<li>Make your resume searchable so employers can find it</li>
+								<li>Save searches and set alerts for easier job hunting</li>
 							</ul>
 							<security:authorize	access=" !hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP') and !hasRole('ROLE_FACILITY_SYSTEM')">
-							<a href="<%=request.getContextPath()%>/jobseekerregistration/createJobSeekerCreateYrAcct.html">Create an Account</a>
+							<a href="<%=request.getContextPath()%>/jobseekerregistration/createJobSeekerCreateYrAcct.html">Create an account</a>
 							</security:authorize>
 							<security:authorize	access="hasRole('ROLE_FACILITY') or hasRole('ROLE_FACILITY_GROUP') or hasRole('ROLE_FACILITY_SYSTEM')">
-							Create an Account
+							Create an account
 							</security:authorize>
 						</div>
 					</security:authorize>

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import java.util.Date;
@@ -14,14 +21,31 @@ import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 
 public class SaveSearchForm {
 
+	/** The save search id. */
 	private int saveSearchId;
+	
+	/** The url. */
 	private String url;
+	
+	/** The search name. */
 	private String searchName;
+	
+	/** The email frequency. */
 	private String emailFrequency;
+	
+	/** The save searched jobs dto list. */
 	private List<SaveSearchedJobsDTO> saveSearchedJobsDTOList;
+	
+	/** The created date. */
 	private Date createdDate;
+	
+	/** The modify date. */
 	private String modifyDate;
+	
+	/** The deleted date. */
 	private Date deletedDate;
+	
+	/** The notify me. */
 	private String notifyMe;
 	
 	/**
@@ -129,18 +153,38 @@ public class SaveSearchForm {
 		this.notifyMe = notifyMe;
 	}
 
+	/**
+	 * Gets the save search id.
+	 *
+	 * @return the save search id
+	 */
 	public int getSaveSearchId() {
 		return saveSearchId;
 	}
 
+	/**
+	 * Sets the save search id.
+	 *
+	 * @param saveSearchId the new save search id
+	 */
 	public void setSaveSearchId(int saveSearchId) {
 		this.saveSearchId = saveSearchId;
 	}
 
+	/**
+	 * Gets the save searched jobs dto list.
+	 *
+	 * @return the save searched jobs dto list
+	 */
 	public List<SaveSearchedJobsDTO> getSaveSearchedJobsDTOList() {
 		return saveSearchedJobsDTOList;
 	}
 
+	/**
+	 * Sets the save searched jobs dto list.
+	 *
+	 * @param saveSearchedJobsDTOList the new save searched jobs dto list
+	 */
 	public void setSaveSearchedJobsDTOList(
 			List<SaveSearchedJobsDTO> saveSearchedJobsDTOList) {
 		this.saveSearchedJobsDTOList = saveSearchedJobsDTOList;

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
@@ -27,41 +34,52 @@ import javax.persistence.TemporalType;
 @Table(name = "adm_order_header")
 public class AdmOrderHeader implements Serializable {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** The Constant ADM_ORDER_HEADER. */
 	private static final String ADM_ORDER_HEADER = "admOrderHeader";
 
+	/** The order id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "order_id")
 	private int orderId;
 
+	/** The order date. */
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "order_date")
 	private Date orderDate;
 
+	/** The user id. */
 	@Column(name = "user_id")
 	private int userId;
 
+	/** The order total. */
 	@Column(name = "order_total")
 	private float orderTotal;
 
+	/** The status. */
 	@Column(name = "status")
 	private String status;
 
+	/** The adm facility. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "facility_id")
 	private AdmFacility admFacility;
 
 	// bi-directional many-to-one association to AdmOrderPayment
+	/** The adm order payment. */
 	@OneToOne(mappedBy = ADM_ORDER_HEADER, cascade = CascadeType.ALL)
 	private AdmOrderPayment admOrderPayment;
 
 	// bi-directional many-to-one association to AdmOrderPayment
+	/** The adm order item. */
 	@OneToMany(mappedBy = ADM_ORDER_HEADER, cascade = CascadeType.ALL)
 	private List<AdmOrderItem> admOrderItem;
 
 	// bi-directional many-to-one association to AdmOrderPayment
+	/** The adm order address. */
 	@OneToOne(mappedBy = ADM_ORDER_HEADER, cascade = CascadeType.ALL)
 	private AdmOrderAddress admOrderAddress;
 

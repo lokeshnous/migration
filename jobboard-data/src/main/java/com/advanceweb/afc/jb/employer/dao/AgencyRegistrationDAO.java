@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.dao;
 
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
@@ -39,8 +46,20 @@ public interface AgencyRegistrationDAO {
 	 */
 	AgencyProfileDTO getProfileAttributes();
 
+	/**
+	 * Validate profile attributes.
+	 *
+	 * @param jobseekerId the jobseeker id
+	 * @return true, if successful
+	 */
 	boolean validateProfileAttributes(int jobseekerId);		
 
+	/**
+	 * Validate email.
+	 *
+	 * @param email the email
+	 * @return true, if successful
+	 */
 	boolean validateEmail(String email);
 
 	

@@ -28,7 +28,7 @@
 							 borderBottomDotted
 							 </c:if>	
 							 ">
-							    ${item.createdDate.toLocaleString()}<br> Search by: <a href="#"	id="${item.saveSearchID}"					
+							    ${item.createdDate.toLocaleString()}<br> Criteria: <a href="#"	id="${item.saveSearchID}"					
 									onclick="loadRecentSearch(${item.saveSearchID})" class="newWindow">${item.recentURL}</a>
 							  </div>									
 								</c:forEach>

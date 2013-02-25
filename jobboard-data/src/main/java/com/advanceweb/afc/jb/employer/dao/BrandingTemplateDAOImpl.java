@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.dao;
 
 import java.util.ArrayList;
@@ -36,17 +43,28 @@ import com.advanceweb.afc.jb.employer.helper.BrandTemplateConversionHelper;
 @Repository("brandingTemplateDAO")
 @SuppressWarnings("unchecked")
 public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
+	
+	/** The brand template conversion helper. */
 	@Autowired
 	private BrandTemplateConversionHelper brandTemplateConversionHelper;
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(BrandingTemplateDAOImpl.class);
 
+	/** The hibernate template career. */
 	private HibernateTemplate hibernateTemplateCareer;
 
+	/** The template limit. */
 	private @Value("${templateLimit}")
 	int templateLimit;
 
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactoryMerionTracker the session factory merion tracker
+	 * @param sessionFactory the session factory
+	 */
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
@@ -88,7 +106,7 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 			}
 		} catch (HibernateException e) {
 			// logger call
-			LOGGER.info("ERROR1");
+			LOGGER.error("Error occured while getting brand template",e);
 		}
 		return templatesDTO;
 	}
@@ -111,7 +129,8 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 		} catch (HibernateException e) {
 			status = Boolean.FALSE;
 			// logger call
-			LOGGER.info("ERROR2" + e);
+			LOGGER.error("Error occured while saving branding template",e);
+			return status;
 		}
 		return status;
 
@@ -156,7 +175,7 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 			}
 		} catch (HibernateException e) {
 			// logger call
-			LOGGER.info("ERROR4");
+			LOGGER.error("Error occured while editing branding template",e);
 		}
 		return templatesDTO;
 	}
@@ -180,7 +199,7 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 		} catch (HibernateException e) {
 			status = false;
 			// logger call
-			LOGGER.info("ERROR5");
+			LOGGER.error("Error occured while deleting branding template",e);
 		}
 		return status;
 	}
@@ -264,6 +283,9 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.BrandingTemplateDAO#getBrandingInformation(int)
+	 */
 	@Override
 	public int getBrandingInformation(int facilityId) {
 		int packageId = 0;
@@ -383,6 +405,9 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.BrandingTemplateDAO#getParentId(int)
+	 */
 	@Override
 	public int getParentId(int facilityId) {
 		int roleId = 0;
@@ -408,6 +433,9 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 		return facilityId;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.BrandingTemplateDAO#getParentUserId(int, int)
+	 */
 	@Override
 	public int getParentUserId(int userId, int parentFacilityId) {
 		List<AdmUserFacility> userFacility = new ArrayList<AdmUserFacility>();

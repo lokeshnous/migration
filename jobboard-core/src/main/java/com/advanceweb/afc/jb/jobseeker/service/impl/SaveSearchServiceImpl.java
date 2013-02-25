@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.jobseeker.service.impl;
 
 import java.util.List;
@@ -20,9 +27,13 @@ import com.advanceweb.afc.jb.jobseeker.dao.SaveSearchDAO;
 @Service("saveSearchService")
 public class SaveSearchServiceImpl implements SaveSearchService {
 
+	/** The save search dao. */
 	@Autowired
 	private SaveSearchDAO saveSearchDAO;
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.SaveSearchService#saveSearchedJobs(com.advanceweb.afc.jb.common.SaveSearchedJobsDTO)
+	 */
 	public SaveSearchedJobsDTO saveSearchedJobs(SaveSearchedJobsDTO saveSearchedJobsDTO) {
 		return saveSearchDAO.saveSearchedJObs(saveSearchedJobsDTO);
 	}

@@ -91,7 +91,7 @@
 						</tr>
 						<tr>
 							<td valign="top"><form:hidden path="digCheckbox"
-									id="digCheckbox"/><label for="checkbox"><strong>Digital-Magazine</strong></label>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									id="digCheckbox"/><label for="checkbox"><strong>Digital Magazine</strong></label>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<c:if test="${!digitalSubList.isEmpty()}">
 									<c:forEach items="${digitalSubList}" var="subscriptionsprint"
 										varStatus="status">
@@ -121,10 +121,10 @@
 
 							<td valign="top" width="200"><form:hidden class="floatLeft"
 									path="mailCheckbox" id="mailCheckbox" /><label
-								class="floatLeft" for="checkbox"><strong>E-mails</strong></label>
+								class="floatLeft" for="checkbox"><strong>Emails</strong></label>
 								<div class="toolTip marginLeft5">
 									<span class="classic">Select this option if you want us
-										to send you emails regarding featured career opportunities</span>
+										to send you emails regarding featured career opportunities.</span>
 								</div>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <c:if
 									test="${!listEmailer.isEmpty()}">
 

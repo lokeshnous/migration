@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 /**
@@ -80,98 +87,153 @@ import com.advanceweb.common.client.ClientContext;
 @SessionAttributes("registerForm")
 @Scope("session")
 public class JobSeekerRegistrationController extends AbstractController {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(JobSeekerRegistrationController.class);
+	
+	/** The custom authentication manager. */
 	@Autowired
 	protected AuthenticationManager customAuthenticationManager;
 
+	/** The profile registration. */
 	@Autowired
 	private ProfileRegistration profileRegistration;
 
+	/** The transform job seeker registration. */
 	@Autowired
 	private TransformJobSeekerRegistration transformJobSeekerRegistration;
 
+	/** The register validation. */
 	@Autowired
 	private JobSeekerRegistrationValidation registerValidation;
 
+	/** The user sub service. */
 	@Autowired
 	private UserSubscriptionService userSubService;
 
+	/** The jobseeker reg phone msg. */
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
 
+	/** The social signup msg. */
 	@Value("${socialSignupMsg}")
 	private String socialSignupMsg;
 
+	/** The followuplinkfacebook. */
 	@Value("${followuplinkfacebook}")
 	private String followuplinkfacebook;
 
+	/** The followuplinktwitter. */
 	@Value("${followuplinktwitter}")
 	private String followuplinktwitter;
 
+	/** The followuplinkyoutube. */
 	@Value("${followuplinkyoutube}")
 	private String followuplinkyoutube;
 
+	/** The followuplinklinkedin. */
 	@Value("${followuplinklinkedin}")
 	private String followuplinklinkedin;
 
+	/** The req fields. */
 	@Value("${js.all.req.fields}")
 	private String reqFields;
 
+	/** The prof numeric msg. */
 	@Value("${js.prof.numeric}")
 	private String profNumericMsg;
 
+	/** The email exists. */
 	@Value("${js.email.exists}")
 	private String emailExists;
 
+	/** The ad service. */
 	@Autowired
 	private AdService adService;
 
+	/** The pwd empty. */
 	@Value("${js.password.empty}")
 	private String pwdEmpty;
 
+	/** The conform pass empty. */
 	@Value("${js.conform.pass.empty}")
 	private String conformPassEmpty;
 
-	@Value("${js.pwd.hint}")
+	/** The pwd hint. */
+	@Value("${js.chpwd.hint}")
 	private String pwdHint;
 
+	/** The pwd not equal. */
 	@Value("${js.pwd.not.equal}")
 	private String pwdNotEqual;
 
+	/** The pwd equal. */
 	@Value("${js.pwd.equal}")
 	private String pwdEqual;
 
+	/** The advance web address. */
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
 
+	/** The dothtml extention. */
 	@Value("${dothtmlExtention}")
 	private String dothtmlExtention;
+	
+	/** The navigation path. */
 	@Value("${navigationPath}")
 	private String navigationPath;
+	
+	/** The employer page extention. */
 	@Value("${employerPageExtention}")
 	private String employerPageExtention;
+	
+	/** The validate city state. */
 	@Value("${validateCityState}")
 	private String validateCityState;
+
+	/** The invalid cur pwd. */
+	@Value("${invalidCurrentPwd}")
+	private String invalidCurPwd;
+	
+	/** The email configuration. */
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
+	
+	/** The email service. */
 	@Autowired
 	private MMEmailService emailService;
+	
+	/** The user service. */
 	@Autowired
 	private UserService userService;
+	
+	/** The facility service. */
 	@Autowired
 	private FacilityService facilityService;
+	
+	/** The lookup service. */
 	@Autowired
 	private LookupService lookupService;
 	// Spring ReCaptcha
+	/** The login success manager. */
 	@Autowired
 	private LoginManager loginSuccessManager;
+	
+	/** The recaptcha response. */
 	private String recaptchaResponse;
+	
+	/** The recaptcha challenge. */
 	private String recaptchaChallenge;
+	
+	/** The remote addr. */
 	private String remoteAddr;
+	
+	/** The Constant JS_CREATE_ACCOUNT. */
 	private static final String JS_CREATE_ACCOUNT = "jobSeekerCreateAccount";
 
+	/** The Constant REGISTER_FORM. */
 	private static final String REGISTER_FORM = "registerForm";
 
 	/**
@@ -529,6 +591,12 @@ public class JobSeekerRegistrationController extends AbstractController {
 					.transformProfileAttribFormToDTO(
 							registerForm.getListProfAttribForms(), registerForm);
 			jsRegistrationDTO.setAttribList(attribLists);
+			if(registerForm.isAdvPassUser()){
+				UserDTO advUser=userService.getAdvancePassUser(registerForm.getEmailId());
+				if(advUser!=null){
+				userDTO.setPassword(advUser.getPassword());
+				}
+			}
 			jsRegistrationDTO.setMerUserDTO(userDTO);
 
 			// Call to service layer
@@ -570,7 +638,9 @@ public class JobSeekerRegistrationController extends AbstractController {
 			session.setAttribute(MMJBCommonConstants.USER_ID,
 					userDTO.getUserId());
 			session.setAttribute("userEmail", userDTO.getEmailId());
-
+			if(registerForm.isAdvPassUser()){
+			session.setAttribute("advancePassUser","advancePassUser");
+			}
 			// send welcome email ends
 			session.setAttribute("userDTO", userDTO);
 			model.put("success", "success");
@@ -669,6 +739,13 @@ public class JobSeekerRegistrationController extends AbstractController {
 		emailService.sendEmail(emailDTO);
 	}
 
+	/**
+	 * Authenticate user and set session.
+	 *
+	 * @param user the user
+	 * @param request the request
+	 * @param response the response
+	 */
 	private void authenticateUserAndSetSession(UserDTO user,
 			HttpServletRequest request, HttpServletResponse response) {
 		try {
@@ -721,7 +798,7 @@ public class JobSeekerRegistrationController extends AbstractController {
 	@RequestMapping(value = "/saveJobSeekerProfile", method = RequestMethod.POST, params = "Cancel")
 	public ModelAndView backToHomePage() {
 
-		return new ModelAndView("healthcarejobs/index.html", "", "");
+		return new ModelAndView("healthcare/index.html", "", "");
 	}
 
 	/**
@@ -991,7 +1068,8 @@ public class JobSeekerRegistrationController extends AbstractController {
 
 				sendUpdatedPasswordMail(session, request, jsRegistrationDTO);
 			} else {
-				return "Invalid Current Password";
+				// return "Invalid Current Password";
+				return invalidCurPwd;
 			}
 		} catch (Exception e) {
 			LOGGER.error(e);
@@ -1061,6 +1139,12 @@ public class JobSeekerRegistrationController extends AbstractController {
 		return "jobseekerchangepassword";
 	}
 
+	/**
+	 * Checks if is integer.
+	 *
+	 * @param input the input
+	 * @return true, if is integer
+	 */
 	public boolean isInteger(String input) {
 		try {
 			Integer.parseInt(input);
@@ -1070,6 +1154,13 @@ public class JobSeekerRegistrationController extends AbstractController {
 		}
 	}
 
+	/**
+	 * Send updated password mail.
+	 *
+	 * @param session the session
+	 * @param request the request
+	 * @param jsRegistrationDTO the js registration dto
+	 */
 	public void sendUpdatedPasswordMail(HttpSession session,
 			HttpServletRequest request,
 			JobSeekerRegistrationDTO jsRegistrationDTO) {
@@ -1235,8 +1326,8 @@ public class JobSeekerRegistrationController extends AbstractController {
 
 		// Collections.sort(listEmailer, new DropDownDTOComparable());
 		model.addObject("listEmailer", listEmailer);
-		
-		//By default emailer checkbox should be enabled in subscriptions
+
+		// By default emailer checkbox should be enabled in subscriptions
 		if (null != listEmailer) {
 			String[] emailsSub = { listEmailer.get(0).getOptionId() };
 			registerForm.setEmailSub(emailsSub);
@@ -1263,6 +1354,10 @@ public class JobSeekerRegistrationController extends AbstractController {
 	}
 
 	class DropDownDTOComparable implements Comparator<DropDownDTO> {
+		
+		/* (non-Javadoc)
+		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+		 */
 		@Override
 		public int compare(DropDownDTO obj1, DropDownDTO obj2) {
 			return obj1.getOptionName().compareTo(obj2.getOptionName());

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.lookup.helper;
 
 import java.util.ArrayList;
@@ -43,6 +50,12 @@ import com.advanceweb.afc.jb.data.entities.ResResumeAttribList;
 @Repository("dropdownHelper")
 public class PopulateDropdownConversionHelper {
 
+	/**
+	 * Convert mer lookup to look up dto.
+	 *
+	 * @param merLookupList the mer lookup list
+	 * @return the list
+	 */
 	public List<DropDownDTO> convertMerLookupToLookUpDTO(
 			List<JpAttribList> merLookupList) {
 
@@ -61,6 +74,12 @@ public class PopulateDropdownConversionHelper {
 
 	}
 
+	/**
+	 * Convert mer utility to country dto.
+	 *
+	 * @param merUtilityList the mer utility list
+	 * @return the list
+	 */
 	public List<CountryDTO> convertMerUtilityToCountryDTO(
 			List<Object> merUtilityList) {
 
@@ -79,12 +98,22 @@ public class PopulateDropdownConversionHelper {
 	}
 
 	class CountryDTOComparable implements Comparator<CountryDTO> {
+		
+		/* (non-Javadoc)
+		 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+		 */
 		@Override
 		public int compare(CountryDTO obj1, CountryDTO obj2) {
 			return obj1.getCountryValue().compareTo(obj2.getCountryValue());
 		}
 	}
 
+	/**
+	 * Convert mer utility to employment info dto.
+	 *
+	 * @param merUtilityList the mer utility list
+	 * @return the list
+	 */
 	public List<EmploymentInfoDTO> convertMerUtilityToEmploymentInfoDTO(
 			List<JpAttribList> merUtilityList) {
 
@@ -104,6 +133,12 @@ public class PopulateDropdownConversionHelper {
 		return list;
 	}
 
+	/**
+	 * Convert mer utility to subscriptions dto.
+	 *
+	 * @param merUtilityList the mer utility list
+	 * @return the list
+	 */
 	public List<SubscriptionsDTO> convertMerUtilityToSubscriptionsDTO(
 			List<JpAttribList> merUtilityList) {
 
@@ -138,6 +173,12 @@ public class PopulateDropdownConversionHelper {
 	 * list.add(countryDTO); } return list; } <<<<<<< .mine
 	 */
 
+	/**
+	 * Convert mer utility to gender dto.
+	 *
+	 * @param merUtilityList the mer utility list
+	 * @return the list
+	 */
 	public List<GenderDTO> convertMerUtilityToGenderDTO(
 			List<JpAttribList> merUtilityList) {
 
@@ -156,6 +197,12 @@ public class PopulateDropdownConversionHelper {
 		return list;
 	}
 
+	/**
+	 * Convert mer utility to ethenticity dto.
+	 *
+	 * @param merUtilityList the mer utility list
+	 * @return the list
+	 */
 	public List<EthenticityDTO> convertMerUtilityToEthenticityDTO(
 			List<JpAttribList> merUtilityList) {
 
@@ -175,6 +222,12 @@ public class PopulateDropdownConversionHelper {
 		return list;
 	}
 
+	/**
+	 * Convert mer utility to veteran status dto.
+	 *
+	 * @param merUtilityList the mer utility list
+	 * @return the list
+	 */
 	public List<VeteranStatusDTO> convertMerUtilityToVeteranStatusDTO(
 			List<JpAttribList> merUtilityList) {
 
@@ -434,6 +487,12 @@ public class PopulateDropdownConversionHelper {
 		return visibilityDTOList;
 	}
 
+	/**
+	 * Transform resume attrib list to dto.
+	 *
+	 * @param resResumeAttribList the res resume attrib list
+	 * @return the list
+	 */
 	public List<ResumeAttribListDTO> transformResumeAttribListToDTO(
 			List<ResResumeAttribList> resResumeAttribList) {
 		List<ResumeAttribListDTO> ResumeAttribListDTOList = new ArrayList<ResumeAttribListDTO>();
@@ -455,6 +514,12 @@ public class PopulateDropdownConversionHelper {
 
 	}
 
+	/**
+	 * Convert adm subscription to drop down dto.
+	 *
+	 * @param subsList the subs list
+	 * @return the list
+	 */
 	public List<DropDownDTO> convertAdmSubscriptionToDropDownDTO(
 			List<AdmSubscription> subsList) {
 
@@ -491,6 +556,12 @@ public class PopulateDropdownConversionHelper {
 		return list;
 	}
 
+	/**
+	 * Transform resume attrib list to drop down dto.
+	 *
+	 * @param resResumeAttribList the res resume attrib list
+	 * @return the list
+	 */
 	public List<DropDownDTO> transformResumeAttribListToDropDownDTO(
 			List<ResResumeAttribList> resResumeAttribList) {
 		List<DropDownDTO> dropdownList = new ArrayList<DropDownDTO>();
@@ -509,6 +580,12 @@ public class PopulateDropdownConversionHelper {
 
 	}
 
+	/**
+	 * Transform res degree edu to drop down dto.
+	 *
+	 * @param resEduDegreeList the res edu degree list
+	 * @return the list
+	 */
 	public List<DropDownDTO> transformResDegreeEduToDropDownDTO(
 			List<ResDegreeEdu> resEduDegreeList) {
 		List<DropDownDTO> dropdownList = new ArrayList<DropDownDTO>();
@@ -523,6 +600,12 @@ public class PopulateDropdownConversionHelper {
 
 	}
 
+	/**
+	 * Transform adm facility to drop down dto.
+	 *
+	 * @param merUsers the mer users
+	 * @return the list
+	 */
 	public List<DropDownDTO> transformAdmFacilityToDropDownDTO(
 			List<MerUser> merUsers) {
 		List<DropDownDTO> dropdownList = new ArrayList<DropDownDTO>();
@@ -538,6 +621,12 @@ public class PopulateDropdownConversionHelper {
 
 	}
 
+	/**
+	 * Transform jp template to drop down dto.
+	 *
+	 * @param templateList the template list
+	 * @return the list
+	 */
 	public List<DropDownDTO> transformJpTemplateToDropDownDTO(
 			List<JpTemplate> templateList) {
 		List<DropDownDTO> dropdownList = new ArrayList<DropDownDTO>();
@@ -555,6 +644,12 @@ public class PopulateDropdownConversionHelper {
 
 	}
 
+	/**
+	 * Transform jp job type to drop down dto.
+	 *
+	 * @param jpJobTypeList the jp job type list
+	 * @return the list
+	 */
 	public List<DropDownDTO> transformJpJobTypeToDropDownDTO(
 			List<JpJobType> jpJobTypeList) {
 		List<DropDownDTO> dropdownList = new ArrayList<DropDownDTO>();
@@ -570,6 +665,12 @@ public class PopulateDropdownConversionHelper {
 
 	}
 
+	/**
+	 * Convert mer user profile to user dto.
+	 *
+	 * @param userProfiles the user profiles
+	 * @return the list
+	 */
 	public List<UserSubscriptionsDTO> convertMerUserProfileToUserDTO(
 			List<MerUserProfile> userProfiles) {
 		List<UserSubscriptionsDTO> dtos = new ArrayList<UserSubscriptionsDTO>();

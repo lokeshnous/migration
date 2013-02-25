@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.login.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +24,11 @@ import com.advanceweb.afc.jb.user.UserService;
 */
 public class SocialLoginAdapter implements SignInAdapter {
 
+	/** The custom authentication manager. */
 	@Autowired
 	protected AuthenticationManager customAuthenticationManager;
 	
+	/** The user service. */
 	@Autowired
 	private UserService userService;
 /**

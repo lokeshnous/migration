@@ -120,21 +120,21 @@
 				var y = userName.lastIndexOf('.');
 				var result = true;
 				if (userName.length == 0) {
-					$("#errorMsgDiv").text("The Username/Password you have entered is invalid, please enter the correct Username/Password");
+					$("#errorMsgDiv").text("The information you entered was invalid. Please try again.");
 					$("#errorMsgDiv").show();
 					$("#errorDiv").hide();
 					result = false;
 				} 
 				
 				if(userPassword.length == 0){
-					$("#errorMsgDiv").text("The Username/Password you have entered is invalid, please enter the correct Username/Password");
+					$("#errorMsgDiv").text("The information you entered was invalid. Please try again.");
 					$("#errorMsgDiv").show();
 					$("#errorDiv").hide();
 					result = false;
 				}
 				if (x == -1 || y == -1 || (x + 2) >= y) {
 					$("#errorMsgDiv")
-							.text("The Username/Password you have entered is invalid, please enter the correct Username/Password");
+							.text("The information you entered was invalid. Please try again.");
 					$("#errorMsgDiv").show();
 					$("#errorDiv").hide();
 					result = false;
@@ -157,7 +157,7 @@
             <div class="main">
 
 				<div class="header_wrapper">
-				<div class="socialLoginLogo"><a href="<%=request.getContextPath()%>/healthcarejobs/index.html">
+				<div class="socialLoginLogo"><a href="<%=request.getContextPath()%>/healthcare/index.html">
           <div class="logo"></div>
           </a></div> 
 
@@ -170,7 +170,7 @@
 			<h2 class="noTopBottomBorder" id="employerLogin" align="center">Employer Login</h2>
 			<h2 class="noTopBottomBorder" id="agencyLogin" align="center">Ad Agency Login</h2>
 			<div  id="commonPage" class="job_seeker_login">
-            <h2 class="noTopBottomBorder">Already have a Job Board ID? </h2> 
+            <h2 class="noTopBottomBorder">Already have a Job Board ID? </h2>
 	                      <form:hidden path="profileId"/>
 	                      <form:hidden path="pageValue"/>
 	                      <form:hidden path="serviceProviderId"/>
@@ -192,8 +192,8 @@
 								</FONT>
 							</div>
 							<div id="errorMsgDiv" class="FormErrorDisplayText" style=" display: none"></div>
-			<h2 class="noTopBottomBorder">Already have a Job Board ID? </h2>
-			<p>Enter your Email Address and Password.</p><br/>
+			<div class="row"><h2 class="noTopBottomBorder">Already have a Job Board ID? </h2></div>
+			<p class="row">Enter your Email Address and Password.</p><br/>
 			
 			    <div class="rowEvenSpacingMargin0">
 				<span class="lableText1">Email Address:</span> 

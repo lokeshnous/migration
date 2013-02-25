@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import java.util.ArrayList;
@@ -46,27 +53,39 @@ import com.advanceweb.afc.jb.search.SearchParamDTO;
 @RequestMapping(value = "/savedSearches")
 public class SaveSearchController {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(SaveSearchController.class);
 
+	/** The navigation path. */
 	private String navigationPath;
 
+	/** The Constant LOGGED_NAV_PATH. */
 	private static final String LOGGED_NAV_PATH = "LoggedInNavigationPath";
+	
+	/** The Constant SAVE_SEARCH_FORM. */
 	private static final String SAVE_SEARCH_FORM = "saveSearchForm";
+	
+	/** The Constant RECENT_SRCH_LIST. */
 	private static final String RECENT_SRCH_LIST = "recentSearchList";
 	
+	/** The save search service. */
 	@Autowired
 	private SaveSearchService saveSearchService;
 
+	/** The populate dropdowns service. */
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
 
+	/** The save this search err msg. */
 	@Value("${saveThisSearchErrMsg}")
 	private String saveThisSearchErrMsg;
 
+	/** The saved searchs limit. */
 	@Value("${savedSearchsLimit}")
 	private String savedSearchsLimit;
 
+	/** The check session map. */
 	@Autowired
 	private CheckSessionMap checkSessionMap;
 

@@ -9,8 +9,8 @@
 									<div class="slider1Frames">
 										<a
 											href="featuredemployerdetails.html?id=${companyProfileDTOList[status.index].facilityid }">
-											<div class="slider1FrameA1" style="margin-top: -20px;" >
-												<img src="<%=request.getContextPath()%>/healthcarejobs/viewImage.html?id=${companyProfileDTOList[status.index].logoPath}"
+											<div class="slider1FrameA1">
+												<img src="<%=request.getContextPath()%>/healthcare/viewImage.html?id=${companyProfileDTOList[status.index].logoPath}"
 													alt="${companyProfileDTOList[status.index].companyName }"
 													class="FeatuEmploy">
 											</div>
@@ -18,8 +18,8 @@
 										<c:if test="${not empty companyProfileDTOList[status.index+1].facilityid }">
 										<a
 											href="featuredemployerdetails.html?id=${companyProfileDTOList[status.index+1].facilityid }">
-											<div class="slider1FrameA2" style="margin-top: -20px;">
-												<img src="<%=request.getContextPath()%>/healthcarejobs/viewImage.html?id=${companyProfileDTOList[status.index+1].logoPath}"
+											<div class="slider1FrameA2">
+												<img src="<%=request.getContextPath()%>/healthcare/viewImage.html?id=${companyProfileDTOList[status.index+1].logoPath}"
 													alt="${companyProfileDTOList[status.index+1].companyName }"
 													 class="FeatuEmploy">
 											</div>

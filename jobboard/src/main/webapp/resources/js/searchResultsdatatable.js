@@ -27,7 +27,7 @@ jQuery(document).ready(function() {
 
 			function sendToFrd(jobId,jobtitle) {	
 				var currentUrl = window.location.pathname;
-				$.nmManual($("#contextPath").val()+'/search/sendtofriend.html?id='+jobId+'&jobtitle='+jobtitle+'&currentUrl='+currentUrl);
+				$.nmManual($("#contextPath").val()+'/search/sendtofriend.html?id='+jobId+'&jobtitle='+jobtitle+'&currentUrl='+currentUrl, {closeOnEscape: false, showCloseButton: false, closeOnClick: false});
 			}
 
 		function validateRadius() {
@@ -67,7 +67,7 @@ jQuery(document).ready(function() {
 					});
 					$.each(data, function(key, val) {
 						if (key == "NavigationPath") {
-							$.nmManual(val + '.html');
+							$.nmManual(val + '.html', {closeOnEscape: false, showCloseButton: false, closeOnClick: false});
 
 						}
 					});
@@ -95,7 +95,11 @@ jQuery(document).ready(function() {
 					$.each(data, function(key, val) {
 						if (key == "applyLink") {
 							$('#bottomjobActionInfo').html("");
+							if((/^\s*$/).test(val)){
+								alert("Insufficient information to apply. Please contact Advance team.");
+							}else{
 							window.open(val, '_blank');
+							}
 						}
 					});
 					$.each(data, function(key, val) {
@@ -107,7 +111,7 @@ jQuery(document).ready(function() {
 					$.each(data, function(key, val) {
 						if (key == "NavigationPath") {
 							$('#bottomjobActionInfo').html("");
-							$.nmManual(val);
+							$.nmManual(val, {closeOnEscape: false, showCloseButton: false, closeOnClick: false});
 						}
 					});
 				},
@@ -133,7 +137,11 @@ jQuery(document).ready(function() {
 						if (key == "applyLink") {
 							$('#topjobActionInfo'+jobId).html("");
 							$('#topjobActionInfo').html("");
+							if((/^\s*$/).test(val)){
+								alert("Insufficient information to apply. Please contact Advance team.");
+							}else{
 							window.open(val, '_blank');
+							}
 						}
 					});
 					$.each(data, function(key, val) {
@@ -147,7 +155,7 @@ jQuery(document).ready(function() {
 						if (key == "NavigationPath") {
 							$('#topjobActionInfo'+jobId).html("");
 							$('#topjobActionInfo').html("");
-							$.nmManual(val);
+							$.nmManual(val, {closeOnEscape: false, showCloseButton: false, closeOnClick: false});
 						}
 					});
 				},
@@ -191,7 +199,7 @@ jQuery(document).ready(function() {
 						if (key == "NavigationPath") {
 							$('#topjobActionInfo'+jobId).html("");
 							$('#topjobActionInfo').html("");
-							$.nmManual(val);
+							$.nmManual(val, {closeOnEscape: false, showCloseButton: false, closeOnClick: false});
 						}
 					});
 				},
@@ -365,7 +373,7 @@ jQuery(document).ready(function() {
 							});
 							$.each(data, function(key, val) {
 								if (key == "NavigationPath") {
-									$.nmManual(val);
+									$.nmManual(val, {closeOnEscape: false, showCloseButton: false, closeOnClick: false});
 								}
 							});
 						},
@@ -387,7 +395,7 @@ jQuery(document).ready(function() {
 							});
 							$.each(data, function(key, val) {
 								if (key == "NavigationPath") {
-									$.nmManual(val);
+									$.nmManual(val, {closeOnEscape: false, showCloseButton: false, closeOnClick: false});
 								}
 							});
 						},
@@ -579,7 +587,7 @@ jQuery(document).ready(function() {
 					var contextPath = $("#contextPath").val();
 					if(contextPath != undefined){
 					$.ajax({
-						url : contextPath+'/healthcarejobs/homeFeaturedEmps.html',
+						url : contextPath+'/healthcare/homeFeaturedEmps.html',
 						data : ({}),
 						
 						success : function(data) {
@@ -619,7 +627,7 @@ jQuery(document).ready(function() {
 								}
 								
 								if (key == "LoggedInNavigationPath") {
-									$.nmManual(val + '.html');
+									$.nmManual(val + '.html', {closeOnEscape: false, showCloseButton: false, closeOnClick: false});
 								}
 							}); 
 						    if(data.success != null){
@@ -653,7 +661,7 @@ jQuery(document).ready(function() {
 							});
 							$.each(data, function(key, val) {
 								if (key == "NavigationPath") {
-									$.nmManual(val + '.html');
+									$.nmManual(val + '.html', {closeOnEscape: false, showCloseButton: false, closeOnClick: false});
 								}
 							});
 						},
@@ -689,7 +697,7 @@ jQuery(document).ready(function() {
 								if (key == "NavigationPath") {
 									$('#bottomjobActionInfo').html("");
 									//window.location.href = val;
-									$.nmManual(val);
+									$.nmManual(val, {closeOnEscape: false, showCloseButton: false, closeOnClick: false});
 								}
 							});
 						},
@@ -939,7 +947,7 @@ jQuery(document).ready(function() {
 					function showCareersPart(careerType){
 						$.ajaxSetup({ cache: false });
 						$.ajax({
-								url : $("#contextPath").val()+'/healthcarejobs/showCareersPart.html?careerType='+careerType,
+								url : $("#contextPath").val()+'/healthcare/showCareersPart.html?careerType='+careerType,
 								page : ({}),								
 								success : function(page) {
 								//	alert(page);
@@ -977,7 +985,7 @@ jQuery(document).ready(function() {
 					function showCareersSubPart(careerType){
 						$.ajaxSetup({ cache: false });
 						$.ajax({
-							url : $("#contextPath").val()+'/healthcarejobs/showCareersPart.html?careerType='+careerType,
+							url : $("#contextPath").val()+'/healthcare/showCareersPart.html?careerType='+careerType,
 							page : ({}),								
 							success : function(page) {
 								//alert(page);

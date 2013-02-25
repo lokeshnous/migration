@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common.util;
 
 import java.io.BufferedReader;
@@ -22,24 +29,48 @@ import com.advanceweb.afc.jb.data.entities.MerUser;
 
 public class OpenAMEUtility {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger(OpenAMEUtility.class);
 	
+	/** The open am service url. */
 	private @Value("${openAMServiceURL}")
 	static String openAMServiceURL;
+	
+	/** The open am user name. */
 	private @Value("${openAM.admin.username}")
 	static String openAMUserName;
+	
+	/** The open am password. */
 	private @Value("${openAM.admin.password}")
 	static String openAMPassword;
 	
+	/** The Constant _TOKEN_URL. */
 	private final static String _TOKEN_URL = openAMServiceURL+"authenticate?username="+openAMUserName+"&password="+openAMPassword;
+	
+	/** The Constant _CREATE_URL. */
 	private final static String _CREATE_URL = openAMServiceURL+"create?admin=";
+	
+	/** The Constant _UPDATE_URL. */
 	private final static String _UPDATE_URL = openAMServiceURL+"update?admin=";
+	
+	/** The Constant _DELETE_URL. */
 	private final static String _DELETE_URL = openAMServiceURL+"delete?admin=";
+	
+	/** The Constant _READ_URL. */
 	private final static String _READ_URL = openAMServiceURL+"read?admin=";
+	
+	/** The Constant _AUTHENTICATE_URL. */
 	private final static String _AUTHENTICATE_URL = openAMServiceURL+"authenticate?";
+	
+	/** The Constant _LOGOUT_URL. */
 	private final static String _LOGOUT_URL = openAMServiceURL+"logout?subjectid=";
 
 	
+	/**
+	 * New password.
+	 *
+	 * @return the string
+	 */
 	public static String newPassword(){
 		SecureRandom srandom = new SecureRandom();
 		String tempassword = new BigInteger(52, srandom).toString(32);
@@ -354,6 +385,13 @@ public class OpenAMEUtility {
 	}
 
 	
+	/**
+	 * Open am create emp.
+	 *
+	 * @param meruserDTO the meruser dto
+	 * @param contact the contact
+	 * @return true, if successful
+	 */
 	public static boolean openAMCreateEmp(MerUser meruserDTO,AdmFacilityContact contact) {
 		LOGGER.debug("-----------------------------------");
 		LOGGER.debug(meruserDTO.getEmail()+ meruserDTO.getPassword()+ meruserDTO.getFirstName()+" " + meruserDTO.getLastName()+ meruserDTO.getEmail());
@@ -374,6 +412,12 @@ public class OpenAMEUtility {
 	}
 
 
+	/**
+	 * Open am update emp.
+	 *
+	 * @param apd the apd
+	 * @return true, if successful
+	 */
 	public static boolean openAMUpdateEmp(AccountProfileDTO apd) {
 
 		

@@ -225,7 +225,7 @@ JAVASCRIPT FILES
 						varStatus="emplyrsStatus">
 						<li>
 						<a 
-						class="link_color2_basic cursor" onclick="$.nmManual('<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/admin/search/${jobTitle.encodeJobtitle}.html');"
+						class="link_color2_basic cursor" onclick="$.nmManual('<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/admin/search/${jobTitle.encodeJobtitle}.html', {closeOnEscape: false, showCloseButton: false, closeOnClick: false});"
 							class="link_color2_basic cursor">${jobTitle.jobtitle}</a></li>
 					</c:forEach>
 				</ul>
@@ -244,7 +244,7 @@ JAVASCRIPT FILES
 					<c:forEach items="${jobByTitle.value}" var="jobTitle"
 						varStatus="emplyrsStatus">
 						<li><a
-						class="link_color2_basic cursor" onclick="$.nmManual('<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/admin/search/${jobTitle.encodeJobtitle}.html');" 
+						class="link_color2_basic cursor" onclick="$.nmManual('<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/admin/search/${jobTitle.encodeJobtitle}.html', {closeOnEscape: false, showCloseButton: false, closeOnClick: false});" 
 							class="link_color2_basic cursor">${jobTitle.jobtitle}</a></li>
 					</c:forEach>
 				</ul>
@@ -261,7 +261,7 @@ JAVASCRIPT FILES
 					<c:forEach items="${jobByTitle.value}" var="jobTitle"
 						varStatus="emplyrsStatus">
 						<li><a 
-						class="link_color2_basic cursor" onclick="$.nmManual('<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/admin/search/${jobTitle.encodeJobtitle}.html');"
+						class="link_color2_basic cursor" onclick="$.nmManual('<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/admin/search/${jobTitle.encodeJobtitle}.html', {closeOnEscape: false, showCloseButton: false, closeOnClick: false});"
 							class="link_color2_basic cursor">${jobTitle.jobtitle}</a></li>
 					</c:forEach>
 				</ul>

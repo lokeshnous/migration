@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.dao;
 
 import java.sql.Timestamp;
@@ -46,25 +53,46 @@ import com.advanceweb.afc.jb.user.helper.RegistrationConversionHelper;
 @SuppressWarnings("unchecked")
 public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger("AgencyRegistrationDAOImpl.class");
 
+	/** The Constant FIND_AGENCY_ROLE_ID. */
 	private static final String FIND_AGENCY_ROLE_ID = "from AdmRole role where role.name=?";
+	
+	/** The Constant REGISTRATION_ATTRIBS. */
 	private static final String REGISTRATION_ATTRIBS = "from MerProfileAttrib prof";
+	
+	/** The Constant VERIFY_EMAIL. */
 	private static final String VERIFY_EMAIL = "from MerUser e where e.email = ? and e.deleteDt is NULL";
+	
+	/** The Constant VERIFY_EMAIL_ADVANCEPASS. */
 	private static final String VERIFY_EMAIL_ADVANCEPASS = "from WebMembershipEmail e where e.email = ? and e.deleteDate is NULL";
+	
+	/** The agency helper. */
 	@Autowired
 	private AgencyRegistrationConversionHelper agencyHelper;
 
+	/** The registration conversion helper. */
 	@Autowired
 	private RegistrationConversionHelper registrationConversionHelper;
 	
+	/** The hibernate template tracker. */
 	private HibernateTemplate hibernateTemplateTracker;
 
+	/** The hibernate template careers. */
 	private HibernateTemplate hibernateTemplateCareers;
 
+	/** The hibernate template advance pass. */
 	private HibernateTemplate hibernateTemplateAdvancePass;
 
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactoryMerionTracker the session factory merion tracker
+	 * @param sessionFactory the session factory
+	 * @param sessionFactoryAdvancePass the session factory advance pass
+	 */
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
@@ -164,6 +192,11 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 		return null;
 	}
 
+	/**
+	 * Gets the country list.
+	 *
+	 * @return the country list
+	 */
 	private List<DropDownDTO> getCountryList() {
 		try {
 			DetachedCriteria criteria = DetachedCriteria
@@ -182,6 +215,11 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 		return null;
 	}
 
+	/**
+	 * Gets the state list.
+	 *
+	 * @return the state list
+	 */
 	private List<DropDownDTO> getStateList() {
 		try {
 			DetachedCriteria criteria = DetachedCriteria
@@ -269,6 +307,9 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 		return false;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.AgencyRegistrationDAO#validateEmail(java.lang.String)
+	 */
 	@Override
 	public boolean validateEmail(String email) {
 		try {

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.common.ads.keyword.service.impl;
 
 import java.util.ArrayList;
@@ -27,9 +34,11 @@ import com.advanceweb.common.index.lucene.LuceneResult;
 @Service
 public class KeywordIndexServiceImpl implements KeywordIndexService {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(KeywordIndexService.class);
 
+	/** The keyword index. */
 	@Autowired
 	private LuceneIndex keywordIndex;
 
@@ -75,12 +84,24 @@ public class KeywordIndexServiceImpl implements KeywordIndexService {
 
 	}
 
+	/**
+	 * Builds the param map.
+	 *
+	 * @param search the search
+	 * @return the map
+	 */
 	private Map<String, String> buildParamMap(String search) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("keyword", search);
 		return params;
 	}
 
+	/**
+	 * Creates the content topic.
+	 *
+	 * @param doc the doc
+	 * @return the content topic
+	 */
 	private ContentTopic createContentTopic(Document doc) {
 		String text = doc.getFieldable(KeywordIndex.KEYWORD_FIELD)
 				.stringValue();

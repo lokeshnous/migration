@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import com.advanceweb.afc.jb.pgi.web.controller.BillingAddressForm;
@@ -11,26 +18,66 @@ import com.advanceweb.afc.jb.pgi.web.controller.BillingAddressForm;
 public class EmployeeAccountForm {
 
 	// Account Address information
+	/** The billing address form. */
 	public BillingAddressForm billingAddressForm;
+	
+	/** The first name. */
 	private String firstName;
+	
+	/** The middle name. */
 	private String middleName;
+	
+	/** The last name. */
 	private String lastName;
+	
+	/** The email. */
 	private String email;
+	
+	/** The company. */
 	private String company;
+	
+	/** The street address. */
 	private String streetAddress;
+	
+	/** The city or town. */
 	private String cityOrTown;
+	
+	/** The state. */
 	private String state;
+	
+	/** The country. */
 	private String country;
+	
+	/** The zip code. */
 	private String zipCode;
+	
+	/** The phone. */
 	private String phone;
+	
+	/** The admin login. */
 	private boolean adminLogin;
+	
+	/** The read only. */
 	private boolean readOnly;
+	
+	/** The use my account addr. */
 	private boolean useMyAccountAddr;
 	
 	
+	/**
+	 * Checks if is admin login.
+	 *
+	 * @return true, if is admin login
+	 */
 	public boolean isAdminLogin() {
 		return adminLogin;
 	}
+	
+	/**
+	 * Sets the admin login.
+	 *
+	 * @param adminLogin the new admin login
+	 */
 	public void setAdminLogin(boolean adminLogin) {
 		this.adminLogin = adminLogin;
 	}
@@ -226,9 +273,21 @@ public class EmployeeAccountForm {
 	public void setReadOnly(boolean readOnly) {
 		this.readOnly = readOnly;
 	}
+	
+	/**
+	 * Checks if is use my account addr.
+	 *
+	 * @return true, if is use my account addr
+	 */
 	public boolean isUseMyAccountAddr() {
 		return useMyAccountAddr;
 	}
+	
+	/**
+	 * Sets the use my account addr.
+	 *
+	 * @param useMyAccountAddr the new use my account addr
+	 */
 	public void setUseMyAccountAddr(boolean useMyAccountAddr) {
 		this.useMyAccountAddr = useMyAccountAddr;
 	}

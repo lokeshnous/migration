@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.admin.web.controller;
 
 import java.util.ArrayList;
@@ -18,7 +25,9 @@ import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
 
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -66,46 +75,77 @@ import com.advanceweb.common.client.ClientContext;
 @SessionAttributes("adminLoginForm")
 @Scope("session")
 public class AdminController extends AbstractController{
+	
+	/** The Constant ADMIN_DASHBOARD. */
 	private static final String ADMIN_DASHBOARD = "adminDashboard";
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
-			.getLogger("AdminController.class");
+			.getLogger(AdminController.class);
 
 	// private static final String = null;
 
+	/** The employer job post. */
 	@Autowired
 	private JobPostService employerJobPost;
 
+	/** The admin validation. */
 	@Autowired
 	private AdminValidation adminValidation;
 
+	/** The admin service. */
 	@Autowired
 	private ProfileRegistration adminService;
 	
+	/** The job search service. */
 	@Autowired
 	private JobSearchService jobSearchService;
+	
+	/** The facility service. */
 	@Autowired
 	private FacilityService facilityService;
+	
+	/** The user service. */
 	@Autowired
 	private UserService userService;
 
 
+	/** The transform admin impersonation. */
 	@Autowired
 	private TransformAdminImpersonation transformAdminImpersonation;
 
+	/** The service. */
 	@Autowired
 	private AdminService service;
+	
+	/** The login err msg. */
 	@Value("${loginErrMsg}")
 	private String loginErrMsg;
+	
+	/** The ad service. */
 	@Autowired
 	private AdService adService;
 	
+	/** The seo configuration. */
 	@Autowired
 	@Resource(name = "seoConfiguration")
 	private Properties seoConfiguration;
 	
+	/** The logger configuration. */
+	@Autowired
+	@Resource(name = "logConfiguration")
+	private Properties logConfiguration;
+	
+	/** The Constant LOGINFORM. */
 	private static final String LOGINFORM ="adminLoginForm";
 	
+	/**
+	 * Admin login.
+	 *
+	 * @param error the error
+	 * @param model the model
+	 * @return the string
+	 */
 	@RequestMapping(value = "/loginPage")
 	public String adminLogin(@RequestParam(value = "error", required = false) boolean error,ModelMap model){
 		if (error) {
@@ -117,6 +157,14 @@ public class AdminController extends AbstractController{
 		return "adminLoginPage";
 	}
 	
+	/**
+	 * Admin menu page.
+	 *
+	 * @param map the map
+	 * @param request the request
+	 * @param session the session
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/adminMenu", method = RequestMethod.GET)
 	public ModelAndView adminMenuPage(ModelMap map, HttpServletRequest request, HttpSession session) {
 		ModelAndView model = new ModelAndView();
@@ -170,6 +218,11 @@ public class AdminController extends AbstractController{
 		}
 	}
 
+	/**
+	 * Admin impersonation page.
+	 *
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/login")
 	public ModelAndView adminImpersonationPage() {
 		ModelAndView model = new ModelAndView();
@@ -180,6 +233,14 @@ public class AdminController extends AbstractController{
 
 	}
 
+	/**
+	 * Impersonate the user.
+	 *
+	 * @param form the form
+	 * @param result the result
+	 * @param session the session
+	 * @return the string
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public String impersonateTheUser(
@@ -511,5 +572,54 @@ public class AdminController extends AbstractController{
 		jobSearchService.saveJobTitleSeoInfo(seoDTO);
 		return "success";
 
+	}
+	
+	/**
+	 * The method changes the logger level throughout the application.
+	 * 
+	 * @param request
+	 * @param session
+	 */
+	@RequestMapping(value = "/manageLogLevel", method = RequestMethod.GET)
+	public ModelAndView manageLogLevel(HttpSession session,
+			HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("manageLoggerLevel");
+		return modelAndView;
+	}
+
+	/**
+	 * The method changes the logger level throughout the application.
+	 * 
+	 * @param request
+	 * @param session
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/changeLogLevel", method = RequestMethod.GET)
+	public JSONObject changeLogLevel(HttpSession session,
+			HttpServletRequest request) {
+		JSONObject jsonObject = new JSONObject();
+		String logLevel = request.getParameter("logLevel");
+		jsonObject.put("status", "");
+		try {
+			if (logLevel.equalsIgnoreCase("INFO")
+					|| logLevel.equalsIgnoreCase("DEBUG")
+					|| logLevel.equalsIgnoreCase("TRACE")) {
+
+				logConfiguration.setProperty("log4j.logger.com.advanceweb",
+						logLevel.toUpperCase());
+				LogManager.resetConfiguration();
+				PropertyConfigurator.configure(logConfiguration);
+				LOGGER.debug("Logger changed to level: "+ logLevel);
+			}
+		} catch (Exception e) {
+			LOGGER.error(
+					"An error occurred while setting the Logger level to: "
+							+ logLevel, e);
+			jsonObject.put("status", "error");
+			return jsonObject;
+		}
+
+		return jsonObject;
 	}
 }

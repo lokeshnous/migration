@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.jobseeker.helper;
 
 import java.util.ArrayList;
@@ -23,6 +30,7 @@ import com.advanceweb.afc.jb.employer.helper.JobPostConversionHelper;
 @Repository("jobSeekerJobDetailConversionHelper")
 public class JobSeekerJobDetailConversionHelper {
 
+	/** The job post conversion helper. */
 	@SuppressWarnings("rawtypes")
 	@Autowired
 	private JobPostConversionHelper jobPostConversionHelper;
@@ -66,6 +74,12 @@ public class JobSeekerJobDetailConversionHelper {
 
 	}
 
+	/**
+	 * Transform to dto for saved job.
+	 *
+	 * @param entity the entity
+	 * @return the list
+	 */
 	public List<AppliedJobDTO> transformToDTOForSavedJob(List<AdmSaveJob> entity) {
 		List<AppliedJobDTO> appliedJobDTOList = new ArrayList<AppliedJobDTO>();
 		if (entity != null) {
@@ -91,6 +105,13 @@ public class JobSeekerJobDetailConversionHelper {
 
 	}
 
+	/**
+	 * Gets the job age.
+	 *
+	 * @param startDate the start date
+	 * @param endDate the end date
+	 * @return the job age
+	 */
 	private int getJobAge(Date startDate, Date endDate) {
 		Calendar startCal;
 		Calendar endCal;

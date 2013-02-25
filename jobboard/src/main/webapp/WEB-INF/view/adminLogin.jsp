@@ -10,17 +10,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
-<link rel='shortcut icon' href='<%=request.getContextPath() %>/resources/images/favicon.ico' type="image/x-icon">
+<link rel='shortcut icon' href='<%=request.getContextPath()%>/resources/images/favicon.ico' type="image/x-icon">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="robots" content="noindex, follow"> 
 <!-- <link rel="stylesheet" type="text/css" href="jquery.autocomplete.css" /> -->
 
+
+	<!-- <script type="text/javascript" src="jquery.autocomplete.min.js"></script> -->
+<jsp:include page="common/include.jsp" />
+<link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
-	<!-- <script type="text/javascript" src="jquery.autocomplete.min.js"></script> -->
-<jsp:include page="common/include.jsp" />
 <title>ADVANCE Heathcare Jobs</title>
 
 <!-- STYLESHEETS -->
@@ -49,6 +51,8 @@ JAVASCRIPT FILES
 		    $(".inventory").displaypopup(".inventory",
 					"300", "100");
 		    $(".manageFacilityGroup").displaypopup(".manageFacilityGroup",
+					"790", "360");
+		    $("#manageLogLevel").displaypopup("#manageLogLevel",
 					"790", "360");
 		});
 		</script>
@@ -104,43 +108,42 @@ JAVASCRIPT FILES
 						<li class="css_main_menu_item"><a href="#">Magazines</a>
 							<ul class="css_subContainer">
 								<div class="css_column">
-									<li><a href="http://nursing.advanceweb.com/">Nurses</a></li>
-									<li><a href="http://physical-therapy.advanceweb.com/">Physical
-											Therapy and Rehab Medicine</a></li>
-									<li><a href="http://occupational-therapy.advanceweb.com/">Occupational
+									<li><a href="http://nursing.advanceweb.com/" target="_blank">Nurses</a></li>
+									<li><a href="http://physical-therapy.advanceweb.com/" target="_blank">Physical Therapy and Rehab Medicine</a></li>
+									<li><a href="http://occupational-therapy.advanceweb.com/" target="_blank">Occupational
 											Therapy Practitioners</a></li>
 									<li><a
-										href="http://imaging-radiation-oncology.advanceweb.com/">Imaging
+										href="http://imaging-radiation-oncology.advanceweb.com/" target="_blank">Imaging
 											& Radiattion Oncology</a></li>
-									<li><a href="http://audiology.advanceweb.com/">Hearing
+									<li><a href="http://audiology.advanceweb.com/" target="_blank">Hearing
 											Practice Management</a></li>
 								</div>
 								<!-- END css_column -->
 
 								<div class="css_column">
 									<li><a
-										href="http://speech-language-pathology-audiology.advanceweb.com/">Speech-Language
+										href="http://speech-language-pathology-audiology.advanceweb.com/" target="_blank">Speech-Language
 											Pathologists & Audiologists</a></li>
 									<li><a
-										href="http://respiratory-care-sleep-medicine.advanceweb.com/">Respiratory
+										href="http://respiratory-care-sleep-medicine.advanceweb.com/" target="_blank">Respiratory
 											Care and Sleep Medicine</a></li>
-									<li><a href="http://laboratory-manager.advanceweb.com/">Administrators
+									<li><a href="http://laboratory-manager.advanceweb.com/" target="_blank">Administrators
 											of the Laboratory</a></li>
-									<li><a href="http://laboratorian.advanceweb.com/">Medical
+									<li><a href="http://laboratorian.advanceweb.com/" target="_blank">Medical
 											Laboratory Professionals</a></li>
-									<li><a href="http://health-information.advanceweb.com/">Health
+									<li><a href="http://health-information.advanceweb.com/" target="_blank">Health
 											Information Professionals</a></li>
 								</div>
 								<!-- END css_column -->
 
 								<div class="css_column">
-									<li><a href="http://long-term-care.advanceweb.com/">Long-Term
+									<li><a href="http://long-term-care.advanceweb.com/" target="_blank">Long-Term
 											Care Management</a></li>
 									<li><a
-										href="http://nurse-practitioners-and-physician-assistants.advanceweb.com/">NPs
+										href="http://nurse-practitioners-and-physician-assistants.advanceweb.com/" target="_blank">NPs
 											& PAs</a></li>
 									<li><a
-										href="http://healthcare-executive-insight.advanceweb.com/">Executive
+										href="http://healthcare-executive-insight.advanceweb.com/" target="_blank">Executive
 											Insight</a></li>
 								</div>
 								<!-- END css_column -->
@@ -151,25 +154,22 @@ JAVASCRIPT FILES
 						<li class="css_main_menu_item"><a href="#">Job Search</a>
 							<ul class="css_subContainer">
 								<div class="css_column">
-									<li><a href="http://health-care-jobs.advanceweb.com/">Quick
+									<li><a href="http://www.advancehealthcarejobs.com" target="_blank">Quick
 											Search</a></li>
 									<li><a
-										href="http://health-care-jobs.advanceweb.com/ResumeBuilder/Default.aspx">Resume
+										href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcare/showCareers.html?careerType=resumeBuilder" target="_blank">Resume
 											Builder</a></li>
+								
 									<li><a
-										href="http://health-care-jobs.advanceweb.com/Salary/Default.aspx">Salary
-											Calculator</a></li>
-									<li><a
-										href="http://health-care-jobs.advanceweb.com/AdvanceMessenger/Default.aspx"><em>ADVANCE</em>
+										href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcare/showCareers.html?careerType=messanger" target="_blank"><em>ADVANCE</em>
 											Messenger</a></li>
 									<li><a
-										href="http://health-care-jobs.advanceweb.com/careers/article.aspx?cc=251059">Career
+										href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/healthcare/showCareers.html?careerType=career" target="_blank">Career
 											Resource Center</a></li>
 									<li><a
-										href="http://health-care-jobs.advanceweb.com/FeaturedFacilities/Default.aspx">Featured
-											Facilities</a></li>
+										href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"")%>/healthcare/featuredemployers.html" target="_blank">Featured Employers</a></li>
 									<li><a
-										href="http://health-care-jobs.advanceweb.com/Default.aspx">Home</a></li>
+										href="http://www.advancehealthcarejobs.com" target="_blank">Home</a></li>
 								</div>
 								<!-- END css_column -->
 							</ul>
@@ -177,15 +177,15 @@ JAVASCRIPT FILES
 						<!-- END css_main_menu_item -->
 
 						<li class="css_main_menu_item"><a
-							href="http://www.advanceweb.com/Advertise/CE2.aspx">Education</a></li>
+							href="http://www.advanceweb.com/Advertise/CE2.aspx" target="_blank">Education</a></li>
 						<li class="css_main_menu_item"><a
-							href="http://events.advanceweb.com/Attendee/Default.aspx">Events</a></li>
+							href="http://events.advanceweb.com/Attendee/Default.aspx" target="_blank">Events</a></li>
 						<li class="css_main_menu_item"><a
-							href="http://community.advanceweb.com/bloggroups/2/Home.aspx">Community</a></li>
+							href="http://community.advanceweb.com" target="_blank">Community</a></li>
 						<li class="css_main_menu_item"><a
-							href="http://shop.advanceweb.com">Healthcare Shop</a></li>
+							href="http://shop.advanceweb.com" target="_blank">Healthcare Shop</a></li>
 						<li class="css_main_menu_item"><a
-							href="http://promotions.advanceweb.com">Custom Promotions</a></li>
+							href="http://promotions.advanceweb.com" target="_blank">Custom Promotions</a></li>
 					</ul>
 				</div>
 				<!--nav-->
@@ -201,6 +201,7 @@ JAVASCRIPT FILES
 					<div class="AdminLinkAlign"><a id="inventory" class="inventory boldText" href="<%=request.getContextPath()%>/admin/employer1/jobInventorypopup.html">Manage/Edit Job Posting Inventory</a></div>
 					<div class="AdminLinkAlign"><a id="manageFacilityGroupId" class="inventory boldText" href="<%=request.getContextPath()%>/admin/employer1/manageFacilityGroup.html">Manage/Edit Facility Group </a></div>
 					<div class="AdminLinkAlign"><a class="boldText" href="<%=request.getContextPath()%>/admin/title.html">Edit Job Titles SEO Info</a></div>
+					<div class="AdminLinkAlign"><a id="manageLogLevel" class="boldText"  href="<%=request.getContextPath()%>/admin/manageLogLevel.html">Manage Logger level</a></div>
 				</form:form>
 				<div class="clearfix"></div>
 				<div class="ad_wrapper">

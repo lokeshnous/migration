@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.resume.dao;
 
 import java.sql.Timestamp;
@@ -52,17 +59,28 @@ import com.advanceweb.afc.jb.resume.helper.ResumeConversionHelper;
 @Repository("resumeDao")
 public class ResumeDaoImpl implements ResumeDao {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger("ResumeDaoImpl.class");
 
+	/** The Constant FIND_RES_BUILD_RESUME. */
 	private static final String FIND_RES_BUILD_RESUME = "from ResBuilderResume res where res.resUploadResumeId=?";
+	
+	/** The Constant ALL_CANDIDATES_FOLDER_NAME. */
 	private static final String ALL_CANDIDATES_FOLDER_NAME = "Default Folder";
 
+	/** The resume conversion helper. */
 	@Autowired
 	private ResumeConversionHelper resumeConversionHelper;
 
+	/** The hibernate template. */
 	private HibernateTemplate hibernateTemplate;
 
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactory the new hibernate template
+	 */
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
@@ -166,6 +184,11 @@ public class ResumeDaoImpl implements ResumeDao {
 		return true;
 	}
 
+	/**
+	 * Resume visibility public to private.
+	 *
+	 * @param resumeDTO the resume dto
+	 */
 	private void resumeVisibilityPublicToPrivate(ResumeDTO resumeDTO) {
 		if (MMJBCommonConstants.VISIBILITY_PUBLIC.equals(resumeDTO
 				.getResumeVisibility())) {
@@ -211,6 +234,9 @@ public class ResumeDaoImpl implements ResumeDao {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.dao.ResumeDao#createResume(com.advanceweb.afc.jb.common.ResumeDTO)
+	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public ResumeDTO createResume(ResumeDTO resumeDTO) {
@@ -230,12 +256,15 @@ public class ResumeDaoImpl implements ResumeDao {
 			newResumeDTO = resumeConversionHelper
 					.transformResUploadResumeToResumeDTO(resUploadResume, null);
 		} catch (HibernateException e) {
-			LOGGER.info("Error while Creating Resume", e);
+			LOGGER.error("Error while Creating Resume", e);
 		}
 		return newResumeDTO;
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.dao.ResumeDao#createResumeCopyPaste(com.advanceweb.afc.jb.common.ResumeDTO)
+	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public boolean createResumeCopyPaste(ResumeDTO resumeDTO) {
@@ -256,16 +285,22 @@ public class ResumeDaoImpl implements ResumeDao {
 			result = true;
 		} catch (HibernateException e) {
 			result = false;
-			LOGGER.info("Error while Copy Paste", e);
+			LOGGER.error("Error while Copy Paste", e);
 		}
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.dao.ResumeDao#updateResumeCopyPaste(com.advanceweb.afc.jb.common.ResumeDTO)
+	 */
 	@Override
 	public boolean updateResumeCopyPaste(ResumeDTO resumeDTO) {
 		return updateResume(resumeDTO);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.dao.ResumeDao#createResumeUpload(com.advanceweb.afc.jb.common.ResumeDTO)
+	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public ResumeDTO createResumeUpload(ResumeDTO resumeDTO) {
@@ -297,18 +332,24 @@ public class ResumeDaoImpl implements ResumeDao {
 					.transformResUploadResumeToResumeDTO(resUploadResume,
 							resumeProfileList);
 		} catch (HibernateException e) {
-			LOGGER.info("Error while Resume Upload", e);
+			LOGGER.error("Error while Resume Upload", e);
 		}
 		resDTO.setFilePath(resUploadResume.getFilePath());
 		return resDTO;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.dao.ResumeDao#updateResumeUpload(com.advanceweb.afc.jb.common.ResumeDTO)
+	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public boolean updateResumeUpload(ResumeDTO resumeDTO) {
 		return updateResume(resumeDTO);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.dao.ResumeDao#createResumeBuilder(com.advanceweb.afc.jb.common.ResumeDTO)
+	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public boolean createResumeBuilder(ResumeDTO resumeDTO) {
@@ -346,7 +387,7 @@ public class ResumeDaoImpl implements ResumeDao {
 			hibernateTemplate.merge(builderResume);
 			return true;
 		} catch (HibernateException e) {
-			LOGGER.info("Error in create Resume Builder", e);
+			LOGGER.error("Error in create Resume Builder", e);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -354,6 +395,9 @@ public class ResumeDaoImpl implements ResumeDao {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.dao.ResumeDao#addWorkExp(java.util.List)
+	 */
 	@Override
 	public boolean addWorkExp(List<WorkExpDTO> listWorkExp) {
 		// Saving only Work Experience
@@ -362,11 +406,14 @@ public class ResumeDaoImpl implements ResumeDao {
 		try {
 			hibernateTemplate.saveOrUpdateAll(listBuilderWorkExp);
 		} catch (HibernateException e) {
-			LOGGER.info("Error while adding work experience", e);
+			LOGGER.error("Error while adding work experience", e);
 		}
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.dao.ResumeDao#addReference(java.util.List)
+	 */
 	@Override
 	public boolean addReference(List<ReferenceDTO> listRefExp) {
 
@@ -376,11 +423,14 @@ public class ResumeDaoImpl implements ResumeDao {
 		try {
 			hibernateTemplate.saveOrUpdateAll(listBuilderRef);
 		} catch (HibernateException e) {
-			LOGGER.info("Error while adding reference", e);
+			LOGGER.error("Error while adding reference", e);
 		}
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.dao.ResumeDao#addEducation(java.util.List)
+	 */
 	@Override
 	public boolean addEducation(List<EducationDTO> listEduExp) {
 		// Saving only Work Experience
@@ -389,11 +439,14 @@ public class ResumeDaoImpl implements ResumeDao {
 		try {
 			hibernateTemplate.saveOrUpdateAll(listBuilderEdu);
 		} catch (HibernateException e) {
-			LOGGER.info("Error while adding education", e);
+			LOGGER.error("Error while adding education", e);
 		}
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.dao.ResumeDao#addLanguage(java.util.List)
+	 */
 	@Override
 	public boolean addLanguage(List<LanguageDTO> listLangExp) {
 		// Saving only Work Experience
@@ -402,11 +455,14 @@ public class ResumeDaoImpl implements ResumeDao {
 		try {
 			// hibernateTemplate.saveOrUpdateAll(builderWorkExp);
 		} catch (HibernateException e) {
-			LOGGER.info("Error while adding language", e);
+			LOGGER.error("Error while adding language", e);
 		}
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.dao.ResumeDao#addCertifications(java.util.List)
+	 */
 	@Override
 	public boolean addCertifications(List<CertificationDTO> listLangExp) {
 		// Saving only Work Experience
@@ -415,7 +471,7 @@ public class ResumeDaoImpl implements ResumeDao {
 		try {
 			hibernateTemplate.saveOrUpdateAll(listBuilderCerts);
 		} catch (HibernateException e) {
-			LOGGER.info("Error while adding certifications", e);
+			LOGGER.error("Error while adding certifications", e);
 		}
 		return true;
 	}
@@ -439,6 +495,9 @@ public class ResumeDaoImpl implements ResumeDao {
 		return editResume(resUploadResume.getUploadResumeId());
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.dao.ResumeDao#findResumeCount(int)
+	 */
 	@Override
 	public int findResumeCount(int userId) {
 		return DataAccessUtils.intResult(hibernateTemplate
@@ -446,6 +505,9 @@ public class ResumeDaoImpl implements ResumeDao {
 						+ userId + " and deleteDt is NULL"));
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.dao.ResumeDao#checkDuplicateResumeName(java.lang.String, java.lang.String, int)
+	 */
 	@Override
 	public boolean checkDuplicateResumeName(String resumeId, String resumeName,
 			int userId) {
@@ -541,7 +603,7 @@ public class ResumeDaoImpl implements ResumeDao {
 			hibernateTemplate.saveOrUpdateAll(admFolderResumeList);
 
 		} catch (HibernateException e) {
-			LOGGER.info("Error occurred while saving the resume details into Adm_folder_resume table.");
+			LOGGER.error("Error occurred while saving the resume details into Adm_folder_resume table.",e);
 			status = false;
 		}
 

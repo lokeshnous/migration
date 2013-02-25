@@ -72,7 +72,7 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 				session.invalidate();
 			}
 			response.sendRedirect(request.getContextPath()
-					+ "/healthcarejobs/index.html");
+					+ "/healthcare/index.html");
 		} else {
 
 			if (authentication.getAuthorities().contains(
@@ -240,26 +240,45 @@ import com.advanceweb.afc.jb.user.UserService;
 
 public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 
+	/** The job seeker job detail service. */
 	@Autowired
 	private JobSeekerJobDetailService jobSeekerJobDetailService;
+	
+	/** The user service. */
 	@Autowired
 	private UserService userService;
+	
+	/** The email service. */
 	@Autowired
 	private MMEmailService emailService;
+	
+	/** The advance web address. */
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
+	
+	/** The dothtml extention. */
 	@Value("${dothtmlExtention}")
 	private String dothtmlExtention;
+	
+	/** The navigation path. */
 	@Value("${navigationPath}")
 	private String navigationPath;
+	
+	/** The jobseeker page extention. */
 	@Value("${jobseekerPageExtention}")
 	private String jobseekerPageExtention;
+	
+	/** The email configuration. */
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
 	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger(LogoutManager.class);
 	
+	/* (non-Javadoc)
+	 * @see org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler#onLogoutSuccess(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.security.core.Authentication)
+	 */
 	@Override
 	public void onLogoutSuccess(HttpServletRequest request,
 			HttpServletResponse response, Authentication authentication)
@@ -277,7 +296,7 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 				session.invalidate();
 			}
 			response.sendRedirect(request.getContextPath()
-					+ "/healthcarejobs/index.html");
+					+ "/healthcare/index.html");
 		} else {
 
 			if (authentication.getAuthorities().contains(
@@ -315,7 +334,7 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 				/*response.sendRedirect(request.getContextPath()
 						+ "/commonLogin/login.html?page=jobSeeker");*/
 				response.sendRedirect(request.getContextPath()
-						+ "/healthcarejobs/index.html");
+						+ "/healthcare/index.html");
 			} else if (authentication.getAuthorities().contains(
 					new SimpleGrantedAuthority(
 							MMJBCommonConstants.ROLE_FACILITY))
@@ -328,7 +347,7 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 				/*response.sendRedirect(request.getContextPath()
 						+ "/commonLogin/login.html?page=employer");*/
 				response.sendRedirect(request.getContextPath()
-						+ "/healthcarejobs/index.html");
+						+ "/healthcare/index.html");
 			} else if (authentication.getAuthorities().contains(
 					new SimpleGrantedAuthority(
 							MMJBCommonConstants.ROLE_FACILITY_SYSTEM))) {
@@ -338,7 +357,7 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 				/*response.sendRedirect(request.getContextPath()
 						+ "/commonLogin/login.html?page=agency");*/
 				response.sendRedirect(request.getContextPath()
-						+ "/healthcarejobs/index.html");
+						+ "/healthcare/index.html");
 			}
 
 		}
@@ -410,6 +429,12 @@ public class LogoutManager extends SimpleUrlLogoutSuccessHandler {
 		emailDTO.setHtmlFormat(true);
 		emailService.sendEmail(emailDTO);
 	}
+	
+	/**
+	 * Delete authentication cookie.
+	 *
+	 * @return the cookie
+	 */
 	private Cookie deleteAuthenticationCookie(){
 		Cookie cookie=new Cookie(".ASPXAUTH","Deleted cookie");
 			cookie.setDomain(".advanceweb.com");

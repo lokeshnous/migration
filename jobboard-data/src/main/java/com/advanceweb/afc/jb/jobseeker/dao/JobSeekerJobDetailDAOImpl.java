@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.jobseeker.dao;
 
 import java.util.ArrayList;
@@ -29,10 +36,22 @@ import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerJobDetailConversionHelper
 @Repository("jobSeekerJobDetailDAO")
 public class JobSeekerJobDetailDAOImpl implements JobSeekerJobDetailDAO {
 
+	/** The hibernate template. */
 	private HibernateTemplate hibernateTemplate;
+	
+	/** The job seeker job detail conversion helper. */
 	@Autowired
 	private JobSeekerJobDetailConversionHelper jobSeekerJobDetailConversionHelper;
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger(JobSeekerJobDetailDAOImpl.class);
+	
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactoryMerionTracker the session factory merion tracker
+	 * @param sessionFactory the session factory
+	 */
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
@@ -182,6 +201,10 @@ public class JobSeekerJobDetailDAOImpl implements JobSeekerJobDetailDAO {
 		return empViews;
 
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.jobseeker.dao.JobSeekerJobDetailDAO#getAppliedJobsByCriteria(int, java.lang.String, java.lang.String)
+	 */
 	@SuppressWarnings("unchecked")
 	@Transactional(readOnly = true)
 	@Override
@@ -189,7 +212,7 @@ public class JobSeekerJobDetailDAOImpl implements JobSeekerJobDetailDAO {
 		List<AdmSaveJob> jobList = null;
 		List<AppliedJobDTO> appliedJobDTOList = null;
 		try {
-			LOGGER.info("Login Date Time: "+startDate+"  LogOut Date Time : "+endDate);
+			LOGGER.debug("Login Date Time: "+startDate+"  LogOut Date Time : "+endDate);
 			if (jobSeekerId != 0) {
 				 jobList = (List<AdmSaveJob>) hibernateTemplate
 						.find("from AdmSaveJob asj where asj.userId=? and  (asj.appliedDt > DATE_FORMAT('"+startDate+"', '%Y-%m-%d %T') and asj.appliedDt < DATE_FORMAT('"+endDate+"', '%Y-%m-%d %T')) and asj.deleteDt is NULL",

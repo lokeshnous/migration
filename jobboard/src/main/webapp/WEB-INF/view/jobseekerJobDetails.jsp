@@ -90,8 +90,8 @@
 							<h2 class="sectionSubHeader MarginBottom10">${jobDetail.companyNameDisp}</h2>
 						</div>
 						<div class="JobDetailHeaderRight">
-							<c:if test="${isFeatureEmployer}">
-	<a	href="<%=request.getContextPath()%>/healthcarejobs/featuredemployerdetails.html?id=${jobDetail.facilityId}"><img
+							<c:if test="${(jobDetail.blindAd == '0') && isFeatureEmployer}">
+	<a	href="<%=request.getContextPath()%>/healthcare/featuredemployerdetails.html?id=${jobDetail.facilityId}"><img
 									onclick="trackClick(${jobDetail.jobId},'6');"
 									src="<%=request.getContextPath()%>/resources/images/FeaturedEmp.png"
 									alt="Featured Employer" width="164" height="23"></img> </a>
@@ -110,7 +110,7 @@
 										<span class="specs">Country:</span>&nbsp;&nbsp;${jobDetail.country}&nbsp;&nbsp;|&nbsp;&nbsp;
 					</c:if>
 									<c:if test="${jobDetail.hidePostcode == 0 && jobDetail.city != null}">
-										<span class="specs">Zip Code:</span>&nbsp;&nbsp;${jobDetail.postCode}&nbsp;&nbsp;|&nbsp;&nbsp;
+										<span class="specs">ZIP Code:</span>&nbsp;&nbsp;${jobDetail.postCode}&nbsp;&nbsp;|&nbsp;&nbsp;
 					</c:if>
 									<span class="specs">Job ID Number:</span>&nbsp;&nbsp;${jobDetail.jobNumber}
 									</p>
@@ -120,15 +120,15 @@
 									<p class="jobDetailsIntroReview">
 									<c:if test="${not empty jobDetail.url and not empty jobDetail.urlDisplay and jobDetail.urlDisplay!='None' and jobDetail.url!='None'}">
 									<br/>
-										<span class="specs">Web Site:</span>&nbsp;&nbsp;<a class="color2" target="_blank" onclick="trackClick(${jobDetail.jobId},'7');" href="${jobDetail.url}">${jobDetail.urlDisplay}</a>&nbsp;&nbsp;
+										<span class="specs">WEBSITE:</span>&nbsp;&nbsp;<a class="color2" target="_blank" onclick="trackClick(${jobDetail.jobId},'7');" href="${jobDetail.url}">${jobDetail.urlDisplay}</a>&nbsp;&nbsp;
 					</c:if>
 					<c:if test="${not empty jobDetail.url and  empty jobDetail.urlDisplay and jobDetail.url!='None' and fn:containsIgnoreCase(urlString, 'http')}">
 									<br/>
-										<span class="specs">Web Site:</span>&nbsp;&nbsp;<a class="color2" target="_blank" onclick="trackClick(${jobDetail.jobId},'7');" href="${jobDetail.url}">${jobDetail.url}</a>&nbsp;&nbsp;
+										<span class="specs">WEBSITE:</span>&nbsp;&nbsp;<a class="color2" target="_blank" onclick="trackClick(${jobDetail.jobId},'7');" href="${jobDetail.url}">${jobDetail.url}</a>&nbsp;&nbsp;
 					</c:if>
 					<c:if test="${not empty jobDetail.url and  empty jobDetail.urlDisplay and jobDetail.url!='None' and !fn:containsIgnoreCase(urlString, 'http')}">
 									<br/>
-										<span class="specs">Web Site:</span>&nbsp;&nbsp;<a class="color2" target="_blank" onclick="trackClick(${jobDetail.jobId},'7');" href=" http://${jobDetail.url}">${jobDetail.url}</a>&nbsp;&nbsp;
+										<span class="specs">WEBSITE:</span>&nbsp;&nbsp;<a class="color2" target="_blank" onclick="trackClick(${jobDetail.jobId},'7');" href=" http://${jobDetail.url}">${jobDetail.url}</a>&nbsp;&nbsp;
 					</c:if>
 					<%-- <c:if test="${empty jobDetail.url and not empty jobDetail.urlDisplay and jobDetail.urlDisplay!='None'}">
 									<br/>
@@ -155,7 +155,7 @@
 											<div class="email cursor"></div>
 											</a>
 									 <div class="ShareText">|&nbsp;&nbsp;Share:&nbsp;</div>
-											<a name="fb_share" class="fbook" onclick="trackClick(${jobDetail.jobId},'9');" href="http://www.facebook.com/sharer.php?u=${basePath}/search/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitleEncode, 
+											<a class="fbook" onclick="trackClick(${jobDetail.jobId},'9');" href="http://www.facebook.com/sharer.php?u=${basePath}/search/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitleEncode, 
                                 					' ', '-'))}.html" target="_blank"></a>
 									 		<a onclick="trackClick(${jobDetail.jobId},'9');" href="https://www.linkedin.com/cws/share?url=${basePath}/search/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitleEncode, 
                                 					' ', '-'))}.html" target="_blank"><div class="linkedIn"></div></a>
@@ -214,6 +214,8 @@
 									<span>Job Summary:</span>
 								</h3>
 								<div id="descriptionText" class="article">${jobDetail.adText}</div>
+								<br />
+								<img src="${jobDetail.trackingPixel}" />
 								<div class="jobDetailsIntroOptionsTborder">
 									<div class="jobDetailsIntroOptions">
 										<div class="rowEvenTB10Spacing">
@@ -222,7 +224,7 @@
 											<div class="email cursor"></div></a>
 											<div class="ShareText">|&nbsp;&nbsp;Share:&nbsp;</div>
 											
-											<a name="fb_share" class="fbook" onclick="trackClick(${jobDetail.jobId},'9');" href="http://www.facebook.com/sharer.php?u=${basePath}/search/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitleEncode, 
+											<a class="fbook" onclick="trackClick(${jobDetail.jobId},'9');" href="http://www.facebook.com/sharer.php?u=${basePath}/search/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitleEncode, 
                                 					' ', '-'))}.html" target="_blank"></a>
 									 		<a onclick="trackClick(${jobDetail.jobId},'9');" href="https://www.linkedin.com/cws/share?url=${basePath}/search/jobview/${jobDetail.jobId}/${fn:toLowerCase(fn:replace(jobDetail.jobTitleEncode, 
                                 					' ', '-'))}.html" target="_blank"><div class="linkedIn"></div></a>

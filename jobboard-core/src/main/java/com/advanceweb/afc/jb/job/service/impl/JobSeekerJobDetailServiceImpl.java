@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.job.service.impl;
 
 import java.util.List;
@@ -21,6 +28,7 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class JobSeekerJobDetailServiceImpl implements JobSeekerJobDetailService {
 
+	/** The job seeker job detail dao. */
 	@Autowired
 	private JobSeekerJobDetailDAO jobSeekerJobDetailDAO;
 	/**

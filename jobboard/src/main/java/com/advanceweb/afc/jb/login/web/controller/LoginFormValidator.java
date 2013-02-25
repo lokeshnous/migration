@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.login.web.controller;
 
 import java.util.regex.Matcher;
@@ -21,10 +28,21 @@ import com.advanceweb.afc.jb.jobseeker.web.controller.JobSeekerRegistrationForm;
 @Repository("loginValidator")
 public class LoginFormValidator {
 
+	/** The pattern. */
 	private Pattern pattern;
+	
+	/** The matcher. */
 	private Matcher matcher;
+	
+	/** The Constant NOTEMPTY. */
 	private static final String NOTEMPTY = "NotEmpty";
 
+	/**
+	 * Supports.
+	 *
+	 * @param form the form
+	 * @return true, if successful
+	 */
 	public boolean supports(Class<?> form) {
 		return JobSeekerRegistrationForm.class.isAssignableFrom(form);
 	}
@@ -95,7 +113,7 @@ public class LoginFormValidator {
 				&& !validatePasswordPattern(loginForm.getPassword())) {
 
 			errors.rejectValue("password", NOTEMPTY,
-					"(Password should contain 8-20 characters, including at least 1 number)");
+					"(Invalid password)");
 
 		}
 	}

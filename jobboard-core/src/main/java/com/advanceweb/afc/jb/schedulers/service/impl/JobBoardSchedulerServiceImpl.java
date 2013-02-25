@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.schedulers.service.impl;
 
 /**
@@ -36,6 +43,9 @@ public class JobBoardSchedulerServiceImpl implements JobBoardSchedulerService {
 	 */
 	private List<JobWorker> jobWorkers;
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.schedulers.service.JobBoardSchedulerService#execute()
+	 */
 	@Override
 	public void execute() {
 		LOGGER.info("Scheduler started....");

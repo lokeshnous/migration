@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.agency.web.controller;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +83,13 @@ public class TransformAgencyRegistration {
 
 
 	
+	/**
+	 * Transform dto to profile attrib form.
+	 *
+	 * @param registerDTO the register dto
+	 * @param userDTO the user dto
+	 * @return the list
+	 */
 	public List<AgencyProfileAttribForm> transformDTOToProfileAttribForm(
 			AgencyProfileDTO registerDTO, UserDTO userDTO){
 		

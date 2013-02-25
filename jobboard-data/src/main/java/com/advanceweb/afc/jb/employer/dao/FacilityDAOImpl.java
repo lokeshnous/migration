@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.dao;
 
 /**
@@ -41,21 +48,34 @@ import com.advanceweb.afc.jb.user.dao.UserDao;
 @Repository("facilityDAO")
 public class FacilityDAOImpl implements FacilityDAO {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(FacilityDAOImpl.class);
 
+	/** The hibernate template. */
 	private HibernateTemplate hibernateTemplate;
 
+	/** The hibernate template tracker. */
 	private HibernateTemplate hibernateTemplateTracker;
 	
+	/** The conversion helper. */
 	@Autowired
 	private EmpConversionHelper conversionHelper;
 	
+	/** The facility conversion helper. */
 	@Autowired
 	private FacilityConversionHelper facilityConversionHelper;
 	
+	/** The user dao. */
 	@Autowired
 	private UserDao userDAO;
+	
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactoryMerionTracker the session factory merion tracker
+	 * @param sessionFactory the session factory
+	 */
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
@@ -394,6 +414,10 @@ public class FacilityDAOImpl implements FacilityDAO {
 		return conversionHelper.transformFacilityToDropDownDTO(facilityList,
 				admFacility);
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.FacilityDAO#getfacilityUserId(int)
+	 */
 	@SuppressWarnings("unchecked")
 	public int getfacilityUserId(int facilityId) {
 		FacilityDTO facilityDto = getParentFacility(facilityId);

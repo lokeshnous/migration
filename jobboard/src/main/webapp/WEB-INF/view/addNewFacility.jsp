@@ -219,7 +219,7 @@ function validateNumber(event) {
 						<span class="required">(Required)</span>
 					</div>
 					<div class="rowEvenNewSpacing">
-						<span class="lableText4">Zip Code:</span>
+						<span class="lableText4">ZIP Code:</span>
 						<form:input  path="zipCode" maxlength="5"
 							class="job_seeker_password" id="zipCode" />
 						<span class="required">(Required)</span>

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.user.web.controller;
 
 import java.util.ArrayList;
@@ -74,6 +81,12 @@ public class TransferUserAlert {
 		return selSubList;
 	}
 	
+	/**
+	 * Jb owner list to drop down dto.
+	 *
+	 * @param jbOwnerList the jb owner list
+	 * @return the list
+	 */
 	public List<DropDownDTO> jbOwnerListTODropDownDTO(List<ManageAccessPermissionDTO> jbOwnerList){
 		List<DropDownDTO> selOwnerList = new ArrayList<DropDownDTO>();
 		for(ManageAccessPermissionDTO permissionDTO : jbOwnerList){

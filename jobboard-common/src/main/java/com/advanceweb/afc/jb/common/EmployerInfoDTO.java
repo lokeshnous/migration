@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common;
 
 import java.io.Serializable;
@@ -11,11 +18,22 @@ import java.io.Serializable;
 public class EmployerInfoDTO implements Serializable {
 
 	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** The user id. */
 	private int userId;
+	
+	/** The facility id. */
 	private int facilityId;
+	
+	/** The role id. */
 	private int roleId;
+	
+	/** The customer no. */
 	private String customerNo;
+	
+	/** The customer name. */
 	private String customerName;
 	
 	
@@ -55,15 +73,39 @@ public class EmployerInfoDTO implements Serializable {
 	public void setCustomerNamel(String customerName) {
 		this.customerName = customerName;
 	}
+	
+	/**
+	 * Gets the facility id.
+	 *
+	 * @return the facility id
+	 */
 	public int getFacilityId() {
 		return facilityId;
 	}
+	
+	/**
+	 * Sets the facility id.
+	 *
+	 * @param facilityId the new facility id
+	 */
 	public void setFacilityId(int facilityId) {
 		this.facilityId = facilityId;
 	}
+	
+	/**
+	 * Gets the role id.
+	 *
+	 * @return the role id
+	 */
 	public int getRoleId() {
 		return roleId;
 	}
+	
+	/**
+	 * Sets the role id.
+	 *
+	 * @param roleId the new role id
+	 */
 	public void setRoleId(int roleId) {
 		this.roleId = roleId;
 	}

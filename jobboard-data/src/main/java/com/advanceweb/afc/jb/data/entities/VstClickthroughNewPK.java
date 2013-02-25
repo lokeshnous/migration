@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
@@ -18,44 +25,81 @@ import javax.persistence.TemporalType;
 @Embeddable
 public class VstClickthroughNewPK implements Serializable {
 	// Default serial version id, required for serializable classes.
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	// This column contains the job_id
+	/** The key id. */
 	@Column(name = "key_id")
 	private int keyId;
 
+	/** The clickthrough dt. */
 	@Temporal(TemporalType.DATE)
 	@Column(name = "clickthrough_dt")
 	private Date clickthroughDt;
 
+	/** The vst clickthrough type. */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "clickthrough_type_id", referencedColumnName = "clickthrough_type_id")
 	private VstClickthroughType vstClickthroughType;
 
+	/**
+	 * Gets the key id.
+	 *
+	 * @return the key id
+	 */
 	public int getKeyId() {
 		return keyId;
 	}
 
+	/**
+	 * Sets the key id.
+	 *
+	 * @param keyId the new key id
+	 */
 	public void setKeyId(int keyId) {
 		this.keyId = keyId;
 	}
 
+	/**
+	 * Gets the clickthrough dt.
+	 *
+	 * @return the clickthrough dt
+	 */
 	public Date getClickthroughDt() {
 		return clickthroughDt;
 	}
 
+	/**
+	 * Sets the clickthrough dt.
+	 *
+	 * @param clickthroughDt the new clickthrough dt
+	 */
 	public void setClickthroughDt(Date clickthroughDt) {
 		this.clickthroughDt = clickthroughDt;
 	}
 
+	/**
+	 * Gets the vst clickthrough type.
+	 *
+	 * @return the vst clickthrough type
+	 */
 	public VstClickthroughType getVstClickthroughType() {
 		return vstClickthroughType;
 	}
 
+	/**
+	 * Sets the vst clickthrough type.
+	 *
+	 * @param vstClickthroughType the new vst clickthrough type
+	 */
 	public void setVstClickthroughType(VstClickthroughType vstClickthroughType) {
 		this.vstClickthroughType = vstClickthroughType;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -70,6 +114,9 @@ public class VstClickthroughNewPK implements Serializable {
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

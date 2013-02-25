@@ -183,6 +183,7 @@ function validateNumber(event) {
 						location.href = href;
 					}
 					if(data.success != undefined){
+						/* alert('You are an existing Advance application user! Your existing credentials are used to register. Please use your old credentials to access Job Board application.'); */
 						window.location.href = "${pageContext.request.contextPath}/jobseekerregistration/authenticateJs.html";
 					}
 				 },error : function(data) {
@@ -351,7 +352,7 @@ function validateNumber(event) {
 		</script>
 <script type="text/javascript">
 		    function cancelProcess(){
-		    	window.location.href = '${pageContext.request.contextPath}/healthcarejobs/index.html';
+		    	window.location.href = '${pageContext.request.contextPath}/healthcare/index.html';
 		    }		
 		</script>
 
@@ -410,6 +411,7 @@ function validateNumber(event) {
 						<form:form method="Post" action="saveJobSeekerProfile.html"
 							commandName="registerForm" enctype="multipart/form-data" id="registerFormId">
 							<form:hidden path="clickBack" />
+							<form:hidden path="advPassUser" />
 							<c:forEach items="${registerForm.listProfAttribForms}"
 								var="profAttrib" varStatus="status">
 
@@ -462,7 +464,7 @@ function validateNumber(event) {
 								</c:if>
 							    <c:if test="${profAttrib.strLabelName == 'Zip Code'}">
 									<div class="rowEvenNewSpacing">
-										<span class="lableText3">Zip Code:</span>
+										<span class="lableText3">ZIP Code:</span>
 
 										<form:input
 											path="listProfAttribForms[${status.index}].strLabelValue"
@@ -517,10 +519,10 @@ function validateNumber(event) {
 										<form:input
 											path="listProfAttribForms[${status.index}].strLabelValue"
 											id="phone" class="job_seeker_password textBox350" />
-										<div class="toolTip marginTop5 marginLeft5">
+										<!-- <div class="toolTip marginTop5 marginLeft5">
 											<span class="classic">Valid format for Phone number is
 												(xxx)xxx-xxxx</span>
-										</div>
+										</div> -->
 										<span class="required"></span>
 									</div>
 								</c:if>
@@ -633,7 +635,7 @@ function validateNumber(event) {
 												 /> --%>
 												 <%-- onchange="modifyPrint('${listpublicationprint.size()}')" --%>
 												 <label
-											for="checkbox"><strong>Print-Magazine</strong></label>
+											for="checkbox"><strong>Print Magazine</strong></label>
 											<%-- <c:if test="${!listpublicationprint.isEmpty()}">
 												<c:forEach items="${listpublicationprint}"
 													var="subscriptionsprint" varStatus="status">
@@ -652,7 +654,7 @@ function validateNumber(event) {
 												id="digCheckboxSub" /> --%>
 												<%-- onchange="modifyDig('${listpublicationdigital.size()}')"  --%>
 												<label
-											for="checkbox"><strong>Digital-Magazine</strong></label>
+											for="checkbox"><strong>Digital Magazine</strong></label>
 											<%-- <c:if test="${!listpublicationdigital.isEmpty()}">
 												<c:forEach items="${listpublicationdigital}"
 													var="subscriptionsprint" varStatus="status">
@@ -683,9 +685,9 @@ function validateNumber(event) {
 											</c:if> --%></td>
 
 										<td width="130" valign="top" class="Padding0"><%-- <form:checkbox path="mailCheckbox"
-												id="mailCheckboxSub" /> --%><label class="floatLeft"   for="checkbox"><strong>E-mails</strong></label>
+												id="mailCheckboxSub" /> --%><label class="floatLeft"   for="checkbox"><strong>Emails</strong></label>
 												<div class="toolTip marginLeft5">
-											<span class="classic">Select this option if you want us to send you emails regarding featured career opportunities</span>
+											<span class="classic">Select this option if you want us to send you emails regarding featured career opportunities.</span>
 										</div></td>									
 									</tr>
 									
@@ -729,7 +731,7 @@ function validateNumber(event) {
 										class="white cursor" name="Cancel" />
 								</c:if>
 								<%-- <a
-									href="<%=request.getContextPath()%>/healthcarejobs/index.html"
+									href="<%=request.getContextPath()%>/healthcare/index.html"
 									class="btn_sm orange cancelacount">Cancel</a> --%>
 								<!-- <input type="submit" value="Cancel" class="orange" name="Cancel"/>  -->
 							</div>
@@ -744,8 +746,8 @@ function validateNumber(event) {
 						<div id="adPageRightMiddle">${adPageRightMiddle}</div>
 
 						<div class="follow_us">
-							<h2>Follow Us</h2>
-							<p>Stay connected to the latest jobs.</p>
+							<h2>Stay Connected</h2>
+							<!-- <p>Stay connected to the latest jobs.</p> -->
 							<a href="${followuplinkfacebook}" target="_blank"><span
 								class="social facebook_link">Facebook</span></a> <a
 								href="${followuplinktwitter}" target="_blank"><span

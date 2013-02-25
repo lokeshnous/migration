@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.search.service.impl;
 
 import java.util.List;
@@ -32,9 +39,11 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 public class JobSearchServiceImpl implements JobSearchService {
 
+	/** The job search delegate. */
 	@Autowired
 	private JobSearchDelegate jobSearchDelegate;
 
+	/** The job search dao. */
 	@Autowired
 	private JobSearchDAO jobSearchDAO;
 
@@ -151,6 +160,9 @@ public class JobSearchServiceImpl implements JobSearchService {
 		jobSearchDAO.clearRecentSearches(userId, recentSearchsLimit);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.search.service.JobSearchService#inserSessinfo(java.lang.String, int)
+	 */
 	@Override
 	public void inserSessinfo(String session_id, int userId) {
 		// TODO Auto-generated method stub

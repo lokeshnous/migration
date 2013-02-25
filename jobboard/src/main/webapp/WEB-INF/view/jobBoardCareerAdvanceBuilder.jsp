@@ -3,7 +3,7 @@
             <div class="BoxLeftStyle marginTop50"><img alt="img" src="<%=request.getContextPath() %>/resources/images/triangle.png" /></div>
             <div class="RowMidContantArea MinHeight600">
                       <div class="MidContantAreaHead">
-                <h1 class="TextColor03">Build Your Online Resume</h1>
+                <h1 class="TextColor03">Build Versatile Online Resumes with Ease</h1>
               </div>
                  <div class="row">
                  <div class="BuildImgBox"><img width="170" height="150" alt="img" src="<%=request.getContextPath() %>/resources/images/careerResume.jpg"></div>

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.math.BigInteger;
@@ -81,6 +88,13 @@ public class TransformEmployerRegistration {
 		return dto;
 	}
 
+	/**
+	 * Transform dto to profile attrib form.
+	 *
+	 * @param registerDTO the register dto
+	 * @param userDTO the user dto
+	 * @return the list
+	 */
 	public List<EmployerProfileAttribForm> transformDTOToProfileAttribForm(
 			EmployerProfileDTO registerDTO, UserDTO userDTO) {
 
@@ -110,6 +124,12 @@ public class TransformEmployerRegistration {
 		return listForms;
 	}
 
+	/**
+	 * Sets the values to form.
+	 *
+	 * @param userDTO the user dto
+	 * @param form the form
+	 */
 	private void setValuesToForm(UserDTO userDTO, EmployerProfileAttribForm form) {
 		if (form.getStrLabelName().equals(
 				MMJBCommonConstants.FIRST_NAME)) {
@@ -187,6 +207,12 @@ public class TransformEmployerRegistration {
 		return dtoList;
 	}
 
+	/**
+	 * Transform account profile form to dto.
+	 *
+	 * @param form the form
+	 * @return the account profile dto
+	 */
 	public AccountProfileDTO transformAccountProfileFormToDto(
 			EmployeeAccountForm form) {
 		AccountProfileDTO dto = new AccountProfileDTO();
@@ -206,6 +232,12 @@ public class TransformEmployerRegistration {
 		return dto;
 	}
 
+	/**
+	 * Transform billing profile form to dto.
+	 *
+	 * @param form the form
+	 * @return the account profile dto
+	 */
 	public AccountProfileDTO transformBillingProfileFormToDto(
 			EmployeeAccountForm form) {
 		AccountProfileDTO dto = new AccountProfileDTO();
@@ -273,6 +305,12 @@ public class TransformEmployerRegistration {
 		return accessPermissionDTO;
 	}
 
+	/**
+	 * Transform employer form to dto.
+	 *
+	 * @param form the form
+	 * @return the account profile dto
+	 */
 	public AccountProfileDTO transformEmployerFormToDto(
 			EmployerRegistrationForm form) {
 		AccountProfileDTO dto = new AccountProfileDTO();
@@ -291,6 +329,12 @@ public class TransformEmployerRegistration {
 	}
 	
 	
+	/**
+	 * Transform to dto.
+	 *
+	 * @param form the form
+	 * @return the account profile dto
+	 */
 	public AccountProfileDTO transformToDto(
 			EmployerRegistrationForm form) {
 		AccountProfileDTO dto = new AccountProfileDTO();

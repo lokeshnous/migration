@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.resume.web.controller;
 
 import java.io.BufferedInputStream;
@@ -93,65 +100,90 @@ import com.advanceweb.common.client.ClientContext;
 @SessionAttributes("createResume")
 public class ResumeController extends AbstractController {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(ResumeController.class);
 
+	/** The Constant CREATE_RESUME. */
 	private static final String CREATE_RESUME = "createResume";
 
+	/** The Constant RESUME_ID. */
 	private static final String RESUME_ID = "resumeId";
 
+	/** The Constant EMP_TYPE_LIST. */
 	private static final String EMP_TYPE_LIST = "empTypeList";
 
+	/** The Constant PHONE_TYPE_LIST. */
 	private static final String PHONE_TYPE_LIST = "phoneTypeList";
 
+	/** The Constant CAREER_LVL_LIST. */
 	private static final String CAREER_LVL_LIST = "careerLvlList";
 
+	/** The Constant AN_SALARY_LIST. */
 	private static final String AN_SALARY_LIST = "annualSalarylList";
 
+	/** The Constant LANGUAGE_LIST. */
 	private static final String LANGUAGE_LIST = "languagelList";
 
+	/** The Constant PROFIENCY_LIST. */
 	private static final String PROFIENCY_LIST = "langProficiencylList";
 
+	/** The Constant EDU_DEGREE_LIST. */
 	private static final String EDU_DEGREE_LIST = "eduDegreeList";
 
+	/** The Constant COUNTRY_LIST. */
 	private static final String COUNTRY_LIST = "countryList";
 
+	/** The Constant STATE_LIST. */
 	private static final String STATE_LIST = "stateList";
 
+	/** The Constant CREATE_RES_BUILDER. */
 	private static final String CREATE_RES_BUILDER = "createResumeBuilder";
 
+	/** The Constant JS_REDIRECT_URL. */
 	private static final String JS_REDIRECT_URL = "redirect:/jobSeeker/jobSeekerDashBoard.html";
 
+	/** The resume service. */
 	@Autowired
 	private ResumeService resumeService;
 
+	/** The trans create resume. */
 	@Autowired
 	private TransformCreateResume transCreateResume;
 
+	/** The ad service. */
 	@Autowired
 	private AdService adService;
 
+	/** The transform job seeker registration. */
 	@Autowired
 	private TransformJobSeekerRegistration transformJobSeekerRegistration;
 
+	/** The populate dropdowns service. */
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
 
+	/** The resume validator. */
 	@Autowired
 	private ResumeValidator resumeValidator;
 
+	/** The basedirectorypath upload. */
 	private @Value("${basedirectorypathUpload}")
 	String basedirectorypathUpload;
 
+	/** The resume warning msg. */
 	private @Value("${resumeWarningMsg}")
 	String resumeWarningMsg;
 
+	/** The resume duplicate. */
 	private @Value("${resumeDuplicate}")
 	String resumeDuplicate;
 
+	/** The resume delete success. */
 	private @Value("${resumeDeleteSuccess}")
 	String resumeDeleteSuccess;
 
+	/** The resume delete failure. */
 	private @Value("${resumeDeleteFailure}")
 	String resumeDeleteFailure;
 	
@@ -263,7 +295,7 @@ public class ResumeController extends AbstractController {
 	 * @return model
 	 */
 	@RequestMapping(value = "/editResume", method = RequestMethod.GET)
-	public ModelAndView editResume(@RequestParam(RESUME_ID) int resumeId) {
+	public ModelAndView editResume(@RequestParam(RESUME_ID) int resumeId,HttpServletRequest request) {
 		ResumeDTO resumeDTO = resumeService.editResume(resumeId);
 
 		CreateResume createResume = new CreateResume();
@@ -277,7 +309,7 @@ public class ResumeController extends AbstractController {
 			}
 		model.addObject("blockedCompanies", blockedCompanies);
 		model.addObject(CREATE_RESUME, createResume);
-
+		request.setAttribute("resVisibility", createResume.getResumeVisibility());
 		
 		if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(resumeDTO
 				.getResumeType())) {
@@ -766,8 +798,8 @@ public class ResumeController extends AbstractController {
 						resumeDTO.setFilePath(filePath);
 					}
 				}
-			} catch (Exception e) {
-				LOGGER.error(e);
+			} catch (Exception jbex) {
+				LOGGER.error("Error Occured While updating resume" + jbex);
 			}
 
 			session.setAttribute("uploadStatus", false);
@@ -988,6 +1020,12 @@ public class ResumeController extends AbstractController {
 
 	}
 
+	/**
+	 * Preview resume builder.
+	 *
+	 * @param createResume the create resume
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/saveResumeBuilder", method = RequestMethod.POST, params = "Preview")
 	public ModelAndView previewResumeBuilder(CreateResume createResume) {
 		ModelAndView model = new ModelAndView();
@@ -1004,6 +1042,14 @@ public class ResumeController extends AbstractController {
 
 	}
 
+	/**
+	 * Back to resume builder.
+	 *
+	 * @param createResume the create resume
+	 * @param request the request
+	 * @param session the session
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/saveResumeBuilder", method = RequestMethod.POST, params = "Back")
 	public ModelAndView backToResumeBuilder(CreateResume createResume,
 			HttpServletRequest request, HttpSession session) {
@@ -1018,6 +1064,14 @@ public class ResumeController extends AbstractController {
 	}
 
 	// */
+	/**
+	 * Removes the work exp.
+	 *
+	 * @param session the session
+	 * @param createResume the create resume
+	 * @param id the id
+	 * @return the int
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/removeWorkExp", method = RequestMethod.POST)
 	public int removeWorkExp(HttpSession session, CreateResume createResume,
@@ -1033,8 +1087,8 @@ public class ResumeController extends AbstractController {
 				}
 				createResume.getListWorkExpForm().remove(count);
 			}
-		} catch (Exception e) {
-			System.out.println("aaaaaaa" + e);
+		} catch (Exception jbex) {
+			LOGGER.error("Error Occured While removing work experience" + jbex);
 		}
 		return id;
 
@@ -1093,6 +1147,14 @@ public class ResumeController extends AbstractController {
 		return model;
 	}
 
+	/**
+	 * Removes the certifications.
+	 *
+	 * @param session the session
+	 * @param createResume the create resume
+	 * @param id the id
+	 * @return the int
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/removeCertifications", method = RequestMethod.POST)
 	public int removeCertifications(HttpSession session,
@@ -1111,8 +1173,8 @@ public class ResumeController extends AbstractController {
 				createResume.getListCertForm().remove(count);
 
 			}
-		} catch (Exception e) {
-			System.out.println("aaaaaaa" + e);
+		} catch (Exception jbex) {
+			LOGGER.error("Error Occured While removing certifications" + jbex);
 		}
 		return id;
 
@@ -1170,13 +1232,20 @@ public class ResumeController extends AbstractController {
 				createResume.getListEduForm().remove(count);
 
 			}
-		} catch (Exception e) {
-			System.out.println("aaaaaaa" + e);
+		} catch (Exception jbex) {
+			LOGGER.error("Error Occured While adding education" + jbex);
 		}
 		return id;
 
 	}
 
+	/**
+	 * Adds the education details.
+	 *
+	 * @param session the session
+	 * @param createResume the create resume
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/addEducationDetails", method = RequestMethod.POST)
 	public ModelAndView addEducationDetails(HttpSession session,
 			CreateResume createResume) {
@@ -1205,6 +1274,14 @@ public class ResumeController extends AbstractController {
 		return model;
 	}
 
+	/**
+	 * Removes the language.
+	 *
+	 * @param session the session
+	 * @param createResume the create resume
+	 * @param id the id
+	 * @return the int
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/removeLanguage", method = RequestMethod.POST)
 	public int removeLanguage(HttpSession session, CreateResume createResume,
@@ -1222,8 +1299,8 @@ public class ResumeController extends AbstractController {
 				createResume.getListLangForm().remove(count);
 
 			}
-		} catch (Exception e) {
-			System.out.println("aaaaaaa" + e);
+		} catch (Exception jbex) {
+			LOGGER.error("Error Occured While removing language" + jbex);
 		}
 		return id;
 	}
@@ -1273,6 +1350,14 @@ public class ResumeController extends AbstractController {
 		return model;
 	}
 
+	/**
+	 * Removes the refrences.
+	 *
+	 * @param session the session
+	 * @param createResume the create resume
+	 * @param id the id
+	 * @return the int
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/removeRefrences", method = RequestMethod.POST)
 	public int removeRefrences(HttpSession session, CreateResume createResume,
@@ -1288,8 +1373,8 @@ public class ResumeController extends AbstractController {
 				}
 				createResume.getListRefForm().remove(count);
 			}
-		} catch (Exception e) {
-			System.out.println("aaaaaaa" + e);
+		} catch (Exception jbex) {
+			LOGGER.error("Error Occured While removing reference" + jbex);
 		}
 		return id;
 	}
@@ -1355,6 +1440,14 @@ public class ResumeController extends AbstractController {
 		return model;
 	}
 
+	/**
+	 * Removes the phone numbers.
+	 *
+	 * @param session the session
+	 * @param createResume the create resume
+	 * @param id the id
+	 * @return the int
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/removePhoneNos", method = RequestMethod.POST)
 	public int removePhoneNumbers(HttpSession session,
@@ -1375,8 +1468,8 @@ public class ResumeController extends AbstractController {
 				createResume.getListPhoneDtlForm().remove(count);
 
 			}
-		} catch (Exception e) {
-			System.out.println("aaaaaaa" + e);
+		} catch (Exception jbex) {
+			LOGGER.error("Error Occured While removing phone number" + jbex);
 		}
 		return id;
 	}
@@ -1415,6 +1508,12 @@ public class ResumeController extends AbstractController {
 		return validateMsg;
 	}
 
+	/**
+	 * Populate dropdowns.
+	 *
+	 * @param model the model
+	 * @return the model and view
+	 */
 	private ModelAndView populateDropdowns(ModelAndView model) {
 
 		List<DropDownDTO> empTypeList = populateDropdownsService
@@ -1503,8 +1602,8 @@ public class ResumeController extends AbstractController {
 				model.setViewName("redirect:/jobSeekerResume/exportResume.html?fileName="
 						+ resumeDTO.getFilePath());
 				return model;
-			} catch (Exception e) {
-				LOGGER.error("Error in view resume builder", e);
+			} catch (Exception jbex) {
+				LOGGER.error("Error in view resume builder", jbex);
 			}
 		} else {
 			String resumeDesc = Jsoup.parse(createResume.getResumeText()).html();
@@ -1543,8 +1642,8 @@ public class ResumeController extends AbstractController {
 			bannerString = adService.getBanner(clientContext, size, position)
 					.getTag();
 			model.addObject(MMJBCommonConstants.ADPAGEBOTTOM, bannerString);
-		} catch (Exception e) {
-			LOGGER.error(e.getMessage(), e);
+		} catch (Exception jbex) {
+			LOGGER.error("Error Occured While populating add" + jbex);
 		}
 	}
 
@@ -1780,8 +1879,8 @@ public class ResumeController extends AbstractController {
 
 			model.setViewName("redirect:/jobSeekerResume/exportResume.html?fileName="
 					+ resumeDTO.getFilePath());
-		} catch (Exception e) {
-			LOGGER.error("Error in download resume", e);
+		} catch (Exception jbex) {
+			LOGGER.error("Error in download resume", jbex);
 		}
 		return model;
 

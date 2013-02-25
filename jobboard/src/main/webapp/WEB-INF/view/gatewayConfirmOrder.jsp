@@ -40,7 +40,7 @@
 		$("#purchaseCart input").change(function(){
 			var quantity = $(this).val();
 			if(isNaN(quantity) || quantity <= 0 || isPositiveInt(quantity)){
-				alert("Please enter quantity in numerics( > 0)");
+				alert("You have to select an item and enter a valid quantity to add it to your cart.");
 				return;
 			}
 			

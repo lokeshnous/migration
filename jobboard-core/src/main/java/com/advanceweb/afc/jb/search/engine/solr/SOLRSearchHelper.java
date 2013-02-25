@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.search.engine.solr;
 
 import java.io.IOException;
@@ -26,17 +33,32 @@ import org.springframework.stereotype.Component;
 @Component("solrSearchHelper")
 public class SOLRSearchHelper {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(SOLRSearchHelper.class);
 
+	/** The Constant SO_TIMEOUT. */
 	private static final String SO_TIMEOUT = "sotimeout";
+	
+	/** The Constant CONNECTION_TIMEOUT. */
 	private static final String CONNECTION_TIMEOUT = "connectiontimeout";
+	
+	/** The Constant MAX_CONNECTION_HOST. */
 	private static final String MAX_CONNECTION_HOST = "maxconnectionperhost";
+	
+	/** The Constant MAX_TOTAL_CONNECTION. */
 	private static final String MAX_TOTAL_CONNECTION = "maxtotalconnection";
+	
+	/** The Constant FOLLOW_REDIRECTS. */
 	private static final String FOLLOW_REDIRECTS = "followredirects";
+	
+	/** The Constant ALLOW_COMPRESSION. */
 	private static final String ALLOW_COMPRESSION = "allowcompression";
+	
+	/** The Constant MAX_RETRIES. */
 	private static final String MAX_RETRIES = "maxretries";
 
+	/** The solr configuration. */
 	@Autowired
 	@Resource(name = "solrConfiguration")
 	private Properties solrConfiguration;
@@ -106,11 +128,10 @@ public class SOLRSearchHelper {
 			}
 		} catch (final MalformedURLException e) {
 			serverAccessible = false;
-			LOGGER.info("Server URL " + url + " is not accessible.");
+			LOGGER.error("Server URL " + url + " is not accessible.",e);
 		} catch (final IOException e) {
-			LOGGER.debug(e);
 			serverAccessible = false;
-			LOGGER.info("Server URL " + url + " is not accessible.");
+			LOGGER.error("Server URL " + url + " is not accessible.",e);
 		}
 
 		return serverAccessible;

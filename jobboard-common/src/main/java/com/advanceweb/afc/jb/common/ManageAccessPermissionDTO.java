@@ -1,10 +1,25 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common;
 
 
 public class ManageAccessPermissionDTO {
+	
+	/** The owner id. */
 	private int ownerId;
+	
+	/** The owner name. */
 	private String ownerName;
+	
+	/** The owner email. */
 	private String ownerEmail;
+	
+	/** The type of access. */
 	private int typeOfAccess;
 	/**
 	 * @return the ownerName

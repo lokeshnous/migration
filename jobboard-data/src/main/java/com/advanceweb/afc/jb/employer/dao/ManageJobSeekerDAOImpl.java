@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.dao;
 
 import java.util.ArrayList;
@@ -34,17 +41,31 @@ import com.advanceweb.afc.jb.employer.helper.JobSeekerConversionHelper;
 @Repository("ManageJobSeekerDAO")
 @SuppressWarnings("unchecked")
 public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(ManageJobSeekerDAOImpl.class);
+	
+	/** The hibernate template. */
 	private HibernateTemplate hibernateTemplate;
+	
+	/** The conversion helper. */
 	@Autowired
 	private JobSeekerConversionHelper conversionHelper;
 
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactory the new hibernate template
+	 */
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageJobSeekerDAO#retrieveAllResume(int)
+	 */
 	@Override
 	public List<ManageJobSeekerDTO> retrieveAllResume(int userId) {
 		List<?> folderDetailList = new ArrayList<AdmFolderResume>();
@@ -64,6 +85,9 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 				.transformFolderResumeToManageJobSeekerDTO(folderDetailList);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageJobSeekerDAO#applicationStatusList()
+	 */
 	@Override
 	public List<DropDownDTO> applicationStatusList()
 			throws JobBoardDataException {
@@ -77,6 +101,9 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 				.transformApplicationStatusToDropDownDTO(appStatusList);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageJobSeekerDAO#folderDetailList(int)
+	 */
 	@Override
 	public List<AdmFolderDTO> folderDetailList(int userId)
 			throws JobBoardDataException {
@@ -90,6 +117,9 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 		return conversionHelper.transformAdmFolderToAdmFolderDTO(folderDTOList);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageJobSeekerDAO#updateAppStatus(int, int)
+	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public boolean updateAppStatus(int appStatusId, int resumeId)
@@ -105,6 +135,9 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageJobSeekerDAO#retrieveAllResumeByFolder(int, int)
+	 */
 	@Override
 	public List<ManageJobSeekerDTO> retrieveAllResumeByFolder(int userId,
 			int folderId) throws JobBoardDataException {
@@ -128,6 +161,9 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 				.transformFolderResumeToManageJobSeekerDTO(folderDetailList);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageJobSeekerDAO#updateResumeFolder(int, int)
+	 */
 	@Override
 	public boolean updateResumeFolder(int folderId, int folderResumeId)
 			throws JobBoardDataException {
@@ -142,6 +178,9 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageJobSeekerDAO#deleteJobSeeker(int)
+	 */
 	@Override
 	public void deleteJobSeeker(int folderResumeId)
 			throws JobBoardDataException {
@@ -155,6 +194,9 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageJobSeekerDAO#addFolder(int, java.lang.String)
+	 */
 	@Override
 	public void addFolder(int userId, String folderName)
 			throws JobBoardDataException {
@@ -203,6 +245,9 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 		return admFolderResList;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageJobSeekerDAO#removeFolder(int, java.lang.String)
+	 */
 	@Override
 	public void removeFolder(int userId, String folderName)
 			throws JobBoardDataException {
@@ -223,6 +268,9 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageJobSeekerDAO#updateRating(int, int)
+	 */
 	@Override
 	public boolean updateRating(int rating, int resumeId)
 			throws JobBoardDataException {
@@ -237,6 +285,9 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageJobSeekerDAO#renameFolder(int, int, java.lang.String)
+	 */
 	@Override
 	public void renameFolder(int userId, int folderId, String folderName)
 			throws JobBoardDataException {
@@ -250,6 +301,9 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageJobSeekerDAO#retrieveAllResume(int, int, int)
+	 */
 	@Override
 	public List<ManageJobSeekerDTO> retrieveAllResume(int userId, int offset,
 			int noOfRecords) throws JobBoardDataException {
@@ -271,6 +325,9 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 				.transformFolderResumeToManageJobSeekerDTO(folderDetailList);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageJobSeekerDAO#retrieveAllResumeByFolder(int, int, int, int)
+	 */
 	@Override
 	public List<ManageJobSeekerDTO> retrieveAllResumeByFolder(int userId,
 			int folderId, int offset, int noOfRecords)
@@ -296,6 +353,9 @@ public class ManageJobSeekerDAOImpl implements ManageJobSeekerDAO {
 				.transformFolderResumeToManageJobSeekerDTO(folderDetailList);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageJobSeekerDAO#getTotalNumberOfJobRecords(int, int)
+	 */
 	@Override
 	public int getTotalNumberOfJobRecords(int userId,int folderId)
 			throws JobBoardDataException {

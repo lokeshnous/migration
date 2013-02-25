@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.advt.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +26,7 @@ import com.advanceweb.common.client.ClientContext;
 @Service("adService")
 public class AdServiceImpl implements AdService {
 
+	/** The ad service delegate. */
 	@Autowired
 	private AdServiceDelegate adServiceDelegate;
 

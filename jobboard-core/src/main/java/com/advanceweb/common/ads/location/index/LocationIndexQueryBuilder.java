@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.common.ads.location.index;
 
 import java.util.Map;
@@ -24,6 +31,8 @@ import com.advanceweb.common.index.lucene.LuceneQueryBuilder;
 @SuppressWarnings("deprecation")
 public class LocationIndexQueryBuilder extends LocationIndexBase implements
 		LuceneQueryBuilder {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(LocationIndexQueryBuilder.class);
 

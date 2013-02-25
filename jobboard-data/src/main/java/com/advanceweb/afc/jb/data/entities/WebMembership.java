@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
@@ -21,74 +28,112 @@ import javax.persistence.Table;
 @Entity
 @Table(name="WebMembership")
 public class WebMembership implements Serializable {
+	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** The web membership id. */
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="WebMembershipID")
 	private Integer webMembershipID;
 
+	/** The password. */
 	@Column(name="Password")
 	private String password;
 
+	/** The salt. */
 	@Column(name="Salt")
 	private String salt;
 
+	/** The address info id. */
 	@Column(name="AddressInfoID")
 //	private Integer addressInfoID;
 	private String addressInfoID;
+	
+	/** The sub request id. */
 	@Column(name="SubRequestID")
 //	private Integer subRequestID;
 	private String subRequestID;
 //	@Column(name="WebMembershipInfoID")
 //	private int WebMembershipInfoID;
 	
-	@OneToOne(fetch=FetchType.EAGER, mappedBy="webMembership")
+	/** The web membership email. */
+@OneToOne(fetch=FetchType.EAGER, mappedBy="webMembership")
 	private WebMembershipEmail webMembershipEmail;
 	
+	/** The web membership info. */
 	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="WebMembershipInfoID")
 	private WebMembershipInfo webMembershipInfo;
 	
+	/** The activated. */
 	@Column(name="Activated")
 	private boolean activated;
 
+	/** The create date. */
 	@Column(name="CreateDate")
 	private Date createDate;
 
+	/** The web membership level id. */
 	@Column(name="WebMembershipLevelID")
 	private Integer webMembershipLevelID;
 
+	/** The display name. */
 	@Column(name="DisplayName")
 	private String displayName;
 
+	/** The deleted. */
 	@Column(name="Deleted")
 	private boolean deleted;
 
+	/** The obs acr user id. */
 	@Column(name="obs_ACRUserID")
 	private Integer obsACRUserID;
+	
+	/** The merion employee id. */
 	@Column(name="MerionEmployeeID")
 //	private Integer merionEmployeeID;
 	private String merionEmployeeID;
+	
+	/** The my advance id. */
 	@Column(name="MyAdvanceID")
 	private Integer myAdvanceID;
+	
+	/** The encrypt password. */
 	@Column(name="EncryptPassword")
 	private String encryptPassword;
+	
+	/** The client employee id. */
 	@Column(name="ClientEmployeeID")
 //	private Integer clientEmployeeID;
 	private String clientEmployeeID;
+	
+	/** The create web user id. */
 	@Column(name="CreateWebUserId")
 	private Integer createWebUserId;
+	
+	/** The modify web user id. */
 	@Column(name="ModifyWebUserId")
 	private Integer modifyWebUserId;
+	
+	/** The modify date. */
 	@Column(name="ModifyDate")
 	private Date modifyDate;
+	
+	/** The delete web user id. */
 	@Column(name="DeleteWebUserId")
 	private Integer deleteWebUserId;
+	
+	/** The delete date. */
 	@Column(name="DeleteDate")
 	private Date deleteDate;
+	
+	/** The shop salt. */
 	@Column(name="ShopSalt")
 	private String shopSalt;
+	
+	/** The shop encrypt password. */
 	@Column(name="ShopEncryptPassword")
 	private String shopEncryptPassword;
 	
@@ -388,26 +433,56 @@ public class WebMembership implements Serializable {
 			this.shopEncryptPassword = shopEncryptPassword;
 		}
 
+		/**
+		 * Gets the creates the date.
+		 *
+		 * @return the creates the date
+		 */
 		public Date getCreateDate() {
 			return createDate;
 		}
 
+		/**
+		 * Sets the creates the date.
+		 *
+		 * @param createDate the new creates the date
+		 */
 		public void setCreateDate(Date createDate) {
 			this.createDate = createDate;
 		}
 
+		/**
+		 * Gets the modify date.
+		 *
+		 * @return the modify date
+		 */
 		public Date getModifyDate() {
 			return modifyDate;
 		}
 
+		/**
+		 * Sets the modify date.
+		 *
+		 * @param modifyDate the new modify date
+		 */
 		public void setModifyDate(Date modifyDate) {
 			this.modifyDate = modifyDate;
 		}
 
+		/**
+		 * Gets the delete date.
+		 *
+		 * @return the delete date
+		 */
 		public Date getDeleteDate() {
 			return deleteDate;
 		}
 
+		/**
+		 * Sets the delete date.
+		 *
+		 * @param deleteDate the new delete date
+		 */
 		public void setDeleteDate(Date deleteDate) {
 			this.deleteDate = deleteDate;
 		}

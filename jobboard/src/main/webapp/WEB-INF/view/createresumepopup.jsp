@@ -8,9 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>ADVANCE Heathcare Jobs</title>
 <meta name="robots" content="noindex, follow">
-<jsp:include page="common/include.jsp" />
 <!-- Common js files  -->
-<script type="text/javascript" src="../resources/js/common/common.js"></script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		$("#managePrivacy").hide();
@@ -216,7 +214,7 @@
 						<span class="lableText4">Company to block:</span>
 						<form:input path="searchComapnyName"
 							class="job_seeker_password textBox150" />
-						<a id="searchCompanyName" href="#" class="btn_sm orange">Search</a>
+						<a id="searchCompanyName" href="#" class="btn_sm orange"  >Search</a>
 
 					</div>
 
@@ -232,7 +230,7 @@
 							</tr>
 							<tr>
 								<td><form:select path="availableList" id="availableList"
-										multiple="true" size="5" style="width:150px;">
+										multiple="true" size="5" style="width:250px;">
 										
 									</form:select></td>
 								<td width="3%" />
@@ -248,7 +246,7 @@
 
 								<td width="45%" style="border: none"><form:select
 										path="selectedList" id="selectedeList" multiple="true" items="${blockedCompanies}" itemValue="optionId" itemLabel="optionName"
-										size="5" style="width:150px;">
+										size="5" style="width:250px;">
 									</form:select></td>
 						</table>
 					</div>

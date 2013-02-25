@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.admin.helper;
 
 import java.util.ArrayList;
@@ -16,6 +23,12 @@ import com.advanceweb.afc.jb.data.entities.AdmFacility;
 @Repository("adminConversionHelper")
 public class AdminConversionHelper {
 
+	/**
+	 * Convert entity tod dto.
+	 *
+	 * @param userFacility the user facility
+	 * @return the list
+	 */
 	public List<EmpSearchDTO> convertEntityTodDTO(List<AdmFacility> userFacility) {
 		EmpSearchDTO searchDto = null;
 		List<EmpSearchDTO> dto = new ArrayList<EmpSearchDTO>();

@@ -31,17 +31,29 @@ import com.advanceweb.afc.jb.employer.helper.ResumePackageConvertionHelper;
 public class ResumePackageDAOimpl implements ResumePackageDAO{
 
 	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger(ResumePackageDAOimpl.class);
+	
+	/** The resume package convertion helper. */
 	@Autowired
 	private ResumePackageConvertionHelper resumePackageConvertionHelper;
 	
+	/** The hibernate template. */
 	private HibernateTemplate hibernateTemplate;
 	
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactory the new hibernate template
+	 */
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.ResumePackageDAO#showResumeSearchPackages()
+	 */
 	@Override
 	public List<ResumePackageDTO> showResumeSearchPackages() throws JobBoardDataException{
 		List<AdmPackage> admPackageList = null;
@@ -55,6 +67,9 @@ public class ResumePackageDAOimpl implements ResumePackageDAO{
 	}
 
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.ResumePackageDAO#isResumePackageActive(int)
+	 */
 	public boolean isResumePackageActive(int facilityId) {
 		boolean status = false;
 		List<AdmFacilityInventory> admFIList = null; 
@@ -70,7 +85,7 @@ public class ResumePackageDAOimpl implements ResumePackageDAO{
 			
 			
 		}catch (HibernateException e) {
-			LOGGER.info("Hibernate Exception Occurred while checking the Resume package.");
+			LOGGER.error("Hibernate Exception Occurred while checking the Resume package.",e);
 		}
 		
 		

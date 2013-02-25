@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.io.File;
@@ -48,33 +55,57 @@ import com.advanceweb.common.client.ClientContext;
 @RequestMapping("/empProfile")
 @SessionAttributes("employerProfileManagementForm")
 public class EmployerProfileManagementController extends AbstractController{
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger(EmployerProfileManagementController.class);
+	
+	/** The Constant STR_NOTEMPTY. */
 	private static final String STR_NOTEMPTY = "NotEmpty";
+	
+	/** The Constant STR_UNDERSCORE. */
 	private static final String STR_UNDERSCORE = "_";
 
+	/** The manage featured employer profile. */
 	@Autowired
 	private ManageFeaturedEmployerProfile manageFeaturedEmployerProfile;
 	
+	/** The base directory path image and media. */
 	private @Value("${baseDirectoryPathImageAndMedia}")
 	String baseDirectoryPathImageAndMedia;
 	
+	/** The app media path. */
 	private @Value("${appMediaPath}")
 	String appMediaPath;
 	
+	/** The feature employer prefix. */
 	private @Value("${featureEmployerPrefix}")
 	String featureEmployerPrefix;
 	
+	/** The is featured employer error msg. */
 	private @Value("${isFeaturedEmployerErrorMsg}")
 	String isFeaturedEmployerErrorMsg;
+	
+	/** The virus found msg. */
 	private @Value("${virus.found.video.msg}")
 	String virusFoundMsg;
+	
+	/** The virus found image msg. */
 	private @Value("${virus.found.image.msg}")
 	String 	virusFoundImageMsg;
 
 	
+	/** The ad service. */
 	@Autowired
 	private AdService adService;
 	
+	/**
+	 * Gets the employee profile.
+	 *
+	 * @param employerProfileManagementForm the employer profile management form
+	 * @param session the session
+	 * @param request the request
+	 * @return the employee profile
+	 */
 	@RequestMapping(value = "/employerprofile", method = RequestMethod.GET)
 
 	public ModelAndView getEmployeeProfile(EmployerProfileManagementForm employerProfileManagementForm,
@@ -205,7 +236,7 @@ public class EmployerProfileManagementController extends AbstractController{
 				.getCompanyOverview());
 
 		// Validate email id
-		checkEmail(managementForm.getCompanyEmail(), result);
+		//checkEmail(managementForm.getCompanyEmail(), result);
 		/*companyProfileDTO.setFacilityid( (String) session
 						.getAttribute(MMJBCommonConstants.FACILITY_ID));*/
 		companyProfileDTO.setCompanyEmail(managementForm.getCompanyEmail());

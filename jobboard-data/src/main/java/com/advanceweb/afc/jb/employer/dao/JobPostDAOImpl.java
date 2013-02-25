@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.dao;
 
 import java.sql.Timestamp;
@@ -61,18 +68,39 @@ import com.advanceweb.afc.jb.user.dao.UserDao;
 @SuppressWarnings("unchecked")
 public class JobPostDAOImpl implements JobPostDAO {
 
+	/** The Constant FIND_ADM_USER_FACILITY. */
 	private static final String FIND_ADM_USER_FACILITY = "select facility from AdmUserFacility facility, AdmRole role where role.roleId=facility.id.roleId and facility.id.userId=? and role.name=?";
+	
+	/** The Constant FIND_EXPIRED_JOBS. */
 	private static final String FIND_EXPIRED_JOBS = "from JpJob job where job.active='1' and job.autoRenew='0' and date_format(job.endDt, '%Y-%m-%d') = ?";
+	
+	/** The Constant FIND_EXPIRED_JOBS_FOR_RENEWAL. */
 	private static final String FIND_EXPIRED_JOBS_FOR_RENEWAL = "from JpJob job where job.active='1'and job.autoRenew='1' and date_format(job.endDt, '%Y-%m-%d') = ?";
+	
+	/** The Constant FIND_SCHEDULED_JOBS. */
 	private static final String FIND_SCHEDULED_JOBS = "from JpJob job where date_format(job.startDt, '%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d') and job.active='0'";
+	
+	/** The Constant FIND_INVENTORY_DETAILS. */
 	private static final String FIND_INVENTORY_DETAILS = "select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 "
 			+ "and dtl.productId=? and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) order by dtl.availableqty ";
+	
+	/** The Constant FIND_INVENTORY_DETAILS_OFFLINE. */
 	private static final String FIND_INVENTORY_DETAILS_OFFLINE = "select dtl from AdmFacilityInventory inv inner join inv.admInventoryDetail dtl where dtl.availableqty != 0 and inv.orderId = 0 "
 			+ "and dtl.productId=? and inv.admFacility in(from AdmFacility fac where fac.facilityId=?) order by dtl.availableqty ";
+	
+	/** The Constant FIND_INVENTORY_DETAILS_BY_INV_ID. */
 	private static final String FIND_INVENTORY_DETAILS_BY_INV_ID = "from AdmInventoryDetail inv  where inv.invDetailId=?)";
+	
+	/** The Constant FIND_JP_JOB. */
 	private static final String FIND_JP_JOB = "SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId=:userId and a.deleteDt is NULL ";
+	
+	/** The Constant FIND_EMP_JP_JOB. */
 	private static final String FIND_EMP_JP_JOB = "SELECT a from JpJob a where a.admFacility.facilityId in (:facilityList) and a.deleteDt is NULL ";
+	
+	/** The Constant COUNT_EMP_JP_JOB. */
 	private static final String COUNT_EMP_JP_JOB = "SELECT count(a) from JpJob a where a.admFacility.facilityId in (:facilityList) and a.deleteDt is NULL ";
+	
+	/** The Constant FIND_JP_JOBS. */
 	private static final String FIND_JP_JOBS = "SELECT a from JpJob a,AdmUserFacility b where a.admFacility.facilityId=b.admFacility.facilityId and b.id.userId=:userId and a.deleteDt is NULL ORDER BY a.jobId DESC ";
 	
 	
@@ -84,19 +112,32 @@ public class JobPostDAOImpl implements JobPostDAO {
 			"and date_format(job.startDt, '%Y-%m-%d') <= CURRENT_DATE and date_format(job.endDt, '%Y-%m-%d') >= CURRENT_DATE " +
 			"and (job.deleteDt is null) and DATEDIFF(date_format(job.endDt, '%Y-%m-%d'),CURRENT_DATE) <= 2";*/
 	
+	/** The Constant FIND_ACTIVE_JOBS_EXPIRE_SOON. */
 	private static final String FIND_ACTIVE_JOBS_EXPIRE_SOON = "select job.job_id,job.facility_id,facility.user_id,fec.name,job.end_dt,job.create_user_id from jp_job job join adm_user_facility facility join adm_facility fec where job.facility_id=facility.facility_id and job.facility_id=fec.facility_id and job.active = 1 and date_format(job.start_dt, '%Y-%m-%d') <= CURRENT_DATE and date_format(job.end_dt, '%Y-%m-%d') >= CURRENT_DATE and (job.delete_dt is null) and DATEDIFF(date_format(job.end_dt, '%Y-%m-%d'),CURRENT_DATE) <= 3";
 	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger(JobPostDAOImpl.class);
 	
+	/** The hibernate template. */
 	private HibernateTemplate hibernateTemplate;
 	
+	/** The hibernate template tracker. */
 	private HibernateTemplate hibernateTemplateTracker;
 	
+	/** The job post conversion helper. */
 	@Autowired
 	private JobPostConversionHelper<?> jobPostConversionHelper;
+	
+	/** The facility conversion helper. */
 	@Autowired
 	private FacilityConversionHelper facilityConversionHelper;
 
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactoryMerionTracker the session factory merion tracker
+	 * @param sessionFactory the session factory
+	 */
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
@@ -106,9 +147,11 @@ public class JobPostDAOImpl implements JobPostDAO {
 				sessionFactoryMerionTracker);
 	}
 
+	/** The user dao. */
 	@Autowired
 	private UserDao userDAO;
 	
+	/** The facility dao. */
 	@Autowired
 	private FacilityDAO facilityDAO;
 	/*
@@ -254,7 +297,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 				audit.setCreateDt(auditObj.getCreateDt());
 				hibernateTemplate.delete(auditObj);
 				hibernateTemplate.save(audit);
-				LOGGER.info("Job post updated successfully");
+				LOGGER.debug("Job post updated successfully");
 			} else {
 				hibernateTemplate.save(audit);
 			}
@@ -683,6 +726,9 @@ public class JobPostDAOImpl implements JobPostDAO {
 		return modListJobPostDto;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.JobPostDAO#getEmpJobsCount(java.util.List)
+	 */
 	@Override
 	public int getEmpJobsCount(List<DropDownDTO> companyList) {
 		int jobsCount = 0;
@@ -702,6 +748,9 @@ public class JobPostDAOImpl implements JobPostDAO {
 		return jobsCount;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.JobPostDAO#getEmpJobsCountByStatus(java.lang.String, java.util.List)
+	 */
 	@Override
 	public int getEmpJobsCountByStatus(String jobStatus,
 			List<DropDownDTO> companyList){
@@ -885,6 +934,9 @@ public class JobPostDAOImpl implements JobPostDAO {
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.JobPostDAO#executeExpireJobs()
+	 */
 	@Override
 	public List<SchedulerDTO> executeExpireJobs() {
 		LOGGER.info("Executing -> executeActiveJobWorker()");
@@ -919,6 +971,9 @@ public class JobPostDAOImpl implements JobPostDAO {
 		return schedulerDTOList;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.JobPostDAO#executeActiveJobWorker(java.util.List)
+	 */
 	@Override
 	public List<SchedulerDTO> executeActiveJobWorker(List<JobPostDTO> jobsList) {
 		LOGGER.info("Executing -> executeActiveJobWorker()");
@@ -1014,6 +1069,9 @@ public class JobPostDAOImpl implements JobPostDAO {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.JobPostDAO#executeAutoRenewalJobWorker(java.util.List)
+	 */
 	@Override
 	public List<SchedulerDTO> executeAutoRenewalJobWorker(List<JobPostDTO> jobsList) {
 		LOGGER.info("Executing -> executeAutoRenewalJobWorker()");
@@ -1135,6 +1193,11 @@ public class JobPostDAOImpl implements JobPostDAO {
 		return false;
 	}
 
+	/**
+	 * Gets the one day before date.
+	 *
+	 * @return the one day before date
+	 */
 	private String getOneDayBeforeDate() {
 
 		Calendar cal = Calendar.getInstance();
@@ -1144,6 +1207,11 @@ public class JobPostDAOImpl implements JobPostDAO {
 		return dateFormat.format(cal.getTime());
 	}
 
+	/**
+	 * Adds the days to current date.
+	 *
+	 * @return the date
+	 */
 	private Date addDaysToCurrentDate() {
 
 		Calendar cal = Calendar.getInstance();
@@ -1204,9 +1272,12 @@ public class JobPostDAOImpl implements JobPostDAO {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.JobPostDAO#validateAvailableCredits(int, int)
+	 */
 	public boolean validateAvailableCredits(int invDtlId, int facilityId) {
 
-		LOGGER.info("Executing -> decreaseAvailableCredits()");
+		LOGGER.debug("Executing -> decreaseAvailableCredits()");
 		try {
 			// Based on inventory detail id, we are retreiving combo id
 			List<AdmInventoryDetail> invDtlList = hibernateTemplate.find(
@@ -1218,10 +1289,10 @@ public class JobPostDAOImpl implements JobPostDAO {
 				List<AdmInventoryDetail> invDtls = hibernateTemplate.find(
 						FIND_INVENTORY_DETAILS, inputs);
 				if (!invDtls.isEmpty()) {
-					LOGGER.info("Having sufficient credits to post the job");
+					LOGGER.debug("Having sufficient credits to post the job");
 					return true;
 				} else {
-					LOGGER.info("Do not have sufficient credits to post the job for the given inventory Detail Id: "
+					LOGGER.debug("Do not have sufficient credits to post the job for the given inventory Detail Id: "
 							+ invDtlId);
 					return false;
 				}
@@ -1230,7 +1301,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
 		}
-		LOGGER.info("Executed -> decreaseAvailableCredits()");
+		LOGGER.debug("Executed -> decreaseAvailableCredits()");
 		return false;
 	}
 
@@ -1268,9 +1339,9 @@ public class JobPostDAOImpl implements JobPostDAO {
 			mer.setEndDt(endDt.getTime());
 			hibernateTemplate.update(mer);
 			isUpdate = true;
-			LOGGER.info("Job Status Save is done by Admin");
+			LOGGER.debug("Job Status Save is done by Admin");
 		} catch (DataAccessException e) {
-			LOGGER.error("Job Status Save is not done by Admin");
+			LOGGER.error("Job Status Save is not done by Admin",e);
 
 		}
 		return isUpdate;
@@ -1292,6 +1363,9 @@ public class JobPostDAOImpl implements JobPostDAO {
 		return new JobPostDTO();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.JobPostDAO#getinvDetIdByJobId(int, int, int)
+	 */
 	@Override
 	public int getinvDetIdByJobId(int jobId, int facilityId, int userId) {
 		int invDetailId = 0;
@@ -1316,6 +1390,10 @@ public class JobPostDAOImpl implements JobPostDAO {
 		}
 		return invDetailId;
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.JobPostDAO#getinvDtlByJobId(int)
+	 */
 	@Override
 	public AdmFacilityJpAudit getinvDtlByJobId(int jobId) {
 		AdmFacilityJpAudit invDetail = new AdmFacilityJpAudit();
@@ -1383,6 +1461,10 @@ public class JobPostDAOImpl implements JobPostDAO {
 		now.add(Calendar.DAY_OF_MONTH, extendDays);
 		return now.getTime();
 	}
+
+/* (non-Javadoc)
+ * @see com.advanceweb.afc.jb.employer.dao.JobPostDAO#checkDraftAndSchedule(int)
+ */
 public boolean checkDraftAndSchedule(int avdSearchId){
 	boolean result=false;
 	List<JpJob>scheduleJobs=hibernateTemplate.find("from JpJob a where a.jobId=? and a.active = 0 and DATE_FORMAT(a.startDt, '%Y-%m-%d') > CURRENT_DATE",avdSearchId);
@@ -1428,6 +1510,9 @@ public boolean checkDraftAndSchedule(int avdSearchId){
 		return facilityDTO;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.JobPostDAO#validateCityStateZip(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
 	@Override
 	public boolean validateCityStateZip(String city, String state, String zipCode,
 			String country) throws JobBoardDataException {

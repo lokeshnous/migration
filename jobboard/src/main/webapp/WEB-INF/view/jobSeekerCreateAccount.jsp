@@ -25,7 +25,7 @@
 		    jQuery(".megamenu").megamenu();
 		});
 		    function cancelProcess(){
-		    	window.location.href = '${pageContext.request.contextPath}/healthcarejobs/index.html';
+		    	window.location.href = '${pageContext.request.contextPath}/healthcare/index.html';
 		    }	
 		    
 		    /*var RecaptchaOptions = {

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.web.controller;
 
 /**
@@ -10,19 +17,46 @@ package com.advanceweb.afc.jb.employer.web.controller;
 
 public class InventoryForm {
 
+	/** The user id. */
 	private int userId;
+	
+	/** The facility id. */
 	private int facilityId;
+	
+	/** The inventory id. */
 	private int inventoryId;
+	
+	/** The jb type id. */
 	private int jbTypeId;
+	
+	/** The jb type. */
 	private String jbType;
+	
+	/** The duration. */
 	private String duration;
+	
+	/** The quantity. */
 	private int quantity;
+	
+	/** The available qty. */
 	private int availableQty;
+	
+	/** The product type. */
 	private String productType;
+	
+	/** The addon. */
 	private String addon;
+	
+	/** The days. */
 	private String days;
+	
+	/** The post job page. */
 	private String postJobPage;
+	
+	/** The fname. */
 	private String fname;
+	
+	/** The net suit id. */
 	private String netSuitId;
 
 	/**

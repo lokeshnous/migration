@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.service.exception;
 
 import com.advanceweb.afc.jb.exception.JobBoardException;
@@ -11,6 +18,7 @@ import com.advanceweb.afc.jb.exception.JobBoardException;
  */
 public class JobBoardServiceException extends JobBoardException {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/**

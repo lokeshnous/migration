@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.advt.legacy;
 
 import java.io.ByteArrayOutputStream;
@@ -23,12 +30,19 @@ import com.advanceweb.common.client.ClientContext;
 
 @Component
 public class LegacyAdServiceDelegate implements AdServiceDelegate {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(LegacyAdServiceDelegate.class);
+	
+	/** The ads configuration. */
 	@Autowired
 	@Resource(name = "adsConfiguration")
 	private Properties adsConfiguration;
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.advt.service.impl.AdServiceDelegate#getBanner(com.advanceweb.common.client.ClientContext, com.advanceweb.common.ads.AdSize, com.advanceweb.common.ads.AdPosition)
+	 */
 	@Override
 	public Banner getBanner(ClientContext context, AdSize size,
 			AdPosition position) {
@@ -63,6 +77,15 @@ public class LegacyAdServiceDelegate implements AdServiceDelegate {
 		return banner;
 	}
 
+	/**
+	 * Gets the ad url.
+	 *
+	 * @param context the context
+	 * @param size the size
+	 * @param position the position
+	 * @return the ad url
+	 * @throws MalformedURLException the malformed url exception
+	 */
 	private URL getAdURL(ClientContext context, AdSize size, AdPosition position)
 			throws MalformedURLException {
 		StringBuffer sbUrl = new StringBuffer();
@@ -93,6 +116,13 @@ public class LegacyAdServiceDelegate implements AdServiceDelegate {
 		return url;
 	}
 
+	/**
+	 * Adds the param.
+	 *
+	 * @param sb the sb
+	 * @param param the param
+	 * @param value the value
+	 */
 	private void addParam(StringBuffer sb, String param, String value) {
 		if (value != null) {
 			sb.append('&');
@@ -108,6 +138,13 @@ public class LegacyAdServiceDelegate implements AdServiceDelegate {
 		}
 	}
 
+	/**
+	 * Gets the response.
+	 *
+	 * @param url the url
+	 * @return the response
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private String getResponse(URL url) throws IOException {
 		InputStream is = url.openStream();
 

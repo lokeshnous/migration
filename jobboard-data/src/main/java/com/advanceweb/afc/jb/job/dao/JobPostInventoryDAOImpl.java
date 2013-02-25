@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.job.dao;
 
 import java.math.BigDecimal;
@@ -25,8 +32,14 @@ import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 @Repository("inventoryDAO")
 public class JobPostInventoryDAOImpl implements JobPostInventoryDAO {
 
+	/** The hibernate template. */
 	private HibernateTemplate hibernateTemplate;
 
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactory the new hibernate template
+	 */
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);

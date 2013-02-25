@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common.util;
 
 import java.io.IOException;
@@ -12,6 +19,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 @SuppressWarnings("unchecked")
 public class JsonUtil {
 	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(JsonUtil.class);
 

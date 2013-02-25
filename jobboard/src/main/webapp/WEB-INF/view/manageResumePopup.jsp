@@ -134,8 +134,7 @@
 						<a class="nyroModal" id="createResumeId" href="<%=request.getContextPath()%>/jobSeekerResume/createResumePopUp.html?resumeType=createResume"></a>
 						<a class="nyroModalClose btn_sm orange" href="#">Cancel</a>	</span>				
 					<span
-						class="floatLeft"><em>*Only 1
-							resume may be made Public at a time</em></span>
+						class="floatLeft"><em>*Only 1 resume may be made public at a time</em></span>
 				</div>
 			</form:form>
 		</div>

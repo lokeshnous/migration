@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.util.ArrayList;
@@ -31,14 +38,19 @@ import com.advanceweb.afc.jb.job.service.JobPostInventoryService;
 @RequestMapping("/inventory")
 public class JobPostingInventoryController {
 	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(JobPostingInventoryController.class);
 	
 	
+	/** The inventory service. */
 	@Autowired
 	private JobPostInventoryService inventoryService;
+	
+	/** The Constant PAGE. */
 	private static final String PAGE = "page";
 	
+	/** The facility service. */
 	@Autowired
 	private FacilityService facilityService;
 

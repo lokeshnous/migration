@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.dao;
 
 import java.util.List;
@@ -66,6 +73,13 @@ public interface EmployerRegistrationDAO {
 	 */
 	boolean validateEmail(String email);
 
+	/**
+	 * Gets the employee data.
+	 *
+	 * @param userId the user id
+	 * @param contactType the contact type
+	 * @return the employee data
+	 */
 	List<AdmFacilityContact> getEmployeeData(int userId, String contactType);
 
 	/**
@@ -90,6 +104,12 @@ public interface EmployerRegistrationDAO {
 	boolean editUser(AccountProfileDTO apd, int admfacilityid,
 			int userId, String billing);
 
+	/**
+	 * Validate profile attributes.
+	 *
+	 * @param jobseekerId the jobseeker id
+	 * @return true, if successful
+	 */
 	boolean validateProfileAttributes(int jobseekerId); 
 	
 	/**

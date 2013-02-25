@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.io.IOException;
@@ -17,6 +24,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.UrlValidator;
 import org.apache.log4j.Logger;
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -61,57 +69,111 @@ import com.advanceweb.common.client.ClientContext;
 @RequestMapping("/employer")
 public class JobPostController extends AbstractController {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(JobPostController.class);
 
+	/** The employer job post. */
 	@Autowired
 	private JobPostService employerJobPost;
 
+	/** The transform job post. */
 	@Autowired
 	private TransformJobPost transformJobPost;
 
+	/** The populate dropdowns service. */
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
 
+	/** The branding template service. */
 	@Autowired
 	private BrandingTemplateService brandingTemplateService;
 
+	/** The ad service. */
 	@Autowired
 	private AdService adService;
 
+	/** The facility service. */
 	@Autowired
 	private FacilityService facilityService;
+	
+	/** The validate city state. */
 	@Value("${validateCityState}")
 	private String validateCityState;
+	
+	/** The delete fail err msg. */
 	@Value("${deleteFail}")
 	private String deleteFailErrMsg;
+	
+	/** The repost fail. */
 	@Value("${repostFail}")
 	private String repostFail;
+	
+	/** The repost success. */
 	@Value("${repostSuccess}")
 	private String repostSuccess;	
+	
+	/** The repost success inactive. */
 	@Value("${repostSuccessInac}")
 	private String repostSuccessInactive;
+	
+	/** The deactivate msg. */
 	@Value("${deactivationFail}")
 	private String deactivateMsg;
+	
+	/** The delete success msg. */
 	@Value("${deleteSuccess}")
 	private String deleteSuccessMsg;
+	
+	/** The job post extension days. */
 	@Value("${jobPostExtensionDays}")
 	private int jobPostExtensionDays;
 
+	/** The Constant JOB_POST_FORM. */
 	private static final String JOB_POST_FORM = "jobPostForm";
+	
+	/** The Constant POST_NEW_JOBS. */
 	private static final String POST_NEW_JOBS = "postNewJobs";
+	
+	/** The Constant SAVE_NEW_JOB. */
 	private static final String SAVE_NEW_JOB = "/saveNewJob";
+	
+	/** The Constant ERROR_MESSAGE. */
 	private static final String ERROR_MESSAGE = "errorMessage";
+	
+	/** The Constant FORWORD_MANAGE_JOBPOST. */
 	private static final String FORWORD_MANAGE_JOBPOST = "forward:/employer/manageJobPost.html";
+	
+	/** The Constant REDIRECT_MANAGE_JOBPOST. */
 	private static final String REDIRECT_MANAGE_JOBPOST = "redirect:/employer/manageJobPost.html";
+	
+	/** The Constant UPDATE_JOBS. */
 	private static final String UPDATE_JOBS = "/updateJobs";
+	
+	/** The Constant USER_ID. */
 	private static final String USER_ID = "userId";
+	
+	/** The Constant TEMPLATE_LIST. */
 	private static final String TEMPLATE_LIST = "templateList";
+	
+	/** The Constant FACILITY_ADMIN. */
 	private static final String FACILITY_ADMIN = "facility_admin";
+	
+	/** The Constant COMPANY_LIST. */
 	private static final String COMPANY_LIST = "companyList";
+	
+	/** The manage featured employer profile. */
 	@Autowired
 	private ManageFeaturedEmployerProfile manageFeaturedEmployerProfile;
 
+	/**
+	 * Show post job.
+	 *
+	 * @param jobPostType the job post type
+	 * @param session the session
+	 * @param request the request
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/postNewJobs", method = RequestMethod.GET)
 	public ModelAndView showPostJob(
 			@RequestParam(value = "jobPostType", required = false) String jobPostType,
@@ -268,8 +330,7 @@ public class JobPostController extends AbstractController {
 				.getFacilityByFacilityId(mainFacilityId);
 
 		return !(null != facility.getFacilityType() && facility.getFacilityType().equalsIgnoreCase(
-				MMJBCommonConstants.FACILITY)
-				&& -1 == facility.getFacilityParentId());
+				MMJBCommonConstants.FACILITY));
 	}
 
 	/**
@@ -572,6 +633,13 @@ public class JobPostController extends AbstractController {
 		return null;
 	}
 
+	/**
+	 * Populate dropdowns.
+	 *
+	 * @param model the model
+	 * @param session the session
+	 * @return the model and view
+	 */
 	private ModelAndView populateDropdowns(ModelAndView model,
 			HttpSession session) {
 		List<DropDownDTO> templateList;
@@ -683,6 +751,11 @@ public class JobPostController extends AbstractController {
 			if (readOnly.equalsIgnoreCase("true")) {
 				jobPostForm.setReadOnly(true);
 				jobPostForm.setViewPage(true);
+				if(jobPostForm.getJobDesc() != ""){
+					String jobDesc = Jsoup.parse(jobPostForm.getJobDesc()).html();
+					jobDesc = jobDesc.replaceAll("\\<.*?\\>", "");
+					jobPostForm.setJobDesc(jobDesc);
+				}
 				model.setViewName(POST_NEW_JOBS);
 			} else if (readOnly.equalsIgnoreCase("false")) {
 				jobPostForm.setViewPage(false);
@@ -885,6 +958,12 @@ public class JobPostController extends AbstractController {
 		return jbPostingTypeList;
 	}
 
+	/**
+	 * Gets the city list.
+	 *
+	 * @param query the query
+	 * @return the city list
+	 */
 	@RequestMapping(value = "/getCityList", method = RequestMethod.GET, headers = "Accept=*/*")
 	@ResponseBody
 	public List<String> getCityList(@RequestParam("term") String query) {
@@ -895,6 +974,12 @@ public class JobPostController extends AbstractController {
 		return countryList;
 	}
 
+	/**
+	 * Gets the state.
+	 *
+	 * @param city the city
+	 * @return the state
+	 */
 	@RequestMapping(value = "/getState")
 	@ResponseBody
 	public String getState(@RequestParam("city") String city) {
@@ -904,6 +989,12 @@ public class JobPostController extends AbstractController {
 		return state;
 	}
 
+	/**
+	 * Gets the postal code auto population.
+	 *
+	 * @param postalCode the postal code
+	 * @return the postal code auto population
+	 */
 	@RequestMapping(value = "/getPostalCodeAutoPopulation", method = RequestMethod.GET, headers = "Accept=*/*")
 	@ResponseBody
 	public List<String> getPostalCodeAutoPopulation(
@@ -915,6 +1006,13 @@ public class JobPostController extends AbstractController {
 		return postalCodeList;
 	}
 
+	/**
+	 * Gets the postal code.
+	 *
+	 * @param city the city
+	 * @param state the state
+	 * @return the postal code
+	 */
 	@RequestMapping(value = "/getPostalCode")
 	@ResponseBody
 	public String getPostalCode(@RequestParam("city") String city,
@@ -928,6 +1026,14 @@ public class JobPostController extends AbstractController {
 		return postalCode;
 	}
 
+	/**
+	 * Gets the country.
+	 *
+	 * @param city the city
+	 * @param state the state
+	 * @param postalCode the postal code
+	 * @return the country
+	 */
 	@RequestMapping(value = "/getCountry")
 	@ResponseBody
 	public String getCountry(@RequestParam("city") String city,
@@ -943,6 +1049,13 @@ public class JobPostController extends AbstractController {
 		return country;
 	}
 
+	/**
+	 * Gets the template.
+	 *
+	 * @param company the company
+	 * @param product the product
+	 * @return the template
+	 */
 	@RequestMapping(value = "/getTemplate")
 	@ResponseBody
 	public List<DropDownDTO> getTemplate(
@@ -958,6 +1071,15 @@ public class JobPostController extends AbstractController {
 		}
 	}
 
+	/**
+	 * Gets the facility template.
+	 *
+	 * @param isChecked the is checked
+	 * @param company the company
+	 * @param product the product
+	 * @param session the session
+	 * @return the facility template
+	 */
 	@RequestMapping(value = "/getFacilityTemplate")
 	@ResponseBody
 	public List<DropDownDTO> getFacilityTemplate(
@@ -1344,6 +1466,12 @@ public class JobPostController extends AbstractController {
 		return model;
 	}
 
+	/**
+	 * Populate location.
+	 *
+	 * @param zipCode the zip code
+	 * @return the location dto
+	 */
 	@RequestMapping(value = "/getLocations")
 	@ResponseBody
 	public LocationDTO populateLocation(@RequestParam("zipCode") String zipCode) {

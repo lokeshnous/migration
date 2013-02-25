@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.common.ads.location.index;
 
 import java.io.IOException;
@@ -26,13 +33,17 @@ import com.advanceweb.common.ads.AdLocation;
  */
 public class ExcelLocationSource implements LocationIndexSource {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(ExcelLocationSource.class);
 
+	/** The file path. */
 	private String filePath;
 
+	/** The column refs. */
 	private Map<String, Integer> columnRefs;
 
+	/** The location list. */
 	private List<AdLocation> locationList;
 
 	/**

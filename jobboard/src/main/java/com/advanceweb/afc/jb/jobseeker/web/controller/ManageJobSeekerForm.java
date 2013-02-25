@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import java.util.List;
@@ -16,20 +23,49 @@ import com.advanceweb.afc.jb.common.ResumeDTO;
 public class ManageJobSeekerForm {
 
 	
+    /** The no of page. */
     private int noOfPage;
+    
+    /** The no of page lower. */
     private int noOfPageLower;
+    
+    /** The begin val. */
     private int beginVal=1;  
+    
+    /** The resume id. */
     private int resumeId;
+	
+	/** The resume name. */
 	private String resumeName;
+	
+	/** The rating. */
 	private int rating;
+	
+	/** The application status. */
 	private int applicationStatus;
+	
+	/** The saved date. */
 	private String savedDate;
+	
+	/** The selected row. */
 	private String selectedRow;
+	
+	/** The manage job seeker dto list. */
 	private List<ManageJobSeekerDTO> manageJobSeekerDTOList;
+	
+	/** The folder id. */
 	private int folderId;
+	
+	/** The folder name. */
 	private String folderName;
+	
+	/** The adm folder dto list. */
 	private List<AdmFolderDTO> admFolderDTOList; 
+	
+	/** The resume dto list. */
 	private List<ResumeDTO> resumeDTOList;
+	
+	/** The total record for comp. */
 	private int totalRecordForComp;
 
 	/**
@@ -60,10 +96,20 @@ public class ManageJobSeekerForm {
 		this.noOfPageLower = noOfPageLower;
 	}
 
+	/**
+	 * Gets the begin val.
+	 *
+	 * @return the begin val
+	 */
 	public int getBeginVal() {
 		return beginVal;
 	}
 
+	/**
+	 * Sets the begin val.
+	 *
+	 * @param beginVal the new begin val
+	 */
 	public void setBeginVal(int beginVal) {
 		this.beginVal = beginVal;
 	}

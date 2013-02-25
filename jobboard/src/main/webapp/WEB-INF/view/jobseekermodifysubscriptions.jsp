@@ -130,7 +130,7 @@
 										<td valign="top" ><form:hidden path="printCheckbox"
 												id="printCheckbox" /><label
 												<%-- onchange="modifyPrint('${listpublicationprint.size()}')" /><label --%>
-											for="checkbox"><strong>Print-Magazine</strong></label>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											for="checkbox"><strong>Print Magazine</strong></label>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 											<c:if test="${!listpublicationprint.isEmpty()}">
 												<c:forEach items="${listpublicationprint}"
 													var="subscriptionsprint" varStatus="status">
@@ -148,7 +148,7 @@
 										<td valign="top" ><form:hidden path="digCheckbox"
 												id="digCheckbox" /><label
 												<%-- onchange="modifyDig('${listpublicationdigital.size()}')" /><label --%>
-											for="checkbox"><strong>Digital-Magazine</strong></label>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											for="checkbox"><strong>Digital Magazine</strong></label>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 											<c:if test="${!listpublicationdigital.isEmpty()}">
 												<c:forEach items="${listpublicationdigital}"
 													var="subscriptionsprint" varStatus="status">
@@ -181,9 +181,9 @@
 											</c:if></td>
 
 										<td valign="top" width="120"><form:hidden class="floatLeft" path="mailCheckbox"
-												id="mailCheckbox" /><label class="floatLeft" for="checkbox"><strong>E-mails</strong></label>
+												id="mailCheckbox" /><label class="floatLeft" for="checkbox"><strong>Emails</strong></label>
 												<div class="toolTip01 marginLeft5">
-											<span class="classic">Select this option if you want us to send you emails regarding featured career opportunities</span>
+											<span class="classic">Select this option if you want us to send you emails regarding featured career opportunities.</span>
 										</div>&nbsp;&nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 											<c:if test="${!listEmailer.isEmpty()}">
 											 

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.util.List;
@@ -29,16 +36,24 @@ import com.advanceweb.afc.jb.exception.JobBoardException;
 @SessionAttributes("purchaseResumeSearchForm")
 public class PurchaseResumeSearchController {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(PurchaseResumeSearchController.class);
 	
+	/** The Constant PURCHASE_RESUME_SEARCH_FORM. */
 	private static final String PURCHASE_RESUME_SEARCH_FORM = "purchaseResumeSearchForm";
+	
+	/** The Constant PURCHASE_RESUME_SEARCH_POPUP. */
 	private static final String PURCHASE_RESUME_SEARCH_POPUP = "empPurchaseResumeSearchPopup";
+	
+	/** The Constant PAYMENT_METHOD. */
 	private static final String PAYMENT_METHOD = "redirect:/pgiController/callPaymentMethod.html?purchaseType=resumeSearch";
 	
+	/** The resume package service. */
 	@Autowired
 	private ResumePackageService resumePackageService;
 	
+	/** The transform resume package. */
 	@Autowired
 	private TransformResumePackage transformResumePackage;
 	

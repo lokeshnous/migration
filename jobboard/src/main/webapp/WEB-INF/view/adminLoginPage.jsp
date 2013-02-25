@@ -5,6 +5,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en">
     <head>
+        <link rel='shortcut icon' href='<%=request.getContextPath()%>/resources/images/favicon.ico' type="image/x-icon">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>ADVANCE Heathcare Jobs</title>
 	<jsp:include page="common/include.jsp" />
@@ -21,21 +22,21 @@
 				var y = userName.lastIndexOf('.');
 				var result = true;
 				if (userName.length == 0) {
-					$("#errorMsgDiv").text("The Username/Password you have entered is invalid, please enter the correct Username/Password");
+					$("#errorMsgDiv").text("The information you entered was invalid. Please try again.");
 					$("#errorMsgDiv").show();
 					$("#errorDiv").hide();
 					result = false;
 				} 
 				
 				if(userPassword.length == 0){
-					$("#errorMsgDiv").text("The Username/Password you have entered is invalid, please enter the correct Username/Password");
+					$("#errorMsgDiv").text("The information you entered was invalid. Please try again.");
 					$("#errorMsgDiv").show();
 					$("#errorDiv").hide();
 					result = false;
 				}
 				if (x == -1 || y == -1 || (x + 2) >= y) {
 					$("#errorMsgDiv")
-							.text("The Username/Password you have entered is invalid, please enter the correct Username/Password");
+							.text("The information you entered was invalid. Please try again.");
 					$("#errorMsgDiv").show();
 					$("#errorDiv").hide();
 					result = false;
@@ -58,7 +59,7 @@
             <div class="main">
 
 				<div class="header_wrapper">
-				<div class="socialLoginLogo"><a href="<%=request.getContextPath()%>/healthcarejobs/index.html">
+				<div class="socialLoginLogo"><a href="<%=request.getContextPath()%>/healthcare/index.html">
           <div class="logo"></div>
           </a></div> 
 
@@ -72,8 +73,8 @@
 								${error}
 							</div>
 							<div id="errorMsgDiv" class="FormErrorDisplayText" style=" display: none"></div>
-			<h2 class="noTopBottomBorder">Admin Login</h2>
-			<p>Enter your Email Address and Password.</p><br/>
+			<div class="row"><h2 class="noTopBottomBorder">Admin Login</h2></div>
+			<p class="row">Enter your Email Address and Password.</p><br/><br/><br/>
 			
 			    <div class="rowEvenSpacingMargin0">
 				<span class="lableText1">Email Address:</span> 

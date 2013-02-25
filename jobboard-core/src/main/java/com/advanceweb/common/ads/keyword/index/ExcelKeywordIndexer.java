@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.common.ads.keyword.index;
 
 import java.io.FileNotFoundException;
@@ -38,21 +45,25 @@ import com.advanceweb.common.index.lucene.LuceneIndexer;
  */
 public class ExcelKeywordIndexer implements LuceneIndexer {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(ExcelKeywordIndexer.class);
 
 	/*
 	 * The Row containing the topi id (tid)
 	 */
+	/** The Constant TID_ROW. */
 	private static final int TID_ROW = 0;
 	/*
 	 * The row containing the actual content topics
 	 */
+	/** The Constant KEYWORD_ROW. */
 	private static final int KEYWORD_ROW = 1;
 
 	/*
 	 * The path where the file is stored.
 	 */
+	/** The file path. */
 	private String filePath;
 
 	/**

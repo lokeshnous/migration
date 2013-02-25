@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.common.controller;
 
 import java.util.List;
@@ -23,15 +30,19 @@ import com.advanceweb.common.client.ClientContext;
 
 public abstract class AbstractController {
 	
+	/** The user service. */
 	@Autowired
 	private UserService userService;
 
+	/** The profile registration. */
 	@Autowired
 	private ProfileRegistration profileRegistration;
 
+	/** The client application. */
 	@Value("${client.application}")
 	private String clientApplication;
 	
+	/** The check session map. */
 	@Autowired
 	private CheckSessionMap checkSessionMap;
 

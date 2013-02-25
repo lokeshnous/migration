@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common.util;
 
 import java.sql.Date;
@@ -13,6 +20,7 @@ import com.mysql.jdbc.StringUtils;
 @Repository("dateUtils")
 public class DateUtils {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger(DateUtils.class);
 
 	/**

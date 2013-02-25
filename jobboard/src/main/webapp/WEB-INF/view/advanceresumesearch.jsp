@@ -752,11 +752,11 @@
 											Searches:</span><br /> <a href="">Clear All</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a
 										href="">See All</a></li>
 
-									<li>May 16, 2012, 7:00 am<br />Search by: <span class="jb"><a
+									<li>May 16, 2012, 7:00 am<br />Criteria: <span class="jb"><a
 											href="">Physical Therapist</a></span></li>
-									<li>May 17, 2012, 8:00 am<br />Search by: <span class="jb"><a
+									<li>May 17, 2012, 8:00 am<br />Criteria: <span class="jb"><a
 											href="">Pediatric Nurse</a></span></li>
-									<li class="last">May 18, 2012, 9:00 am<br />Search by: <span
+									<li class="last">May 18, 2012, 9:00 am<br />Criteria: <span
 										class="jb"><a href="">ER Nurse</a></span></li>
 								</ul>
 

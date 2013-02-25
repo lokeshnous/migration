@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.mail.service;
 
 import java.util.List;
@@ -37,18 +44,28 @@ import com.advanceweb.afc.jb.user.dao.UserDao;
 @Service("emailService")
 public class MMEmailService implements MMEmail {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(MMEmailService.class);
 	
+	/** The mail sender. */
 	@Autowired
 	private JavaMailSender mailSender;
+	
+	/** The user dao. */
 	@Autowired
 	private UserDao userDAO;
+	
+	/** The email configuration. */
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
+	
+	/** The advance web address. */
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
+	
+	/** The job search service. */
 	@Autowired
 	private JobSearchService jobSearchService;
 	/**
@@ -86,7 +103,7 @@ public class MMEmailService implements MMEmail {
 				}
 			}
 			mailSender.send(message);
-			LOGGER.info("Mail has been sent.");
+			LOGGER.debug("Mail has been sent.");
 		} catch (Exception e) {
 			LOGGER.error("sendEmail Exception : "+e);
 			//throw new MailParseException(e);
@@ -127,7 +144,7 @@ public class MMEmailService implements MMEmail {
 			if ((boolean) stringAlter.nextElement().equals(
 					"keywords")) {
 				keyWord = (String) stringAlter.nextElement();
-				LOGGER.info("Keyword=" + keyWord);
+				LOGGER.debug("Keyword=" + keyWord);
 				inputParams.put(SearchParamDTO.KEYWORDS, keyWord);
 				inputParams.put(SearchParamDTO.SEARCH_NAME,
 						MMJBCommonConstants.KEYWORD_SEARCH);
@@ -155,7 +172,7 @@ public class MMEmailService implements MMEmail {
 					if (null != jobSearchResultDTO
 							&& null != jobSearchResultDTO
 									.getResultList()) {
-						LOGGER.info("Total Count:"
+						LOGGER.debug("Total Count:"
 								+ jobSearchResultDTO
 										.getResultCount());
 						saveSearchedJobsDTO.setKeywords(keyWord);
@@ -215,11 +232,11 @@ public class MMEmailService implements MMEmail {
 							"Error occured while running scheduler job",
 							jbex);
 				}
-				LOGGER.info("sent email to" + merUserdto.getEmailId()
+				LOGGER.debug("sent email to" + merUserdto.getEmailId()
 						+ "with below details");
-				LOGGER.info("Employer Details for KeyWord:....."+saveSearchedJobsDTO.getKeywords());
-				LOGGER.info("Comapny Name:" + searchDTO.getCompany());
-				LOGGER.info("Job Title:" + searchDTO.getJobTitle());
+				LOGGER.debug("Employer Details for KeyWord:....."+saveSearchedJobsDTO.getKeywords());
+				LOGGER.debug("Comapny Name:" + searchDTO.getCompany());
+				LOGGER.debug("Job Title:" + searchDTO.getJobTitle());
 				if (null != saveSearchedJobsDTO.getKeywords()) {
 					jobseekerNewJobEmailBody = jobseekerNewJobEmailBody
 							+ emailConfiguration

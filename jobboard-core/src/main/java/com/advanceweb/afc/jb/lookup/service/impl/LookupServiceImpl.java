@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.lookup.service.impl;
 
 import java.util.List;
@@ -22,6 +29,7 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 public class LookupServiceImpl implements LookupService{
 	
 	
+	/** The location dao. */
 	@Autowired
 	private LocationDAO locationDAO;
 	
@@ -59,11 +67,17 @@ public class LookupServiceImpl implements LookupService{
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.LookupService#getStateFullName(java.lang.String)
+	 */
 	@Override
 	public String getStateFullName(String stateShortForm) {
 		return locationDAO.getStateFullName(stateShortForm);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.LookupService#validateCityStateZip(java.lang.String, java.lang.String, java.lang.String)
+	 */
 	@Override
 	public boolean validateCityStateZip(String city,String state,String zip) throws JobBoardServiceException{
 		boolean valied=false;

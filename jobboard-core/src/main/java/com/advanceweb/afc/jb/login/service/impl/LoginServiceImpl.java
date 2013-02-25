@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.login.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +25,7 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 @Service("loginService")
 public class LoginServiceImpl implements LoginService {
 
+	/** The login form dao. */
 	@Autowired
 	private LoginFormDAO loginFormDAO;
 

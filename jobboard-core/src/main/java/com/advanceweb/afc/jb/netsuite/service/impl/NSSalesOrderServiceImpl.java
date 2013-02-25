@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.netsuite.service.impl;
 
 import java.io.InputStream;
@@ -34,12 +41,15 @@ import com.advanceweb.afc.jb.netsuite.service.NetSuiteMethod;
 @Service("nsSalesOrderService")
 public class NSSalesOrderServiceImpl implements NSSalesOrderService{
 	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(NSSalesOrderServiceImpl.class);
 	
+	/** The net suite method. */
 	@Autowired
 	private NetSuiteMethod netSuiteMethod;
 	
+	/** The net suite helper. */
 	@Autowired
 	private NetSuiteHelper netSuiteHelper;
 	
@@ -58,7 +68,7 @@ public class NSSalesOrderServiceImpl implements NSSalesOrderService{
 		
 		String jsonCustomer = JsonUtil.toJson(nsCustomer);
 		
-		LOGGER.info("Json for Customer=>"+jsonCustomer.toLowerCase(Locale.US));
+		LOGGER.debug("Json for Customer=>"+jsonCustomer.toLowerCase(Locale.US));
 		
 		Map<String, String> queryparamMap = createQueryMap();
 		// As the netsuite service  takes all parameters only in lower case,
@@ -142,7 +152,7 @@ public class NSSalesOrderServiceImpl implements NSSalesOrderService{
 				userDTO.setNsStatusCode(nsStatusCode);
 				userDTO.setNsStatus(String.valueOf(response.getStatus()));
 			}else{
-				LOGGER.info("Transaction is success :"+jsonResponse);
+				LOGGER.debug("Transaction is success :"+jsonResponse);
 				nsStatusCode.put(response.getStatus(), jsonResponse);
 				userDTO.setNsStatusCode(nsStatusCode);
 				userDTO.setNsStatus(String.valueOf(response.getStatus()));

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.job.service.impl;
 
 import java.util.List;
@@ -18,6 +25,7 @@ import com.advanceweb.afc.jb.job.service.JobPostInventoryService;
 @Service("inventoryService")
 public class JobPostInventoryServiceImpl implements JobPostInventoryService{
 
+	/** The inventory dao. */
 	@Autowired
 	private JobPostInventoryDAO inventoryDAO;
 

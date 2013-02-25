@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common;
 
 import java.util.Date;
@@ -11,17 +18,34 @@ import java.util.Date;
 
 public class SaveSearchedJobsDTO {
 
+	/** The save search id. */
 	private int saveSearchID;
+	
+	/** The user id. */
 	private int userID;
+	
+	/** The url. */
 	private String url;
+	
+	/** The search name. */
 	private String searchName;
+	
+	/** The email frequency. */
 	private String emailFrequency;
+	
+	/** The created date. */
 	private Date createdDate;
+	
+	/** The modify date. */
 	private String modifyDate;
+	
+	/** The deleted date. */
 	private Date deletedDate;
 
+	/** The recent url. */
 	private String recentURL;
 
+	/** The keywords. */
 	private String keywords;
 
 	/**
@@ -31,10 +55,26 @@ public class SaveSearchedJobsDTO {
 		return keywords;
 	}
 
+	/**
+	 * Instantiates a new save searched jobs dto.
+	 */
 	public SaveSearchedJobsDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Instantiates a new save searched jobs dto.
+	 *
+	 * @param saveSearchID the save search id
+	 * @param userID the user id
+	 * @param url the url
+	 * @param searchName the search name
+	 * @param emailFrequency the email frequency
+	 * @param createdDate the created date
+	 * @param modifyDate the modify date
+	 * @param deletedDate the deleted date
+	 * @param recentURL the recent url
+	 */
 	public SaveSearchedJobsDTO(int saveSearchID, int userID, String url,
 			String searchName, String emailFrequency, Date createdDate,
 			String modifyDate, Date deletedDate, String recentURL) {
@@ -178,10 +218,20 @@ public class SaveSearchedJobsDTO {
 		this.modifyDate = modifyDate;
 	}
 
+	/**
+	 * Gets the recent url.
+	 *
+	 * @return the recent url
+	 */
 	public String getRecentURL() {
 		return recentURL;
 	}
 
+	/**
+	 * Sets the recent url.
+	 *
+	 * @param recentURL the new recent url
+	 */
 	public void setRecentURL(String recentURL) {
 		this.recentURL = recentURL;
 	}

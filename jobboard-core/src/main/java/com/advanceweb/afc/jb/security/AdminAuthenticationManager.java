@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.security;
 
 import java.util.ArrayList;
@@ -22,11 +29,17 @@ import com.advanceweb.afc.jb.user.dao.UserDao;
  */
 public class AdminAuthenticationManager implements AuthenticationManager{
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(AdminAuthenticationManager.class);
+	
+	/** The user dao. */
 	@Autowired
 	UserDao userDAO;
 	
+	/* (non-Javadoc)
+	 * @see org.springframework.security.authentication.AuthenticationManager#authenticate(org.springframework.security.core.Authentication)
+	 */
 	public Authentication authenticate(Authentication auth)throws AuthenticationException {
 		UserDTO user=null;		
 		
@@ -69,7 +82,12 @@ public class AdminAuthenticationManager implements AuthenticationManager{
 			}
 	}
 	
-	 public Collection<SimpleGrantedAuthority> getAuthorities() {
+	 /**
+ 	 * Gets the authorities.
+ 	 *
+ 	 * @return the authorities
+ 	 */
+ 	public Collection<SimpleGrantedAuthority> getAuthorities() {
 			List<SimpleGrantedAuthority> authList = new ArrayList<SimpleGrantedAuthority>();
 			authList.add(new SimpleGrantedAuthority("ROLE_MERION_ADMIN"));
 			return authList;

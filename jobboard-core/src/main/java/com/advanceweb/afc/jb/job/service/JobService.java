@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.job.service;
 
 
@@ -17,7 +24,10 @@ import com.advanceweb.afc.jb.mail.service.MMEmail;
 @SuppressWarnings("unused")
 public class JobService implements Job {
 
+	/** The mm mail service. */
 	private MMEmail mmMailService;
+	
+	/** The job search adapter. */
 	private JobSearch jobSearchAdapter;
 
 	// Commented to fix PMD issue
@@ -42,6 +52,9 @@ public class JobService implements Job {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.service.Job#retrieveJobPostings()
+	 */
 	public List<JobDTO> retrieveJobPostings(){
 		return null;
 	}

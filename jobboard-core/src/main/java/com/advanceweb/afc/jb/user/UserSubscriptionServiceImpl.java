@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.user;
 
 import java.util.ArrayList;
@@ -26,8 +33,12 @@ import com.advanceweb.afc.jb.user.dao.UserSubscriptionsDAO;
 @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 public class UserSubscriptionServiceImpl implements UserSubscriptionService,
 		CoverLetterService {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger("UserSubscriptionServiceImpl.class");
+	
+	/** The subscriptions dao. */
 	@Autowired
 	private UserSubscriptionsDAO subscriptionsDAO;
 
@@ -135,6 +146,9 @@ public class UserSubscriptionServiceImpl implements UserSubscriptionService,
 		return subscriptionsDAO.coverLetterEditByjobSeeker(rclDTO);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.jobseeker.service.CoverLetterService#getJobOwnerList(int)
+	 */
 	@Override
 	public List<ResCoverLetterDTO> getJobOwnerList(int userId)
 			throws JobBoardServiceException {
@@ -177,11 +191,14 @@ public class UserSubscriptionServiceImpl implements UserSubscriptionService,
 			resDTO = subscriptionsDAO.getCoverList(coverletterId);
 
 		} catch (Exception e) {
-			LOGGER.info("Error for employee registration edit");
+			LOGGER.error("Error for employee registration edit",e);
 		}
 		return resDTO;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.jobseeker.service.CoverLetterService#fetchPublicCoverLetter(long, java.lang.String)
+	 */
 	@Override
 	public ResCoverLetterDTO fetchPublicCoverLetter(long jobSeekerId,String coverLetterId) {
 		return subscriptionsDAO.fetchPublicCoverLetter(jobSeekerId,coverLetterId);
@@ -216,6 +233,9 @@ public class UserSubscriptionServiceImpl implements UserSubscriptionService,
 		return subscriptionsDAO.getEnewsLetterSubList();
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.UserSubscriptionService#getSubEmailerList()
+	 */
 	@Override
 	public List<DropDownDTO> getSubEmailerList(){
 		return subscriptionsDAO.getSubEmailerList();
@@ -235,24 +255,36 @@ public class UserSubscriptionServiceImpl implements UserSubscriptionService,
 				facilityId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.UserSubscriptionService#getSubscriptionscheck(int)
+	 */
 	@Override
 	public List<DropDownDTO> getSubscriptionscheck(int userId) {
 		// TODO Auto-generated method stub
 		return subscriptionsDAO.getSubscriptionscheck(userId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.UserSubscriptionService#getSubscriptionsdigital(int)
+	 */
 	@Override
 	public List<DropDownDTO> getSubscriptionsdigital(int userId) {
 		// TODO Auto-generated method stub
 		return subscriptionsDAO.getSubscriptionsdigital(userId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.UserSubscriptionService#getSubscriptionsletter(int)
+	 */
 	@Override
 	public List<DropDownDTO> getSubscriptionsletter(int userId) {
 		// TODO Auto-generated method stub
 		return subscriptionsDAO.getSubscriptionsletter(userId);
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.UserSubscriptionService#getSubscriptionsEmailer(int)
+	 */
 	@Override
 	public List<DropDownDTO> getSubscriptionsEmailer(int userId){
 		return subscriptionsDAO.getSubscriptionsEmailer(userId);
@@ -270,6 +302,9 @@ public class UserSubscriptionServiceImpl implements UserSubscriptionService,
 		return subscriptionsDAO.getSelectedSub(userId);
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.UserSubscriptionService#getParentId(int)
+	 */
 	@Override
 	public int getParentId(int facilityId){
 		return subscriptionsDAO.getParentId(facilityId);

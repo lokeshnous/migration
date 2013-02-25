@@ -93,7 +93,7 @@
 					<div class="featuredEmployerRight">
 						<div class="row">
 							<div class="featuredEmployerLogoArea">
-							<img src="<%=request.getContextPath()%>/healthcarejobs/viewImage.html?id=${employerProfileManagementForm.logoPath}"
+							<img src="<%=request.getContextPath()%>/healthcare/viewImage.html?id=${employerProfileManagementForm.logoPath}"
 								alt="${employerProfileManagementForm.companyName}">
 								<span>${employerProfileManagementForm.companyName}</span>
 								</div>

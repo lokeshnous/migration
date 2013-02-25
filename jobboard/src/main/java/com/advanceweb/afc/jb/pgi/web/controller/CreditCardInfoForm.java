@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.pgi.web.controller;
 
 /**
@@ -7,11 +14,22 @@ package com.advanceweb.afc.jb.pgi.web.controller;
 public class CreditCardInfoForm {
 
 	// Credit card information
+	/** The name. */
 	private String name;
+	
+	/** The credit card no. */
 	private String creditCardNo;
+	
+	/** The card type. */
 	private String cardType;
+	
+	/** The exp month. */
 	private String expMonth;
+	
+	/** The exp year. */
 	private String expYear;
+	
+	/** The securiy code. */
 	private String securiyCode;
 
 	/**

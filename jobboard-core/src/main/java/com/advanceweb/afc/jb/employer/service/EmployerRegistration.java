@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.service;
 
 import java.util.ArrayList;
@@ -28,11 +35,16 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
 @Service("employerRegistration")
 public class EmployerRegistration implements ProfileRegistration,
 		EmloyerRegistartionService {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger("EmployerRegistration.class");
+	
+	/** The employer registration dao. */
 	@Autowired
 	public EmployerRegistrationDAO employerRegistrationDAO;
 
+	/** The employer delegate. */
 	@Autowired
 	private EmployerDelegate employerDelegate;
 
@@ -47,7 +59,7 @@ public class EmployerRegistration implements ProfileRegistration,
 			EmployerProfileDTO empProfileDTO = (EmployerProfileDTO) profileDTO;
 			return employerDelegate.createUser(empProfileDTO);
 		} catch (JobBoardServiceException e) {
-			LOGGER.info("Error occurred while interaction with NetSuite.. Please try again.");
+			LOGGER.error("Error occurred while interaction with NetSuite.. Please try again.",e);
 			return null;
 		}
 
@@ -77,34 +89,49 @@ public class EmployerRegistration implements ProfileRegistration,
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.ProfileRegistration#changePassword(com.advanceweb.afc.jb.common.ProfileDTO)
+	 */
 	@Override
 	public boolean changePassword(ProfileDTO profileDTO) {
 		try {
 			EmployerProfileDTO empProfileDTO = (EmployerProfileDTO) profileDTO;
 			return employerRegistrationDAO.changePassword(empProfileDTO);
 		} catch (Exception e) {
-			LOGGER.info("Error occurred while interaction with NetSuite.. Please try again.");
+			LOGGER.error("Error occurred while interaction with NetSuite.. Please try again.",e);
 		}
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.ProfileRegistration#validatePassword(com.advanceweb.afc.jb.common.ProfileDTO)
+	 */
 	@Override
 	public boolean validatePassword(ProfileDTO profileDTO) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.ProfileRegistration#validateEmail(java.lang.String)
+	 */
 	@Override
 	public boolean validateEmail(String email) {
 		return employerRegistrationDAO.validateEmail(email);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.ProfileRegistration#getProfileAttributes()
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ProfileDTO getProfileAttributes() {
 		return employerRegistrationDAO.getProfileAttributes();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.service.EmloyerRegistartionService#getEmployeeData(int, java.lang.String)
+	 */
 	@Override
 	public List<AdmFacilityContact> getEmployeeData(int userId,
 			String contactType) {
@@ -114,7 +141,7 @@ public class EmployerRegistration implements ProfileRegistration,
 			accountProfileDTO = employerRegistrationDAO.getEmployeeData(userId,
 					contactType);
 		} catch (Exception e) {
-			LOGGER.info("Error for employee registration edit");
+			LOGGER.error("Error for employee registration edit",e);
 		}
 		return accountProfileDTO;
 	}
@@ -146,7 +173,7 @@ public class EmployerRegistration implements ProfileRegistration,
 			}
 
 		} catch (JobBoardServiceException jbe) {
-			LOGGER.info("Error occurred while interaction with NetSuite.. Please try again.");
+			LOGGER.error("Error occurred while interaction with NetSuite.. Please try again.",jbe);
 
 		}
 
@@ -154,6 +181,9 @@ public class EmployerRegistration implements ProfileRegistration,
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.service.EmloyerRegistartionService#getEmployeePrimaryKey(int, java.lang.String)
+	 */
 	@Override
 	public AdmFacilityContactDTO getEmployeePrimaryKey(int userId,
 			String contactType) {
@@ -163,11 +193,14 @@ public class EmployerRegistration implements ProfileRegistration,
 			accountProfileDTO = employerRegistrationDAO.getEmployeePrimaryKey(
 					userId, contactType);
 		} catch (Exception e) {
-			LOGGER.info("Error for employee registration edit");
+			LOGGER.error("Error for employee registration edit",e);
 		}
 		return accountProfileDTO;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.ProfileRegistration#validateProfileAttributes(int)
+	 */
 	@Override
 	public boolean validateProfileAttributes(int jobseekerId) {
 

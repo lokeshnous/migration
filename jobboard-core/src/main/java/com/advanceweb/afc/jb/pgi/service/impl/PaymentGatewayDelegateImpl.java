@@ -23,16 +23,23 @@ import com.advanceweb.afc.jb.pgi.service.PaymentGatewayDelegate;
  */
 @Service("paymentGatewayDelegate")
 public class PaymentGatewayDelegateImpl implements PaymentGatewayDelegate{
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(EmployerDelegateImpl.class);
 	
+	/** The payment gateway dao. */
 	@Autowired(required = true)
 	private PaymentGatewayDao paymentGatewayDao;
 	
+	/** The ns sales order service. */
 	@Autowired(required = true)
 	
 	private NSSalesOrderService nsSalesOrderService;
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.pgi.service.PaymentGatewayDelegate#createOrder(com.advanceweb.afc.jb.common.OrderDetailsDTO)
+	 */
 	@Override
 	public UserDTO createOrder(OrderDetailsDTO orderDetailsDTO) {
 		

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.user.web.controller;
 
 import java.util.ArrayList;
@@ -47,27 +54,35 @@ import com.advanceweb.afc.jb.user.UserService;
 @RequestMapping("/alerts")
 public class UserAlertController {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(UserAlertController.class);
 
+	/** The alert service. */
 	@Autowired
 	private UserAlertService alertService;
 
+	/** The facility service. */
 	@Autowired
 	private FacilityService facilityService;
 
+	/** The permission service. */
 	@Autowired
 	private ManageAccessPermissionService permissionService;
 
+	/** The transfer user alert. */
 	@Autowired
 	private TransferUserAlert transferUserAlert;
 
+	/** The user service. */
 	@Autowired
 	private UserService userService;
 
+	/** The data delete success. */
 	@Value("${dataDeleteSuccess}")
 	private String dataDeleteSuccess;
 
+	/** The data delete failure. */
 	@Value("${dataDeleteFailure}")
 	private String dataDeleteFailure;
 

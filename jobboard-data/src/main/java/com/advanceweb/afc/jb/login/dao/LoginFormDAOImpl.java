@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.login.dao;
 
 import java.util.List;
@@ -28,9 +35,18 @@ import com.advanceweb.afc.jb.data.entities.MerUser;
 @Repository("loginFormDAO")
 public class LoginFormDAOImpl implements LoginFormDAO {
 
+	/** The hibernate template tracker. */
 	private HibernateTemplate hibernateTemplateTracker;
+	
+	/** The hibernate template. */
 	private HibernateTemplate hibernateTemplate;
 
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactoryMerionTracker the session factory merion tracker
+	 * @param sessionFactory the session factory
+	 */
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,

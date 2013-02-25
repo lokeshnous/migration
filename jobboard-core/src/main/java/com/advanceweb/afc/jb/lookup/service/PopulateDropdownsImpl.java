@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.lookup.service;
 
 import java.util.List;
@@ -32,39 +39,58 @@ import com.advanceweb.afc.jb.lookup.dao.PopulateDropdownsDAO;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 public class PopulateDropdownsImpl implements PopulateDropdowns {
 
+	/** The populate dropdowns dao. */
 	@Autowired
 	private PopulateDropdownsDAO populateDropdownsDAO;
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#getCountryList()
+	 */
 	@Override
 	public List<CountryDTO> getCountryList() {
 
 		return populateDropdownsDAO.getCountryList();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#getEmployementInfoList()
+	 */
 	@Override
 	public List<EmploymentInfoDTO> getEmployementInfoList() {
 
 		return populateDropdownsDAO.getEmployementInfoList();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#getSubscriptionsList()
+	 */
 	@Override
 	public List<DropDownDTO> getSubscriptionsList() {
 
 		return populateDropdownsDAO.getSubscriptionsList();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#getGenderList()
+	 */
 	@Override
 	public List<GenderDTO> getGenderList() {
 
 		return populateDropdownsDAO.getGenderList();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#getVeteranStatusList()
+	 */
 	@Override
 	public List<VeteranStatusDTO> getVeteranStatusList() {
 
 		return populateDropdownsDAO.getVeteranStatusList();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#getEthenticityList()
+	 */
 	@Override
 	public List<EthenticityDTO> getEthenticityList() {
 
@@ -167,11 +193,17 @@ public class PopulateDropdownsImpl implements PopulateDropdowns {
 		return populateDropdownsDAO.getJobPostedDateList();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#getJobAlertsList()
+	 */
 	@Override
 	public List<JobAlertsDTO> getJobAlertsList() {
 		return populateDropdownsDAO.getJobAlertsList();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#getMagazinesList()
+	 */
 	@Override
 	public List<MagazinesDTO> getMagazinesList() {
 		return populateDropdownsDAO.getMagazinesList();
@@ -190,33 +222,51 @@ public class PopulateDropdownsImpl implements PopulateDropdowns {
 		return populateDropdownsDAO.getResumeVisibilityList();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#populateDropdown(java.lang.String)
+	 */
 	@Override
 	public List<DropDownDTO> populateDropdown(String dropDownName) {
 
 		return populateDropdownsDAO.populateDropdown(dropDownName);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#populateResumeDropdown(java.lang.String)
+	 */
 	@Override
 	public List<ResumeAttribListDTO> populateResumeDropdown(String dropdownName) {
 		return populateDropdownsDAO.populateResumeDropdown(dropdownName);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#populateResumeBuilderDropdowns(java.lang.String)
+	 */
 	@Override
 	public List<DropDownDTO> populateResumeBuilderDropdowns(String dropdownName) {
 		return populateDropdownsDAO
 				.populateResumeBuilderDropdowns(dropdownName);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#populateEducationDegreesDropdowns()
+	 */
 	@Override
 	public List<DropDownDTO> populateEducationDegreesDropdowns() {
 		return populateDropdownsDAO.populateEducationDegreesDropdowns();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#populateJobOwnersDropdown(int)
+	 */
 	@Override
 	public List<DropDownDTO> populateJobOwnersDropdown(int facilityId) {
 		return populateDropdownsDAO.populateJobOwnersDropdown(facilityId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#populateBrandingTemplateDropdown(int, int)
+	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 	public List<DropDownDTO> populateBrandingTemplateDropdown(int facilityId,
@@ -226,29 +276,44 @@ public class PopulateDropdownsImpl implements PopulateDropdowns {
 				facilityId, userId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#populateJobPostingTypeDropdowns(int)
+	 */
 	@Override
 	public List<DropDownDTO> populateJobPostingTypeDropdowns(int facilityId) {
 
 		return populateDropdownsDAO.populateJobPostingTypeDropdowns(facilityId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#populateCityAutoComplete(java.lang.String)
+	 */
 	@Override
 	public List<String> populateCityAutoComplete(String city) {
 
 		return populateDropdownsDAO.populateCityAutoComplete(city);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#populateStateAutoComplete(java.lang.String)
+	 */
 	@Override
 	public String populateStateAutoComplete(String city) {
 
 		return populateDropdownsDAO.populateStateAutoComplete(city);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#populatePostalCodeAutoComplete(java.lang.String)
+	 */
 	@Override
 	public List<String> populatePostalCodeAutoComplete(String postalCode) {
 		return populateDropdownsDAO.populatePostalCodeAutoComplete(postalCode);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#populateCompanyNames(int, boolean)
+	 */
 	@Override
 	public List<DropDownDTO> populateCompanyNames(int facilityId,
 			boolean isHighlightFacility) {
@@ -256,33 +321,51 @@ public class PopulateDropdownsImpl implements PopulateDropdowns {
 				isHighlightFacility);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#populateTemplateAutoComplete(java.lang.String)
+	 */
 	@Override
 	public List<DropDownDTO> populateTemplateAutoComplete(String company) {
 
 		return populateDropdownsDAO.populateTemplateAutoComplete(company);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#getPostalCode(java.lang.String, java.lang.String)
+	 */
 	@Override
 	public String getPostalCode(String city, String state) {
 		return populateDropdownsDAO.getPostalCode(city, state);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#getCountry(java.lang.String, java.lang.String, java.lang.String)
+	 */
 	@Override
 	public String getCountry(String city, String state, String postalCode) {
 
 		return populateDropdownsDAO.getCountry(city, state, postalCode);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#populateLocation(java.lang.String)
+	 */
 	@Override
 	public LocationDTO populateLocation(String postalCode) {
 		return populateDropdownsDAO.populateLocation(postalCode);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#getJobStatusList()
+	 */
 	@Override
 	public Map<String, String> getJobStatusList() {
 		return populateDropdownsDAO.getJobStatusList();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.lookup.service.PopulateDropdowns#populateJobPostingTypeDropdown(int, int)
+	 */
 	@Override
 	public List<DropDownDTO> populateJobPostingTypeDropdown(int facilityId,
 			int jobPostType) {

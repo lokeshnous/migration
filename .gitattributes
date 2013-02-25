@@ -95,6 +95,8 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/AVScannerHelper.
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/JsonUtil.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/MMJBCommonConstants.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/MMUtils.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/XmlUrl.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/XmlUrlSet.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/constants/PageNames.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/constants/RequestHeaderNames.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/dto/CreateResumeDTO.java -text
@@ -577,6 +579,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/job/web/controller/JobApplicationFo
 jobboard/src/main/java/com/advanceweb/afc/jb/job/web/controller/JobSearchResultForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/job/web/controller/JobSearchViewDetailForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/job/web/controller/JobsController.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/job/web/controller/SiteMapController.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/ApplyJobForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/CheckSessionMap.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/ContactInfoForm.java -text
@@ -790,6 +793,7 @@ jobboard/src/main/webapp/WEB-INF/view/manageJobSeekerContent.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/manageJobSeekerFolder.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/manageJobSeekerFolderView.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/manageJobSeekers.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/manageLoggerLevel.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/manageResumePopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/managefacility.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/metricsDetails.jsp -text
@@ -831,6 +835,7 @@ jobboard/src/main/webapp/resources/css/screen.css -text
 jobboard/src/main/webapp/resources/css/site.css -text
 jobboard/src/main/webapp/resources/images/01_ascending.gif -text
 jobboard/src/main/webapp/resources/images/01_descending.gif -text
+jobboard/src/main/webapp/resources/images/ADVANCE-Favicon.png -text
 jobboard/src/main/webapp/resources/images/Addbutton.png -text
 jobboard/src/main/webapp/resources/images/ArrowLeft.png -text
 jobboard/src/main/webapp/resources/images/ArrowRight.png -text
@@ -866,6 +871,7 @@ jobboard/src/main/webapp/resources/images/ads/300x250ad1.png -text
 jobboard/src/main/webapp/resources/images/ads/300x250ad2.png -text
 jobboard/src/main/webapp/resources/images/ads/Thumbs.db -text
 jobboard/src/main/webapp/resources/images/ads/banner_ad_fpo.png -text
+jobboard/src/main/webapp/resources/images/advancePass.png -text
 jobboard/src/main/webapp/resources/images/ajaxLoader.gif -text
 jobboard/src/main/webapp/resources/images/careerResume.jpg -text
 jobboard/src/main/webapp/resources/images/carrerMessenger.png -text

@@ -23,7 +23,8 @@
 	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
 <script type="text/javascript">
 tinyMCE.init({
-	mode : "textareas",
+	mode : "specific_textareas",
+	editor_selector : "mceEditor",
 	theme : "advanced",
 	theme_advanced_buttons1 : "mybutton,bold,italic,underline,separator,strikethrough,justifyleft,justifycenter,justifyright, justifyfull,bullist,numlist,undo,redo,link,unlink",
 	theme_advanced_buttons2 : "",
@@ -405,6 +406,9 @@ function appendURLForATS(){
 							$('#stateDpId').val("");
 							$('#countryDpId').val("");
 						});
+						
+						//Need to set default country as USA
+						$('#countryDpId').val("USA");
 						
 						if ($("#readOnly").val() == 'true') {
 							$('#postNewJobFormId').each(
@@ -792,14 +796,14 @@ function appendURLForATS(){
 
 								<div class="row marginLeft30 marginTop8 width450">
 									<span class="floatLeft">
-										<p>Choose your preferred method to receive application.</p>
+										<p>Choose your preferred method to receive applications.</p>
 									</span><span class="required requiredTopmargin2">(Required)</span>
 								</div>
 								<div class="rowEvenNewSpacing">
-									<span class="required lableText6-span"> <form:radiobutton
+									<span class="required width25p100"> <form:radiobutton
 											path="applMethod" class="marginLeft30" value="ApplyToEMail"
 											id="applyToEMailId" />
-									</span><span class="lableText6">Apply-to Email:</span>
+									</span><span class="splLableText" style="width:35px">Email:</span>
 									<form:input path="applyEmail"
 										class="job_seeker_password textBox350" id="applyToEMailTSId"
 										readonly="readonly" />
@@ -808,22 +812,22 @@ function appendURLForATS(){
 										address where you would like resumes to be sent.</span>
 								</div>
 								<div class="rowEvenNewSpacing">
-									<span class="required lableText6-span"> <form:radiobutton
+									<span class="required width25p100"> <form:radiobutton
 											path="applMethod" class="marginLeft30" value="ApplyToURL"
 											id="applyToURLId" />
-									</span><span class="lableText6">Apply-to URL:</span>
+									</span><span class="splLableText" style="width:35px">URL:</span>
 									<form:input path="applyUrl"
 										class="job_seeker_password textBox350" id="applyToURLTSId"
 										onblur="appendURL()" readonly="readonly" />
 									<span class="required requiredWidth">Enter the URL where
-										you would like to send job-seekers to apply.</span>
+										you would like to send job seekers to apply.</span>
 								</div>
 
 								<div class="rowEvenNewSpacing">
-									<span class="required lableText6-span"> <form:radiobutton
+									<span class="required width25p100"> <form:radiobutton
 											path="applMethod" class="marginLeft30" value="ApplyToATS"
 											id="applyToATSId" />
-									</span><span class="lableText6">Apply-to ATS :</span>
+									</span><span class="splLableText" style="width:35px">ATS :</span>
 									<form:input path="atsUrl"
 										class="job_seeker_password textBox350" id="applyToATSIPId"
 										onblur="appendURLForATS()" readonly="readonly" />
@@ -848,7 +852,7 @@ function appendURLForATS(){
 												path="bHideCity" />
 										</span>
 										<div class="Auto">
-											<p>Hide the city from job-seekers</p>
+											<p>Hide the city from job seekers</p>
 										</div>
 									</div>
 								</div>
@@ -867,13 +871,13 @@ function appendURLForATS(){
 												path="bHideState" />
 										</span>
 										<div class="Auto">
-											<p>Hide the state from job-seekers</p>
+											<p>Hide the state from job seekers</p>
 										</div>
 									</div>
 
 								</div>
 								<div class="rowEvenNewSpacing">
-									<span class="lableText3">Job Zip Code:</span>
+									<span class="lableText3">Job ZIP Code:</span>
 									<form:input path="jobZipCode"
 										class="job_seeker_password textBox350" id="zipCodeITId"
 										maxlength="5" />
@@ -882,7 +886,7 @@ function appendURLForATS(){
 												path="bHideZipCode" />
 										</span>
 										<div class="Auto">
-											<p>Hide the zip code from job-seekers</p>
+											<p>Hide the ZIP Code from job seekers</p>
 										</div>
 									</div>
 								</div>
@@ -899,7 +903,7 @@ function appendURLForATS(){
 												path="bHideCountry" />
 										</span>
 										<div class="Auto">
-											<p>Hide the country from job-seekers</p>
+											<p>Hide the country from job seekers</p>
 										</div>
 									</div>
 								</div>
@@ -936,15 +940,25 @@ function appendURLForATS(){
 										<span class="classic">If this position requires
 											specific skills, enter them here. Use brief keywords and
 											phrases like "Triage" and "Emergency Care" to attract
-											job-seekers who are including skills in their search.</span>
+											job seekers who are including skills in their search.</span>
 									</div>
 								</div>
 								<div class="rowEvenNewSpacing">
 									<span class="lableText3">Job Description :</span>
-									<div class="input_grp6">
-										<form:textarea path="jobDesc" id="jobDesc"
-											class="textareaBoxCResume width450" rows="3" cols="45" />
-									</div>
+									<c:if test="${jobPostForm.viewPage == 'false'}">
+										<div class="input_grp6">
+											<form:textarea path="jobDesc" id="jobDesc"
+												class="mceEditor textareaBoxCResume width450" rows="3"
+												cols="45" />
+										</div>
+									</c:if>
+									<c:if test="${jobPostForm.viewPage == 'true'}">
+										<div class="input_grp6">
+											<form:textarea path="jobDesc" id="jobDesc"
+												class="textareaBoxCResume width450" rows="3" cols="45" />
+										</div>
+									</c:if>
+
 									<span class="required">(Required)</span>
 									<div class="toolTip01 colorPkrAreaToolTip">
 										<span class="classic">Enter all of the pertinent

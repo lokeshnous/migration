@@ -7,8 +7,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>ADVANCE Heathcare Jobs</title>
-
-<jsp:include page="common/include.jsp" />
 <!-- Common js files  -->
 <script type="text/javascript" src="../resources/js/common/common.js"></script>
 <script type="text/javascript">
@@ -29,7 +27,12 @@ tinyMCE.init({
 
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
-		
+		var resVisibility = <%= request.getAttribute("resVisibility")%>
+		if (resVisibility>0){
+			$("#managePrivacy").show();
+		}else{
+			$("#managePrivacy").hide();
+		}
 		 
 		 $("#update").click(function(){
 			 selectAllElementsInDualList();

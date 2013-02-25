@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common;
 
 import java.io.Serializable;
@@ -10,15 +17,31 @@ import java.io.Serializable;
  */
 public class ManageJobSeekerDTO implements Serializable {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** The resume id. */
 	private int resumeId;
+	
+	/** The resume name. */
 	private String resumeName;
+	
+	/** The rating. */
 	private int rating;
+	
+	/** The application status. */
 	private int applicationStatus;
+	
+	/** The saved date. */
 	private String savedDate;
+	
+	/** The folder id. */
 	private int folderId;
+	
+	/** The folder name. */
 	private String folderName;
+	
+	/** The folder resume id. */
 	private int folderResumeId;
 	/**
 	 * @return the resumeId

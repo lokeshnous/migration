@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import net.sf.json.JSONObject;
@@ -18,9 +25,11 @@ import com.advanceweb.afc.jb.resume.web.controller.SearchResumeForm;
 @Component("resumeSearchValidator")
 public class ResumeSearchValidator {
 
+	/** The ajax msg. */
 	@Value("${ajaxMsg}")
 	private String ajaxMsg;
 	
+	/** The resume search validate keyword. */
 	@Value("${resumeSearchValidateKeyword}")
 	private String resumeSearchValidateKeyword;
 

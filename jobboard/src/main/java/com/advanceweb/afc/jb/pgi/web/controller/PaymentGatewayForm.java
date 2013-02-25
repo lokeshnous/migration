@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.pgi.web.controller;
 
 import com.advanceweb.afc.jb.employer.web.controller.PurchaseJobPostForm;
@@ -12,28 +19,48 @@ import com.advanceweb.afc.jb.employer.web.controller.PurchaseResumeSearchForm;
  */
 public class PaymentGatewayForm {
 
+	/** The ns customer id. */
 	private int nsCustomerId;
+	
+	/** The payment method. */
 	private String paymentMethod;
 	
 	//For Account address
+	/** The account address form. */
 	public AccountAddressForm accountAddressForm;
 	//For Billing address
+	/** The billing address form. */
 	public BillingAddressForm billingAddressForm;
 	//For Invoice for
+	/** The invoice form. */
 	public InvoiceForm invoiceForm;
 	//For Credit Card
+	/** The credit card info form. */
 	public CreditCardInfoForm creditCardInfoForm;
 	
+	/** The purchase type. */
 	private String purchaseType;
 	
+	/** The purchase job post form. */
 	private PurchaseJobPostForm purchaseJobPostForm;
 
+	/** The purchase resume search form. */
 	private PurchaseResumeSearchForm purchaseResumeSearchForm;
 	
+	/**
+	 * Gets the ns customer id.
+	 *
+	 * @return the ns customer id
+	 */
 	public int getNsCustomerId() {
 		return nsCustomerId;
 	}
 
+	/**
+	 * Sets the ns customer id.
+	 *
+	 * @param nsCustomerId the new ns customer id
+	 */
 	public void setNsCustomerId(int nsCustomerId) {
 		this.nsCustomerId = nsCustomerId;
 	}
@@ -126,19 +153,39 @@ public class PaymentGatewayForm {
 		this.purchaseJobPostForm = purchaseJobPostForm;
 	}
 
+	/**
+	 * Gets the purchase resume search form.
+	 *
+	 * @return the purchase resume search form
+	 */
 	public PurchaseResumeSearchForm getPurchaseResumeSearchForm() {
 		return purchaseResumeSearchForm;
 	}
 
+	/**
+	 * Sets the purchase resume search form.
+	 *
+	 * @param purchaseResumeSearchForm the new purchase resume search form
+	 */
 	public void setPurchaseResumeSearchForm(
 			PurchaseResumeSearchForm purchaseResumeSearchForm) {
 		this.purchaseResumeSearchForm = purchaseResumeSearchForm;
 	}
 
+	/**
+	 * Gets the purchase type.
+	 *
+	 * @return the purchase type
+	 */
 	public String getPurchaseType() {
 		return purchaseType;
 	}
 
+	/**
+	 * Sets the purchase type.
+	 *
+	 * @param purchaseType the new purchase type
+	 */
 	public void setPurchaseType(String purchaseType) {
 		this.purchaseType = purchaseType;
 	}

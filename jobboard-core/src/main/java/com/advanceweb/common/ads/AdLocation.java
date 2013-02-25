@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.common.ads;
 
 /**
@@ -16,61 +23,136 @@ package com.advanceweb.common.ads;
  * 
  */
 public class AdLocation {
+	
+	/** The city. */
 	private String city;
+	
+	/** The state. */
 	private String state;
+	
+	/** The label. */
 	private String label;
+	
+	/** The latitude. */
 	private Float latitude;
+	
+	/** The longitude. */
 	private Float longitude;
+	
+	/** The country. */
 	private String country;
 
+	/**
+	 * Gets the city.
+	 *
+	 * @return the city
+	 */
 	public String getCity() {
 		return city;
 	}
 
+	/**
+	 * Sets the city.
+	 *
+	 * @param city the new city
+	 */
 	public void setCity(String city) {
 		this.city = city;
 	}
 
+	/**
+	 * Gets the state.
+	 *
+	 * @return the state
+	 */
 	public String getState() {
 		return state;
 	}
 
+	/**
+	 * Sets the state.
+	 *
+	 * @param state the new state
+	 */
 	public void setState(String state) {
 		this.state = state;
 	}
 
+	/**
+	 * Gets the label.
+	 *
+	 * @return the label
+	 */
 	public String getLabel() {
 		return label;
 	}
 
+	/**
+	 * Sets the label.
+	 *
+	 * @param label the new label
+	 */
 	public void setLabel(String label) {
 		this.label = label;
 	}
 
+	/**
+	 * Gets the latitude.
+	 *
+	 * @return the latitude
+	 */
 	public Float getLatitude() {
 		return latitude;
 	}
 
+	/**
+	 * Sets the latitude.
+	 *
+	 * @param latitude the new latitude
+	 */
 	public void setLatitude(Float latitude) {
 		this.latitude = latitude;
 	}
 
+	/**
+	 * Gets the longitude.
+	 *
+	 * @return the longitude
+	 */
 	public Float getLongitude() {
 		return longitude;
 	}
 
+	/**
+	 * Sets the longitude.
+	 *
+	 * @param longitude the new longitude
+	 */
 	public void setLongitude(Float longitude) {
 		this.longitude = longitude;
 	}
 
+	/**
+	 * Gets the country.
+	 *
+	 * @return the country
+	 */
 	public String getCountry() {
 		return country;
 	}
 
+	/**
+	 * Sets the country.
+	 *
+	 * @param country the new country
+	 */
 	public void setCountry(String country) {
 		this.country = country;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -84,6 +166,9 @@ public class AdLocation {
 		return builder.toString();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
@@ -96,6 +181,9 @@ public class AdLocation {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		if (label == null) {

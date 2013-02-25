@@ -18,7 +18,9 @@
 	<util:properties id="emailConfiguration" location="classpath:email.properties" />
 	<!-- For SOLR search -->
 	<util:properties id="solrConfiguration" location="classpath:solr.properties" />
-
+	<!-- For Logger -->
+	<util:properties id="logConfiguration" location="classpath:log4j.properties" />
+	
 	<!-- Search parameter builder. Initialized with search name and the order 
 		of the place-holder -->
 	<bean id="searchParamBuilder"
@@ -40,9 +42,9 @@
 	<bean id="jobSearchIndex" class="com.advanceweb.afc.jb.search.SearchIndex">
 
 		<!-- If Solr mapped to jobPost -->
-		<property name="name" value="jobPost" />
+		<property name="name" value="jobPostJB2" />
 		<property name="group" value="careers" />
-		<property name="environment" value="DEV" />
+		<property name="environment" value="PRD" />
 	</bean>
 
 	<bean id="jobSearchDelegate"

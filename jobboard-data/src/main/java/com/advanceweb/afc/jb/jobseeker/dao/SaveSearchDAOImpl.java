@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.jobseeker.dao;
 
 import java.util.ArrayList;
@@ -26,17 +33,27 @@ import com.advanceweb.afc.jb.jobseeker.helper.SaveSearchConversionHelper;
 @Repository("saveSearchDAO")
 public class SaveSearchDAOImpl implements SaveSearchDAO {
 
+	/** The save search conversion helper. */
 	@Autowired
 	private SaveSearchConversionHelper saveSearchConversionHelper;
 
+	/** The hibernate template. */
 	private HibernateTemplate hibernateTemplate;
 
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactory the new hibernate template
+	 */
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
 	}
 
 	// To Save the save searched job details to DB
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.jobseeker.dao.SaveSearchDAO#saveSearchedJObs(com.advanceweb.afc.jb.common.SaveSearchedJobsDTO)
+	 */
 	public SaveSearchedJobsDTO saveSearchedJObs(SaveSearchedJobsDTO saveSearchedJobsDTO) {
 		// Transforming the saveSearchedJobsDTO to Save Search Entity
 		AdmSaveSearch searchResults = saveSearchConversionHelper
@@ -178,6 +195,9 @@ public class SaveSearchDAOImpl implements SaveSearchDAO {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.jobseeker.dao.SaveSearchDAO#updateSearchName(int, java.lang.String)
+	 */
 	@Override
 	public void updateSearchName(int id, String searchName) {
 		// TODO Auto-generated method stub

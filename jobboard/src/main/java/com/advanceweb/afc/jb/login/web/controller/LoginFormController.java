@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.login.web.controller;
 
 import java.math.BigInteger;
@@ -57,51 +64,68 @@ import com.advanceweb.common.client.ClientContext;
 @SessionAttributes("loginForm")
 public class LoginFormController extends AbstractController{
 
+	/** The jobseeker forgot pwd sub. */
 	@Value("${jobseekerForgotPwdSub}")
 	private String jobseekerForgotPwdSub;
 
+	/** The jobseeker forgot pwd body. */
 	@Value("${jobseekerForgotPwdBody}")
 	private String jobseekerForgotPwdBody;
 	
+	/** The ad service. */
 	@Autowired
 	private AdService adService;
 
+	/** The login err msg. */
 	@Value("${loginErrMsg}")
 	private String loginErrMsg;
 	
+	/** The social login error msg. */
 	@Value("${socialLoginErrorMsg}")
 	private String socialLoginErrorMsg;
 
+	/** The dothtml extention. */
 	@Value("${dothtmlExtention}")
 	private String dothtmlExtention;
 
+	/** The navigation path. */
 	@Value("${navigationPath}")
 	private String navigationPath;
 
+	/** The invalidmail. */
 	@Value("${invalidemail}")
 	private String invalidmail;
 
+	/** The emptyerrormsg. */
 	@Value("${notempty}")
 	private String emptyerrormsg;
 
+	/** The advance web address. */
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger("LoginFormController.class");
 
+	/** The email service. */
 	@Autowired
 	private MMEmailService emailService;
 
+	/** The login service. */
 	@Autowired
 	private LoginService loginService;
 
+	/** The login validator. */
 	@Autowired
 	private LoginFormValidator loginValidator;
 
+	/** The email configuration. */
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
+	
+	/** The user service. */
 	@Autowired
 	private UserService userService;
 	
@@ -331,6 +355,12 @@ public class LoginFormController extends AbstractController{
 	
 	
 	
+	/**
+	 * Redirect to dashbord.
+	 *
+	 * @param page the page
+	 * @return the redirect view
+	 */
 	@RequestMapping(value = "/mailLogin", method = RequestMethod.GET)
 	public RedirectView redirectToDashbord(@RequestParam(value = "page", required = false) String page) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -369,13 +399,19 @@ public class LoginFormController extends AbstractController{
 				return redirect(URIBuilder.fromUri("/commonLogin/login.html").queryParam("page", "agency").build().toString());
 			}
 			else{
-			return redirect(URIBuilder.fromUri("/healthcarejobs/index.html").build().toString());
+			return redirect(URIBuilder.fromUri("/healthcare/index.html").build().toString());
 			}
 		}
 		
 		
 	}
 	// internal helper method
+	/**
+	 * Redirect.
+	 *
+	 * @param url the url
+	 * @return the redirect view
+	 */
 	private RedirectView redirect(String url) {
 		return new RedirectView(url, true);
 	}

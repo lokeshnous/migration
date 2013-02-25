@@ -29,20 +29,10 @@
 		    }); 
 		    
 		    function downloadResume(resumeId){
-		    	//alert('resumeId'+resumeId);
 		    	if(resumeId == 0){
 		    		alert("Please save the resume before you download.");
 		    		return false;
-		    	}	    	
-		    	$.ajax({url : "${pageContext.request.contextPath}/employer/downloadResume.html?resumeId="+resumeId,
-		    		type: "GET",
-					success : function(data) {
-					},
-					error : function(data) {
-					},
-					complete : function(data) {
-					}
-				});
+		    	}
 		    	return true;
 		    }
 		    
@@ -50,17 +40,7 @@
 		    	if(resumeId == 0){
 		    		alert("Please save the resume before you print.");
 		    		return false;
-		    	}	
-		    		$.ajax({url: "${pageContext.request.contextPath}/employer/printResume.html?resumeId="+resumeId,
-		    		type: "GET",
-					success : function(data) {
-	
-					},
-					error : function(data) {
-					},
-					complete : function(data) {
-					}
-				});
+		    	}
 		    	return true;
 		    }
 		</script>
@@ -110,13 +90,28 @@
                     <p class="marginTop3">Available ${createResume.availableDate}</p>
                     </span> </div>
                   <div class="IconsArea">
-                  <a onclick="downloadResume(${createResume.uploadResumeId})" id="${createResume.uploadResumeId}" title="Download">
-                  <%-- <a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}" title="Download"> --%>
-                  <div class="download"></div></a>&nbsp; 
-                  <a onclick="printResume(${createResume.uploadResumeId})" id="${createResume.uploadResumeId}" title="Print">
-                  <%-- 	<a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${createResume.uploadResumeId}" target="_blank" title="Print"> --%>
-                  <div class="printOrange"></div></a>
-                  </div>
+								<c:if test="${createResume.uploadResumeId>0}">
+									<a id="downloadId"
+										href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}"
+										title="Download">
+										<div class="download"></div>
+									</a>
+									<a id="printId"
+											href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${createResume.uploadResumeId}"
+										target="_blank" title="Print">
+										<div class="printOrange"></div>
+									</a>
+								</c:if>
+								<c:if test="${createResume.uploadResumeId==0}">
+									<a onclick="downloadResume(${createResume.uploadResumeId})"
+										id="${createResume.uploadResumeId}" title="Download"> 
+										<div class="download"></div></a>&nbsp; 
+                  <a
+										onclick="printResume(${createResume.uploadResumeId})"
+										id="${createResume.uploadResumeId}" title="Print"> 
+										<div class="printOrange"></div></a>
+								</c:if>
+							</div>
                 </div>
         <!---->
 
@@ -416,12 +411,27 @@
             </c:forEach>
 
               <div class="IconsArea">
-               <a onclick="downloadResume(${createResume.uploadResumeId})" id="${createResume.uploadResumeId}" title="Download">
-                  <%-- <a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}" title="Download"> --%>
-                  <div class="download"></div></a>&nbsp; 
-                  <a onclick="printResume(${createResume.uploadResumeId})" id="${createResume.uploadResumeId}" title="Print">
-                  <%-- 	<a id="${createResume.uploadResumeId}" href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${createResume.uploadResumeId}" target="_blank" title="Print"> --%>
-                  <div class="printOrange"></div></a></div>
+              <c:if test="${createResume.uploadResumeId>0}">
+									<a id="downloadId"
+										href="${pageContext.request.contextPath}/employer/downloadResume.html?resumeId=${createResume.uploadResumeId}"
+										title="Download">
+										<div class="download"></div>
+									</a>
+									<a id="printId"
+										href="${pageContext.request.contextPath}/employer/printResume.html?resumeId=${createResume.uploadResumeId}"
+										target="_blank" title="Print">
+										<div class="printOrange"></div>
+									</a>
+								</c:if>
+								<c:if test="${createResume.uploadResumeId==0}">
+									<a onclick="downloadResume(${createResume.uploadResumeId})"
+										id="${createResume.uploadResumeId}" title="Download"> 
+										<div class="download"></div></a>&nbsp; 
+                  <a
+										onclick="printResume(${createResume.uploadResumeId})"
+										id="${createResume.uploadResumeId}" title="Print"> 
+										<div class="printOrange"></div></a>
+								</c:if></div>
           </div>
                 </div>
 

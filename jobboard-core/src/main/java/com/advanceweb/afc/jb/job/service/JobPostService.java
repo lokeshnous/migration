@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.job.service;
 
 import java.util.List;
@@ -20,9 +27,22 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
  */
 public interface JobPostService {
 
+	/**
+	 * Gets the employer info.
+	 *
+	 * @param userId the user id
+	 * @param roleName the role name
+	 * @return the employer info
+	 */
 	EmployerInfoDTO getEmployerInfo(int userId, String roleName);
 
 	// List<StateDTO> getStateList();
+	/**
+	 * Save post job.
+	 *
+	 * @param dto the dto
+	 * @return true, if successful
+	 */
 	boolean savePostJob(JobPostDTO dto);
 
 	/**
@@ -68,25 +88,86 @@ public interface JobPostService {
 	 */
 	int getEmpJobsCount(List<DropDownDTO> companyList);
 	
+	/**
+	 * Retrieve job by id.
+	 *
+	 * @param jobId the job id
+	 * @return the job post dto
+	 */
 	JobPostDTO retrieveJobById(int jobId);
 
+	/**
+	 * Delete job.
+	 *
+	 * @param jobId the job id
+	 * @param userId the user id
+	 * @return true, if successful
+	 */
 	boolean deleteJob(int jobId, int userId);
 
+	/**
+	 * Update manage job.
+	 *
+	 * @param autoRenew the auto renew
+	 * @param brandTemplate the brand template
+	 * @param jobId the job id
+	 * @param userId the user id
+	 * @return true, if successful
+	 */
 	boolean updateManageJob(boolean autoRenew, int brandTemplate, int jobId,
 			int userId);
 
+	/**
+	 * Deactivate job.
+	 *
+	 * @param jobId the job id
+	 * @param userId the user id
+	 * @return true, if successful
+	 */
 	boolean deactivateJob(int jobId, int userId);
 
 	//boolean repostJob(int jobId, int userId);
 	
+	/**
+	 * Repost job.
+	 *
+	 * @param jobId the job id
+	 * @param extendDays the extend days
+	 * @return true, if successful
+	 */
 	boolean repostJob(int jobId, int extendDays);
 
+	/**
+	 * Gets the job posting plans.
+	 *
+	 * @return the job posting plans
+	 */
 	List<JobPostingPlanDTO> getJobPostingPlans();
 
+	/**
+	 * Validate and decrease available credits.
+	 *
+	 * @param invDtlId the inv dtl id
+	 * @param facilityId the facility id
+	 * @return true, if successful
+	 */
 	boolean validateAndDecreaseAvailableCredits(int invDtlId, int facilityId);
 
+	/**
+	 * Validate available credits.
+	 *
+	 * @param invDtlId the inv dtl id
+	 * @param facilityId the facility id
+	 * @return true, if successful
+	 */
 	boolean validateAvailableCredits(int invDtlId, int facilityId);
 
+	/**
+	 * Gets the nS customer details.
+	 *
+	 * @param nsCustomerID the ns customer id
+	 * @return the nS customer details
+	 */
 	UserDTO getNSCustomerDetails(int nsCustomerID);
 
 	/**
@@ -114,7 +195,20 @@ public interface JobPostService {
 	 */
 	int getinvDetIdByJobId(int jobId, int facilityId, int userId);
 	
+	/**
+	 * Gets the inv dtl by job id.
+	 *
+	 * @param jobId the job id
+	 * @return the inv dtl by job id
+	 */
 	AdmFacilityJpAudit getinvDtlByJobId(int jobId);
+	
+	/**
+	 * Check draft and schedule.
+	 *
+	 * @param avdSearchId the avd search id
+	 * @return true, if successful
+	 */
 	public boolean checkDraftAndSchedule(int avdSearchId);
 	
 	/**

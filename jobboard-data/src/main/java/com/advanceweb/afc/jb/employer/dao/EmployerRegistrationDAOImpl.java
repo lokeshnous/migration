@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.dao;
 
 import java.sql.Timestamp;
@@ -53,26 +60,49 @@ import com.mysql.jdbc.StringUtils;
 @Repository("employerRegistrationDAO")
 public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(EmployerRegistrationDAOImpl.class);
 
+	/** The Constant FIND_EMPLOYER_ROLE_ID. */
 	private static final String FIND_EMPLOYER_ROLE_ID = "from AdmRole role where role.name=?";
+	
+	/** The Constant REGISTRATION_ATTRIBS. */
 	private static final String REGISTRATION_ATTRIBS = "from MerProfileAttrib prof";
+	
+	/** The Constant VERIFY_EMAIL. */
 	private static final String VERIFY_EMAIL = "from MerUser e where e.email = ? and e.deleteDt is NULL";
+	
+	/** The Constant FIND_EMPLOYER_PROFILE. */
 	private static final String FIND_EMPLOYER_PROFILE = "from MerUserProfile prof where prof.id.userId=?";
+	
+	/** The Constant VERIFY_EMAIL_ADVANCEPASS. */
 	private static final String VERIFY_EMAIL_ADVANCEPASS = "from WebMembershipEmail e where e.email = ? and e.deleteDate is NULL";
 
+	/** The hibernate template tracker. */
 	private HibernateTemplate hibernateTemplateTracker;
 
+	/** The hibernate template careers. */
 	private HibernateTemplate hibernateTemplateCareers;
+	
+	/** The hibernate template advance pass. */
 	private HibernateTemplate hibernateTemplateAdvancePass;
 
+	/** The emp helper. */
 	@Autowired
 	private EmployerRegistrationConversionHelper empHelper;
 
+	/** The registration conversion helper. */
 	@Autowired
 	private RegistrationConversionHelper registrationConversionHelper;
 
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactoryMerionTracker the session factory merion tracker
+	 * @param sessionFactory the session factory
+	 * @param sessionFactoryAdvancePass the session factory advance pass
+	 */
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
@@ -199,6 +229,15 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	}
 
 	// This method will be called to set the details of facility
+	/**
+	 * Sets the facility.
+	 *
+	 * @param facility the facility
+	 * @param role the role
+	 * @param empDTO the emp dto
+	 * @param parentFacilityId the parent facility id
+	 * @return the adm facility
+	 */
 	private AdmFacility setFacility(AdmFacility facility, String role,
 			EmployerProfileDTO empDTO, int parentFacilityId) {
 
@@ -211,6 +250,13 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	}
 
 	// This method will be called to save the data in adm_user_facility
+	/**
+	 * Sets the user facility.
+	 *
+	 * @param facility the facility
+	 * @param userId the user id
+	 * @param roleId the role id
+	 */
 	private void setUserFacility(AdmFacility facility, int userId, int roleId) {
 		AdmUserFacility userfacility = new AdmUserFacility();
 		AdmUserFacilityPK facilityPK = new AdmUserFacilityPK();
@@ -301,6 +347,11 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 		return false;
 	}
 
+	/**
+	 * Gets the country list.
+	 *
+	 * @return the country list
+	 */
 	private List<DropDownDTO> getCountryList() {
 		try {
 			DetachedCriteria criteria = DetachedCriteria
@@ -319,6 +370,11 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 		return null;
 	}
 
+	/**
+	 * Gets the state list.
+	 *
+	 * @return the state list
+	 */
 	private List<DropDownDTO> getStateList() {
 		try {
 			DetachedCriteria criteria = DetachedCriteria
@@ -362,6 +418,9 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 		return dto;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.EmployerRegistrationDAO#validateEmail(java.lang.String)
+	 */
 	@Override
 	public boolean validateEmail(String email) {
 		try {
@@ -418,6 +477,9 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.EmployerRegistrationDAO#getEmployeeData(int, java.lang.String)
+	 */
 	@Override
 	public List<AdmFacilityContact> getEmployeeData(int userId,
 			String contactType) {
@@ -434,7 +496,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 			}
 
 		} catch (DataAccessException e) {
-			LOGGER.info("Error for update of employee data");
+			LOGGER.error("Error for update of employee data",e);
 		}
 		return accountProfileDTO;
 	}
@@ -510,7 +572,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 			}
 			
 		} catch (Exception e) {
-			LOGGER.info("Error im Meruser duplicate Data insert");
+			LOGGER.error("Error im Meruser duplicate Data insert",e);
 		}
 
 		return isUpdate;
@@ -546,7 +608,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 			}
 			accountProfileDTO = empHelper.transformListToDTOList(adm);
 		} catch (DataAccessException e) {
-			LOGGER.info("Error for update of employee data");
+			LOGGER.error("Error for update of employee data",e);
 		}
 		return accountProfileDTO;
 	}
@@ -565,7 +627,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 				return true;
 			}
 		} catch (DataAccessException e) {
-			LOGGER.info("Error for update of employee data");
+			LOGGER.error("Error for update of employee data",e);
 		}
 
 		return false;

@@ -28,7 +28,7 @@
 		var y = userName.lastIndexOf('.');
 		var result = true;
 		if (userName.length == 0) {
-			$("#error").text("The Username/Password you have entered is invalid, please enter the correct Username/Password");
+			$("#error").text("The information you entered was invalid. Please try again.");
 			$("#error").show();
 			$("#error1").hide();
 			$("#j_username").val('');
@@ -38,7 +38,7 @@
 		} 
 		
 		if(userPassword.length == 0){
-			$("#error").text("The Username/Password you have entered is invalid, please enter the correct Username/Password");
+			$("#error").text("The information you entered was invalid. Please try again.");
 			$("#error").show();
 			$("#error1").hide();
 			$("#j_username").val('');
@@ -48,7 +48,7 @@
 		}
 		if (x == -1 || y == -1 || (x + 2) >= y) {
 			$("#error")
-					.text("The Username/Password you have entered is invalid, please enter the correct Username/Password");
+					.text("The information you entered was invalid. Please try again.");
 			$("#error").show();
 			$("#error1").hide();
 			$("#j_username").val('');
@@ -108,6 +108,15 @@
 										
                     	<a href="forgrtPasswordLogin.html?page=agency" id="forgrtpassword">Forgot your password?</a>
 			
+				</div>
+				<div class="rowEvenNewSpacing">
+				<br>
+				<img src="<%=request.getContextPath()%>/resources/images/advancePass.png"/> <br><br>
+				If you already have as account with
+				ADVANCE,signing in to the job board is
+				easy! Just use the same email address <br>
+				 and password you've used in the past to <br>
+				log into other ADVANCE websites.
 				</div>
 				<div class="row">
 				    <p><span class="bold">Not a member?</span> <a href="<%=request.getContextPath()%>/agencyRegistration/agencyregistration.html">Sign up now!</a></p>

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.resume.dao;
 
 import java.util.ArrayList;
@@ -30,13 +37,24 @@ import com.advanceweb.afc.jb.employer.helper.ResumeSearchConversionHelper;
 @Transactional
 public class ResumeSearchDAOImpl implements ResumeSearchDAO{
 	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger("ResumeSearchDAOImpl.class");
 	
+	/** The hibernate template. */
 	private HibernateTemplate hibernateTemplate;
+	
+	/** The total number of searched resume. */
 	private int totalNumberOfSearchedResume;
+	
+	/** The res search conversion helper. */
 	@Autowired
 	private ResumeSearchConversionHelper resSearchConversionHelper;
 	
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactory the new hibernate template
+	 */
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory) {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
@@ -105,7 +123,7 @@ public class ResumeSearchDAOImpl implements ResumeSearchDAO{
 		// Need to remove 100 and use the dynamic values
 		query.setMaxResults(100);
 		
-		LOGGER.info("Total number of searched resume = "+resumeCount.intValue());
+		LOGGER.debug("Total number of searched resume = "+resumeCount.intValue());
 		setTotalNumberOfResume(resumeCount.intValue());
 		
 		List<ResBuilderResume> resBuilderResumeList = query.list();
@@ -126,7 +144,7 @@ public class ResumeSearchDAOImpl implements ResumeSearchDAO{
 			resumeDTOList.add(resumeDTO);
 		}
 		
-		LOGGER.info("Size of resume list = "+resumeDTOList.size());
+		LOGGER.debug("Size of resume list = "+resumeDTOList.size());
 		return resumeDTOList;
 	}
 	
@@ -148,6 +166,9 @@ public class ResumeSearchDAOImpl implements ResumeSearchDAO{
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.dao.ResumeSearchDAO#mySavedResumeSearches(int)
+	 */
 	@Override
 	public List<SaveSearchedJobsDTO> mySavedResumeSearches(int userId) {
 		@SuppressWarnings("unchecked")
@@ -158,6 +179,9 @@ public class ResumeSearchDAOImpl implements ResumeSearchDAO{
 				.transformAdmSaveSearchToDTO(searchResults);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.dao.ResumeSearchDAO#editSavedResumeSearch(int)
+	 */
 	@Override
 	public List<SaveSearchedJobsDTO> editSavedResumeSearch(int searchId) {
 		@SuppressWarnings("unchecked")
@@ -167,6 +191,9 @@ public class ResumeSearchDAOImpl implements ResumeSearchDAO{
 				.transformAdmSaveSearchToDTO(searchResults);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.dao.ResumeSearchDAO#deleteSavedResume(int)
+	 */
 	@Override
 	public boolean deleteSavedResume(int saveSearchId) {
 		@SuppressWarnings("unchecked")
@@ -179,6 +206,9 @@ public class ResumeSearchDAOImpl implements ResumeSearchDAO{
 	}
 
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.dao.ResumeSearchDAO#saveModifiedData(java.util.List)
+	 */
 	@Override
 	public boolean saveModifiedData(List<SaveSearchedJobsDTO> searchedJobsDTOs) {
 		SaveSearchedJobsDTO searchedJobsDTO = new SaveSearchedJobsDTO();
@@ -196,6 +226,9 @@ public class ResumeSearchDAOImpl implements ResumeSearchDAO{
 	}
 
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.dao.ResumeSearchDAO#validateSearchName(java.lang.String, int)
+	 */
 	@Override
 	public boolean validateSearchName(String searchName, int userId) {
 		@SuppressWarnings("unchecked")
@@ -209,6 +242,9 @@ public class ResumeSearchDAOImpl implements ResumeSearchDAO{
 	}
 
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.dao.ResumeSearchDAO#viewMySavedSearches(int)
+	 */
 	@Override
 	public List<SaveSearchedJobsDTO> viewMySavedSearches(int userId) {
 		@SuppressWarnings("unchecked")
@@ -220,6 +256,9 @@ public class ResumeSearchDAOImpl implements ResumeSearchDAO{
 	}
 
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.dao.ResumeSearchDAO#deleteFirstSearch(int)
+	 */
 	@Override
 	public boolean deleteFirstSearch(int userId) {
 		@SuppressWarnings("unchecked")
@@ -233,6 +272,9 @@ public class ResumeSearchDAOImpl implements ResumeSearchDAO{
 	}
 
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.dao.ResumeSearchDAO#saveSearchedResumes(com.advanceweb.afc.jb.common.SaveSearchedJobsDTO)
+	 */
 	@Override
 	public void saveSearchedResumes(SaveSearchedJobsDTO searchedJobsDTO) {
 		// Transforming the saveSearchedJobsDTO to Save Search Entity
@@ -242,6 +284,9 @@ public class ResumeSearchDAOImpl implements ResumeSearchDAO{
 	}
 
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.resume.dao.ResumeSearchDAO#updateSearchDetails(com.advanceweb.afc.jb.common.SaveSearchedJobsDTO)
+	 */
 	@Override
 	public boolean updateSearchDetails(SaveSearchedJobsDTO searchedJobsDTO) {
 		@SuppressWarnings("unchecked")

@@ -25,7 +25,7 @@ function saveRecentSearch(searchJobId){
 					$("#ErrorMsg").text("${msg.DuplicateSearchName}");
 				}
 				if (key == "NavigationPath") {
-					$.nmManual(val + '.html');
+					$.nmManual(val + '.html',{closeOnEscape: false, showCloseButton: false, closeOnClick: false});
 					alert("Search saved successfully! Access saved search criteria using  \"My saved searches\" on your dashboard.");
 					//parent.$.nmTop().close();
 				}
@@ -41,7 +41,7 @@ function saveRecentSearch(searchJobId){
 	});
 }
 function cancelRecentSearch(){
-	$.nmManual("${pageContext.request.contextPath}/savedSearches/viewrecentsearches.html");
+	$.nmManual("${pageContext.request.contextPath}/savedSearches/viewrecentsearches.html",{closeOnEscape: false, showCloseButton: false, closeOnClick: false});
 }
 function closePopup() {
 	//parent.window.location.reload();

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
 import java.util.HashSet;
@@ -49,45 +56,65 @@ import com.advanceweb.common.client.ClientContext;
 @Scope("session")
 public class JobSeekerDashBoardController extends AbstractController {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger("JobSeekerDashBoardController.class");
 
+	/** The user sub service. */
 	@Autowired
 	private UserSubscriptionService userSubService;
 
+	/** The userubscription. */
 	@Autowired
 	private TransformUserubscription userubscription;
 
+	/** The populate dropdowns service. */
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
 
+	/** The save search service. */
 	@Autowired
 	private SaveSearchService saveSearchService;
 
+	/** The job seeker service. */
 	@Autowired
 	private JobSeekerJobDetailService jobSeekerService;
 
+	/** The ad service. */
 	@Autowired
 	private AdService adService;
 
+	/** The followuplinkfacebook. */
 	@Value("${followuplinkfacebook}")
 	private String followuplinkfacebook;
 
+	/** The followuplinktwitter. */
 	@Value("${followuplinktwitter}")
 	private String followuplinktwitter;
 
+	/** The followuplinkyoutube. */
 	@Value("${followuplinkyoutube}")
 	private String followuplinkyoutube;
 
+	/** The followuplinklinkedin. */
 	@Value("${followuplinklinkedin}")
 	private String followuplinklinkedin;
 
+	/** The check session map. */
 	@Autowired
 	private CheckSessionMap checkSessionMap;
 
+	/** The job search service. */
 	@Autowired
 	private JobSearchService jobSearchService;
 
+	/**
+	 * Display dash board.
+	 *
+	 * @param session the session
+	 * @param request the request
+	 * @return the model and view
+	 */
 	@RequestMapping("/jobSeekerDashBoard")
 	public ModelAndView displayDashBoard(HttpSession session,
 			HttpServletRequest request) {
@@ -104,6 +131,9 @@ public class JobSeekerDashBoardController extends AbstractController {
 			request.setAttribute("virusStatus", virusStatus);
 			session.removeAttribute("virusStatus");
 			LOGGER.debug("Virus Status : " + true);
+		}
+		if(session.getAttribute("advancePassUser")!=null){
+			model.addObject("advUserMessg", "advancePassUser");
 		}
 		if (null != session.getAttribute("uploadStatus")) {
 			boolean status = (Boolean) session.getAttribute("uploadStatus");

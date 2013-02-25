@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common;
 
 
@@ -14,6 +21,7 @@ import com.mysql.jdbc.StringUtils;
 
 public class CommonUtil {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger(CommonUtil.class);
 
 	/**
@@ -45,11 +53,17 @@ public class CommonUtil {
 		try {
 			convertedDate = dateFormat.parse(date);
 		} catch (ParseException e) {
-			LOGGER.info(e);
+			LOGGER.error(e);
 		}
 		return convertedDate;
 	}
 
+	/**
+	 * Convert date string to sql date.
+	 *
+	 * @param date the date
+	 * @return the date
+	 */
 	public static Date convertDateStringToSQLDate(String date) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(
 				MMJBCommonConstants.NEWDATE_PATTERN, Locale.ENGLISH);
@@ -57,11 +71,17 @@ public class CommonUtil {
 		try {
 			convertedDate = dateFormat.parse(date);
 		} catch (ParseException e) {
-			LOGGER.info(e);
+			LOGGER.error(e);
 		}
 		return convertedDate;
 	}
 
+	/**
+	 * Convert sql date time to std date time.
+	 *
+	 * @param dateString the date string
+	 * @return the string
+	 */
 	public static String convertSQLDateTimeToStdDateTime(String dateString) {
 
 		String stdDateFormat = null;
@@ -73,11 +93,17 @@ public class CommonUtil {
 							MMJBCommonConstants.SQL_DATE_PATTERN,
 							Locale.ENGLISH).parse(dateString));
 		} catch (ParseException e) {
-			LOGGER.info(e);
+			LOGGER.error(e);
 		}
 		return stdDateFormat;
 	}
 
+	/**
+	 * Convert sql date to std date string.
+	 *
+	 * @param sqlDate the sql date
+	 * @return the string
+	 */
 	public static String convertSQLDateToStdDateString(String sqlDate) {
 
 		String stdDateFormat = null;
@@ -88,11 +114,17 @@ public class CommonUtil {
 							MMJBCommonConstants.DATE_PATTERN, Locale.ENGLISH)
 							.parse(sqlDate));
 		} catch (ParseException e) {
-			LOGGER.info(e);
+			LOGGER.error(e);
 		}
 		return stdDateFormat;
 	}
 
+	/**
+	 * Convert string to sql date.
+	 *
+	 * @param startDate the start date
+	 * @return the date
+	 */
 	public static Date convertStringToSQLDate(String startDate) {
 		Date sqltDate = null;
 		try {
@@ -102,7 +134,7 @@ public class CommonUtil {
 							MMJBCommonConstants.DISP_DATE_PATTERN,
 							Locale.ENGLISH).format(startDate)).getTime());
 		} catch (ParseException e) {
-			LOGGER.info(e);
+			LOGGER.error(e);
 //			e.printStackTrace();
 		}
 		return sqltDate;
@@ -125,7 +157,7 @@ public class CommonUtil {
 				utilDate=(Date)formater.parse(dateInStr);
 			}
 		} catch (ParseException e) {
-			LOGGER.info("convertDateStringToDate Exception");
+			LOGGER.error("convertDateStringToDate Exception",e);
 		}
 		return utilDate;
 	}
@@ -153,7 +185,7 @@ public class CommonUtil {
 
 			}
 		} catch (ParseException e) {
-			LOGGER.info("convertDateStringToSQLDate Exception");
+			LOGGER.error("convertDateStringToSQLDate Exception",e);
 		}
 		return sqltDate;
 	}
@@ -181,12 +213,18 @@ public class CommonUtil {
 
 			}
 		} catch (ParseException e) {
-			LOGGER.info("convertDateStringToSQLDate Exception");
+			LOGGER.error("convertDateStringToSQLDate Exception",e);
 		}
 		return sqltDate;
 	}
 	
 	
+	/**
+	 * Str date to sql date.
+	 *
+	 * @param strDate the str date
+	 * @return the date
+	 */
 	public static Date strDateToSQLDate(String strDate) {
 
 		Date sqltDate = null;
@@ -204,7 +242,7 @@ public class CommonUtil {
 
 			}
 		} catch (ParseException e) {
-			LOGGER.info("convertDateStringToSQLDate Exception");
+			LOGGER.error("convertDateStringToSQLDate Exception",e);
 		}
 		return sqltDate;
 	}

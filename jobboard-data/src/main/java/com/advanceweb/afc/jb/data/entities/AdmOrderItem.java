@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.data.entities;
 
 import java.io.Serializable;
@@ -20,34 +27,44 @@ import javax.persistence.Table;
 @Table(name = "adm_order_item")
 public class AdmOrderItem implements Serializable {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** The order item id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "order_item_id")
 	private int orderItemId;
 
+	/** The product type. */
 	@Column(name = "product_type")
 	private String productType;
 
+	/** The product id. */
 	@Column(name = "product_id")
 	private int productId;
 
+	/** The product name. */
 	@Column(name = "product_name")
 	private String productName;
 
+	/** The qty ordered. */
 	@Column(name = "qty_ordered")
 	private int qtyOrdered;
 
+	/** The price. */
 	@Column(name = "price")
 	private float price;
 	
+	/** The order status. */
 	@Column(name = "order_status")
 	private String orderStatus;
 	
+	/** The item number. */
 	@Column(name = "item_number")
 	private int itemNumber;
 
+	/** The adm order header. */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "order_id")
 	private AdmOrderHeader admOrderHeader;
@@ -150,14 +167,29 @@ public class AdmOrderItem implements Serializable {
 		this.orderStatus = orderStatus;
 	}
 	
+	/**
+	 * Gets the item number.
+	 *
+	 * @return the item number
+	 */
 	public int getItemNumber() {
 		return itemNumber;
 	}
 
+	/**
+	 * Sets the item number.
+	 *
+	 * @param itemNumber the new item number
+	 */
 	public void setItemNumber(int itemNumber) {
 		this.itemNumber = itemNumber;
 	}
 
+	/**
+	 * Gets the serialversionuid.
+	 *
+	 * @return the serialversionuid
+	 */
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

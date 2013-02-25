@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common.util;
 
 import java.text.DateFormat;
@@ -17,6 +24,7 @@ import com.advanceweb.afc.jb.common.LocationDTO;
 
 public class MMUtils {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger(MMUtils.class);
 
 	/**
@@ -56,6 +64,12 @@ public class MMUtils {
 	    return containsDigit;
 	}
 
+	/**
+	 * Convert to city state string list.
+	 *
+	 * @param locationDTOList the location dto list
+	 * @return the list
+	 */
 	public static List<String> convertToCityStateStringList(
 			List<LocationDTO> locationDTOList) {
 
@@ -66,6 +80,12 @@ public class MMUtils {
 		return list;
 	}
 
+	/**
+	 * Convert to postcode string list.
+	 *
+	 * @param locationDTOList the location dto list
+	 * @return the list
+	 */
 	public static List<String> convertToPostcodeStringList(
 			List<LocationDTO> locationDTOList) {
 

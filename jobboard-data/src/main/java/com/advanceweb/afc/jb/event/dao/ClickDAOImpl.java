@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.event.dao;
 
 import java.util.Date;
@@ -24,12 +31,21 @@ import com.advanceweb.afc.jb.data.entities.VstSearchResultNewPK;
 @Repository("clickDAO")
 public class ClickDAOImpl implements ClickDAO {
 
+	/** The hibernate template. */
 	private HibernateTemplate hibernateTemplate;
 
+	/** The hibernate template tracker. */
 	private HibernateTemplate hibernateTemplateTracker;
 	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger(ClickDAOImpl.class);
 
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactoryMerionTracker the session factory merion tracker
+	 * @param sessionFactory the session factory
+	 */
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
@@ -39,6 +55,9 @@ public class ClickDAOImpl implements ClickDAO {
 		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.event.dao.ClickDAO#saveClickEvent(int, java.lang.String)
+	 */
 	@Override
 	public void saveClickEvent(int jobId, String type) {
 		VstClickthroughNew clickthroughNew;

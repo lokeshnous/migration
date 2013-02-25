@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.pgi.web.controller;
 
 import java.text.SimpleDateFormat;
@@ -68,54 +75,101 @@ import com.advanceweb.common.client.ClientContext;
 public class PaymentGatewayController extends AbstractController{
 
 	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(PaymentGatewayController.class);
 	
+	/** The Constant STATE_LIST. */
 	private static final String STATE_LIST = "stateList";
+	
+	/** The Constant COUNTRY_LIST. */
 	private static final String COUNTRY_LIST = "countryList";
+	
+	/** The Constant STATUS_CODE. */
 	private static final String STATUS_CODE = "statusCode";
 	
+	/** The Constant THANK_YOU_FORM. */
 	private static final String THANK_YOU_FORM = "gatewayThankYou";
+	
+	/** The Constant CONFIRM_ORDER_FORM. */
 	private static final String CONFIRM_ORDER_FORM = "gatewayConfirmOrder";
+	
+	/** The Constant BILLING_INFO_FORM. */
 	private static final String BILLING_INFO_FORM = "gatewayBillingInfo";
+	
+	/** The Constant GATEWAY_PAYMENT_FORM. */
 	private static final String GATEWAY_PAYMENT_FORM = "gatewayPaymentMethod";
+	
+	/** The Constant PAYMENT_GATEWAY_FORM. */
 	private static final String PAYMENT_GATEWAY_FORM = "paymentGatewayForm";
 	
+	/** The payment gateway service. */
 	@Autowired
 	private PaymentGatewayService paymentGatewayService;
 
+	/** The populate dropdowns service. */
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
 
+	/** The transform payment method. */
 	@Autowired
 	private TransformPaymentMethod transformPaymentMethod;
 	
+	/** The manage featured employer profile. */
 	@Autowired
 	private ManageFeaturedEmployerProfile manageFeaturedEmployerProfile;
 	
+	/** The payment gateway validation. */
 	@Autowired
 	private PaymentGatewayValidation paymentGatewayValidation;
 	
+	/** The ad service. */
 	@Autowired
 	private AdService adService;
+	
+	/** The advance web address. */
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
+	
+	/** The email configuration. */
 	@Value("${dothtmlExtention}")
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
+	
+	/** The email service. */
 	@Autowired
 	private MMEmailService emailService;
+	
+	/** The facility service. */
 	@Autowired
 	private FacilityService facilityService;
+	
+	/** The user service. */
 	@Autowired
 	private UserService userService;
+	
+	/** The alert service. */
 	@Autowired
 	private UserAlertService alertService;
+	
+	/** The validate city state. */
 	@Value("${validateCityState}")
 	private String validateCityState;
+	
+	/** The lookup service. */
 	@Autowired
 	private LookupService lookupService;
+	
+	/**
+	 * Call payment method.
+	 *
+	 * @param paymentGatewayForm the payment gateway form
+	 * @param session the session
+	 * @param purchaseType the purchase type
+	 * @param request the request
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/callPaymentMethod", method = RequestMethod.GET)
 	public ModelAndView callPaymentMethod(@Valid PaymentGatewayForm paymentGatewayForm,
 			HttpSession session,@RequestParam(value = "purchaseType", required = false ) String purchaseType, HttpServletRequest request) {
@@ -179,6 +233,14 @@ public class PaymentGatewayController extends AbstractController{
 	}
 
 	
+	/**
+	 * Gateway payment method.
+	 *
+	 * @param paymentGatewayForm the payment gateway form
+	 * @param session the session
+	 * @param request the request
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/paymentMethodForBack", method = RequestMethod.GET)
 	public ModelAndView gatewayPaymentMethod(@Valid PaymentGatewayForm paymentGatewayForm,
 			HttpSession session, HttpServletRequest request) {
@@ -193,6 +255,15 @@ public class PaymentGatewayController extends AbstractController{
 	}
 
 	
+	/**
+	 * Payment billing info.
+	 *
+	 * @param paymentGatewayForm the payment gateway form
+	 * @param result the result
+	 * @param session the session
+	 * @param request the request
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/paymentBillingInfo", method = RequestMethod.POST)
 	public ModelAndView paymentBillingInfo(@Valid PaymentGatewayForm paymentGatewayForm,
 			BindingResult result, HttpSession session, HttpServletRequest request) {
@@ -244,6 +315,14 @@ public class PaymentGatewayController extends AbstractController{
 		return model;
 	}
 	
+	/**
+	 * Payment billing info back.
+	 *
+	 * @param paymentGatewayForm the payment gateway form
+	 * @param session the session
+	 * @param request the request
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/paymentBillingInfoBack", method = RequestMethod.GET)
 	public ModelAndView paymentBillingInfoBack(@Valid PaymentGatewayForm paymentGatewayForm,
 			HttpSession session, HttpServletRequest request) {
@@ -269,6 +348,14 @@ public class PaymentGatewayController extends AbstractController{
 		return model;
 	}
 	
+	/**
+	 * Back to confirm order.
+	 *
+	 * @param paymentGatewayForm the payment gateway form
+	 * @param session the session
+	 * @param request the request
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/backToConfirmOrder", method = RequestMethod.GET)
 	public ModelAndView backToConfirmOrder(PaymentGatewayForm paymentGatewayForm,
 			HttpSession session, HttpServletRequest request) {
@@ -281,6 +368,15 @@ public class PaymentGatewayController extends AbstractController{
 		return model;
 	}
 	
+	/**
+	 * Confirm order.
+	 *
+	 * @param paymentGatewayForm the payment gateway form
+	 * @param result the result
+	 * @param session the session
+	 * @param request the request
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/confirmOrder", method = RequestMethod.POST)
 	public ModelAndView confirmOrder(@Valid PaymentGatewayForm paymentGatewayForm,
 			BindingResult result, HttpSession session, HttpServletRequest request) {
@@ -339,6 +435,12 @@ public class PaymentGatewayController extends AbstractController{
 		return model;
 	}
 
+	/**
+	 * Validate billing form.
+	 *
+	 * @param paymentGatewayForm the payment gateway form
+	 * @param result the result
+	 */
 	private void validateBillingForm(PaymentGatewayForm paymentGatewayForm,
 			BindingResult result) {
 		if(MMJBCommonConstants.CREDIT_CARD.equals(paymentGatewayForm.getPaymentMethod()) 
@@ -351,6 +453,11 @@ public class PaymentGatewayController extends AbstractController{
 		}
 	}
 
+	/**
+	 * Adds the country state list.
+	 *
+	 * @param model the model
+	 */
 	private void addCountryStateList(ModelAndView model) {
 		// Getting the countries from the database & Getting the States from the database
 		List<CountryDTO> countryList = populateDropdownsService.getCountryList();
@@ -482,6 +589,14 @@ public class PaymentGatewayController extends AbstractController{
 		}
 	}
 	
+	/**
+	 * Place order.
+	 *
+	 * @param paymentGatewayFormP the payment gateway form p
+	 * @param session the session
+	 * @param request the request
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/placeOrder", method = RequestMethod.POST)
 	public ModelAndView placeOrder(PaymentGatewayForm paymentGatewayFormP,
 			HttpSession session, HttpServletRequest request) {

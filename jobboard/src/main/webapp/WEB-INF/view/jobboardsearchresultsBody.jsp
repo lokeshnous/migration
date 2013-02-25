@@ -44,7 +44,7 @@ function showSaveSearchMessage(){
 								<h1>
 								<c:if test="${searchedJobCount != null}">
 									<%-- <span>${searchedJobCount}</span> ${jobSearchResultForm.keywords} jobs match your search criteria. --%>
-									<span>${searchedJobCount}</span> ${jobSearchMatchInfo }
+									 ${jobSearchMatchInfo }
 								</c:if>
 								</h1>
 							</div>
@@ -404,11 +404,11 @@ function showSaveSearchMessage(){
 								
 								<div class="featured_empButton">
 									<c:choose>
-										<c:when test="${job.IsFeatured}">
-											<%-- <a href="<%=request.getContextPath()%>/healthcarejobs/featuredemployerdetails.html?id=${job.facilityId}"> <img src="<%=request.getContextPath()%>/resources/images/FeaturedEmp.png"
+										<c:when test="${(job.BlindAd == '0') && job.IsFeatured}">
+											<%-- <a href="<%=request.getContextPath()%>/healthcare/featuredemployerdetails.html?id=${job.facilityId}"> <img src="<%=request.getContextPath()%>/resources/images/FeaturedEmp.png"
 												alt="featured emp Button" width="164" height="23"></a> --%>
 									<a
-										href="<%=request.getContextPath()%>/healthcarejobs/featuredemployerdetails.html?id=${job.facilityId}"><img
+										href="<%=request.getContextPath()%>/healthcare/featuredemployerdetails.html?id=${job.facilityId}"><img
 										onclick="trackClick(${job.JobId},'6');"
 										src="<%=request.getContextPath()%>/resources/images/FeaturedEmp.png"
 										alt="Featured Employer" width="164" height="23"></img> </a>
@@ -423,7 +423,7 @@ function showSaveSearchMessage(){
 
 								<div class="ShareSearch">
 									<span class="ShareText"> Send to
-										Friend:&nbsp;</span><span><a onclick="sendToFrd(${job.JobId}, '${job.jobTitle}');"><span
+										friend:&nbsp;</span><span><a onclick="sendToFrd(${job.JobId}, '${job.jobTitle}');"><span
 												class="email cursor"></span></a></span>
 								</div>
 

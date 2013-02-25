@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.agency.web.controller;
 
 import java.awt.image.BufferedImage;
@@ -109,77 +116,132 @@ import com.advanceweb.common.client.ClientContext;
 @RequestMapping("/agency")
 public class AgencyDashBoardController extends AbstractController {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(AgencyDashBoardController.class);
+	
+	/** The Constant FACILITY_ID. */
 	private static final String FACILITY_ID = "facilityId";
 
+	/** The Constant JB_POST_TOTAL_LIST. */
 	private static final String JB_POST_TOTAL_LIST = "jbPostTotalList";
 
+	/** The emp reg service. */
 	@Autowired
 	private EmloyerRegistartionService empRegService;
+	
+	/** The custom authentication manager. */
 	@Autowired
 	protected DatabaseAuthenticationManager customAuthenticationManager;
+	
+	/** The inventory service. */
 	@Autowired
 	private JobPostInventoryService inventoryService;
 
+	/** The facility service. */
 	@Autowired
 	private FacilityService facilityService;
 
+	/** The user sub service. */
 	@Autowired
 	private UserSubscriptionService userSubService;
 
+	/** The userubscription. */
 	@Autowired
 	private TransformUserubscription userubscription;
+	
+	/** The agency service. */
 	@Autowired
 	private AgencyService agencyService;
+	
+	/** The transform emp reg. */
 	@Autowired
 	private TransformEmployerRegistration transformEmpReg;
+	
+	/** The fetch adm facility conatact. */
 	@Autowired
 	private PaymentGatewayService fetchAdmFacilityConatact;
+	
+	/** The transform payment method. */
 	@Autowired
 	private TransformPaymentMethod transformPaymentMethod;
+	
+	/** The populate dropdowns service. */
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
 
+	/** The employer registration. */
 	@Autowired
 	private ProfileRegistration employerRegistration;
 
+	/** The ad service. */
 	@Autowired
 	private AdService adService;
 
+	/** The employer job post. */
 	@Autowired
 	private JobPostService employerJobPost;
 
+	/** The user service. */
 	@Autowired
 	private UserService userService;
 	
+	/** The job search service. */
 	@Autowired
 	private JobSearchService jobSearchService;
 
+	/** The required field. */
 	@Value("${requiredField}")
 	private String requiredField;
+	
+	/** The required all fields. */
 	@Value("${requiredAllFields}")
 	private String requiredAllFields;
+	
+	/** The employer linked. */
 	@Value("${employerLinked}")
 	private String employerLinked;
+	
+	/** The employer add validation. */
 	@Value("${employerAddValidation}")
 	private String employerAddValidation;
+	
+	/** The already added. */
 	@Value("${alreadyAdded}")
 	private String alreadyAdded;
+	
+	/** The email in use. */
 	@Value("${emailInUse}")
 	private String emailInUse;
+	
+	/** The advance web address. */
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
+	
+	/** The validate city state. */
 	@Value("${validateCityState}")
 	private String validateCityState;
+	
+	/** The lookup service. */
 	@Autowired
 	private LookupService lookupService;
+	
+	/** The email service. */
 	@Autowired
 	private MMEmailService emailService;
 
+	/** The email configuration. */
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
+	
+	/**
+	 * Display dash board.
+	 *
+	 * @param session the session
+	 * @param request the request
+	 * @return the model and view
+	 */
 	@RequestMapping("/agencyDashboard")
 	public ModelAndView displayDashBoard(HttpSession session,
 			HttpServletRequest request) {
@@ -190,6 +252,9 @@ public class AgencyDashBoardController extends AbstractController {
 		int facilityId = (Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID);
 		List<FacilityDTO> assocEmplyrsNames;
+		if(session.getAttribute("advancePassUser")!=null){
+			model.addObject("advUserMessg", "advancePassUser");
+		}
 		try {
 			assocEmplyrsNames = agencyService
 					.getLinkedFacilityNames(facilityId);
@@ -578,6 +643,12 @@ public class AgencyDashBoardController extends AbstractController {
 		return matcher.matches();
 	}
 
+	/**
+	 * Gets the adds the facility popup.
+	 *
+	 * @param session the session
+	 * @return the adds the facility popup
+	 */
 	@RequestMapping(value = "/getAddFacilityPopup", method = RequestMethod.GET)
 	public ModelAndView getAddFacilityPopup(HttpSession session) {
 		ModelAndView model = new ModelAndView();
@@ -593,6 +664,12 @@ public class AgencyDashBoardController extends AbstractController {
 		return model;
 	}
 
+	/**
+	 * Gets the facility details popup.
+	 *
+	 * @param facilityId the facility id
+	 * @return the facility details popup
+	 */
 	@RequestMapping(value = "/viewFacilityDetails", method = RequestMethod.GET)
 	public ModelAndView getFacilityDetailsPopup(
 			@RequestParam(FACILITY_ID) int facilityId) {
@@ -627,6 +704,12 @@ public class AgencyDashBoardController extends AbstractController {
 		return model;
 	}
 
+	/**
+	 * Gets the facility names list.
+	 *
+	 * @param name the name
+	 * @return the facility names list
+	 */
 	@RequestMapping(value = "/getFacilityNamesList", method = RequestMethod.GET, headers = "Accept=*/*")
 	public @ResponseBody
 	JSONObject getFacilityNamesList(@RequestParam("term") String name) {
@@ -651,6 +734,12 @@ public class AgencyDashBoardController extends AbstractController {
 		return jsonObject;
 	}
 
+	/**
+	 * Gets the selected facility.
+	 *
+	 * @param facilityId the facility id
+	 * @return the selected facility
+	 */
 	@RequestMapping(value = "/getSelectedFacility")
 	@ResponseBody
 	public FacilityDTO getSelectedFacility(
@@ -665,6 +754,14 @@ public class AgencyDashBoardController extends AbstractController {
 		return facilityDTO;
 	}
 
+	/**
+	 * Link selected facility.
+	 *
+	 * @param employerRegistrationForm the employer registration form
+	 * @param result the result
+	 * @param session the session
+	 * @return the string
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/linkSelectedFacility", method = RequestMethod.POST)
 	public String linkSelectedFacility(
@@ -724,6 +821,12 @@ public class AgencyDashBoardController extends AbstractController {
 		return "";
 	}
 
+	/**
+	 * Gets the manage facility popup.
+	 *
+	 * @param session the session
+	 * @return the manage facility popup
+	 */
 	@RequestMapping(value = "/getManageFacilityPopup", method = RequestMethod.GET)
 	public ModelAndView getManageFacilityPopup(HttpSession session) {
 		ModelAndView model = new ModelAndView();
@@ -743,6 +846,13 @@ public class AgencyDashBoardController extends AbstractController {
 		return model;
 	}
 
+	/**
+	 * Delete assoc facility.
+	 *
+	 * @param facilityId the facility id
+	 * @param session the session
+	 * @return the jSON object
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/deleteAssocFacility", method = RequestMethod.POST)
 	public JSONObject deleteAssocFacility(
@@ -763,6 +873,14 @@ public class AgencyDashBoardController extends AbstractController {
 		return deleteStatusJson;
 	}
 
+	/**
+	 * Impersonate agency to facility.
+	 *
+	 * @param facilityId the facility id
+	 * @param session the session
+	 * @param request the request
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/impersonateAgencyToFacility", method = RequestMethod.GET)
 	public ModelAndView impersonateAgencyToFacility(
 			@RequestParam(FACILITY_ID) int facilityId, HttpSession session,
@@ -816,6 +934,13 @@ public class AgencyDashBoardController extends AbstractController {
 		return model;
 	}
 
+	/**
+	 * Impersonate facility to agency.
+	 *
+	 * @param session the session
+	 * @param request the request
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/impersonateFacilityToAgency", method = RequestMethod.GET)
 	public ModelAndView impersonateFacilityToAgency(HttpSession session,
 			HttpServletRequest request) {
@@ -904,6 +1029,14 @@ public class AgencyDashBoardController extends AbstractController {
 		return model;
 	}
 
+	/**
+	 * Show metrics.
+	 *
+	 * @param metricsForm the metrics form
+	 * @param result the result
+	 * @param session the session
+	 * @param facilityId the facility id
+	 */
 	@RequestMapping(value = "/viewFacilityMetrics", method = RequestMethod.GET)
 	public @ResponseBody
 	void showMetrics(@ModelAttribute("metricsForm") MetricsForm metricsForm,
@@ -1001,6 +1134,14 @@ public class AgencyDashBoardController extends AbstractController {
 		return jbPostTotalList;
 	}
 
+	/**
+	 * Gets the image.
+	 *
+	 * @param imagePath the image path
+	 * @param response the response
+	 * @param request the request
+	 * @return the image
+	 */
 	@RequestMapping("/viewImage")
 	public void getImage(@RequestParam("path") String imagePath,
 			HttpServletResponse response, HttpServletRequest request) {
@@ -1053,6 +1194,12 @@ public class AgencyDashBoardController extends AbstractController {
 		}
 	}
 
+	/**
+	 * Gets the response entity.
+	 *
+	 * @param imageInByte the image in byte
+	 * @return the response entity
+	 */
 	private ResponseEntity<byte[]> getResponseEntity(byte[] imageInByte) {
 		byte[] byteData = imageInByte;
 		HttpHeaders responseHeaders = new HttpHeaders();

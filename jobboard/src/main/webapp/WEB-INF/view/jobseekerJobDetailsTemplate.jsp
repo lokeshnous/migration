@@ -21,7 +21,9 @@
 		<script src="<%=request.getContextPath()%>/resources/js/FB.Share" type="text/javascript"></script>
 		<script src="<%=request.getContextPath()%>/resources/js/in.js" type="text/javascript"></script>
 		<script  src="<%=request.getContextPath()%>/resources/js/widgets.js"></script>
-  
+		<script type='text/javascript' src="<%= request.getContextPath() %>/resources/js/silverlight.js"></script>
+		<script type='text/javascript' src="<%= request.getContextPath() %>/resources/js/wmvplayer.js"></script>
+										  
   <jsp:include page="common/include.jsp" />
   <script type="text/javascript" src="<%= request.getContextPath() %>/resources/js/slider.js"></script>
 		<script type="text/javascript">
@@ -97,13 +99,13 @@
 		<script type="text/javascript">
 		function popImage(path) {
 			if(path!=''){
-			$.nmManual('<%= request.getContextPath() %>/search/viewImage.html?id='+path ,  {closeOnEscape: true, showCloseButton: true, closeOnClick: true, sizes:{initW: 500, initH: 500, minW: 500, minH: 500,  w: 500, h: 500}});
+			$.nmManual('<%= request.getContextPath() %>/search/viewImage.html?id='+path ,  {closeOnEscape: true, showCloseButton: true, sizes:{initW: 100, initH: 100, minW: 150, minH: 150,  w: 500, h: 500}});
 			}
 		}
 		
-		function popTestimony(path) {
-			if(path!=''){
-			$.nmManual('<%= request.getContextPath() %>/search/viewTestimonial.html?id='+path,  {closeOnEscape: true, showCloseButton: true, closeOnClick: true, sizes:{initW: 600, initH: 600, minW: 600, minH: 600,  w: 600, h: 600}});
+		function popTestimony(testimonyId, templateId) {
+			if(testimonyId !=''){
+			$.nmManual('<%= request.getContextPath() %>/search/viewTestimonial.html?id='+testimonyId+'&templateId='+templateId,  {closeOnEscape: true, showCloseButton: true, sizes:{initW: 100, initH: 50, minW: 200, minH: 100,  w: 600, h: 600}});
 			}
 		}
 		</script>
@@ -143,7 +145,7 @@
          <!--LOGO AREA-->
        	 <div class="row marginTop5">
           <div class="row marginTop16">
-               	<div class="LogoAreaBox" ><img src="<%=request.getContextPath()%>/search/viewImage.html?id=${jobDetail.getLogo()}"  alt="logo" width="335" height="60" border="0" /></div>
+               	<div class="LogoAreaBox" ><img style="min-width:50px; max-width:100%; max-height:100%;" src="<%=request.getContextPath()%>/search/viewImage.html?id=${jobDetail.getLogo()}"  alt="logo" border="0" /></div>
           </div>
           <div class="BoxText" alt="Color" width="500" height="60" border="0" style="color: ${jobDetail.getColor().substring(4)}"/></div>
          </div>
@@ -153,7 +155,7 @@
           <input value="<%=request.getContextPath()%>" type="hidden" id="contextPath">
          	<div class="BannerAreaBox" style="background: ${jobDetail.getColor().substring(4)}">
                    <div class="BannerAreaInnerBox">
-               <div class="BannerImgBox" > <img src="<%=request.getContextPath()%>/search/viewImage.html?id=${jobDetail.getImagePath()}" width="490" height="319" alt="Main image"></div>
+               <div class="BannerImgBox" > <img src="<%=request.getContextPath()%>/search/viewImage.html?id=${jobDetail.getImagePath()}" class="imgCenter" alt="Main image"></div>
                <div class="BannerTextBoxBlank" style="background: #c0c0c0">
 				                
                        <h1 style="color: ${jobDetail.getColor().substring(4)}">About This Employer </h1>
@@ -249,6 +251,9 @@
 	                   </div>	
 	               </div>
 	               <!--Video Area  -->
+	               <script type="text/javascript">
+								var src = '<%= request.getContextPath() %>/resources/MediaFiles/wmvplayer.xaml';
+					</script>
 	               <div id="VideoSlideContant" >
 	               	<div class="row">
 	                   	<!-- <div class="LeftSlidNav"><a href="#"><img src="images/Multimedia_ArrowLeft.png" alt="icon" width="21" height="30" border="0"></a></div>
@@ -268,14 +273,12 @@
 									<c:if test="${not empty videoList[status.index]}">
 										<div class="floatLeft width285 marginLeft10 marginRight10">
 										&nbsp;
-										<div id="mediaspacePath" style="display: none;">${videoList[status.index]}</div> 
-										<div name="mediaspace" id="mediaspace"></div> 
-										<script type='text/javascript' src="<%= request.getContextPath() %>/resources/js/silverlight.js"></script>
-										<script type='text/javascript' src="<%= request.getContextPath() %>/resources/js/wmvplayer.js"></script>
+										<div id="mediaspacePath${status.index}" style="display: none;">${videoList[status.index]}</div> 
+										<div name="mediaspace${status.index}" id="mediaspace${status.index}"></div> 
 										<script type="text/javascript">
-											var cnt = document.getElementById("mediaspace");
-											var src = '<%= request.getContextPath() %>/resources/MediaFiles/wmvplayer.xaml';
-											var filePath = $("#mediaspacePath").text();
+											var statusIndex = parseInt('${status.index}');
+											var cnt = document.getElementById("mediaspace"+statusIndex);
+											var filePath = $("#mediaspacePath"+statusIndex).text();
 											var cfg = {
 												file: filePath,
 												height:'165',
@@ -289,12 +292,12 @@
 										<c:if test="${not empty videoList[status.index+1]}">
 										<div class="floatLeft width285 marginLeft10 marginRight10">
 										&nbsp;
-										<div id="mediaspacePath1" style="display: none;">${videoList[status.index+1]}</div> 
-										<div id="mediaspace1"></div> 
-										
+										<div id="mediaspacePath${status.index+1}" style="display: none;">${videoList[status.index+1]}</div> 
+										<div id="mediaspace${status.index+1}"></div> 
 										<script type="text/javascript">
-											var cnt = document.getElementById("mediaspace1");
-											var filePath = $("#mediaspacePath1").text();
+											var statusIndex = parseInt('${status.index+1}');
+											var cnt = document.getElementById("mediaspace"+statusIndex);
+											var filePath = $("#mediaspacePath"+statusIndex).text();
 											var cfg = {
 												file: filePath,
 												height:'165',
@@ -308,12 +311,12 @@
 										<c:if test="${not empty videoList[status.index+2]}">
 										<div class="floatLeft width285 marginLeft10 marginRight10">
 										&nbsp;
-										<div id="mediaspacePath2" style="display: none;">${videoList[status.index+2]}</div> 
-										<div id="mediaspace2"></div> 
-										
+										<div id="mediaspacePath${status.index+2}" style="display: none;">${videoList[status.index+2]}</div> 
+										<div id="mediaspace${status.index+2}"></div> 
 										<script type="text/javascript">
-											var cnt = document.getElementById("mediaspace2");
-											var filePath = $("#mediaspacePath2").text();
+											var statusIndex = parseInt('${status.index+2}');
+											var cnt = document.getElementById("mediaspace"+statusIndex);
+											var filePath = $("#mediaspacePath"+statusIndex).text();
 											var cfg = {
 												file: filePath,
 												height:'165',
@@ -343,32 +346,32 @@
 									items="${jobDetail.listTestimony}" varStatus="status" step="4">
 									<div class="slider1Frames">
 									<c:if test="${not empty jobDetail.listTestimony[status.index].testimony}">
-										<a
-											id="${jobDetail.listTestimony[status.index].testimony}"  onclick="popTestimony(this.id);">
+										<a class="cursor"
+											id="${jobDetail.listTestimony[status.index].testimonyId}"  onclick="popTestimony(this.id, ${jobDetail.templateId});">
 											<div class="slider1FrameA1">
 												<p class="BannerTextBoxBlankSlide" >${jobDetail.listTestimony[status.index].testimony}</p>
 											</div>
 										</a> 
 										</c:if>
 									<c:if test="${not empty jobDetail.listTestimony[status.index+1].testimony}">
-										<a
-											id="${jobDetail.listTestimony[status.index+1].testimony}" onclick="popTestimony(this.id);" >
+										<a class="cursor"
+											id="${jobDetail.listTestimony[status.index+1].testimonyId}" onclick="popTestimony(this.id, ${jobDetail.templateId});" >
 											<div class="slider1FrameA1">
 												<p class="BannerTextBoxBlankSlide" >${jobDetail.listTestimony[status.index+1].testimony}</p>
 											</div>
 										</a>
 										</c:if>
 									<c:if test="${not empty jobDetail.listTestimony[status.index+2].testimony}">
-										<a
-											id="${jobDetail.listTestimony[status.index+2].testimony}" onclick="popTestimony(this.id);">
+										<a class="cursor"
+											id="${jobDetail.listTestimony[status.index+2].testimonyId}" onclick="popTestimony(this.id, ${jobDetail.templateId});">
 											<div class="slider1FrameA1">
 												<p class="BannerTextBoxBlankSlide" >${jobDetail.listTestimony[status.index+2].testimony}</p>
 											</div>
 										</a>
 										</c:if>
 									<c:if test="${not empty jobDetail.listTestimony[status.index+3].testimony}">
-										<a
-											id="${jobDetail.listTestimony[status.index+3].testimony}" onclick="popTestimony(this.id);">
+										<a class="cursor"
+											id="${jobDetail.listTestimony[status.index+3].testimonyId}" onclick="popTestimony(this.id, ${jobDetail.templateId});">
 											<div class="slider1FrameA1">
 												<p class="BannerTextBoxBlankSlide" >${jobDetail.listTestimony[status.index+3].testimony}</p>
 											</div>
@@ -467,7 +470,7 @@
                   </c:if>
                   <c:if test="${jobDetail.hidePostcode == 0}" >
                   <div class="row marginTop5">
-                    <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>Zip Code :</strong></h1>
+                    <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>ZIP CODE :</strong></h1>
                     <p>${jobDetail.postCode}</p>
                   </div>
                   </c:if>
@@ -480,18 +483,18 @@
                   
                   <div class="row marginTop5">
                     <c:if test="${not empty jobDetail.url and not empty jobDetail.urlDisplay and jobDetail.urlDisplay!='None' and jobDetail.url!='None'}">
-									<h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>WEB SITE :</strong></h1>
+									<h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>WEBSITE :</strong></h1>
 										<p><a class="color2" target="_blank" onclick="trackClick(${jobDetail.jobId},'7');" href="${jobDetail.url}">${jobDetail.urlDisplay}</a></p>
 										<%-- <span class="specs">Web Site:</span>&nbsp;&nbsp;<a class="color2" target="_blank" href="${jobDetail.url}">${jobDetail.urlDisplay}</a>&nbsp;&nbsp;|&nbsp;&nbsp; --%>
 					</c:if>
 					<c:if test="${not empty jobDetail.url and  empty jobDetail.urlDisplay and jobDetail.url!='None' and fn:containsIgnoreCase(urlString, 'http')}">
-									<h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>WEB SITE :</strong></h1>
+									<h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>WEBSITE :</strong></h1>
 										
 										<p><a class="color2" target="_blank" onclick="trackClick(${jobDetail.jobId},'7');" href="${jobDetail.url}">${jobDetail.url}</a></p>
 										<!-- <span class="specs">Web Site:</span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; -->
 					</c:if>
 					<c:if test="${not empty jobDetail.url and  empty jobDetail.urlDisplay and jobDetail.url!='None' and !fn:containsIgnoreCase(urlString, 'http')}">
-									<h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>WEB SITE :</strong></h1>
+									<h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>WEBSITE :</strong></h1>
 										<p><a class="color2" target="_blank" onclick="trackClick(${jobDetail.jobId},'7');" href=" http://${jobDetail.url}">${jobDetail.url}</a></p>
 										<!-- <span class="specs">Web Site:</span>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; -->
 					</c:if>
@@ -524,7 +527,7 @@
                         From This Employer </h1>
                             </div>
                     <c:forEach items="${jobDTOList}" var="jobDTO">   
-	                    <div class="BlueBoxCont"><a href="#" class="TextColorA02Link" onclick="viewJobDetails(${jobDTO.jobId},'${jobDTO.jobTitle}')">
+	                    <div class="BlueBoxCont"><a href="#" class="TextColorA02Link" onclick="viewJobDetails(${jobDTO.jobId},'${jobDTO.encodedJobTitle}')">
 	                      <h3 class="TextColor02">${jobDTO.jobTitle}</h3>
 	                      </a></div>
                     </c:forEach> 
@@ -623,8 +626,8 @@
 			           <div class="rowPadding"> 
 		                <span class="detailHeaderOrange marginTop5" style="color: ${jobDetail.getColor().substring(4)}">JOB  SUMMARY:</span>
 		                <div class="JobDetailHeaderRightView">
-				            <c:if test="${isFeatureEmployer}">
-				            <a	href="<%=request.getContextPath()%>/healthcarejobs/featuredemployerdetails.html?id=${jobDetail.facilityId}"><img
+				            <c:if test="${(jobDetail.blindAd == '0') && isFeatureEmployer}">
+				            <a	href="<%=request.getContextPath()%>/healthcare/featuredemployerdetails.html?id=${jobDetail.facilityId}"><img
 									onclick="trackClick(${jobDetail.jobId},'6');"
 									src="<%=request.getContextPath()%>/resources/images/FeaturedEmp.png"
 									alt="Featured Employer" width="164" height="23"></img> </a>
@@ -636,6 +639,7 @@
 		                <!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p> -->
 		                <div id="descriptionText" class="article">${jobDetail.adText}</div>
 		                <br />
+		                <img src="${jobDetail.trackingPixel}" />
 	               		</div>
                 	</div>
                 

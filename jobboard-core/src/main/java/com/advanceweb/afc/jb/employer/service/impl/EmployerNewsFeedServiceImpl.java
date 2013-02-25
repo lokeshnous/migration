@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.service.impl;
 
 import java.io.File;
@@ -33,18 +40,30 @@ import com.advanceweb.afc.jb.employer.service.EmployerNewsFeedService;
 @Service("employerNewsFeedService")
 public class EmployerNewsFeedServiceImpl implements EmployerNewsFeedService {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(EmployerNewsFeedServiceImpl.class);
 	
+	/** The Constant ITEM_STRING. */
 	private static final String ITEM_STRING = "item";
+	
+	/** The Constant TITLE_STRING. */
 	private static final String TITLE_STRING = "title";
+	
+	/** The Constant LINK_STRING. */
 	private static final String LINK_STRING = "link";
 	//private static final String DESC_STRING = "description";
+	/** The Constant FACILITY_STRING. */
 	private static final String FACILITY_STRING = "facility";
+	
+	/** The Constant PLATINUM_LIST. */
 	private static final String PLATINUM_LIST = "PlatinumNewsList";
+	
+	/** The Constant HOMEPAGE_LIST. */
 	private static final String HOMEPAGE_LIST = "HomePageNewsList";
 	
 
+	/** The base directory path for xml news feeds. */
 	@Value("${baseDirectoryPathForXMLNewsFeeds}")
 	private String baseDirectoryPathForXMLNewsFeeds;
 

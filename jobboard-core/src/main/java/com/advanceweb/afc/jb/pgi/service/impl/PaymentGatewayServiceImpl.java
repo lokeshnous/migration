@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.pgi.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +28,17 @@ import com.advanceweb.afc.jb.pgi.service.PaymentGatewayService;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 public class PaymentGatewayServiceImpl implements PaymentGatewayService {
 
+	/** The payment gateway dao. */
 	@Autowired(required = true)
 	private PaymentGatewayDao paymentGatewayDao;
 
+	/** The payment gateway delegate. */
 	@Autowired(required = true)
 	private PaymentGatewayDelegate paymentGatewayDelegate;
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.pgi.service.PaymentGatewayService#getConatactByFacilityId(int)
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 	public AccountAddressDTO getConatactByFacilityId(int facilityId) {
@@ -34,6 +46,9 @@ public class PaymentGatewayServiceImpl implements PaymentGatewayService {
 				.getAccountAddressByFacilityId(facilityId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.pgi.service.PaymentGatewayService#getBillingAddByFacilityId(int)
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 	public AccountAddressDTO getBillingAddByFacilityId(int facilityId) {
@@ -41,11 +56,18 @@ public class PaymentGatewayServiceImpl implements PaymentGatewayService {
 				.getBillingAddressByFacilityId(facilityId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.pgi.service.PaymentGatewayService#saveBillingAddress(com.advanceweb.afc.jb.pgi.AccountAddressDTO)
+	 */
 	@Override
 	public boolean saveBillingAddress(AccountAddressDTO billingAddressDTO) {
 		return paymentGatewayDao
 				.saveBillingAddress(billingAddressDTO);
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.pgi.service.PaymentGatewayService#saveDataBillingAddress(com.advanceweb.afc.jb.common.AccountBillingDTO)
+	 */
 	@Override
 	public boolean saveDataBillingAddress(AccountBillingDTO billingAddressDTO) {
 		return paymentGatewayDao

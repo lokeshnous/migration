@@ -409,7 +409,7 @@ $("#cityOrTown2").change(function(){
 					</div>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">
-							E-Mail:
+							Email:
 						</span>
 						<!-- readonly="true" -->
 						<c:if test="${!employeeAccountForm.adminLogin && !employeeAccountForm.readOnly}">
@@ -515,7 +515,7 @@ $("#cityOrTown2").change(function(){
 						<span class="required">(Required)</span>
 					</div>
 					<div class="rowEvenNewSpacing">
-						<span class="lableText3"> E-Mail: </span>
+						<span class="lableText3"> Email: </span>
 						<form:input path="email" name="email2" readonly="${employeeAccountForm.readOnly }" id="email2" class="job_seeker_password" 
 							type="text"/>
 							<span class="required">(Required)</span>

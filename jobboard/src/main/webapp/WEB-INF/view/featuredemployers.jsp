@@ -45,7 +45,7 @@
 					<ul class="employersList">
 					
 						<c:forEach var="companyProfileDTO" items="${companyProfileDTOList}" >
-						<li><a href="featuredemployerdetails.html?id=${companyProfileDTO.facilityid }"><img src="<%=request.getContextPath()%>/healthcarejobs/viewImage.html?id=${companyProfileDTO.logoPath}" alt="${companyProfileDTO.companyName }"></a></li>
+						<li><a href="featuredemployerdetails.html?id=${companyProfileDTO.facilityid }"><img src="<%=request.getContextPath()%>/healthcare/viewImage.html?id=${companyProfileDTO.logoPath}" alt="${companyProfileDTO.companyName }"></a></li>
 						</c:forEach>
 					</ul>
 					

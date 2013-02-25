@@ -235,6 +235,12 @@ public class AccountBillingDTO implements Serializable{
 	public Date getCreateDate() {
 		return createDate;
 	}
+	
+	/**
+	 * Sets the creates the date.
+	 *
+	 * @param createDate the new creates the date
+	 */
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common.schedulers.jobs;
 
 import java.util.List;
@@ -33,34 +40,48 @@ import com.advanceweb.afc.jb.user.UserService;
 @Service
 public class AutoRenewalJobWorker implements JobWorker {
 
+	/** The Constant JOB_NAME. */
 	private final static String JOB_NAME = "AUTORENEAL_JOB";
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger(AutoRenewalJobWorker.class);
 	
+	/** The employer job post dao. */
 	@Autowired
 	private JobPostDAO employerJobPostDAO;
 	
+	/** The advance web address. */
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
 	
+	/** The email configuration. */
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
+	
+	/** The email service. */
 	@Autowired
 	private MMEmailService emailService;
 	
+	/** The facility service. */
 	@Autowired
 	private FacilityService facilityService;
 	
+	/** The manage featured employer profile. */
 	@Autowired
 	private ManageFeaturedEmployerProfile manageFeaturedEmployerProfile;
 
+	/** The alert service. */
 	@Autowired
 	private UserAlertService alertService;
 	
+	/** The user service. */
 	@Autowired
 	private UserService userService;
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.common.schedulers.jobs.JobWorker#executeJob()
+	 */
 	@Override
 	public void executeJob() {
 		LOGGER.info("AutoRenewalJobWorker-> Execute Job.....");
@@ -216,6 +237,9 @@ public class AutoRenewalJobWorker implements JobWorker {
 		emailService.sendEmail(emailDTO);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.common.schedulers.jobs.JobWorker#getJobName()
+	 */
 	@Override
 	public String getJobName() {
 		return JOB_NAME;

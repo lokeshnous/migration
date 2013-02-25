@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.search.engine.solr;
 
 import java.util.ArrayList;
@@ -18,12 +25,17 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 //@Component("jobSearchParamBuilder")
 public class SOLRSearchParamBuilder implements SearchParamBuilder {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(SOLRSearchParamBuilder.class);
 
+	/** The field map. */
 	private final Map<String, String[]> fieldMap;
 
+	/** The Constant REGEX_PATTERN. */
 	private static final String REGEX_PATTERN = ":b\\d\\d";
+	
+	/** The Constant PATTERN. */
 	private static final Pattern PATTERN = Pattern.compile(REGEX_PATTERN);
 
 	/**
@@ -52,6 +64,9 @@ public class SOLRSearchParamBuilder implements SearchParamBuilder {
 	 * search query. The placeholders named like :b01 :b02 etc will be replaced
 	 * with corresponding values. The order of the values replaced are
 	 * determined by a predefined array of keys
+	 */
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.search.SearchParamBuilder#buildParams(java.util.List, java.util.Map)
 	 */
 	@Override
 	public List<SearchParamDTO> buildParams(List<SearchParamDTO> searchParams,

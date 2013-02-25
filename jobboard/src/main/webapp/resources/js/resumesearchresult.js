@@ -126,7 +126,7 @@ function saveThisResume() {
 					window.location.href = val + '.html';
 				}
 				if (key == "LoggedInNavigationPath") {
-					$.nmManual(val + '.html');
+					$.nmManual(val + '.html', {closeOnEscape: false, showCloseButton: false, closeOnClick: false});
 				}
 			});
 			if (data.success != null) {
@@ -146,7 +146,7 @@ function saveThisResume() {
 
 function openPopUpToPurchase(){
 	
-	$.nmManual("../employerSearchResume/employerpurchaseresumepopup.html");
+	$.nmManual("../employerSearchResume/employerpurchaseresumepopup.html", {closeOnEscape: false, showCloseButton: false, closeOnClick: false});
 	
 }
 

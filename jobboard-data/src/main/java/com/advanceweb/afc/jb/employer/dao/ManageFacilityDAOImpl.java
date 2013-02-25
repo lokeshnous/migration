@@ -32,14 +32,28 @@ import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 @Repository("manageFacilityDAO")
 public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(ManageFacilityDAOImpl.class);
+	
+	/** The Constant FIND_ADM_FACILITY. */
 	private static final String FIND_ADM_FACILITY = "from AdmFacility where facilityId=? and facilityType='FACILITY_GROUP'";
+	
+	/** The Constant FIND_ADM_FACILITY_DETAILS. */
 	private static final String FIND_ADM_FACILITY_DETAILS = "from AdmFacility where facilityId=?";
+	
+	/** The Constant NONE. */
 	private static final String NONE = "None";
 	
+	/** The hibernate template careers. */
 	private HibernateTemplate hibernateTemplateCareers;
 
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactoryMerionTracker the session factory merion tracker
+	 * @param sessionFactory the session factory
+	 */
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
@@ -48,10 +62,13 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageFacilityDAO#getFacilityList(int, boolean)
+	 */
 	@Override
 	public ManageFacilityDTO getFacilityList(int facilityId, boolean isGroup)
 			throws JobBoardDataException {
-		LOGGER.info("Fetching Facility Details");
+		LOGGER.debug("Fetching Facility Details");
 		ManageFacilityDTO facilityDTO = new ManageFacilityDTO();
 		List<AdmFacility> admFacilityList;
 		AdmFacility admFacility = null;
@@ -86,6 +103,9 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 		return facilityDTO;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageFacilityDAO#getFacilityListByGroup(int)
+	 */
 	@Override
 	public List<FacilityDTO> getFacilityListByGroup(int facilityId)
 			throws JobBoardDataException {
@@ -131,6 +151,9 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageFacilityDAO#createFacility(com.advanceweb.afc.jb.common.ManageFacilityDTO, int)
+	 */
 	@Override
 	public void createFacility(ManageFacilityDTO manageFacilityDTO,
 			int facilityIdParent) throws JobBoardDataException {
@@ -209,9 +232,12 @@ public class ManageFacilityDAOImpl implements ManageFacilityDAO {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageFacilityDAO#deleteFacility(int)
+	 */
 	@Override
 	public void deleteFacility(int facilityId) throws JobBoardDataException {
-		LOGGER.info("delete Facility Id ----" + facilityId);
+		LOGGER.debug("delete Facility Id ----" + facilityId);
 		AdmFacility admFacility = hibernateTemplateCareers.get(
 				AdmFacility.class, facilityId);
 		try {

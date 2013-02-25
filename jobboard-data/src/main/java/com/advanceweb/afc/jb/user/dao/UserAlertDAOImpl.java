@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.user.dao;
 
 import java.util.ArrayList;
@@ -35,16 +42,26 @@ import com.advanceweb.afc.jb.employer.helper.EmpConversionHelper;
 @Repository("alertDAO")
 public class UserAlertDAOImpl implements UserAlertDAO {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(UserAlertDAOImpl.class);
 
+	/** The hibernate template. */
 	private HibernateTemplate hibernateTemplate;
 
+	/** The hibernate template tracker. */
 	private HibernateTemplate hibernateTemplateTracker;
 
+	/** The conversion helper. */
 	@Autowired
 	private EmpConversionHelper conversionHelper;
 
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactoryMerionTracker the session factory merion tracker
+	 * @param sessionFactory the session factory
+	 */
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,

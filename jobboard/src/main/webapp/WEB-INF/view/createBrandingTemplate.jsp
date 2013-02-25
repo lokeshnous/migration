@@ -217,8 +217,8 @@
 								<div class="toolTip colorPkrAreaToolTip">
 									<span class="classic">Select the company logo you want
 										to feature on this job posting template. The file size limit
-										is ${brandingTemplateForm.imageSizeLimit} KB at 72 dpi. Accepted file types include .jpg, .gif,
-										.png and .tif.</span>
+										is 500 KB at 72 dpi. Accepted file types include JPG, GIF and
+										PNG. Recommended width: 335 px. Recommended height: 60 px.</span>
 								</div>
 								<span class="required">(Required)</span>
 								<label class="MultimediaLabel">
@@ -267,8 +267,9 @@
 								<div class="toolTip colorPkrAreaToolTip">
 									<span class="classic">This is the large image that will
 										appear at the top of your job posting template. The file size
-										limit is ${brandingTemplateForm.imageSizeLimit} KB at 72 dpi. Accepted file types include .jpg,
-										.gif, .png and .tif.</span>
+										limit is 500 KB at 72 dpi. Accepted file types include JPG,
+										GIF and PNG. Recommended width: 490 px. Recommended height:
+										319 px.</span>
 								</div>
 								<span class="required">(Required)</span>
 								<label class="MultimediaLabel">
@@ -385,7 +386,8 @@
 										thumbnails in an interactive gallery prominently displayed on
 										your job posting template. They will expand to full size upon
 										being clicked. The file size limit is ${brandingTemplateForm.imageSizeLimit} KB at 72 dpi.
-										Accepted file types include .jpg, .gif, .png and .tif.</span>
+										Accepted file types include .jpg, .gif and .png.
+										Recommended width: 178 px. Recommended height: 130 px.</span>
 							</div>
 						</div>
 					
@@ -432,15 +434,15 @@
 								
 							<div id="video">
 								<span class="required"><a href="#nogo" id="videoAjaxCallId">Add Another	Video</a></span>
-							</div>	
-								
-							<div class="toolTip colorPkrAreaToolTip">
-								<span class="classic">These videos will appear as
-									thumbnails in your interactive gallery. They will expand to
-									full size and play upon being clicked. The file size limit is
-									${brandingTemplateForm.videoSizeLimit} MB. Accepted file types include .wmv and .mp4.</span>
 							</div>
-						</div>
+
+										<div class="toolTip colorPkrAreaToolTip">
+											<span class="classic">These videos will appear as
+												thumbnails in your interactive gallery. They will expand to
+												full size and play upon being clicked. The file size limit
+												is 30 MB. Accepted file types include MP4 and WMV.</span>
+										</div>
+									</div>
 						
 						<div class="row">
 						<c:if test="${not empty errorMessage}">

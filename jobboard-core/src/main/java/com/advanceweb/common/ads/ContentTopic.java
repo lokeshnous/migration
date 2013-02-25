@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.common.ads;
 
 /**
@@ -9,7 +16,11 @@ package com.advanceweb.common.ads;
  * 
  */
 public class ContentTopic {
+	
+	/** The id. */
 	private int id;
+	
+	/** The text. */
 	private String text;
 
 	/**
@@ -25,22 +36,45 @@ public class ContentTopic {
 		this.text = text;
 	}
 
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * Sets the id.
+	 *
+	 * @param id the new id
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * Gets the text.
+	 *
+	 * @return the text
+	 */
 	public String getText() {
 		return text;
 	}
 
+	/**
+	 * Sets the text.
+	 *
+	 * @param string the new text
+	 */
 	public void setText(String string) {
 		this.text = string;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "ContentTopic [id=" + id + ", text=" + text + "]";

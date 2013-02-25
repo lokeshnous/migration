@@ -47,23 +47,36 @@ import com.advanceweb.afc.jb.jobseeker.service.CoverLetterService;
 @SessionAttributes("resCoverLetterForm")
 @Scope("session")
 public class JobseekerCoverLetterController {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger("JobseekerCoverLetterController.class");
 
+	/** The Constant COVER_LETTER_ID. */
 	private static final String COVER_LETTER_ID = "coverletterId";
 
+	/** The cover letter service. */
 	@Autowired
 	private CoverLetterService coverLetterService;
 
+	/** The resume delete success. */
 	@Value("${resumeDeleteSuccess}")
 	private String resumeDeleteSuccess;
 
+	/** The resume delete failure. */
 	@Value("${resumeDeleteFailure}")
 	private String resumeDeleteFailure;
 
+	/** The js cover letter name. */
 	private @Value("${jsCoverLetterName}")
 	String jsCoverLetterName;
 
+	/**
+	 * Job seeker cover page.
+	 *
+	 * @param map the map
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/createCoverLetter", method = RequestMethod.GET)
 	public ModelAndView jobSeekerCoverPage(ModelMap map) {
 		ResCoverLetterForm resCoverLetterForm = new ResCoverLetterForm();

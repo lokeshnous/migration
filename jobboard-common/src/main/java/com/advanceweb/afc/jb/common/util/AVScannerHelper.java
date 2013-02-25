@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 
 package com.advanceweb.afc.jb.common.util;
 
@@ -24,10 +31,16 @@ import com.symantec.scanengine.api.ThreatInfo;
  * 
  */
 public class AVScannerHelper {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(AVScannerHelper.class);
+	
+	/** The antivirus ip. */
 	private @Value("${semantic.antivirus.ip}")
 	String antivirusIp;
+	
+	/** The port. */
 	private @Value("${semantic.antivirus.port}")
 	int port;
 	/**
@@ -53,7 +66,7 @@ public class AVScannerHelper {
 		}*/
 
 		ScanEngine.ScanEngineInfo scanEngTobeUsed = new ScanEngine.ScanEngineInfo(
-				"10.0.16.170", 1344);
+				"10.0.16.174", 1344);
 		scanEnginesForScanning.add(scanEngTobeUsed);
 
 		FileOutputStream output = null;
@@ -104,6 +117,11 @@ public class AVScannerHelper {
 		return virusFound;
 	}
 
+	/**
+	 * Prints the result.
+	 *
+	 * @param result the result
+	 */
 	private void printResult(Result result) {
 
 		LOGGER.debug("----------------------------------------------------------------------");
@@ -150,6 +168,11 @@ public class AVScannerHelper {
 
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String args[]) {
 
 		new AVScannerHelper().scanFile("C:\\temp\\ResumeTemp.docx",

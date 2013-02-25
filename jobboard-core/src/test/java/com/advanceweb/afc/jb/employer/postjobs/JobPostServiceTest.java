@@ -183,10 +183,10 @@ public class JobPostServiceTest extends ServiceTestBase {
 		schedulerDTO.setFirstName("FN");
 		schedulerDTO.setLastName("LN");
 		schedulerDTO.setCompanyName("CompN");
-		schedulerDTO.setJobId(97545);
-		schedulerDTO.setFacilityId(4665);
-		schedulerDTO.setUserId(141431);
-		schedulerDTO.setExpireDate("2013-01-25 18:12:19");
+		schedulerDTO.setJobId(153737);
+		schedulerDTO.setFacilityId(2656);
+		schedulerDTO.setUserId(157504);
+		schedulerDTO.setExpireDate("2013-02-02 18:12:19");
 		EmailDTO emailDTO = new EmailDTO();
 
 		emailDTO.setFromAddress(advanceWebAddress);
@@ -215,11 +215,11 @@ public class JobPostServiceTest extends ServiceTestBase {
 				for (UserAlertDTO alertDTO : alertDTOs) {
 					if (alertDTO.getAlertId() > 0
 							&& alertDTO.getAlertId() == MMJBCommonConstants.JOB_POSTING_EXPIRING_SOON) {
-//						sendExpiringSoonMail(emailDTO, toAddress, schedulerDTO);
+					sendExpiringSoonMail(emailDTO, toAddress, schedulerDTO);
 					}
 				}
 			} else {
-//				sendExpiringSoonMail(emailDTO, toAddress, schedulerDTO);
+			sendExpiringSoonMail(emailDTO, toAddress, schedulerDTO);
 			}
 		}
 		// send mail to employer on interest
@@ -239,11 +239,11 @@ public class JobPostServiceTest extends ServiceTestBase {
 			for (UserAlertDTO alertDTO : alertDTOs) {
 				if (alertDTO.getAlertId() > 0
 						&& alertDTO.getAlertId() == MMJBCommonConstants.JOB_POSTING_EXPIRING_SOON) {
-//					sendExpiringSoonMail(emailDTO, toAddress, schedulerDTO);
+				sendExpiringSoonMail(emailDTO, toAddress, schedulerDTO);
 				}
 			}
 		} else {
-//			sendExpiringSoonMail(emailDTO, toAddress, schedulerDTO);
+			sendExpiringSoonMail(emailDTO, toAddress, schedulerDTO);
 		}
 
 		LOGGER.info("Scheduler : Job Expires Soon Scheduler completed .......");

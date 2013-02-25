@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.pgi.web.controller;
 
 import java.util.Date;
@@ -11,17 +18,37 @@ import java.util.Date;
 public class BillingAddressForm {
 
 	// Billing Address Information
+	/** The fname for billing addr. */
 	private String fnameForBillingAddr;
+	
+	/** The lname for billing addr. */
 	private String lnameForBillingAddr;
 	//private String useMyAccountAddr;
+	/** The use my account addr. */
 	private boolean useMyAccountAddr;
+	
+	/** The street for billing addr. */
 	private String streetForBillingAddr;
+	
+	/** The city or town for billing addr. */
 	private String cityOrTownForBillingAddr;
+	
+	/** The state billing address. */
 	private String stateBillingAddress;
+	
+	/** The country for billing addr. */
 	private String countryForBillingAddr;
+	
+	/** The zip code for billing addr. */
 	private String zipCodeForBillingAddr;
+	
+	/** The phone. */
 	private String phone;
+	
+	/** The facility contact id. */
 	private int facilityContactId;
+	
+	/** The create date. */
 	private Date createDate;
 
 	/**
@@ -174,18 +201,38 @@ public class BillingAddressForm {
 		this.facilityContactId = facilityContactId;
 	}
 
+	/**
+	 * Gets the phone.
+	 *
+	 * @return the phone
+	 */
 	public String getPhone() {
 		return phone;
 	}
 
+	/**
+	 * Sets the phone.
+	 *
+	 * @param phone the new phone
+	 */
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
+	/**
+	 * Checks if is use my account addr.
+	 *
+	 * @return true, if is use my account addr
+	 */
 	public boolean isUseMyAccountAddr() {
 		return useMyAccountAddr;
 	}
 
+	/**
+	 * Sets the use my account addr.
+	 *
+	 * @param useMyAccountAddr the new use my account addr
+	 */
 	public void setUseMyAccountAddr(boolean useMyAccountAddr) {
 		this.useMyAccountAddr = useMyAccountAddr;
 	}

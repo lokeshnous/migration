@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.jobseeker.helper;
 
 import java.util.ArrayList;
@@ -66,6 +73,12 @@ public class SaveSearchConversionHelper {
 		return searchedJobsDTOList;
 	}
 	
+	/**
+	 * Gets the split url.
+	 *
+	 * @param urlData the url data
+	 * @return the split url
+	 */
 	private String getSplitURL(String urlData) {
 
 		StringBuffer splitURL = new StringBuffer();

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.admin.dao;
 
 import java.util.List;
@@ -5,7 +12,9 @@ import java.util.List;
 import com.advanceweb.afc.jb.common.AdminDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmpSearchDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
+import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 
 public interface AdminDAO {
 	
@@ -89,4 +98,23 @@ public interface AdminDAO {
 	 * @return
 	 */
 	boolean updateJobPostInventory(int facilityId, int jobTypeId, int quantity);
+	/**
+	 * This method is used to get the list of the Facility whose name is
+	 * matching with the given facility name
+	 * 
+	 * @param String
+	 *            facilityName
+	 * @return List<FacilityDTO>
+	 */
+	List<FacilityDTO> getFacilityNames(String facilityName)
+			throws JobBoardDataException;
+	/**
+	 * This method is used to get the details of the Facility depending on the
+	 * facilityId
+	 * 
+	 * @param int facilityId
+	 * @return List<FacilityDTO>
+	 */
+	FacilityDTO getLinkedFacilityDetails(int facilityId)
+			throws JobBoardDataException;
 }

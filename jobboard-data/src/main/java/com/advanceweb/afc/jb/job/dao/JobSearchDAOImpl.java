@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.job.dao;
 
 import java.math.BigInteger;
@@ -22,6 +29,7 @@ import com.advanceweb.afc.jb.common.JobApplyTypeDTO;
 import com.advanceweb.afc.jb.common.JobDTO;
 import com.advanceweb.afc.jb.common.JobPostDTO;
 import com.advanceweb.afc.jb.common.JobTitleDTO;
+import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.data.entities.AdmSaveJob;
 import com.advanceweb.afc.jb.data.entities.JpJob;
@@ -46,8 +54,18 @@ import com.advanceweb.afc.jb.jobseeker.helper.JobSeekerJobDetailConversionHelper
 @Repository("jobSearchDAO")
 public class JobSearchDAOImpl implements JobSearchDAO {
 
+	/** The hibernate template. */
 	private HibernateTemplate hibernateTemplate;
+	
+	/** The hibernate template tracker. */
 	private HibernateTemplate hibernateTemplateTracker;
+	
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactory the session factory
+	 * @param sessionFactoryMerionTracker the session factory merion tracker
+	 */
 	@Autowired
 	public void setHibernateTemplate(SessionFactory sessionFactory,
 			SessionFactory sessionFactoryMerionTracker) {
@@ -56,15 +74,19 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 				sessionFactoryMerionTracker);
 	}
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(JobSearchDAOImpl.class);
 
+	/** The job search conversion helper. */
 	@Autowired
 	private JobSearchConversionHelper jobSearchConversionHelper;
 
+	/** The job seeker job detail conversion helper. */
 	@Autowired
 	private JobSeekerJobDetailConversionHelper jobSeekerJobDetailConversionHelper;
 
+	/** The session factory. */
 	@Autowired
 	private SessionFactory sessionFactory;
 	
@@ -165,6 +187,9 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 					if (jpJob.getJobId() != facilityID) {
 						JobPostDTO jobPostDTO = new JobPostDTO();
 						jobPostDTO.setJobTitle(jpJob.getJobtitle());
+						jobPostDTO.setEncodedJobTitle(jpJob.getJobtitle().replaceAll(
+								MMJBCommonConstants.IGNORE_SPECIAL_CHAR_PATTERN,
+								""));
 						// jobPostDTO.setJobCity(jpJob.get);
 						// jobPostDTO.setJobCountry(jobCountry);
 						// jobPostDTO.setJobState();
@@ -261,6 +286,9 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 	}
 
 	// To Save the save searched job details to DB
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.job.dao.JobSearchDAO#saveTheJob(com.advanceweb.afc.jb.common.JobDTO)
+	 */
 	@Override
 	public void saveTheJob(JobDTO jobDTO) {
 		// Transforming the saveSearchedJobsDTO to Save Search Entity
@@ -287,9 +315,11 @@ public class JobSearchDAOImpl implements JobSearchDAO {
 					"from JpJobApply where jpJob = ?", jpJob);
 			List<JobApplyTypeDTO> jobApplyTypeDTOs = jobSearchConversionHelper
 					.transformJpJobApplytoJobApplyTypeDTO(jpJobApply);
+			if(null != jobApplyTypeDTOs && jobApplyTypeDTOs.size()>0){
 			jobApplyTypeDTO = jobApplyTypeDTOs.get(0);
+			}
 		} catch (Exception e) {
-			LOGGER.info("applyJobDetails : ERROR");
+			LOGGER.error("applyJobDetails : ERROR",e);
 		}
 		return jobApplyTypeDTO;
 	}

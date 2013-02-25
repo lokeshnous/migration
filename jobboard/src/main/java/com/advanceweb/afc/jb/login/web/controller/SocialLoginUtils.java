@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.login.web.controller;
 
 import org.springframework.social.connect.Connection;
@@ -25,6 +32,12 @@ public class SocialLoginUtils {
 		return signInAttempt != null ? signInAttempt.getConnection() : null;
 	}
 
+	/**
+	 * Gets the provider user sign in attempt.
+	 *
+	 * @param request the request
+	 * @return the provider user sign in attempt
+	 */
 	private static SocialConnectionManager getProviderUserSignInAttempt(
 			RequestAttributes request) {
 		return (SocialConnectionManager) request.getAttribute(

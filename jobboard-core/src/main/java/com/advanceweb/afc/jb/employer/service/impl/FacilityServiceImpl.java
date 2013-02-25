@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.service.impl;
 
 import java.util.ArrayList;
@@ -22,8 +29,11 @@ import com.advanceweb.afc.jb.user.dao.UserDao;
 @Service("facilityService")
 public class FacilityServiceImpl implements FacilityService {
 
+	/** The facility dao. */
 	@Autowired
 	private FacilityDAO facilityDAO;
+	
+	/** The user dao. */
 	@Autowired
 	private UserDao userDao;
 
@@ -38,6 +48,9 @@ public class FacilityServiceImpl implements FacilityService {
 		return facilityDAO.facilityDetails(userId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.service.FacilityService#getFacilityByFacilityId(int)
+	 */
 	@Override
 	public FacilityDTO getFacilityByFacilityId(int facilityId) {
 		return facilityDAO.getFacilityByFacilityId(facilityId);
@@ -128,6 +141,9 @@ public class FacilityServiceImpl implements FacilityService {
 		return returnVal;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.service.FacilityService#employerDateMetrics(java.util.Date, java.util.Date, int)
+	 */
 	@Override
 	/**
 	 * Get the Date range specific data
@@ -144,15 +160,25 @@ public class FacilityServiceImpl implements FacilityService {
 	} 
 	
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.service.FacilityService#getfacilityUserId(int)
+	 */
 	@Override
 	public int getfacilityUserId(int facilityId) {
 		return facilityDAO.getfacilityUserId(facilityId);
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.service.FacilityService#getAllFacilityList()
+	 */
 	@Override
 	public List<SchedulerDTO> getAllFacilityList() {
 		return facilityDAO.getAllFacilityList();
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.service.FacilityService#getUser(java.lang.String)
+	 */
 	@Override
 	public UserDTO getUser(String email) {
 		return userDao.getUser(email);

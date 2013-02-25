@@ -41,10 +41,19 @@
 					
 				</div>
 				<div>
-				  <h1 style="color:red">Error occurred while processing your request. please try again.</h1>
+					<h1 style="color: red">We're sorry, but an error occurred
+						while processing your request. This maybe due to the following
+						reasons. Please try again.</h1>
 				</div>
 				<br/><br/><br/><br/><br/>
-				
+				<div  class="article" style="font-size:15px;" >
+					<ul >
+						<li>You have not logged into the System</li>
+						<li>You have been timed out due to inactivity</li>
+						<li>You may have entered the address (URL) incorrectly</li>
+						<li>An internal application error has occurred</li>
+					</ul>
+				</div>
 				<br class="clearfix" />
 
 				<div class="ad_wrapper">${adPageBottom}</div>

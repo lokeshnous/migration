@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.login.web.controller;
 
 import java.io.IOException;
@@ -12,6 +19,10 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 
 public class LoginFailureManager extends SimpleUrlAuthenticationFailureHandler {
+	
+	/* (non-Javadoc)
+	 * @see org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler#onAuthenticationFailure(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.security.core.AuthenticationException)
+	 */
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request,
 			HttpServletResponse response, AuthenticationException exception)

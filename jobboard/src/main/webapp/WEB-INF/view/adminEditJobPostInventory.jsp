@@ -15,19 +15,8 @@
 	type="text/css" />
 <link href="../resources/css/SliderStyles.css" rel="stylesheet"
 	type="text/css">
-<link rel="stylesheet" type="text/css" media="screen"
-	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
 <link rel="stylesheet" type="text/css" href="jquery.autocomplete.css" />
-	<!-- JAVASCRIPT FILES -->
-	<!--  <script type="text/javascript"
-		src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>-->
-	<!-- <script type="text/javascript"
-		src="javascripts/jquery.cycle.all.min.js"></script>
-	<script type="text/javascript" src="javascripts/slider.js"></script>
-	<script type="text/javascript" src="javascripts/jquery.megamenu.js"></script> -->
 
-	<!-- <script type="text/javascript" src="jquery-1.3.2.min.js"></script>
-	<script type="text/javascript" src="jquery.autocomplete.min.js"></script>-->
 	<script type="text/javascript">
 /* function cancelProcess() {
 	parent.$.nmTop().close();
@@ -43,10 +32,54 @@ function closePopup() {
 		$.nmFilters({
     	    custom: {
     	        afterShowCont: function(nm) {
-    	        	$('.focus').focus();
+    	        	$('#empList').focus();
     	        }
     	    }
     	});
+		var IdData = new Array();
+    	var NameData = new Array();
+    	
+		var empName = $("#empList").val();
+		$.ajax({
+	        type: "GET",
+	        url: "${pageContext.request.contextPath}/admininventory/getFacilityNamesList.html?term="+empName,
+	        dataType: "json",							        
+	        contentType: "application/json; charset=utf-8",
+	        success: function(data) {							        	
+	        								        	
+	        	for (var x = 0; x < data.EmpList.length; x++) {
+	        		
+	               IdData.push(data.EmpList[x].ID);
+	               
+	               NameData.push(data.EmpList[x].NAME);
+	            }
+	        	
+	        	$("#empList").autocomplete({
+	        		source: NameData,
+	        		select : function(event, ui) {
+	        			var IndexVal = $.inArray(ui.item.value, NameData);					        			
+	        			
+	        			var IdVal = IdData[IndexVal];
+	        			
+						$("#empList")
+								.val(ui.item.value);
+						
+						$.ajax({
+							url: '${pageContext.request.contextPath}/admininventory/getSelectedFacility.html?facilityId='+IdVal,
+							success : function(data) {	
+								$('#empList').val(data.name);
+								$('#nsId').val(data.nsCustomerID);
+							},
+						});	
+						
+	        		},
+	        	});
+					
+	        },
+	        error: function(XMLHttpRequest, textStatus, errorThrown) {
+	           alert(textStatus);
+	        }
+	    });
 		//$('[id^=nsId]').keypress(validateNumber);
 		//$(".onlyNum").keypress(validateNumber);
 		var empList = $.trim($("#empList").val());
@@ -84,13 +117,13 @@ function closePopup() {
 				//storing data in key  value manner
 				$('#tb_save_search > tbody > tr').each(function(){
 				    var inveId  = $(this).attr("id");   
-				    var availQty = $(this).find("td").eq(3).children().val(); 
+				    var availQty = $(this).find("td").eq(4).children().val(); 
 				    stringObj = inveId +"="+ availQty;
 				    stringObjNew = stringObj +";" + stringObjNew ;
 				 });
 				$('#jp_slot_save > tbody > tr').each(function(){
 				    var inveId  = $(this).attr("id");   
-				    var availQty = $(this).find("td").eq(3).children().val(); 
+				    var availQty = $(this).find("td").eq(4).children().val(); 
 				    stringObj = inveId +"="+ availQty;
 				    stringObjNew = stringObj +";" + stringObjNew ;
 				 });
@@ -170,10 +203,10 @@ function closePopup() {
 			<div class="row">
 				<span class="splLableText">Company Name: &nbsp;</span>
 				<input type="text" id="empList" name="empList"
-					class="job_seeker_Resume focus textBox2" value="${empList}"/>
-				<span class="splLableText FormErrorDisplayText01">&nbsp;&nbsp;OR</span>
-				<span class="lableText7">Net Suite ID Number:</span>
-				<input type="text" id="nsId" name="nsId" class="job_seeker_Resume onlyNum"
+					class="job_seeker_Resume focus textBox350" value="${empList}"/>
+				<span class="splLableText FormErrorDisplayText01">OR</span>
+				<span class="splLableText">Net Suite ID:</span>
+				<input type="text" id="nsId" name="nsId" class="netsuiteid onlyNum"
 					value="${nsId}" />&nbsp;&nbsp;
 				<c:if test="${pageName == 'adminDashboard'}">
 				<input type="button" value="find" name="find" id="find"
@@ -193,7 +226,8 @@ function closePopup() {
 						id="tb_save_search" class="grid">
 						<thead>
 							<tr>
-								<th width="41%" align="left" valign="top" scope="col">Type</th>
+								<th width="13%" align="left" valign="top" scope="col">Inventory Id</th>
+								<th width="41%" align="center" valign="top" scope="col">Type</th>
 								<th width="13%" align="center" valign="top" scope="col">Duration</th>
 								<th width="13%" align="center" valign="top" scope="col">Purchased</th>
 								<th width="11%" align="center" valign="top" scope="col">Available</th>
@@ -202,7 +236,8 @@ function closePopup() {
 						<tbody>
 							<c:forEach items="${jbPostList}" var="jbPostList" varStatus="rowCount">
 								<tr id="${jbPostList.invDetailId}" class="Height30">
-									<td align="left">${jbPostList.getAddon()}</td>
+									<td align="left">${jbPostList.inventoryId}</td>
+									<td align="center">${jbPostList.getAddon()}</td>
 									<td align="center">${jbPostList.getDuration()}</td>
 									<td align="center">${jbPostList.getQuantity()}</td>
 									<td align="center">
@@ -224,7 +259,8 @@ function closePopup() {
 						id="jp_slot_save" class="grid">
 						<thead>
 							<tr>
-								<th width="41%" align="left" valign="top" scope="col">Type</th>
+								<th width="13%" align="left" valign="top" scope="col">Inventory Id</th>
+								<th width="41%" align="center" valign="top" scope="col">Type</th>
 								<th width="13%" align="center" valign="top" scope="col">Duration</th>
 								<th width="13%" align="center" valign="top" scope="col">Purchased</th>
 								<th width="11%" align="center" valign="top" scope="col">Available</th>
@@ -233,7 +269,8 @@ function closePopup() {
 						<tbody>
 							<c:forEach items="${jbSlotList}" var="jbSlotList" varStatus="rowCount">
 								<tr id="${jbSlotList.invDetailId}" class="Height30">
-									<td align="left">${jbSlotList.getAddon()}</td>
+									<td align="left">${jbSlotList.inventoryId}</td>
+									<td align="center">${jbSlotList.getAddon()}</td>
 									<td align="center">${jbSlotList.getDuration()}</td>
 									<td align="center">${jbSlotList.getQuantity()}</td>
 									<td align="center">

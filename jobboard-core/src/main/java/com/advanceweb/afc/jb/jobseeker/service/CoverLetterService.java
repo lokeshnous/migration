@@ -102,6 +102,13 @@ public interface CoverLetterService {
 	 */
 	ResCoverLetterDTO getCoverList(int coverletterId);
 
+	/**
+	 * Fetch public cover letter.
+	 *
+	 * @param jobSeekerId the job seeker id
+	 * @param coverLetterId the cover letter id
+	 * @return the res cover letter dto
+	 */
 	ResCoverLetterDTO fetchPublicCoverLetter(long jobSeekerId,String coverLetterId);
 
 }

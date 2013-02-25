@@ -1,1 +1,1 @@
-<%response.sendRedirect("healthcarejobs/index.html"); %>
+<%response.sendRedirect("healthcare/index.html"); %>

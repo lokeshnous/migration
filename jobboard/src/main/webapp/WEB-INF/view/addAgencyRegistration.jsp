@@ -48,6 +48,9 @@
 					/* $("#emailId").attr("readonly", true);
 					$("#confirmEmailId").attr("readonly", true);  */
 		}
+		if ($("#replaceAdvPassPassword").val() == 'true') {
+			$("#passwordOverride").show();
+		}
 		//Auto complete on selecting city
 		/* $("#cityAutoPopulation").autocomplete({
 			source: '${pageContext.request.contextPath}/employer/getCityList.html',
@@ -119,7 +122,7 @@
 </script>
 <script type="text/javascript">
 	function cancelProcess() {
-		window.location.href = '${pageContext.request.contextPath}/healthcarejobs/index.html';
+		window.location.href = '${pageContext.request.contextPath}/healthcare/index.html';
 	}
 </script>
 
@@ -243,7 +246,7 @@
 								var="profAttrib" varStatus="status">
 								<c:if test="${profAttrib.strLabelName == 'Position Title'}">
 									<div class="rowEvenNewSpacing marginTop0">
-										<span class="lableText3">Position Title:</span>
+										<span class="lableText3">Job Title:</span>
 										<form:input
 											path="listProfAttribForms[${status.index}].strLabelValue"
 											type="text" name="healthCareSubSplty"
@@ -302,7 +305,7 @@
 								</c:if>
 								<c:if test="${profAttrib.strLabelName == 'Zip Code'}">
 									<div class="rowEvenNewSpacing">
-										<span class="lableText3">Zip:</span>
+										<span class="lableText3">ZIP Code:</span>
 										<form:input
 											path="listProfAttribForms[${status.index}].strLabelValue"
 											type="text" name="healthCareSubSplty" id="zipCode"
@@ -396,7 +399,7 @@
 									test="${agencyRegForm.bReadOnly == false}">
 									<input type="button" value="Cancel" onclick="cancelProcess()"
 										class="btn_sm orange cursor" name="Cancel" />
-								</c:if> <%-- <a href="<%=request.getContextPath()%>/healthcarejobs/index.html" class="btn_sm orange">Cancel</a> --%></span>
+								</c:if> <%-- <a href="<%=request.getContextPath()%>/healthcare/index.html" class="btn_sm orange">Cancel</a> --%></span>
 							<span class="floatLeft marginTop10"><!-- I'll set up my profile
 								later. <a href="#">Continue</a> to the site now. -->
 							</span>

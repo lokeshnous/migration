@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.user.dao;
 
 import java.text.ParseException;
@@ -47,30 +54,49 @@ import com.advanceweb.afc.jb.lookup.helper.PopulateDropdownConversionHelper;
 @Repository("subscriptionsDAO")
 public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 
+	/** The Constant FETCH_USER_SUBSCRIPTIONS. */
 	private static final String FETCH_USER_SUBSCRIPTIONS = "select usersubs from AdmUserSubscription usersubs where usersubs.id.userId=:userId and usersubs.deleteDt is null";
+	
+	/** The Constant SELECTED_CURRENT_SUBS. */
 	private static final String SELECTED_CURRENT_SUBS = "from AdmUserSubscription sub where sub.id.userId=?";
+	
+	/** The Constant SELECTED_FACILITY_SUBS. */
 	private static final String SELECTED_FACILITY_SUBS = "from AdmFacilitySubscription e where e.admFacility.facilityId=?";
 	// private static final String FIND_USER_SUBSCRIPTIONS =
 	// "from AdmSubscription sub where sub.subscriptionType=?";
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(UserSubscriptionsDAOImpl.class);
 
+	/** The Constant OLD_FORMAT. */
 	private static final String OLD_FORMAT = "MM/dd/yyyy HH:mm:ss";
+	
+	/** The Constant NEW_FORMAT. */
 	private static final String NEW_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	// private static final ResPrivacy ResCoverletter = null;
 	// private static final
 	// MAX_RESULT="select MAX(rs.coverletterId),rs.userId,rs.name,rs.coverletterText,rs.active,rs.createDt,rs.updateDt,rs.deleteDt";
 
+	/** The hibernate template careers. */
 	private HibernateTemplate hibernateTemplateCareers;
 
+	/** The hibernate template tracker. */
 	private HibernateTemplate hibernateTemplateTracker;
 
+	/** The subscription helper. */
 	@Autowired
 	private UserSubscriptionsConversionHelper subscriptionHelper;
 
+	/** The dropdown helper. */
 	@Autowired
 	private PopulateDropdownConversionHelper dropdownHelper;
 
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactoryMerionTracker the session factory merion tracker
+	 * @param sessionFactory the session factory
+	 */
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
@@ -176,7 +202,7 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 				String dateNow = formatter.format(currentDate.getTime());
 				todayDate = dateConveter(dateNow);
 			} catch (Exception ex) {
-				LOGGER.info("Error:Cover letter save by job seeker" + ex);
+				LOGGER.error("Error:Cover letter save by job seeker" + ex);
 			}
 
 			// this is save option in ResCoverletter
@@ -214,8 +240,7 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 			}
 
 		} catch (DataAccessException e) {
-			LOGGER.info("Error" + e);
-			LOGGER.error("Not save Cover letter");
+			LOGGER.error("Could not save Cover letter" + e);
 		}
 		return isUpdate;
 	}
@@ -240,7 +265,7 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 					Locale.US);
 			dateValue = sdfSource.parse(newDateString);
 		} catch (ParseException e) {
-			LOGGER.info("Date parsing in Job save by admin wrong");
+			LOGGER.error("Date parsing in Job save by admin wrong",e);
 		}
 
 		return dateValue;
@@ -387,7 +412,7 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 				String dateNow = formatter.format(currentDate.getTime());
 				todayDate = dateConveter(dateNow);
 			} catch (Exception e) {
-				LOGGER.info("Info data error date conversion");
+				LOGGER.error("Info data error date conversion",e);
 			}
 
 			if (rclDTO.getActive() == 1) {
@@ -433,7 +458,7 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 			}
 
 		} catch (DataAccessException e) {
-			LOGGER.info("Error" + e);
+			LOGGER.error("Error" + e);
 			LOGGER.error("Not save Cover letter");
 		}
 		return isUpdate;
@@ -494,7 +519,7 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 			String dateNow = formatter.format(currentDate.getTime());
 			todayDate = dateConveter(dateNow);
 		} catch (Exception e) {
-			LOGGER.info("Info data error date conversion");
+			LOGGER.error("Info data error date conversion",e);
 		}
 		try {
 			ResCoverletter resCov = new ResCoverletter();
@@ -521,7 +546,7 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 			hibernateTemplateCareers.update(resPriv);
 			isUpdate = true;
 		} catch (Exception ex) {
-			LOGGER.info("Error: Delete Cover Letter" + ex);
+			LOGGER.error("Error: Delete Cover Letter" + ex);
 
 		}
 		return isUpdate;
@@ -562,7 +587,7 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 			}
 			resCovDTO = subscriptionHelper.toTransFormListToDTO(resList);
 		} catch (DataAccessException e) {
-			LOGGER.info("Error for update of employee data");
+			LOGGER.error("Error for update of employee data",e);
 		}
 		return resCovDTO;
 
@@ -590,7 +615,7 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 				String dateNow = formatter.format(currentDate.getTime());
 				todayDate = dateConveter(dateNow);
 			} catch (Exception e) {
-				LOGGER.info("Info data error date conversion");
+				LOGGER.error("Info data error date conversion",e);
 			}
 			int primaryIdData = 0;
 
@@ -619,12 +644,14 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 			isUpdate = true;
 
 		} catch (DataAccessException e) {
-			LOGGER.info("Error" + e);
-			LOGGER.error("Not save Cover letter");
+			LOGGER.error("Could not save Cover letter" + e);
 		}
 		return isUpdate;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.dao.UserSubscriptionsDAO#fetchPublicCoverLetter(long, java.lang.String)
+	 */
 	@Override
 	public ResCoverLetterDTO fetchPublicCoverLetter(long jobSeekerId,
 			String coverLetterId) {
@@ -641,7 +668,6 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 			resCovDTO = subscriptionHelper.toTransFormListToDTO(resList);
 		} catch (DataAccessException e) {
 			LOGGER.error("Error for update of employee data" + e);
-			LOGGER.info("Error for update of employee data");
 		}
 		return resCovDTO;
 	}
@@ -712,6 +738,9 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 		return listDTOs;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.dao.UserSubscriptionsDAO#getSubEmailerList()
+	 */
 	@Override
 	public List<DropDownDTO> getSubEmailerList(){
 		
@@ -756,8 +785,6 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 			}
 		} catch (DataAccessException e) {
 			LOGGER.error("Error while saveing the selected facility subscriptions dta to DB"
-					+ e);
-			LOGGER.info("Error while saveing the selected facility subscriptions dta to DB"
 					+ e);
 		}
 		return true;
@@ -984,6 +1011,9 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 		return subscriptionsDTOs;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.dao.UserSubscriptionsDAO#getParentId(int)
+	 */
 	@Override
 	public int getParentId(int facilityId) {
 		int roleId = 0;

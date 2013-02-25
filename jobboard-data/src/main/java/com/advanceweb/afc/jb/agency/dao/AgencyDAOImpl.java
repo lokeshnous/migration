@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.agency.dao;
 
 import java.util.ArrayList;
@@ -21,14 +28,23 @@ import com.advanceweb.afc.jb.employer.helper.FacilityConversionHelper;
 @Repository("impersonateAgencyDAO")
 public class AgencyDAOImpl implements AgencyDAO {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 
 	.getLogger(AgencyDAOImpl.class);
+	
+	/** The facility conversion helper. */
 	@Autowired
 	private FacilityConversionHelper facilityConversionHelper;
 
+	/** The hibernate template careers. */
 	private HibernateTemplate hibernateTemplateCareers;
 
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactory the new hibernate template
+	 */
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactory) {

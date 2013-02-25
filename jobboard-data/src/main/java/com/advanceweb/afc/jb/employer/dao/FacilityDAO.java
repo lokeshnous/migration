@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.dao;
 
 import java.util.Date;
@@ -104,6 +111,11 @@ public interface FacilityDAO {
 	 */
 	int getfacilityUserId(int facilityId);
 	
+	/**
+	 * Gets the all facility list.
+	 *
+	 * @return the all facility list
+	 */
 	List<SchedulerDTO> getAllFacilityList();
 	
 	/**

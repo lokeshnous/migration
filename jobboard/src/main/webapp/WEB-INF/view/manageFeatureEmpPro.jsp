@@ -44,14 +44,14 @@
 			} 
 	        var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 	        var emailaddressVal = $("#companyEmaiAddress").val();
-	        if(emailaddressVal == '') {
+	      /*   if(emailaddressVal == '') {
 	            hasError = false;
 	            $("#errMsg").text('Please enter the E-Mail Address');
-	        }
-	        else if(!emailReg.test(emailaddressVal)) {
+	        }*/
+	         if(!emailReg.test(emailaddressVal)) {
 	            $("#errMsg").text('Enter a valid email address.');
 	            hasError = false;
-	        }
+	        } 
 	        return hasError; 
 	    });
 		
@@ -150,7 +150,7 @@
 										class="jb_input2Coverletter width300" />
 
 								</div>
-								<span class="required">(Required)</span>
+								<!-- <span class="required">(Required)</span> -->
 								<div class="FormErrorDisplayText">
 									<span id="errMsg" ></span>
 								</div>

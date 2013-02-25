@@ -60,7 +60,7 @@
 						</div>
 					</c:if>
 					<div class="rowEvenNewSpacing">
-					<span class="lableText3">Zip Code:</span>
+					<span class="lableText3">ZIP Code:</span>
 					<form:input disabled="true" id="zipCode" path="zipCode" class="job_seeker_email disabled-input" />
 					<!-- <span class="required">(Required)</span> -->
 				</div>

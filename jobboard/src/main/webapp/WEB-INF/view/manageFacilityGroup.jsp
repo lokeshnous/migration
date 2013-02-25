@@ -66,11 +66,54 @@ function validateFacility() {
 		$.nmFilters({
     	    custom: {
     	        afterShowCont: function(nm) {
-    	        	$('.focus').focus();
+    	        	$('#empList').focus();
     	        }
     	    }
     	});
-		
+		var IdData = new Array();
+    	var NameData = new Array();
+    	
+		var empName = $("#empList").val();
+		$.ajax({
+	        type: "GET",
+	        url: "${pageContext.request.contextPath}/admininventory/getFacilityNamesList.html?term="+empName,
+	        dataType: "json",							        
+	        contentType: "application/json; charset=utf-8",
+	        success: function(data) {							        	
+	        								        	
+	        	for (var x = 0; x < data.EmpList.length; x++) {
+	        		
+	               IdData.push(data.EmpList[x].ID);
+	               
+	               NameData.push(data.EmpList[x].NAME);
+	            }
+	        	
+	        	$("#empList").autocomplete({
+	        		source: NameData,
+	        		select : function(event, ui) {
+	        			var IndexVal = $.inArray(ui.item.value, NameData);					        			
+	        			
+	        			var IdVal = IdData[IndexVal];
+	        			
+						$("#empList")
+								.val(ui.item.value);
+						
+						$.ajax({
+							url: '${pageContext.request.contextPath}/admininventory/getSelectedFacility.html?facilityId='+IdVal,
+							success : function(data) {	
+								$('#empList').val(data.name);
+								$('#nsId').val(data.nsCustomerID);
+							},
+						});	
+						
+	        		},
+	        	});
+					
+	        },
+	        error: function(XMLHttpRequest, textStatus, errorThrown) {
+	           alert(textStatus);
+	        }
+	    });
 		//$('[id^=nsId]').keypress(validateNumber);
 		//$(".onlyNum").keypress(validateNumber);
 			var empList = $.trim($("#empList").val());
@@ -171,11 +214,11 @@ function validateFacility() {
 			<div class="row">
 				<span class="splLableText">Company Name: </span>
 				<form:input path="compName" id="empList" name="empList"
-					class="job_seeker_Resume focus textBox2" value="${empList}"/>
-						<span class="splLableText FormErrorDisplayText01">&nbsp;&nbsp;OR&nbsp;</span>
+					class="job_seeker_Resume focus textBox350" value="${empList}"/>
+						<span class="splLableText FormErrorDisplayText01">OR</span>
 
-				<span class="lableText7">Net Suite ID Number:</span>
-				<form:input path="nsId" id="nsId" name="nsId" class="job_seeker_Resume onlyNum"
+				<span class="splLableText">Net Suite ID:</span>
+				<input type="text" id="nsId" name="nsId" class="netsuiteid onlyNum"
 					value="${nsId}" />&nbsp;&nbsp;
  				<c:if test="${result != 'result'}">
 				<input type="button" value="find" name="find" id="find"
@@ -187,9 +230,10 @@ function validateFacility() {
 				<span class="splLableText">Company Name:</span>
 				<div id="facilityListId" class="splLableText" >
 				<div class="row" style="text-align: left">
+				${facilityList}<%-- 
 				<c:forEach items="${facilityList}" var="item">
 					${item.companyName}<br/>
-				</c:forEach>
+				</c:forEach> --%>
 				</div>
 				</div>
 				<div class="splLableText" >

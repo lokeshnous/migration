@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.awt.image.BufferedImage;
@@ -63,64 +70,102 @@ import com.advanceweb.common.client.ClientContext;
 @SuppressWarnings("rawtypes")
 public class BrandingTemplateController extends AbstractController {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(BrandingTemplateController.class);
 
+	/** The branding template service. */
 	@Autowired
 	private BrandingTemplateService brandingTemplateService;
 
+	/** The transform empoyer brand template. */
 	@Autowired
 	private TransformEmployerBrandTemplate transformEmpoyerBrandTemplate;
 
+	/** The branding template validation. */
 	@Autowired
 	private BrandingTemplateValidation brandingTemplateValidation;
 
+	/** The ad service. */
 	@Autowired
 	private AdService adService;
 
+	/** The base directory path image and media. */
 	private @Value("${baseDirectoryPathImageAndMedia}")
 	String baseDirectoryPathImageAndMedia;
 
+	/** The app media path. */
 	private @Value("${appMediaPath}")
 	String appMediaPath;
 
+	/** The media path. */
 	private @Value("${mediaPath}")
 	String mediaPath;
 
+	/** The image size limit. */
 	private @Value("${imageSizeLimit}")
 	String imageSizeLimit;
 
+	/** The video size limit. */
 	private @Value("${videoSizeLimit}")
 	String videoSizeLimit;
 
+	/** The emp brand file error. */
 	private @Value("${empBrandFileError}")
 	String empBrandFileError;
 
+	/** The emp brand template error. */
 	private @Value("${empBrandTemplateError}")
 	String empBrandTemplateError;
-
+	
+	/** The emp brand template purchase. */
 	private @Value("${empBrandTemplatePurchase}")
 	String empBrandTemplatePurchase;
 
+	/** The default color. */
 	private @Value("${defaultColor}")
 	String defaultColor;
 
+	/** The emp brand template delete. */
 	private @Value("${empBrandTemplateDelete}")
 	String empBrandTemplateDelete;
 
+	/** The emp brand template exceed. */
 	private @Value("${empBrandTemplateExceed}")
 	String empBrandTemplateExceed;
+	
+	/** The virus found msg. */
 	private @Value("${virus.found.file.msg}")
 	String virusFoundMsg;
+	
+	/** The Constant STR_BRANDINGTEMPLATEFORM. */
 	private static final String STR_BRANDINGTEMPLATEFORM = "brandingTemplateForm";
+	
+	/** The Constant STR_CREATEBRANDINGTEMPLATE. */
 	private static final String STR_CREATEBRANDINGTEMPLATE = "createBrandingTemplate";
+	
+	/** The Constant STR_LOGOFILEDATA. */
 	private static final String STR_LOGOFILEDATA = "logoFileData";
+	
+	/** The Constant STR_NOTEMPTY. */
 	private static final String STR_NOTEMPTY = "NotEmpty";
+	
+	/** The Constant STR_TEMPLATE_. */
 	private static final String STR_TEMPLATE_ = "Template_";
+	
+	/** The Constant STR_BRANDTEMPLATEPREVIEW. */
 	private static final String STR_BRANDTEMPLATEPREVIEW = "brandTemplatePreview";
+	
+	/** The Constant STR_EMPDASHBOARD. */
 	private static final String STR_EMPDASHBOARD = "redirect:/employer/employerDashBoard.html";
+	
+	/** The Constant STR_UNDERSCORE. */
 	private static final String STR_UNDERSCORE = "_";
+	
+	/** The Constant STR_ERRORMESSAGE. */
 	private static final String STR_ERRORMESSAGE = "errorMessage";
+	
+	/** The Constant STR_TEMPLATEID. */
 	private static final String STR_TEMPLATEID = "templateId";
 
 	/**
@@ -238,6 +283,14 @@ public class BrandingTemplateController extends AbstractController {
 		templateForm.setListVideos(new ArrayList<VideoForm>());
 	}
 
+	/**
+	 * Validate non silver cust.
+	 *
+	 * @param brandingTemplate the branding template
+	 * @param result the result
+	 * @param model the model
+	 * @return true, if successful
+	 */
 	public boolean validateNonSilverCust(BrandingTemplateForm brandingTemplate,
 			BindingResult result, ModelAndView model) {
 		String errorMessage = brandingTemplateValidation.validateNonSilver(
@@ -264,6 +317,16 @@ public class BrandingTemplateController extends AbstractController {
 
 	}
 
+	/**
+	 * Preview emp brand temp.
+	 *
+	 * @param form the form
+	 * @param result the result
+	 * @param session the session
+	 * @param request the request
+	 * @param response the response
+	 * @return the model and view
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/createBrandingTemplate", method = RequestMethod.POST, params = "Preview")
 	public ModelAndView previewEmpBrandTemp(
@@ -346,16 +409,16 @@ public class BrandingTemplateController extends AbstractController {
 			HttpServletRequest request) {
 		List<VideoForm> listVideoForm = brandingTemplateForm.getListVideos();
 		List<VideoForm> modListVideoForm = new ArrayList<VideoForm>();
-		StringBuffer videoURL = new StringBuffer();
-
-		videoURL.append(request.getRequestURL().toString()
-				.replace(request.getRequestURI(), MMJBCommonConstants.EMPTY));
-		videoURL.append(mediaPath);
-
+		StringBuffer videoURL = null;
+		String path = null;
 		if (null != listVideoForm && !listVideoForm.isEmpty()) {
 			for (VideoForm videoForm : listVideoForm) {
 				int index = 0;
-				String path = videoForm.getMediaPath();
+				videoURL = new StringBuffer();				
+				videoURL.append(request.getRequestURL().toString()
+						.replace(request.getRequestURI(), MMJBCommonConstants.EMPTY));
+				videoURL.append(mediaPath);
+				path = videoForm.getMediaPath();
 				index = videoForm.getMediaPath().lastIndexOf('/');
 				if (index == -1) {
 					index = videoForm.getMediaPath().lastIndexOf('\\');
@@ -411,6 +474,15 @@ public class BrandingTemplateController extends AbstractController {
 		return brandingTemplateForm;
 	}
 
+	/**
+	 * Preview existing.
+	 *
+	 * @param form the form
+	 * @param templateId the template id
+	 * @param session the session
+	 * @param request the request
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/previewExisting", method = RequestMethod.GET)
 	public ModelAndView previewExisting(BrandingTemplateForm form,
 			@RequestParam(STR_TEMPLATEID) int templateId, HttpSession session,
@@ -450,18 +522,41 @@ public class BrandingTemplateController extends AbstractController {
 
 	}
 
+	/**
+	 * The method helps to get the testimonial for employer by 
+	 * testimonial id.
+	 * 
+	 * @param testimonyId
+	 * @param response
+	 * @param request
+	 * @param brandingTemplateForm
+	 * @return
+	 */
 	@RequestMapping("/viewTestimonial")
-	public ModelAndView enlargeTestimonial(
-			@RequestParam("id") String testimonyId,
+	public ModelAndView enlargeTestimonial(@RequestParam("id") int testimonyId,
 			HttpServletResponse response, HttpServletRequest request,
-			BrandingTemplateForm brandingTemplateForm) {
+			@ModelAttribute("brandingTemplateForm") BrandingTemplateForm brandingTemplateForm) {
 		ModelAndView model = new ModelAndView();
-		brandingTemplateForm.setTestimonyContainer(testimonyId);
-		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
+		String testimonialTxt = null;
+		if (!brandingTemplateForm.getListTestimony().isEmpty()) {
+			testimonialTxt = brandingTemplateForm.getListTestimony()
+					.get(testimonyId).getTestimony();
+		}
+		brandingTemplateForm.setTestimonyContainer(testimonialTxt);
+		model.addObject("brandingTemplateForm", brandingTemplateForm);
 		model.setViewName("viewTestimony");
 		return model;
 	}
 
+	/**
+	 * Gets the photo.
+	 *
+	 * @param imageId the image id
+	 * @param response the response
+	 * @param request the request
+	 * @param brandingTemplateForm the branding template form
+	 * @return the photo
+	 */
 	@RequestMapping("/viewImage")
 	public void getPhoto(@RequestParam("id") String imageId,
 			HttpServletResponse response, HttpServletRequest request,
@@ -513,6 +608,12 @@ public class BrandingTemplateController extends AbstractController {
 		}
 	}
 
+	/**
+	 * Handle get my bytes request.
+	 *
+	 * @param imageInByte the image in byte
+	 * @return the response entity
+	 */
 	public ResponseEntity<byte[]> handleGetMyBytesRequest(byte[] imageInByte) {
 		// Get bytes from somewhere...
 		byte[] byteData = imageInByte;
@@ -687,7 +788,7 @@ public class BrandingTemplateController extends AbstractController {
 		}
 
 		for (VideoForm videoForm : brandingTemplateForm.getListVideos()) {
-			if (videoForm.getVideoFileData().getSize() > 0) {
+			if (videoForm.getVideoFileData()!= null && videoForm.getVideoFileData().getSize() > 0) {
 				if (null != System.getProperty("catalina.home")) {
 					videoForm.getVideoFileData().transferTo(
 							new File(System.getProperty("catalina.home")
@@ -1260,7 +1361,7 @@ public class BrandingTemplateController extends AbstractController {
 
 			}
 		} catch (Exception exp) {
-			LOGGER.info("Exception occured while deleting testimlni");
+			LOGGER.error("Exception occured while deleting testimlni",exp);
 		}
 		return id;
 	}
@@ -1292,7 +1393,7 @@ public class BrandingTemplateController extends AbstractController {
 
 			}
 		} catch (Exception exp) {
-			LOGGER.info("Exception occured while deleting images");
+			LOGGER.error("Exception occured while deleting images",exp);
 		}
 		return id;
 	}
@@ -1325,7 +1426,7 @@ public class BrandingTemplateController extends AbstractController {
 
 			}
 		} catch (Exception exp) {
-			LOGGER.info("Exception occured while deleting Videos");
+			LOGGER.error("Exception occured while deleting Videos",exp);
 		}
 		return id;
 	}

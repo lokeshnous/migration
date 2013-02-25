@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.netsuite.service.impl;
 
 import java.io.IOException;
@@ -20,6 +27,7 @@ import net.sf.json.JSONSerializer;
 
 import org.apache.cxf.helpers.IOUtils;
 import org.apache.log4j.Logger;
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,61 +55,118 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 @Service("nsCustomerService")
 public class NSCustomerServiceImpl implements NSCustomerService {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(NSCustomerServiceImpl.class);
 
+	/** The net suite method. */
 	@Autowired
 	private NetSuiteMethod netSuiteMethod;
 
+	/** The net suite helper. */
 	@Autowired
 	private NetSuiteHelper netSuiteHelper;
 
+	/** The Constant RECORD_TYPE. */
 	private static final String RECORD_TYPE = "customer";
+	
+	/** The Constant IS_PERSION_STRING. */
 	private static final String IS_PERSION_STRING = "isperson";
+	
+	/** The Constant IS_PERSON_VAL. */
 	private static final String IS_PERSON_VAL = "F";
+	
+	/** The Constant COMPANY_NAME. */
 	private static final String COMPANY_NAME = "companyname";
+	
+	/** The Constant COUNTRY. */
 	private static final String COUNTRY = "country";
+	
+	/** The Constant USA. */
 	private static final String USA = "USA";
 
+	/** The Constant BASE_URL_STRING. */
 	private static final String BASE_URL_STRING = "baseUrl";
+	
+	/** The Constant SCRIPT_STRING. */
 	private static final String SCRIPT_STRING = "script";
+	
+	/** The Constant DEPLOY_STRING. */
 	private static final String DEPLOY_STRING = "deploy";
 
+	/** The Constant SCRIPT_STRING_CREATE_USER. */
 	private static final String SCRIPT_STRING_CREATE_USER = "scriptForCreateUser";
+	
+	/** The Constant DEPLOY_STRING_CREATE_USER. */
 	private static final String DEPLOY_STRING_CREATE_USER = "deployForCreateUser";
 
+	/** The Constant SCRIPT_STRING_UPDATE_USER. */
 	private static final String SCRIPT_STRING_UPDATE_USER = "scriptForUpdateUser";
+	
+	/** The Constant DEPLOY_STRING_UPDATE_USER. */
 	private static final String DEPLOY_STRING_UPDATE_USER = "deployForUpdateUser";
 
+	/** The Constant SCRIPT_STRING_GET_USER_DETAILS. */
 	private static final String SCRIPT_STRING_GET_USER_DETAILS = "scriptForGetUserDetails";
+	
+	/** The Constant DEPLOY_STRING_GET_USER_DETAILS. */
 	private static final String DEPLOY_STRING_GET_USER_DETAILS = "deployForGetUserDetails";
 
+	/** The Constant SCRIPT_STRING_GET_CUST_PACKAGES. */
 	private static final String SCRIPT_STRING_GET_CUST_PACKAGES = "scriptForGetCustomerPackages";
+	
+	/** The Constant DEPLOY_STRING_GET_CUST_PACKAGES. */
 	private static final String DEPLOY_STRING_GET_CUST_PACKAGES = "deployForGetCustomerPackages";
 	
+	/** The Constant SCRIPT_STRING_GET_FE_DATES. */
 	private static final String SCRIPT_STRING_GET_FE_DATES = "scriptForGetFeatureDates";
+	
+	/** The Constant DEPLOY_STRING_GET_FE_DATES. */
 	private static final String DEPLOY_STRING_GET_FE_DATES = "deployForGetFeatureDates";
 	
+	/** The Constant AMP_RECORD_TYPE. */
 	private static final String AMP_RECORD_TYPE = "&recordtype=";
 
+	/** The Constant AMP_ID. */
 	private static final String AMP_ID = "&id=";
+	
+	/** The Constant ERROR_STRING. */
 	private static final String ERROR_STRING = "error";
 
+	/** The Constant RECORD_ALREADY_EXIST_MSG. */
 	private static final String RECORD_ALREADY_EXIST_MSG = "record already exist";
+	
+	/** The Constant TRUE_STRING. */
 	private static final String TRUE_STRING = "true";
 
+	/** The Constant IS_INVOICE_ENABLED. */
 	private static final String IS_INVOICE_ENABLED = "custentityinvoiceenabled";
 
+	/** The Constant PACKAGE_TYPE_STRING. */
 	private static final String PACKAGE_TYPE_STRING = "custentitypackagetype";
+	
+	/** The Constant NAME_STRING. */
 	private static final String NAME_STRING = "name";
 
+	/** The Constant CONTACT_ROLES_STRING. */
 	private static final String CONTACT_ROLES_STRING = "contactroles";
+	
+	/** The Constant EMAIL_STRING. */
 	private static final String EMAIL_STRING = "email";
 	
+	/** The Constant LEFT_SQ_BRKT_STRING. */
 	private static final String LEFT_SQ_BRKT_STRING = "[";
+	
+	/** The Constant RIGHT_SQ_BRKT_STRING. */
 	private static final String RIGHT_SQ_BRKT_STRING = "]";
+	
+	/** The Constant DOUBLE_QUOTE_STRING. */
 	private static final String DOUBLE_QUOTE_STRING = "\"";
+	
+	/** The Constant NS_ERROR. */
 	private static final String NS_ERROR = "Failed to get a string represenation of the NetSuite response";
+	
+	/** The Constant NS_ERROR2. */
 	private static final String NS_ERROR2 = "Error occurred while record updation in NetSuite.";
 
 	/**
@@ -473,7 +538,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 		try {
 			jsonResponse = IOUtils.readStringFromStream((InputStream) response
 					.getEntity());
-
+			LOGGER.debug("jsonResponse: "+jsonResponse);
 			if (jsonResponse.contains(ERROR_STRING)) {
 				LOGGER.error(NS_ERROR2);
 				throw new JobBoardNetSuiteServiceException(
@@ -517,7 +582,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 		try {
 			strResponse = IOUtils.readStringFromStream((InputStream) response
 					.getEntity());
-
+			LOGGER.debug("jsonResponse: "+strResponse);
 			if (strResponse.contains(ERROR_STRING)) {
 				LOGGER.error(NS_ERROR2);
 				throw new JobBoardNetSuiteServiceException(
@@ -562,6 +627,7 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 		try {
 			stringResponse = IOUtils
 					.readStringFromStream((InputStream) response.getEntity());
+			LOGGER.debug("jsonResponse: "+stringResponse);
 			if (stringResponse.contains(LEFT_SQ_BRKT_STRING)) {
 				stringResponse = stringResponse.replace(LEFT_SQ_BRKT_STRING,
 						MMJBCommonConstants.EMPTY);
@@ -626,22 +692,19 @@ public class NSCustomerServiceImpl implements NSCustomerService {
 	private List<String> setContactEmailList(
 			org.codehaus.jettison.json.JSONObject jsonObject)
 			throws JSONException {
-//		JSONArray jsonArray = new JSONArray();
+		JSONArray jsonArray = new JSONArray();
 		List<String> emailList = new ArrayList<String>();
-//		if (jsonObject.has(CONTACT_ROLES_STRING)) {
-//			jsonArray = (JSONArray) jsonObject.get("email");
-//		}
-//		for (int index = 0; index < jsonArray.length(); index++) {
-//			org.codehaus.jettison.json.JSONObject innerJsonObj = jsonArray
-//					.getJSONObject(index);
-//			if (innerJsonObj.has(EMAIL_STRING)) {
-//				emailList.add(innerJsonObj.getString(EMAIL_STRING));
-//			}
-//		}
-		
-		if(jsonObject.has(EMAIL_STRING)){
-		emailList.add(jsonObject.get(EMAIL_STRING).toString());
+		if (jsonObject.has(CONTACT_ROLES_STRING)) {
+			jsonArray = (JSONArray) jsonObject.get(CONTACT_ROLES_STRING);
 		}
+		for (int index = 0; index < jsonArray.length(); index++) {
+			org.codehaus.jettison.json.JSONObject innerJsonObj = jsonArray
+					.getJSONObject(index);
+			if (innerJsonObj.has(EMAIL_STRING)) {
+				emailList.add(innerJsonObj.getString(EMAIL_STRING));
+			}
+		}
+		
 		LOGGER.debug("Email List is " + emailList);
 		return emailList;
 	}

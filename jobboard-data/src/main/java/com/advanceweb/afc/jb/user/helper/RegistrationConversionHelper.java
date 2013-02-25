@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.user.helper;
 
 import java.io.IOException;
@@ -31,9 +38,17 @@ import com.advanceweb.afc.jb.data.entities.MerUserProfilePK;
 @Repository("registrationConversionHelper")
 public class RegistrationConversionHelper {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(RegistrationConversionHelper.class);
 
+	/**
+	 * Transform mer user dto to mer user.
+	 *
+	 * @param dto the dto
+	 * @param entity the entity
+	 * @return the mer user
+	 */
 	public MerUser transformMerUserDTOToMerUser(JobSeekerRegistrationDTO dto,
 			MerUser entity) {
 		/**
@@ -56,6 +71,14 @@ public class RegistrationConversionHelper {
 
 	}
 
+	/**
+	 * Creates the mer user.
+	 *
+	 * @param entity the entity
+	 * @param dto the dto
+	 * @param userDTO the user dto
+	 * @return the mer user
+	 */
 	private MerUser createMerUser(MerUser entity, JobSeekerRegistrationDTO dto,
 			UserDTO userDTO) {
 
@@ -324,7 +347,7 @@ public class RegistrationConversionHelper {
 				labels.add(entries.getProperty((String) itr.next()));
 			}
 		} catch (IOException e) {
-			LOGGER.info("ERROR in JobSeekerRegistrationDTO", e);
+			LOGGER.error("ERROR in JobSeekerRegistrationDTO", e);
 		}
 		return labels;
 	}
@@ -451,7 +474,11 @@ public class RegistrationConversionHelper {
 	}
 	
 	class DropDownDTOComparable implements Comparator<DropDownDTO>{
-	    @Override
+	    
+    	/* (non-Javadoc)
+    	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+    	 */
+    	@Override
 	    public int compare(DropDownDTO obj1, DropDownDTO obj2) {
 	        return obj1.getOptionName().compareTo(obj2.getOptionName());
 	    }

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common;
 
 import java.util.Date;
@@ -9,10 +16,19 @@ import java.util.Date;
  */
 public class PackageInformationDTO {
 
+	/** The packageid. */
 	private long packageid;
+	
+	/** The package type. */
 	private String packageType;
+	
+	/** The package name. */
 	private String packageName;
+	
+	/** The effective date. */
 	private Date effectiveDate;
+	
+	/** The expiry date. */
 	private Date expiryDate;
 	/**
 	 * @return the packageid

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.job.web.controller;
 
 import java.util.ArrayList;
@@ -50,22 +57,30 @@ import com.advanceweb.afc.jb.search.service.JobSearchService;
 @RequestMapping("/jobs")
 public class JobsController extends AbstractController {
 
+	/** The Constant NO_OF_PAGES. */
 	private static final String NO_OF_PAGES = "noOfPages";
 
+	/** The Constant JOBBOARD_SEARCHRESULTS_BYJOBTITLE. */
 	private static final String JOBBOARD_SEARCHRESULTS_BYJOBTITLE = "jobboardsearchresultsbyjobtitles";
 
+	/** The Constant JOB_SEARCH_RESULT_FORM. */
 	private static final String JOB_SEARCH_RESULT_FORM = "jobSearchResultForm";
 	
+	/** The Constant JOBTITLE_REPLACE_WORD. */
 	private static final String JOBTITLE_REPLACE_WORD = "?jobtitle";
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger(JobsController.class);
 	
+	/** The job search service. */
 	@Autowired
 	private JobSearchService jobSearchService;
 
+	/** The check session map. */
 	@Autowired
 	private CheckSessionMap checkSessionMap;
 
+	/** The seo configuration. */
 	@Autowired
 	@Resource(name = "seoConfiguration")
 	private Properties seoConfiguration;
@@ -245,13 +260,15 @@ public class JobsController extends AbstractController {
 	 * 
 	 * @param session
 	 * @param desc
+	 * @param facilityId
 	 * @param jobSearchResultForm
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/employer/{desc}", method = RequestMethod.GET)
+	@RequestMapping(value = "/employer/{facilityId}/{desc}", method = RequestMethod.GET)
 	public ModelAndView searchJobByEmployer(HttpSession session,
 			@PathVariable("desc") String desc,
+			@PathVariable("facilityId") String facilityId,
 			JobSearchResultForm jobSearchResultForm, HttpServletRequest request) {
 		// Clear the session map
 		session.removeAttribute(SearchParamDTO.SEARCH_SESSION_MAP);
@@ -266,12 +283,17 @@ public class JobsController extends AbstractController {
 
 		// set the FQ parameters
 		String employerName = MMUtils.decodeString(desc.trim());
-		request.setAttribute(MMJBCommonConstants.SECOND_FQ_PARAM, employerName);
+//		request.setAttribute(MMJBCommonConstants.SECOND_FQ_PARAM, employerName);
 		request.setAttribute(SearchParamDTO.KEYWORDS, MMJBCommonConstants.EMPTY);
 
 		// merge the parameters
 		Map<String, String> paramMap = getParameterMap(jobSearchResultForm,
 				searchName, MMJBCommonConstants.POSTED_DT, session, request);
+		// Add the facility Id param to map
+		paramMap.put(MMJBCommonConstants.FacilityId_FQ_PARAM,
+				MMJBCommonConstants.FQ_FACILITY_ID + facilityId + '"');
+		paramMap.put(MMJBCommonConstants.FacilityId_NAME_FQ_PARAM,
+				MMJBCommonConstants.EMPTY);
 
 		// set default page value
 		int page = 1;

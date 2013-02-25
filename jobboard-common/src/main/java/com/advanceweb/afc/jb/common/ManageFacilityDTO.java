@@ -9,15 +9,35 @@ package com.advanceweb.afc.jb.common;
  * @Purpose: This class will act as a DTO Bean for the Manage Access Facility
  */
 public class ManageFacilityDTO {
+	
+	/** The facility id. */
 	private int facilityId;
+	
+	/** The facility name. */
 	private String facilityName;
+	
+	/** The facility type. */
 	private String facilityType;
+	
+	/** The facility street. */
 	private String facilityStreet;
+	
+	/** The facility city. */
 	private String facilityCity;
+	
+	/** The facility state. */
 	private String facilityState;
+	
+	/** The zip code. */
 	private String zipCode;
+	
+	/** The facility country. */
 	private String facilityCountry;
+	
+	/** The phone number. */
 	private String phoneNumber;
+	
+	/** The template id. */
 	private String templateId;
 	/**
 	 * @return the facilityType

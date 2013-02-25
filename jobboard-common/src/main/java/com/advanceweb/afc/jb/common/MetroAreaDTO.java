@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common;
 
 import java.io.Serializable;
@@ -10,9 +17,13 @@ import java.io.Serializable;
  */
 public class MetroAreaDTO implements Serializable {
 	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
+	/** The metro area id. */
 	private String metroAreaId;
+	
+	/** The metro area value. */
 	private String metroAreaValue;
 	
 	

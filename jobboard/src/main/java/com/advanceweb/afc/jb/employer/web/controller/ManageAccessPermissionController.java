@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.web.controller;
 
 import java.util.ArrayList;
@@ -50,44 +57,80 @@ import com.advanceweb.afc.jb.user.UserService;
 @Controller
 @RequestMapping("/employer")
 public class ManageAccessPermissionController {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(ManageAccessPermissionController.class);
 
+	/** The manage access permission service. */
 	@Autowired
 	private ManageAccessPermissionService manageAccessPermissionService;
+	
+	/** The transform emp reg. */
 	@Autowired
 	private TransformEmployerRegistration transformEmpReg;
+	
+	/** The employer registration. */
 	@Autowired
 	private ProfileRegistration employerRegistration;
+	
+	/** The job owner pwd body. */
 	@Value("${jobOwnerPwdBody}")
 	private String jobOwnerPwdBody;
+	
+	/** The job owner mail subject. */
 	@Value("${jobOwnerMailSubject}")
 	private String jobOwnerMailSubject;
+	
+	/** The advance web address. */
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
+	
+	/** The dothtml extention. */
 	@Value("${dothtmlExtention}")
 	private String dothtmlExtention;
 
+	/** The facility service. */
 	@Autowired
 	private FacilityService facilityService;
+	
+	/** The navigation path. */
 	@Value("${navigationPath}")
 	private String navigationPath;
+	
+	/** The job owner exist. */
 	@Value("${jobOwnerExist}")
 	private String jobOwnerExist;
+	
+	/** The job owner add success. */
 	@Value("${jobOwnerAddSuccess}")
 	private String jobOwnerAddSuccess;
 
+	/** The email service. */
 	@Autowired
 	private MMEmailService emailService;
 
+	/** The user service. */
 	@Autowired
 	private UserService userService;
 	
+	/** The email configuration. */
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
+	
+	/** The alert service. */
 	@Autowired
 	private UserAlertService alertService;
+	
+	/**
+	 * Show job owner details.
+	 *
+	 * @param manageAccessPermissionForm the manage access permission form
+	 * @param session the session
+	 * @param page the page
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/manageAccessPermission")
 	public ModelAndView showJobOwnerDetails(
 			ManageAccessPermissionForm manageAccessPermissionForm,
@@ -123,6 +166,14 @@ public class ManageAccessPermissionController {
 		return model;
 	}
 
+	/**
+	 * Adds the new job owner.
+	 *
+	 * @param session the session
+	 * @param manageAccessPermissionForm the manage access permission form
+	 * @param page the page
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/addNewJobOwner")
 	public ModelAndView addNewJobOwner(HttpSession session,
 			ManageAccessPermissionForm manageAccessPermissionForm,
@@ -140,6 +191,14 @@ public class ManageAccessPermissionController {
 		return model;
 	}
 
+	/**
+	 * Save new job owner.
+	 *
+	 * @param session the session
+	 * @param manageAccessPermissionForm the manage access permission form
+	 * @param request the request
+	 * @return the jSON object
+	 */
 	@RequestMapping(value = "/saveNewJobOwner", method = RequestMethod.POST)
 	public @ResponseBody
 	JSONObject saveNewJobOwner(HttpSession session,
@@ -267,6 +326,13 @@ public class ManageAccessPermissionController {
 		return warningMessage;
 	}
 
+	/**
+	 * Delete job owner.
+	 *
+	 * @param manageAccessPermissionForm the manage access permission form
+	 * @param userId the user id
+	 * @return the jSON object
+	 */
 	@RequestMapping(value = "/deleteJobOwner", method = RequestMethod.POST)
 	public @ResponseBody
 	JSONObject deleteJobOwner(
@@ -286,6 +352,14 @@ public class ManageAccessPermissionController {
 		return warningMessage;
 	}
 
+	/**
+	 * Update job owner.
+	 *
+	 * @param manageAccessPermissionForm the manage access permission form
+	 * @param request the request
+	 * @param session the session
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/updateJobOwner", method = RequestMethod.POST)
 	public ModelAndView updateJobOwner(
 			ManageAccessPermissionForm manageAccessPermissionForm,
@@ -437,7 +511,6 @@ public class ManageAccessPermissionController {
 		StringBuffer admChangeDetail = new StringBuffer();
 		String userName = merUserdto.getFirstName() + " "
 				+ merUserdto.getLastName();
-		String loginPath = navigationPath.substring(2);
 		String employerloginUrl;
 		if (session.getAttribute(MMJBCommonConstants.AGEN_PER_PAGE) != null) {
 			employerloginUrl = request.getRequestURL().toString()
@@ -451,7 +524,7 @@ public class ManageAccessPermissionController {
 //					+ dothtmlExtention + "?page=employer";
 		}
 		String emailContent = emailConfiguration.getProperty(
-				"adminstrator.change.email.body").trim();
+				"new.jobowner.email.body").trim();
 
 		emailContent = emailContent.replace("?userName", userName);
 
@@ -475,7 +548,7 @@ public class ManageAccessPermissionController {
 		emailDTO.setToAddress(jsToAddress);
 		emailDTO.setFromAddress(advanceWebAddress);
 		emailDTO.setSubject(emailConfiguration.getProperty(
-				"admin.change.mail.subject").trim());
+				"new.jobowner.mail.subject").trim());
 		admChangeDetail.append(emailConfiguration.getProperty(
 				"employer.email.header").trim());
 		admChangeDetail.append(emailContent);

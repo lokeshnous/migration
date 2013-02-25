@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.job.service.impl;
 
 import java.util.ArrayList;
@@ -26,8 +33,12 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 @Service("ManageJobSeekerService")
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = false)
 public class ManageJobSeekerServiceImpl implements ManageJobSeekerService {
+	
+	/** The manage job seeker dao. */
 	@Autowired
 	private ManageJobSeekerDAO manageJobSeekerDAO;
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(ManageJobSeekerServiceImpl.class);
 

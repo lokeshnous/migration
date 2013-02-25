@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common.schedulers.jobs;
 
 import java.util.ArrayList;
@@ -37,30 +44,49 @@ import com.advanceweb.afc.jb.user.UserService;
 @Qualifier("noActiveJobPostingJobWorker")
 public class NoActiveJobPostingJobWorker implements JobWorker {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(NoActiveJobPostingJobWorker.class);
+	
+	/** The Constant JOB_NAME. */
 	private static final String JOB_NAME = "SEND_MAIL";
+	
+	/** The job post service. */
 	@Autowired
 	private JobPostService jobPostService;
+	
+	/** The email service. */
 	@Autowired
 	private MMEmailService emailService;
 	
+	/** The advance web address. */
 	@Value("${advanceWebAddress}")
 	private String advanceWebAddress;
+	
+	/** The email configuration. */
 	@Autowired
 	@Resource(name = "emailConfiguration")
 	private Properties emailConfiguration;
+	
+	/** The facility service. */
 	@Autowired
 	private FacilityService facilityService;
 
+	/** The alert service. */
 	@Autowired
 	private UserAlertService alertService;
 	
+	/** The user service. */
 	@Autowired
 	private UserService userService;
 	
+	/** The populate dropdowns service. */
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
+	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.common.schedulers.jobs.JobWorker#executeJob()
+	 */
 	@Override
 	public void executeJob() {
 		List<SchedulerDTO> schedulerDTO=facilityService.getAllFacilityList();
@@ -195,6 +221,9 @@ public class NoActiveJobPostingJobWorker implements JobWorker {
 		emailService.sendEmail(emailDTO);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.common.schedulers.jobs.JobWorker#getJobName()
+	 */
 	@Override
 	public String getJobName() {
 		return JOB_NAME;

@@ -103,7 +103,7 @@
 				</div>
 			</form:form>
 		</div>
-		<div >Note: If no alerts are selected, by default all alerts are sent.</div>
+		<div >Note: If no alerts are selected, all alerts will be sent by default.</div>
 		<div class="clearfix"></div>
 	</div>
 

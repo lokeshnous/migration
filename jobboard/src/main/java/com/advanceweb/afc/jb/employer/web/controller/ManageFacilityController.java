@@ -45,23 +45,48 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 @RequestMapping("/facility")
 public class ManageFacilityController {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(ManageFacilityController.class);
+	
+	/** The facility service. */
 	@Autowired
 	private ManageFacilityService facilityService;
+	
+	/** The populate dropdowns service. */
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
+	
+	/** The employer job post. */
 	@Autowired
 	private JobPostService employerJobPost;
+	
+	/** The register validation. */
 	@Autowired
 	private EmployerRegistrationValidation registerValidation;
+	
+	/** The jobseeker reg phone msg. */
 	@Value("${jobseekerRegPhoneMsg}")
 	private String jobseekerRegPhoneMsg;
+	
+	/** The Constant FAILURE_MSG. */
 	private static final String FAILURE_MSG="failure";
+	
+	/** The validate city state. */
 	@Value("${validateCityState}")
 	private String validateCityState;
+	
+	/** The lookup service. */
 	@Autowired
 	private LookupService lookupService;
+	
+	/**
+	 * Addfacility details.
+	 *
+	 * @param facilityForm the facility form
+	 * @param session the session
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/addFacility")
 	public ModelAndView addfacilityDetails(ManageFacilityForm facilityForm,
 			HttpSession session) {
@@ -87,6 +112,13 @@ public class ManageFacilityController {
 		return model;
 	}
 
+	/**
+	 * Update facility details.
+	 *
+	 * @param facilityForm the facility form
+	 * @param session the session
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/updateFacilityDetail")
 	public ModelAndView updateFacilityDetails(ManageFacilityForm facilityForm,
 			HttpSession session) {
@@ -123,6 +155,14 @@ public class ManageFacilityController {
 		return model;
 	}
 
+	/**
+	 * Save new facility.
+	 *
+	 * @param session the session
+	 * @param facilityFormP the facility form p
+	 * @param request the request
+	 * @return the jSON object
+	 */
 	@RequestMapping(value = "/saveNewFacility", method = RequestMethod.POST)
 	public @ResponseBody
 	JSONObject saveNewFacility(HttpSession session,
@@ -190,6 +230,15 @@ public class ManageFacilityController {
 
 	}
 
+	/**
+	 * Delete facility.
+	 *
+	 * @param session the session
+	 * @param facilityFormP the facility form p
+	 * @param request the request
+	 * @param facilityId the facility id
+	 * @return the string
+	 */
 	@RequestMapping(value = "/deleteFacility", method = RequestMethod.POST)
 	public @ResponseBody
 	String deleteFacility(HttpSession session,
@@ -209,6 +258,15 @@ public class ManageFacilityController {
 
 	}
 
+	/**
+	 * Edits the facility.
+	 *
+	 * @param session the session
+	 * @param facilityFormP the facility form p
+	 * @param request the request
+	 * @param facilityId the facility id
+	 * @return the model and view
+	 */
 	@RequestMapping(value = "/editFacility", method = RequestMethod.GET)
 	public @ResponseBody
 	ModelAndView editFacility(HttpSession session,
@@ -269,6 +327,12 @@ public class ManageFacilityController {
 
 	}
 
+	/**
+	 * Transform facility fromto facility dto.
+	 *
+	 * @param facilityForm the facility form
+	 * @return the manage facility dto
+	 */
 	public ManageFacilityDTO transformFacilityFromtoFacilityDTO(
 			ManageFacilityForm facilityForm) {
 		ManageFacilityDTO manageFacilityDTO = new ManageFacilityDTO();

@@ -117,7 +117,7 @@ function validateNumber(event) {
 </script>
 <script type="text/javascript">
 		    function cancelProcess(){
-		    	window.location.href = '${pageContext.request.contextPath}/healthcarejobs/index.html';
+		    	window.location.href = '${pageContext.request.contextPath}/healthcare/index.html';
 		    }		
 		</script>
 
@@ -239,12 +239,11 @@ function validateNumber(event) {
 								var="profAttrib" varStatus="status">
 								<c:if test="${profAttrib.strLabelName == 'Position Title'}">
 									<div class="rowEvenNewSpacing marginTop0">
-										<span class="lableText3">Position Title:</span>
+										<span class="lableText3">Job Title:</span>
 										<form:input
 											path="listProfAttribForms[${status.index}].strLabelValue"
 											type="text" name="healthCareSubSplty"
-											class="job_seeker_password textBox350 
-" />
+											class="job_seeker_password textBox350 " />
 										<span class="required">(Required)</span>
 									</div>
 								</c:if>
@@ -254,8 +253,7 @@ function validateNumber(event) {
 										<form:input
 											path="listProfAttribForms[${status.index}].strLabelValue"
 											type="text" name="healthCareSubSplty"
-											class="job_seeker_password textBox350 
-" />
+											class="job_seeker_password textBox350 " />
 										<span class="required">(Required)</span>
 									</div>
                                         <div class="rowEvenNewSpacing">
@@ -305,7 +303,7 @@ function validateNumber(event) {
 								</c:if>
 								<c:if test="${profAttrib.strLabelName == 'Zip Code'}">
 									<div class="rowEvenNewSpacing">
-										<span class="lableText3">Zip:</span>
+										<span class="lableText3">ZIP Code:</span>
 										<form:input
 											path="listProfAttribForms[${status.index}].strLabelValue"
 											type="text" name="zipCode" id="zipCode"
@@ -399,7 +397,7 @@ function validateNumber(event) {
 								 <c:if test="${empRegisterForm.bReadOnly == false}">
 									<input type="button" value="Cancel" onclick="cancelProcess()" class="orange cursor" name="Cancel" />
 								</c:if> 
-								<%-- <a href="<%=request.getContextPath()%>/healthcarejobs/index.html" class="btn_sm orange">Cancel</a> --%></span>
+								<%-- <a href="<%=request.getContextPath()%>/healthcare/index.html" class="btn_sm orange">Cancel</a> --%></span>
 							<!-- <span class="floatLeft marginTop10">I'll set up my profile
 								later. <a href="#">Continue</a> to the site now.
 							</span> -->
@@ -410,7 +408,7 @@ function validateNumber(event) {
 							<input type="button" value="Cancel" onclick="cancelProcess()"
 									class="orange" name="Cancel" />
 							
-							<a href="<%=request.getContextPath()%>/healthcarejobs/index.html" class="btn_sm orange">Cancel</a></span> <span
+							<a href="<%=request.getContextPath()%>/healthcare/index.html" class="btn_sm orange">Cancel</a></span> <span
 							class="floatLeft marginTop10">I'll set up my profile
 							later. <a href="#">Continue</a> to the site now. --%>
 				

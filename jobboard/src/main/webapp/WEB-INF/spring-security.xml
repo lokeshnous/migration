@@ -9,10 +9,10 @@
 	<security:http pattern="/resources/**" security="none"/>
 	<security:http pattern="/index.jsp" security="none"/>
 	<security:http pattern="/search/jobboardSearchesHistory.html" security="none"/>
-	<security:http pattern="/healthcarejobs/logo.html" security="none"/>
-	<security:http pattern="/healthcarejobs/homeFeaturedEmps.html" security="none"/>
-	<security:http pattern="/healthcarejobs/activeJobs.html" security="none"/>
-	<security:http pattern="/healthcarejobs/viewImage.html" security="none"/>
+	<security:http pattern="/healthcare/logo.html" security="none"/>
+	<security:http pattern="/healthcare/homeFeaturedEmps.html" security="none"/>
+	<security:http pattern="/healthcare/activeJobs.html" security="none"/>
+	<security:http pattern="/healthcare/viewImage.html" security="none"/>
 	
 <security:http pattern="/admin/**" use-expressions="true" auto-config="false" entry-point-ref="adminAuthenticationEntryPoint">
 <security:intercept-url pattern="/admin/adminMenu.html"
@@ -53,9 +53,9 @@ class="com.advanceweb.afc.jb.login.web.controller.AdminLoginManager"/>
 		p:loginFormUrl="/admin/loginPage.html"/>
 		
 	<security:http auto-config="false" use-expressions="true"
-		access-denied-page="/healthcarejobs/index.html" entry-point-ref="authenticationEntryPoint">
+		access-denied-page="/healthcare/index.html" entry-point-ref="authenticationEntryPoint">
 
-		<security:intercept-url pattern="/healthcarejobs/index.html"
+		<security:intercept-url pattern="/healthcare/index.html"
 			access="permitAll" />
 		<security:intercept-url pattern="/commonLogin/login.html"
 			access="permitAll" />
@@ -97,7 +97,7 @@ class="com.advanceweb.afc.jb.login.web.controller.AdminLoginManager"/>
 			connectionTimeout="20000" redirectPort="8443" /> spring-security.xml <security:port-mapping 
 			http="2815" https="8443" /> -start -->
 		<!-- <security:port-mappings>
-			<security:port-mapping http="2815" https="8443" />
+			<security:port-mapping http="8080" https="8443" />
 		</security:port-mappings> -->
 		<!-- Added for SSL Implementation -end -->
 
@@ -142,7 +142,7 @@ class="com.advanceweb.afc.jb.login.web.controller.AdminLoginManager"/>
 
 	<bean id="authenticationEntryPoint"
 		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint"
-		p:loginFormUrl="/healthcarejobs/index.html"/>
+		p:loginFormUrl="/healthcare/index.html"/>
 
 	<bean id="rememberMeServices"
 		class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">

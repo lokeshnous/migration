@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
@@ -31,10 +38,17 @@ import com.advanceweb.afc.jb.lookup.service.PopulateDropdowns;
 @RequestMapping("/jobseekeradvancesearch")
 public class JobSeekerAdvanceSearchController {
 
+	/** The populate dropdowns service. */
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
 	
 	
+	/**
+	 * Creates the job seeker advance search.
+	 *
+	 * @param model the model
+	 * @return the model and view
+	 */
 	@RequestMapping(value="/jobseekeradvancesearch",method = RequestMethod.GET)
 	public ModelAndView createJobSeekerAdvanceSearch(Map model) {
 		

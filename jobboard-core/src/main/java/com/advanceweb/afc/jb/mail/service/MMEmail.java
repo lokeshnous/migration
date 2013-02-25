@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.mail.service;
 
 /**
@@ -7,6 +14,7 @@ package com.advanceweb.afc.jb.mail.service;
  */
 public interface MMEmail {
 
+	/** The m emaildto. */
 	EmailDTO M_EMAILDTO=null;
 
 	/**

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.service;
 
 //import java.util.List;
@@ -22,12 +29,16 @@ import com.advanceweb.afc.jb.user.ProfileRegistration;
  */
 @Service("agencyRegistration")
 public class AgencyRegistration implements ProfileRegistration {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(AgencyRegistration.class);
 
+	/** The agency registration dao. */
 	@Autowired
 	public AgencyRegistrationDAO agencyRegistrationDAO;
 
+	/** The agency delegate. */
 	@Autowired
 	private AgencyDelegate agencyDelegate;
 
@@ -72,30 +83,45 @@ public class AgencyRegistration implements ProfileRegistration {
 		return null;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.ProfileRegistration#changePassword(com.advanceweb.afc.jb.common.ProfileDTO)
+	 */
 	@Override
 	public boolean changePassword(ProfileDTO profileDTO) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.ProfileRegistration#validatePassword(com.advanceweb.afc.jb.common.ProfileDTO)
+	 */
 	@Override
 	public boolean validatePassword(ProfileDTO profileDTO) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.ProfileRegistration#validateEmail(java.lang.String)
+	 */
 	@Override
 	public boolean validateEmail(String email) {
 		// TODO Auto-generated method stub
 		return agencyRegistrationDAO.validateEmail(email);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.ProfileRegistration#getProfileAttributes()
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ProfileDTO getProfileAttributes() {
 		return agencyRegistrationDAO.getProfileAttributes();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.ProfileRegistration#validateProfileAttributes(int)
+	 */
 	@Override
 	public boolean validateProfileAttributes(int jobseekerId) {
 

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common;
 
 import java.io.Serializable;
@@ -165,9 +172,21 @@ public class AdmFacilityContactDTO implements Serializable {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+	
+	/**
+	 * Gets the count.
+	 *
+	 * @return the count
+	 */
 	public int getCount() {
 		return count;
 	}
+	
+	/**
+	 * Sets the count.
+	 *
+	 * @param count the new count
+	 */
 	public void setCount(int count) {
 		this.count = count;
 	}

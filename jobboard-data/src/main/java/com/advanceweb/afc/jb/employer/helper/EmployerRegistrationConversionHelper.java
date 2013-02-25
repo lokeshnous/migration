@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.helper;
 
 import java.io.IOException;
@@ -39,6 +46,7 @@ import com.advanceweb.afc.jb.data.entities.MerUserProfilePK;
 @Repository("empHelper")
 public class EmployerRegistrationConversionHelper {
 	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger("EmployerRegistrationConversionHelper.class");
 
@@ -71,6 +79,14 @@ public class EmployerRegistrationConversionHelper {
 
 	}
 
+	/**
+	 * Creates the mer user.
+	 *
+	 * @param entity the entity
+	 * @param dto the dto
+	 * @param userDTO the user dto
+	 * @return the mer user
+	 */
 	private MerUser createMerUser(MerUser entity, EmployerProfileDTO dto,
 			UserDTO userDTO) {
 
@@ -231,6 +247,12 @@ public class EmployerRegistrationConversionHelper {
 
 	}
 	
+	/**
+	 * Transform to account profile dto.
+	 *
+	 * @param dto the dto
+	 * @return the account profile dto
+	 */
 	public AccountProfileDTO transformToAccountProfileDTO(EmployerProfileDTO dto) {
 		AccountProfileDTO aPDto=new AccountProfileDTO();
 		if (null != dto.getAttribList()) {
@@ -518,6 +540,12 @@ public class EmployerRegistrationConversionHelper {
 		return null;
 	}
 
+	/**
+	 * Transform mer user to user dto.
+	 *
+	 * @param merUser the mer user
+	 * @return the user dto
+	 */
 	public UserDTO transformMerUserToUserDTO(MerUser merUser) {
 		UserDTO userDTO = new UserDTO();
 		if (null != merUser) {
@@ -532,6 +560,13 @@ public class EmployerRegistrationConversionHelper {
 		return userDTO;
 	}
 
+	/**
+	 * Transform emp acc dto to adm acc entity data.
+	 *
+	 * @param afc the afc
+	 * @param apd the apd
+	 * @return the adm facility contact
+	 */
 	public AdmFacilityContact transformEmpAccDTOToAdmAccEntityData(
 			AdmFacilityContact afc, AccountProfileDTO apd) {
 		// AdmFacilityContact admFacilityContact = new AdmFacilityContact();
@@ -552,6 +587,12 @@ public class EmployerRegistrationConversionHelper {
 		return afc;
 	}
 
+	/**
+	 * Transform list to dto list.
+	 *
+	 * @param adm the adm
+	 * @return the adm facility contact dto
+	 */
 	public AdmFacilityContactDTO transformListToDTOList(
 			List<AdmFacilityContact> adm) {
 
@@ -605,6 +646,13 @@ public class EmployerRegistrationConversionHelper {
 
 	}
 
+	/**
+	 * Transform adm facility to manage access permission dto.
+	 *
+	 * @param merUsers the mer users
+	 * @param roleId the role id
+	 * @return the list
+	 */
 	public List<ManageAccessPermissionDTO> transformAdmFacilityToManageAccessPermissionDTO(
 			List<MerUser> merUsers, List<Integer> roleId) {
 		List<ManageAccessPermissionDTO> manageAccessPermissionDTOList = new ArrayList<ManageAccessPermissionDTO>();

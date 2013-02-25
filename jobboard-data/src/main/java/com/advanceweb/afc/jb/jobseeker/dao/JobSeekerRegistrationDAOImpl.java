@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.jobseeker.dao;
 
 import java.sql.Timestamp;
@@ -26,7 +33,6 @@ import com.advanceweb.afc.jb.data.entities.AdmRole;
 import com.advanceweb.afc.jb.data.entities.AdmSubscription;
 import com.advanceweb.afc.jb.data.entities.AdmUserRole;
 import com.advanceweb.afc.jb.data.entities.AdmUserRolePK;
-import com.advanceweb.afc.jb.data.entities.AdmUserSubscription;
 import com.advanceweb.afc.jb.data.entities.MerLocation;
 import com.advanceweb.afc.jb.data.entities.MerProfileAttrib;
 import com.advanceweb.afc.jb.data.entities.MerUser;
@@ -34,6 +40,7 @@ import com.advanceweb.afc.jb.data.entities.MerUserProfile;
 import com.advanceweb.afc.jb.data.entities.WebMembership;
 import com.advanceweb.afc.jb.data.entities.WebMembershipEmail;
 import com.advanceweb.afc.jb.data.entities.WebMembershipInfo;
+import com.advanceweb.afc.jb.user.dao.UserDao;
 import com.advanceweb.afc.jb.user.helper.RegistrationConversionHelper;
 import com.mysql.jdbc.StringUtils;
 
@@ -47,18 +54,51 @@ import com.mysql.jdbc.StringUtils;
 @Repository("jobSeekerRegistrationDAO")
 public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger(JobSeekerRegistrationDAOImpl.class);
+	
+	/** The registration conversion helper. */
 	@Autowired
 	private RegistrationConversionHelper registrationConversionHelper;
+	
+	/** The hibernate template. */
 	private HibernateTemplate hibernateTemplate;
+	
+	/** The hibernate template careers. */
 	private HibernateTemplate hibernateTemplateCareers;
+	
+	/** The hibernate template advance pass. */
 	private HibernateTemplate hibernateTemplateAdvancePass;
+	
+	/** The Constant VERIFY_EMAIL. */
 	private static final String VERIFY_EMAIL = "from MerUser e where e.email = ?";
+	
+	/** The Constant REGISTRATION_ATTRIBS. */
 	private static final String REGISTRATION_ATTRIBS = "from MerProfileAttrib prof";
+	
+	/** The Constant FIND_JOBSEEKER_ROLE_ID. */
 	private static final String FIND_JOBSEEKER_ROLE_ID="from AdmRole role where role.name=?";
+	
+	/** The Constant FIND_JOBSEEKER_SUBSCRIPTIONS. */
 	private static final String FIND_JOBSEEKER_SUBSCRIPTIONS="from AdmSubscription sub where sub.subscriptionType=?";
+	
+	/** The Constant FIND_JOBSEEKER_PROFILE. */
 	private static final String FIND_JOBSEEKER_PROFILE = "from MerUserProfile prof where prof.id.userId=?";
+	
+	/** The Constant VERIFY_EMAIL_ADVANCEPASS. */
 	private static final String VERIFY_EMAIL_ADVANCEPASS = "from WebMembershipEmail e where e.email = ? and e.deleteDate is NULL";
+	
+	/** The user dao. */
+	@Autowired
+	private UserDao userDAO;
+	
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactoryMerionTracker the session factory merion tracker
+	 * @param sessionFactory the session factory
+	 * @param sessionFactoryAdvancePass the session factory advance pass
+	 */
 	@Autowired
 	public void setHibernateTemplate(
 			final SessionFactory sessionFactoryMerionTracker,
@@ -186,6 +226,9 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 
 
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.jobseeker.dao.JobSeekerRegistrationDAO#jsChangePassword(com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO)
+	 */
 	@Override
 	public boolean jsChangePassword( JobSeekerRegistrationDTO dto) {
 		try {
@@ -211,11 +254,16 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.jobseeker.dao.JobSeekerRegistrationDAO#validatePassword(com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO)
+	 */
 	@Override
 	public boolean validatePassword(JobSeekerRegistrationDTO dto) {
 		try {
 			if (dto.getMerUserDTO() != null) {
-				MerUser user = hibernateTemplate.get(MerUser.class, dto.getMerUserDTO().getUserId());
+				// commented code to fix the issue of checking password from advance pass not by JB2
+//				MerUser user = hibernateTemplate.get(MerUser.class, dto.getMerUserDTO().getUserId());
+				UserDTO user = userDAO.getAdvancePassUser(dto.getMerUserDTO().getEmailId());
 				if(null != user){
 					return user.getPassword().equals(dto.getMerUserDTO().getCurrentPassword());
 				}
@@ -227,6 +275,9 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.jobseeker.dao.JobSeekerRegistrationDAO#validateEmail(java.lang.String)
+	 */
 	@Override
 	public boolean validateEmail(String email) {
 		try {
@@ -252,6 +303,9 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.jobseeker.dao.JobSeekerRegistrationDAO#getProfileAttributes()
+	 */
 	@Override
 	public JobSeekerRegistrationDTO getProfileAttributes() {
 		JobSeekerRegistrationDTO dto = null;
@@ -272,6 +326,11 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	
 	
 	
+	/**
+	 * Gets the country list.
+	 *
+	 * @return the country list
+	 */
 	private List<DropDownDTO> getCountryList() {
 		try {
 			DetachedCriteria criteria = DetachedCriteria.forClass(MerLocation.class);
@@ -286,6 +345,11 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 	}
 	
 
+	/**
+	 * Gets the state list.
+	 *
+	 * @return the state list
+	 */
 	private List<DropDownDTO> getStateList() {
 		try {
 			DetachedCriteria criteria = DetachedCriteria

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.resume.web.controller;
 
 /**
@@ -7,25 +14,55 @@ package com.advanceweb.afc.jb.resume.web.controller;
  * @Since 9th Aug, 2012
  */
 public class PhoneDetailForm {
+	
+	/** The builder phone id. */
 	private int builderPhoneId;
+	
+	/** The phone number. */
 	private String phoneNumber;
+	
+	/** The phone type. */
 	private String phoneType;
+	
+	/** The item id. */
 	private int itemId;
+	
+	/** The edit mode. */
 	private boolean editMode;
 	
 
+	/**
+	 * Checks if is edits the mode.
+	 *
+	 * @return true, if is edits the mode
+	 */
 	public boolean isEditMode() {
 		return editMode;
 	}
 
+	/**
+	 * Sets the edits the mode.
+	 *
+	 * @param editMode the new edits the mode
+	 */
 	public void setEditMode(boolean editMode) {
 		this.editMode = editMode;
 	}
 
+	/**
+	 * Gets the item id.
+	 *
+	 * @return the item id
+	 */
 	public int getItemId() {
 		return itemId;
 	}
 
+	/**
+	 * Sets the item id.
+	 *
+	 * @param itemId the new item id
+	 */
 	public void setItemId(int itemId) {
 		this.itemId = itemId;
 	}

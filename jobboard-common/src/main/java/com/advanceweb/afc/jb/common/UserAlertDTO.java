@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common;
 
 
@@ -10,12 +17,25 @@ package com.advanceweb.afc.jb.common;
  */
 public class UserAlertDTO {
 
+	/** The alert id. */
 	private int alertId;
+	
+	/** The alert type. */
 	private String alertType;
+	
+	/** The job owner. */
 	private String jobOwner;
+	
+	/** The set date. */
 	private String setDate;
+	
+	/** The user id. */
 	private int userId;
+	
+	/** The facility id. */
 	private int facilityId;
+	
+	/** The facility alert id. */
 	private int facilityAlertId;
 
 	/**

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.admin.web.controller;
 
 import java.util.regex.Matcher;
@@ -16,10 +23,19 @@ import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 @Component("adminValidation")
 public class AdminValidation {
 
+	/** The pattern. */
 	public Pattern pattern;
+	
+	/** The matcher. */
 	public Matcher matcher;
 
 
+	/**
+	 * Supports.
+	 *
+	 * @param form the form
+	 * @return true, if successful
+	 */
 	public boolean supports(Class<?> form) {
 		return AdminLoginForm.class.isAssignableFrom(form);
 	}

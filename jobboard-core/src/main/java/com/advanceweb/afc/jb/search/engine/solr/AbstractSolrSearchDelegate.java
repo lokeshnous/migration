@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.search.engine.solr;
 
 import java.util.ArrayList;
@@ -28,20 +35,26 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 @Component
 public abstract class AbstractSolrSearchDelegate {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(AbstractSolrSearchDelegate.class);
 
+	/** The Constant URL_SEPARATOR. */
 	private static final String URL_SEPARATOR = "/";
 
+	/** The solr search helper. */
 	@Autowired
 	private SOLRSearchHelper solrSearchHelper;
 
+	/** The search dao. */
 	@Autowired
 	private SearchDAO searchDAO;
 
+	/** The search param builder. */
 	@Autowired
 	private SearchParamBuilder searchParamBuilder;
 
+	/** The search index. */
 	private SearchIndex searchIndex;
 
 	/**

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.dao;
 
 import java.sql.Timestamp;
@@ -40,24 +47,47 @@ import com.mysql.jdbc.StringUtils;
 @SuppressWarnings("unchecked")
 @Repository("manageAccessPermissionDAO")
 public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO {
+	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(ManageAccessPermissionDAOImpl.class);
+	
+	/** The Constant FIND_ADM_FACILITY. */
 	private static final String FIND_ADM_FACILITY = "from AdmFacility where facilityId=?";
+	
+	/** The Constant VERIFY_EMAIL_ADVANCEPASS. */
 	private static final String VERIFY_EMAIL_ADVANCEPASS = "from WebMembershipEmail e where e.email = ? and e.deleteDate is NULL";
+	
+	/** The Constant VERIFY_EMAILID. */
 	private static final String VERIFY_EMAILID = "from WebMembershipEmail e where e.email = ?";
+	
+	/** The hibernate template tracker. */
 	private HibernateTemplate hibernateTemplateTracker;
 
+	/** The hibernate template careers. */
 	private HibernateTemplate hibernateTemplateCareers;
 	
+	/** The hibernate template advance pass. */
 	private HibernateTemplate hibernateTemplateAdvancePass;
+	
+	/** The emp helper. */
 	@Autowired
 	private EmployerRegistrationConversionHelper empHelper;
 	
+	/** The manage featured employer profile dao. */
 	@Autowired
 	private ManageFeaturedEmployerProfileDAO manageFeaturedEmployerProfileDAO;
 
+	/** The Constant VERIFY_EMAIL. */
 	private static final String VERIFY_EMAIL = "from MerUser where email = ? and deleteDt is NOT NULL";
 
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactoryMerionTracker the session factory merion tracker
+	 * @param sessionFactory the session factory
+	 * @param sessionFactoryAdvancePass the session factory advance pass
+	 */
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
@@ -70,6 +100,9 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageAccessPermissionDAO#createJobOwner(com.advanceweb.afc.jb.common.EmployerProfileDTO, int, int)
+	 */
 	@Override
 	public UserDTO createJobOwner(EmployerProfileDTO empDTO, int facilityIdP,
 			int userIdp) {
@@ -349,7 +382,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 				jobOwnerId);
 		List<WebMembershipEmail> webMembershipEmails = hibernateTemplateAdvancePass
 				.find(VERIFY_EMAIL_ADVANCEPASS, ownerDetails.getEmail());
-		LOGGER.info("delete Emailid ----" + ownerDetails.getEmail());
+		LOGGER.debug("delete Emailid ----" + ownerDetails.getEmail());
 		/**
 		 * Delete Job owner from OpenAM
 		 */
@@ -390,7 +423,7 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 	@Override
 	public boolean updateJobOwner(
 			List<ManageAccessPermissionDTO> accessPermissionDTOList) {
-		LOGGER.info("Update Job Owners");
+		LOGGER.debug("Update Job Owners");
 		try {
 			for (ManageAccessPermissionDTO accessPermissionDTO : accessPermissionDTOList) {
 				AdmUserRole admUserRole = new AdmUserRole();
@@ -472,12 +505,15 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 				updateAdmFacilityUserRole.executeUpdate();
 				updateAdmUserRole.executeUpdate();
 			}
-			LOGGER.info("Updated Job Owners Role To:"
+			LOGGER.debug("Updated Job Owners Role To:"
 					+ accessPermissionDTO.getTypeOfAccess());
 		}
 		return admUserFacilityNew;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageAccessPermissionDAO#getJobOwnerList(int, int)
+	 */
 	@Override
 	public List<ManageAccessPermissionDTO> getJobOwnerList(int facilityId,
 			int userId) {
@@ -525,6 +561,9 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.dao.ManageAccessPermissionDAO#getUserListByEmail(java.lang.String)
+	 */
 	@Override
 	public UserDTO getUserListByEmail(String email) {
 		MerUser user = null;

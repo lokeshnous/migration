@@ -24,12 +24,17 @@ import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 @Service("resumePackageService")
 public class ResumePackageServiceImpl implements ResumePackageService{
 	
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(ResumePackageServiceImpl.class);
 	
+	/** The resume package dao. */
 	@Autowired
 	private ResumePackageDAO resumePackageDAO;
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.service.ResumePackageService#showResumeSearchPackages()
+	 */
 	@Override
 	public List<ResumePackageDTO> showResumeSearchPackages() throws JobBoardServiceException{
 		try {
@@ -41,6 +46,9 @@ public class ResumePackageServiceImpl implements ResumePackageService{
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.employer.service.ResumePackageService#isResumePackageActive(int)
+	 */
 	public boolean isResumePackageActive(int facilityId){
 		
 		return resumePackageDAO.isResumePackageActive(facilityId);

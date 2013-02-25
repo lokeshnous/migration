@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.agency.service;
 
 import java.util.List;
@@ -29,6 +36,12 @@ public interface AgencyService {
 	List<FacilityDTO> getFacilityNames(String employerName)
 			throws JobBoardServiceException;
 
+	/**
+	 * Gets the user by user id.
+	 *
+	 * @param userId the user id
+	 * @return the user by user id
+	 */
 	UserDTO getUserByUserId(int userId);
 
 	/**

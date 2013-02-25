@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.pgi;
 
 import java.util.Date;
@@ -10,43 +17,99 @@ import java.util.Date;
  */
 public class AccountAddressDTO {
 	
+	/** The first name. */
 	private String firstName;
+	
+	/** The middle name. */
 	private String middleName;
+	
+	/** The last name. */
 	private String lastName;
+	
+	/** The email. */
 	private String email;
+	
+	/** The company. */
 	private String company;
+	
+	/** The street address. */
 	private String streetAddress;
+	
+	/** The city or town. */
 	private String cityOrTown;
+	
+	/** The state. */
 	private String state;
+	
+	/** The country. */
 	private String country;
+	
+	/** The zip code. */
 	private String zipCode;
+	
+	/** The phone. */
 	private String phone;
 	
+	/** The facility contact id. */
 	private int facilityContactId;
+	
+	/** The create date. */
 	private Date createDate;
+	
+	/** The facility id. */
 	private int facilityId;
 	
 
+	/**
+	 * Gets the facility contact id.
+	 *
+	 * @return the facility contact id
+	 */
 	public int getFacilityContactId() {
 		return facilityContactId;
 	}
 
+	/**
+	 * Sets the facility contact id.
+	 *
+	 * @param facilityContactId the new facility contact id
+	 */
 	public void setFacilityContactId(int facilityContactId) {
 		this.facilityContactId = facilityContactId;
 	}
 
+	/**
+	 * Gets the creates the date.
+	 *
+	 * @return the creates the date
+	 */
 	public Date getCreateDate() {
 		return createDate;
 	}
 
+	/**
+	 * Sets the creates the date.
+	 *
+	 * @param createDate the new creates the date
+	 */
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
 
+	/**
+	 * Gets the facility id.
+	 *
+	 * @return the facility id
+	 */
 	public int getFacilityId() {
 		return facilityId;
 	}
 
+	/**
+	 * Sets the facility id.
+	 *
+	 * @param facilityId the new facility id
+	 */
 	public void setFacilityId(int facilityId) {
 		this.facilityId = facilityId;
 	}

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.jobseeker.dao;
 
 import com.advanceweb.afc.jb.common.JobSeekerRegistrationDTO;
@@ -42,8 +49,20 @@ public interface JobSeekerRegistrationDAO {
 	 */
 	boolean jsChangePassword(JobSeekerRegistrationDTO jobSeekerRegistrationDTO);
 	
+	/**
+	 * Validate password.
+	 *
+	 * @param jobSeekerRegistrationDTO the job seeker registration dto
+	 * @return true, if successful
+	 */
 	boolean validatePassword(JobSeekerRegistrationDTO jobSeekerRegistrationDTO);
 	
+	/**
+	 * Validate email.
+	 *
+	 * @param email the email
+	 * @return true, if successful
+	 */
 	boolean validateEmail(String email);
 	
 	/**
@@ -53,6 +72,12 @@ public interface JobSeekerRegistrationDAO {
 	 */
 	JobSeekerRegistrationDTO getProfileAttributes();
 	
+	/**
+	 * Validate profile attributes.
+	 *
+	 * @param jobseekerId the jobseeker id
+	 * @return true, if successful
+	 */
 	boolean validateProfileAttributes(int jobseekerId);
 
 }

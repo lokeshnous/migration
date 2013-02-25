@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.common.template;
 
 import java.io.StringWriter;
@@ -22,11 +29,18 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class VelocityTemplate implements AdvanceTemplate {
 
+	/** The velocity engine. */
 	@Autowired
 	private VelocityEngine velocityEngine;
 
+	/** The template file. */
 	private String templateFile;
 
+	/**
+	 * Instantiates a new velocity template.
+	 *
+	 * @param templateFile the template file
+	 */
 	public VelocityTemplate(String templateFile) {
 		this.templateFile = templateFile;
 	}

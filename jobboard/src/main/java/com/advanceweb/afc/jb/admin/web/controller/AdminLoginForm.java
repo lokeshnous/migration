@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.admin.web.controller;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -7,9 +14,11 @@ public class AdminLoginForm {
 	/*@NotEmpty
 	private String userEmail;*/
 
+	/** The emp or agency email. */
 	@NotEmpty
 	private String empOrAgencyEmail;
 
+	/** The admin user id. */
 	private int adminUserId;
 	
 	
@@ -35,6 +44,11 @@ public class AdminLoginForm {
 		return adminUserId;
 	}
 
+	/**
+	 * Sets the admin user id.
+	 *
+	 * @param adminUserId the new admin user id
+	 */
 	public void setAdminUserId(int adminUserId) {
 		this.adminUserId = adminUserId;
 	}

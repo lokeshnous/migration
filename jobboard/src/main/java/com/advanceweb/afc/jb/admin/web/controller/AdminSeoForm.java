@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.admin.web.controller;
 
 /**
@@ -6,11 +13,22 @@ package com.advanceweb.afc.jb.admin.web.controller;
  */
 public class AdminSeoForm {
 	
+	/** The seo info id. */
 	private int seoInfoId;
+	
+	/** The job title. */
 	private String jobTitle;
+	
+	/** The meta title. */
 	private String metaTitle;
+	
+	/** The meta desc. */
 	private String metaDesc;
+	
+	/** The static content. */
 	private String staticContent;
+	
+	/** The description. */
 	private String description;
 	
 	/**

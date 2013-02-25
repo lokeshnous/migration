@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common.schedulers.jobs;
 
 import java.util.HashMap;
@@ -25,14 +32,24 @@ import com.advanceweb.afc.jb.mail.service.MMEmailService;
 @Qualifier("NewJobsUpdationMailWorkerDaily")
 public class NewJobsUpdationMailWorkerDaily implements JobWorker {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(NewJobsUpdationMailWorkerDaily.class);
 	
+	/** The Constant JOB_NAME. */
 	private static final String JOB_NAME = "SEND_MAIL";
+	
+	/** The save search service. */
 	@Autowired
 	private SaveSearchService saveSearchService;
+	
+	/** The email service. */
 	@Autowired
 	private MMEmailService emailService;
+	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.common.schedulers.jobs.JobWorker#executeJob()
+	 */
 	@Override
 	public void executeJob() {
 		LOGGER.info("New Jobs Updation Mail Worker.-> Execution Of  Daily Job Scheduler Started.....");
@@ -62,6 +79,9 @@ public class NewJobsUpdationMailWorkerDaily implements JobWorker {
 		LOGGER.info("New Jobs Updation Mail Worker.-> Execution Of  Daily Job Scheduler Executed Successfully.....");
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.common.schedulers.jobs.JobWorker#getJobName()
+	 */
 	@Override
 	public String getJobName() {
 		return JOB_NAME;

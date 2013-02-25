@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.admin.dao;
 
 import java.math.BigDecimal;
@@ -21,8 +28,8 @@ import com.advanceweb.afc.jb.admin.helper.AdminConversionHelper;
 import com.advanceweb.afc.jb.common.AdminDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmpSearchDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
-import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 import com.advanceweb.afc.jb.data.entities.AdmFacilityContact;
@@ -34,32 +41,63 @@ import com.advanceweb.afc.jb.data.entities.JpJobTypeCombo;
 import com.advanceweb.afc.jb.data.entities.MerUser;
 import com.advanceweb.afc.jb.data.entities.WebMembership;
 import com.advanceweb.afc.jb.data.entities.WebMembershipEmail;
+import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 
 @Transactional
 @Repository("adminDAO")
 @SuppressWarnings("unchecked")
 public class AdminDAOImpl implements AdminDAO {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger.getLogger("AdminDAOImpl.class");
 
+	/** The admin conversion helper. */
 	@Autowired
 	private AdminConversionHelper adminConversionHelper;
 
+	/** The Constant GET_EMAIL. */
 	private static final String GET_EMAIL = "from MerUser e where e.email = ?";
+	
+	/** The Constant USER_ROLE. */
 	private static final String USER_ROLE = "from AdmUserRole aur where aur.rolePK.userId = ?";
+	
+	/** The Constant FACILITY_ID. */
 	private static final String FACILITY_ID = "from AdmUserFacility auf where auf.facilityPK.userId =?";
+	
+	/** The Constant VALIDATE_ADMIN. */
 	private static final String VALIDATE_ADMIN = "from MerUser e where e.email=?";
+	
+	/** The Constant VALIDATE_ADM_USERID. */
 	private static final String VALIDATE_ADM_USERID = "from AdmFacility af where af.adminUserId =?";
+	
+	/** The Constant GET_ADM_FACILITY_BY_NS_ID. */
 	private static final String GET_ADM_FACILITY_BY_NS_ID = "from AdmFacility af1 where af1.nsCustomerID =? and af1.facilityType in ('FACILITY','FACILITY_GROUP') and af1.deleteDt is NULL";
+	
+	/** The Constant GET_NS_ID_BY_COMPNAME. */
 	private static final String GET_NS_ID_BY_COMPNAME = "from AdmFacility af1 where af1.name =? and af1.facilityType in ('FACILITY','FACILITY_GROUP') and af1.deleteDt is NULL";
+	
+	/** The Constant GET_USERID_BY_FAC_ID. */
 	private static final String GET_USERID_BY_FAC_ID = "from AdmUserFacility auf1 where auf1.facilityPK.facilityId=?";
+	
+	/** The Constant GET_FACILITY_CONTACT_BY_FAC_ID. */
 	private static final String GET_FACILITY_CONTACT_BY_FAC_ID = "from AdmFacilityContact ac where ac.admFacility.facilityId = ? and ac.contactType='PRIMARY'";
 
+	/** The hibernate template tracker. */
 	private HibernateTemplate hibernateTemplateTracker;
 
+	/** The hibernate template careers. */
 	private HibernateTemplate hibernateTemplateCareers;
+	
+	/** The hibernate template advance pass. */
 	private HibernateTemplate hibernateTemplateAdvancePass;
 
+	/**
+	 * Sets the hibernate template.
+	 *
+	 * @param sessionFactoryMerionTracker the session factory merion tracker
+	 * @param sessionFactory the session factory
+	 * @param sessionFactoryAdvancePass the session factory advance pass
+	 */
 	@Autowired
 	public void setHibernateTemplate(
 			SessionFactory sessionFactoryMerionTracker,
@@ -70,6 +108,9 @@ public class AdminDAOImpl implements AdminDAO {
 		this.hibernateTemplateAdvancePass = new HibernateTemplate(sessionFactoryAdvancePass);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.admin.dao.AdminDAO#validateEmail(java.lang.String)
+	 */
 	@Override
 	public boolean validateEmail(String email) {
 		boolean status = false;
@@ -94,6 +135,9 @@ public class AdminDAOImpl implements AdminDAO {
 		return status;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.admin.dao.AdminDAO#validateAdminCredentials(java.lang.String, java.lang.String)
+	 */
 	@Override
 	public boolean validateAdminCredentials(String email, String password) {
 		boolean status = false;
@@ -132,6 +176,9 @@ public class AdminDAOImpl implements AdminDAO {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.admin.dao.AdminDAO#impersonateUser(com.advanceweb.afc.jb.common.AdminDTO)
+	 */
 	@Override
 	public boolean impersonateUser(AdminDTO adminDTO) {
 		boolean status = true;
@@ -165,6 +212,9 @@ public class AdminDAOImpl implements AdminDAO {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.admin.dao.AdminDAO#validateCompName(java.lang.String)
+	 */
 	@Override
 	public EmpSearchDTO validateCompName(String empList) {
 		EmpSearchDTO dto = new EmpSearchDTO();
@@ -185,6 +235,9 @@ public class AdminDAOImpl implements AdminDAO {
 		return dto;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.admin.dao.AdminDAO#validateNetSuitId(int)
+	 */
 	@Override
 	public boolean validateNetSuitId(int nsId) {
 		boolean status = false;
@@ -206,6 +259,9 @@ public class AdminDAOImpl implements AdminDAO {
 		return status;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.admin.dao.AdminDAO#getUserIdAndFacilityId(int)
+	 */
 	@Override
 	public EmpSearchDTO getUserIdAndFacilityId(int nsId) {
 		EmpSearchDTO dto = new EmpSearchDTO();
@@ -220,13 +276,16 @@ public class AdminDAOImpl implements AdminDAO {
 		}
 		List<AdmUserFacility> userFacility = hibernateTemplateCareers.find(
 				GET_USERID_BY_FAC_ID, facId);
-		if (userFacility != null) {
+		if (null != userFacility && !userFacility.isEmpty()) {
 			AdmUserFacility facilityList = userFacility.get(0);
 			dto.setUserId(facilityList.getFacilityPK().getUserId());
 		}
 		return dto;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.admin.dao.AdminDAO#saveModifiedData(java.util.List)
+	 */
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public boolean saveModifiedData(
@@ -250,6 +309,9 @@ public class AdminDAOImpl implements AdminDAO {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.admin.dao.AdminDAO#getEmpdataByNetSuiteId(int)
+	 */
 	@Override
 	public List<EmpSearchDTO> getEmpdataByNetSuiteId(int nsId) {
 		List<EmpSearchDTO> emplist = null;
@@ -308,11 +370,17 @@ public class AdminDAOImpl implements AdminDAO {
 			dto.setQuantity(qty.intValue());
 			dto.setAvailableQty(availqty.intValue());
 			dto.setInvDetailId((Integer) row[6]);
+			dto.setInventoryId((Integer) row[7]);
 			inventoryDTOs.add(dto);
 		}
 		return inventoryDTOs;
 	}
 
+	/**
+	 * Save facility.
+	 *
+	 * @param nsId the ns id
+	 */
 	public void saveFacility(int nsId) {
 		List<AdmFacility> usersList = hibernateTemplateCareers.find(
 				GET_ADM_FACILITY_BY_NS_ID, nsId);
@@ -449,6 +517,9 @@ public class AdminDAOImpl implements AdminDAO {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.admin.dao.AdminDAO#listJobPostings()
+	 */
 	@Override
 	public List<DropDownDTO> listJobPostings() {
 		
@@ -471,6 +542,9 @@ public class AdminDAOImpl implements AdminDAO {
 		return dropDownDTOList;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.admin.dao.AdminDAO#updateJobPostInventory(int, int, int)
+	 */
 	@Override
 	public boolean updateJobPostInventory(int facilityId, int jobTypeId,
 			int quantity) {
@@ -505,5 +579,84 @@ public class AdminDAOImpl implements AdminDAO {
 		admInventoryDetail.setAvailableqty(quantity);
 
 		return admInventoryDetail;
+	}
+	/**
+	 * This method is used to get the list of the Facility whose name is
+	 * matching with the given facility name
+	 * 
+	 * @param String
+	 *            facilityName
+	 * @return List<FacilityDTO>
+	 */
+	@Override
+	public List<FacilityDTO> getFacilityNames(String employerName)
+			throws JobBoardDataException {
+		List<FacilityDTO> emplyrNamesList = new ArrayList<FacilityDTO>();
+		try {
+
+			List<AdmFacility> facility = hibernateTemplateCareers
+					.find("from AdmFacility adm where adm.name like '"
+							+ employerName
+							+ "%' and adm.facilityType!='FACILITY_SYSTEM' group by nsCustomerID");
+			for (AdmFacility adm : facility) {
+				FacilityDTO dto = new FacilityDTO();
+				dto.setName(adm.getName()+", "+adm.getNsCustomerID());
+				dto.setFacilityId(adm.getFacilityId());
+				emplyrNamesList.add(dto);
+			}
+		} catch (Exception e) {
+			LOGGER.debug("Exception while getting the employer name" + e);
+			throw new JobBoardDataException(
+					"Error while fetching data from AdmFacility based on the facilityName"
+							+ e);
+		}
+		return emplyrNamesList;
+	}
+
+	/**
+	 * This method is used to get the details of the Facility depending on the
+	 * facilityId
+	 * 
+	 * @param int facilityId
+	 * @return FacilityDTO
+	 */
+	@Override
+	public FacilityDTO getLinkedFacilityDetails(int facilityId)
+			throws JobBoardDataException {
+
+		FacilityDTO employerDetails;
+		try {
+			employerDetails = new FacilityDTO();
+			AdmFacility facility = (AdmFacility) DataAccessUtils
+					.uniqueResult(hibernateTemplateCareers
+							.find("from AdmFacility admFacility where admFacility.facilityId=?",
+									facilityId));
+			if (facility != null) {
+				employerDetails.setCity(facility.getCity());
+				employerDetails.setStreet(facility.getStreet());
+				employerDetails.setPostcode(facility.getPostcode());
+				employerDetails.setState(facility.getState());
+				employerDetails.setCountry(facility.getCountry());
+				employerDetails.setFacilityId(facility.getFacilityId());
+				employerDetails.setName(facility.getName());
+				employerDetails.setNsCustomerID(facility.getNsCustomerID());
+				for (AdmFacilityContact contact : facility
+						.getAdmFacilityContacts()) {
+					if (contact.getContactType().equals("PRIMARY")) {
+						employerDetails.setPhone(contact.getPhone());
+					}
+				}
+				/*
+				 * employerDetails.setPhone(facility.getAdmFacilityContacts()
+				 * .get(0).getPhone());
+				 */
+			}
+		} catch (Exception e) {
+			LOGGER.debug(e);
+			throw new JobBoardDataException(
+					"Error while fetching data from AdmFacility based on the facilityId"
+							+ e);
+		}
+		return employerDetails;
 	}
 }

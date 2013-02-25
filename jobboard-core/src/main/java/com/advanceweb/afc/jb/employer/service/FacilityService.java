@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.employer.service;
 
 import java.util.Date;
@@ -81,6 +88,12 @@ public interface FacilityService {
 	MetricsDTO employerDateMetrics(Date startFrom, Date endFrom,
 			int selEmployerId); 
 	
+	/**
+	 * Gets the facility by facility id.
+	 *
+	 * @param facilityId the facility id
+	 * @return the facility by facility id
+	 */
 	FacilityDTO getFacilityByFacilityId(int facilityId);
 	
 	/**
@@ -93,12 +106,25 @@ public interface FacilityService {
 	List<DropDownDTO> getFacilityGroup(int facilityId)
 			throws JobBoardServiceException;
 	
+	/**
+	 * Gets the facility user id.
+	 *
+	 * @param facilityId the facility id
+	 * @return the facility user id
+	 */
 	int getfacilityUserId(int facilityId);
 	/**
 	 * This method is to get all facility list 
 	 * @return List<SchedulerDTO>
 	 */
 	List<SchedulerDTO> getAllFacilityList();
+	
+	/**
+	 * Gets the user.
+	 *
+	 * @param email the email
+	 * @return the user
+	 */
 	UserDTO getUser(String email);
 	
 	/**

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.login.web.controller;
 
 import javax.inject.Inject;
@@ -46,25 +53,47 @@ import com.advanceweb.afc.jb.user.UserService;
 @RequestMapping("/signin")
 public class SocialLoginController {
 
+	/** The Constant LOGGER. */
 	private static final Logger LOGGER = Logger
 			.getLogger(SocialLoginController.class);
+	
+	/** The Constant PROVIDER_ID. */
 	private static final String PROVIDER_ID="/{providerId}";
+	
+	/** The login err msg. */
 	@Value("${loginErrMsg}")
 	private String loginErrMsg;
+	
+	/** The login success manager. */
 	@Autowired
 	private LoginManager loginSuccessManager;
+	
+	/** The custom authentication manager. */
 	@Autowired
 	protected AuthenticationManager customAuthenticationManager;
+	
+	/** The connection factory locator. */
 	private final ConnectionFactoryLocator connectionFactoryLocator;
 
+	/** The sign in adapter. */
 	private final SignInAdapter signInAdapter;
+	
+	/** The sign in url. */
 	@Value("${application.signInUrl}")
 	private String signInUrl;
+	
+	/** The sign up url. */
 	@Value("${application.signUpUrl}")
 	private String signUpUrl;
+	
+	/** The post sign in url. */
 	@Value("${application.postUrl}")
 	private String postSignInUrl ;
+	
+	/** The web support. */
 	private final ConnectSupport webSupport = new ConnectSupport();
+	
+	/** The user service. */
 	@Autowired
 	private UserService userService;
 
@@ -223,6 +252,13 @@ public class SocialLoginController {
 
 	// internal helper method,used to redirect user to sign up page or dash
 	// board depending on user's social media profile is linked to DB
+	/**
+	 * Handle sign in.
+	 *
+	 * @param connection the connection
+	 * @param request the request
+	 * @return the redirect view
+	 */
 	private RedirectView handleSignIn(Connection<?> connection,
 			NativeWebRequest request) {
 		String pageValue = (String) request
@@ -260,6 +296,12 @@ public class SocialLoginController {
 	}
 
 	// internal helper method
+	/**
+	 * Redirect.
+	 *
+	 * @param url the url
+	 * @return the redirect view
+	 */
 	private RedirectView redirect(String url) {
 		return new RedirectView(url, true);
 	}
@@ -296,6 +338,13 @@ public class SocialLoginController {
 	}
 
 	// internal method,used to redirect to the common social media login page
+	/**
+	 * Gets the user page.
+	 *
+	 * @param connection the connection
+	 * @param pageValue the page value
+	 * @return the user page
+	 */
 	private ModelAndView getUserPage(Connection<?> connection, String pageValue) {
 		ModelAndView model = new ModelAndView();
 		String profileId = null;

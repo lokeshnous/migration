@@ -12,7 +12,9 @@
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
-		
+		if($('#advanceUserMsgId').val()!=''){
+			alert('You are an existing Advance application user! Your existing credentials are used to register. Please use your old credentials to access Job Board application.');
+		}
 		$(".purchaseJobPostingId").displaypopup(".purchaseJobPostingId",
 				"770", "360");
 	});
@@ -105,6 +107,7 @@
 							</div> -->
 						</div>
 						<!--3-->
+						<input type="hidden" value="${advUserMessg}" id="advanceUserMsgId">
 						<div class="MidContentBox01 marginLeft20 minHeight235">
 							<h3 class="FontSize16">EZ POST</h3>
 							<p class="marginTop10 lineHeight16">

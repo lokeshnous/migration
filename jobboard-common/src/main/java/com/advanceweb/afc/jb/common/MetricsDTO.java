@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2013. Nous info system for JobBoard.
+ * All rights reserved. 
+ * @author Nous
+ * 
+ * @version 1.0
+ */
 package com.advanceweb.afc.jb.common;
 
 import java.util.Date;
@@ -12,11 +19,22 @@ import java.util.Date;
 
 public class MetricsDTO {
 
+	/** The job id. */
 	private int jobId;
+	
+	/** The views. */
 	private long views;
+	
+	/** The clicks. */
 	private long clicks;
+	
+	/** The applies. */
 	private long applies;
+	
+	/** The stats date. */
 	private Date statsDate;
+	
+	/** The metrics name. */
 	private String metricsName;
 
 	/**
@@ -63,26 +81,56 @@ public class MetricsDTO {
 		this.metricsName = metricsName;
 	}
 
+	/**
+	 * Gets the views.
+	 *
+	 * @return the views
+	 */
 	public long getViews() {
 		return views;
 	}
 
+	/**
+	 * Sets the views.
+	 *
+	 * @param views the new views
+	 */
 	public void setViews(long views) {
 		this.views = views;
 	}
 
+	/**
+	 * Gets the clicks.
+	 *
+	 * @return the clicks
+	 */
 	public long getClicks() {
 		return clicks;
 	}
 
+	/**
+	 * Sets the clicks.
+	 *
+	 * @param clicks the new clicks
+	 */
 	public void setClicks(long clicks) {
 		this.clicks = clicks;
 	}
 
+	/**
+	 * Gets the applies.
+	 *
+	 * @return the applies
+	 */
 	public long getApplies() {
 		return applies;
 	}
 
+	/**
+	 * Sets the applies.
+	 *
+	 * @param applies the new applies
+	 */
 	public void setApplies(long applies) {
 		this.applies = applies;
 	}
