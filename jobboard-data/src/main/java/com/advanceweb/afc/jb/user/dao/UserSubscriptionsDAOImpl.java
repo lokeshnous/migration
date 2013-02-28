@@ -56,10 +56,10 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 
 	/** The Constant FETCH_USER_SUBSCRIPTIONS. */
 	private static final String FETCH_USER_SUBSCRIPTIONS = "select usersubs from AdmUserSubscription usersubs where usersubs.id.userId=:userId and usersubs.deleteDt is null";
-	
+
 	/** The Constant SELECTED_CURRENT_SUBS. */
 	private static final String SELECTED_CURRENT_SUBS = "from AdmUserSubscription sub where sub.id.userId=?";
-	
+
 	/** The Constant SELECTED_FACILITY_SUBS. */
 	private static final String SELECTED_FACILITY_SUBS = "from AdmFacilitySubscription e where e.admFacility.facilityId=?";
 	// private static final String FIND_USER_SUBSCRIPTIONS =
@@ -70,7 +70,7 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 
 	/** The Constant OLD_FORMAT. */
 	private static final String OLD_FORMAT = "MM/dd/yyyy HH:mm:ss";
-	
+
 	/** The Constant NEW_FORMAT. */
 	private static final String NEW_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	// private static final ResPrivacy ResCoverletter = null;
@@ -93,9 +93,11 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 
 	/**
 	 * Sets the hibernate template.
-	 *
-	 * @param sessionFactoryMerionTracker the session factory merion tracker
-	 * @param sessionFactory the session factory
+	 * 
+	 * @param sessionFactoryMerionTracker
+	 *            the session factory merion tracker
+	 * @param sessionFactory
+	 *            the session factory
 	 */
 	@Autowired
 	public void setHibernateTemplate(
@@ -265,7 +267,7 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 					Locale.US);
 			dateValue = sdfSource.parse(newDateString);
 		} catch (ParseException e) {
-			LOGGER.error("Date parsing in Job save by admin wrong",e);
+			LOGGER.error("Date parsing in Job save by admin wrong", e);
 		}
 
 		return dateValue;
@@ -412,7 +414,7 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 				String dateNow = formatter.format(currentDate.getTime());
 				todayDate = dateConveter(dateNow);
 			} catch (Exception e) {
-				LOGGER.error("Info data error date conversion",e);
+				LOGGER.error("Info data error date conversion", e);
 			}
 
 			if (rclDTO.getActive() == 1) {
@@ -519,7 +521,7 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 			String dateNow = formatter.format(currentDate.getTime());
 			todayDate = dateConveter(dateNow);
 		} catch (Exception e) {
-			LOGGER.error("Info data error date conversion",e);
+			LOGGER.error("Info data error date conversion", e);
 		}
 		try {
 			ResCoverletter resCov = new ResCoverletter();
@@ -587,7 +589,7 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 			}
 			resCovDTO = subscriptionHelper.toTransFormListToDTO(resList);
 		} catch (DataAccessException e) {
-			LOGGER.error("Error for update of employee data",e);
+			LOGGER.error("Error for update of employee data", e);
 		}
 		return resCovDTO;
 
@@ -615,7 +617,7 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 				String dateNow = formatter.format(currentDate.getTime());
 				todayDate = dateConveter(dateNow);
 			} catch (Exception e) {
-				LOGGER.error("Info data error date conversion",e);
+				LOGGER.error("Info data error date conversion", e);
 			}
 			int primaryIdData = 0;
 
@@ -649,8 +651,12 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 		return isUpdate;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.advanceweb.afc.jb.user.dao.UserSubscriptionsDAO#fetchPublicCoverLetter(long, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.advanceweb.afc.jb.user.dao.UserSubscriptionsDAO#fetchPublicCoverLetter
+	 * (long, java.lang.String)
 	 */
 	@Override
 	public ResCoverLetterDTO fetchPublicCoverLetter(long jobSeekerId,
@@ -737,19 +743,21 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 		}
 		return listDTOs;
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.advanceweb.afc.jb.user.dao.UserSubscriptionsDAO#getSubEmailerList()
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.advanceweb.afc.jb.user.dao.UserSubscriptionsDAO#getSubEmailerList()
 	 */
 	@Override
-	public List<DropDownDTO> getSubEmailerList(){
-		
-		try{
+	public List<DropDownDTO> getSubEmailerList() {
+
+		try {
 			List<MerPublication> emailSubList = hibernateTemplateTracker
 					.find("from MerPublication p where p.isEmail = 1 and p.active = 1");
-			return subscriptionHelper
-					.transferEmailSubToSubDTO(emailSubList);
-		}catch (DataAccessException e) {
+			return subscriptionHelper.transferEmailSubToSubDTO(emailSubList);
+		} catch (DataAccessException e) {
 			LOGGER.error(
 					"Error while getting data for Emailer magazine subscriptions",
 					e);
@@ -800,6 +808,7 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 	@Override
 	public List<DropDownDTO> getSubscriptionscheck(int userId) {
 		// TODO Auto-generated method stub
+		List<DropDownDTO> list = new ArrayList<DropDownDTO>();
 		List<MerPublication> listSubscriptiosnscheck = null;
 		MerUserProfile profile = new MerUserProfile();
 		MerProfileAttribList attribList = new MerProfileAttribList();
@@ -809,38 +818,46 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 					.find("from MerUserProfile m where m.profilePK.userId=? and m.merProfileAttrib.profileAttribId = 13",
 							userId);
 			profile = userProfiles.get(0);
-			int profileAttribId = Integer.parseInt(profile.getAttribValue());
-
-			List<MerProfileAttribList> attribLists = hibernateTemplateTracker
-					.find("from MerProfileAttribList e where e.profileAttribListId=?",
-							profileAttribId);
-			attribList = attribLists.get(0);
-			String profession = attribList.getListValue().trim();
-
-			Query getSubscriptionData = hibernateTemplateTracker
-					.getSessionFactory().getCurrentSession()
-					.createSQLQuery(" { call getSubscriptionData(?) }");
-
-			getSubscriptionData.setString(0, profession.trim());
-			List<MerPublication> ListSubCheck = getSubscriptionData.list();
-
-			Iterator<?> iterator = ListSubCheck.iterator();
-			listSubscriptiosnscheck = new ArrayList<MerPublication>();
-			while (iterator.hasNext()) {
-				MerPublication dto = new MerPublication();
-				Object[] row = (Object[]) iterator.next();
-				dto.setPublicationId((Integer) row[0]);
-				dto.setPublicationName((String) row[1]);
-				listSubscriptiosnscheck.add(dto);
+			int profileAttribId = 0;
+			try {
+				profileAttribId = Integer.parseInt(profile.getAttribValue());
+			} catch (NumberFormatException e) {
+				LOGGER.error("Error while getting magazines from DB" + e);
 			}
-			return dropdownHelper
-					.convertMerPublicationToDropDownDTO(listSubscriptiosnscheck);
+
+			if (profileAttribId != 0) {
+				List<MerProfileAttribList> attribLists = hibernateTemplateTracker
+						.find("from MerProfileAttribList e where e.profileAttribListId=?",
+								profileAttribId);
+				attribList = attribLists.get(0);
+				String profession = attribList.getListValue().trim();
+
+				Query getSubscriptionData = hibernateTemplateTracker
+						.getSessionFactory().getCurrentSession()
+						.createSQLQuery(" { call getSubscriptionData(?) }");
+
+				getSubscriptionData.setString(0, profession.trim());
+				List<MerPublication> ListSubCheck = getSubscriptionData.list();
+
+				Iterator<?> iterator = ListSubCheck.iterator();
+				listSubscriptiosnscheck = new ArrayList<MerPublication>();
+				while (iterator.hasNext()) {
+					MerPublication dto = new MerPublication();
+					Object[] row = (Object[]) iterator.next();
+					dto.setPublicationId((Integer) row[0]);
+					dto.setPublicationName((String) row[1]);
+					listSubscriptiosnscheck.add(dto);
+				}
+				return dropdownHelper
+						.convertMerPublicationToDropDownDTO(listSubscriptiosnscheck);
+			}
+
 		} catch (DataAccessException e) {
 			LOGGER.error("Error while getting emailer publications  from DB"
 					+ e);
 		}
 
-		return null;
+		return list;
 
 	}
 
@@ -854,6 +871,7 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 	@Override
 	public List<DropDownDTO> getSubscriptionsdigital(int userId) {
 		// TODO Auto-generated method stub
+		List<DropDownDTO> list = new ArrayList<DropDownDTO>();
 		List<MerPublication> listSubscriptiosnsDigital = null;
 		MerUserProfile profile = new MerUserProfile();
 		MerProfileAttribList attribList = new MerProfileAttribList();
@@ -863,37 +881,46 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 					.find("from MerUserProfile m where m.profilePK.userId=? and m.merProfileAttrib.profileAttribId = 13",
 							userId);
 			profile = userProfiles.get(0);
-			int profileAttribId = Integer.parseInt(profile.getAttribValue());
-
-			List<MerProfileAttribList> attribLists = hibernateTemplateTracker
-					.find("from MerProfileAttribList e where e.profileAttribListId=?",
-							profileAttribId);
-			attribList = attribLists.get(0);
-			String profession = attribList.getListValue().trim();
-
-			Query getSubscriptionDigital = hibernateTemplateTracker
-					.getSessionFactory().getCurrentSession()
-					.createSQLQuery(" { call getSubscriptionDigital(?) }");
-
-			getSubscriptionDigital.setString(0, profession.trim());
-			List<MerPublication> ListSubDigital = getSubscriptionDigital.list();
-
-			Iterator<?> iterator = ListSubDigital.iterator();
-			listSubscriptiosnsDigital = new ArrayList<MerPublication>();
-			while (iterator.hasNext()) {
-				MerPublication dto = new MerPublication();
-				Object[] row = (Object[]) iterator.next();
-				dto.setPublicationId((Integer) row[0]);
-				dto.setPublicationName((String) row[1]);
-				listSubscriptiosnsDigital.add(dto);
+			int profileAttribId = 0;
+			try {
+				profileAttribId = Integer.parseInt(profile.getAttribValue());
+			} catch (NumberFormatException e) {
+				LOGGER.error("Error while getting magazines from DB" + e);
 			}
-			return dropdownHelper
-					.convertMerPublicationToDropDownDTO(listSubscriptiosnsDigital);
+
+			if (profileAttribId != 0) {
+				List<MerProfileAttribList> attribLists = hibernateTemplateTracker
+						.find("from MerProfileAttribList e where e.profileAttribListId=?",
+								profileAttribId);
+				attribList = attribLists.get(0);
+				String profession = attribList.getListValue().trim();
+
+				Query getSubscriptionDigital = hibernateTemplateTracker
+						.getSessionFactory().getCurrentSession()
+						.createSQLQuery(" { call getSubscriptionDigital(?) }");
+
+				getSubscriptionDigital.setString(0, profession.trim());
+				List<MerPublication> ListSubDigital = getSubscriptionDigital
+						.list();
+
+				Iterator<?> iterator = ListSubDigital.iterator();
+				listSubscriptiosnsDigital = new ArrayList<MerPublication>();
+				while (iterator.hasNext()) {
+					MerPublication dto = new MerPublication();
+					Object[] row = (Object[]) iterator.next();
+					dto.setPublicationId((Integer) row[0]);
+					dto.setPublicationName((String) row[1]);
+					listSubscriptiosnsDigital.add(dto);
+				}
+				return dropdownHelper
+						.convertMerPublicationToDropDownDTO(listSubscriptiosnsDigital);
+			}
+
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
 		}
 
-		return null;
+		return list;
 	}
 
 	/**
@@ -907,6 +934,7 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 	public List<DropDownDTO> getSubscriptionsletter(int userId) {
 		// TODO Auto-generated method stub
 		// List<MerPublication> listSubscriptiosnsLetter = null;
+		List<DropDownDTO> list = new ArrayList<DropDownDTO>();
 		List<MerPublication> listSubscriptiosnsLetter = new ArrayList<MerPublication>();
 		MerUserProfile profile = new MerUserProfile();
 		MerProfileAttribList attribList = new MerProfileAttribList();
@@ -915,37 +943,46 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 					.find("from MerUserProfile m where m.profilePK.userId=? and m.merProfileAttrib.profileAttribId = 13",
 							userId);
 			profile = userProfiles.get(0);
-			int profileAttribId = Integer.parseInt(profile.getAttribValue());
-
-			List<MerProfileAttribList> attribLists = hibernateTemplateTracker
-					.find("from MerProfileAttribList e where e.profileAttribListId=?",
-							profileAttribId);
-			attribList = attribLists.get(0);
-			String profession = attribList.getListValue().trim();
-
-			Query getSubscriptionLetter = hibernateTemplateTracker
-					.getSessionFactory().getCurrentSession()
-					.createSQLQuery(" { call getSubscriptionLetter(?) }");
-
-			getSubscriptionLetter.setString(0, profession.trim());
-			List<MerPublication> ListSubLetter = getSubscriptionLetter.list();
-
-			Iterator<?> iterator = ListSubLetter.iterator();
-			listSubscriptiosnsLetter = new ArrayList<MerPublication>();
-			while (iterator.hasNext()) {
-				MerPublication dto = new MerPublication();
-				Object[] row = (Object[]) iterator.next();
-				dto.setPublicationId((Integer) row[0]);
-				dto.setPublicationName((String) row[1]);
-				listSubscriptiosnsLetter.add(dto);
+			int profileAttribId = 0;
+			try {
+				profileAttribId = Integer.parseInt(profile.getAttribValue());
+			} catch (NumberFormatException e) {
+				LOGGER.error("Error while getting magazines from DB" + e);
 			}
-			return dropdownHelper
-					.convertMerPublicationToDropDownDTO(listSubscriptiosnsLetter);
+
+			if (profileAttribId != 0) {
+				List<MerProfileAttribList> attribLists = hibernateTemplateTracker
+						.find("from MerProfileAttribList e where e.profileAttribListId=?",
+								profileAttribId);
+				attribList = attribLists.get(0);
+				String profession = attribList.getListValue().trim();
+
+				Query getSubscriptionLetter = hibernateTemplateTracker
+						.getSessionFactory().getCurrentSession()
+						.createSQLQuery(" { call getSubscriptionLetter(?) }");
+
+				getSubscriptionLetter.setString(0, profession.trim());
+				List<MerPublication> ListSubLetter = getSubscriptionLetter
+						.list();
+
+				Iterator<?> iterator = ListSubLetter.iterator();
+				listSubscriptiosnsLetter = new ArrayList<MerPublication>();
+				while (iterator.hasNext()) {
+					MerPublication dto = new MerPublication();
+					Object[] row = (Object[]) iterator.next();
+					dto.setPublicationId((Integer) row[0]);
+					dto.setPublicationName((String) row[1]);
+					listSubscriptiosnsLetter.add(dto);
+				}
+				return dropdownHelper
+						.convertMerPublicationToDropDownDTO(listSubscriptiosnsLetter);
+			}
+
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
 		}
 
-		return null;
+		return list;
 	}
 
 	/**
@@ -953,6 +990,7 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 	 */
 	@Override
 	public List<DropDownDTO> getSubscriptionsEmailer(int userId) {
+		List<DropDownDTO> listDTO = new ArrayList<DropDownDTO>();
 		List<MerPublication> list = new ArrayList<MerPublication>();
 		MerUserProfile profile = new MerUserProfile();
 		MerProfileAttribList attribList = new MerProfileAttribList();
@@ -962,31 +1000,39 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 					.find("from MerUserProfile m where m.profilePK.userId=? and m.merProfileAttrib.profileAttribId = 13",
 							userId);
 			profile = userProfiles.get(0);
-			int profileAttribId = Integer.parseInt(profile.getAttribValue());
-
-			List<MerProfileAttribList> attribLists = hibernateTemplateTracker
-					.find("from MerProfileAttribList e where e.profileAttribListId=?",
-							profileAttribId);
-			attribList = attribLists.get(0);
-			String profession = attribList.getListValue().trim();
-
-			pubProfList = hibernateTemplateTracker
-					.find("from MerPublicationProfession p where p.profession=? and p.subSubType = 'EMAILER'",
-							profession);
-			if (null != pubProfList) {
-				for (MerPublicationProfession merProf : pubProfList) {
-					int publicationId = merProf.getPublicationId();
-					list = hibernateTemplateTracker.find(
-							"from MerPublication mp where mp.publicationId=?",
-							publicationId);
-				}
+			int profileAttribId = 0;
+			try {
+				profileAttribId = Integer.parseInt(profile.getAttribValue());
+			} catch (NumberFormatException e) {
+				LOGGER.error("Error while getting magazines from DB" + e);
 			}
-			return dropdownHelper.convertMerPublicationToDropDownDTO(list);
+
+			if (profileAttribId != 0) {
+				List<MerProfileAttribList> attribLists = hibernateTemplateTracker
+						.find("from MerProfileAttribList e where e.profileAttribListId=?",
+								profileAttribId);
+				attribList = attribLists.get(0);
+				String profession = attribList.getListValue().trim();
+
+				pubProfList = hibernateTemplateTracker
+						.find("from MerPublicationProfession p where p.profession=? and p.subSubType = 'EMAILER'",
+								profession);
+				if (null != pubProfList) {
+					for (MerPublicationProfession merProf : pubProfList) {
+						int publicationId = merProf.getPublicationId();
+						list = hibernateTemplateTracker
+								.find("from MerPublication mp where mp.publicationId=?",
+										publicationId);
+					}
+				}
+				return dropdownHelper.convertMerPublicationToDropDownDTO(list);
+			}
+
 		} catch (DataAccessException e) {
 			LOGGER.error("Error while getting emailer publications  from DB"
 					+ e);
 		}
-		return null;
+		return listDTO;
 	}
 
 	/**
@@ -1011,7 +1057,9 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 		return subscriptionsDTOs;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.advanceweb.afc.jb.user.dao.UserSubscriptionsDAO#getParentId(int)
 	 */
 	@Override

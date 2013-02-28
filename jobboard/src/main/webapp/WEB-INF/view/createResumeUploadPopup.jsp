@@ -8,13 +8,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>ADVANCE Heathcare Jobs</title>
 
-<jsp:include page="common/include.jsp" />
 <!-- Common js files  -->
-<script type="text/javascript" src="../resources/js/common/common.js"></script>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		$(".megamenu").megamenu();
 		$("#managePrivacy").hide();
+		$.nmFilters({
+    	    custom: {
+    	        afterShowCont: function(nm) {
+    	        	$('#resumeName').focus();
+    	        }
+    	    }
+    	});
 		var virusStatus=$('#virusFound').val();
 		if(virusStatus=='true'){
 			$("#resumeErrorMsg").html("The resume you tried to upload contains a virus. We attempted to remove the virus from your file, but we were unsuccessful. Please upload another file.");
@@ -44,6 +50,7 @@
 		});
 		
 		$("#create").click(function() {
+			$(".popUpButtonRow").hide();
 			        selectAllElementsInDualList();
 					//validate the required fields
 					var resumeName = $.trim($("#resumeName").val());
@@ -67,8 +74,10 @@
 										type : "GET",
 										success : function(data) {
 											if (data.maxResume != null) {
+												$(".popUpButtonRow").show();
 												$("#resumeErrorMsg").html("<span>"+ data.maxResume+ "</span>");
 											} else if (data.duplicateResume != null) {
+												$(".popUpButtonRow").show();
 												$("#resumeErrorMsg").append("<span>"+ data.duplicateResume+ "</span>");
 											} else {
 											 	$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/createResumeUpload.html");
@@ -76,6 +85,7 @@
 											}
 										},
 										error : function(response) {
+											$(".popUpButtonRow").show();
 											alert("Server Error : "+ response.status);
 										},
 										complete : function() {
@@ -84,8 +94,10 @@
 							});
 						}	
 					}else if(parseInt(sizeInKB) > 750){
+						$(".popUpButtonRow").show();
 						$("#resumeErrorMsg").html("<span>File size should not exceed more than 750KB. Please try again.</span>");
 					} else {
+						$(".popUpButtonRow").show();
 						$("#resumeErrorMsg")
 								.html(
 										"<span>Please enter the required fields.</span>");
@@ -97,51 +109,14 @@
 			 if(fileName!=''){
 				  var filename = fileName.toLowerCase();
 				  if (!filename.match(/(\.doc|\.pdf|\.docx)$/)){
+					  $(".popUpButtonRow").show();
 					  alert("Please upload resume with Doc,Docx or Pdf format only!");
 					  return false;
 				    }
 				 }
 			 return true;
 		 }
-		$("#searchCompanyName").click(function() {
-			var IdData = new Array();
-	    	var NameData = new Array();
-	    	
-			var empName = $("#searchComapnyName").val();
-			$.ajax({
-		        type: "GET",
-		        url: "${pageContext.request.contextPath}/agency/getFacilityNamesList.html?term="+empName,
-		        dataType: "json",							        
-		        contentType: "application/json; charset=utf-8",
-		        success: function(data) {							        	
-		        								        	
-		        	for (var x = 0; x < data.EmpList.length; x++) {
-		        		
-		               IdData.push(data.EmpList[x].ID);
-		               NameData.push(data.EmpList[x].NAME);
-		               //appends options 
-		               var availableList = document.getElementById("availableList");
-		               var exists = false; 
-		               $('#availableList option').each(function(){
-		            	   
-		                 if ((this.text).toLowerCase() == (data.EmpList[x].NAME).toLowerCase()) {
-		                	 exists=true;
-		                 }
-		               });
-		               if(!exists){
-		            	   availableList.options[availableList.options.length]=new Option(data.EmpList[x].NAME,data.EmpList[x].ID,false,false);
-		               }
-		               	               
-		            }
-		        	        					
-		        },
-		        error: function(XMLHttpRequest, textStatus, errorThrown) {
-		           alert(textStatus);
-		        }
-		    });
-			});
-			
-	
+		
 });
 						
 </script>
@@ -256,7 +231,7 @@
 						<span class="lableText4">Company to block:</span>
 						<form:input path="searchComapnyName"
 							class="job_seeker_password textBox150" />
-						<a id="searchCompanyName" href="#" class="btn_sm orange">Search</a>
+						<a id="searchCompanyName" href="#" class="btn_sm orange" onclick="searchByName('${pageContext.request.contextPath}/agency/getFacilityNamesList.html?term=');">Search</a>
 
 					</div>
 
@@ -272,7 +247,7 @@
 							</tr>
 							<tr>
 								<td><form:select path="availableList" id="availableList"
-										multiple="true" size="5" style="width:150px;">
+										multiple="true" size="7" style="width:250px;">
 										
 									</form:select></td>
 								<td width="3%" />
@@ -288,7 +263,7 @@
 
 								<td width="45%" style="border: none"><form:select
 										path="selectedList" id="selectedeList" multiple="true"
-										size="5" style="width:150px;">
+										size="7" style="width:250px;">
 									</form:select></td>
 						</table>
 					</div>

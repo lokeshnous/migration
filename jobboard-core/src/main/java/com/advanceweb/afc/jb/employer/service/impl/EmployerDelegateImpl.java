@@ -144,6 +144,7 @@ public class EmployerDelegateImpl implements EmployerDelegate {
 			}
 
 		}
+		userDTO.setEmailId(empProfileDTO.getMerUserDTO().getEmailId());
 		return userDTO;
 	}
 

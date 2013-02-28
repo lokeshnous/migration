@@ -234,6 +234,21 @@ public class EmployerRegistrationController extends AbstractController{
 		EmployerProfileDTO registerDTO = (EmployerProfileDTO) employerRegistration
 				.getProfileAttributes();
 		UserDTO userDTO = null;
+		
+		if (session.getAttribute("advancePassUserDetails") != null) {
+			userDTO = (UserDTO) session
+					.getAttribute("advancePassUserDetails");
+			empRegisterForm.setEmailId(userDTO.getEmailId());
+			empRegisterForm.setConfirmEmailId(userDTO.getEmailId());
+			empRegisterForm.setPassword(userDTO.getPassword());
+			empRegisterForm.setConfirmPassword(userDTO.getPassword());
+			empRegisterForm.setFirstName(userDTO.getFirstName());
+			empRegisterForm.setLastName(userDTO.getLastName());
+			empRegisterForm.setbReadOnly(true);
+			empRegisterForm.setAdvPassUser(true);
+			session.removeAttribute("advancePassUserDetails");
+		}
+		
 		if (session.getAttribute(MMJBCommonConstants.USER_DTO) != null) {
 			userDTO = (UserDTO) session
 					.getAttribute(MMJBCommonConstants.USER_DTO);
@@ -245,12 +260,29 @@ public class EmployerRegistrationController extends AbstractController{
 			empRegisterForm.setbReadOnly(true);
 			empRegisterForm.setOldUser(true);
 		}
-		if(profileId!=null){
+		if(profileId != null && !profileId.equals("null") ){
 			empRegisterForm.setServiceProviderName(serviceProviderId);
 			empRegisterForm.setSocialProfileId(profileId);
 			empRegisterForm.setSocialSignUp(true);
+			if(session.getAttribute("socialProfileAttrId")!=null){
+				serviceProviderId="Social Media";
+				if(String.valueOf(session.getAttribute("socialProfileAttrId")).equals(MMJBCommonConstants.FACEBOOK_PROFILE_ATTR_ID)){
+					serviceProviderId="Facebook";
+				}
+				
+				if(String.valueOf(session.getAttribute("socialProfileAttrId")).equals(MMJBCommonConstants.LINKEDIN_PROFILE_ATTR_ID)){
+					serviceProviderId="LinkedIn";
+				}
+				
+				model.addObject("socialSignUpMsg", socialSignupMsg.replace(
+						"?serviceProviderId", serviceProviderId));
+				session.removeAttribute("socialProfileId");
+				session.removeAttribute("socialProfileAttrId");
+			}
+			else{
 			model.addObject("socialSignUpMsg", socialSignupMsg.replace(
 					"?serviceProviderId", serviceProviderId));
+			}
 			
 		}
 		List<EmployerProfileAttribForm> listProfAttribForms = transformEmpReg
@@ -291,9 +323,8 @@ public class EmployerRegistrationController extends AbstractController{
 		ModelAndView model = new ModelAndView();
 		if (null != empRegForm.getListProfAttribForms()) {
 			model.setViewName(EMPLOYERREG);
-			if(userService.checkUserMail(empRegForm.getEmailId())){
-				advPassUser=true;
-				empRegForm.setAdvPassUser(true);
+			if(!empRegForm.isAdvPassUser()){
+				advPassUser=userService.checkUserMail(empRegForm.getEmailId());
 			}
 			// get the Ads
 			populateAds (request, session, model, PageNames.EMPLOYER_REGISTRATION);
@@ -337,12 +368,6 @@ public class EmployerRegistrationController extends AbstractController{
 		List<ProfileAttribDTO> attribLists = transformEmpReg
 				.transformProfileAttribFormToDTO(empRegForm);
 		empDTO.setAttribList(attribLists);
-		if(empRegForm.isAdvPassUser()){
-			UserDTO advUser=userService.getAdvancePassUser(empRegForm.getEmailId());
-			if(advUser!=null){
-			userDTO.setPassword(advUser.getPassword());
-			}
-		}
 		empDTO.setMerUserDTO(userDTO);
 		userDTO = employerRegistration.createUser(empDTO);
 				
@@ -372,9 +397,6 @@ public class EmployerRegistrationController extends AbstractController{
 					infoDTO.getFacilityId());
 			session.setAttribute(MMJBCommonConstants.COMPANY_EMP,
 					infoDTO.getCustomerName());
-			if(empRegForm.isAdvPassUser()){
-			session.setAttribute("advancePassUser","advancePassUser");
-			}
 			model.addObject("viewMediaUrl", viewMediaUrl);
 			model.setViewName("jobBoardEmployerPostJobs01");
 			String role = MMJBCommonConstants.ROLE_FACILITY;
@@ -403,9 +425,6 @@ public class EmployerRegistrationController extends AbstractController{
 		EmployerRegistrationForm empRegForm=new EmployerRegistrationForm();
 		model.addObject(EMPREGFORM, empRegForm);
 		model.addObject("viewMediaUrl", viewMediaUrl);
-		if(session.getAttribute("advancePassUser")!=null){
-			model.addObject("advUserMessg", "advancePassUser");
-		}
 		model.setViewName("jobBoardEmployerPostJobs01");
 		return model;
 	}
@@ -572,8 +591,8 @@ public class EmployerRegistrationController extends AbstractController{
 			}
 		}
 		registerValidation.validate(empRegForm, result);
-		if (!empRegForm.isbReadOnly()
-				&& employerRegistration.validateEmail(empRegForm.getEmailId()) && !advPassUser) {
+		if ((!empRegForm.isbReadOnly()
+				&& employerRegistration.validateEmail(empRegForm.getEmailId()) && advPassUser)|| (employerRegistration.validateEmail(empRegForm.getEmailId()) && !empRegForm.isAdvPassUser() && !empRegForm.isOldUser())) {
 			result.rejectValue("emailId", "NotEmpty", emailExists.replace(
 					"?empLoginLink",req.getRequestURL().toString()
 					.replace(req.getServletPath(),"/commonLogin/login.html?page=employer")));

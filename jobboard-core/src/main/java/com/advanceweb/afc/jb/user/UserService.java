@@ -102,4 +102,6 @@ public interface UserService {
 	 * @return the admin info
 	 */
 	public UserDTO getAdminInfo(String email);
+	
+	public UserDTO getAdvancePassUserDetails(String email);
 }

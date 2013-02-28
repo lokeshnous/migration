@@ -4563,10 +4563,12 @@ orange:hover {
 
 .featuredEmployerLogoArea img { /* background:#000; */
 	float: left;
-	height: 54px;
+	max-height: 54px;
+	min-height:20px;
 	/*width: 218px;*/
 	margin-top: 10px;
 	margin-bottom: 10px;
+	max-width:375px;
 }
 
 .featuredEmployerLogoArea span {
@@ -4747,7 +4749,9 @@ h2.option2 span {
 	padding: 4px 9px 1px 10px;
 	border: none;
 	height: 26px;
+	
 }
+:root #menu li { margin-right: 14px \0/IE9; }  /* IE9 */
 
 #menu li:hover {
 	border: 1px solid #777;

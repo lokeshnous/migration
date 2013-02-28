@@ -17,7 +17,6 @@ import com.advanceweb.afc.jb.common.AddImageDTO;
 import com.advanceweb.afc.jb.common.BrandingTemplateDTO;
 import com.advanceweb.afc.jb.common.TestimonyDTO;
 import com.advanceweb.afc.jb.common.VideoDTO;
-import com.advanceweb.afc.jb.common.util.DateUtils;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 
 /**
@@ -51,8 +50,9 @@ public class TransformEmployerBrandTemplate {
 		dto.setFacilityId(brandingTemplateForm.getFacilityId());
 		dto.setLogoPath(brandingTemplateForm.getLogoPath());
 		dto.setColor(brandingTemplateForm.getColor());
-		dto.setCreatedDate(DateUtils.convertSQLDateTimeToStdDateTime(new Date()
-				.toString()));
+//		dto.setCreatedDate(DateUtils.convertSQLDateTimeToStdDateTime(new Date()
+//				.toString()));
+		dto.setCreatedDate(new Date().toString());
 		dto.setTemplateName(brandingTemplateForm.getTemplateName());
 		dto.setCompanyOverview(brandingTemplateForm.getCompanyOverview());
 		dto.setMainImagePath(brandingTemplateForm.getMainImagePath());

@@ -541,6 +541,9 @@ public interface MMJBCommonConstants {
 	/** The facility post edit. */
 	String FACILITY_POST_EDIT = "Post_Edit";
 	
+	/** The role advance pass user. */
+	String ROLE_ADVANCE_PASS_USER = "ROLE_ADVANCE_PASS_USER";
+	
 	/** The role merion admin. */
 	String ROLE_MERION_ADMIN = "ROLE_MERION_ADMIN";
 	

@@ -10,6 +10,7 @@ package com.advanceweb.afc.jb.login.web.controller;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactory;
@@ -379,7 +381,7 @@ public class SocialLoginController {
 	@RequestMapping(value = "/verifyUserAccount")
 	public ModelAndView verifyUserAccount(
 			@ModelAttribute("socialLoginForm") SocialLoginForm socialLoginForm,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response,HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		int profileAttrId=0;
 		model.addObject("socialLoginForm", socialLoginForm);
@@ -412,10 +414,18 @@ public class SocialLoginController {
 					profileAttrId=Integer.parseInt(MMJBCommonConstants.LINKEDIN_PROFILE_ATTR_ID);
 				}
 			try {
+				if(!(authenticatedUser!=null && authenticatedUser.getAuthorities().contains(
+						new SimpleGrantedAuthority(
+								MMJBCommonConstants.ROLE_ADVANCE_PASS_USER)))){
 				UserDTO userDTO = userService.getUser(socialLoginForm.getEmailId());
 				userService.updateSocialProfileId(userDTO.getUserId(),
 						socialLoginForm.getProfileId(),
 						profileAttrId);
+				}
+				else{
+					session.setAttribute("socialProfileId", socialLoginForm.getProfileId());
+					session.setAttribute("socialProfileAttrId", profileAttrId);
+				}
 				loginSuccessManager.onAuthenticationSuccess(request, response,
 						authenticatedUser);
 			}catch (JobBoardException e) {
@@ -446,7 +456,12 @@ private ModelAndView addErrorMessage(ModelAndView model,SocialLoginForm socialLo
  */
 private boolean checkUserRoute(String pageValue,Authentication authenticatedUser){
 	boolean result=false;
-	if(pageValue.equals(MMJBCommonConstants.JOB_SEEKER)&&!loginSuccessManager.isJobSeeker(authenticatedUser, pageValue,"jobseekerRegistration")){
+	if(authenticatedUser!=null && authenticatedUser.getAuthorities().contains(
+			new SimpleGrantedAuthority(
+					MMJBCommonConstants.ROLE_ADVANCE_PASS_USER))){
+		result=false;
+	}
+	else if(pageValue.equals(MMJBCommonConstants.JOB_SEEKER)&&!loginSuccessManager.isJobSeeker(authenticatedUser, pageValue,"jobseekerRegistration")){
 		result=true;
 	}
 	else if(pageValue.equals(MMJBCommonConstants.EMPLOYER)&&!loginSuccessManager.isFacility(authenticatedUser, pageValue,"employerRegistration")){
@@ -455,6 +470,7 @@ private boolean checkUserRoute(String pageValue,Authentication authenticatedUser
 	else if(pageValue.equals(MMJBCommonConstants.AGENCY)&& !loginSuccessManager.isFacilitySystem(authenticatedUser, pageValue,"agencyRegistration")){
 		result=true;
 	}
+	
 	return result;
 }
 }

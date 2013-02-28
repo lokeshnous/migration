@@ -433,8 +433,10 @@ function showSaveSearchMessage(){
                                 					' ', '-'))}.html" target="_blank"></a>
 								<a onclick="trackClick(${job.JobId},'9');" href="https://www.linkedin.com/cws/share?url=${basePath}/search/jobview/${job.JobId}/${fn:toLowerCase(fn:replace(job.JobTitleEncode, 
                                 					' ', '-'))}.html" target="_blank"><div class="linkedIn"></div></a>
-								<a onclick="trackClick(${job.JobId},'9');" href="https://twitter.com/share" class="twitter" data-url="${basePath}/search/jobview/${job.JobId}/${fn:toLowerCase(fn:replace(job.JobTitleEncode, 
-                                					' ', '-'))}.html" data-count="none" target="_blank"></a>
+								<%-- <a onclick="trackClick(${job.JobId},'9');" href="https://twitter.com/share" class="twitter" data-url="${basePath}/search/jobview/${job.JobId}/${fn:toLowerCase(fn:replace(job.JobTitleEncode, 
+                                					' ', '-'))}.html" data-count="vertical" target="_blank"></a> --%>
+								<a onclick="trackClick(${job.JobId},'9');" href="http://twitter.com/home?status=${basePath}/search/jobview/${job.JobId}/${fn:toLowerCase(fn:replace(job.JobTitleEncode, 
+                                					' ', '-'))}.html" target="_blank" class="twitter" ></a>
 								
 							</div>
 							

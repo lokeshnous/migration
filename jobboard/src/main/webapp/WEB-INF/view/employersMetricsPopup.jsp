@@ -281,7 +281,7 @@ var options = {
                 <!--T-->
                 <div class="row">
                <c:if test="${not empty employerDetails.logoPath}">
-                <div class="floatLeft"><img src="<%=request.getContextPath()%>/agency/viewImage.html?path=${employerDetails.logoPath}" width="204" height="50" alt="logo"></div>
+                <div class="featuredEmployerLogoArea floatLeft"><img src="<%=request.getContextPath()%>/agency/viewImage.html?path=${employerDetails.logoPath}" alt="logo"></div>
                </c:if>
                <c:if test="${empty employerDetails.logoPath}">
                 <div class="floatLeft" style="width:204px;height:50px;"></div>

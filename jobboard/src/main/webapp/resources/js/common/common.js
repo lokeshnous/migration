@@ -27,7 +27,71 @@ function enableDisableCompanyPanel(id){
 		$("#managePrivacy").hide();
 	}
 }
-//Dual List Move Elements scripts STARTS here
+function searchByName(url) {
+	var IdData = new Array();
+	var NameData = new Array();
+
+	var empName = $("#searchComapnyName").val();
+	// Remove the available list
+	$('#availableList option').each(function(index, option) {
+		$(option).remove();
+
+	});
+	if ($.trim(empName).length <= 0) {
+		$('#availableList').attr('size', 7);
+		$('#selectedeList').attr('size', 7);
+
+	} else {
+		$
+				.ajax({
+					type : "GET",
+					url : url
+							+ empName,
+					dataType : "json",
+					contentType : "application/json; charset=utf-8",
+					success : function(data) {
+
+						for ( var x = 0; x < data.EmpList.length; x++) {
+
+							IdData.push(data.EmpList[x].ID);
+							NameData.push(data.EmpList[x].NAME);
+							
+							if(data.EmpList.length>10){
+				        		$('#availableList').attr('size', 10);
+					        	$('#selectedeList').attr('size', 10);
+				        	}else{	
+					        	$('#availableList').attr('size', data.EmpList.length);
+					        	$('#selectedeList').attr('size', data.EmpList.length);
+				        	}
+							// appends options
+							var availableList = document
+									.getElementById("availableList");
+							var exists = false;
+							$('#availableList option')
+									.each(
+											function() {
+
+												if ((this.text).toLowerCase() == (data.EmpList[x].NAME)
+														.toLowerCase()) {
+													exists = true;
+												}
+											});
+							if (!exists) {
+								availableList.options[availableList.options.length] = new Option(
+										data.EmpList[x].NAME,
+										data.EmpList[x].ID, false, false);
+							}
+
+						}
+
+					},
+					error : function(XMLHttpRequest, textStatus, errorThrown) {
+						alert(textStatus);
+					}
+				});
+	}
+}
+// Dual List Move Elements scripts STARTS here
 function addAttribute(){
 	var selectedList;
 	var availableList;

@@ -89,8 +89,9 @@ public class PreAuthenticationManager extends AbstractPreAuthenticatedProcessing
 						LOGGER.debug("2 cookieValue=======>"+cookieValue);
 						
 						Date date =new Date();
-						SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH.mm.ss aa", Locale.US);
+						SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh.mm.ss aa");
 						String postData = cookieValue + "^" + formatter.format(date) + "^" + "30" + "^" + "true";
+						LOGGER.debug("postData: "+postData);
 						LOGGER.debug("Date Passing to interpreter=======>"+formatter.format(date));
 						try {
 							URL url = new URL(advancepassInterpreterUrl);
@@ -113,6 +114,7 @@ public class PreAuthenticationManager extends AbstractPreAuthenticatedProcessing
 							connection.setRequestProperty("method", "POST");
 							connection.setRequestProperty("keepAlive", "true");
 							OutputStream oStrem = connection.getOutputStream();
+							LOGGER.debug("URL: "+url);
 							oStrem.write(postData.getBytes(), 0, postData.length());
 							oStrem.close();
 							InputStream iStream = connection.getInputStream();

@@ -75,8 +75,6 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 		String registrationValue=(String) request.getAttribute("userRegistration");
 		
 		String pageValue = request.getParameter(MMJBCommonConstants.PAGE_VALUE);
-		String socialSignUp = (String) request.getAttribute("socialSignUp");
-		UserDTO user = userService.getUser(authentication.getName());
 		
 		HttpSession session;
 		if (authentication instanceof UsernamePasswordAuthenticationToken || authentication instanceof PreAuthenticatedAuthenticationToken) {
@@ -85,6 +83,35 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 		 else {
 			session = request.getSession();
 		}
+		if (authentication.getAuthorities().contains(
+				new SimpleGrantedAuthority(
+						MMJBCommonConstants.ROLE_ADVANCE_PASS_USER))){
+			UserDTO advPassUser=userService.getAdvancePassUserDetails(authentication.getName());
+			session.setAttribute("advancePassUserDetails",advPassUser);
+			String profileId=null;
+			String serviceProviderId=null;
+			if(session.getAttribute("socialProfileId")!=null){
+			profileId=session.getAttribute("socialProfileId").toString();
+			serviceProviderId=session.getAttribute("socialProfileAttrId").toString();
+			}
+			if(pageValue!=null && pageValue.equals(MMJBCommonConstants.JOB_SEEKER)){
+				sendRedirect(request, response,
+						"/jobseekerregistration/createJobSeekerCreateYrAcct.html?profileId="+profileId+"&serviceProviderId="+serviceProviderId);
+			}
+			if(pageValue!=null && pageValue.equals(MMJBCommonConstants.EMPLOYER)){
+				sendRedirect(request, response,
+						"/employerRegistration/employerregistration.html?profileId="+profileId+"&serviceProviderId="+serviceProviderId);
+			}
+			if(pageValue!=null && pageValue.equals(MMJBCommonConstants.AGENCY)){
+				sendRedirect(request, response,
+						"/agencyRegistration/agencyregistration.html?profileId="+profileId+"&serviceProviderId="+serviceProviderId);
+			}
+			
+		}
+		else{
+		String socialSignUp = (String) request.getAttribute("socialSignUp");
+		UserDTO user = userService.getUser(authentication.getName());
+		
 		if (authentication.getAuthorities().contains(
 				new SimpleGrantedAuthority(
 						MMJBCommonConstants.ROLE_MERION_ADMIN))) {
@@ -100,18 +127,7 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 			
 		}
 		
-//		if((authentication instanceof RememberMeAuthenticationToken)){
-//			UserDetails userDetails =
-//					 (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//			String un=userDetails.getUsername();
-//			String pw=userDetails.getPassword();
-//			response.addCookie(createCookie("harsha@gmail.com","harsha123"));
-//			}
-//		UserDTO userDTO=userService.getAdvancePassUser(authentication.getPrincipal().toString());
 		if(!(authentication instanceof PreAuthenticatedAuthenticationToken)){
-//		response.addCookie(createCookie("ravindra@gmail.com","pass1234"));
-//		response.addCookie(createCookie("harsha@gmail.com","harsha123"));
-//			response.addCookie(createCookie(userDTO.getEmailId(),userDTO.getPassword()));
 			UserDTO advancePassUser=null;
 			if(authentication instanceof RememberMeAuthenticationToken){
 				User details =(User)authentication.getPrincipal();
@@ -172,7 +188,7 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 					"/commonLogin/login.html?error=true&page=" + pageValue
 							+ "&socalLogin=" + socalLogin);
 		}
-		
+		}
 	}
 
 	/**

@@ -75,7 +75,9 @@
 						<h2 class="noTopBottomBorder ">Resume:</h2>
 						<br> </span> <br>
 						<div class="clearfix"></div>
-						<textarea readonly="readonly" cols="120" rows="50">${createResume.resumeText}</textarea>
+						<div class="article">
+						${createResume.resumeText}</div>
+						<%-- <textarea readonly="readonly" cols="120" rows="50">${createResume.resumeText}</textarea> --%>
 						<!-- class="textareaBoxCResume Height255 marginTop5 " -->
 					</div>
 					<div class="IconsArea marginBottom10">

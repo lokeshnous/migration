@@ -110,9 +110,7 @@
 								<tr id="${job.coverletterId}">
 									<td align="left" valign="middle">${job.name}</td>
 									<td align="center" valign="middle">${job.updateDt}</td>
-									<td align="center">
-									
-									<a
+									<td align="center"><a
 										href="<%=request.getContextPath()%>/jobSeekerCoverLetter/jobseekerViewCoverLetter.html?coverletterId=${job.coverletterId}&type=View"
 										class="nyroModal"> <img title="View"
 											src="../resources/images/tranBg.png" width="20" height="20"
@@ -120,18 +118,26 @@
 										href="<%=request.getContextPath()%>/jobSeekerCoverLetter/jobseekerViewCoverLetter.html?coverletterId=${job.coverletterId}&type=Edit"
 										class="nyroModal"> <img title="Edit"
 											src="../resources/images/tranBg.png" width="20" height="20"
-											alt="" class="editFile" /></a> <a
-										href="<%=request.getContextPath()%>/jobSeekerCoverLetter/jobseekerDownloadCoverLetter.html?coverletterId=${job.coverletterId}">
+											alt="" class="editFile" /></a> 
+											<%--<a
+										href="<%=request.getContextPath()%>/jobSeekerCoverLetter/downloadCoverLetter.html?coverletterId=${job.coverletterId}">
 											<img title="Download" src="../resources/images/tranBg.png"
 											width="20" height="20" alt="" class="download" />
-									</a> <a title="Print" id="print${job.coverletterId}"
+									</a>  <a title="Print" id="print${job.coverletterId}"
 										onclick="printPopup(this.id)"> <img
 											src="../resources/images/tranBg.png" width="20" height="20"
 											alt="" class="printOrange" />
 
-									</a> <a href="#"> <img title="Delete"
+									</a>  --%> 
+									<a href="${pageContext.request.contextPath}/jobSeekerCoverLetter/downloadCoverLetter.html?coverletterId=${job.coverletterId}" title="download"><img title="Download" src="../resources/images/tranBg.png" width="20" height="20" alt="download" class="download"></a>
+									<a
+										href="<%=request.getContextPath()%>/jobSeekerCoverLetter/printCoverLetter.html?coverletterId=${job.coverletterId}"
+										title="print" target="_blank"><img title="Print"
 											src="../resources/images/tranBg.png" width="20" height="20"
-											alt="" class="delete" /></a></td>
+											alt="print" class="printOrange"></a> 
+										<a href="#"> <img
+											title="Delete" src="../resources/images/tranBg.png"
+											width="20" height="20" alt="" class="delete" /></a></td>
 								</tr>
 							</c:forEach>
 						</tbody>

@@ -345,9 +345,14 @@ public class JobPostController extends AbstractController {
 			HttpSession session) {
 
 		ModelAndView model = new ModelAndView();
+		int productId=Integer.valueOf(form.getJobPostingType());
 		String errMessage = validateJobPostDetails(form);
 		if (!StringUtils.isEmpty(errMessage)) {
 			model = populateDropdowns(model, session);
+			if (!brandingTemplateService.getBrandPackage(productId)) {
+				List<DropDownDTO> templateList = new ArrayList<DropDownDTO>();
+				model.addObject(TEMPLATE_LIST, templateList);
+			}
 			model.setViewName(POST_NEW_JOBS);
 			model.addObject(ERROR_MESSAGE, errMessage);
 			return model;
@@ -763,6 +768,11 @@ public class JobPostController extends AbstractController {
 						jobStatus, jobPostType, jbPostingTypeList, facilityId);
 			}
 		}
+		int productId=Integer.valueOf(jobPostFormP.getJobPostingType());
+		if (productId >0 && !brandingTemplateService.getBrandPackage(productId)) {
+			List<DropDownDTO> templateList = new ArrayList<DropDownDTO>();
+			model.addObject(TEMPLATE_LIST, templateList);
+		}
 		model.addObject(JOB_POST_FORM, jobPostForm);
 		return model;
 	}
@@ -1063,7 +1073,7 @@ public class JobPostController extends AbstractController {
 			@RequestParam("product") String product) {
 		int productId = Integer.parseInt(product);
 
-		if (brandingTemplateService.getBrandPackage(productId)) {
+		if (productId>0 && brandingTemplateService.getBrandPackage(productId)) {
 			return populateDropdownsService
 					.populateTemplateAutoComplete(company);
 		} else {
@@ -1492,5 +1502,19 @@ public class JobPostController extends AbstractController {
 		Matcher matcher = pattern.matcher(emailId);
 		return matcher.matches();
 	}
+	
+	/**
+	 * This method checks if the user has purchased Branding Template based on
+	 * Branding Template package present in jp_jobtype_combo table
+	 * 
+	 * @param productId
+	 * @return boolean
+	 */
+	public boolean checkPostSlots(int productId) {
 
+		return (productId == 2 || productId == 5 || productId == 6
+				|| productId == 8 || productId == 10 || productId == 13
+				|| productId == 14 || productId == 16);
+
+	}
 }

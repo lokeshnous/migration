@@ -180,13 +180,13 @@
 							<span class="lableText3">First Name:</span>
 							<form:input path="accountAddressForm.firstName" type="text"
 								name="firstName" readonly="true" id="firstName"
-								class="job_seeker_password textBox350" />
+								class="job_seeker_password textBox350 disabled-input" />
 						</div>
 						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Middle Name:</span>
 							<form:input path="accountAddressForm.middleName" type="text"
 								name="middlename" readonly="true" id="middlename"
-								class="job_seeker_password textBox350" />
+								class="job_seeker_password textBox350 disabled-input" />
 							<!-- <span class="required">(Optional)</span> -->
 						</div>
 
@@ -194,56 +194,56 @@
 							<span class="lableText3">Last Name:</span>
 							<form:input path="accountAddressForm.lastName" type="text"
 								name="lastname" readonly="true" id="lastname"
-								class="job_seeker_password textBox350" />
+								class="job_seeker_password textBox350 disabled-input" />
 						</div>
 
 						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Email Address:</span>
 							<form:input path="accountAddressForm.email" type="text"
 								name="email" id="email" readonly="true"
-								class="job_seeker_password textBox350 " />
+								class="job_seeker_password textBox350 disabled-input" />
 						</div>
 
 						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Company</span>
 							<form:input path="accountAddressForm.company" type="text"
 								name="company" readonly="true" id="company"
-								class="job_seeker_password textBox350 " />
+								class="job_seeker_password textBox350 disabled-input" />
 						</div>
 
 						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Street Address:</span>
 							<form:input path="accountAddressForm.streetAddress" type="text"
 								name="streetAddress" readonly="true" id="streetAddress"
-								class="job_seeker_password textBox350 " />
+								class="job_seeker_password textBox350 disabled-input" />
 						</div>
 
 						<div class="rowEvenNewSpacing">
 							<span class="lableText3">City / Town:</span>
 							<form:input path="accountAddressForm.cityOrTown" type="text"
 								name="cityTown" readonly="true" id="cityTown"
-								class="job_seeker_password textBox350 " />
+								class="job_seeker_password textBox350 disabled-input" />
 						</div>
 
 						<div class="rowEvenNewSpacing">
 							<span class="lableText3">State / Province:</span>
 							<form:input path="accountAddressForm.state" type="text"
 								name="cityTown" readonly="true" id="state"
-								class="job_seeker_password textBox350 " />
+								class="job_seeker_password textBox350 disabled-input" />
 						</div>
 						<div class="rowEvenNewSpacing">
 							<span class="lableText3">ZIP Code:</span>
 							
 							<form:input path="accountAddressForm.zipCode" type="text"
 								name="zip" id="zip" readonly="true"
-								class="job_seeker_password textBox350 " />
+								class="job_seeker_password textBox350 disabled-input" />
 								
 						</div>
 						<div class="rowEvenNewSpacing">
 							<span class="lableText3">Country:</span>
 							<form:input path="accountAddressForm.country" type="text"
 								name="cityTown" readonly="true" id="country"
-								class="job_seeker_password textBox350 " />
+								class="job_seeker_password textBox350 disabled-input" />
 						</div>
 
 						
@@ -252,7 +252,7 @@
 							<span class="lableText3">Phone:</span>
 							<form:input path="accountAddressForm.phone" type="text"
 								name="phone" readonly="true" id="phone"
-								class="job_seeker_password textBox350 " />
+								class="job_seeker_password textBox350 disabled-input" />
 						</div>
 						<div class="clearfix"></div>
 						<p class="borderBottomDotted marginBottom15">&nbsp;</p>

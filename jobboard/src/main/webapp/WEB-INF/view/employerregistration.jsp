@@ -142,20 +142,25 @@ function validateNumber(event) {
 							class="job_seeker_login leftFormHolder" style="display: block">
 							<h2 class="sectionSubHeader">To register as an employer,
 								please fill out these fields.</h2>
-							<c:if test="${not empty message}">
-								<div class="validationMsg">
-									${message}
-								</div>
-							</c:if>
+							
 							<div>
+							<div style="flot:left;">
+							<img src="<%=request.getContextPath()%>/resources/images/advancePass.png" style="margin:0px;"/>
+							</div>
 								<span class="lableText3"></span> <FONT color="red"> <c:if
 										test="${not empty socialSignUpMsg}">
-										<div id="errmsg" style="color: red" align="left">
+										<div id="errmsg" style="margin-bottom:8px; color: red" align="left">
 											<c:out value="${socialSignUpMsg}"></c:out>
 										</div>
 									</c:if>
 								</FONT>
 							</div>
+							
+							<c:if test="${not empty message}">
+								<div class="validationMsg" style="margin-bottom:8px; margin-left:0px !important;">
+									${message}
+								</div>
+							</c:if> 
 							<c:forEach items="${empRegisterForm.listProfAttribForms}"
 								var="profAttrib" varStatus="status">
 								<c:if test="${profAttrib.strLabelName == 'First Name'}">

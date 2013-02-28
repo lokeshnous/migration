@@ -41,6 +41,13 @@ function validateNumber(event) {
 </script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
+		$.nmFilters({
+    	    custom: {
+    	        afterShowCont: function(nm) {
+    	        	$('.focus').focus();
+    	        }
+    	    }
+    	});
 		$("#enterTooltip").hide();
 		$("#phone").inputmask("mask", {"mask": "(999) 999-9999"});
 		

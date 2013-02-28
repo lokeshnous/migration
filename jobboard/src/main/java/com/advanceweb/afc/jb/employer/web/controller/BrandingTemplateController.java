@@ -639,12 +639,19 @@ public class BrandingTemplateController extends AbstractController {
 		String logoModifiedName = null;
 		String mainImageModifiedName = null;
 		Random random = new Random();
-
+		String fileName;
+		String fileExtn;
 		if (brandingTemplateForm.getLogoFileData().getSize() > 0) {
 			logoOrigName = brandingTemplateForm.getLogoFileData()
 					.getOriginalFilename();
+			fileName = logoOrigName.substring(0, logoOrigName.
+					lastIndexOf(".")).replaceAll(
+							MMJBCommonConstants.IGNORE_SPECIAL_CHAR_PATTERN,
+							"");
+			fileExtn = 	logoOrigName.substring(logoOrigName.
+					lastIndexOf("."));
 			logoModifiedName = STR_TEMPLATE_ + random.nextInt(10000)
-					+ STR_UNDERSCORE + logoOrigName;
+					+ STR_UNDERSCORE + fileName + fileExtn;
 
 			brandingTemplateForm.setLogoPath(baseDirectoryPathImageAndMedia
 					+ logoModifiedName);
@@ -653,8 +660,14 @@ public class BrandingTemplateController extends AbstractController {
 		if (brandingTemplateForm.getMainImageFileData().getSize() > 0) {
 			mainImageOrigName = brandingTemplateForm.getMainImageFileData()
 					.getOriginalFilename();
+			fileName = mainImageOrigName.substring(0, mainImageOrigName.
+					lastIndexOf(".")).replaceAll(
+							MMJBCommonConstants.IGNORE_SPECIAL_CHAR_PATTERN,
+							"");
+			fileExtn = 	mainImageOrigName.substring(mainImageOrigName.
+					lastIndexOf("."));
 			mainImageModifiedName = STR_TEMPLATE_ + random.nextInt(10000)
-					+ STR_UNDERSCORE + mainImageOrigName;
+					+ STR_UNDERSCORE + fileName + fileExtn;
 			brandingTemplateForm
 					.setMainImagePath(baseDirectoryPathImageAndMedia
 							+ mainImageModifiedName);
@@ -677,14 +690,20 @@ public class BrandingTemplateController extends AbstractController {
 		List<AddImageForm> listImages = new ArrayList<AddImageForm>();
 		List<AddImageForm> listModImages = new ArrayList<AddImageForm>();
 		listImages = brandingTemplateForm.getListAddImages();
-
+		String fileName ; 
+		String fileExtn ; 
 		for (AddImageForm image : listImages) {
-
 			if (null!= image.getAddImageFileData() && image.getAddImageFileData().getSize() > 0) {
+				fileName = image.getAddImageFileData().getOriginalFilename().substring(0, image.getAddImageFileData().getOriginalFilename().
+						lastIndexOf(".")).replaceAll(
+								MMJBCommonConstants.IGNORE_SPECIAL_CHAR_PATTERN,
+								"");
+				fileExtn = 	image.getAddImageFileData().getOriginalFilename().substring(image.getAddImageFileData().getOriginalFilename().
+						lastIndexOf("."));
 				image.setMediaPath(baseDirectoryPathImageAndMedia
 						+ STR_TEMPLATE_ + random.nextInt(10000)
 						+ STR_UNDERSCORE
-						+ image.getAddImageFileData().getOriginalFilename());
+						+ fileName + fileExtn);
 			}
 			if (null != image.getMediaPath()) {
 				listModImages.add(image);
@@ -699,9 +718,15 @@ public class BrandingTemplateController extends AbstractController {
 
 		for (VideoForm video : listVideos) {
 			if (null != video.getVideoFileData() && video.getVideoFileData().getSize() > 0) {
+				fileName = video.getVideoFileData().getOriginalFilename().substring(0, video.getVideoFileData().getOriginalFilename().
+						lastIndexOf(".")).replaceAll(
+						MMJBCommonConstants.IGNORE_SPECIAL_CHAR_PATTERN,
+						"");
+				fileExtn = 	video.getVideoFileData().getOriginalFilename().substring(video.getVideoFileData().getOriginalFilename().
+						lastIndexOf("."));
 				video.setMediaPath(STR_TEMPLATE_ + random.nextInt(10000)
 						+ STR_UNDERSCORE
-						+ video.getVideoFileData().getOriginalFilename());
+						+ fileName + fileExtn);
 
 			}
 			if (null != video.getMediaPath()) {
@@ -781,7 +806,7 @@ public class BrandingTemplateController extends AbstractController {
 			throws IOException {
 		for (AddImageForm addImageForm : brandingTemplateForm
 				.getListAddImages()) {
-			if (addImageForm.getAddImageFileData().getSize() > 0) {
+			if (addImageForm.getAddImageFileData()!= null && addImageForm.getAddImageFileData().getSize() > 0) {
 				addImageForm.getAddImageFileData().transferTo(
 						new File(addImageForm.getMediaPath()));
 			}
@@ -950,10 +975,17 @@ public class BrandingTemplateController extends AbstractController {
 		AddImageForm image = new AddImageForm();
 		ModelAndView model = new ModelAndView();
 		model.setViewName("addImages");
-
-		model.addObject("imagePosId", brandingTemplateForm.getListAddImages()
-				.size());
-		image.setItemId(brandingTemplateForm.getListAddImages().size());
+//		model.addObject("imagePosId", brandingTemplateForm.getListAddImages()
+//				.size());
+		int imgId = 0;
+		if (null != brandingTemplateForm.getListAddImages()) {
+			imgId = brandingTemplateForm.getListAddImages()
+					.get(brandingTemplateForm.getListAddImages().size() - 1)
+					.getItemId();
+			imgId++;
+		}		
+		model.addObject("imagePosId", imgId);
+		image.setItemId(imgId);
 		if (null == brandingTemplateForm.getListAddImages()) {
 			List<AddImageForm> listImages = new ArrayList<AddImageForm>();
 			listImages.add(image);
@@ -982,10 +1014,15 @@ public class BrandingTemplateController extends AbstractController {
 		VideoForm video = new VideoForm();
 		ModelAndView model = new ModelAndView();
 		model.setViewName("addVideos");
-
-		model.addObject("videoPosId", brandingTemplateForm.getListVideos()
-				.size());
-		video.setItemId(brandingTemplateForm.getListVideos().size());
+		int videoId = 0;
+		if (null != brandingTemplateForm.getListVideos()) {
+			videoId = brandingTemplateForm.getListVideos()
+					.get(brandingTemplateForm.getListVideos().size() - 1)
+					.getItemId();
+			videoId++;
+		}		
+		model.addObject("videoPosId", videoId);
+		video.setItemId(videoId);
 		if (null == brandingTemplateForm.getListVideos()) {
 			List<VideoForm> listVideos = new ArrayList<VideoForm>();
 			listVideos.add(video);

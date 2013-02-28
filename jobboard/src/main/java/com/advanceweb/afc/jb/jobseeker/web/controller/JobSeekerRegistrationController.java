@@ -256,6 +256,23 @@ public class JobSeekerRegistrationController extends AbstractController {
 		JobSeekerRegistrationForm registerForm = new JobSeekerRegistrationForm();
 
 		UserDTO userDTO = null;
+		
+		if (session.getAttribute("advancePassUserDetails") != null) {
+			userDTO = (UserDTO) session
+					.getAttribute("advancePassUserDetails");
+			registerForm = new JobSeekerRegistrationForm();
+			registerForm.setPassword(userDTO.getPassword());
+			registerForm.setRetypepassword(userDTO.getPassword());
+			registerForm.setEmailId(userDTO.getEmailId());
+			registerForm.setConfirmEmailId(userDTO.getEmailId());
+			registerForm.setFirstName(userDTO.getFirstName());
+			registerForm.setLastName(userDTO.getLastName());
+			registerForm.setbReadOnly(true);
+			registerForm.setAdvPassUser(true);
+			session.removeAttribute("advancePassUserDetails");
+		}
+		
+		
 		if (session.getAttribute(MMJBCommonConstants.USER_DTO) != null) {
 			userDTO = (UserDTO) session
 					.getAttribute(MMJBCommonConstants.USER_DTO);
@@ -273,12 +290,29 @@ public class JobSeekerRegistrationController extends AbstractController {
 					userDTO.getUserId());
 			session.setAttribute("userEmail", userDTO.getEmailId());
 		}
-		if (profileId != null) {
+		if (profileId != null && !profileId.equals("null") ){
 			registerForm.setServiceProviderName(serviceProviderId);
 			registerForm.setSocialProfileId(profileId);
 			registerForm.setSocialSignUp(true);
+			if(session.getAttribute("socialProfileAttrId")!=null){
+				serviceProviderId="Social Media";
+				if(String.valueOf(session.getAttribute("socialProfileAttrId")).equals(MMJBCommonConstants.FACEBOOK_PROFILE_ATTR_ID)){
+					serviceProviderId="Facebook";
+				}
+				
+				if(String.valueOf(session.getAttribute("socialProfileAttrId")).equals(MMJBCommonConstants.LINKEDIN_PROFILE_ATTR_ID)){
+					serviceProviderId="LinkedIn";
+				}
+				
+				model.addObject("socialSignUpMsg", socialSignupMsg.replace(
+						"?serviceProviderId", serviceProviderId));
+				session.removeAttribute("socialProfileId");
+				session.removeAttribute("socialProfileAttrId");
+			}
+			else{
 			model.addObject("socialSignUpMsg", socialSignupMsg.replace(
 					"?serviceProviderId", serviceProviderId));
+			}
 		}
 		model.setViewName(JS_CREATE_ACCOUNT);
 		model.addObject(REGISTER_FORM, registerForm);
@@ -362,13 +396,13 @@ public class JobSeekerRegistrationController extends AbstractController {
 					return model;
 				}
 
-				if (userService.checkUserMail(registerForm.getEmailId())) {
-					advPassUser = true;
-					registerForm.setAdvPassUser(true);
+				if (!registerForm.isAdvPassUser()) {
+					advPassUser =userService.checkUserMail(registerForm.getEmailId());
 				}
 				if (profileRegistration
 						.validateEmail(registerForm.getEmailId())
-						&& !advPassUser) {
+						&& advPassUser || profileRegistration
+						.validateEmail(registerForm.getEmailId())) {
 					model.setViewName(JS_CREATE_ACCOUNT);
 					result.rejectValue(
 							"emailId",
@@ -845,6 +879,12 @@ public class JobSeekerRegistrationController extends AbstractController {
 					session.setAttribute("countryOnViewProfile",
 							profileForm.getStrLabelValue());
 				}
+				if (profileForm.getStrLabelValue() != null
+						&& profileForm.getStrLabelName().equalsIgnoreCase(
+								MMJBCommonConstants.MYPROFESSION)) {
+					session.setAttribute("selectedProfession",
+							profileForm.getStrLabelValue());
+				}
 
 			}
 
@@ -986,6 +1026,7 @@ public class JobSeekerRegistrationController extends AbstractController {
 			// Call to service layer
 			profileRegistration.modifyProfile(jsRegistrationDTO);
 			boolean isCountryChanged = false;
+			boolean isProfessionChanged = false;
 			for (JobSeekerProfileAttribForm attribForm : registerForm
 					.getListProfAttribForms()) {
 				if (attribForm.getStrLabelName().equalsIgnoreCase(
@@ -999,10 +1040,17 @@ public class JobSeekerRegistrationController extends AbstractController {
 						MMJBCommonConstants.COUNTRY)) {
 					String prevSelectedCountry = (String) session
 							.getAttribute("countryOnViewProfile");
+					String prevSelectedProfession = (String) session
+							.getAttribute("selectedProfession");
 					if (!attribForm.getStrLabelValue().equalsIgnoreCase(
 							prevSelectedCountry)) {
 						LOGGER.debug("Country is changed while updating profile settings");
 						isCountryChanged = true;
+					}
+					if (!attribForm.getStrLabelValue().equalsIgnoreCase(
+							prevSelectedProfession)) {
+						LOGGER.debug("Profession is changed while updating profile settings");
+						isProfessionChanged = true;
 					}
 				}
 			}
@@ -1010,7 +1058,7 @@ public class JobSeekerRegistrationController extends AbstractController {
 			session.setAttribute(MMJBCommonConstants.USER_NAME, firstName + " "
 					+ lastName);
 			// clear subscriptions if country changed
-			if (isCountryChanged) {
+			if (isCountryChanged || isProfessionChanged) {
 				LOGGER.debug("Country is changed so deleting selected subscriptions");
 				userSubService.deleteSubscriptionsById(Integer.valueOf(String
 						.valueOf(session

@@ -49,9 +49,12 @@
         <div id="jobSeekerRegister1" class="job_seeker_login leftFormHolder" style="display:block">
            <h2 class="sectionSubHeader">Step 1: Create Your Account</h2>
            <div>
+           <div style="flot:left;">
+							<img src="<%=request.getContextPath()%>/resources/images/advancePass.png" style="margin:0px;"/>
+							</div>
 								<span class="lableText3"></span> <FONT color="red"> <c:if
 										test="${not empty socialSignUpMsg}">
-										<div id="errmsg" style="color: red" align="left">
+										<div id="errmsg" style="margin-bottom:8px; color: red" align="left">
 											<c:out value="${socialSignUpMsg}"></c:out>
 										</div>
 									</c:if>

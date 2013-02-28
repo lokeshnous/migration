@@ -16,7 +16,7 @@
 		$.nmFilters({
     	    custom: {
     	        afterShowCont: function(nm) {
-    	        	$('#resumeType').focus();
+    	        	$('#resumeName').focus();
     	        }
     	    }
     	});
@@ -71,45 +71,7 @@
 			} else {
 				$("#resumeErrorMsg").html("<span>Please enter the required fields.</span>");
 			}
-		});
-		
-		$("#searchCompanyName").click(function() {
-			var IdData = new Array();
-	    	var NameData = new Array();
-	    	
-			var empName = $("#searchComapnyName").val();
-			$.ajax({
-		        type: "GET",
-		        url: "${pageContext.request.contextPath}/agency/getFacilityNamesList.html?term="+empName,
-		        dataType: "json",							        
-		        contentType: "application/json; charset=utf-8",
-		        success: function(data) {							        	
-		        								        	
-		        	for (var x = 0; x < data.EmpList.length; x++) {
-		        		
-		               IdData.push(data.EmpList[x].ID);
-		               NameData.push(data.EmpList[x].NAME);
-		               //appends options 
-		               var availableList = document.getElementById("availableList");
-		               var exists = false; 
-		               $('#availableList option').each(function(){
-		            	   
-		                 if ((this.text).toLowerCase() == (data.EmpList[x].NAME).toLowerCase()) {
-		                	 exists=true;
-		                 }
-		               });
-		               if(!exists){
-		            	   availableList.options[availableList.options.length]=new Option(data.EmpList[x].NAME,data.EmpList[x].ID,false,false);
-		               }
-		               	               
-		            }
-		        	        					
-		        },
-		        error: function(XMLHttpRequest, textStatus, errorThrown) {
-		           alert(textStatus);
-		        }
-		    });
-			});
+		});	
 			
 		});
 	
@@ -214,7 +176,7 @@
 						<span class="lableText4">Company to block:</span>
 						<form:input path="searchComapnyName"
 							class="job_seeker_password textBox150" />
-						<a id="searchCompanyName" href="#" class="btn_sm orange"  >Search</a>
+						<a id="searchCompanyName" href="#" class="btn_sm orange"  onclick="searchByName('${pageContext.request.contextPath}/agency/getFacilityNamesList.html?term=');" >Search</a>
 
 					</div>
 
@@ -230,7 +192,7 @@
 							</tr>
 							<tr>
 								<td><form:select path="availableList" id="availableList"
-										multiple="true" size="5" style="width:250px;">
+										multiple="true" size="7" style="width:250px;">
 										
 									</form:select></td>
 								<td width="3%" />
@@ -246,7 +208,7 @@
 
 								<td width="45%" style="border: none"><form:select
 										path="selectedList" id="selectedeList" multiple="true" items="${blockedCompanies}" itemValue="optionId" itemLabel="optionName"
-										size="5" style="width:250px;">
+										size="7" style="width:250px;">
 									</form:select></td>
 						</table>
 					</div>

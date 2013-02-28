@@ -34,6 +34,11 @@ tinyMCE.init({
 	$("#saveData").click(function(event){
 		//validate the seo popup
 		var content = tinyMCE.get('staticContent').getContent();
+		var length = content.length;
+		var value = $("#characterCounter").val();
+		if(value == 5000 || length > 5000){
+			$("#errmsg").html("The text characters have exceeded the limit of 5000. Please reduce the text characters.");
+		}else{
 		$("#description").val(content); 
 		if(!validateSeoPopup()){
 		$.ajax({url: "${pageContext.request.contextPath}/admin/saveseoinfo.html",
@@ -50,8 +55,10 @@ tinyMCE.init({
 				
 			}
 		});
+		
 		}else{
 			$("#errmsg").text("Please enter all the required fields."); 	
+		}
 		}
 	});
 	function validateSeoPopup(){
@@ -117,7 +124,7 @@ tinyMCE.init({
 								<span class="lableText7" style="margin-top:8px;">
 								Static Content:
 								</span>
-								<form:textarea path="staticContent" class="mceEditor textareaBoxCResume textareaBoxCResumeTemplate" resize="none"  rows="5" cols="20"
+								<form:textarea id="staticContent" path="staticContent" class="mceEditor textareaBoxCResume textareaBoxCResumeTemplate" resize="none"  rows="5" cols="20"
 								/>
 									<!-- <div class="required2" style="float:right; margin-top:0px;">(Required)</div> -->
 									</div>

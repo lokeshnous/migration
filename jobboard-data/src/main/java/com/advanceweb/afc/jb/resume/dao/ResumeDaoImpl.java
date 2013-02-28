@@ -285,7 +285,11 @@ public class ResumeDaoImpl implements ResumeDao {
 			result = true;
 		} catch (HibernateException e) {
 			result = false;
-			LOGGER.error("Error while Copy Paste", e);
+			LOGGER.error("Hibernate Error while Copy Paste", e);
+		}
+		catch (Exception exp) {
+			result = false;
+			LOGGER.error("Error while Copy Paste", exp);
 		}
 		return result;
 	}
@@ -623,11 +627,12 @@ public class ResumeDaoImpl implements ResumeDao {
 			hibernateTemplate.deleteAll(resBlockedCompaniesList);
 		}
 		if (null != resumeDTO.getSelectedList()
-				&& resumeDTO.getSelectedList().size() > 0) {
+				&& resumeDTO.getSelectedList().size() > 0 && Integer.valueOf(resumeDTO.getResumeVisibility()) > 0) {
 			List<Integer> blockedCompnyList = resumeDTO.getSelectedList();
 			
 			for (Integer blockedCompany : blockedCompnyList) {
 				ResBlockedCompanies blockedCompanies = new ResBlockedCompanies();
+
 				blockedCompanies.setCompanyId(blockedCompany);
 				blockedCompanies.setResumeId(resumeId);
 				blockedCompanies.setCreateDt(new Date());

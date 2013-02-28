@@ -208,8 +208,8 @@
 															},
 															error : function(
 																	response) {
-																alert("Server Error : "
-																		+ response.status);
+																/* alert("Server Error : "
+																		+ response.status); */
 															}
 														});
 											}

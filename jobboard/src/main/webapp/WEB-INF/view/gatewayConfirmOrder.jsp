@@ -32,6 +32,7 @@
 				alert("Please select any one of the package to proceed to place order");
 				return false;
 			}
+			$(".buttonContainer").hide();
 			$("#errorMsg").html("<span>Processing...</span>");
 			$("#creditConfirmForm").attr("action","${pageContext.request.contextPath}/pgiController/placeOrder.html");
 			$("#creditConfirmForm").submit();

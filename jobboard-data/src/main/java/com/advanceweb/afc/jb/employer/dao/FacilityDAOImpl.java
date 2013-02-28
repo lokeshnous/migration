@@ -359,20 +359,26 @@ public class FacilityDAOImpl implements FacilityDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	public FacilityDTO getFacilityByFacilityId(int facilityId) {
-		AdmFacility facility = (AdmFacility) DataAccessUtils
-				.uniqueResult(hibernateTemplate
-						.find("from AdmFacility facility where facility.facilityId=?",
-								facilityId));
+//		AdmFacility facility = (AdmFacility) DataAccessUtils
+//				.uniqueResult(hibernateTemplate
+//						.find("from AdmFacility facility where facility.facilityId=?",
+//								facilityId));
+		AdmFacility facility = hibernateTemplate.get(AdmFacility.class,
+				facilityId);
+
 		FacilityDTO dto = new FacilityDTO();
 		dto.setFacilityId(facility.getFacilityId());
 		dto.setName(facility.getName());
-		dto.setRoleId(facility.getAdmUserFacilities().get(0).getFacilityPK()
-				.getRoleId());
+		dto.setRoleId((null == facility.getAdmUserFacilities() || facility
+				.getAdmUserFacilities().isEmpty()) ? 0 : facility
+				.getAdmUserFacilities().get(0).getFacilityPK().getRoleId());
 		dto.setFacilityParentId(facility.getFacilityParentId());
 		dto.setLogoPath(facility.getLogoPath());
 		dto.setNsCustomerID(facility.getNsCustomerID());
 		dto.setFacilityType(facility.getFacilityType());
-		dto.setUserId(facility.getAdmUserFacilities().get(0).getFacilityPK().getUserId());
+		dto.setUserId((null == facility.getAdmUserFacilities() || facility
+				.getAdmUserFacilities().isEmpty()) ? 0 : facility
+				.getAdmUserFacilities().get(0).getFacilityPK().getUserId());
 		return dto;
 	}
 

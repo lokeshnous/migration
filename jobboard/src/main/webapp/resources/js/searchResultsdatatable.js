@@ -96,7 +96,7 @@ jQuery(document).ready(function() {
 						if (key == "applyLink") {
 							$('#bottomjobActionInfo').html("");
 							if((/^\s*$/).test(val)){
-								alert("Insufficient information to apply. Please contact Advance team.");
+								alert("This employer isn't accepting online applications right now. Read the job description to find instructions on how you can apply for this position or get in touch with the employer using the contact information provided.");
 							}else{
 							window.open(val, '_blank');
 							}
@@ -138,7 +138,7 @@ jQuery(document).ready(function() {
 							$('#topjobActionInfo'+jobId).html("");
 							$('#topjobActionInfo').html("");
 							if((/^\s*$/).test(val)){
-								alert("Insufficient information to apply. Please contact Advance team.");
+								alert("This employer isn't accepting online applications right now. Read the job description to find instructions on how you can apply for this position or get in touch with the employer using the contact information provided.");
 							}else{
 							window.open(val, '_blank');
 							}

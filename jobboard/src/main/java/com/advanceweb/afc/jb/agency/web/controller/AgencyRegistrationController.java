@@ -207,6 +207,21 @@ public class AgencyRegistrationController extends AbstractController {
 		AgencyProfileDTO registerDTO = (AgencyProfileDTO) agencyRegistration
 				.getProfileAttributes();
 		UserDTO userDTO = null;
+		
+		if (session.getAttribute("advancePassUserDetails") != null) {
+			userDTO = (UserDTO) session
+					.getAttribute("advancePassUserDetails");
+			agencyRegForm.setEmailId(userDTO.getEmailId());
+			agencyRegForm.setConfirmEmailId(userDTO.getEmailId());
+			agencyRegForm.setPassword(userDTO.getPassword());
+			agencyRegForm.setConfirmPassword(userDTO.getPassword());
+			agencyRegForm.setFirstName(userDTO.getFirstName());
+			agencyRegForm.setLastName(userDTO.getLastName());
+			agencyRegForm.setbReadOnly(true);
+			agencyRegForm.setAdvPassUser(true);
+			session.removeAttribute("advancePassUserDetails");
+		}
+		
 		if (session.getAttribute(MMJBCommonConstants.USER_DTO) != null) {
 			userDTO = (UserDTO) session
 					.getAttribute(MMJBCommonConstants.USER_DTO);
@@ -219,12 +234,30 @@ public class AgencyRegistrationController extends AbstractController {
 			agencyRegForm.setOldUSer(true);
 		}
 
-		if (profileId != null) {
+		if (profileId != null && !profileId.equals("null")) {
 			agencyRegForm.setServiceProviderName(serviceProviderId);
 			agencyRegForm.setSocialProfileId(profileId);
 			agencyRegForm.setSocialSignUp(true);
+			
+			if(session.getAttribute("socialProfileAttrId")!=null){
+				serviceProviderId="Social Media";
+				if(String.valueOf(session.getAttribute("socialProfileAttrId")).equals(MMJBCommonConstants.FACEBOOK_PROFILE_ATTR_ID)){
+					serviceProviderId="Facebook";
+				}
+				
+				if(String.valueOf(session.getAttribute("socialProfileAttrId")).equals(MMJBCommonConstants.LINKEDIN_PROFILE_ATTR_ID)){
+					serviceProviderId="LinkedIn";
+				}
+				
+				model.addObject("socialSignUpMsg", socialSignupMsg.replace(
+						"?serviceProviderId", serviceProviderId));
+				session.removeAttribute("socialProfileId");
+				session.removeAttribute("socialProfileAttrId");
+			}
+			else{
 			model.addObject("socialSignUpMsg", socialSignupMsg.replace(
 					"?serviceProviderId", serviceProviderId));
+			}
 		}
 		List<AgencyProfileAttribForm> listProfAttribForms = transformAgencyRegistration
 				.transformDTOToProfileAttribForm(registerDTO, userDTO);
@@ -304,9 +337,8 @@ public class AgencyRegistrationController extends AbstractController {
 		ModelAndView model = new ModelAndView();
 		boolean advPassUser=false;
 		populateAds(req, session, model);
-		if(userService.checkUserMail(agencyRegistrationForm.getEmailId())){
-			advPassUser=true;
-			agencyRegistrationForm.setAdvPassUser(true);
+		if(!agencyRegistrationForm.isAdvPassUser()){
+			advPassUser=userService.checkUserMail(agencyRegistrationForm.getEmailId());
 		}
 		if (null != agencyRegistrationForm.getListProfAttribForms()) {
 			model.setViewName(AGENCYREG);
@@ -376,9 +408,6 @@ public class AgencyRegistrationController extends AbstractController {
 					infoDTO.getFacilityId());
 			session.setAttribute(MMJBCommonConstants.COMPANY_EMP,
 					infoDTO.getCustomerName());
-			if(agencyRegistrationForm.isAdvPassUser()){
-				session.setAttribute("advancePassUser","advancePassUser");
-				}
 			model.setViewName("redirect:/agency/agencyDashboard.html");
 		}
 		authenticateUserAndSetSession(userDTO, req,response);
@@ -483,9 +512,10 @@ public class AgencyRegistrationController extends AbstractController {
 			// model.setViewName(AGENCYREG);
 			return false;
 		}
-		if (!agencyRegistrationForm.isbReadOnly()
+		if ((!agencyRegistrationForm.isbReadOnly()
 				&& agencyRegistration.validateEmail(agencyRegistrationForm
-						.getEmailId()) && !advPassUser) {
+						.getEmailId()) && advPassUser)|| (agencyRegistration.validateEmail(agencyRegistrationForm
+								.getEmailId()) && !agencyRegistrationForm.isAdvPassUser() && !agencyRegistrationForm.isOldUSer())) {
 			result.rejectValue("emailId", "NotEmpty", emailExists.replace(
 					"?ageLoginLink",req.getRequestURL().toString()
 					.replace(req.getServletPath(),"/commonLogin/login.html?page=agency")));

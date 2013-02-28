@@ -834,8 +834,25 @@ public class JobSearchController extends AbstractController {
 			jobDTO.setEmail(jobApplyTypeDTO.getApplyLink());
 		}
 		
-		if (null != jobDTO.getEmail() && !jobSearchValidator.validateEmailPattern(jobDTO.getEmail())) {
-			jsonObject.put("applyLink", jobDTO.getEmail());
+		if (null != jobDTO.getEmail()
+				&& !jobSearchValidator.validateEmailPattern(jobDTO.getEmail())) {
+			if (jobDTO.getEmail().isEmpty() && null != jobDTO.getUrl()
+					&& !jobDTO.getUrl().isEmpty()) {
+				String finalUrl = jobDTO.getUrl();
+				boolean httpsStatus = false;
+				if (jobDTO.getUrl().startsWith("https://")) {
+					httpsStatus = true;
+
+				} else if (jobDTO.getUrl().startsWith("http://")) {
+					httpsStatus = true;
+				}
+				if (!httpsStatus) {
+					finalUrl = "http://" + jobDTO.getUrl();
+				}
+				jsonObject.put("applyLink", finalUrl);
+			} else {
+				jsonObject.put("applyLink", jobDTO.getEmail());
+			}
 			return jsonObject;
 		}
 		int userId = getUserID(session);
@@ -1015,7 +1032,7 @@ public class JobSearchController extends AbstractController {
 		String userEmail = (String) session
 				.getAttribute(MMJBCommonConstants.USER_EMAIL);
 		String jobTitle = jobDTO.getJobTitle();
-		String jbDatail = jobTitle +" "+"(" +jobDTO.getJobId() +")";
+		String jbDatail = jobTitle +" "+"(" +jobDTO.getJobNumber()+")";
 		StringBuffer mailBody = new StringBuffer();
 		// Send mail to Employer regarding job application
 		String loginPath = navigationPath.substring(2);
@@ -1593,18 +1610,29 @@ public class JobSearchController extends AbstractController {
 					statesList.add(stateDetail);
 				}
 				
-				int statesCount = statesList.size();
-				int divider = (int) ((double) statesCount / 5);
-				List<HashMap<String, String>> firstColStatesList = statesList
-						.subList(0, divider);
-				List<HashMap<String, String>> secColStatesList = statesList.subList(divider,
-						divider * 2);
-				List<HashMap<String, String>> thirdColStatesList = statesList.subList(
-						divider * 2, divider * 3);
-				List<HashMap<String, String>> fourtColStatesList = statesList.subList(
-						divider * 3, divider * 4);
-				List<HashMap<String, String>> fifthColStatesList = statesList.subList(
-						divider * 4, divider * 5);
+				double statesCount = statesList.size();
+				int divider = (int) (Math.ceil(statesCount / 5));
+				List<HashMap<String, String>> firstColStatesList = new ArrayList<HashMap<String, String>>();
+				List<HashMap<String, String>> secColStatesList = new ArrayList<HashMap<String, String>>();
+				List<HashMap<String, String>> thirdColStatesList = new ArrayList<HashMap<String, String>>();
+				List<HashMap<String, String>> fourtColStatesList = new ArrayList<HashMap<String, String>>();
+				List<HashMap<String, String>> fifthColStatesList = new ArrayList<HashMap<String, String>>();
+
+				firstColStatesList = statesList.subList(0, divider);
+				if (statesCount >= divider * 2) {
+					secColStatesList = statesList.subList(divider, divider * 2);
+				}
+				if (statesCount >= divider * 3) {
+					thirdColStatesList = statesList.subList(divider * 2,
+							divider * 3);
+				}
+				if (statesCount >= divider * 4) {
+					fourtColStatesList = statesList.subList(divider * 3,
+							divider * 4);
+				}
+				fifthColStatesList = statesList.subList(divider * 4,
+						(int) statesCount);
+				
 				modelAndView
 						.addObject("firstColStatesList", firstColStatesList);
 				modelAndView.addObject("secColStatesList", secColStatesList);

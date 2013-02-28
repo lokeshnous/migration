@@ -30,11 +30,15 @@ tinyMCE.init({
 						$('#save')
 								.click(
 										function() {
-											
 											var coverLetterText = tinyMCE.get('coverletterText').getContent();
+											var length = coverLetterText.length;
+											var value = $("#characterCounter").val();
+											if(value == 5000 || length > 5000){
+												$("#errmsg").html("The text characters have exceeded the limit of 5000. Please reduce the text characters.");
+											}else{
 											$("#description").val(coverLetterText);
 											$.ajax({
-														url : "${pageContext.request.contextPath}/jobSeekerCoverLetter/jobseekerupdateCoverLetter.html?coverLetterText="+coverLetterText,
+														url : "${pageContext.request.contextPath}/jobSeekerCoverLetter/jobseekerupdateCoverLetter.html",
 														data : $(
 																'#resCovLetForm')
 																.serialize(),
@@ -53,6 +57,7 @@ tinyMCE.init({
 															}
 														},
 													});
+											}
 										});
 
 						jQuery(".megamenu").megamenu();

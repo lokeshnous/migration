@@ -146,6 +146,7 @@ public class AgencyDelegateImpl implements AgencyDelegate {
 			}
 
 		}
+		userDTO.setEmailId(agencyProfileDTO.getMerUserDTO().getEmailId());
 		return userDTO;
 	}
 

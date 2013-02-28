@@ -3,12 +3,9 @@
  */
 package com.advanceweb.afc.jb.jobseeker.web.controller;
 
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,7 +13,6 @@ import javax.servlet.http.HttpSession;
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
-import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -34,6 +30,7 @@ import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.exception.JobBoardException;
 import com.advanceweb.afc.jb.jobseeker.service.CoverLetterService;
+import com.advanceweb.afc.jb.web.utils.PDFGenerator;
 
 /**
  * This method is called for create cover letter etc.
@@ -68,8 +65,12 @@ public class JobseekerCoverLetterController {
 	private String resumeDeleteFailure;
 
 	/** The js cover letter name. */
-	private @Value("${jsCoverLetterName}")
-	String jsCoverLetterName;
+//	private @Value("${jsCoverLetterName}")
+//	String jsCoverLetterName;
+	
+	/** The pdf generator. */
+	@Autowired
+	private PDFGenerator pdfGenerator;
 
 	/**
 	 * Job seeker cover page.
@@ -101,22 +102,16 @@ public class JobseekerCoverLetterController {
 	@RequestMapping(value = "/jobseekerCoverLetterSub", method = RequestMethod.POST)
 	public String getJobPostDetailsSave(HttpServletRequest request,
 			HttpSession session, ResCoverLetterForm resCoverLetterForm,
-			@RequestParam("coverLetterText") String coverLetterText,
-			@RequestParam("coverLetterName") String coverLetterName,
 			BindingResult result) {
 
 		try {
 			int userId = (Integer) session.getAttribute("userId");
 			ResCoverLetterDTO dto = new ResCoverLetterDTO();
-			/*
-			 * dto.setName(resCoverLetterForm.getName());
-			 * dto.setCoverletterText(resCoverLetterForm.getCoverletterText());
-			 */
-			if(("".equals(coverLetterName)) || (null == coverLetterName)){
+			
+			if(("".equals(resCoverLetterForm.getName())) || (null == resCoverLetterForm.getName())){
 				return "Please enter the required fields";
 			}else{
-				dto.setName(coverLetterName);
-				resCoverLetterForm.setName(coverLetterName);
+				dto.setName(resCoverLetterForm.getName());
 			}
 			
 			if(("".equals(resCoverLetterForm.getDescription())) || (null == resCoverLetterForm.getDescription())){
@@ -126,18 +121,6 @@ public class JobseekerCoverLetterController {
 				resCoverLetterForm.setCoverletterText(resCoverLetterForm.getDescription());
 			}
 			
-			/*if (("".equals(resCoverLetterForm.getName()))
-					|| (null == resCoverLetterForm.getName())) {
-				return "Please enter the required fields";
-			} else {
-				dto.setName(resCoverLetterForm.getName());
-			}
-			if (("".equals(resCoverLetterForm.getCoverletterText()))
-					|| (null == resCoverLetterForm.getCoverletterText())) {
-				return "Please enter the required fields";
-			} else {
-				dto.setCoverletterText(resCoverLetterForm.getCoverletterText());
-			}*/
 			dto.setActive(resCoverLetterForm.getActive());
 			dto.setUserId(userId);
 			// this for first time
@@ -253,8 +236,6 @@ public class JobseekerCoverLetterController {
 		ModelAndView model = new ModelAndView();
 
 		try {
-			// int userId = (Integer) session
-			// .getAttribute(MMJBCommonConstants.USER_ID);
 			String covId = request.getParameter(COVER_LETTER_ID);
 			String covType = request.getParameter("type");
 			int coverletterId = Integer.parseInt(covId);
@@ -293,7 +274,7 @@ public class JobseekerCoverLetterController {
 	 */
 
 	// @ResponseBody
-	@RequestMapping(value = "/jobseekerDownloadCoverLetter", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/jobseekerDownloadCoverLetter", method = RequestMethod.GET)
 	public ModelAndView jobseekerDownloadCoverLetter(
 			HttpServletRequest request, HttpSession session,
 			ResCoverLetterForm resCoverLetterForm, BindingResult result,
@@ -338,17 +319,17 @@ public class JobseekerCoverLetterController {
 				ServletOutputStream outs = response.getOutputStream();
 				outs.write(bytesGot);
 
-				/*
+				
 				 * String filePath = "C:\\test reference-material"; File f=new
 				 * File(filePath, fileName); String fileType =
 				 * fileName.substring
 				 * (fileName.indexOf(".")+1,fileName.length());
 				 * LOGGER.info("Filetype:"+fileType+";"+f.length());
-				 */
+				 
 
 				// if (fileType.trim().equalsIgnoreCase("txt")) {
 				// response.setContentType( "text/plain" );
-				/*
+				
 				 * } else if (fileType.trim().equalsIgnoreCase("doc")) {
 				 * response.setContentType( "application/msword" ); } else if
 				 * (fileType.trim().equalsIgnoreCase("xls")) {
@@ -357,24 +338,24 @@ public class JobseekerCoverLetterController {
 				 * response.setContentType( "application/pdf" );
 				 * LOGGER.info("content type set to pdf"); } else {
 				 * response.setContentType( "application/octet-stream" ); }
-				 */
+				 
 				// response.setContentLength((int)f.length());
-				/*
+				
 				 * PrintWriter out = response.getWriter(); out.write(fileName);
 				 * out.write("\n");
 				 * out.write(listOfCoverLetter.getCoverletterText()); String
 				 * fName=fileName+".txt";
-				 */
+				 
 				// response.setHeader("Content-Disposition","attachment; filename="+fName);
 
 				// response.setHeader("Cache-Control", "no-cache");
-				/*
+				
 				 * byte[] buf = new byte[8192]; FileInputStream inStream = new
 				 * FileInputStream(f); int sizeRead = 0; while ((sizeRead =
 				 * inStream.read(buf, 0, buf.length)) > 0) {
 				 * LOGGER.info("size:"+sizeRead); outStream.write(buf, 0,
 				 * sizeRead); } inStream.close();
-				 */
+				 
 				// outStream.close();
 
 				outs.flush();
@@ -389,7 +370,7 @@ public class JobseekerCoverLetterController {
 		}
 
 		return new ModelAndView();
-	}
+	}*/
 
 	/**
 	 * This method is called to Account Setting update page and
@@ -403,9 +384,7 @@ public class JobseekerCoverLetterController {
 	@ResponseBody
 	@RequestMapping(value = "/jobseekerupdateCoverLetter", method = RequestMethod.POST)
 	public String updateCoverLetter(ResCoverLetterForm resCoverLetterForm,
-			BindingResult result,
-			@RequestParam("coverLetterText") String coverLetterText,
-			HttpSession session) {
+			BindingResult result, HttpSession session) {
 		// boolean isUpdated = false;
 		try {
 			int userId = (Integer) session
@@ -472,7 +451,7 @@ public class JobseekerCoverLetterController {
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(value = "/jobseekerPrintCoverLetter", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/jobseekerPrintCoverLetter", method = RequestMethod.GET)
 	public ModelAndView jobseekerPrintCoverLetter(HttpServletRequest request,
 			HttpSession session, ResCoverLetterForm resCoverLetterForm,
 			BindingResult result) {
@@ -504,5 +483,57 @@ public class JobseekerCoverLetterController {
 			LOGGER.error("This is Account Addresss edite option error" + e);
 		}
 		return model;
+	}*/
+	
+	/**
+	 * This method is called to print cover letter.
+	 * 
+	 * @param coverLtrId
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/printCoverLetter", method = RequestMethod.GET)
+	public ModelAndView printResume(
+			@RequestParam(COVER_LETTER_ID) int coverLtrId,
+			HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView model = new ModelAndView();
+		try {
+			ResCoverLetterDTO resCoverLetterDTO = coverLetterService
+					.getCoverList(coverLtrId);
+			if (resCoverLetterDTO != null) {
+				pdfGenerator.generateAndExportCoverLetterAsPdfForPrint(request,
+						response, resCoverLetterDTO);
+			}
+		} catch (Exception e) {
+			LOGGER.error("Error in Printing cover letter", e);
+		}
+		return model;
+
+	}
+	
+	/**
+	 * This method is called to download Cover Letter.
+	 * 
+	 * @param createResume
+	 * @return model
+	 */
+	@RequestMapping(value = "/downloadCoverLetter", method = RequestMethod.GET)
+	public ModelAndView downloadResume(
+			@RequestParam(COVER_LETTER_ID) int coverLtrId,
+			HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView model = new ModelAndView();
+		try {
+			ResCoverLetterDTO resCoverLetterDTO = coverLetterService
+					.getCoverList(coverLtrId);
+			if (resCoverLetterDTO != null) {
+				pdfGenerator.generateAndExportCoverLetterAsPdf(request,
+						response, resCoverLetterDTO);
+			}
+		} catch (Exception e) {
+			LOGGER.error("Error in download resume", e);
+		}
+		return model;
+
 	}
 }

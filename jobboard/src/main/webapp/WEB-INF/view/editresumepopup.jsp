@@ -60,13 +60,31 @@
 	    	var NameData = new Array();
 	    	
 			var empName = $("#searchComapnyName").val();
+			//Remove the available list
+			$('#availableList option').each(function(index, option) {
+					  $(option).remove();
+					  
+			});
+				if($.trim(empName).length<=0){
+					$('#availableList').attr('size', 7);
+		        	$('#selectedeList').attr('size', 7);
+					
+			}else{
+				
 			$.ajax({
 		        type: "GET",
 		        url: "${pageContext.request.contextPath}/agency/getFacilityNamesList.html?term="+empName,
 		        dataType: "json",							        
 		        contentType: "application/json; charset=utf-8",
 		        success: function(data) {							        	
-		        								        	
+		        	if(data.EmpList.length>10){
+		        		$('#availableList').attr('size', 10);
+			        	$('#selectedeList').attr('size', 10);
+		        	}else{	
+			        	$('#availableList').attr('size', data.EmpList.length);
+			        	$('#selectedeList').attr('size', data.EmpList.length);
+		        	}
+		        	
 		        	for (var x = 0; x < data.EmpList.length; x++) {
 		        		
 		               IdData.push(data.EmpList[x].ID);
@@ -91,6 +109,7 @@
 		           alert(textStatus);
 		        }
 		    });
+			}
 			});
 	});
 </script>
@@ -188,7 +207,7 @@
 							</tr>
 							<tr>
 								<td><form:select path="availableList" id="availableList"
-										multiple="true" size="5" style="width:150px;">
+										multiple="true" size="7" style="width:250px;">
 										
 									</form:select></td>
 								<td width="3%" />
@@ -204,7 +223,7 @@
 
 								<td width="45%" style="border: none"><form:select
 										path="selectedList" id="selectedeList" multiple="true" items="${blockedCompanies}" itemValue="optionId" itemLabel="optionName"
-										size="5" style="width:150px;">
+										size="7" style="width:250px;">
 									</form:select></td>
 						</table>
 					</div>

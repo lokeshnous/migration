@@ -135,5 +135,9 @@ public class UserServiceImpl implements UserService{
 	public UserDTO getAdminInfo(String email) {
 		return userDAO.getAdminInfo(email);
 	}
-
+	
+	@Override
+	public UserDTO getAdvancePassUserDetails(String email) {
+		return userDAO.getAdvancePassUserDetails(email);
+	}
 }

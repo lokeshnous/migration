@@ -174,7 +174,7 @@ function validateFacility() {
 						 var val = true;
 						 if (data.success == val) {	
 							//window.location.href = '${pageContext.request.contextPath}/admininventory/employer1/jobInventory1.html';
-							$.nmManual('${pageContext.request.contextPath}/impersonationForFacility/jobSearchBycompanyName.html');	
+							$.nmManual('${pageContext.request.contextPath}/impersonationForFacility/jobSearchBycompanyName.html',{ showCloseButton: false});	
 						 }else{
 							 $("#ErrorMsg").text(data.errMsg);
 							 $("#facilityListId").html('');

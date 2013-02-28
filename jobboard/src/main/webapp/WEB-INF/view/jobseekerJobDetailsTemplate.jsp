@@ -156,11 +156,11 @@
          	<div class="BannerAreaBox" style="background: ${jobDetail.getColor().substring(4)}">
                    <div class="BannerAreaInnerBox">
                <div class="BannerImgBox" > <img src="<%=request.getContextPath()%>/search/viewImage.html?id=${jobDetail.getImagePath()}" class="imgCenter" alt="Main image"></div>
-               <div class="BannerTextBoxBlank" style="background: #c0c0c0">
+               <div class="BannerTextBoxBlank" style="background: #F2F2F2">
 				                
                        <h1 style="color: ${jobDetail.getColor().substring(4)}">About This Employer </h1>
                        <br />
-                       <p class="lineHeight16" style="color: ${jobDetail.getColor().substring(4)}">${jobDetail.getCompanyOverview()}</p>
+                       <p class="lineHeight16 ShareText" style="font-size: 14px;">${jobDetail.getCompanyOverview()}</p>
                        <br />
                        <!-- <p class="lineHeight16">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p> -->
                      </div>

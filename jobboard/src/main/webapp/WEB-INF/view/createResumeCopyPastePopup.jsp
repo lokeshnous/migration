@@ -7,12 +7,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>ADVANCE Heathcare Jobs</title>
-
-<jsp:include page="common/include.jsp" />
 <!-- Common js files  -->
 <script type="text/javascript" src="../resources/js/common/common.js"></script>
 <script type="text/javascript">
 tinyMCE.init({
+	width : "550",
+	height: "300",
 	mode : "textareas",
 	theme : "advanced",
 	theme_advanced_buttons1 : "mybutton,bold,italic,underline,strikethrough,separator,|,justifyleft,justifycenter,justifyright, justifyfull,|,bullist,numlist,|,undo,redo,link,unlink",
@@ -29,6 +29,13 @@ tinyMCE.init({
 	jQuery(document).ready(function() {
 		jQuery(".megamenu").megamenu();
 		$("#managePrivacy").hide();
+		$.nmFilters({
+    	    custom: {
+    	        afterShowCont: function(nm) {
+    	        	$('#resumeName').focus();
+    	        }
+    	    }
+    	});
 		 $("#resumeType").change(function() {
 				var resumeType = $.trim($("#resumeType").val());
 				switch(resumeType){
@@ -46,6 +53,7 @@ tinyMCE.init({
 		 
 		 $("#Save").click(function() {
 			 selectAllElementsInDualList();
+				$(".popUpButtonRow").hide();
 				//validate the required fields
 				var resumeName = $.trim($("#resumeName").val());
 				var jobTitle = $.trim($("#desiredJobTitle").val());
@@ -63,13 +71,15 @@ tinyMCE.init({
 							type: "GET",
 							success : function(data) {
 								if (data.maxResume != null) {
+									$(".popUpButtonRow").show();
 										$("#resumeErrorMsg").html("<span>"+ data.maxResume+ "</span>");
 									} else if (data.duplicateResume != null) {
+										$(".popUpButtonRow").show();
 										$("#resumeErrorMsg").append("<span>"+ data.duplicateResume+ "</span>");
 									} else {
 										//$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/copyPasteResume.html");
 										//$("#copyPastResume").submit();
-										$.ajax({url : "${pageContext.request.contextPath}/jobSeekerResume/copyPasteResume.html?resumeText="+resumeText,
+										$.ajax({url : "${pageContext.request.contextPath}/jobSeekerResume/copyPasteResume.html",
 											data : $("#copyPastResume").serialize(),
 											type: "POST",
 											success : function(data) {
@@ -78,9 +88,13 @@ tinyMCE.init({
 												window.location.reload();
 												},
 											error : function(response) {
-												alert("Server Error : "+ response.status);
-												parent.$.nmTop().close();
-												window.location.reload();
+												$("#resumeErrorMsg").html("<span>"+ "Please reduce the size of Paste Resume text and try again."+ "</span>");
+												var href = $('#topLocation').attr('href');
+												location.href = href;
+												//alert("Server Error : "+ response.status);
+												//parent.$.nmTop().close();
+												//window.location.reload();
+												$(".popUpButtonRow").show();
 												},
 											complete : function() {
 												
@@ -89,6 +103,7 @@ tinyMCE.init({
 									}
 								},
 							error : function(response) {
+								$(".popUpButtonRow").show();
 								alert("Server Error : "+ response.status);
 								},
 							complete : function() {
@@ -96,47 +111,21 @@ tinyMCE.init({
 							}
 						});
 				} else {
+					$(".popUpButtonRow").show();
 					$("#resumeErrorMsg").html("<span>Please enter the required fields.</span>");
 				}
 			});
-		 $("#searchCompanyName").click(function() {
-				var IdData = new Array();
-		    	var NameData = new Array();
-		    	
-				var empName = $("#searchComapnyName").val();
-				$.ajax({
-			        type: "GET",
-			        url: "${pageContext.request.contextPath}/agency/getFacilityNamesList.html?term="+empName,
-			        dataType: "json",							        
-			        contentType: "application/json; charset=utf-8",
-			        success: function(data) {							        	
-			        								        	
-			        	for (var x = 0; x < data.EmpList.length; x++) {
-			        		
-			               IdData.push(data.EmpList[x].ID);
-			               NameData.push(data.EmpList[x].NAME);
-			               //appends options 
-			               var availableList = document.getElementById("availableList");
-			               var exists = false; 
-			               $('#availableList option').each(function(){
-			            	   
-			                 if ((this.text).toLowerCase() == (data.EmpList[x].NAME).toLowerCase()) {
-			                	 exists=true;
-			                 }
-			               });
-			               if(!exists){
-			            	   availableList.options[availableList.options.length]=new Option(data.EmpList[x].NAME,data.EmpList[x].ID,false,false);
-			               }
-			               	               
-			            }
-			        	        					
-			        },
-			        error: function(XMLHttpRequest, textStatus, errorThrown) {
-			           alert(textStatus);
-			        }
-			    });
-				});
+		
 	});	 
+	
+	function refreshCall(){
+		location.reload();
+	}
+	
+	$('#Cancel').click(function(){	
+		location.reload();
+		parent.$.nmTop().close();		
+	});
 </script>
 </head>
 <body class="job_board">
@@ -144,7 +133,7 @@ tinyMCE.init({
 		style="display: block">
 		<div class="popupHeader">
 			<h2>Create Or Upload My New Resume</h2>
-			<img src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose cursor" title="Close"
+			<img src="<%= request.getContextPath() %>/resources/images/Close.png" class="nyroModalClose cursor" title="Close" onclick="refreshCall();"
 				width="19" height="19" alt="">
 		</div>
 
@@ -236,11 +225,12 @@ tinyMCE.init({
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4 TextAlignL">Paste Resume:</span>
 					<div class="clearfix"></div>
+					<div class="floatLeft">
 					<%-- <form:textarea path="resumeText"
 						class="textareaBoxCResume Height255 marginTop5 "
 						cols="45" rows="3"></form:textarea> --%>
 						<form:hidden path="description" id="description"/>
-						<form:textarea path="resumeText" name="resumeText" class="textareaBoxCResume textareaBoxCResumeTemplate" resize="none"  rows="5" cols="20"/>
+						<form:textarea path="resumeText" name="resumeText" resize="none"  rows="5" cols="20"/></div>
 								
 					<div class="toolTipBefore">
 						<span class="required">(Required)</span>
@@ -251,7 +241,7 @@ tinyMCE.init({
 						<span class="lableText4">Company to block:</span>
 						<form:input path="searchComapnyName"
 							class="job_seeker_password textBox150" />
-						<a id="searchCompanyName" href="#" class="btn_sm orange">Search</a>
+						<a id="searchCompanyName" href="#" class="btn_sm orange" onclick="searchByName('${pageContext.request.contextPath}/agency/getFacilityNamesList.html?term=');">Search</a>
 
 					</div>
 
@@ -267,7 +257,7 @@ tinyMCE.init({
 							</tr>
 							<tr>
 								<td><form:select path="availableList" id="availableList"
-										multiple="true" size="5" style="width:150px;">
+										multiple="true" size="7" style="width:250px;">
 										
 									</form:select></td>
 								<td width="3%" />
@@ -283,7 +273,7 @@ tinyMCE.init({
 
 								<td width="45%" style="border: none"><form:select
 										path="selectedList" id="selectedeList" multiple="true"
-										size="5" style="width:150px;">
+										size="7" style="width:250px;">
 									</form:select></td>
 						</table>
 					</div>
@@ -291,7 +281,7 @@ tinyMCE.init({
 				<div class="popUpButtonRow">
 					<a id="Save" href="#"
 						class="btn_sm orange">Save</a> 
-						<a href="#"
+						<a href="#" id="Cancel"
 						class="nyroModalClose btn_sm orange">Cancel</a>
 				</div>
 				<a id="resumeBuilder" href="<%=request.getContextPath()%>/jobSeekerResume/createResumePopUp.html?resumeType=ADVANCE Resume Builder" class="nyroModal"></a>
@@ -301,6 +291,7 @@ tinyMCE.init({
 			</form:form>
 		</div>
 		<div class="clearfix"></div>
+		<a id="topLocation" href="#jobSeekerRegister1"></a>
 	</div>
 
 </body>

@@ -395,14 +395,24 @@ public class ManageAccessPermissionDAOImpl implements ManageAccessPermissionDAO 
 
 		boolean bDelete = false;
 		try {
-			ownerDetails.setDeleteDt(new Timestamp(new Date().getTime()));
-			hibernateTemplateTracker.save(ownerDetails);
+			hibernateTemplateTracker.delete(ownerDetails);
+			/*
+			 * ownerDetails.setDeleteDt(new Timestamp(new Date().getTime()));
+			 * hibernateTemplateTracker.save(ownerDetails);
+			 */
 			// update Delete date in Advence pass
+
 			if (null != webMembershipEmails && !webMembershipEmails.isEmpty()) {
 				WebMembershipEmail webMembershipEmail = webMembershipEmails
 						.get(0);
+				WebMembership membership = hibernateTemplateAdvancePass.get(
+						WebMembership.class, webMembershipEmail
+								.getWebMembership().getWebMembershipID());
 				webMembershipEmail.setDeleteDate(new Timestamp(new Date()
 						.getTime()));
+				membership.setSalt(null);
+				membership.setEncryptPassword(null);
+				hibernateTemplateAdvancePass.saveOrUpdate(membership);
 				hibernateTemplateAdvancePass.saveOrUpdate(webMembershipEmail);
 			}
 			bDelete = true;

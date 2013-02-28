@@ -187,6 +187,27 @@ public class ResumeController extends AbstractController {
 	private @Value("${resumeDeleteFailure}")
 	String resumeDeleteFailure;
 	
+	
+	/** The Rchilli Key. */
+	private @Value("${Key}")
+	String key;
+	
+	/** The Rchilli Sub Key. */
+	private @Value("${SubKey}")
+	String subKey;
+	
+	/** The Rchilli Version. */
+	private @Value("${version}")
+	String version;
+	
+	/** The Rchilli Country. */
+	private @Value("${Country}")
+	String country;
+	
+	/** The Rchilli Services. */
+	private @Value("${Services}")
+	String services;
+	
 	/**
 	 * This method is called to display resume list belonging to a logged in
 	 * jobSeeker
@@ -557,7 +578,6 @@ public class ResumeController extends AbstractController {
 	 */
 	@RequestMapping(value = "/copyPasteResume", method = RequestMethod.POST)
 	public ModelAndView createCopyPasteResume(CreateResume createResume,
-			@RequestParam("resumeText") String resumeText,
 			HttpSession session) {
 		ModelAndView model = populateResumeDropDowns();
 		if (MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(createResume
@@ -593,7 +613,6 @@ public class ResumeController extends AbstractController {
 	 */
 	@RequestMapping(value = "/updateCopyPasteResume", method = RequestMethod.POST)
 	public ModelAndView updateCopyPasteResume(CreateResume createResume,
-			@RequestParam("resumeText") String resumeText,
 			HttpSession session) {
 		ModelAndView model = populateResumeDropDowns();
 		ResumeDTO resumeDTO = transCreateResume
@@ -716,15 +735,27 @@ public class ResumeController extends AbstractController {
 						}
 						File dest = new File(resumeDTO.getFilePath());						
 						virusChkFiledest.renameTo(dest);
-						callFileParser(virusChkFiledest);
+						createResume =  callFileParser(dest,createResume);
+						List<CountryDTO> countryList = populateDropdownsService
+								.getCountryList();
+						List<StateDTO> stateList = populateDropdownsService.getStateList();
+						List<DropDownDTO> phoneTypeList = populateDropdownsService
+								.populateResumeBuilderDropdowns(MMJBCommonConstants.PHONE_TYPE);
+						model.addObject(PHONE_TYPE_LIST, phoneTypeList);
+						model.addObject(COUNTRY_LIST, countryList);
+						model.addObject(STATE_LIST, stateList);
+						model.addObject(CREATE_RESUME, createResume);
+						// Ads for resume page
+						//populateAds(request, session, model);
+						model.setViewName(CREATE_RES_BUILDER);
 					}
 
 				}
 			} catch (Exception jbex) {
 				LOGGER.error("Error Occured While Uploading the File" + jbex);
 			}
-			session.setAttribute("uploadStatus", true);
-			model.setViewName(JS_REDIRECT_URL);
+			//session.setAttribute("uploadStatus", true);
+			//model.setViewName(JS_REDIRECT_URL);
 		}
 		return model;
 	}
@@ -1452,8 +1483,6 @@ public class ResumeController extends AbstractController {
 	@RequestMapping(value = "/removePhoneNos", method = RequestMethod.POST)
 	public int removePhoneNumbers(HttpSession session,
 			CreateResume createResume, @RequestParam("id") int id) {
-
-		ModelAndView model = new ModelAndView();
 		try {
 			if (null != createResume.getListPhoneDtlForm()) {
 				int count = 0;
@@ -1606,9 +1635,9 @@ public class ResumeController extends AbstractController {
 				LOGGER.error("Error in view resume builder", jbex);
 			}
 		} else {
-			String resumeDesc = Jsoup.parse(createResume.getResumeText()).html();
+			/*String resumeDesc = createResume.getResumeText();
 			resumeDesc = resumeDesc.replaceAll("\\<.*?\\>", "");
-			createResume.setResumeText(resumeDesc);		
+			createResume.setResumeText(resumeDesc);	*/
 			model.addObject(CREATE_RESUME, createResume);
 			model.setViewName("viewCopyPasteResume");
 		}
@@ -1966,69 +1995,47 @@ public class ResumeController extends AbstractController {
 		return String.valueOf(createResume.getTotalProgress());
 	}
 
-	public void callFileParser(File inFile) throws ServletException,
+	public CreateResume callFileParser(File inFile,CreateResume createResume) throws ServletException,
 			IOException {
-
-		// response.setContentType("text/plain");
-		// response.setContentType("text/html;charset=UTF-8");
-		// PrintWriter out = response.getWriter();
-		// HttpSession ssa = request.getSession();
-		// String sst = (String) ssa.getAttribute("ss");
-		String Key = "2M91V3L0CRJ";
-		String Country = "MYHNTRY6U5FF8GR3HAVF";
-		String version = "4.0";
-		String SubKey = "ADVANCE WEB ";
-		String Services = "http://saas.rchilli.com/rchilli.asmx";
-
-		// String realPath12 =
-		// getServletContext().getRealPath(DESTINATION_DIR_PATH1);
-		File file = new File("C:\\mmsource\\UploadResume\\temp.docx");
+		File file = new File(basedirectorypathUpload +"\\temp.docx");
 		
 		if (!file.exists()) {
 			if (inFile.createNewFile()) {
-				System.out.println("Success!");
+				LOGGER.debug("Success!");
 			} else {
-				System.out.println("Error, file already exists.");
+				LOGGER.debug("Error, file already exists.");
 			}
 			FileOutputStream fop = new FileOutputStream(file);
 
 			if (file.exists()) {
 
-				fop.write(Services.getBytes());
-				// fop.write(str1.getBytes());
+				fop.write(services.getBytes());
 				fop.flush();
 				fop.close();
-				System.out.println("The data has been written");
+				LOGGER.debug("The data has been written");
 			} else {
-				System.out.println("This file is not exist");
+				LOGGER.debug("This file is not exist");
 			}
 		} else {
 			FileOutputStream fop = new FileOutputStream(file);
 
 			if (file.exists()) {
-				fop.write(Services.getBytes());
-
-				// fop.write(str1.getBytes());
+				fop.write(services.getBytes());
 				fop.flush();
 				fop.close();
-				System.out.println("The data has been written");
+				LOGGER.debug("The data has been written");
 			} else {
-				System.out.println("This file is not exist");
+				LOGGER.debug("This file is not exist");
 			}
 		}
 		try {
-			/*
-			 * String realPath1 =
-			 * getServletContext().getRealPath(DESTINATION_DIR_PATH); String
-			 * real = realPath1 + "\\" + sst;
-			 */
 			File f = inFile;
 			FileInputStream fin = new FileInputStream(f);
 			byte[] fileContent = new byte[(int) f.length()];
 			fin.read(fileContent);
 
 			String encodedString = new sun.misc.BASE64Encoder()
-					.encode(fileContent); // changes done.
+					.encode(fileContent); 
 
 			StringBuffer soapXML = new StringBuffer();
 			soapXML.append("<?xml version='1.0' encoding='utf-8'?>");
@@ -2037,14 +2044,14 @@ public class ResumeController extends AbstractController {
 			soapXML.append("<ParseResumeBinary xmlns='http://tempuri.org/'>");
 			soapXML.append("<filedata>" + encodedString + "</filedata>");
 			soapXML.append("<filetype>doc</filetype>");
-			soapXML.append("<key>" + Key + "</key>");
+			soapXML.append("<key>" + key + "</key>");
 			soapXML.append("<version>" + version + "</version>");
-			soapXML.append("<countryKey>" + Country + "</countryKey>");
-			soapXML.append("<subUserId>" + SubKey + "</subUserId>");
+			soapXML.append("<countryKey>" + country + "</countryKey>");
+			soapXML.append("<subUserId>" + subKey + "</subUserId>");
 			soapXML.append("</ParseResumeBinary>");
 			soapXML.append("</soap:Body>");
 			soapXML.append("</soap:Envelope>");
-			URL url = new URL(Services); // correction done
+			URL url = new URL(services); // correction done
 			URLConnection urlc = url.openConnection();
 			urlc.setRequestProperty("SOAPAction",
 					"http://tempuri.org/ParseResumeBinary");
@@ -2068,74 +2075,186 @@ public class ResumeController extends AbstractController {
 			String line = "";
 			StringBuffer str = new StringBuffer();
 			while ((line = is.readLine()) != null) {
-				System.out.println(line);
+				LOGGER.debug(line);
 				str.append(line);
 
 			}
-			System.out.println(str.toString());
+			LOGGER.debug(str.toString());
 
 			String ss1 = str.toString();
 
 			String ssp = ss1.replace("&lt;", "<");
 			String ssp1 = ssp.replace("&gt;", ">");
-			//String strXml = ssp1.substring(298);
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			InputSource is1 = new InputSource();
 			is1.setCharacterStream(new StringReader(ssp1));
 			Document dom = db.parse(is1);
 
-			HashMap<String, String> resumeDetails = readXmlDocument(dom);
-			if(null!=resumeDetails){
-				System.out.println("File parser details");
+			createResume = readXmlDocument(dom,createResume);
+			if(null!=createResume){
+				LOGGER.debug("Parsing from XML to form done successfully");
 			}
-			// RequestDispatcher dispatcher =
-			// request.getRequestDispatcher("parseFrame.jsp");
-			// request.setAttribute("resume", resumeDetails);
-			// request.setAttribute("ss1", ss1);
-			// System.out.println(currentDate.concat("_").concat(fileName));
-			// dispatcher.forward(request, response);
 
 		} catch (Exception ex) {
-			System.out.print(ex.getMessage());
+			LOGGER.debug(ex.getMessage());
 
 		}
+		return createResume;
 	}
-	public HashMap<String, String> readXmlDocument(Document xmlDocument) {
-        HashMap<String, String> resumeDetails = new HashMap<String, String>();
-        try {
-            xmlDocument.getDocumentElement().normalize();
-            NodeList profile = xmlDocument.getElementsByTagName("ResumeParserData");
-            if (profile.getLength() > 0) {
+	/**
+	 * Parsing XML content 
+	 * @param xmlDocument
+	 * @param createResume
+	 * @return
+	 */
+	public CreateResume readXmlDocument(Document xmlDocument,
+			CreateResume createResume) {
 
-                Node profileNode = profile.item(0);
-                if (profileNode.getNodeType() == Node.ELEMENT_NODE) {
-                    Element profileElement = (Element) profileNode;
-                    NodeList list = profileElement.getChildNodes();
-                    String nodeName = "";
-                    int j = 1;
-                    for (int i = 0; i < list.getLength(); i++) {
-                        profileNode = list.item(i);
-                        if (profileNode.getNodeType() == Node.ELEMENT_NODE) {
-                            //System.out.println(profileNode.getNodeName());
-                            nodeName = profileNode.getNodeName();
-                            if (profileNode.getFirstChild() != null) {
-                                //System.out.println(j++ + "). " + nodeName);
-                                // System.out.println(profileNode.getFirstChild().getNodeValue());
-                                resumeDetails.put(nodeName, profileNode.getFirstChild().getNodeValue());
-                                // JOptionPane.showMessageDialog(null, nodeName +"="+profileNode.getFirstChild().getNodeValue());
+		try {
+			xmlDocument.getDocumentElement().normalize();
+			NodeList profile = xmlDocument
+					.getElementsByTagName("ResumeParserData");
+			if (profile.getLength() > 0) {
 
-                            }
-                        }
+				Node profileNode = profile.item(0);
+				if (profileNode.getNodeType() == Node.ELEMENT_NODE) {
+					Element profileElement = (Element) profileNode;
+					NodeList list = profileElement.getChildNodes();
+					convertNodeDetailToResumeForm(createResume,list);
+				}
+			}
 
-                    }
-                }
-            }
+		} catch (Exception e) {
+			LOGGER.error(e);
+		}
+		return createResume;
+	}
 
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return resumeDetails;
-    }
+	private void convertNodeDetailToResumeForm(CreateResume createResume, NodeList list) {
+		
+		Node profileNode;
+		String nodeName;
+		ContactInfoForm contactInformationForm = new ContactInfoForm();
+		List<PhoneDetailForm> phoneDetailFormList = new ArrayList<PhoneDetailForm>();
+		/** The list cert form. */
+		 List<CertificationsForm> listCertForm = new ArrayList<CertificationsForm>();
+		
+		/** The list edu form. */
+		 List<EducationForm> listEduForm =  new ArrayList<EducationForm>();
+		
+		/** The list lang form. */
+		 List<LanguageForm> listLangForm =  new ArrayList<LanguageForm>();
+		
+		/** The list ref form. */
+		 List<ReferenceForm> listRefForm = new ArrayList<ReferenceForm>();
+		
+		/** The list work exp form. */
+		 List<WorkExpForm> listWorkExpForm =  new ArrayList<WorkExpForm>();
+		
+		for (int i = 0; i < list.getLength(); i++) {
+			profileNode = list.item(i);
+			if (profileNode.getNodeType() == Node.ELEMENT_NODE) {
+				nodeName = profileNode.getNodeName();
+				LOGGER.debug("Node : "
+						+ nodeName
+						+ "Node Value"
+						+ profileNode.getFirstChild()
+								.getNodeValue());
+				if (profileNode.getFirstChild() != null) {
+					// Contact Info Starts
+					if (nodeName.equalsIgnoreCase("FirstName")) {
+						contactInformationForm.setFirstName(profileNode
+								.getFirstChild().getNodeValue());
+					} else if (nodeName.equalsIgnoreCase("LastName")) {
+						contactInformationForm.setLastName(profileNode
+								.getFirstChild().getNodeValue());
+					} else if (nodeName.equalsIgnoreCase("Middlename")) {
+						contactInformationForm.setMiddleName(profileNode
+								.getFirstChild().getNodeValue());
+					} else if (nodeName.equalsIgnoreCase("Email")) {
+						// contactInformationForm.set(profileNode.getFirstChild().getNodeValue());
+					} else if (nodeName.equalsIgnoreCase("Phone")) {
+						PhoneDetailForm phoneDetailForm = new PhoneDetailForm();
+						phoneDetailForm.setBuilderPhoneId(17);
+						phoneDetailForm.setPhoneType("17");
+						phoneDetailForm.setPhoneNumber(profileNode
+								.getFirstChild().getNodeValue());
+						phoneDetailFormList.add(phoneDetailForm);
+					} else if (nodeName.equalsIgnoreCase("Mobile")) {
+						PhoneDetailForm phoneDetailForm = new PhoneDetailForm();
+						phoneDetailForm.setBuilderPhoneId(19);
+						phoneDetailForm.setPhoneType("19");
+						phoneDetailForm.setPhoneNumber(profileNode
+								.getFirstChild().getNodeValue());
+						phoneDetailFormList.add(phoneDetailForm);
+					} else if (nodeName.equalsIgnoreCase("City")) {
+						contactInformationForm.setCity(profileNode
+								.getFirstChild().getNodeValue());
+					} else if (nodeName.equalsIgnoreCase("State")) {
+						contactInformationForm.setState(profileNode
+								.getFirstChild().getNodeValue());
+					} else if (nodeName.equalsIgnoreCase("ZipCode")) {
+						contactInformationForm.setPostalCode(profileNode
+								.getFirstChild().getNodeValue());
+					} else if (nodeName.equalsIgnoreCase("City")) {
+						contactInformationForm.setCity(profileNode
+								.getFirstChild().getNodeValue());
+					} else if (nodeName.equalsIgnoreCase("Address")) {
+						String address = profileNode.getFirstChild()
+								.getNodeValue();
+						if (address.length() > 40) {
+							contactInformationForm.setAddressLine1(address
+									.substring(0, 39));
+							contactInformationForm.setAddressLine2(address
+									.substring(40));
+						} else {
+							contactInformationForm.setAddressLine1(address);
+						}
+
+					} else if (nodeName.equalsIgnoreCase("Objectives")) {
+						if (profileNode.getFirstChild().getNodeValue().length() > 200) {
+							createResume.setObjective(profileNode
+									.getFirstChild().getNodeValue()
+									.substring(0, 199));
+						} else {
+							createResume.setObjective(profileNode
+									.getFirstChild().getNodeValue());
+						}
+					} else if (nodeName.equalsIgnoreCase("Skills")) {
+						createResume.setSkills(profileNode.getFirstChild()
+								.getNodeValue());
+
+					}
+					
+					/*// Contact Info Ends
+					if (phoneDetailFormList.size() > 0) {
+						createResume.setListPhoneDtlForm(phoneDetailFormList);
+					} else {
+						PhoneDetailForm phoneDetailForm = new PhoneDetailForm();
+						phoneDetailForm.setPhoneType("17");
+						phoneDetailFormList.add(phoneDetailForm);
+						createResume.setListPhoneDtlForm(phoneDetailFormList);
+					}
+					createResume.setContactInfoForm(contactInformationForm);*/
+
+					// resumeDetails.put(nodeName,
+					// profileNode.getFirstChild().getNodeValue());
+
+				}
+			}
+
+		}
+		// Contact Info Ends
+		if (phoneDetailFormList.size() > 0) {
+			createResume.setListPhoneDtlForm(phoneDetailFormList);
+		} else {
+			PhoneDetailForm phoneDetailForm = new PhoneDetailForm();
+			phoneDetailForm.setPhoneType("17");
+			phoneDetailFormList.add(phoneDetailForm);
+			createResume.setListPhoneDtlForm(phoneDetailFormList);
+		}
+		createResume.setContactInfoForm(contactInformationForm);
+	}
 	 
 }

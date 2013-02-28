@@ -16,7 +16,7 @@
 			theme_advanced_buttons2 :"",
 			theme_advanced_buttons3 :"",
 			theme_advanced_toolbar_location : "top",
-			theme_advanced_toolbar_align : "left",
+			theme_advanced_toolbar_align : "left",			
 			max_chars : 5000,
 			max_chars_indicator : "characterCounter",
 			/*plugins : 'inlinepopups',*/
@@ -32,11 +32,19 @@
 	    	        }
 	    	    }
 	    	});
+			
+			$("#cancel").live("keydown",function(){		    		
+	    		$('#name').focus();		    				    		
+	    	});
+			
 			$('#save').click(function(){ 
-				var coverLetterName = $.trim($("#name").val());
-				var coverLetterText = tinyMCE.get('coverletterText').getContent();				
+				var coverLetterText = tinyMCE.get('coverletterText').getContent();	
+				var value = $("#characterCounter").val();
+				if(value == 5000){
+					$("#errmsg").html("The text characters have exceeded the limit of 5000. Please reduce the text characters.");
+				}else{				
 				$("#description").val(coverLetterText);
-				$.ajax({url:"${pageContext.request.contextPath}/jobSeekerCoverLetter/jobseekerCoverLetterSub.html?coverLetterText="+coverLetterText+"&coverLetterName="+coverLetterName,
+				$.ajax({url:"${pageContext.request.contextPath}/jobSeekerCoverLetter/jobseekerCoverLetterSub.html",
 					data:$('#resCovLetForm').serialize(),
 					type:"POST",
 					success: function(data) {
@@ -49,6 +57,7 @@
 						}
 					 },
 				});
+				}
 			});
 			
 			jQuery(".megamenu").megamenu();   
@@ -67,6 +76,17 @@
 	function refreshCall(){
 		location.reload();
 	}
+	
+	// Returns text statistics for the specified editor by id
+	function getStats(id) {
+	    var body = tinymce.get(id).getBody(), text = tinymce.trim(body.innerText || body.textContent);
+
+	    return {
+	        chars: text.length,
+	        words: text.split(/[\w\u2019\'-]+/).length
+	    };
+	}
+	
 	</script>
 	<script type="text/javascript">
 		$('#Cancel').click(function(){	

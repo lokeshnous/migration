@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,7 @@ import com.advanceweb.afc.jb.common.EducationDTO;
 import com.advanceweb.afc.jb.common.LanguageDTO;
 import com.advanceweb.afc.jb.common.PhoneDetailDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
+import com.advanceweb.afc.jb.common.ResCoverLetterDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
@@ -33,6 +36,8 @@ import com.lowagie.text.FontFactory;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
+import com.lowagie.text.html.simpleparser.HTMLWorker;
+import com.lowagie.text.html.simpleparser.StyleSheet;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
@@ -359,7 +364,12 @@ public class PDFGenerator {
 				referencesTable.addCell(new Paragraph("Reference Type",
 						getLabelFontFactory()));
 				referencesTable.addCell(referenceDTO.getRefType());
-
+				referencesTable.addCell(new Paragraph(
+						" ",
+						getLabelFontFactory()));
+				referencesTable.addCell(new Paragraph(
+						" ",
+						getLabelFontFactory()));
 			}
 
 			if (null == referencesParagraph) {
@@ -550,6 +560,12 @@ public class PDFGenerator {
 			for (LanguageDTO langDTO : listLangDTO) {
 				languagePTable.addCell(langDTO.getLanguage());
 				languagePTable.addCell(langDTO.getExpLvl());
+				languagePTable.addCell(new Paragraph(
+						" ",
+						getLabelFontFactory()));
+				languagePTable.addCell(new Paragraph(
+						" ",
+						getLabelFontFactory()));
 			}
 
 			languageParagraph.add(languagePTable);
@@ -629,6 +645,12 @@ public class PDFGenerator {
 						getLabelFontFactory()));
 				
 				certificationTable.addCell(certificationDTO.getSummary());
+				certificationTable.addCell(new Paragraph(
+						" ",
+						getLabelFontFactory()));
+				certificationTable.addCell(new Paragraph(
+						" ",
+						getLabelFontFactory()));
 			}
 
 			if (null == certificationParagraph) {
@@ -726,7 +748,12 @@ public class PDFGenerator {
 				educationTable.addCell(new Paragraph("I havent graduated",
 						getLabelFontFactory()));
 				educationTable.addCell((educationDTO.isbNotGraduatedYet()==true?"Yes":"No"));
-
+				educationTable.addCell(new Paragraph(
+						" ",
+						getLabelFontFactory()));
+				educationTable.addCell(new Paragraph(
+						" ",
+						getLabelFontFactory()));
 				if (null == educationParagraph) {
 					educationParagraph = new Paragraph();
 				}
@@ -852,7 +879,12 @@ public class PDFGenerator {
 				workExpTable
 						.addCell((workExpDTO.isbCurrentCareerLevel() ? "Yes"
 								:"No"));
-
+				workExpTable.addCell(new Paragraph(
+						" ",
+						getLabelFontFactory()));
+				workExpTable.addCell(new Paragraph(
+						" ",
+						getLabelFontFactory()));
 				/*workExpTable.addCell(new Paragraph("Present",
 						getLabelFontFactory()));
 				workExpTable.addCell((workExpDTO.isbPresent() ? "Yes"
@@ -1115,20 +1147,34 @@ public class PDFGenerator {
 		if ((null != resumeDTO)
 				&& (null != resumeDTO.getResumeText())) {
 
-			Paragraph referencesPara = generateParagraph(
-					resumeDTO.getResumeText(), paragraphFontName,
-					sectionHeadingFontSize, Font.BOLD, Color.BLACK);
-			if (null != referencesPara) {
+//			Paragraph referencesPara = generateParagraph(
+//					resumeDTO.getResumeText(), paragraphFontName,
+//					sectionHeadingFontSize, Font.BOLD, Color.BLACK);
+//			if (null != referencesPara) {
 				Paragraph languageHeadingPara = generateParagraph(
 						"Resume Details", paragraphFontName,
 						sectionHeadingFontSize, Font.BOLD, Color.BLACK);
 				document.add(Chunk.NEWLINE);
 				document.add(languageHeadingPara);
 				document.add(Chunk.NEWLINE);
-				document.add(referencesPara);
-			}
+//				document.add(referencesPara);
+				HTMLWorker htmlWorker = new HTMLWorker(document);
+				ArrayList<Element> arrayElementList = null;
+				try {
+					StyleSheet styles = new StyleSheet();
+//			        styles.loadTagStyle("body", "font", "Bitstream Vera Sans");
+					arrayElementList = htmlWorker.parseToList(new StringReader(resumeDTO.getResumeText()), styles);
+				} catch (IOException e) {
+					logException(e, "Uable to parse HTML content of copy paste resume");
+					e.printStackTrace();
+				} 
+				for (int i = 0; i < arrayElementList.size(); ++i) {
+		            Element element = (Element) arrayElementList.get(i);
+		            document.add(element);
+		        }
+//			}
 			//Section separator - Draw Line
-			 drawLineSeperator(document);
+//			 drawLineSeperator(document);
 		}
 	}
 
@@ -1210,6 +1256,124 @@ public class PDFGenerator {
 		pCell.setColspan(1);
 		return pCell;
 
+	}
+	
+	/**
+	 * Produce the Resume Cover Letter in PDF format and display to the user to print
+	 * 
+	 * @param request
+	 * @param response
+	 * @param resCoverLetterDTO
+	 * 		the retrieved Resume cover Letter from the data store
+	 */
+	public void generateAndExportCoverLetterAsPdfForPrint(
+			HttpServletRequest request, HttpServletResponse response,
+			ResCoverLetterDTO resCoverLetterDTO) {
+
+		String fileName = (null != resCoverLetterDTO.getName() ? resCoverLetterDTO
+				.getName() : "Cover Letter");
+
+		response.setHeader("Content-disposition", "inline; filename=\""
+				+ fileName + ".pdf\"");
+		response.setContentType("application/pdf");
+		Document document = new Document(PageSize.A4, 36, 36, 36, 36);
+		try {
+
+			PdfWriter.getInstance(document, response.getOutputStream());
+			document.open();
+			generatePDFCoverLtr(document, resCoverLetterDTO);
+			document.close();
+		} catch (DocumentException documentException) {
+			logException(documentException, "Uable to create PDF document");
+		} catch (IOException ioException) {
+			logException(ioException, "Uable to create PDF document");
+		}
+	}
+
+	/**
+	 * Main method that begins to draw the information onto the generated PDF
+	 * 
+	 * @param document
+	 *            the new pdf document that is being created
+	 * @param resCoverLetterDTO
+	 *            the resume Cover Letter information from the data source for the candidate
+	 * @throws DocumentException
+	 *             thrown if there is any exception occurring during pdf
+	 *             generation
+	 */
+	public void generatePDFCoverLtr(Document document,
+			ResCoverLetterDTO resCoverLetterDTO) throws DocumentException {
+
+		// TODO change the Creator / Author to the logged-in User / Candidate
+		// Name
+		document.addAuthor("User Name");
+		if (null != resCoverLetterDTO.getName()) {
+			document.addCreator(resCoverLetterDTO.getName());
+			document.addTitle(resCoverLetterDTO.getName());
+		}
+		document.addCreationDate();
+		// Creating the cover letter in the form PDF
+		if ((null != resCoverLetterDTO)
+				&& (null != resCoverLetterDTO.getCoverletterText())) {
+//			Paragraph referencesPara = generateParagraph(
+//					resCoverLetterDTO.getCoverletterText(), paragraphFontName,
+//					sectionHeadingFontSize, Font.BOLD, Color.BLACK);
+//			if (null != referencesPara) {
+				Paragraph languageHeadingPara = generateParagraph(
+						"Cover Letter Details", paragraphFontName,
+						sectionHeadingFontSize, Font.BOLD, Color.BLACK);
+				document.add(Chunk.NEWLINE);
+				document.add(languageHeadingPara);
+				document.add(Chunk.NEWLINE);
+				HTMLWorker htmlWorker = new HTMLWorker(document);
+				ArrayList<Element> arrayElementList = null;
+				try {
+					StyleSheet styles = new StyleSheet();
+			        styles.loadTagStyle("body", "font", "Bitstream Vera Sans");
+					arrayElementList = htmlWorker.parseToList(new StringReader(resCoverLetterDTO.getCoverletterText()), styles);
+				} catch (IOException e) {
+					logException(e, "Uable to parse HTML content of cover Letter");
+					e.printStackTrace();
+				} 
+				for (int i = 0; i < arrayElementList.size(); ++i) {
+		            Element element = (Element) arrayElementList.get(i);
+		            document.add(element);
+		        }
+//				document.add(referencesPara);
+//			}
+			// Section separator - Draw Line
+//			drawLineSeperator(document);
+		}
+
+	}
+	
+	/**
+	 * Produce the Cover Letter Resume in PDF format and display to the user to download
+	 * 
+	 * @param resCoverLetterDTO
+	 *            the retrieved Cover Letter Resume from the data store
+	 */
+	public void generateAndExportCoverLetterAsPdf(HttpServletRequest request,
+			HttpServletResponse response, ResCoverLetterDTO resCoverLetterDTO) {
+
+		String fileName = (null != resCoverLetterDTO.getName() ? resCoverLetterDTO
+				.getName() : "Cover Letter");
+
+		response.setHeader("Content-disposition", "attachment; filename=\""
+				+ fileName + ".pdf\"");
+		response.setContentType("application/pdf");
+		Document document = new Document(PageSize.A4, 36, 36, 36, 36);
+		try {
+
+			PdfWriter.getInstance(document, response.getOutputStream());
+			document.open();
+			generatePDFCoverLtr(document, resCoverLetterDTO);
+			document.close();
+		} catch (DocumentException documentException) {
+			logException(documentException, "Uable to create PDF document");
+		} catch (IOException ioException) {
+			logException(ioException, "Uable to create PDF document");
+		}
 	}
 
 	/**

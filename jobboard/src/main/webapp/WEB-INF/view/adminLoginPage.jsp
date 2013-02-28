@@ -67,13 +67,15 @@
 
 
 		<form style="align:center" method="post" id="loginForm" action="../admin/authenticateAdmin.html" onsubmit="return validate();">
-		    <div id="loginPage" class="job_seeker_login width400 ">
-		    
+		    <div id="loginPage" class="job_seeker_login width526 ">
+		    <div style="width:70%; float:left;">
 		    <div id="errorDiv" class="FormErrorDisplayText paddingBottom10">
 								${error}
 							</div>
 							<div id="errorMsgDiv" class="FormErrorDisplayText" style=" display: none"></div>
 			<div class="row"><h2 class="noTopBottomBorder">Admin Login</h2></div>
+			<br/>
+			
 			<p class="row">Enter your Email Address and Password.</p><br/><br/><br/>
 			
 			    <div class="rowEvenSpacingMargin0">
@@ -92,8 +94,11 @@
 				 <span class="floatLeft"><input type="submit" id="loginButton" class="orange" value="Login"/></span>
 				 <!--  <span class="floatLeft"><input type="button" id="back" class="orange" value="Cancel"/></span> -->
 				</div>
+				</div>
 				<div class="clearfix"></div>
 			    </div>
+			    <div style="width:21%; float:left; margin-top:70px; ">
+		    <img src="<%=request.getContextPath()%>/resources/images/advancePass.png"/> </div>
 			
 		    </div>
 		    <br class="clearfix" />

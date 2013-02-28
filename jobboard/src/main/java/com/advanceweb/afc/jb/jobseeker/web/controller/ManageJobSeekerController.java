@@ -705,11 +705,11 @@ public class ManageJobSeekerController {
 		try {
 			ResumeDTO resumeDTO = resumeService.editResume(resumeId);
 			
-			if (resumeDTO.getResumeText() != null) {
-				String resumeTextParsed = Jsoup.parse(
-						resumeDTO.getResumeText()).text();
-				resumeDTO.setResumeText(resumeTextParsed);
-			}
+//			if (resumeDTO.getResumeText() != null) {
+//				String resumeTextParsed = Jsoup.parse(
+//						resumeDTO.getResumeText()).text();
+//				resumeDTO.setResumeText(resumeTextParsed);
+//			}
 
 			// if the resume Type is Upload then we download the Resume as is
 			if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO
@@ -744,11 +744,11 @@ public class ManageJobSeekerController {
 		ModelAndView model = new ModelAndView();
 		try {
 			ResumeDTO resumeDTO = resumeService.editResume(resumeId);
-			if (resumeDTO.getResumeText() != null) {
-				String resumeTextParsed = Jsoup.parse(
-						resumeDTO.getResumeText()).text();
-				resumeDTO.setResumeText(resumeTextParsed);
-			}
+//			if (resumeDTO.getResumeText() != null) {
+//				String resumeTextParsed = Jsoup.parse(
+//						resumeDTO.getResumeText()).text();
+//				resumeDTO.setResumeText(resumeTextParsed);
+//			}
 			
 			// if the resume Type is Upload then we download the Resume as is
 			if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO

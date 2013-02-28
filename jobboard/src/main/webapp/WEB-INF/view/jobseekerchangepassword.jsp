@@ -58,7 +58,10 @@
        <a href="#"><img title="Close" src="../resources/images/Close.png" width="19" height="19" onclick="cancelProcess();" alt=""></a></div>
                  
        <div class="popUpContainerWrapper">
-       <form:form method="Get" action="/<%=request.getContextPath()%>/jobseekerregistration/jobSeekerUpdatePassword.html" commandName="changePasswordForm" id="passwordChange"> 
+       
+       <div style="width:79%;float:left ">
+       <form:form method="Get" action="/<%=request.getContextPath()%>/jobseekerregistration/jobSeekerUpdatePassword.html" commandName="changePasswordForm" id="passwordChange">
+        
        		<div class="validationMsg" id="errmsg"> </div>
             <div class="rowEvenNewSpacing">
               	<span class="lableText3">Email Address:</span> 
@@ -106,6 +109,8 @@
             </div>
             <div class="clearfix"></div>
      </form:form>
+     </div>
+     <div style="width:21%; float:left; margin-top:20px; "><img src="<%=request.getContextPath()%>/resources/images/advancePass.png"/></div>
         </div>
 </div>
 

@@ -42,9 +42,9 @@
 	<bean id="jobSearchIndex" class="com.advanceweb.afc.jb.search.SearchIndex">
 
 		<!-- If Solr mapped to jobPost -->
-		<property name="name" value="jobPostJB2" />
+		<property name="name" value="jobPostTest" />
 		<property name="group" value="careers" />
-		<property name="environment" value="PRD" />
+		<property name="environment" value="DEV" />
 	</bean>
 
 	<bean id="jobSearchDelegate"

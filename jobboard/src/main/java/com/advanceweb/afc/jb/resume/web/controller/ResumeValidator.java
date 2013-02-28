@@ -66,9 +66,10 @@ public class ResumeValidator {
 	public String validateResumeBuilder(CreateResume createResume) {
 
 		String validationMessage = "";
-		validationMessage = validateContactInfo(createResume
-				.getContactInfoForm());
-		validationMessage = validatePhoneNumbers(createResume);
+		validationMessage = validateContactInfo(createResume);
+		if (null == validationMessage) {
+			validationMessage = validatePhoneNumbers(createResume);
+		}
 		if (!StringUtils.isEmpty(validationMessage)) {
 			return validationMessage;
 		}
@@ -109,8 +110,11 @@ public class ResumeValidator {
 	 * @param form
 	 * @return
 	 */
-	private String validateContactInfo(ContactInfoForm form) {
-
+	private String validateContactInfo(CreateResume createResume) {
+		ContactInfoForm form = new ContactInfoForm();
+		if (null != createResume.getContactInfoForm()) {
+			form = createResume.getContactInfoForm();
+		}
 		if (StringUtils.isBlank(form.getFirstName())
 				|| StringUtils.isBlank(form.getLastName())
 				|| StringUtils.isBlank(form.getAddressLine1())
@@ -192,12 +196,60 @@ public class ResumeValidator {
 
 		if (null != workExpList) {
 			for (WorkExpForm form : workExpList) {
+
+				Date currentDate = new Date();
+				if (!StringUtils.isEmpty(form.getStartDate())) {
+					Date startDate = DateUtils.convertStringToSQLDate(form
+							.getStartDate());
+					Calendar curDt = Calendar.getInstance();
+					Calendar startDt = Calendar.getInstance();
+					curDt.setTime(currentDate);
+					startDt.setTime(startDate);
+					if (startDt.after(curDt)) {
+						return "Entered Date should not be greater than current Date";
+					}
+				}
+
+				if (!StringUtils.isEmpty(form.getEndDate())) {
+					Date endDate = DateUtils.convertStringToSQLDate(form
+							.getEndDate());
+					Calendar curDt = Calendar.getInstance();
+					Calendar endDt = Calendar.getInstance();
+					curDt.setTime(currentDate);
+					endDt.setTime(endDate);
+					if (endDt.after(curDt)) {
+						return "Entered Date should not be greater than current Date";
+					}
+				}
+
+				if (!StringUtils.isEmpty(form.getStartDate())
+						&& !StringUtils.isEmpty(form.getEndDate())) {
+					Date startDate = DateUtils.convertStringToSQLDate(form
+							.getStartDate());
+					Date endDate = DateUtils.convertStringToSQLDate(form
+							.getEndDate());
+
+					Calendar curDt = Calendar.getInstance();
+					Calendar startDt = Calendar.getInstance();
+					Calendar endDt = Calendar.getInstance();
+					curDt.setTime(currentDate);
+					endDt.setTime(endDate);
+					startDt.setTime(startDate);
+					int yearDiff = endDt.get(Calendar.YEAR)
+							- startDt.get(Calendar.YEAR);
+					if (startDt.after(endDt)) {
+						return "Start date should be less than end date";
+					}
+					if (yearDiff < 0) {
+						return "Start date should be less than end date";
+					}
+				}
+
 				if (!StringUtils.isEmpty(form.getYrsAtPostion())) {
 					if ((!StringUtils.isEmpty(form.getYrsAtPostion()) && !validateNumericsPattern(form
 							.getYrsAtPostion()))) {
 						return "Years at Position should contain only numeric values";
 					}
-					Date currentDate = new Date();
 					if (!StringUtils.isEmpty(form.getStartDate())) {
 						Date startDate = DateUtils.convertStringToSQLDate(form
 								.getStartDate());

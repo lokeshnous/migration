@@ -568,7 +568,7 @@ function removeRefrences(divID,pID){
 									         									         
 											<div class="floatLeft marginRight10"></div>
 											<span class="floatLeft marginRight10"></span>
-										
+																					
 												<form:select path="listPhoneDtlForm[${status.index}].phoneType" id="exclude" class="jb_input75">
 													<form:options items="${phoneTypeList}" itemValue="optionId" itemLabel="optionName" />
 												</form:select>

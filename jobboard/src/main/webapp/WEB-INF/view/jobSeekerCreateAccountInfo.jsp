@@ -401,8 +401,16 @@ function validateNumber(event) {
 						class="job_seeker_login leftFormHolder" style="display: block">
 						<h2 class="sectionSubHeader">Step 2: Your Information</h2>
 						<h3 class="marginLeft10">Contact Information</h3>
+						<%-- <div class="rowEvenNewSpacing">
+						
+						<!-- <span class="lableText3"></span> -->
+						<img src="<%=request.getContextPath()%>/resources/images/advancePass.png" style="margin:0 0 0px 95px;"/>
+						</div> --%>
 						<%-- <c:if test="${not empty message}"> --%>
 							<div class="rowEvenNewSpacing" >
+							<div style="flot:left;">
+							<img src="<%=request.getContextPath()%>/resources/images/advancePass.png" style="margin:0px;"/>
+							</div>
 								<span class="lableText3"></span> <span
 									class="FormErrorDisplayText" id= "errorMsg"> ${message}<br /></span>
 

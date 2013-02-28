@@ -433,8 +433,8 @@ function appendURLForATS(){
 						}
 						
 						if ($("#activeOrInactive").val() == 'true') {
-							populateTemplates();
-							callTemplate();
+							//populateTemplates();
+							//callTemplate();
 							if ($("#enableJobTitle").val() == 'true') {
 								$("#jobTitleId").attr("disabled", false);
 								$("#jobOwner").attr("disabled", false);
@@ -466,8 +466,8 @@ function appendURLForATS(){
 								$("#bHideCountry1").attr("disabled", false);
 							}
 							else{
-								populateTemplates();
-								callTemplate();
+								//populateTemplates();
+								//callTemplate();
 								$("#jobTitleId").attr("disabled", true);
 								$("#jobOwner").attr("disabled", false);
 								$("#companyAutoPopulation").attr("disabled", false);

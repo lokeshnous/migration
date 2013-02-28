@@ -147,6 +147,8 @@ public class ResumeDTO extends ProfileDTO implements Serializable{
 	/** The publish resume id. */
 	private int publishResumeId;
 	
+	/**	The Selected List. */
+	private List<Integer> selectedList;
 
 	/**
 	 * Gets the publish resume id.
