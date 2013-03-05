@@ -43,6 +43,8 @@ public class ResumeDTO extends ProfileDTO implements Serializable{
 	/** The desired employment type. */
 	private String desiredEmploymentType;
 	
+	private List<String> employmentTypes;
+	
 	/** The work authorization us. */
 	private String workAuthorizationUS;
 	
@@ -972,6 +974,22 @@ public class ResumeDTO extends ProfileDTO implements Serializable{
 
 	public void setSelectedList(List<Integer> selectedList) {
 		this.selectedList = selectedList;
+	}
+
+
+	/**
+	 * @return the employmentTypes
+	 */
+	public List<String> getEmploymentTypes() {
+		return employmentTypes;
+	}
+
+
+	/**
+	 * @param employmentTypes the employmentTypes to set
+	 */
+	public void setEmploymentTypes(List<String> employmentTypes) {
+		this.employmentTypes = employmentTypes;
 	}
 	
 }

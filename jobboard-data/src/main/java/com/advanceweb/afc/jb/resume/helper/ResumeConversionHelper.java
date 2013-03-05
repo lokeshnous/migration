@@ -444,7 +444,17 @@ public class ResumeConversionHelper {
 				resumeProfile.setAttribValue(resumeDTO.getDesiredJobTitle());
 			}
 			else if(MMJBCommonConstants.EMPLOYMENT_TYPE.equals(formTypeName)){
-				resumeProfile.setAttribValue(resumeDTO.getDesiredEmploymentType());
+				//resumeProfile.setAttribValue(resumeDTO.getDesiredEmploymentType());
+				 StringBuilder sb = new StringBuilder();
+				 String strfromArrayList = MMJBCommonConstants.EMPTY;
+				if(null != resumeDTO.getEmploymentTypes()){
+					for(String str : resumeDTO.getEmploymentTypes()){
+			            sb.append(str).append(","); 
+			        }
+					sb.deleteCharAt(sb.length()-1);
+					strfromArrayList = sb.toString();					
+				}		
+				resumeProfile.setAttribValue(strfromArrayList);
 			}
 			else if(MMJBCommonConstants.WORK_AUTH_US.equals(formTypeName)){
 				resumeProfile.setAttribValue(resumeDTO.getWorkAuthorizationUS());

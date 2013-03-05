@@ -39,7 +39,6 @@ import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -1635,9 +1634,6 @@ public class ResumeController extends AbstractController {
 				LOGGER.error("Error in view resume builder", jbex);
 			}
 		} else {
-			/*String resumeDesc = createResume.getResumeText();
-			resumeDesc = resumeDesc.replaceAll("\\<.*?\\>", "");
-			createResume.setResumeText(resumeDesc);	*/
 			model.addObject(CREATE_RESUME, createResume);
 			model.setViewName("viewCopyPasteResume");
 		}
@@ -2255,6 +2251,5 @@ public class ResumeController extends AbstractController {
 			createResume.setListPhoneDtlForm(phoneDetailFormList);
 		}
 		createResume.setContactInfoForm(contactInformationForm);
-	}
-	 
+	} 
 }

@@ -155,10 +155,10 @@
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4">Desired Employment Type:</span>
 
-					<form:select class="jb_input3 jb_input_width3"
-						path="desiredEmploymentType" items="${employmentType}"
-						itemValue="optionValue" itemLabel="optionValue" />
-					<form:errors path="desiredEmploymentType" />
+					<form:select 
+						path="employmentTypes" id="employmentTypes" items="${employmentType}"
+						itemValue="optionValue" itemLabel="optionValue" size="7" multiple="true" style="width:150px;"/>
+					<form:errors path="employmentTypes" />
 
 				</div>
 				<div class="rowEvenNewSpacing">

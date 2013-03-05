@@ -35,6 +35,8 @@ public class CreateResume {
 	/** The desired employment type. */
 	private String desiredEmploymentType;
 	
+	private List<String> employmentTypes;
+	
 	/** The work authorization us. */
 	private String workAuthorizationUS;
 	
@@ -794,5 +796,19 @@ public class CreateResume {
 	 */
 	public void setSelectedLst(List<DropDownDTO> selectedLst) {
 		this.selectedLst = selectedLst;
+	}
+
+	/**
+	 * @return the employmentTypes
+	 */
+	public List<String> getEmploymentTypes() {
+		return employmentTypes;
+	}
+
+	/**
+	 * @param employmentTypes the employmentTypes to set
+	 */
+	public void setEmploymentTypes(List<String> employmentTypes) {
+		this.employmentTypes = employmentTypes;
 	}
 }

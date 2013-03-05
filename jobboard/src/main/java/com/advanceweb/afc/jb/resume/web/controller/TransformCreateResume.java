@@ -9,6 +9,7 @@ package com.advanceweb.afc.jb.resume.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
@@ -50,8 +51,7 @@ public class TransformCreateResume {
 		resumeDTO.setResumeType(createResume.getResumeType());
 		resumeDTO.setResumeName(createResume.getResumeName());
 		resumeDTO.setDesiredJobTitle(createResume.getDesiredJobTitle());
-		resumeDTO.setDesiredEmploymentType(createResume
-				.getDesiredEmploymentType());
+		resumeDTO.setEmploymentTypes(createResume.getEmploymentTypes());
 		resumeDTO.setResumeVisibility(createResume.getResumeVisibility());
 		resumeDTO.setWorkAuthorizationUS(createResume.getWorkAuthorizationUS());
 		resumeDTO.setWillingToRelocate(createResume.getWillingToRelocate());
@@ -84,6 +84,17 @@ public class TransformCreateResume {
 		createResume.setDesiredJobTitle(resumeDTO.getDesiredJobTitle());
 		createResume.setDesiredEmploymentType(resumeDTO
 				.getDesiredEmploymentType());
+		if(null != resumeDTO
+				.getDesiredEmploymentType()){
+			String empTypes = resumeDTO.getDesiredEmploymentType();
+			StringTokenizer stringNew = new StringTokenizer(empTypes, ",");
+			List<String> resumes = new ArrayList<String>();
+			while (stringNew.hasMoreElements()) {
+				String stringObject = (String) stringNew.nextElement();			
+				resumes.add(stringObject);			
+				createResume.setEmploymentTypes(resumes);
+			}
+		}
 		createResume.setWorkAuthorizationUS(resumeDTO.getWorkAuthorizationUS());
 		createResume.setWillingToRelocate(resumeDTO.getWillingToRelocate());
 		createResume.setResumeVisibility(resumeDTO.getResumeVisibility());

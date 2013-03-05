@@ -72,7 +72,7 @@
 				$("#resumeErrorMsg").html("<span>Please enter the required fields.</span>");
 			}
 		});	
-			
+		
 		});
 	
 </script>
@@ -121,11 +121,11 @@
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4">Desired Employment Type:</span>
 
-					<form:select class="jb_input3 jb_input_width3"
-						path="desiredEmploymentType" items="${employmentType}"
-						itemValue="optionValue" itemLabel="optionValue" />
-					<form:errors path="desiredEmploymentType" />
-
+					<form:select
+						path="employmentTypes" id="employmentTypes" multiple="true" items="${employmentType}"
+						itemValue="optionValue" itemLabel="optionValue" size="7" style="width:150px;"/>
+					<form:errors path="employmentTypes" />
+					
 				</div>
 				<div class="rowEvenNewSpacing">
 					<span class="lableText4">U.S. Work Authorization:</span>
