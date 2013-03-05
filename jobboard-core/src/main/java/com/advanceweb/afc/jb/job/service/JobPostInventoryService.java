@@ -29,4 +29,12 @@ public interface JobPostInventoryService {
 	 * @return JobPostingInventoryDTO
 	 */
 	List<JobPostingInventoryDTO> getInventoryDetails(int userId, int facilityId);
+	/**
+	 * This method to get resume inventory details
+	 * 
+	 * @param userId
+	 * @param facilityId
+	 * @return JobPostingInventoryDTO
+	 */
+	List<JobPostingInventoryDTO> getResumeInventoryDetails(int userId, int facilityId);
 }

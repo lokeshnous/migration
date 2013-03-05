@@ -40,4 +40,16 @@ public class JobPostInventoryServiceImpl implements JobPostInventoryService{
 			int facilityId) {
 		return inventoryDAO.getInventoryDetails(userId, facilityId);
 	}
+	
+	/**
+	 * This method to get resume inventory details
+	 * 
+	 * @param userId
+	 * @param facilityId
+	 * @return JobPostingInventoryDTO
+	 */
+	public List<JobPostingInventoryDTO> getResumeInventoryDetails(int userId,
+			int facilityId) {
+		return inventoryDAO.getResumeInventoryDetails(userId, facilityId);
+	}
 }

@@ -7,6 +7,8 @@
  */
 package com.advanceweb.afc.jb.common;
 
+import java.util.Date;
+
 /**
  * 
  * @author Bharati Umarani
@@ -54,6 +56,24 @@ public class JobPostingInventoryDTO {
 	
 	/** The inv detail id. */
 	private int invDetailId;
+	private Date startDt;
+	private Date endtDt;
+
+	public Date getStartDt() {
+		return startDt;
+	}
+
+	public void setStartDt(Date startDt) {
+		this.startDt = startDt;
+	}
+
+	public Date getEndtDt() {
+		return endtDt;
+	}
+
+	public void setEndtDt(Date endtDt) {
+		this.endtDt = endtDt;
+	}
 
 	/**
 	 * @return the invDetailId

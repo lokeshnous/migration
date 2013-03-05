@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.advanceweb.afc.jb.common.CommonUtil;
 import com.advanceweb.afc.jb.common.JobPostingInventoryDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
@@ -107,6 +108,66 @@ public class JobPostingInventoryController {
 		model.addObject("jbSlotList", jbSlotList);
 		model.addObject("pageName", page);
 		model.setViewName("jobPostingInventoryPopup");
+		}catch(Exception e){
+			LOGGER.error(e);
+		}
+		return model;
+	}
+	
+	/**
+	 * This method to get job posting inventory details
+	 * 
+	 * @param model
+	 * @return ModelAndView
+	 */
+	@RequestMapping(value = "/employer/resumeInventory", method = RequestMethod.GET)
+	public ModelAndView resumeInventory(
+			@ModelAttribute("alertForm") InventoryForm inventoryForm,
+			BindingResult result,
+			HttpSession session) {
+		
+		ModelAndView model = new ModelAndView();
+		try{
+		// If Inventory page is from dashboard then we need to provide action
+		// column
+		
+		int userId = (Integer) session.getAttribute(MMJBCommonConstants.USER_ID);
+		int facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
+		facilityId = facilityService.getParentFacility(facilityId).getFacilityId();
+		List<JobPostingInventoryDTO> inventiryDTOList = inventoryService.getResumeInventoryDetails(userId, facilityId);
+
+		List<JobPostingInventoryDTO> inventoryList = new ArrayList<JobPostingInventoryDTO>();
+//		List<JobPostingInventoryDTO> jbSlotList = new ArrayList<JobPostingInventoryDTO>();
+		JobPostingInventoryDTO dto = null;
+		
+//		String duration = Integer.toString(MMJBCommonConstants.PLAN_DAYS) + " "+ MMJBCommonConstants.DAYS;
+		
+		for (JobPostingInventoryDTO postingInventoryDTO : inventiryDTOList) {
+			
+			dto = new JobPostingInventoryDTO();
+			
+//			if (MMJBCommonConstants.STANDARD_JOB_POSTING.equalsIgnoreCase(postingInventoryDTO.getJbType())) {
+//				dto.setAddon(postingInventoryDTO.getAddon());
+//				dto.setDuration(duration);
+//				dto.setQuantity(postingInventoryDTO.getQuantity());
+//				dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
+//				dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
+//				jbPostList.add(dto);
+//			}else if (MMJBCommonConstants.JOB_POSTING_SLOT.equalsIgnoreCase(postingInventoryDTO.getJbType())) {
+//				dto.setAddon(postingInventoryDTO.getAddon());
+//				dto.setDuration(duration);
+//				dto.setQuantity(postingInventoryDTO.getQuantity());
+//				dto.setAvailableQty(postingInventoryDTO.getAvailableQty());
+//				dto.setInvDetailId(postingInventoryDTO.getInvDetailId());
+			dto.setProductType(postingInventoryDTO.getProductType());
+			dto.setStartDt(postingInventoryDTO.getStartDt());
+			dto.setEndtDt(postingInventoryDTO.getEndtDt());
+				inventoryList.add(dto);
+//			}
+		}
+		model.addObject("jbPostList", inventoryList);
+//		model.addObject("jbSlotList", jbSlotList);
+		model.setViewName("resumeInventoryPopup");
 		}catch(Exception e){
 			LOGGER.error(e);
 		}

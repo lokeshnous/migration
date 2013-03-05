@@ -803,6 +803,7 @@ jobboard/src/main/webapp/WEB-INF/view/postNewJobs.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/printCoverLetter.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/publicationDetails.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/registrationsuccess.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/resumeInventoryPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/selectResumePopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/setAlertPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/sitemap.jsp -text

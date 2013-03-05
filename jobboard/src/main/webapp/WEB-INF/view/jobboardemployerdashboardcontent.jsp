@@ -98,6 +98,10 @@ var options = {
 						"370");
 				$("#purchaseJobPostings").displaypopup("#purchaseJobPostings",
 						"790", "360");
+				$("#purchaseResumeSearch").displaypopup("#purchaseResumeSearch",
+						"790", "360");
+				$("#resumeInventory").displaypopup("#resumeInventory",
+						"790", "360");
 				$("#accessPermissioPopUp").displaypopup(
 						"#accessPermissioPopUp", "770", "360");
 				$("#setAlertPopUp")
@@ -541,8 +545,13 @@ padding:0;
 								<%-- 	<c:if test="${enablePostEditAccess eq 'true'}"> --%>
 								<div class="lableTextDashBoard">
 									<p>
-										<a id="purchaseResumeSearch" title="Coming Soon">Purchase Resume Search
+										<a href="<%=request.getContextPath()%>/purchaseResumeSearch/showResumeSearchPachages.html" id="purchaseResumeSearch" >Purchase Resume Search
 											Packages</a>
+									</p>
+								</div>
+								<div class="lableTextDashBoard">
+									<p>
+											<a href="<%=request.getContextPath()%>/inventory/employer/resumeInventory.html" id="resumeInventory" >Resume Inventory</a>
 									</p>
 								</div>
 							</security:authorize>
@@ -554,9 +563,11 @@ padding:0;
 						</div>
 						<div class="lableTextDashBoard">
 							<p>
-								<a title="Coming Soon"> My Saved
-									Resume Searches&nbsp;<%-- ${msg.commonOpenBrace}<c:out
-										value="${employerDashBoardForm.resumeSearchCount}" />${msg.commonCloseBrace} --%>
+								<a
+									href="<%=request.getContextPath()%>/employerSearchResume/mySavedResumeSearches.html"
+									id="mySavedResumeSearches"> My Saved
+									Resume Searches&nbsp;${msg.commonOpenBrace}<c:out
+										value="${employerDashBoardForm.resumeSearchCount}" />${msg.commonCloseBrace}
 								</a>
 							</p>
 						</div>
