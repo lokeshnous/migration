@@ -7,6 +7,7 @@
  */
 package com.advanceweb.afc.jb.resume;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import com.advanceweb.afc.jb.common.LanguageDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
+import com.advanceweb.afc.jb.data.entities.ResViewed;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.resume.dao.ResumeDao;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
@@ -231,6 +233,30 @@ public class ResumeServiceImpl implements ResumeService {
 		}
 		return result;
 	}
-	
+
+	@Override
+	public boolean saveViewDetails(int resumeId, int userId) throws JobBoardServiceException {
+		boolean result = false;
+		try {
+			result= resumeDao.saveViewDetails(resumeId,userId);
+		} catch (JobBoardDataException jdex) {
+			throw new JobBoardServiceException(
+					"Error while saving viewed resume details..." + jdex);
+		}
+		return result;
+	}
+
+	@Override
+	public List<ResViewed> getViewDetails(int resumeId, int userId)
+			throws JobBoardServiceException {
+		List<ResViewed> resViewedList = new ArrayList<ResViewed>();
+		try {
+			resViewedList = resumeDao.getViewDetails(resumeId, userId);
+		} catch (JobBoardDataException jdex) {
+			throw new JobBoardServiceException(
+					"Error while saving viewed resume details..." + jdex);
+		}
+		return resViewedList;
+	}
 
 }
