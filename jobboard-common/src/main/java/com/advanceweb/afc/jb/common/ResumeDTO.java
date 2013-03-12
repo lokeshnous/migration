@@ -149,6 +149,9 @@ public class ResumeDTO extends ProfileDTO implements Serializable{
 	/** The publish resume id. */
 	private int publishResumeId;
 	
+	/** The publish resume id. */
+	private boolean resumeViewed;
+	
 	/**	The Selected List. */
 	private List<Integer> selectedList;
 
@@ -990,6 +993,20 @@ public class ResumeDTO extends ProfileDTO implements Serializable{
 	 */
 	public void setEmploymentTypes(List<String> employmentTypes) {
 		this.employmentTypes = employmentTypes;
+	}
+	/**
+	 * @return the resumeViewed
+	 */
+	public boolean isResumeViewed() {
+		return resumeViewed;
+	}
+
+
+	/**
+	 * @param resumeViewed the resumeViewed to set
+	 */
+	public void setResumeViewed(boolean resumeViewed) {
+		this.resumeViewed = resumeViewed;
 	}
 	
 }

@@ -12,7 +12,10 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.advanceweb.afc.jb.common.CertificationDTO;
 import com.advanceweb.afc.jb.common.ContactInformationDTO;
@@ -34,6 +37,10 @@ import com.advanceweb.afc.jb.jobseeker.web.controller.ContactInfoForm;
  */
 @Repository("transCreateResume")
 public class TransformCreateResume {
+	
+	/** The Constant LOGGER. */
+	private static final Logger LOGGER = Logger
+			.getLogger(TransformCreateResume.class);
 
 	/**
 	 * Transform create resume to resume dto.
@@ -575,6 +582,199 @@ public class TransformCreateResume {
 		}
 
 		return createResume;
+
+	}
+	
+	/** Method to convert the Parser node value to resume form
+	 * 
+	 * @param createResume
+	 * @param list
+	 */
+	public void convertNodeDetailToResumeForm(CreateResume createResume,
+			NodeList list) {
+
+		Node profileNode;
+		String nodeName;
+		ContactInfoForm contactInformationForm = new ContactInfoForm();
+		List<PhoneDetailForm> phoneDetailFormList = new ArrayList<PhoneDetailForm>();
+		/** The list cert form. */
+		List<CertificationsForm> listCertForm = new ArrayList<CertificationsForm>();
+
+		/** The list edu form. */
+		List<EducationForm> listEduForm = new ArrayList<EducationForm>();
+
+		/** The list lang form. */
+		List<LanguageForm> listLangForm = new ArrayList<LanguageForm>();
+
+		/** The list ref form. */
+		List<ReferenceForm> listRefForm = new ArrayList<ReferenceForm>();
+
+		/** The list work exp form. */
+		List<WorkExpForm> listWorkExpForm = new ArrayList<WorkExpForm>();
+
+		for (int i = 0; i < list.getLength(); i++) {
+			profileNode = list.item(i);
+			if (profileNode.getNodeType() == Node.ELEMENT_NODE) {
+				nodeName = profileNode.getNodeName();
+				
+				if (profileNode.getFirstChild() != null) {
+					LOGGER.debug("Node : " + nodeName + "Node Value"
+							+ profileNode.getFirstChild().getNodeValue());
+					// Contact Info Starts
+					if (nodeName.equalsIgnoreCase("FirstName") && !StringUtils.isBlank(profileNode
+								.getFirstChild().getNodeValue())) {
+						contactInformationForm.setFirstName(profileNode
+								.getFirstChild().getNodeValue());
+					} else if (nodeName.equalsIgnoreCase("LastName") && !StringUtils.isBlank(profileNode
+							.getFirstChild().getNodeValue())) {
+						contactInformationForm.setLastName(profileNode
+								.getFirstChild().getNodeValue());
+					} else if (nodeName.equalsIgnoreCase("Middlename") && !StringUtils.isBlank(profileNode
+							.getFirstChild().getNodeValue())) {
+						contactInformationForm.setMiddleName(profileNode
+								.getFirstChild().getNodeValue());
+					} else if (nodeName.equalsIgnoreCase("Email") && !StringUtils.isBlank(profileNode
+							.getFirstChild().getNodeValue())) {
+						// contactInformationForm.set(profileNode.getFirstChild().getNodeValue());
+					} else if (nodeName.equalsIgnoreCase("Phone") && !StringUtils.isBlank(profileNode
+							.getFirstChild().getNodeValue())) {
+						PhoneDetailForm phoneDetailForm = new PhoneDetailForm();
+						phoneDetailForm.setBuilderPhoneId(17);
+						phoneDetailForm.setPhoneType("17");
+						phoneDetailForm.setPhoneNumber(profileNode
+								.getFirstChild().getNodeValue());
+						phoneDetailFormList.add(phoneDetailForm);
+					} else if (nodeName.equalsIgnoreCase("Mobile") && !StringUtils.isBlank(profileNode
+							.getFirstChild().getNodeValue())) {
+						PhoneDetailForm phoneDetailForm = new PhoneDetailForm();
+						phoneDetailForm.setBuilderPhoneId(19);
+						phoneDetailForm.setPhoneType("19");
+						phoneDetailForm.setPhoneNumber(profileNode
+								.getFirstChild().getNodeValue());
+						phoneDetailFormList.add(phoneDetailForm);
+					} else if (nodeName.equalsIgnoreCase("City") && !StringUtils.isBlank(profileNode
+							.getFirstChild().getNodeValue())) {
+						contactInformationForm.setCity(profileNode
+								.getFirstChild().getNodeValue());
+					} else if (nodeName.equalsIgnoreCase("State") && !StringUtils.isBlank(profileNode
+							.getFirstChild().getNodeValue())) {
+						contactInformationForm.setState(profileNode
+								.getFirstChild().getNodeValue());
+					} else if (nodeName.equalsIgnoreCase("ZipCode") && !StringUtils.isBlank(profileNode
+							.getFirstChild().getNodeValue())) {
+						contactInformationForm.setPostalCode(profileNode
+								.getFirstChild().getNodeValue());
+					} else if (nodeName.equalsIgnoreCase("City") && !StringUtils.isBlank(profileNode
+							.getFirstChild().getNodeValue())) {
+						contactInformationForm.setCity(profileNode
+								.getFirstChild().getNodeValue());
+					} else if (nodeName.equalsIgnoreCase("Address") && !StringUtils.isBlank(profileNode
+							.getFirstChild().getNodeValue())) {
+						String address = profileNode.getFirstChild()
+								.getNodeValue();
+						if (address.length() > 40) {
+							contactInformationForm.setAddressLine1(address
+									.substring(0, 39));
+							contactInformationForm.setAddressLine2(address
+									.substring(40));
+						} else {
+							contactInformationForm.setAddressLine1(address);
+						}
+
+					} else if (nodeName.equalsIgnoreCase("Objectives") && !StringUtils.isBlank(profileNode
+							.getFirstChild().getNodeValue())) {
+						if (profileNode.getFirstChild().getNodeValue().length() > 200) {
+							createResume.setObjective(profileNode
+									.getFirstChild().getNodeValue()
+									.substring(0, 199));
+						} else {
+							createResume.setObjective(profileNode
+									.getFirstChild().getNodeValue());
+						}
+					} else if (nodeName.equalsIgnoreCase("Skills")
+							&& !StringUtils.isBlank(profileNode.getFirstChild()
+									.getNodeValue())) {
+						if (profileNode.getFirstChild().getNodeValue().length() > 254) {
+							createResume.setSkills(profileNode.getFirstChild()
+									.getNodeValue().substring(0, 254));
+						} else {
+							createResume.setSkills(profileNode.getFirstChild()
+									.getNodeValue());
+						}
+
+					} else if (nodeName.equalsIgnoreCase("Experience") && !StringUtils.isBlank(profileNode
+							.getFirstChild().getNodeValue())) {
+						WorkExpForm workExpForm = new WorkExpForm();
+						workExpForm.setDescription(profileNode
+							.getFirstChild().getNodeValue());
+						listWorkExpForm.add(workExpForm);
+
+					}
+					
+
+				}
+			}
+
+		}
+		// Contact Info Ends
+
+		createResume.setContactInfoForm(contactInformationForm);
+
+		// set Phone details
+		if (phoneDetailFormList.size() > 0) {
+			createResume.setListPhoneDtlForm(phoneDetailFormList);
+		} else {
+			PhoneDetailForm phoneDetailForm = new PhoneDetailForm();;
+			phoneDetailFormList.add(phoneDetailForm);
+			createResume.setListPhoneDtlForm(phoneDetailFormList);
+		}
+
+		// set Language details
+
+		if (listLangForm.size() > 0) {
+			createResume.setListLangForm(listLangForm);
+		} else {
+			LanguageForm languageForm = new LanguageForm();
+			listLangForm.add(languageForm);
+			createResume.setListLangForm(listLangForm);
+		}
+
+		// set Certification details
+		if (listCertForm.size() > 0) {
+			createResume.setListCertForm(listCertForm);
+		} else {
+			CertificationsForm certificationsForm = new CertificationsForm();
+			listCertForm.add(certificationsForm);
+			createResume.setListCertForm(listCertForm);
+		}
+
+		// set Education details
+		if (listEduForm.size() > 0) {
+			createResume.setListEduForm(listEduForm);
+		} else {
+			EducationForm educationForm = new EducationForm();
+			listEduForm.add(educationForm);
+			createResume.setListEduForm(listEduForm);
+		}
+
+		// set Reference details
+
+		if (listRefForm.size() > 0) {
+			createResume.setListRefForm(listRefForm);
+		} else {
+			ReferenceForm referenceForm = new ReferenceForm();
+			listRefForm.add(referenceForm);
+			createResume.setListRefForm(listRefForm);
+		}
+
+		// set Work Experience details
+		if (listWorkExpForm.size() > 0) {
+			createResume.setListWorkExpForm(listWorkExpForm);
+		} else {
+			WorkExpForm workExpForm = new WorkExpForm();
+			listWorkExpForm.add(workExpForm);
+			createResume.setListWorkExpForm(listWorkExpForm);
+		}
 
 	}
 

@@ -419,6 +419,7 @@ jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/ResResumeAttrib.
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/ResResumeAttribList.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/ResResumeProfile.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/ResUploadResume.java -text
+jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/ResViewed.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/SaveSearchResults.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/StgSessionEvent.java -text
 jobboard-data/src/main/java/com/advanceweb/afc/jb/data/entities/StgSessioninfo.java -text
@@ -890,6 +891,7 @@ jobboard/src/main/webapp/resources/images/downarow.png -text
 jobboard/src/main/webapp/resources/images/email.png -text
 jobboard/src/main/webapp/resources/images/emslogo.jpg -text
 jobboard/src/main/webapp/resources/images/favicon.ico -text
+jobboard/src/main/webapp/resources/images/flag.png -text
 jobboard/src/main/webapp/resources/images/gold_logo.png -text
 jobboard/src/main/webapp/resources/images/img01.png -text
 jobboard/src/main/webapp/resources/images/img02.png -text

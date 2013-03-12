@@ -36,8 +36,7 @@
 				<!--Start:MidContant-->
 				<div class="row">
 						<!-- Include the resume header page -->
-						<!-- Enable the below jsp in phase 2B -->
-						<%-- <jsp:include page="jobboardsearchresumeheader.jsp"></jsp:include> --%>
+						 <jsp:include page="jobboardsearchresumeheader.jsp"></jsp:include>
 						<div class="searchContent" style="display: none;" id="resumeTableContent">
 							<jsp:include page="jobboardsearchresumeresultbody.jsp"></jsp:include>
 						</div>

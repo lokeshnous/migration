@@ -1018,12 +1018,12 @@ public class PopulateDropdownsDAOImpl implements PopulateDropdownsDAO {
 	@Override
 	public List<DropDownDTO> getBlockedCompanyList(int resumeId) {
 		try {
-			List<ResBlockedCompanies> BlockedCompanies = hibernateTemplate
+			List<ResBlockedCompanies> blockedCompanies = hibernateTemplate
 					.find(FIND_BLOCKED_BOMPANIES, resumeId);
 			DropDownDTO dropDownDTO = null;
 			List<DropDownDTO> list = new ArrayList<DropDownDTO>();
 
-			for (ResBlockedCompanies company : BlockedCompanies) {
+			for (ResBlockedCompanies company : blockedCompanies) {
 				dropDownDTO = new DropDownDTO();
 				AdmFacility admFacility = hibernateTemplate.get(
 						AdmFacility.class, company.getCompanyId());

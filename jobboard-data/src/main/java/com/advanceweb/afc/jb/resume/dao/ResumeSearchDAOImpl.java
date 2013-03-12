@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.data.entities.AdmSaveSearch;
+import com.advanceweb.afc.jb.data.entities.ResBlockedCompanies;
 import com.advanceweb.afc.jb.data.entities.ResBuilderResume;
 import com.advanceweb.afc.jb.employer.helper.ResumeSearchConversionHelper;
 
@@ -128,20 +129,26 @@ public class ResumeSearchDAOImpl implements ResumeSearchDAO{
 		
 		List<ResBuilderResume> resBuilderResumeList = query.list();
 		
-		for(ResBuilderResume obj: resBuilderResumeList){
+		for (ResBuilderResume obj : resBuilderResumeList) {
 			ResumeDTO resumeDTO = new ResumeDTO();
-			if(obj.getResPublishResume() != null){
-				resumeDTO.setPublishResumeId(obj.getResPublishResume().getPublishResumeId());
+			if (obj.getResPublishResume() != null) {
+				resumeDTO.setPublishResumeId(obj.getResPublishResume()
+						.getPublishResumeId());
 			}
-			resumeDTO.setUploadResumeId(obj.getResUploadResumeId());
-			resumeDTO.setResumeName(obj.getResumeName());
-			resumeDTO.setFullName(obj.getFirstName()+" "+ obj.getLastName());
-			resumeDTO.setCity(obj.getCity());
-			resumeDTO.setState(obj.getState());
-			resumeDTO.setExperience(obj.getResBuilderEmployments().get(0).getEmploymentYears());
-			resumeDTO.setEmploymentType(obj.getResBuilderEmployments().get(0).getEmploymentType());
-			resumeDTO.setPostDt(obj.getCreateDt());
-			resumeDTOList.add(resumeDTO);
+			if (!getBlockedCompanyDetailsByResumeId(obj.getResUploadResumeId())) {
+				resumeDTO.setUploadResumeId(obj.getResUploadResumeId());
+				resumeDTO.setResumeName(obj.getResumeName());
+				resumeDTO.setFullName(obj.getFirstName() + " "
+						+ obj.getLastName());
+				resumeDTO.setCity(obj.getCity());
+				resumeDTO.setState(obj.getState());
+				resumeDTO.setExperience(obj.getResBuilderEmployments().get(0)
+						.getEmploymentYears());
+				resumeDTO.setEmploymentType(obj.getResBuilderEmployments()
+						.get(0).getEmploymentType());
+				resumeDTO.setPostDt(obj.getCreateDt());
+				resumeDTOList.add(resumeDTO);
+			}
 		}
 		
 		LOGGER.debug("Size of resume list = "+resumeDTOList.size());
@@ -289,7 +296,6 @@ public class ResumeSearchDAOImpl implements ResumeSearchDAO{
 	 */
 	@Override
 	public boolean updateSearchDetails(SaveSearchedJobsDTO searchedJobsDTO) {
-		@SuppressWarnings("unchecked")
 		List<AdmSaveSearch> searchList = hibernateTemplate.find("from AdmSaveSearch where saveSearchId = ?",
 				searchedJobsDTO.getSaveSearchID());
 		AdmSaveSearch search = searchList.get(0);
@@ -300,5 +306,22 @@ public class ResumeSearchDAOImpl implements ResumeSearchDAO{
 		search.setSaveSearchId(searchedJobsDTO.getSaveSearchID());
 		hibernateTemplate.saveOrUpdate(search);
 		return true;
+	}
+	
+	/**
+	 *  Get the blocked company details as per the specified resume
+	 * @param resumeId
+	 * @return
+	 */
+
+	public boolean getBlockedCompanyDetailsByResumeId(int resumeId) {
+		
+		List<ResBlockedCompanies> blockedCompanies = hibernateTemplate
+				.find("from ResBlockedCompanies rbc where rbc.resumeId=?", resumeId);
+		if(null!=blockedCompanies && blockedCompanies.size()>0){
+		return true;
+		}else{
+			return false;
+		}
 	}
 }

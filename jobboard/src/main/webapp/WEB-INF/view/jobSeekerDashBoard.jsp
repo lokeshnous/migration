@@ -25,12 +25,19 @@
 jQuery(document).ready(
 		function() {
 			$('#virusUrlDiv').hide();
+			$('#fileParser').hide();
 			var uploadStatus = <%= request.getAttribute("uploadStatus")%>
 			var virusStatus=<%= request.getAttribute("virusStatus")%>
 			if(virusStatus){
 				$("#createResumePopupUpload").displaypopup("#createResumePopupUpload",
 						"790", "350");
 				$('#createResumePopupUpload').trigger('click');
+			}
+			var fileParserError=<%= request.getAttribute("fileParserError")%>
+			if(fileParserError){
+				$("#createResumePopupUploadFP").displaypopup("#createResumePopupUploadFP",
+						"790", "350");
+				$('#createResumePopupUploadFP').trigger('click');
 			}
 			if(null != uploadStatus){
 				if(uploadStatus){
@@ -63,6 +70,8 @@ jQuery(document).ready(
 			$("#retainThisJobId").displaypopup(
 					"#retainThisJobId", "790", "252");
 			$("#createResumePopupUpload").displaypopup("#createResumePopupUpload",
+					"790", "350");
+			$("#createResumePopupUploadFP").displaypopup("#createResumePopupUploadFP",
 					"790", "350");
 			var status = <%= session.getAttribute(MMJBCommonConstants.RETAIN_SEARCH)%>
 			if(status)
@@ -232,6 +241,11 @@ jQuery(document).ready(
 													<a 
 													href="<%=request.getContextPath()%>/jobSeekerResume/createResumePopUp.html?resumeType=Upload Existing Resume&virus=true"
 													 id="createResumePopupUpload" >${msg.jsCreateNewResume}</a>
+													 </div>
+													 <div id="fileParser">
+													<a 
+													href="<%=request.getContextPath()%>/jobSeekerResume/createResumePopUp.html?resumeType=Upload Existing Resume&fileParserError=true"
+													 id="createResumePopupUploadFP" >${msg.jsCreateNewResume}</a>
 													 </div>
 											</p>
 										</div>

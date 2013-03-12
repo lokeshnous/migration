@@ -108,11 +108,13 @@ public class CommonUtil {
 
 		String stdDateFormat = null;
 		try {
-			stdDateFormat = new SimpleDateFormat(
-					MMJBCommonConstants.DISP_DATE_PATTERN, Locale.ENGLISH)
-					.format(new SimpleDateFormat(
-							MMJBCommonConstants.DATE_PATTERN, Locale.ENGLISH)
-							.parse(sqlDate));
+			if (null != sqlDate) {
+				stdDateFormat = new SimpleDateFormat(
+						MMJBCommonConstants.DISP_DATE_PATTERN, Locale.ENGLISH)
+						.format(new SimpleDateFormat(
+								MMJBCommonConstants.DATE_PATTERN,
+								Locale.ENGLISH).parse(sqlDate));
+			}
 		} catch (ParseException e) {
 			LOGGER.error(e);
 		}

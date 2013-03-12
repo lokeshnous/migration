@@ -530,7 +530,7 @@ padding:0;
 					</div>
 				</div>
 				<!---->
-				<div class="comingSoon"></div>
+				
 				<div class="dashboardPanal dashboardpanalHight ">
 					<div class="Applicants">
 						<img src="../resources/images/tranBg.png" width="30" height="30"

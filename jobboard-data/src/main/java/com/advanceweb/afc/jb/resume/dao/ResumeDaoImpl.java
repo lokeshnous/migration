@@ -45,6 +45,7 @@ import com.advanceweb.afc.jb.data.entities.ResBuilderSkill;
 import com.advanceweb.afc.jb.data.entities.ResResumeAttrib;
 import com.advanceweb.afc.jb.data.entities.ResResumeProfile;
 import com.advanceweb.afc.jb.data.entities.ResUploadResume;
+import com.advanceweb.afc.jb.data.entities.ResViewed;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.resume.helper.ResumeConversionHelper;
 
@@ -274,14 +275,7 @@ public class ResumeDaoImpl implements ResumeDao {
 				.transformResumeDTOToResUploadResume(resumeDTO);
 		try {
 			hibernateTemplate.save(resUploadResume);
-			resumeDTO.setUploadResumeId(resUploadResume.getUploadResumeId());
-			List<ResResumeAttrib> resumeAttrib = hibernateTemplate
-					.find("from ResResumeAttrib");
-			List<ResResumeProfile> resumeProfileList = resumeConversionHelper
-					.transformResumeDTOResResumeProfile(resUploadResume,
-							resumeDTO, resumeAttrib);
-			hibernateTemplate.saveOrUpdateAll(resumeProfileList);
-
+			
 			result = true;
 		} catch (HibernateException e) {
 			result = false;
@@ -318,23 +312,14 @@ public class ResumeDaoImpl implements ResumeDao {
 				.transformResumeDTOToResUploadResume(resDTO);
 
 		try {
-			hibernateTemplate.save(resUploadResume);
+			hibernateTemplate.saveOrUpdate(resUploadResume);
 
 			resUploadResume.setFilePath(resUploadResume.getFilePath()
 					+ resUploadResume.getUploadResumeId() + "_"
 					+ resDTO.getFileName());
 
 			hibernateTemplate.update(resUploadResume);
-
-			List<ResResumeAttrib> resumeAttrib = hibernateTemplate
-					.find("from ResResumeAttrib");
-			List<ResResumeProfile> resumeProfileList = resumeConversionHelper
-					.transformResumeDTOResResumeProfile(resUploadResume,
-							resDTO, resumeAttrib);
-			hibernateTemplate.saveOrUpdateAll(resumeProfileList);
-			resDTO = resumeConversionHelper
-					.transformResUploadResumeToResumeDTO(resUploadResume,
-							resumeProfileList);
+			
 		} catch (HibernateException e) {
 			LOGGER.error("Error while Resume Upload", e);
 		}
@@ -388,12 +373,29 @@ public class ResumeDaoImpl implements ResumeDao {
 		builderResume.setResBuilderPhones(builderPhoneList);
 		builderResume.setResBuilderSkills(builderSkillSet);
 		try {
+			if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO
+					.getResumeType())) {
+				if (resumeDTO.getUploadResumeId() > 0
+						&& builderResume.getBuilderResumeId() > 0) {
+					updateResumeUpload(resumeDTO);
+				} else if (resumeDTO.getUploadResumeId() <= 0
+						&& builderResume.getBuilderResumeId() <= 0) {
+					resumeDTO = createResumeUpload(resumeDTO);
+				}
+				builderResume.setResUploadResumeId(resumeDTO
+						.getUploadResumeId());
+			}
+			if (MMJBCommonConstants.RESUME_TYPE_COPY_PASTE.equals(resumeDTO
+					.getResumeType())) {
+				builderResume.setResUploadResumeId(resumeDTO
+						.getUploadResumeId());
+			}
 			hibernateTemplate.merge(builderResume);
+
 			return true;
 		} catch (HibernateException e) {
 			LOGGER.error("Error in create Resume Builder", e);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;
@@ -642,4 +644,37 @@ public class ResumeDaoImpl implements ResumeDao {
 		return true;
 	}
 
+	@Override
+	public boolean saveViewDetails(int resumeId, int userId)
+			throws JobBoardDataException {
+		try {
+			List<ResViewed> resViewedList = hibernateTemplate
+					.find("select rv from  ResViewed rv where rv.resumeId="
+							+ resumeId + "and rv.userId=" + userId);
+			if (null != resViewedList
+					&& resViewedList.size() <= 0) {
+				ResViewed resViewed = new ResViewed();
+				resViewed.setResumeId(resumeId);
+				resViewed.setUserId(userId);
+				resViewed.setCreateDt(new Date());
+				hibernateTemplate.saveOrUpdate(resViewed);
+			}
+		} catch (HibernateException e) {
+			LOGGER.error("Error while adding education", e);
+		}
+		return true;
+	}
+	@Override
+	public List<ResViewed>  getViewDetails(int resumeId, int userId)
+			throws JobBoardDataException {
+		List<ResViewed> resViewedList = new ArrayList<ResViewed>();
+		try {
+			resViewedList = hibernateTemplate
+					.find("select rv from  ResViewed rv where rv.resumeId="
+							+ resumeId + "and rv.userId=" + userId);
+		} catch (HibernateException e) {
+			LOGGER.error("Error while adding education", e);
+		}
+		return resViewedList;
+	}
 }

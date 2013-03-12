@@ -27,7 +27,6 @@ import javax.servlet.http.HttpSession;
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
-import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailParseException;
@@ -705,25 +704,12 @@ public class ManageJobSeekerController {
 		try {
 			ResumeDTO resumeDTO = resumeService.editResume(resumeId);
 			
-//			if (resumeDTO.getResumeText() != null) {
-//				String resumeTextParsed = Jsoup.parse(
-//						resumeDTO.getResumeText()).text();
-//				resumeDTO.setResumeText(resumeTextParsed);
-//			}
-
-			// if the resume Type is Upload then we download the Resume as is
-			if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO
-					.getResumeType())) {
-				model.setViewName("redirect:/employer/exportResume.html?fileName="
-						+ resumeDTO.getFilePath());
-			} else {
-
 				// if the Resume had been generated through Resume Builder or
 				// CopyPaste
 				// The resulting resume download will produce a PDF format
 				pdfGenerator.generateAndExportResumeAsPdf(request, response,
 						resumeDTO);
-			}
+			
 		} catch (Exception e) {
 			LOGGER.error("Error in download resume", e);
 		}
@@ -744,25 +730,13 @@ public class ManageJobSeekerController {
 		ModelAndView model = new ModelAndView();
 		try {
 			ResumeDTO resumeDTO = resumeService.editResume(resumeId);
-//			if (resumeDTO.getResumeText() != null) {
-//				String resumeTextParsed = Jsoup.parse(
-//						resumeDTO.getResumeText()).text();
-//				resumeDTO.setResumeText(resumeTextParsed);
-//			}
-			
-			// if the resume Type is Upload then we download the Resume as is
-			if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(resumeDTO
-					.getResumeType())) {
-				model.setViewName("redirect:/employer/exportResume.html?fileName="
-						+ resumeDTO.getFilePath());
-			} else {
 
-				// if the Resume had been generated through Resume Builder or
+			// if the Resume had been generated through Resume Builder or
 				// CopyPaste
 				// The resulting resume download will produce a PDF format
 				pdfGenerator.generateAndExportResumeAsPdfForPrint(request,
 						response, resumeDTO);
-			}
+			
 		} catch (Exception e) {
 			LOGGER.error("Error in download resume", e);
 		}

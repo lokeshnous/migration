@@ -18,17 +18,17 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
-@Table(name="res_blocked_companies")
-public class ResBlockedCompanies implements Serializable {
+@Table(name="res_viewed")
+public class ResViewed implements Serializable {
 	private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name = "blocked_company_id")
-	private int blockedCompanyId;
+	@Column(name = "res_viewed_id")
+	private int resViewedId;
 	@Column(name = "Resume_id")
 	private int resumeId;
-	@Column(name = "Company_Id")
-	private int companyId;
+	@Column(name = "user_Id")
+	private int userId;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_date")
 	private Date createDt;
@@ -37,28 +37,13 @@ public class ResBlockedCompanies implements Serializable {
 	@Column(name = "delete_date")
 	private Date deleteDt;
 
-	public int getBlockedCompanyId() {
-		return blockedCompanyId;
-	}
-
-	public void setBlockedCompanyId(int blockedCompanyId) {
-		this.blockedCompanyId = blockedCompanyId;
-	}
-
+	
 	public int getResumeId() {
 		return resumeId;
 	}
 
 	public void setResumeId(int resumeId) {
 		this.resumeId = resumeId;
-	}
-
-	public int getCompanyId() {
-		return companyId;
-	}
-
-	public void setCompanyId(int companyId) {
-		this.companyId = companyId;
 	}
 
 	public Date getCreateDt() {
@@ -73,8 +58,36 @@ public class ResBlockedCompanies implements Serializable {
 		return this.deleteDt;
 	}
 
-	public void setModifiedDt(Date deleteDt) {
+	public void setDeleteDt(Date deleteDt) {
 		this.deleteDt = deleteDt;
+	}
+
+	/**
+	 * @return the resViewedId
+	 */
+	public int getResViewedId() {
+		return resViewedId;
+	}
+
+	/**
+	 * @param resViewedId the resViewedId to set
+	 */
+	public void setResViewedId(int resViewedId) {
+		this.resViewedId = resViewedId;
+	}
+
+	/**
+	 * @return the userId
+	 */
+	public int getUserId() {
+		return userId;
+	}
+
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 }

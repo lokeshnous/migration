@@ -185,6 +185,7 @@
 					<value>com.advanceweb.afc.jb.data.entities.AdmFolderResume</value>
 					<value>com.advanceweb.afc.jb.data.entities.AdmPackage</value>
 					<value>com.advanceweb.afc.jb.data.entities.ResBlockedCompanies</value>
+					<value>com.advanceweb.afc.jb.data.entities.ResViewed</value>
 			</list>
 		</property>
 	</bean>

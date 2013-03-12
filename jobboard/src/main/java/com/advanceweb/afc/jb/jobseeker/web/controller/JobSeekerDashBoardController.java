@@ -132,6 +132,12 @@ public class JobSeekerDashBoardController extends AbstractController {
 			session.removeAttribute("virusStatus");
 			LOGGER.debug("Virus Status : " + true);
 		}
+		if(null !=session.getAttribute("parseError") ){
+			boolean fileParserError = (Boolean) session.getAttribute("parseError");
+			request.setAttribute("fileParserError", fileParserError);
+			session.removeAttribute("parseError");
+			LOGGER.debug("Parse Error Status : " + true);
+		}
 		if(session.getAttribute("advancePassUser")!=null){
 			model.addObject("advUserMessg", "advancePassUser");
 		}

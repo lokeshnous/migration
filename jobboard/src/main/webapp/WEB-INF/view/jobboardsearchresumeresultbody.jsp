@@ -178,7 +178,9 @@
 									</tr>
 							<c:forEach items="${resSrchJsonList.jsonRows}" var="job" varStatus="status">
 									<tr>
-										<td align="left" style="word-wrap: break-word;" valign="bottom">&nbsp;</td>
+										<td align="left" style="word-wrap: break-word;" valign="bottom"><c:if test="${job['resumeViewed']=='true'}">
+										 <img src="<%=request.getContextPath() %>/resources/images/flag.png">
+										 </c:if></td>
 										<td align="left" valign="bottom"><input type="checkbox"
 											name="checkbox2"  value="${job['UploadResumeId']}" class="marginRight5">
 											<label for="checkbox2" >
@@ -210,8 +212,8 @@
 													<a href="#"><div class="printOrange"></div></a>
 											</td>
 										 </c:if>  
-										
-										
+										 
+																		
 										<%-- <c:choose>
 										<c:when test="${empty (job["isResumePackageActive"])}">
 										<td align="center"><a href="../employerSearchResume/viewResume.html?resumeId=${job['UploadResumeId']}"><div class="view"></div></a>

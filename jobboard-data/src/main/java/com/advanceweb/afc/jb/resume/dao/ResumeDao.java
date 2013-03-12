@@ -15,6 +15,7 @@ import com.advanceweb.afc.jb.common.LanguageDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
+import com.advanceweb.afc.jb.data.entities.ResViewed;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 
 
@@ -179,6 +180,17 @@ public interface ResumeDao {
 	 * @return boolean
 	 */
 	boolean moveResumesToFolder(List<String> publishResumeIdArrList, int userId);
+	
 	boolean saveBlockedCompanydetails(ResumeDTO resumeDTO) throws JobBoardDataException;
+	
+	/**
+	 * This method is used to save the view detail in res_viewd table.
+	 * @param String resumeId, int userId
+	 * @return boolean
+	 */
+	boolean saveViewDetails(int resumeId, int userId) throws JobBoardDataException;
+
+	List<ResViewed> getViewDetails(int resumeId, int userId)
+			throws JobBoardDataException;
 	
 }

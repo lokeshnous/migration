@@ -7,8 +7,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>ADVANCE Heathcare Jobs</title>
-<!-- Common js files  -->
-<script type="text/javascript" src="../resources/js/common/common.js"></script>
 <script type="text/javascript">
 tinyMCE.init({
 	width : "550",
@@ -77,30 +75,9 @@ tinyMCE.init({
 										$(".popUpButtonRow").show();
 										$("#resumeErrorMsg").append("<span>"+ data.duplicateResume+ "</span>");
 									} else {
-										//$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/copyPasteResume.html");
-										//$("#copyPastResume").submit();
-										$.ajax({url : "${pageContext.request.contextPath}/jobSeekerResume/copyPasteResume.html",
-											data : $("#copyPastResume").serialize(),
-											type: "POST",
-											success : function(data) {
-												alert('Copy Paste Resume created successfully!');
-												parent.$.nmTop().close();
-												window.location.reload();
-												},
-											error : function(response) {
-												$("#resumeErrorMsg").html("<span>"+ "Please reduce the size of Paste Resume text and try again."+ "</span>");
-												var href = $('#topLocation').attr('href');
-												location.href = href;
-												//alert("Server Error : "+ response.status);
-												//parent.$.nmTop().close();
-												//window.location.reload();
-												$(".popUpButtonRow").show();
-												},
-											complete : function() {
-												
-											}
-										});
-									}
+										$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/copyPasteResume.html");
+										$("#copyPastResume").submit();
+										}
 								},
 							error : function(response) {
 								$(".popUpButtonRow").show();

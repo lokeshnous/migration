@@ -64,31 +64,9 @@ tinyMCE.init({
 										$(".popUpButtonRow").show();
 										$("#resumeErrorMsg").append("<span>"+ data.duplicateResume+ "</span>");
 									} else {
-										/* 
 										$("form").attr("action","${pageContext.request.contextPath}/jobSeekerResume/updateCopyPasteResume.html");
-										$("#copyPastResumeForm").submit(); */
-										$.ajax({url : "${pageContext.request.contextPath}/jobSeekerResume/updateCopyPasteResume.html",
-											data : $("#copyPastResumeForm").serialize(),
-											type: "POST",
-											success : function(data) {
-												alert('Resume updated successfully');
-												parent.$.nmTop().close();
-												window.location.reload();
-												},
-											error : function(response) {
-												$("#resumeErrorMsg").html("<span>"+ "Please reduce the size of Paste Resume text and try again."+ "</span>");
-												var href = $('#topLocation').attr('href');
-												location.href = href;
-												$(".popUpButtonRow").show();
-												//alert("Server Error : "+ response.status);
-												//parent.$.nmTop().close();
-												//window.location.reload();
-												},
-											complete : function() {
-												
-											}
-										});
-												
+										$("#copyPastResumeForm").submit();
+													
 									}
 								},
 							error : function(response) {

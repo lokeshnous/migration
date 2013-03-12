@@ -132,6 +132,8 @@ public class CreateResume {
 	private List<Integer> selectedList;
 	private List<String> availableList;
 	private List<DropDownDTO> selectedLst;
+	/** The parsing flag. */
+	private boolean parseError=false;
 	//Creating Resume	
 	
 	/**
@@ -810,5 +812,18 @@ public class CreateResume {
 	 */
 	public void setEmploymentTypes(List<String> employmentTypes) {
 		this.employmentTypes = employmentTypes;
+	}
+	/**
+	 * @return the parseError
+	 */
+	public boolean isParseError() {
+		return parseError;
+	}
+
+	/**
+	 * @param parseError the parseError to set
+	 */
+	public void setParseError(boolean parseError) {
+		this.parseError = parseError;
 	}
 }

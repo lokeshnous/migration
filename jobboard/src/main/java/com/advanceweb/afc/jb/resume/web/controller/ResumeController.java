@@ -23,6 +23,7 @@ import java.net.URLConnection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +38,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -411,90 +413,105 @@ public class ResumeController extends AbstractController {
 
 		if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(resumeDTO
 				.getResumeType())) {
-			resumeService.updateResume(resumeDTO);
-			resumeDTO = resumeService.editResume(resumeDTO.getUploadResumeId());
-
-			createResume = transCreateResume
-					.transformCreateResumeForm(resumeDTO);
-
-			List<DropDownDTO> empTypeList = populateDropdownsService
-					.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
-			List<DropDownDTO> phoneTypeList = populateDropdownsService
-					.populateResumeBuilderDropdowns(MMJBCommonConstants.PHONE_TYPE);
-			List<DropDownDTO> careerLvlList = populateDropdownsService
-					.populateResumeBuilderDropdowns(MMJBCommonConstants.CAREER_LEVEL);
-			List<DropDownDTO> annualSalarylList = populateDropdownsService
-					.populateResumeBuilderDropdowns(MMJBCommonConstants.ANNUAL_SALARY);
-			List<DropDownDTO> languagelList = populateDropdownsService
-					.populateResumeBuilderDropdowns(MMJBCommonConstants.LANGUAGE_TYPE);
-			List<DropDownDTO> langProficiencylList = populateDropdownsService
-					.populateResumeBuilderDropdowns(MMJBCommonConstants.LANGUAGE_PROFICIENCY_TYPE);
-			List<DropDownDTO> eduDegreeList = populateDropdownsService
-					.populateEducationDegreesDropdowns();
-			List<CountryDTO> countryList = populateDropdownsService
-					.getCountryList();
-			List<StateDTO> stateList = populateDropdownsService.getStateList();
-
-			List<CertificationsForm> listCertForm = transCreateResume
-					.transformCertForm(resumeDTO.getListCertDTO());
-			List<ReferenceForm> listRefForm = transCreateResume
-					.transformReferenceForm(resumeDTO.getListRefDTO());
-			List<EducationForm> listEduForm = transCreateResume
-					.transformEducationForm(resumeDTO.getListEduDTO());
-			List<WorkExpForm> listWorkExpForm = transCreateResume
-					.transformWorkExpForm(resumeDTO.getListWorkExpDTO());
-			List<LanguageForm> listLangForm = transCreateResume
-					.transformLanguageForm(resumeDTO.getListLangDTO());
-			ContactInfoForm contactForm = transCreateResume
-					.transformContactInfoForm(resumeDTO.getContactInfoDTO());
-			List<PhoneDetailForm> listPhoneDtl = transCreateResume
-					.transformPhoneDetailDTOToForm(resumeDTO.getListPhoneDtl());
-			List<DropDownDTO> blockedCompanies = new ArrayList<DropDownDTO>();
-			if(null!=createResume.getUploadResumeId()){
-			 blockedCompanies = populateDropdownsService
-					.getBlockedCompanyList(Integer.valueOf(createResume.getUploadResumeId()));
-			}
-			createResume.setListCertForm(listCertForm);
-			createResume.setListEduForm(listEduForm);
-			createResume.setListLangForm(listLangForm);
-			createResume.setListRefForm(listRefForm);
-			createResume.setListWorkExpForm(listWorkExpForm);
-			createResume.setContactInfoForm(contactForm);
-			createResume.setListPhoneDtlForm(listPhoneDtl);
-			createResume.setSelectedList(selectedList);
-			getTotalNotNullField(createResume);
-			// DropDowns
-			model.addObject(EMP_TYPE_LIST, empTypeList);
-			model.addObject(PHONE_TYPE_LIST, phoneTypeList);
-			model.addObject(CAREER_LVL_LIST, careerLvlList);
-			model.addObject(AN_SALARY_LIST, annualSalarylList);
-			model.addObject(LANGUAGE_LIST, languagelList);
-			model.addObject(PROFIENCY_LIST, langProficiencylList);
-			model.addObject(EDU_DEGREE_LIST, eduDegreeList);
-			model.addObject(COUNTRY_LIST, countryList);
-			model.addObject(STATE_LIST, stateList);
-			model.addObject("blockedCompanies", blockedCompanies);
-
-			session.setAttribute(EMP_TYPE_LIST, empTypeList);
-			session.setAttribute(PHONE_TYPE_LIST, phoneTypeList);
-			session.setAttribute(CAREER_LVL_LIST, careerLvlList);
-			session.setAttribute(AN_SALARY_LIST, annualSalarylList);
-			session.setAttribute(LANGUAGE_LIST, languagelList);
-			session.setAttribute(PROFIENCY_LIST, langProficiencylList);
-			session.setAttribute(EDU_DEGREE_LIST, eduDegreeList);
-			session.setAttribute(COUNTRY_LIST, countryList);
-			session.setAttribute(STATE_LIST, stateList);
-
-			// DropDowns end
-			getTotalNotNullField(createResume);
-			resumeDTO.getContactInfoDTO();
-			model.addObject(CREATE_RESUME, createResume);
-			// Ads for resume page
-			populateAds(request, session, model);
-			model.setViewName(CREATE_RES_BUILDER);
+			setResumeBuilderDetails(session, request, model, selectedList,
+					resumeDTO);
 		}
 
 		return model;
+	}
+/**
+ * 
+ * @param session
+ * @param request
+ * @param model
+ * @param selectedList
+ * @param resumeDTO
+ */
+	private void setResumeBuilderDetails(HttpSession session,
+			HttpServletRequest request, ModelAndView model,
+			List<Integer> selectedList, ResumeDTO resumeDTO) {
+		CreateResume createResume;
+		resumeService.updateResume(resumeDTO);
+		resumeDTO = resumeService.editResume(resumeDTO.getUploadResumeId());
+
+		createResume = transCreateResume
+				.transformCreateResumeForm(resumeDTO);
+
+		List<DropDownDTO> empTypeList = populateDropdownsService
+				.populateResumeBuilderDropdowns(MMJBCommonConstants.EMPLOYMENT_TYPE);
+		List<DropDownDTO> phoneTypeList = populateDropdownsService
+				.populateResumeBuilderDropdowns(MMJBCommonConstants.PHONE_TYPE);
+		List<DropDownDTO> careerLvlList = populateDropdownsService
+				.populateResumeBuilderDropdowns(MMJBCommonConstants.CAREER_LEVEL);
+		List<DropDownDTO> annualSalarylList = populateDropdownsService
+				.populateResumeBuilderDropdowns(MMJBCommonConstants.ANNUAL_SALARY);
+		List<DropDownDTO> languagelList = populateDropdownsService
+				.populateResumeBuilderDropdowns(MMJBCommonConstants.LANGUAGE_TYPE);
+		List<DropDownDTO> langProficiencylList = populateDropdownsService
+				.populateResumeBuilderDropdowns(MMJBCommonConstants.LANGUAGE_PROFICIENCY_TYPE);
+		List<DropDownDTO> eduDegreeList = populateDropdownsService
+				.populateEducationDegreesDropdowns();
+		List<CountryDTO> countryList = populateDropdownsService
+				.getCountryList();
+		List<StateDTO> stateList = populateDropdownsService.getStateList();
+
+		List<CertificationsForm> listCertForm = transCreateResume
+				.transformCertForm(resumeDTO.getListCertDTO());
+		List<ReferenceForm> listRefForm = transCreateResume
+				.transformReferenceForm(resumeDTO.getListRefDTO());
+		List<EducationForm> listEduForm = transCreateResume
+				.transformEducationForm(resumeDTO.getListEduDTO());
+		List<WorkExpForm> listWorkExpForm = transCreateResume
+				.transformWorkExpForm(resumeDTO.getListWorkExpDTO());
+		List<LanguageForm> listLangForm = transCreateResume
+				.transformLanguageForm(resumeDTO.getListLangDTO());
+		ContactInfoForm contactForm = transCreateResume
+				.transformContactInfoForm(resumeDTO.getContactInfoDTO());
+		List<PhoneDetailForm> listPhoneDtl = transCreateResume
+				.transformPhoneDetailDTOToForm(resumeDTO.getListPhoneDtl());
+		List<DropDownDTO> blockedCompanies = new ArrayList<DropDownDTO>();
+		if(null!=createResume.getUploadResumeId()){
+		 blockedCompanies = populateDropdownsService
+				.getBlockedCompanyList(Integer.valueOf(createResume.getUploadResumeId()));
+		}
+		createResume.setListCertForm(listCertForm);
+		createResume.setListEduForm(listEduForm);
+		createResume.setListLangForm(listLangForm);
+		createResume.setListRefForm(listRefForm);
+		createResume.setListWorkExpForm(listWorkExpForm);
+		createResume.setContactInfoForm(contactForm);
+		createResume.setListPhoneDtlForm(listPhoneDtl);
+		createResume.setSelectedList(selectedList);
+		getTotalNotNullField(createResume);
+		// DropDowns
+		model.addObject(EMP_TYPE_LIST, empTypeList);
+		model.addObject(PHONE_TYPE_LIST, phoneTypeList);
+		model.addObject(CAREER_LVL_LIST, careerLvlList);
+		model.addObject(AN_SALARY_LIST, annualSalarylList);
+		model.addObject(LANGUAGE_LIST, languagelList);
+		model.addObject(PROFIENCY_LIST, langProficiencylList);
+		model.addObject(EDU_DEGREE_LIST, eduDegreeList);
+		model.addObject(COUNTRY_LIST, countryList);
+		model.addObject(STATE_LIST, stateList);
+		model.addObject("blockedCompanies", blockedCompanies);
+
+		session.setAttribute(EMP_TYPE_LIST, empTypeList);
+		session.setAttribute(PHONE_TYPE_LIST, phoneTypeList);
+		session.setAttribute(CAREER_LVL_LIST, careerLvlList);
+		session.setAttribute(AN_SALARY_LIST, annualSalarylList);
+		session.setAttribute(LANGUAGE_LIST, languagelList);
+		session.setAttribute(PROFIENCY_LIST, langProficiencylList);
+		session.setAttribute(EDU_DEGREE_LIST, eduDegreeList);
+		session.setAttribute(COUNTRY_LIST, countryList);
+		session.setAttribute(STATE_LIST, stateList);
+
+		// DropDowns end
+		getTotalNotNullField(createResume);
+		resumeDTO.getContactInfoDTO();
+		model.addObject(CREATE_RESUME, createResume);
+		// Ads for resume page
+		populateAds(request, session, model);
+		model.setViewName(CREATE_RES_BUILDER);
 	}
 
 	/**
@@ -549,6 +566,8 @@ public class ResumeController extends AbstractController {
 			}
 
 			createResume.setVirusFound(true);
+		}else if(null != request.getParameter("fileParserError")){
+			createResume.setParseError(true);
 		}
 		ModelAndView model = populateResumeDropDowns();
 		model.addObject(CREATE_RESUME, createResume);
@@ -586,20 +605,56 @@ public class ResumeController extends AbstractController {
 					.transformCreateResumeToResumeDTO(createResume);
 			resumeDTO.setUserId((Integer) session
 					.getAttribute(MMJBCommonConstants.USER_ID));
-			resumeService.createResumeCopyPaste(resumeDTO);
-			// if user want to block some company save the blocked comapny details
-			if (null != createResume.getSelectedList()
-					&& createResume.getSelectedList().size() > 0) {
-				resumeDTO.setSelectedList(createResume.getSelectedList());
-				try {
-					resumeService.saveBlockedCompanydetails(resumeDTO);
-				} catch (JobBoardServiceException jbex) {
-					LOGGER.error(
-							"Error occured while saving Blocked Company Details",
-							jbex);
-				}
+			resumeDTO.setFileName(resumeDTO.getResumeName());
+			resumeDTO.setFilePath(basedirectorypathUpload);
+			resumeDTO.setUserId((Integer) session
+					.getAttribute(MMJBCommonConstants.USER_ID));
+			createResume.setFilename(basedirectorypathUpload);
+			createResume.setFilePath(basedirectorypathUpload);
+			createResume.setUserId((Integer) session
+					.getAttribute(MMJBCommonConstants.USER_ID));
+			// if(!StringUtils.isBlank(resumeDTO.getResumeText())){ --To DO--
+			String tempDirectoryFilePath = createDirectoryFilePath(resumeDTO);
+			File copyPasteFiledest = new File(tempDirectoryFilePath+".docx");
+			try {
+				FileUtils.writeStringToFile(copyPasteFiledest,
+						resumeDTO.getResumeText());
+				createResume = callFileParser(copyPasteFiledest, createResume);
+							
+				 /* String   -- To Do--
+				  resValidator=resumeValidator.validateParser(createResume); if
+				  (!StringUtils.isEmpty(resValidator)) {
+				  model.setViewName(JS_REDIRECT_URL); }*/
+				 
+			} catch (IOException IOE) {
+				LOGGER.error(IOE);
+			} catch (Exception jbex) {
+				LOGGER.error("Error Occured While Uploading the File" + jbex);
 			}
-			model.setViewName(JS_REDIRECT_URL);
+			List<CountryDTO> countryList = populateDropdownsService
+					.getCountryList();
+			List<StateDTO> stateList = populateDropdownsService.getStateList();
+			List<DropDownDTO> phoneTypeList = populateDropdownsService
+					.populateResumeBuilderDropdowns(MMJBCommonConstants.PHONE_TYPE);
+			model.addObject(PHONE_TYPE_LIST, phoneTypeList);
+			model.addObject(COUNTRY_LIST, countryList);
+			model.addObject(STATE_LIST, stateList);
+			model.addObject(CREATE_RESUME, createResume);
+			// Ads for resume page
+			// populateAds(request, session, model);
+			model.setViewName(CREATE_RES_BUILDER);
+			// }-- TO DO --
+			/*
+			 * resumeService.createResumeCopyPaste(resumeDTO); // if user want
+			 * to block some company save the blocked comapny details if (null
+			 * != createResume.getSelectedList() &&
+			 * createResume.getSelectedList().size() > 0) {
+			 * resumeDTO.setSelectedList(createResume.getSelectedList()); try {
+			 * resumeService.saveBlockedCompanydetails(resumeDTO); } catch
+			 * (JobBoardServiceException jbex) { LOGGER.error(
+			 * "Error occured while saving Blocked Company Details", jbex); } }
+			 */
+		//	model.setViewName(JS_REDIRECT_URL);
 		}
 		return model;
 	}
@@ -612,24 +667,54 @@ public class ResumeController extends AbstractController {
 	 */
 	@RequestMapping(value = "/updateCopyPasteResume", method = RequestMethod.POST)
 	public ModelAndView updateCopyPasteResume(CreateResume createResume,
-			HttpSession session) {
+			HttpSession session, HttpServletRequest request) {
 		ModelAndView model = populateResumeDropDowns();
-		ResumeDTO resumeDTO = transCreateResume
-				.transformCreateResumeToResumeDTO(createResume);
+
+		ResumeDTO resumeDTO = resumeService.editResume(Integer
+				.valueOf(createResume.getUploadResumeId()));
 		resumeDTO.setUserId((Integer) session
 				.getAttribute(MMJBCommonConstants.USER_ID));
-		resumeService.updateResumeCopyPaste(resumeDTO);
-		// if user want to block some company save the blocked comapny details
+		if (!StringUtils.isBlank(resumeDTO.getResumeText())
+				&& !resumeDTO.getResumeText().equalsIgnoreCase(
+						createResume.getResumeText())) {
+			resumeDTO.setFileName(resumeDTO.getResumeName());
+			resumeDTO.setFilePath(basedirectorypathUpload);
+			resumeDTO.setUserId((Integer) session
+					.getAttribute(MMJBCommonConstants.USER_ID));
+			createResume.setFilename(basedirectorypathUpload);
+			createResume.setFilePath(basedirectorypathUpload);
+			createResume.setUserId((Integer) session
+					.getAttribute(MMJBCommonConstants.USER_ID));
+			String tempDirectoryFilePath = createDirectoryFilePath(resumeDTO);
+			File copyPasteFiledest = new File(tempDirectoryFilePath);
+			try {
+				FileUtils.writeStringToFile(copyPasteFiledest,
+						resumeDTO.getResumeText());
+				createResume = callFileParser(copyPasteFiledest, createResume);
 
-		resumeDTO.setSelectedList(createResume.getSelectedList());
-		try {
-			resumeService.saveBlockedCompanydetails(resumeDTO);
-		} catch (JobBoardServiceException jbex) {
-			LOGGER.error("Error occured while saving Blocked Company Details",
-					jbex);
+			} catch (IOException IOE) {
+				LOGGER.error(IOE);
+			} catch (Exception jbex) {
+				LOGGER.error("Error Occured While Uploading the File" + jbex);
+			}
+
+			List<CountryDTO> countryList = populateDropdownsService
+					.getCountryList();
+			List<StateDTO> stateList = populateDropdownsService.getStateList();
+			List<DropDownDTO> phoneTypeList = populateDropdownsService
+					.populateResumeBuilderDropdowns(MMJBCommonConstants.PHONE_TYPE);
+			model.addObject(PHONE_TYPE_LIST, phoneTypeList);
+			model.addObject(COUNTRY_LIST, countryList);
+			model.addObject(STATE_LIST, stateList);
+			model.addObject(CREATE_RESUME, createResume);
+		} else {
+			List<Integer> selectedList = createResume.getSelectedList();
+			setResumeBuilderDetails(session, request, model, selectedList,
+					resumeDTO);
 		}
-				
-		model.setViewName(JS_REDIRECT_URL);
+		// Ads for resume page
+		// populateAds(request, session, model);
+		model.setViewName(CREATE_RES_BUILDER);
 		return model;
 	}
 
@@ -661,10 +746,15 @@ public class ResumeController extends AbstractController {
 					resumeDTO.setFilePath(filePath);
 					resumeDTO.setUserId((Integer) session
 							.getAttribute(MMJBCommonConstants.USER_ID));
+					createResume.setFilename(fileName);
+					createResume.setFilePath(filePath);
+					createResume.setUserId((Integer) session
+							.getAttribute(MMJBCommonConstants.USER_ID));
 					String tempDirectoryFilePath = createDirectoryFilePath(resumeDTO);
 					String tempVirusChkFile= tempDirectoryFilePath;
 					// Code to implement Antivirus Check Starts
 					File virusChkFiledest = new File(tempVirusChkFile);
+					
 					file.transferTo(virusChkFiledest);
 					boolean virusFound = scanFileForVirus(
 							virusChkFiledest.getPath(),
@@ -717,24 +807,17 @@ public class ResumeController extends AbstractController {
 						LOGGER.debug("No Virus Found In File "
 								+ resumeDTO.getFileName() + " Uploaded By !"
 								+ resumeDTO.getUserId());
-						// virusChkFiledest.delete();
+											
 						
-						resumeDTO = resumeService.createResumeUpload(resumeDTO);
-						// if user want to block some company save the blocked comapny details
-						if (null != createResume.getSelectedList()
-								&& createResume.getSelectedList().size() > 0) {
-							resumeDTO.setSelectedList(createResume.getSelectedList());
-							try {
-								resumeService.saveBlockedCompanydetails(resumeDTO);
-							} catch (JobBoardServiceException jbex) {
-								LOGGER.error(
-										"Error occured while saving Blocked Company Details",
-										jbex);
-							}
-						}
 						File dest = new File(resumeDTO.getFilePath());						
 						virusChkFiledest.renameTo(dest);
-						createResume =  callFileParser(dest,createResume);
+						createResume =  callFileParser(virusChkFiledest,createResume);
+						if(createResume.isParseError()){
+							session.setAttribute("parseError", true);
+							model.addObject(CREATE_RESUME, createResume);
+							model.setViewName(JS_REDIRECT_URL);
+							return model;
+						}
 						List<CountryDTO> countryList = populateDropdownsService
 								.getCountryList();
 						List<StateDTO> stateList = populateDropdownsService.getStateList();
@@ -768,7 +851,7 @@ public class ResumeController extends AbstractController {
 	 */
 	private String createDirectoryFilePath(ResumeDTO resumeDTO) {
 		String newUploadedPath = resumeDTO.getFilePath()
-				+ resumeDTO.getUploadResumeId() + "_" + resumeDTO.getFileName();
+				+ Calendar.getInstance().get(Calendar.DATE) +Calendar.getInstance().getTimeInMillis() +"_" + resumeDTO.getFileName();
 
 		return newUploadedPath;
 	}
@@ -800,7 +883,7 @@ public class ResumeController extends AbstractController {
 	 */
 	@RequestMapping(value = "/updateResumeUpload", method = RequestMethod.POST)
 	public ModelAndView updateResumeUpload(CreateResume createResume,
-			HttpSession session) {
+			HttpSession session, HttpServletRequest request) {
 
 		ModelAndView model = populateResumeDropDowns();
 		if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(createResume
@@ -822,31 +905,105 @@ public class ResumeController extends AbstractController {
 								+ fileName;
 						File dest = new File(filePath);
 						file.transferTo(dest);
-
 						resumeDTO.setFileServer(basedirectorypathUpload);
 						resumeDTO.setFileName(fileName);
 						resumeDTO.setFilePath(filePath);
+
+						String tempDirectoryFilePath = createDirectoryFilePath(resumeDTO);
+						String tempVirusChkFile = tempDirectoryFilePath;
+						// Code to implement Antivirus Check Starts
+						File virusChkFiledest = new File(tempVirusChkFile);
+						file.transferTo(virusChkFiledest);
+						boolean virusFound = scanFileForVirus(
+								virusChkFiledest.getPath(),
+								virusChkFiledest.getName());
+
+						if (virusFound) {
+							LOGGER.debug("Virus Found In File "
+									+ resumeDTO.getFileName()
+									+ " Uploaded By !" + resumeDTO.getUserId());
+							// delete the temporary storage location in the
+							// server
+							// which was used
+							// for file uploading and virus scanning purposes
+							virusChkFiledest.delete();
+
+							// alert the user that the uploaded document
+							// contains
+							// virus and reject the resume
+							createResume
+									.setResumeType(MMJBCommonConstants.RESUME_TYPE_UPLOAD);
+							createResume.setVirusFound(true);
+							session.setAttribute("virusStatus", true);
+							if (null != createResume.getResumeName()) {
+								session.setAttribute("resumeName",
+										createResume.getResumeName());
+							}
+							if (null != createResume.getDesiredJobTitle()) {
+								session.setAttribute("jobTitle",
+										createResume.getDesiredJobTitle());
+							}
+							if (null != createResume.getDesiredEmploymentType()) {
+								session.setAttribute("empType",
+										createResume.getDesiredEmploymentType());
+							}
+							if (null != createResume.getWorkAuthorizationUS()) {
+								session.setAttribute("workAuthorizationUS",
+										createResume.getWorkAuthorizationUS());
+							}
+							if (null != createResume.getWillingToRelocate()) {
+								session.setAttribute("willingToRelocate",
+										createResume.getWillingToRelocate());
+							}
+							if (null != createResume.getResumeVisibility()) {
+								session.setAttribute("resumeVisibility",
+										createResume.getResumeVisibility());
+							}
+							model.addObject(CREATE_RESUME, createResume);
+							model.setViewName(JS_REDIRECT_URL);
+							return model;
+							// Code to implement Antivirus Check Ends
+						} else {
+							createResume = callFileParser(dest, createResume);
+							if(createResume.isParseError()){
+								session.setAttribute("parseError", true);
+								model.addObject(CREATE_RESUME, createResume);
+								model.setViewName(JS_REDIRECT_URL);
+								return model;
+							}
+							List<CountryDTO> countryList = populateDropdownsService
+									.getCountryList();
+							List<StateDTO> stateList = populateDropdownsService
+									.getStateList();
+							List<DropDownDTO> phoneTypeList = populateDropdownsService
+									.populateResumeBuilderDropdowns(MMJBCommonConstants.PHONE_TYPE);
+							model.addObject(PHONE_TYPE_LIST, phoneTypeList);
+							model.addObject(COUNTRY_LIST, countryList);
+							model.addObject(STATE_LIST, stateList);
+							model.addObject(CREATE_RESUME, createResume);
+						}
+
 					}
+				} else {
+					List<Integer> selectedList = createResume.getSelectedList();
+					setResumeBuilderDetails(session, request, model,
+							selectedList, resumeDTO);
 				}
 			} catch (Exception jbex) {
 				LOGGER.error("Error Occured While updating resume" + jbex);
 			}
 
-			session.setAttribute("uploadStatus", false);
+			
 			resumeDTO.setUserId((Integer) session
 					.getAttribute(MMJBCommonConstants.USER_ID));
-			resumeService.updateResumeUpload(resumeDTO);
-			// if user want to block some company save the blocked comapny details
+			createResume.setUserId((Integer) session
+					.getAttribute(MMJBCommonConstants.USER_ID));
+			createResume.setFilename(fileName);
+			createResume.setFilePath(filePath);
 			
-				resumeDTO.setSelectedList(createResume.getSelectedList());
-				try {
-					resumeService.saveBlockedCompanydetails(resumeDTO);
-				} catch (JobBoardServiceException jbex) {
-					LOGGER.error(
-							"Error occured while saving Blocked Company Details",
-							jbex);
-				}
-			model.setViewName(JS_REDIRECT_URL);
+
+			model.setViewName(CREATE_RES_BUILDER);
+			
 		}
 		return model;
 	}
@@ -1620,23 +1777,8 @@ public class ResumeController extends AbstractController {
 		createResume.setContactInfoForm(contactForm);
 		createResume.setListPhoneDtlForm(listPhoneDtl);
 		resumeDTO.getContactInfoDTO();
-		if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(createResume
-				.getResumeType())) {
 			model.addObject(CREATE_RESUME, createResume);
 			model.setViewName("viewresume");
-		} else if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(createResume
-				.getResumeType())) {
-			try {
-				model.setViewName("redirect:/jobSeekerResume/exportResume.html?fileName="
-						+ resumeDTO.getFilePath());
-				return model;
-			} catch (Exception jbex) {
-				LOGGER.error("Error in view resume builder", jbex);
-			}
-		} else {
-			model.addObject(CREATE_RESUME, createResume);
-			model.setViewName("viewCopyPasteResume");
-		}
 		// Ads for resume page
 		populateAds(request, session, model);
 		return model;
@@ -1991,15 +2133,25 @@ public class ResumeController extends AbstractController {
 		return String.valueOf(createResume.getTotalProgress());
 	}
 
-	public CreateResume callFileParser(File inFile,CreateResume createResume) throws ServletException,
-			IOException {
+	/**
+	 * Method which will parse the specified input file and return the details
+	 * in createResume form
+	 * 
+	 * @param inFile
+	 * @param createResume
+	 * @return
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	public CreateResume callFileParser(File inFile, CreateResume createResume)
+			throws ServletException, IOException {
 		File file = new File(basedirectorypathUpload +"\\temp.docx");
 		
 		if (!file.exists()) {
 			if (inFile.createNewFile()) {
 				LOGGER.debug("Success!");
 			} else {
-				LOGGER.debug("Error, file already exists.");
+				LOGGER.error("Error, file already exists.");
 			}
 			FileOutputStream fop = new FileOutputStream(file);
 
@@ -2010,7 +2162,7 @@ public class ResumeController extends AbstractController {
 				fop.close();
 				LOGGER.debug("The data has been written");
 			} else {
-				LOGGER.debug("This file is not exist");
+				LOGGER.error("File not Found ");
 			}
 		} else {
 			FileOutputStream fop = new FileOutputStream(file);
@@ -2021,15 +2173,17 @@ public class ResumeController extends AbstractController {
 				fop.close();
 				LOGGER.debug("The data has been written");
 			} else {
-				LOGGER.debug("This file is not exist");
+				LOGGER.debug("File not Found");
 			}
 		}
 		try {
-			File f = inFile;
-			FileInputStream fin = new FileInputStream(f);
-			byte[] fileContent = new byte[(int) f.length()];
+			File inFileCopy = inFile;
+			FileInputStream fin = new FileInputStream(inFileCopy);
+			byte[] fileContent = new byte[(int) inFileCopy.length()];
 			fin.read(fileContent);
-
+			String fName=inFileCopy.getName();
+			int index = fName.lastIndexOf('.');
+			String fileExtn = fName.substring(index + 1);
 			String encodedString = new sun.misc.BASE64Encoder()
 					.encode(fileContent); 
 
@@ -2039,7 +2193,7 @@ public class ResumeController extends AbstractController {
 			soapXML.append("<soap:Body>");
 			soapXML.append("<ParseResumeBinary xmlns='http://tempuri.org/'>");
 			soapXML.append("<filedata>" + encodedString + "</filedata>");
-			soapXML.append("<filetype>doc</filetype>");
+			soapXML.append("<filetype>"+fileExtn+"</filetype>");
 			soapXML.append("<key>" + key + "</key>");
 			soapXML.append("<version>" + version + "</version>");
 			soapXML.append("<countryKey>" + country + "</countryKey>");
@@ -2070,8 +2224,13 @@ public class ResumeController extends AbstractController {
 			BufferedReader is = new BufferedReader(new InputStreamReader(in));
 			String line = "";
 			StringBuffer str = new StringBuffer();
+			createResume.setParseError(false);
 			while ((line = is.readLine()) != null) {
 				LOGGER.debug(line);
+				if(line.contains("errorcode")){
+					LOGGER.debug("Empty File");
+					createResume.setParseError(true);
+				}
 				str.append(line);
 
 			}
@@ -2117,7 +2276,7 @@ public class ResumeController extends AbstractController {
 				if (profileNode.getNodeType() == Node.ELEMENT_NODE) {
 					Element profileElement = (Element) profileNode;
 					NodeList list = profileElement.getChildNodes();
-					convertNodeDetailToResumeForm(createResume,list);
+					transCreateResume.convertNodeDetailToResumeForm(createResume,list);
 				}
 			}
 
@@ -2127,129 +2286,4 @@ public class ResumeController extends AbstractController {
 		return createResume;
 	}
 
-	private void convertNodeDetailToResumeForm(CreateResume createResume, NodeList list) {
-		
-		Node profileNode;
-		String nodeName;
-		ContactInfoForm contactInformationForm = new ContactInfoForm();
-		List<PhoneDetailForm> phoneDetailFormList = new ArrayList<PhoneDetailForm>();
-		/** The list cert form. */
-		 List<CertificationsForm> listCertForm = new ArrayList<CertificationsForm>();
-		
-		/** The list edu form. */
-		 List<EducationForm> listEduForm =  new ArrayList<EducationForm>();
-		
-		/** The list lang form. */
-		 List<LanguageForm> listLangForm =  new ArrayList<LanguageForm>();
-		
-		/** The list ref form. */
-		 List<ReferenceForm> listRefForm = new ArrayList<ReferenceForm>();
-		
-		/** The list work exp form. */
-		 List<WorkExpForm> listWorkExpForm =  new ArrayList<WorkExpForm>();
-		
-		for (int i = 0; i < list.getLength(); i++) {
-			profileNode = list.item(i);
-			if (profileNode.getNodeType() == Node.ELEMENT_NODE) {
-				nodeName = profileNode.getNodeName();
-				LOGGER.debug("Node : "
-						+ nodeName
-						+ "Node Value"
-						+ profileNode.getFirstChild()
-								.getNodeValue());
-				if (profileNode.getFirstChild() != null) {
-					// Contact Info Starts
-					if (nodeName.equalsIgnoreCase("FirstName")) {
-						contactInformationForm.setFirstName(profileNode
-								.getFirstChild().getNodeValue());
-					} else if (nodeName.equalsIgnoreCase("LastName")) {
-						contactInformationForm.setLastName(profileNode
-								.getFirstChild().getNodeValue());
-					} else if (nodeName.equalsIgnoreCase("Middlename")) {
-						contactInformationForm.setMiddleName(profileNode
-								.getFirstChild().getNodeValue());
-					} else if (nodeName.equalsIgnoreCase("Email")) {
-						// contactInformationForm.set(profileNode.getFirstChild().getNodeValue());
-					} else if (nodeName.equalsIgnoreCase("Phone")) {
-						PhoneDetailForm phoneDetailForm = new PhoneDetailForm();
-						phoneDetailForm.setBuilderPhoneId(17);
-						phoneDetailForm.setPhoneType("17");
-						phoneDetailForm.setPhoneNumber(profileNode
-								.getFirstChild().getNodeValue());
-						phoneDetailFormList.add(phoneDetailForm);
-					} else if (nodeName.equalsIgnoreCase("Mobile")) {
-						PhoneDetailForm phoneDetailForm = new PhoneDetailForm();
-						phoneDetailForm.setBuilderPhoneId(19);
-						phoneDetailForm.setPhoneType("19");
-						phoneDetailForm.setPhoneNumber(profileNode
-								.getFirstChild().getNodeValue());
-						phoneDetailFormList.add(phoneDetailForm);
-					} else if (nodeName.equalsIgnoreCase("City")) {
-						contactInformationForm.setCity(profileNode
-								.getFirstChild().getNodeValue());
-					} else if (nodeName.equalsIgnoreCase("State")) {
-						contactInformationForm.setState(profileNode
-								.getFirstChild().getNodeValue());
-					} else if (nodeName.equalsIgnoreCase("ZipCode")) {
-						contactInformationForm.setPostalCode(profileNode
-								.getFirstChild().getNodeValue());
-					} else if (nodeName.equalsIgnoreCase("City")) {
-						contactInformationForm.setCity(profileNode
-								.getFirstChild().getNodeValue());
-					} else if (nodeName.equalsIgnoreCase("Address")) {
-						String address = profileNode.getFirstChild()
-								.getNodeValue();
-						if (address.length() > 40) {
-							contactInformationForm.setAddressLine1(address
-									.substring(0, 39));
-							contactInformationForm.setAddressLine2(address
-									.substring(40));
-						} else {
-							contactInformationForm.setAddressLine1(address);
-						}
-
-					} else if (nodeName.equalsIgnoreCase("Objectives")) {
-						if (profileNode.getFirstChild().getNodeValue().length() > 200) {
-							createResume.setObjective(profileNode
-									.getFirstChild().getNodeValue()
-									.substring(0, 199));
-						} else {
-							createResume.setObjective(profileNode
-									.getFirstChild().getNodeValue());
-						}
-					} else if (nodeName.equalsIgnoreCase("Skills")) {
-						createResume.setSkills(profileNode.getFirstChild()
-								.getNodeValue());
-
-					}
-					
-					/*// Contact Info Ends
-					if (phoneDetailFormList.size() > 0) {
-						createResume.setListPhoneDtlForm(phoneDetailFormList);
-					} else {
-						PhoneDetailForm phoneDetailForm = new PhoneDetailForm();
-						phoneDetailForm.setPhoneType("17");
-						phoneDetailFormList.add(phoneDetailForm);
-						createResume.setListPhoneDtlForm(phoneDetailFormList);
-					}
-					createResume.setContactInfoForm(contactInformationForm);*/
-
-					// resumeDetails.put(nodeName,
-					// profileNode.getFirstChild().getNodeValue());
-
-				}
-			}
-
-		}
-		// Contact Info Ends
-		if (phoneDetailFormList.size() > 0) {
-			createResume.setListPhoneDtlForm(phoneDetailFormList);
-		} else {
-			PhoneDetailForm phoneDetailForm = new PhoneDetailForm();
-			phoneDetailForm.setPhoneType("17");
-			phoneDetailFormList.add(phoneDetailForm);
-			createResume.setListPhoneDtlForm(phoneDetailFormList);
-		}
-		createResume.setContactInfoForm(contactInformationForm);
-	} 
 }

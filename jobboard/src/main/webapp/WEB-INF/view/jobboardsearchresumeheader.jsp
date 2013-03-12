@@ -30,7 +30,7 @@
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 			$("#keywords").click(function(event){
-				searchResume();
+				//searchResume();
 	   });
 	});
 	</script>
@@ -127,10 +127,10 @@
             				<form:hidden path="rows" id="rows"/>
 							<form:hidden path="searchtype" id="searchtype" value= "resume"/>
 							
-							<input type="button" id="submitval" title="Coming Soon"
-								value="SEARCH" class="btn_sm orange margin0 cursor" />
-								<!-- <a href="#" class="btn_sm orange margin0"
-									onclick="searchResume();">SEARCH</a> --><br>
+							<!-- <input type="button" id="submitval" title="Coming Soon"
+								value="SEARCH" class="btn_sm orange margin0 cursor" /> -->
+								 <a href="#" class="btn_sm orange margin0"
+									onclick="searchResume();">SEARCH</a><br>
 								<div class="floatRight marginTop5" title="Coming Soon">
 									<a href="#">Advanced Search</a>
 								</div>

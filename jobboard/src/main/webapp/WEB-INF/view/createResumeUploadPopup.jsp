@@ -25,6 +25,12 @@
 		if(virusStatus=='true'){
 			$("#resumeErrorMsg").html("The resume you tried to upload contains a virus. We attempted to remove the virus from your file, but we were unsuccessful. Please upload another file.");
 		}
+		var parseError=$('#parseError').val();
+		if(parseError=='true'){
+			$("#resumeErrorMsg").html("The file, you are uploading is not a general resume or not contain valied resume content." +
+					"(means does not contains either of  EMAIL-ID or Name or Phone No. ) or  file contains scanned document " +
+					", Please upload a valied Resume.");
+		}
 		var sizeInKB = 0;
 		
 		$("#resumeType").change(function() {
@@ -135,6 +141,7 @@
 				commandName="createResume" id="resumeUploadForm"
 				enctype="multipart/form-data">
 				<form:hidden path="virusFound"/>
+				<form:hidden path="parseError"/>
 				<div class="rowEvenNewSpacing">
 					<div id="resumeErrorMsg" class="FormErrorDisplayText"></div>
 					<div class="clearfix"></div>

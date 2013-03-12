@@ -607,7 +607,7 @@ public class PaymentGatewayController extends AbstractController{
 
 		orderDetailsDTO = transformPaymentMethod
 				.transformToOrderDetailsDTO(paymentGatewayForm);
-		if(paymentGatewayForm.getPurchaseJobPostForm().getDiscountAmt()>0){
+		if(null!=paymentGatewayForm.getPurchaseJobPostForm() && paymentGatewayForm.getPurchaseJobPostForm().getDiscountAmt()>0){
 			orderDetailsDTO.setDiscountItem(MMJBCommonConstants.NS_DISCOUNT_ITEM_ID);
 		}
 		/*int parentFacilityId = facilityService.getFacilityByFacilityId((Integer) session

@@ -44,6 +44,7 @@ import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.constants.PageNames;
+import com.advanceweb.afc.jb.data.entities.ResViewed;
 import com.advanceweb.afc.jb.employer.service.ResumePackageService;
 import com.advanceweb.afc.jb.employer.web.controller.MetricsForm;
 import com.advanceweb.afc.jb.event.service.ClickService;
@@ -58,6 +59,7 @@ import com.advanceweb.afc.jb.resume.ResumeService;
 import com.advanceweb.afc.jb.search.ResumeSearchResultDTO;
 import com.advanceweb.afc.jb.search.SearchParamDTO;
 import com.advanceweb.afc.jb.search.service.ResumeSearchService;
+import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
 import com.advanceweb.common.ads.AdPosition;
 import com.advanceweb.common.ads.AdSize;
 import com.advanceweb.common.client.ClientContext;
@@ -540,6 +542,8 @@ public class SearchResumeController extends AbstractController {
 		removeSession(session);
 		session.removeAttribute("jobSrchJsonObj");
 		session.removeAttribute(MMJBCommonConstants.KEYWORD_STRING);
+		int userId = (Integer) session
+				.getAttribute(MMJBCommonConstants.USER_ID);
 		// session.removeAttribute(MMJBCommonConstants.AUTOLOAD);
 		JSONObject jobSrchJsonObj = null;
 		
@@ -585,6 +589,16 @@ public class SearchResumeController extends AbstractController {
 //					paramMap, start, rows);
 			resumeDTOList = resumeSearchService
 					.resumeSearchFromDB(searchResumeForm.getKeywords(), start, rows);
+			for (ResumeDTO resumeDTO : resumeDTOList) {
+				if (resumeDTO.getUploadResumeId() > 0 && userId > 0) {
+					List<ResViewed> resVieweds = resumeService.getViewDetails(
+							resumeDTO.getUploadResumeId(), userId);
+					if (null != resVieweds && resVieweds.size() > 0) {
+						resumeDTO.setResumeViewed(true);
+					}
+				}
+
+			}
 
 			session.setAttribute(MMJBCommonConstants.START_ROW, ((page - 1)
 					* recordsPerPage + 1));
@@ -626,7 +640,7 @@ public class SearchResumeController extends AbstractController {
 		if (session.getAttribute(MMJBCommonConstants.FACILITY_ID) != null) {
 			int facilityId = (Integer) session.getAttribute(MMJBCommonConstants.FACILITY_ID);
 			
-			System.out.println("Valu=================="+resumePackageService.isResumePackageActive(facilityId));
+			LOGGER.debug("Value=================="+resumePackageService.isResumePackageActive(facilityId));
 			
 			//jobSrchJsonObj.put(MMJBCommonConstants.IS_RESUME_PACKAGE_ACTIVE, resumePackageService.isResumePackageActive(userID));
 			session.setAttribute(MMJBCommonConstants.IS_RESUME_PACKAGE_ACTIVE, resumePackageService.isResumePackageActive(facilityId));
@@ -1227,24 +1241,15 @@ public class SearchResumeController extends AbstractController {
 
 		// Save the resume which was viewed by employer
 		clickService.saveResumeEmpViews(resumeId);
-
-		if (MMJBCommonConstants.RESUME_TYPE_RESUME_BUILDER.equals(createResume
-				.getResumeType())) {
+		try {
+			resumeService
+					.saveViewDetails(resumeId, (Integer) session
+							.getAttribute(MMJBCommonConstants.USER_ID));
+		} catch (JobBoardServiceException jbex) {
+			LOGGER.error("Error in view resume builder", jbex);
+		}
 			model.addObject("createResume", createResume);
 			model.setViewName("viewresume");
-		} else if (MMJBCommonConstants.RESUME_TYPE_UPLOAD.equals(createResume
-				.getResumeType())) {
-			try {
-				model.setViewName("redirect:/jobSeekerResume/exportResume.html?fileName="
-						+ resumeDTO.getFilePath());
-				return model;
-			} catch (Exception e) {
-				LOGGER.error("Error in view resume builder", e);
-			}
-		} else {
-			model.addObject("createResume", createResume);
-			model.setViewName("viewCopyPasteResume");
-		}
 		return model;
 
 	}
@@ -1291,7 +1296,8 @@ public class SearchResumeController extends AbstractController {
 			jobSrchJson.put(MMJBCommonConstants.RELOCATE, "Yes");
 			jobSrchJson.put(MMJBCommonConstants.POSTED_DT,
 					MMUtils.convertToReqdDateString(resumeDTO.getPostDt()));
-
+			jobSrchJson.put("resumeViewed",
+					resumeDTO.isResumeViewed());
 			jsonRows.add(jobSrchJson);
 
 		}
