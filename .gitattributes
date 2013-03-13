@@ -939,6 +939,10 @@ jobboard/src/main/webapp/resources/jquery.nyroModal/js/jquery.nyroModal.custom.m
 jobboard/src/main/webapp/resources/jquery.nyroModal/js/popup.js -text
 jobboard/src/main/webapp/resources/jquery.nyroModal/styles/nyroModal.css -text
 jobboard/src/main/webapp/resources/js/FB.Share -text
+jobboard/src/main/webapp/resources/js/Funnel.swf -text
+jobboard/src/main/webapp/resources/js/FusionCharts.HC.Widgets.js -text
+jobboard/src/main/webapp/resources/js/FusionCharts.HC.js -text
+jobboard/src/main/webapp/resources/js/FusionCharts.js -text
 jobboard/src/main/webapp/resources/js/PIE.htc -text
 jobboard/src/main/webapp/resources/js/arrow.gif -text
 jobboard/src/main/webapp/resources/js/arrow.png -text
@@ -966,6 +970,7 @@ jobboard/src/main/webapp/resources/js/jquery.inputmask.extensions.js -text
 jobboard/src/main/webapp/resources/js/jquery.inputmask.js -text
 jobboard/src/main/webapp/resources/js/jquery.js -text
 jobboard/src/main/webapp/resources/js/jquery.megamenu.js -text
+jobboard/src/main/webapp/resources/js/jquery.min.js -text
 jobboard/src/main/webapp/resources/js/jquery.simplemodal.js -text
 jobboard/src/main/webapp/resources/js/jquery.tablesorter.js -text
 jobboard/src/main/webapp/resources/js/lpb.gif -text

@@ -713,7 +713,51 @@ padding:0;
 											
 								</div>
 								<!-- Funnel part: Code is commented for Phase 2A: -->
-								<div style="display: none;"><div id="container">
+
+							<script type="text/javascript"
+								src="../resources/js/FusionCharts.js"></script>
+
+							<!-- <div id="container" style="height: 250px; width: 290px"></div> -->
+							<div id="chartContainer">FusionWidgets XT will load here!</div>
+							<script type="text/javascript">
+							<!--
+								FusionCharts.setCurrentRenderer('javascript')
+								var myChart = new FusionCharts(
+										"Charts/Funnel.swf", "myChartId",
+										"250", "290", "0", "1");
+								//myChart.setJSONUrl("Data.json");
+								myChart.setJSONData({
+									"chart" : {
+										"caption" : "Views Clicks Applies",
+										"subcaption" : "Statistics",
+										"showpercentvalues" : "0",
+										"decimals" : "1",
+										"basefontsize" : "11",
+										"usesameslantangle" : "1",
+										"exportenabled" : "1",
+										"exportatclient" : "0",
+										"exporthandler" : "FCExporter.php",
+										"streamlinedData" : "0",
+										"isHollow" : "1"
+									},
+									"data" : [ {
+										"label" : "Views",
+										"value" : "40"
+									}, {
+										"label" : "Clicks",
+										"value" : "23"
+									}, {
+										"label" : "Applies",
+										"value" : "12"
+									} ]
+								}
+
+								);
+								myChart.render("chartContainer");
+							// -->
+							</script>
+
+							<div style="display: none;"><div id="container">
 								</div> </div>
 							</div>
 
