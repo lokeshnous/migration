@@ -40,11 +40,11 @@ import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.LocationDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
+import com.advanceweb.afc.jb.common.ResumeViewedDTO;
 import com.advanceweb.afc.jb.common.SaveSearchedJobsDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.common.util.MMUtils;
 import com.advanceweb.afc.jb.constants.PageNames;
-import com.advanceweb.afc.jb.data.entities.ResViewed;
 import com.advanceweb.afc.jb.employer.service.ResumePackageService;
 import com.advanceweb.afc.jb.employer.web.controller.MetricsForm;
 import com.advanceweb.afc.jb.event.service.ClickService;
@@ -591,7 +591,7 @@ public class SearchResumeController extends AbstractController {
 					.resumeSearchFromDB(searchResumeForm.getKeywords(), start, rows);
 			for (ResumeDTO resumeDTO : resumeDTOList) {
 				if (resumeDTO.getUploadResumeId() > 0 && userId > 0) {
-					List<ResViewed> resVieweds = resumeService.getViewDetails(
+					List<ResumeViewedDTO> resVieweds = resumeService.getViewDetails(
 							resumeDTO.getUploadResumeId(), userId);
 					if (null != resVieweds && resVieweds.size() > 0) {
 						resumeDTO.setResumeViewed(true);

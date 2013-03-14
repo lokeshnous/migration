@@ -14,6 +14,7 @@ import com.advanceweb.afc.jb.common.EducationDTO;
 import com.advanceweb.afc.jb.common.LanguageDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
+import com.advanceweb.afc.jb.common.ResumeViewedDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.data.entities.ResViewed;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
@@ -201,7 +202,7 @@ public interface ResumeService {
 	 * @param String resumeId, int userId
 	 * @return boolean
 	 */
-	List<ResViewed> getViewDetails(int resumeId, int userId) throws JobBoardServiceException;
+	List<ResumeViewedDTO> getViewDetails(int resumeId, int userId) throws JobBoardServiceException;
 	
 	
 }

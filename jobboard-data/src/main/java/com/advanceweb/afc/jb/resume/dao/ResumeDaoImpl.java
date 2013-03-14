@@ -29,6 +29,7 @@ import com.advanceweb.afc.jb.common.EducationDTO;
 import com.advanceweb.afc.jb.common.LanguageDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
+import com.advanceweb.afc.jb.common.ResumeViewedDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.AdmFolder;
@@ -665,16 +666,21 @@ public class ResumeDaoImpl implements ResumeDao {
 		return true;
 	}
 	@Override
-	public List<ResViewed>  getViewDetails(int resumeId, int userId)
+	public List<ResumeViewedDTO>  getViewDetails(int resumeId, int userId)
 			throws JobBoardDataException {
 		List<ResViewed> resViewedList = new ArrayList<ResViewed>();
+		List<ResumeViewedDTO> resumeViewedDTOs=new ArrayList<ResumeViewedDTO>();
 		try {
 			resViewedList = hibernateTemplate
 					.find("select rv from  ResViewed rv where rv.resumeId="
 							+ resumeId + "and rv.userId=" + userId);
+			if(resViewedList.size()>0){
+				resumeViewedDTOs=resumeConversionHelper
+				.transformResViewedToResViewedDto(resViewedList);
+			}
 		} catch (HibernateException e) {
 			LOGGER.error("Error while adding education", e);
 		}
-		return resViewedList;
+		return resumeViewedDTOs;
 	}
 }

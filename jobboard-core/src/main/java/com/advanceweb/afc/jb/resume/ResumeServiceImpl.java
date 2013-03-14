@@ -20,8 +20,8 @@ import com.advanceweb.afc.jb.common.EducationDTO;
 import com.advanceweb.afc.jb.common.LanguageDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
+import com.advanceweb.afc.jb.common.ResumeViewedDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
-import com.advanceweb.afc.jb.data.entities.ResViewed;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
 import com.advanceweb.afc.jb.resume.dao.ResumeDao;
 import com.advanceweb.afc.jb.service.exception.JobBoardServiceException;
@@ -247,9 +247,9 @@ public class ResumeServiceImpl implements ResumeService {
 	}
 
 	@Override
-	public List<ResViewed> getViewDetails(int resumeId, int userId)
+	public List<ResumeViewedDTO> getViewDetails(int resumeId, int userId)
 			throws JobBoardServiceException {
-		List<ResViewed> resViewedList = new ArrayList<ResViewed>();
+		List<ResumeViewedDTO> resViewedList = new ArrayList<ResumeViewedDTO>();
 		try {
 			resViewedList = resumeDao.getViewDetails(resumeId, userId);
 		} catch (JobBoardDataException jdex) {

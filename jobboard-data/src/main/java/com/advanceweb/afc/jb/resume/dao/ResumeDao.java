@@ -14,6 +14,7 @@ import com.advanceweb.afc.jb.common.EducationDTO;
 import com.advanceweb.afc.jb.common.LanguageDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
+import com.advanceweb.afc.jb.common.ResumeViewedDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.data.entities.ResViewed;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
@@ -190,7 +191,7 @@ public interface ResumeDao {
 	 */
 	boolean saveViewDetails(int resumeId, int userId) throws JobBoardDataException;
 
-	List<ResViewed> getViewDetails(int resumeId, int userId)
+	List<ResumeViewedDTO> getViewDetails(int resumeId, int userId)
 			throws JobBoardDataException;
 	
 }

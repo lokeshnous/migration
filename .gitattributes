@@ -71,6 +71,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResCoverLetterDTO.jav
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeAttribListDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumePackageDTO.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeViewedDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeVisibilityDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/ResumeWordDocumentDTO.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/SalesItemDTO.java -text

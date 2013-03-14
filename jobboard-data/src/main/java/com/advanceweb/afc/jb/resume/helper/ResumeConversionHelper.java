@@ -23,6 +23,7 @@ import com.advanceweb.afc.jb.common.LanguageDTO;
 import com.advanceweb.afc.jb.common.PhoneDetailDTO;
 import com.advanceweb.afc.jb.common.ReferenceDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
+import com.advanceweb.afc.jb.common.ResumeViewedDTO;
 import com.advanceweb.afc.jb.common.WorkExpDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.data.entities.ResBuilderCertification;
@@ -37,6 +38,7 @@ import com.advanceweb.afc.jb.data.entities.ResDegreeEdu;
 import com.advanceweb.afc.jb.data.entities.ResResumeAttrib;
 import com.advanceweb.afc.jb.data.entities.ResResumeProfile;
 import com.advanceweb.afc.jb.data.entities.ResUploadResume;
+import com.advanceweb.afc.jb.data.entities.ResViewed;
 
 /**
  * 
@@ -786,6 +788,31 @@ public class ResumeConversionHelper {
 			skillList.add(entity);
 		}
 		return skillList;
+	}
+	/**
+	 * MEthod to convert the resumeViewed entity to Resume viewed DTO
+	 * @param resVieweds
+	 * @return
+	 */
+	public List<ResumeViewedDTO> transformResViewedToResViewedDto(
+			List<ResViewed> resVieweds) {
+		List<ResumeViewedDTO> resumeViewedDTOs = new ArrayList<ResumeViewedDTO>();
+		if (null != resVieweds) {
+			for (ResViewed resViewed : resVieweds) {
+				ResumeViewedDTO resumeViewedDTO = new ResumeViewedDTO();
+				resumeViewedDTO.setResumeId(resViewed.getResumeId());
+				resumeViewedDTO.setUserId(resViewed.getUserId());
+				resumeViewedDTO.setResViewedId(resViewed.getResViewedId());
+				if (null != resViewed.getCreateDt()) {
+					resumeViewedDTO.setCreateDt(resViewed.getCreateDt());
+				}
+				if (null != resViewed.getDeleteDt()) {
+					resumeViewedDTO.setDeleteDt(resViewed.getDeleteDt());
+				}
+				resumeViewedDTOs.add(resumeViewedDTO);
+			}
+		}
+		return resumeViewedDTOs;
 	}
 	
 }
