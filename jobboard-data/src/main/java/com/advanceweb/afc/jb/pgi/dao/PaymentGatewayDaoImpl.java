@@ -311,18 +311,21 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 					
 					//If its first time purchase then today's date + numberOfDays otherwise find the last purchase expire date + numberOfDays 
 					Date expireDate = new Date();
+					Date expireDateNew = new Date();
+					Calendar calendar = Calendar.getInstance(); 
 					if(!admInvObj.isEmpty()){
 						expireDate = admInvObj.get(0).getExpireDt();
-					}
-					Calendar calendar = Calendar.getInstance(); 
-					
-					
+						calendar.setTime(expireDate);
+						calendar.add(Calendar.DATE, 1);
+						expireDate = calendar.getTime(); 
+					}					
 					for(ResumePackageDTO resSearchPackageDTO : orderDetailsDTO.getResSearchPackageDTOList()){
 						
 						admFacilityInventory = new AdmFacilityInventory();
 						admFacilityInventory.setOrderId(orderId);
 						admFacilityInventory.setAdmFacility(admFacility);
-						admFacilityInventory.setCreateDt(new Date());
+						//admFacilityInventory.setCreateDt(new Date());
+						admFacilityInventory.setCreateDt(expireDate);
 						admFacilityInventory.setFacilityId(admFacility.getFacilityId());
 						
 						AdmInventoryDetail admInventoryDetail = transformToAdmInventoryDetail(admFacilityInventory,resSearchPackageDTO);
@@ -332,8 +335,8 @@ public class PaymentGatewayDaoImpl implements PaymentGatewayDao {
 						
 						calendar.setTime(expireDate);
 						calendar.add(Calendar.DATE, numberOfDays);
-						expireDate = calendar.getTime(); 
-						admFacilityInventory.setExpireDt(expireDate);
+						expireDateNew = calendar.getTime(); 
+						admFacilityInventory.setExpireDt(expireDateNew);
 						admFacilityInventoryList.add(admFacilityInventory);
 						
 					}
