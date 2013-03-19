@@ -98,6 +98,7 @@ jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/MMJBCommonConsta
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/MMUtils.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/XmlUrl.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/XmlUrlSet.java -text
+jobboard-common/src/main/java/com/advanceweb/afc/jb/common/util/package-info.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/constants/PageNames.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/constants/RequestHeaderNames.java -text
 jobboard-common/src/main/java/com/advanceweb/afc/jb/dto/CreateResumeDTO.java -text
@@ -610,6 +611,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/jobseeker/web/controller/TransformJ
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/AdminAuthenticationEntryPoint.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/AdminLoginManager.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/ChangePasswordForm.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/CookieAuthenticationFilter.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginFailureManager.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginForm.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginFormController.java -text
@@ -617,6 +619,7 @@ jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginFormValid
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LoginManager.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/LogoutManager.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/PreAuthenticationManager.java -text
+jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/SessionManagementFilter.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/SocialConnectionManager.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/SocialLoginAdapter.java -text
 jobboard/src/main/java/com/advanceweb/afc/jb/login/web/controller/SocialLoginController.java -text
@@ -716,6 +719,7 @@ jobboard/src/main/webapp/WEB-INF/view/browseByLocationRegions.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/common/include.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/commonSocialLogin.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/compareJobSeeker.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/cookieExpired.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/copyPasteResumeText.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/createBrandingTemplate.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/createResumeBuilder.jsp -text
@@ -804,9 +808,14 @@ jobboard/src/main/webapp/WEB-INF/view/newsList.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/postNewJobs.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/printCoverLetter.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/publicationDetails.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/redirectCookieExpired.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/redirectSessionExpired.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/redirectSessionExpiredCookieExist.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/registrationsuccess.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/resumeInventoryPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/selectResumePopup.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/sessionExpired.jsp -text
+jobboard/src/main/webapp/WEB-INF/view/sessionExpiredCookieExist.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/setAlertPopup.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/sitemap.jsp -text
 jobboard/src/main/webapp/WEB-INF/view/updateFacility.jsp -text

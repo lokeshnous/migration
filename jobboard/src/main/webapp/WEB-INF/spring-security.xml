@@ -8,11 +8,19 @@
 			http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 	<security:http pattern="/resources/**" security="none"/>
 	<security:http pattern="/index.jsp" security="none"/>
-	<security:http pattern="/search/jobboardSearchesHistory.html" security="none"/>
-	<security:http pattern="/healthcare/logo.html" security="none"/>
-	<security:http pattern="/healthcare/homeFeaturedEmps.html" security="none"/>
-	<security:http pattern="/healthcare/activeJobs.html" security="none"/>
-	<security:http pattern="/healthcare/viewImage.html" security="none"/>
+	<security:http pattern="/jobsearch/jobboardSearchesHistory.html" security="none"/>
+	<security:http pattern="/healthcarejobs/logo.html" security="none"/>
+	<!-- <security:http pattern="/commonLogin/**" security="none"/> -->
+	<security:http pattern="/healthcarejobs/homeFeaturedEmps.html" security="none"/>
+	<security:http pattern="/healthcarejobs/activeJobs.html" security="none"/>
+	<security:http pattern="/search/activeJobs.html" security="none"/>
+	<security:http pattern="/employer/metricsDetails.html" security="none" />
+	
+	<security:http pattern="/healthcare/redirectSessionExpiredCookieExist.html" security="none" />
+	<security:http pattern="/healthcare/redirectSessionExpired.html" security="none" />
+	<security:http pattern="/healthcare/sessionExpired.html" security="none" />
+	<security:http pattern="/healthcare/redirectCookieExpired.html" security="none" />
+	<security:http pattern="/healthcare/cookieExpired.html" security="none" />
 	
 <security:http pattern="/admin/**" use-expressions="true" auto-config="false" entry-point-ref="adminAuthenticationEntryPoint">
 <security:intercept-url pattern="/admin/adminMenu.html"
@@ -57,21 +65,21 @@ class="com.advanceweb.afc.jb.login.web.controller.AdminLoginManager"/>
 
 		<security:intercept-url pattern="/healthcare/index.html"
 			access="permitAll" />
-		<security:intercept-url pattern="/commonLogin/login.html"
+		<security:intercept-url pattern="/commonlogin/login.html"
 			access="permitAll" />
 		<security:intercept-url
 			pattern="/jobseekerregistration/saveJobSeekerProfile.html" access="permitAll" />
 		<security:intercept-url
 			pattern="/jobseekerregistration/createJobSeekerYourInfo.html" access="permitAll" />
 		<security:intercept-url
-			pattern="/jobseekerregistration/createJobSeekerCreateYrAcct.html"
+			pattern="/jobseekerregistration/createjobseekercreateyracct.html"
 			access="permitAll" />
-		<security:intercept-url pattern="/search/**"
+		<security:intercept-url pattern="/jobsearch/**"
 			access="permitAll" />
 		<security:intercept-url pattern="/jobSeeker/jobSeekerDashBoard.html"
+		access="hasRole('ROLE_JOB_SEEKER')" />
+		<security:intercept-url pattern="/savedSearches/**"
 			access="hasRole('ROLE_JOB_SEEKER')" />
-		<!-- <security:intercept-url pattern="/savedSearches/**"
-			access="hasRole('ROLE_JOB_SEEKER')" /> -->
 		<security:intercept-url pattern="/subscriptions/**"
 			access="permitAll" />
 		<security:intercept-url pattern="/jobSeekerJobDetail/**"
@@ -81,15 +89,15 @@ class="com.advanceweb.afc.jb.login.web.controller.AdminLoginManager"/>
 		<security:intercept-url pattern="/jobSeekerResume/**"
 			access="hasRole('ROLE_JOB_SEEKER')" />
 		<security:intercept-url pattern="/savedSearches/**"
-			access="permitAll"/>
+			access="permitAll" />
 
 		<!-- Added for SSL Implementation -start -->
-		<security:intercept-url pattern="/pgiController/**"
+		<!-- <security:intercept-url pattern="/pgiController/**"
 			access="permitAll" requires-channel="https" />
 		<security:intercept-url pattern="/employer/employerDashBoard.html"
 			access="permitAll" requires-channel="http" />
 		<security:intercept-url pattern="/logout.html"
-			access="permitAll" requires-channel="http" />
+			access="permitAll" requires-channel="http" /> -->
 		<!-- Added for SSL Implementation -end -->
 
 		<!-- Added for SSL Implementation : Server.xml : Connector port and Security: 
@@ -97,7 +105,7 @@ class="com.advanceweb.afc.jb.login.web.controller.AdminLoginManager"/>
 			connectionTimeout="20000" redirectPort="8443" /> spring-security.xml <security:port-mapping 
 			http="2815" https="8443" /> -start -->
 		<!-- <security:port-mappings>
-			<security:port-mapping http="8080" https="8443" />
+			<security:port-mapping http="2815" https="8443" />
 		</security:port-mappings> -->
 		<!-- Added for SSL Implementation -end -->
 
@@ -109,7 +117,18 @@ class="com.advanceweb.afc.jb.login.web.controller.AdminLoginManager"/>
 			position="REMEMBER_ME_FILTER" />
 			<security:custom-filter ref="preAuthFilter"
 			position="PRE_AUTH_FILTER" />
+			<security:custom-filter ref="sessionManagementFilter"
+			before="FIRST"  />
+			<security:custom-filter ref="cookieAuthenticationFilter"
+			position="LAST" />
+			<!-- <security:session-management session-authentication-strategy-ref="sessionAuthStrategy" invalid-session-url="/healthcare/sessionExpired.html">
+			</security:session-management> -->
 	</security:http>
+
+<bean id="sessionManagementFilter"
+    class="com.advanceweb.afc.jb.login.web.controller.SessionManagementFilter"/>
+<bean id="cookieAuthenticationFilter"
+    class="com.advanceweb.afc.jb.login.web.controller.CookieAuthenticationFilter"/>
 
 <bean id="preAuthenticationProvider"
     class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider" p:preAuthenticatedUserDetailsService-ref="customAuthenticationManager"/>
@@ -121,7 +140,7 @@ class="com.advanceweb.afc.jb.login.web.controller.AdminLoginManager"/>
 		p:authenticationManager-ref="theauthenticationManager"
 		p:authenticationSuccessHandler-ref="customAuthenticationSuccessHandler"
 		p:authenticationFailureHandler-ref="customAuthenticationFailureHandler"
-		p:rememberMeServices-ref="rememberMeServices" />
+		p:rememberMeServices-ref="rememberMeServices"/>
 
 	<bean id="rememberMeProcessingFilter"
 		class="org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter"
@@ -142,7 +161,7 @@ class="com.advanceweb.afc.jb.login.web.controller.AdminLoginManager"/>
 
 	<bean id="authenticationEntryPoint"
 		class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint"
-		p:loginFormUrl="/healthcare/index.html"/>
+		p:loginFormUrl="/healthcarejobs/advanceweb.html" />
 
 	<bean id="rememberMeServices"
 		class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">

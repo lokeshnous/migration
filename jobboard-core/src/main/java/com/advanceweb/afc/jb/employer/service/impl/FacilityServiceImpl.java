@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
+import com.advanceweb.afc.jb.common.FacilityContactDTO;
 import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.SchedulerDTO;
@@ -204,5 +205,19 @@ public class FacilityServiceImpl implements FacilityService {
 	 */
 	public boolean isJobOwner(int facilityId) {
 		return facilityDAO.isJobOwner(facilityId);
+	}
+	
+	/**
+	 * This method provides facility contact details
+	 * @param facilityId
+	 * @return
+	 */
+	public FacilityContactDTO getFacilityContactDetails(int facilityId){
+		return facilityDAO.getFacilityContactDetails(facilityId);
+	}
+
+	@Override
+	public List<FacilityDTO> getUserFacilityDetails(int facilityId) {
+		return facilityDAO.getUserFacilityDetails(facilityId);
 	}
 }
