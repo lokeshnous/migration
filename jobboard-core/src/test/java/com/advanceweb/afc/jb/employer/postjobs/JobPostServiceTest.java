@@ -76,6 +76,34 @@ public class JobPostServiceTest extends ServiceTestBase {
 	
 	@Autowired
 	private PopulateDropdowns populateDropdownsService;
+	
+	/** The NetSuite package internal ID. */
+	@Value("${FEATURE_30}")
+	private String FEATURE_30;
+
+	/** The NetSuite package internal ID. */
+	@Value("${FEATURE_90}")
+	private String FEATURE_90;
+	
+	/** The NetSuite package internal ID. */
+	@Value("${FEATURE_180}")
+	private String FEATURE_180;
+	
+	/** The NetSuite package internal ID. */
+	@Value("${FEATURE_365}")
+	private String FEATURE_365;
+	
+	/** The NetSuite package internal ID. */
+	@Value("${XML_90}")
+	private String XML_90;
+	
+	/** The NetSuite package internal ID. */
+	@Value("${XML_180}")
+	private String XML_180;
+	
+	/** The NetSuite package internal ID. */
+	@Value("${XML_365}")
+	private String XML_365;
 
 	private static final String Q_USERNAME = "?userName";
 	private static final String Q_JOBID = "?jobId";
@@ -469,18 +497,18 @@ public class JobPostServiceTest extends ServiceTestBase {
 					.getNSCustomerPackages(nsCustomerID);
 
 			dto.setbFeatured(purchasedPackages
-					.contains(MMJBCommonConstants.FEATURE_30)
+					.contains(FEATURE_30)
 					|| purchasedPackages
-							.contains(MMJBCommonConstants.FEATURE_90)
+							.contains(FEATURE_90)
 					|| purchasedPackages
-							.contains(MMJBCommonConstants.FEATURE_180)
+							.contains(FEATURE_180)
 					|| purchasedPackages
-							.contains(MMJBCommonConstants.FEATURE_365));
+							.contains(FEATURE_365));
 			// Verify the employer is applicable for free posting or not
 			dto.setXmlStartEndDateEnabled(purchasedPackages
-					.contains(MMJBCommonConstants.XML_90)
-					|| purchasedPackages.contains(MMJBCommonConstants.XML_180)
-					|| purchasedPackages.contains(MMJBCommonConstants.XML_365));
+					.contains(XML_90)
+					|| purchasedPackages.contains(XML_180)
+					|| purchasedPackages.contains(XML_365));
 		}
 		List<SchedulerDTO> schedulerDTOList = employerJobPostDAO.executeAutoRenewalJobWorker(jobsList);
 		SchedulerDTO schedulerDTO = new SchedulerDTO();
@@ -920,18 +948,18 @@ public class JobPostServiceTest extends ServiceTestBase {
 					.getNSCustomerPackages(nsCustomerID);
 
 			dto.setbFeatured(purchasedPackages
-					.contains(MMJBCommonConstants.FEATURE_30)
+					.contains(FEATURE_30)
 					|| purchasedPackages
-							.contains(MMJBCommonConstants.FEATURE_90)
+							.contains(FEATURE_90)
 					|| purchasedPackages
-							.contains(MMJBCommonConstants.FEATURE_180)
+							.contains(FEATURE_180)
 					|| purchasedPackages
-							.contains(MMJBCommonConstants.FEATURE_365));
+							.contains(FEATURE_365));
 			// Verify the employer is applicable for free posting or not
 			dto.setXmlStartEndDateEnabled(purchasedPackages
-					.contains(MMJBCommonConstants.XML_90)
-					|| purchasedPackages.contains(MMJBCommonConstants.XML_180)
-					|| purchasedPackages.contains(MMJBCommonConstants.XML_365));
+					.contains(XML_90)
+					|| purchasedPackages.contains(XML_180)
+					|| purchasedPackages.contains(XML_365));
 		}
 		List<SchedulerDTO> schedulerDTOList = employerJobPostDAO
 				.executeAutoRenewalJobWorker(jobsList);
