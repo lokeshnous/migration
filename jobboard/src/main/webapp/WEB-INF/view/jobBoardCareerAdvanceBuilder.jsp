@@ -25,16 +25,15 @@
                     <p>Print out your resumes for offline use</p>
                     </div>
                  </div>
-                 <div class="row marginTop25">
+                 <security:authorize access="(!hasRole('ROLE_JOB_SEEKER') and !hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP') and !hasRole('ROLE_FACILITY_SYSTEM')) or (hasRole('ROLE_JOB_SEEKER'))">
+                 <div class="row marginTop25">                 
                  	<a class="btn_sm orange cursor" onclick="postYourResumeLink();">Get started now</a>
                  </div>
-                 <security:authorize access="!hasRole('ROLE_JOB_SEEKER')">
+                 </security:authorize>
+                 <security:authorize access="!hasRole('ROLE_JOB_SEEKER') and !hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP') and !hasRole('ROLE_FACILITY_SYSTEM')">
                  <div class="row marginTop20">
-                 <p>To view your existing resumes, please <a href="<%=request.getContextPath() %>/commonLogin/login.html?page=jobSeeker">log in</a></p>
+                 <p>To view your existing resumes, please <a href="<%=request.getContextPath() %>/commonlogin/login.html?page=jobSeeker">log in</a></p>
                  </div>
                  </security:authorize>
-                 </div>     
-                      
-                      
-                      
+                 </div>                          
                     </div>

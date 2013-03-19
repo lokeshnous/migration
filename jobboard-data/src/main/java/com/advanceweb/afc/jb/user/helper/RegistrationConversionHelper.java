@@ -241,7 +241,12 @@ public class RegistrationConversionHelper {
 						.equalsIgnoreCase(attribDTO.getStrLabelName())) {
 					attribDTO.setStrLabelValue(user.getEmail());
 					jsDTO.setEmailId(user.getEmail());
-				} else {
+				} else if(MMJBCommonConstants.MYINDUSTRY.equalsIgnoreCase(attribDTO
+						.getStrLabelName())){
+					if(null == attribDTO.getStrLabelValue()){
+						attribDTO.setStrLabelValue("Health Care");	
+					}
+				}else {
 					attribDTO.setStrLabelValue(retrieveLabelValue(attribDTO,
 							profiles));
 				}
@@ -420,7 +425,7 @@ public class RegistrationConversionHelper {
 	 * @param user
 	 * @return
 	 */
-	public UserDTO transformMerUserToUserDTO(MerUser user,Boolean oldUser,Boolean advPassUser) {
+	public UserDTO transformMerUserToUserDTO(MerUser user,Boolean oldUser,Boolean advPassUser,Boolean advPassUserWithNullPass) {
 
 		UserDTO userDTO = new UserDTO();
 		if (null != user) {
@@ -437,6 +442,10 @@ public class RegistrationConversionHelper {
 			if(advPassUser)
 			{
 				userDTO.setAdvPassUser(true);
+			}
+			if(advPassUserWithNullPass)
+			{
+				userDTO.setAdvPassUserWithNullPass(true);
 			}
 		}
 

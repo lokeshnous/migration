@@ -89,7 +89,7 @@ public class PreAuthenticationManager extends AbstractPreAuthenticatedProcessing
 						LOGGER.debug("2 cookieValue=======>"+cookieValue);
 						
 						Date date =new Date();
-						SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh.mm.ss aa");
+						SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa");
 						String postData = cookieValue + "^" + formatter.format(date) + "^" + "30" + "^" + "true";
 						LOGGER.debug("postData: "+postData);
 						LOGGER.debug("Date Passing to interpreter=======>"+formatter.format(date));

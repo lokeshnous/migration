@@ -33,6 +33,9 @@ public class EmployeeAccountForm {
 	/** The email. */
 	private String email;
 	
+	/** The original email. */
+	private String originalEmail;
+	
 	/** The company. */
 	private String company;
 	
@@ -291,5 +294,14 @@ public class EmployeeAccountForm {
 	public void setUseMyAccountAddr(boolean useMyAccountAddr) {
 		this.useMyAccountAddr = useMyAccountAddr;
 	}
+
+	public String getOriginalEmail() {
+		return originalEmail;
+	}
+
+	public void setOriginalEmail(String originalEmail) {
+		this.originalEmail = originalEmail;
+	}
+
 
 }

@@ -1,3 +1,6 @@
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
+
 <div class="BoxLeftStyle marginTop100"><img alt="img" src="<%=request.getContextPath() %>/resources/images/triangle.png" /></div>
             <div class="RowMidContantArea MinHeight600">
                       <div class="MidContantAreaHead">
@@ -11,7 +14,8 @@
                         </div>
                         <div class="clearfix"></div>
                         <div class="DotBorderBottom marginTop20 width600"></div>
+                        <security:authorize access="(!hasRole('ROLE_JOB_SEEKER') and !hasRole('ROLE_FACILITY') and !hasRole('ROLE_FACILITY_GROUP') and !hasRole('ROLE_FACILITY_SYSTEM')) or (hasRole('ROLE_JOB_SEEKER'))">
                 <div class="row marginTop25"> <a class="btn_sm orange" href="<%=request.getContextPath() %>/healthcare/navigateJsDashboard.html">Get started now</a> </div>
-                
+                </security:authorize>
               </div>
                     </div>

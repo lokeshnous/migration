@@ -10,6 +10,7 @@ package com.advanceweb.afc.jb.common.schedulers.jobs;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.StringTokenizer;
 
 import javax.annotation.Resource;
 import javax.mail.internet.AddressException;
@@ -22,7 +23,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
-import com.advanceweb.afc.jb.common.JobPostDTO;
+import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.SchedulerDTO;
 import com.advanceweb.afc.jb.common.UserAlertDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
@@ -89,82 +90,109 @@ public class NoActiveJobPostingJobWorker implements JobWorker {
 	 */
 	@Override
 	public void executeJob() {
-		List<SchedulerDTO> schedulerDTO=facilityService.getAllFacilityList();
+		List<SchedulerDTO> schedulerDTOList=facilityService.getAllFacilityList();
 		List<SchedulerDTO> sendMailList=new ArrayList<SchedulerDTO>();
 		List<DropDownDTO> companyList = new ArrayList<DropDownDTO>();
 		
-		for (SchedulerDTO dto : schedulerDTO) {
+		for (SchedulerDTO schedulerDTO: schedulerDTOList) {
 			companyList = populateDropdownsService.populateCompanyNames(
-					dto.getFacilityId(), false);
+					schedulerDTO.getFacilityId(), false);
 			try{
-			List<JobPostDTO> jobPostDTOList = jobPostService
-					.retrieveAllJobByStatus(MMJBCommonConstants.POST_NEW_JOB,
-							companyList, 0, 10);
-			if (jobPostDTOList != null) {
-				sendMailList.add(dto);
+				int noOfRecords = jobPostService
+					.getEmpJobsCountByStatus(MMJBCommonConstants.POST_NEW_JOB,
+							companyList);
+			if (noOfRecords <= 0) {
+				sendMailList.add(schedulerDTO);
 			}
 			}catch(Exception e){
 				LOGGER.error(e.getMessage(), e);
 			}
 		}
-		for (SchedulerDTO dto : sendMailList) {
-			
-//			FacilityDTO mainFacilityDTO = facilityService.getParentFacility(dto.getFacilityId());
-//	        UserDTO mainuserDto = userService.getUserByUserId(mainFacilityDTO
-//					.getUserId());
-	        
-	        // check for job is posted by Job owner and send mail on interest
-			/* if(dto.getUserId() !=  mainFacilityDTO.getUserId()){
-	        	List<UserAlertDTO> alertDTOs = alertService.viewAlerts(dto
-						.getUserId());
-	        	UserDTO mainuserDto = userService.getUserByUserId(dto
-						.getUserId());
-	        	InternetAddress[] toAddress = new InternetAddress[1];
-				try {
-					toAddress[0] = new InternetAddress(mainuserDto.getEmailId());
-				} catch (AddressException jbex) {
-					LOGGER.error(
-							"Error occured while geting InternetAddress reference",
-							jbex);
-				}
-				if (null != alertDTOs && alertDTOs.size() > 0) {
-					for (UserAlertDTO alertDTO : alertDTOs) {
-						if (alertDTO.getAlertId() > 0
-								&& alertDTO.getAlertId() == MMJBCommonConstants.NO_ACTIVE_POSTINGS_ON_ADVANCE) {
-							noActivePostingSendMail(dto, toAddress);
+		for (SchedulerDTO schedulerDTO : sendMailList) {
+			if (schedulerDTO.getFacilityId() > 0) {
+				// send mail to employer on interest
+				FacilityDTO mainFacilityDTO = facilityService
+						.getParentFacility(schedulerDTO.getFacilityId());
+				// Get all associated user for the above facility id
+				List<FacilityDTO> admUserFacilities = facilityService
+						.getUserFacilityDetails(mainFacilityDTO.getFacilityId());
+				if (null != admUserFacilities && admUserFacilities.size() > 0) {
+					// iterate each associated user for the above facility id
+					// and
+					// send mail
+					for (FacilityDTO admUserFacility : admUserFacilities) {
+						// check for job is posted by Job owner and send mail on
+						// interest
+						List<UserAlertDTO> alertDTOs = alertService
+								.viewAlerts(admUserFacility.getUserId());
+						UserDTO mainuserDto = userService
+								.getUserByUserId(admUserFacility.getUserId());
+						InternetAddress[] toAddress = new InternetAddress[1];
+						try {
+							toAddress[0] = new InternetAddress(
+									mainuserDto.getEmailId());
+						} catch (AddressException jbex) {
+							LOGGER.error(
+									"Error occured while geting InternetAddress reference",
+									jbex);
+						}
+						if (null != alertDTOs && alertDTOs.size() > 0) {
+							for (UserAlertDTO alertDTO : alertDTOs) {
+								if (alertDTO.getAlertId() > 0
+										&& alertDTO.getAlertId() == MMJBCommonConstants.NO_ACTIVE_POSTINGS_ON_ADVANCE) {
+									noActivePostingSendMail(schedulerDTO,
+											toAddress);
+								}
+							}
+						} else {
+							noActivePostingSendMail(schedulerDTO, toAddress);
 						}
 					}
-				} else {
-					noActivePostingSendMail(dto,  toAddress);
+
 				}
-	        }*/
-	        // send mail to employer on interest
-			List<UserAlertDTO> alertDTOs = alertService
-					.viewAlerts(dto.getUserId());
-			UserDTO mainuserDto = userService.getUserByUserId(dto
-					.getUserId());
-			InternetAddress[] toAddress = new InternetAddress[1];
-			try {
-				toAddress[0] = new InternetAddress(mainuserDto.getEmailId());
-			} catch (AddressException jbex) {
-				LOGGER.error(
-						"Error occured while geting InternetAddress reference",
-						jbex);
-			}
-			if (null != alertDTOs && alertDTOs.size() > 0) {
-				for (UserAlertDTO alertDTO : alertDTOs) {
-					if (alertDTO.getAlertId() > 0
-							&& alertDTO.getAlertId() == MMJBCommonConstants.NO_ACTIVE_POSTINGS_ON_ADVANCE) {
-						noActivePostingSendMail(dto, toAddress);
+				// if Mail not sent to the main Facility,send mail on interest
+				if (!mainFacilityDTO.getFacilityId().equals(schedulerDTO
+						.getFacilityId()) && schedulerDTO.getFacilityId() > 0) {
+					List<FacilityDTO> admUserFacilityList = facilityService
+							.getUserFacilityDetails(schedulerDTO
+									.getFacilityId());
+					if (null != admUserFacilityList
+							&& admUserFacilityList.size() > 0) {
+						for (FacilityDTO admUserFacility : admUserFacilityList) {
+
+							List<UserAlertDTO> alertDTOs = alertService
+									.viewAlerts(admUserFacility.getUserId());
+							UserDTO userDto = userService
+									.getUserByUserId(admUserFacility
+											.getUserId());
+							InternetAddress[] jsToAddress = new InternetAddress[1];
+							try {
+								jsToAddress[0] = new InternetAddress(
+										userDto.getEmailId());
+							} catch (AddressException jbex) {
+								LOGGER.error(
+										"Error occured while geting InternetAddress reference",
+										jbex);
+							}
+							if (null != alertDTOs && alertDTOs.size() > 0) {
+								for (UserAlertDTO alertDTO : alertDTOs) {
+									if (alertDTO.getAlertId() > 0
+											&& alertDTO.getAlertId() == MMJBCommonConstants.NO_ACTIVE_POSTINGS_ON_ADVANCE) {
+										noActivePostingSendMail(schedulerDTO,
+												jsToAddress);
+									}
+								}
+							} else {
+								noActivePostingSendMail(schedulerDTO,
+										jsToAddress);
+							}
+						}
 					}
 				}
-			} else {
-				noActivePostingSendMail(dto, toAddress);
 			}
+
+			LOGGER.info("NoActiveJobPostingJobWorker.-> Executed Job Successfully.....");
 		}
-
-
-		LOGGER.info("NoActiveJobPostingJobWorker.-> Executed Job Successfully.....");
 	}
 
 	/**
@@ -175,11 +203,25 @@ public class NoActiveJobPostingJobWorker implements JobWorker {
 	 */
 	private void noActivePostingSendMail(SchedulerDTO dto, InternetAddress[] toAddress) {
 		StringBuffer stringBuffer = new StringBuffer();
-		
+
 		EmailDTO emailDTO = new EmailDTO();
-		InternetAddress[] ccAddress = new InternetAddress[1];
+		InternetAddress[] ccAddress = null;
 		try {
-			ccAddress[0]=new InternetAddress(emailConfiguration.getProperty("rep.email.address").trim());
+
+			String ccAddressDetails = emailConfiguration.getProperty(
+					"rep.email.address").trim();
+			if (null != ccAddressDetails && !ccAddressDetails.isEmpty()) {
+				StringTokenizer stringNew = new StringTokenizer(
+						ccAddressDetails, ",");
+
+				ccAddress = new InternetAddress[stringNew.countTokens()];
+				int i = 0;
+				while (stringNew.hasMoreElements()) {
+					String stringObject = (String) stringNew.nextElement();
+					ccAddress[i] = new InternetAddress(stringObject.trim());
+					i++;
+				}
+			}
 		} catch (AddressException jbex) {
 			LOGGER.error(
 					"Error occured while geting InternetAddress reference",
@@ -218,6 +260,7 @@ public class NoActiveJobPostingJobWorker implements JobWorker {
 		stringBuffer.append(emailConfiguration.getProperty("email.footer").trim());
 		emailDTO.setBody(stringBuffer.toString());
 		emailDTO.setHtmlFormat(true);
+		LOGGER.debug("No Active job Found mail send to :" +emailDTO.getToAddress());
 		emailService.sendEmail(emailDTO);
 	}
 

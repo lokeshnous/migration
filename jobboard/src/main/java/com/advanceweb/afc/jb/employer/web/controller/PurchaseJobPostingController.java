@@ -18,6 +18,7 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,6 +60,10 @@ public class PurchaseJobPostingController {
 	/** The transform job post. */
 	@Autowired
 	private TransformJobPost transformJobPost;
+	
+	/** The NetSuite package internal ID. */
+	@Value("${PROMOCODE_15ADVOFF}")
+	private String PROMOCODE_15ADVOFF;
 	
 	/**
 	 * This method is to display the Job Type & Respective AddOns
@@ -201,7 +206,7 @@ public class PurchaseJobPostingController {
 	private void calculateDiscountAmount(PurchaseJobPostForm purchaseJobPostForm) {
 		 if ((null != purchaseJobPostForm.getPromotionCode() && purchaseJobPostForm
 				.getPromotionCode().equalsIgnoreCase(
-						MMJBCommonConstants.PROMOCODE_15ADVOFF))
+						PROMOCODE_15ADVOFF))
 				&& purchaseJobPostForm.getDiscountAmt() <= 0) {
 			int total = (int) purchaseJobPostForm.getGrandTotal();
 			double discountAmt = Math.round((total * .15) * 10.0) / 10.0;
@@ -290,7 +295,7 @@ public class PurchaseJobPostingController {
 		//calculating the Total amount after deducting the discount 
 		if (!promotionCode.isEmpty()
 				&& promotionCode
-						.equalsIgnoreCase(MMJBCommonConstants.PROMOCODE_15ADVOFF)) {
+						.equalsIgnoreCase(PROMOCODE_15ADVOFF)) {
 			int total =  (int) grandTotalAmt;
 			double discountAmt = Math.round((total * .15)*10.0)/10.0;
 			double grandTotal = total - discountAmt;

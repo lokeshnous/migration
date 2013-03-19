@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 import com.advanceweb.afc.jb.common.AddressDTO;
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
 import com.advanceweb.afc.jb.common.CompanyProfileDTO;
+import com.advanceweb.afc.jb.common.FacilityContactDTO;
 import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
@@ -181,5 +182,79 @@ public class TransformAgencyRegistration {
 		}
 		return dtoList;		
 	}
+
+	/**
+	 * Transform dto to profile attrib form.
+	 *
+	 * @param registerDTO the register dto
+	 * @param userDTO the user dto
+	 * @return the list
+	 */
+	public List<AgencyProfileAttribForm> transformContactDTOToProfileAttribForm(
+			AgencyProfileDTO registerDTO, FacilityContactDTO facilityContactDTO, UserDTO userDTO) {
+		List<AgencyProfileAttribForm> listForms=new ArrayList<AgencyProfileAttribForm>();
+		
+		if (null != registerDTO.getAttribList()) {
+			for (ProfileAttribDTO dto : registerDTO.getAttribList()) {
+				AgencyProfileAttribForm form = new AgencyProfileAttribForm();
+				form.setDropdown(dto.getDropdown());
+				form.setStrAttribType(dto.getStrAttribType());
+				form.setStrLabelName(dto.getStrLabelName());
+				form.setStrLabelValue(dto.getStrLabelValue());
+				form.setStrProfileAttribId(dto.getStrProfileAttribId());
+				form.setRequired(dto.getRequired());
+				if (null != facilityContactDTO) {
+					setContactValuesToForm(facilityContactDTO, form,userDTO);
+				}
+				listForms.add(form);
+			}
+		}
+
+		return listForms;
+	}
 	
+	/**
+	 * Sets the values to form.
+	 *
+	 * @param userDTO the user dto
+	 * @param form the form
+	 */
+	private void setContactValuesToForm(FacilityContactDTO contactDTO, AgencyProfileAttribForm form,UserDTO userDTO) {
+		if (form.getStrLabelName().equals(
+				MMJBCommonConstants.FIRST_NAME)) {
+			form.setStrLabelValue(userDTO.getFirstName());
+		}
+		if (form.getStrLabelName().equals(
+				MMJBCommonConstants.LAST_NAME)) {
+			form.setStrLabelValue(userDTO.getLastName());
+		}
+		if (form.getStrLabelName().equals(
+				MMJBCommonConstants.MIDDLE_NAME)) {
+			form.setStrLabelValue(userDTO.getMiddleName());
+		}
+		if (form.getStrLabelName().equals(
+				MMJBCommonConstants.STREET_ADD)) {
+			form.setStrLabelValue(contactDTO.getStreet());
+		}
+		if (form.getStrLabelName().equals(
+				MMJBCommonConstants.CITY_EMP)) {
+			form.setStrLabelValue(contactDTO.getCity());
+		}
+		if (form.getStrLabelName().equals(
+				MMJBCommonConstants.STATE_PROVINCE)) {
+			form.setStrLabelValue(contactDTO.getState());
+		}
+		if (form.getStrLabelName().equals(
+				MMJBCommonConstants.ZIP_CODE)) {
+			form.setStrLabelValue(contactDTO.getPostcode());
+		}
+		if (form.getStrLabelName().equals(
+				MMJBCommonConstants.COUNTRY)) {
+			form.setStrLabelValue(contactDTO.getCountry());
+		}
+		if (form.getStrLabelName().equals(
+				MMJBCommonConstants.COMPANY_EMP)) {
+			form.setStrLabelValue(contactDTO.getCompany());
+		}
+	}	
 }

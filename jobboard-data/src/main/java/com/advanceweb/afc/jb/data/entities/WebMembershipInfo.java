@@ -82,7 +82,7 @@ public class WebMembershipInfo implements Serializable {
 	private String zipCode;
 
 	/** The web membership. */
-	@OneToOne(fetch=FetchType.EAGER, mappedBy="webMembershipInfo")
+	@OneToOne(fetch=FetchType.LAZY, mappedBy="webMembershipInfo")
 	private WebMembership webMembership;
 
 	/**

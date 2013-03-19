@@ -455,18 +455,16 @@ public class UserAlertController {
 						e);
 			}
 		}
-		if (jbOwnerList != null
+		/*if (jbOwnerList != null
 				&& !jbOwnerList.isEmpty()
 				&& (roleList.getRoleId() == Integer
 						.valueOf(MMJBCommonConstants.EMPLOYER_ROLE_ID))) {
 
-		}
+		}*/
 		List<UserAlertDTO> alertList = alertService.viewalerts(userId,
 				facilityId, jbOwnerList);
-		if (jbOwnerList != null
-				&& !jbOwnerList.isEmpty()
-				&& (roleList.getRoleId() == Integer
-						.valueOf(MMJBCommonConstants.EMPLOYER_ROLE_ID))) {
+		if (roleList.getRoleId() == Integer
+						.valueOf(MMJBCommonConstants.EMPLOYER_ROLE_ID)) {
 			List<UserAlertDTO> alertDTOs = alertService.viewAlerts(userId);
 			List<UserAlertDTO> alertDTODetails = new ArrayList<UserAlertDTO>();
 			UserDTO userDTO = userService.getUserByUserId(userId);

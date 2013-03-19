@@ -31,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
+import com.advanceweb.afc.jb.common.FacilityContactDTO;
 import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.SchedulerDTO;
@@ -529,5 +530,37 @@ public class FacilityDAOImpl implements FacilityDAO {
 			}
 		}
 		return isJobOwner;
+	}
+	
+	/**
+	 * This method provides facility contact details
+	 * @param facilityId
+	 * @return
+	 */
+	public FacilityContactDTO getFacilityContactDetails(int facilityId){
+		AdmFacility facility = hibernateTemplate.get(AdmFacility.class, facilityId);
+		return facilityConversionHelper.transformToFacilityContactDTO(facility);
+	}
+	/**
+	 * This method provides user facility details
+	 * @param facilityId
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FacilityDTO> getUserFacilityDetails(int facilityId) {
+		List<FacilityDTO> facilityDTOs = new ArrayList<FacilityDTO>();
+		List<AdmUserFacility> userFacilityList = hibernateTemplate
+				.find("from AdmUserFacility e where e.id.facilityId = "
+						+ facilityId);
+		if (null != userFacilityList && userFacilityList.size() > 0) {
+			for (AdmUserFacility admUserFacility : userFacilityList) {
+				FacilityDTO facilityDTO = new FacilityDTO();
+				facilityDTO.setUserId(admUserFacility.getFacilityPK()
+						.getUserId());
+				facilityDTOs.add(facilityDTO);
+			}
+		}
+		return facilityDTOs;
 	}
 }

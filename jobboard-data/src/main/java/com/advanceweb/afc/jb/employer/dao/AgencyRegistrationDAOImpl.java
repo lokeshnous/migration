@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.advanceweb.afc.jb.agency.helper.AgencyRegistrationConversionHelper;
 import com.advanceweb.afc.jb.common.AccountProfileDTO;
@@ -50,6 +51,7 @@ import com.advanceweb.afc.jb.user.helper.RegistrationConversionHelper;
  * @created 21-Jun-2012 2:25:52 PM
  */
 @Repository("agencyRegistrationDAO")
+@Transactional
 @SuppressWarnings("unchecked")
 public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 	
@@ -144,7 +146,35 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 				roleId = role.getRoleId();
 			}
 			// saving the data in adm_facility
-			AdmFacility facility = agencyHelper
+			AdmFacility facility=null;
+			AdmFacility nsFacility=null;
+			boolean nsExists=false;
+			boolean primaryAddrExists=false;
+			agencyDTO.getMerUserDTO().setFacilityCreateDate(new Date());
+			
+			List<AdmFacility> listAdmFacility = hibernateTemplateCareers.find("from AdmFacility where nsCustomerID=?",agencyDTO.getMerUserDTO().getNsCustomerID());
+			if(null != listAdmFacility && !listAdmFacility.isEmpty()){
+				nsFacility = listAdmFacility.get(0);
+				agencyDTO.getMerUserDTO().setEmailId(nsFacility.getEmail());
+				agencyDTO.getMerUserDTO().setFacilityParentId(nsFacility.getFacilityParentId());
+				agencyDTO.getMerUserDTO().setFacilityCreateDate(nsFacility.getCreateDt());
+				nsExists = true;
+			}
+			
+			if (agencyDTO.getMerUserDTO().getFacilityId() > 0) {
+				facility = hibernateTemplateCareers.get(AdmFacility.class, agencyDTO
+						.getMerUserDTO().getFacilityId());
+				facility.setNsCustomerID(agencyDTO.getMerUserDTO()
+						.getNsCustomerID());
+				facility.setFacilityType(MMJBCommonConstants.FACILITY_SYSTEM);
+				LOGGER.info("NetSuite record already exists: "+agencyDTO.getMerUserDTO().getNsCustomerID()+" . Hence new facility not created.");
+			}
+			else if(nsExists){
+				facility = nsFacility;
+				LOGGER.info("NetSuite record already exists: "+agencyDTO.getMerUserDTO().getNsCustomerID()+" . Hence new facility not created.");
+			}
+			else{
+			facility = agencyHelper
 					.transformEmpDTOToAdmFAcility(agencyDTO);
 			facility.setFacilityType(MMJBCommonConstants.FACILITY_SYSTEM);
 			// TODO: Remove hard code values
@@ -153,8 +183,24 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 			facility.setNsCustomerID(agencyDTO.getMerUserDTO()
 					.getNsCustomerID());
 			facility.setCreateDt(new Date());
-			hibernateTemplateCareers.save(facility);
-
+			LOGGER.info("NetSuite record does not exist: "+agencyDTO.getMerUserDTO().getNsCustomerID()+" . Hence new facility will be created.");
+			}
+			hibernateTemplateCareers.saveOrUpdate(facility);
+			
+			if (null != facility.getAdmFacilityContacts()
+					&& !facility.getAdmFacilityContacts().isEmpty()) {
+				for (AdmFacilityContact admFacilityContact : facility
+						.getAdmFacilityContacts()) {
+					primaryAddrExists = admFacilityContact.getContactType()
+							.equals(MMJBCommonConstants.PRIMARY) ? true
+							: false;
+					if (primaryAddrExists) {
+						break;
+					}
+				}
+			}
+			
+			if(!primaryAddrExists){
 			// saving the data in adm_facility_contact
 			AdmFacilityContact contact = agencyHelper
 					.transformEmpDTOToAdmFacilityContact(agencyDTO, facility);
@@ -162,8 +208,8 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 			contact.setCreateDt(new Date());
 			contact.setEmail(agencyDTO.getMerUserDTO().getEmailId());
 			contact.setActive(1);
-			hibernateTemplateCareers.save(contact);
-
+			hibernateTemplateCareers.saveOrUpdate(contact);
+			}
 			// saving the data in the adm_user_facility
 			AdmUserFacility userfacility = new AdmUserFacility();
 			AdmUserFacilityPK facilityPK = new AdmUserFacilityPK();
@@ -174,15 +220,15 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 			userfacility.setCreateUserId(0);
 			// userfacility.setAdmRole();
 			userfacility.setCreateDt(new Date());
-			hibernateTemplateCareers.save(userfacility);
+			hibernateTemplateCareers.saveOrUpdate(userfacility);
 			//saveAdvancePassDetails(facility.getFacilityId(),merUser);
 			
-			if(!agencyDTO.getMerUserDTO().isOldUser() && !agencyDTO.getMerUserDTO().isAdvPassUser()){
+			if(!agencyDTO.getMerUserDTO().isOldUser() && !agencyDTO.getMerUserDTO().isAdvPassUser()&& !agencyDTO.getMerUserDTO().isAdvPassUserWithNullPass()){
 				saveAdvancePassDetails(facility.getFacilityId(),merUser);
 				}
 			else{
 				AccountProfileDTO apDto=agencyHelper.transformToAccountProfileDTO(agencyDTO);
-					editAdvancePassDetails(apDto,merUser.getEmail());
+					editAdvancePassDetails(apDto,merUser.getEmail(),agencyDTO.getMerUserDTO().isAdvPassUserWithNullPass());
 				}
 			return agencyHelper.transformMerUserToUserDTO(merUser);
 
@@ -412,7 +458,7 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 	 * @param facilityIdP
 	 * @param merUser
 	 */
-	private void editAdvancePassDetails(AccountProfileDTO empDTO, String email) {
+	private void editAdvancePassDetails(AccountProfileDTO empDTO, String email,Boolean advPassUserWithNullPass) {
 		WebMembership webMembership = new WebMembership();
 		WebMembershipInfo membershipInfo = new WebMembershipInfo();
 
@@ -429,7 +475,11 @@ public class AgencyRegistrationDAOImpl implements AgencyRegistrationDAO {
 
 			// Update WebMembership
 			webMembership = webMembershipEmail.getWebMembership();
-
+			if(advPassUserWithNullPass){
+				webMembership.setPassword(empDTO.getPassword());
+				webMembership.setEncryptPassword(null);
+				webMembership.setSalt(null);
+			}
 			// Update WebMembershipInfo
 			membershipInfo = webMembership.getWebMembershipInfo();
 

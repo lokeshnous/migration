@@ -220,24 +220,7 @@ public class ManageAccessPermissionController {
 					.getFullAccess()));
 		}
 
-		/**
-		 * OpenAM code starts here for Validate Email-Id
-		 * 
-		 * @auther Santhosh Gampa
-		 * @since Sep 4 2012
-		 * 
-		 */
-		// boolean isinvaliduser = OpenAMEUtility
-		// .openAMValidateEmail(manageAccessPermissionForm.getOwnerEmail());
-		// if (isinvaliduser) {
-		// LOGGER.info("OpenAM : user is already exist !");
-		// warningMessage.put("failure", jobOwnerExist);
-		// return warningMessage;
-		// } else {
-		// LOGGER.info("OpenAM : valid user!");
-		// }
-
-		// End of openAM code
+		
 
 		if (employerRegistration.validateEmail(manageAccessPermissionForm
 				.getOwnerEmail())) {
@@ -292,7 +275,7 @@ public class ManageAccessPermissionController {
 		sendAdministratorUpdateMail(manageAccessPermissionForm.getOwnerEmail(),
 				request,
 				changeRgn.replace("?temporarypassword", userDTO.getPassword()),
-				session);
+				session,null);
 		
         // Send the mail to employer on interest
         FacilityDTO mainFacilityDTO = facilityService.getParentFacility(facilityIdParent);
@@ -308,7 +291,7 @@ public class ManageAccessPermissionController {
 							mainuserDto.getEmailId(),
 							request,
 							changeRgn.replace("?temporarypassword",
-									userDTO.getPassword()), session);
+									userDTO.getPassword()), session,manageAccessPermissionForm.getOwnerEmail());
 					break;
 				}
 			}
@@ -318,7 +301,7 @@ public class ManageAccessPermissionController {
 					mainuserDto.getEmailId(),
 					request,
 					changeRgn.replace("?temporarypassword",
-							userDTO.getPassword()), session);
+							userDTO.getPassword()), session,manageAccessPermissionForm.getOwnerEmail());
 		}
 		//sendEmail(manageAccessPermissionForm, userDTO, request, session);
 		LOGGER.debug("Email : sent Email!");
@@ -372,58 +355,10 @@ public class ManageAccessPermissionController {
 					.getManageAccessPermissiondetails()
 					&& manageAccessPermissionForm
 							.getManageAccessPermissiondetails().size() > 0) {
-				/*List<ManageAccessPermissionDTO> accessPermissionDTOList = manageAccessPermissionForm
-						.getManageAccessPermissiondetails();*/
 				manageAccessPermissionService
 						.updateJobOwner(manageAccessPermissionForm
 								.getManageAccessPermissiondetails());
-				
-				// send email to all updated job owners 
-				/*int userIdParent = (Integer) session
-						.getAttribute(MMJBCommonConstants.USER_ID);
-				for (ManageAccessPermissionDTO accessPermissionDTO : accessPermissionDTOList) {
-					String changeRgn = emailConfiguration.getProperty(
-							"admin.jobowner.added").trim();
-					UserDTO userDTO = transformEmpReg
-							.createUserDTOFromManageAccessForm(manageAccessPermissionForm);
-					EmployerInfoDTO facilityDetail =facilityService.facilityDetails(userIdParent);
-					if(null !=facilityDetail){
-					userDTO.setCompany(facilityDetail.getCustomerName());
-					}
-					changeRgn = changeRgn.replace("?companyName",
-							userDTO.getCompany());
-					String accessType = null;
-					if (accessPermissionDTO.getTypeOfAccess() > 0
-							&& accessPermissionDTO.getTypeOfAccess() == 5) {
-						accessType = "Full access";
-					} else {
-						accessType = "Post / Edit access";
-					}
-					changeRgn = changeRgn.replace("?accessType", accessType);
 
-					List<UserAlertDTO> alertDTOs = alertService
-							.viewAlerts(userDTO.getUserId());
-					if (null != alertDTOs && alertDTOs.size() > 0) {
-						for (UserAlertDTO alertDTO : alertDTOs) {
-							if (alertDTO.getAlertId() > 0
-									&& alertDTO.getAlertId() == MMJBCommonConstants.ADMINISTRATOR_CHANGES) {
-								sendAdministratorUpdateMail(
-										manageAccessPermissionForm
-												.getOwnerEmail(),
-										request, changeRgn.replace(
-												"?temporarypassword", ""),
-										session);
-							}
-						}
-					} else {
-						sendAdministratorUpdateMail(
-								manageAccessPermissionForm.getOwnerEmail(),
-								request,
-								changeRgn.replace("?temporarypassword", ""),
-								session);
-					}
-				}
-*/
 			}
 		} catch (JobBoardException jbex) {
 			LOGGER.error("Error occured while updating the job owner", jbex);
@@ -504,8 +439,14 @@ public class ManageAccessPermissionController {
 	 * @param form
 	 */
 	public void sendAdministratorUpdateMail(String email,
-			HttpServletRequest request, String ChangeRsn,HttpSession session) {
-		UserDTO merUserdto = userService.getUser(email);
+			HttpServletRequest request, String ChangeRsn, HttpSession session,
+			String employerEmail) {
+		UserDTO merUserdto = null;
+		if (null != employerEmail) {
+			merUserdto = userService.getUser(employerEmail);
+		} else {
+			merUserdto = userService.getUser(email);
+		}
 		EmployerInfoDTO facilityDetail = facilityService
 				.facilityDetails(merUserdto.getUserId());
 		StringBuffer admChangeDetail = new StringBuffer();
@@ -513,15 +454,23 @@ public class ManageAccessPermissionController {
 				+ merUserdto.getLastName();
 		String employerloginUrl;
 		if (session.getAttribute(MMJBCommonConstants.AGEN_PER_PAGE) != null) {
-			employerloginUrl = request.getRequestURL().toString()
-					.replace(request.getServletPath(), emailConfiguration.getProperty(
-							"agency.email.login.url").trim());
-//					+ dothtmlExtention + "?page=agency";
+			employerloginUrl = request
+					.getRequestURL()
+					.toString()
+					.replace(
+							request.getServletPath(),
+							emailConfiguration.getProperty(
+									"agency.email.login.url").trim());
+			// + dothtmlExtention + "?page=agency";
 		} else {
-			employerloginUrl = request.getRequestURL().toString()
-					.replace(request.getServletPath(), emailConfiguration.getProperty(
-							"employer.email.login.url").trim());
-//					+ dothtmlExtention + "?page=employer";
+			employerloginUrl = request
+					.getRequestURL()
+					.toString()
+					.replace(
+							request.getServletPath(),
+							emailConfiguration.getProperty(
+									"employer.email.login.url").trim());
+			// + dothtmlExtention + "?page=employer";
 		}
 		String emailContent = emailConfiguration.getProperty(
 				"new.jobowner.email.body").trim();

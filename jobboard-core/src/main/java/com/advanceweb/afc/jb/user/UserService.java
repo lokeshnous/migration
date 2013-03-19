@@ -96,6 +96,14 @@ public interface UserService {
 	public boolean checkUserMail(String email);
 	
 	/**
+	 * Check Advance Pass user password.
+	 *
+	 * @param email the email
+	 * @return true, if successful
+	 */
+	public boolean checkAdvUserPassword(String email);
+	
+	/**
 	 * Gets the admin info.
 	 *
 	 * @param email the email

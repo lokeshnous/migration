@@ -245,7 +245,7 @@ public class JobSeekerRegistrationController extends AbstractController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/createJobSeekerCreateYrAcct", method = RequestMethod.GET)
+	@RequestMapping(value = "/createjobseekercreateyracct", method = RequestMethod.GET)
 	public ModelAndView createJobSeekerRegistrationStep1(
 			HttpSession session,
 			@RequestParam(value = "profileId", required = false) String profileId,
@@ -383,6 +383,7 @@ public class JobSeekerRegistrationController extends AbstractController {
 			BindingResult result, HttpServletRequest req, HttpSession session,
 			HttpServletRequest request) {
 		boolean advPassUser = false;
+		boolean advPassUserWithNullPass=false;
 		ModelAndView model = new ModelAndView();
 
 		try {
@@ -395,10 +396,14 @@ public class JobSeekerRegistrationController extends AbstractController {
 					model.setViewName(JS_CREATE_ACCOUNT);
 					return model;
 				}
-
+				if(!registerForm.isAdvPassUser()){
+					advPassUserWithNullPass=userService.checkAdvUserPassword(registerForm.getEmailId());
+					registerForm.setAdvPassUserWithNullPass(advPassUserWithNullPass);
+					}
 				if (!registerForm.isAdvPassUser()) {
 					advPassUser =userService.checkUserMail(registerForm.getEmailId());
 				}
+				if(!advPassUserWithNullPass){
 				if (profileRegistration
 						.validateEmail(registerForm.getEmailId())
 						&& advPassUser || profileRegistration
@@ -412,8 +417,9 @@ public class JobSeekerRegistrationController extends AbstractController {
 									request.getRequestURL()
 											.toString()
 											.replace(request.getServletPath(),
-													"/commonLogin/login.html?page=jobSeeker")));
+													"/commonlogin/login.html?page=jobSeeker")));
 					return model;
+				}
 				}
 			}
 			if (req.getParameter("recaptcha_response_field") != null) {
@@ -625,12 +631,6 @@ public class JobSeekerRegistrationController extends AbstractController {
 					.transformProfileAttribFormToDTO(
 							registerForm.getListProfAttribForms(), registerForm);
 			jsRegistrationDTO.setAttribList(attribLists);
-			if(registerForm.isAdvPassUser()){
-				UserDTO advUser=userService.getAdvancePassUser(registerForm.getEmailId());
-				if(advUser!=null){
-				userDTO.setPassword(advUser.getPassword());
-				}
-			}
 			jsRegistrationDTO.setMerUserDTO(userDTO);
 
 			// Call to service layer

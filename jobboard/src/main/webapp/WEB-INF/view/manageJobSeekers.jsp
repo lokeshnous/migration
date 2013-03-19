@@ -104,7 +104,7 @@
 							if (val != "") {
 								$('#selectedRow').val(val);
 								$('#moveToFolderPopup').attr("href","${pageContext.request.contextPath}/employer/moveToFolder.html?folderId=0&selectedVal="+val);
-								$.nmManual($('#moveToFolderPopup').attr("href"));
+								$.nmManual($('#moveToFolderPopup').attr("href"),  {closeOnEscape: true, showCloseButton: true,resizable: true, sizes:{initW: 50, initH: 50, minW: 50, minH:50,  w: 50, h: 50}});
 								
 							} else {
 								alert("Please select a resume!");

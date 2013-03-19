@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.StringTokenizer;
 
 import javax.annotation.Resource;
 import javax.mail.internet.AddressException;
@@ -160,6 +161,10 @@ public class PaymentGatewayController extends AbstractController{
 	/** The lookup service. */
 	@Autowired
 	private LookupService lookupService;
+	
+	/** The NetSuite DISCOUNT ITEM ID. */
+	@Value("${NS_DISCOUNT_ITEM_ID}")
+	private String NS_DISCOUNT_ITEM_ID;
 	
 	/**
 	 * Call payment method.
@@ -608,7 +613,7 @@ public class PaymentGatewayController extends AbstractController{
 		orderDetailsDTO = transformPaymentMethod
 				.transformToOrderDetailsDTO(paymentGatewayForm);
 		if(null!=paymentGatewayForm.getPurchaseJobPostForm() && paymentGatewayForm.getPurchaseJobPostForm().getDiscountAmt()>0){
-			orderDetailsDTO.setDiscountItem(MMJBCommonConstants.NS_DISCOUNT_ITEM_ID);
+			orderDetailsDTO.setDiscountItem(NS_DISCOUNT_ITEM_ID);
 		}
 		/*int parentFacilityId = facilityService.getFacilityByFacilityId((Integer) session
 				.getAttribute(MMJBCommonConstants.FACILITY_ID)).getFacilityParentId();*/
@@ -977,10 +982,23 @@ public class PaymentGatewayController extends AbstractController{
 		salesrcptMailBody = salesrcptMailBody.replace("?userName", userName);
 		salesrcptMailBody = salesrcptMailBody.replace("?companyName",
 				comapnyName);
-		
-		InternetAddress[] ccAddress = new InternetAddress[1];
+
+		InternetAddress[] ccAddress = null;
 		try {
-			ccAddress[0]=new InternetAddress(emailConfiguration.getProperty("rep.email.address").trim());
+			String ccAddressDetails = emailConfiguration.getProperty(
+					"rep.email.address").trim();
+			StringTokenizer stringNew = new StringTokenizer(ccAddressDetails,
+					",");
+
+			ccAddress = new InternetAddress[stringNew.countTokens()];
+			int i = 0;
+			while (stringNew.hasMoreElements()) {
+				String stringObject = (String) stringNew.nextElement();
+				ccAddress[i] = new InternetAddress(stringObject.trim());
+				i++;
+			}
+			// ccAddress[0]=new
+			// InternetAddress(emailConfiguration.getProperty("rep.email.address").trim());
 		} catch (AddressException jbex) {
 			LOGGER.error(
 					"Error occured while geting InternetAddress reference",
@@ -1072,6 +1090,8 @@ public class PaymentGatewayController extends AbstractController{
 		stringBuffer.append(newJobPostCreditAvailable);
 		stringBuffer.append(emailConfiguration
 				.getProperty("email.footer").trim());
+		emailDTO.setSubject(emailConfiguration
+				.getProperty("new.credit.message").trim());
 		emailDTO.setBody(stringBuffer.toString());
 		emailDTO.setHtmlFormat(true);
 		emailService.sendEmail(emailDTO);

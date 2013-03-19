@@ -34,12 +34,12 @@
 </ul>
 <%-- <div class="NameOrderNormal"><h3 class="color2 TextAlignL">&nbsp;My Account Info</h3></div>
 <ul>
-<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobseekerregistration/createJobSeekerCreateYrAcct.html">	Job Seeker Sign Up</a></li>
-<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/commonLogin/login.html?page=jobSeeker">	Job Seeker Login</a></li>
-<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/commonLogin/login.html?page=employer">	Employer Login</a></li>
-<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/employerRegistration/employerregistration.html">	Employer Sign Up</a></li>
-<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/commonLogin/login.html?page=agency">	Ad Agency Login</a></li>
-<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/agencyRegistration/agencyregistration.html">	Ad Agency Sign Up</a></li>
+<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/jobseekerregistration/createjobseekercreateyracct.html">	Job Seeker Sign Up</a></li>
+<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/commonlogin/login.html?page=jobSeeker">	Job Seeker Login</a></li>
+<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/commonlogin/login.html?page=employer">	Employer Login</a></li>
+<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/employerreg/employerregistration.html">	Employer Sign Up</a></li>
+<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/commonlogin/login.html?page=agency">	Ad Agency Login</a></li>
+<li><a href="<%=request.getRequestURL().toString().replace(request.getServletPath(),"") %>/agencyreg/agencyregistration.html">	Ad Agency Sign Up</a></li>
 </ul> --%>
 <div class="NameOrderNormal"><h3 class="color2 TextAlignL">&nbsp;Resume Services</h3></div>
 <ul>

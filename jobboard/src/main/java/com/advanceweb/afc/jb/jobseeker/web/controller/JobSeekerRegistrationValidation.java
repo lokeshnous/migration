@@ -192,6 +192,11 @@ public class JobSeekerRegistrationValidation {
 		 JobSeekerRegistrationForm registerForm = (JobSeekerRegistrationForm) target;
 		 
 		 validateEmail(registerForm, errors);
-		 validatePassoword(registerForm.getPassword(), registerForm.getRetypepassword(), errors);
+		if (((!registerForm.isOldUser() && registerForm.isAdvPassUser()) && (registerForm
+				.isOldUser() && !registerForm.isAdvPassUser()))
+				|| (!registerForm.isOldUser() && !registerForm.isAdvPassUser())) {
+			validatePassoword(registerForm.getPassword(),
+					registerForm.getRetypepassword(), errors);
+		}
 	}	
 }

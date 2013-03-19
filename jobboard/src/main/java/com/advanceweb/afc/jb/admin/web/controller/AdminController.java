@@ -525,7 +525,7 @@ public class AdminController extends AbstractController{
 			@PathVariable("jobtitle") String jobTitle) {
 		ModelAndView modelAndView = new ModelAndView();
 		AdminSeoForm adminSeoForm = new AdminSeoForm();
-		jobTitle = MMUtils.decodeString(jobTitle);
+		jobTitle = jobTitle.trim().replace("-", " ");
 		adminSeoForm.setJobTitle(jobTitle);
 		AdminSeoDTO seoDTO = jobSearchService.getSeoInfoByJobTitle(jobTitle);
 		if (seoDTO == null) {

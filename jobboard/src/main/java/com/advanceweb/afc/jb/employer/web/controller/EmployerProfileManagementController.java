@@ -98,6 +98,22 @@ public class EmployerProfileManagementController extends AbstractController{
 	@Autowired
 	private AdService adService;
 	
+	/** The NetSuite package internal ID. */
+	@Value("${FEATURE_30}")
+	private String FEATURE_30;
+
+	/** The NetSuite package internal ID. */
+	@Value("${FEATURE_90}")
+	private String FEATURE_90;
+	
+	/** The NetSuite package internal ID. */
+	@Value("${FEATURE_180}")
+	private String FEATURE_180;
+	
+	/** The NetSuite package internal ID. */
+	@Value("${FEATURE_365}")
+	private String FEATURE_365;
+	
 	/**
 	 * Gets the employee profile.
 	 *
@@ -124,10 +140,10 @@ public class EmployerProfileManagementController extends AbstractController{
 		List<String> purchasedPackages = manageFeaturedEmployerProfile
 				.getNSCustomerPackages(nsCustomerID);
 				
-		if (purchasedPackages.contains(MMJBCommonConstants.FEATURE_30)
-				|| purchasedPackages.contains(MMJBCommonConstants.FEATURE_90)
-				|| purchasedPackages.contains(MMJBCommonConstants.FEATURE_180)
-				|| purchasedPackages.contains(MMJBCommonConstants.FEATURE_365)) {
+		if (purchasedPackages.contains(FEATURE_30)
+				|| purchasedPackages.contains(FEATURE_90)
+				|| purchasedPackages.contains(FEATURE_180)
+				|| purchasedPackages.contains(FEATURE_365)) {
 			CompanyProfileDTO companyProfileDTO = manageFeaturedEmployerProfile
 					.getEmployerDetails(parentFacilityId);
 			if (null != companyProfileDTO) {

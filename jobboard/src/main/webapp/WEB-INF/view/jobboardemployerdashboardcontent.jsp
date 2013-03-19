@@ -395,7 +395,7 @@ padding:0;
 								<div class="lableTextDashBoard">
 									<p>
 										<a
-											href="<%=request.getContextPath()%>/employerRegistration/viewEmpAccountProfile.html"
+											href="<%=request.getContextPath()%>/employerreg/viewEmpAccountProfile.html"
 											id="accountSettingpopUp">Account Settings</a>
 									</p>
 								</div>
@@ -427,7 +427,7 @@ padding:0;
 								<div class="lableTextDashBoard">
 									<p>
 										<a
-											href="<%=request.getContextPath()%>/employerRegistration/viewEmpAccountProfile.html"
+											href="<%=request.getContextPath()%>/employerreg/viewEmpAccountProfile.html"
 											id="accountSettingpopUp">Account Settings</a>
 									</p>
 								</div>
@@ -502,7 +502,7 @@ padding:0;
 						<div class="lableTextDashBoard">
 							<p>
 								<a
-									href="<%=request.getContextPath()%>/employer/manageJobPost.html">Manage
+									href="<%=request.getContextPath()%>/employer/managejobpost.html">Manage
 									/ Edit Job Postings</a>
 							</p>
 						</div>
@@ -558,7 +558,8 @@ padding:0;
 						</c:if>
 						<div class="lableTextDashBoard">
 							<p>
-								<a title="Coming Soon">Manage Job Seekers</a>
+								<a href="<%=request.getContextPath()%>/employer/manageJobSeeker.html?folderId=-1">Manage
+									Job Seekers</a>
 							</p>
 						</div>
 						<div class="lableTextDashBoard">
@@ -707,7 +708,7 @@ padding:0;
 										</div>
 									</div>
 									<div class=" clearfix"></div>
-									<span class="FloatLeft"><a href="<%=request.getContextPath()%>/employer/manageJobPost.html">View Individual
+									<span class="FloatLeft"><a href="<%=request.getContextPath()%>/employer/managejobpost.html">View Individual
 											Job Posting Stats</a></span>
 											
 											

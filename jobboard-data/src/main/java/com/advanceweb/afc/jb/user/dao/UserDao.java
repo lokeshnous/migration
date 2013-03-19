@@ -112,4 +112,11 @@ public interface UserDao {
 	public UserDTO getAdminInfo(String email);
 	
 	public UserDTO getAdvancePassUserDetails(String email);
+	/**
+	 * Check Advance Pass user password.
+	 *
+	 * @param email the email
+	 * @return true, if successful
+	 */
+	public boolean checkAdvUserPassword(String email);
 }

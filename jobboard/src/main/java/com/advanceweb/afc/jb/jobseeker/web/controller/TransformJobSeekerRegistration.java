@@ -112,6 +112,7 @@ public class TransformJobSeekerRegistration {
 				.getUserId()) : 0);
 		dto.setOldUser(form.isOldUser());
 		dto.setAdvPassUser(form.isAdvPassUser());
+		dto.setAdvPassUserWithNullPass(form.isAdvPassUserWithNullPass());
 		return dto;
 	}
 

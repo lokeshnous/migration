@@ -219,10 +219,13 @@ jQuery(document).ready(function() {
 						<form:hidden
 							path="manageJobSeekerDTOList[${status.index}].resumeId"
 							id="resumeId" />
-						<tr class="Height35" id=${resume.folderResumeId}>
-							<td align="center" valign="middle"><input type="checkbox"
-								name="checkbox" id=${resume.folderResumeId
-								}
+						<tr class="Height35" id="${resume.folderResumeId}">						
+						
+							<td align="center" valign="middle"><c:if test="${resume.resumeViewed}">
+						
+										 <img src="<%=request.getContextPath() %>/resources/images/flag.png">
+										 </c:if><input type="checkbox"
+								name="checkbox" id=${resume.folderResumeId	}
 							value="${resume.folderResumeId}"></td>
 							<td align="left" valign="middle"><a
 								href="${pageContext.request.contextPath}/employer/viewResume.html?resumeId=${resume.resumeId }">${resume.resumeName}</a></td>

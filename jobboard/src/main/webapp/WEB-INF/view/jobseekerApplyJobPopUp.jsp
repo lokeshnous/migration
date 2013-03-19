@@ -20,7 +20,7 @@
 			<form action="" method="">
 				<div class="MidContent_Wrapper">
 					<span class="floatleft">You need to be
-						logged in to Apply jobs. <a href="<%= request.getContextPath() %>/commonLogin/login.html?page=jobSeeker&isRedirect=true" id="id">Click here to log
+						logged in to Apply jobs. <a href="<%= request.getContextPath() %>/commonlogin/login.html?page=jobSeeker&isRedirect=true" id="id">Click here to log
 							in now.</a>
 					</span>
 				</div>

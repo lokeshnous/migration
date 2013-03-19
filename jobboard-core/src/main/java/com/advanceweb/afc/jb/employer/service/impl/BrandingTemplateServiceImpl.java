@@ -42,8 +42,8 @@ public class BrandingTemplateServiceImpl implements BrandingTemplateService {
 	 * Fetch the job posting Branding Templates
 	 */
 	@Override
-	public List<BrandingTemplateDTO> getBrandingTemplate(int userId) {
-		return brandingTemplateDAO.getBrandingTemplate(userId);
+	public List<BrandingTemplateDTO> getBrandingTemplate(int facilityId) {
+		return brandingTemplateDAO.getBrandingTemplate(facilityId);
 	}
 
 	/**

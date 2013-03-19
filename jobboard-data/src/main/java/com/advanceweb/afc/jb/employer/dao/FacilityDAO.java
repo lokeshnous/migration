@@ -12,6 +12,7 @@ import java.util.List;
 
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
+import com.advanceweb.afc.jb.common.FacilityContactDTO;
 import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.common.MetricsDTO;
 import com.advanceweb.afc.jb.common.SchedulerDTO;
@@ -134,4 +135,13 @@ public interface FacilityDAO {
 	 * @return
 	 */
 	public boolean isJobOwner(int facilityId);
+	
+	/**
+	 * This method provides facility contact details
+	 * @param facilityId
+	 * @return
+	 */
+	public FacilityContactDTO getFacilityContactDetails(int facilityId);
+	
+	public List<FacilityDTO> getUserFacilityDetails(int facilityId);
 }

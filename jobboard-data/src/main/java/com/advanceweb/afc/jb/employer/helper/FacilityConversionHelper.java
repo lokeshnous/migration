@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.advanceweb.afc.jb.common.FacilityContactDTO;
 import com.advanceweb.afc.jb.common.FacilityDTO;
 import com.advanceweb.afc.jb.data.entities.AdmFacility;
 /**
@@ -51,6 +52,29 @@ public class FacilityConversionHelper {
 			facilityDTO.add(dto);
 		}
 		return facilityDTO;
+	}
+	
+	/**
+	 * Converting AdmFacility to FacilityContactDTO
+	 * 
+	 * @param AdmFacility 
+	 * @return FacilityContactDTO
+	 */
+	public FacilityContactDTO transformToFacilityContactDTO(AdmFacility facility){
+		
+		FacilityContactDTO facilityContactDTO = new FacilityContactDTO();
+		
+		facilityContactDTO.setCompany(facility.getName());
+		facilityContactDTO.setStreet(facility.getStreet());
+		facilityContactDTO.setCity(facility.getCity());
+		facilityContactDTO.setState(facility.getState());
+		facilityContactDTO.setPostcode(facility.getPostcode());
+		if(facility.getPostcode()!=null && facility.getPostcode().length()>5){
+		facilityContactDTO.setPostcode(facility.getPostcode().substring(0, 5));
+		}
+		facilityContactDTO.setCountry(facility.getCountry());
+		
+		return facilityContactDTO;
 	}
 	
 }

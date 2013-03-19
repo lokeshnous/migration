@@ -59,11 +59,11 @@ public class WebMembership implements Serializable {
 //	private int WebMembershipInfoID;
 	
 	/** The web membership email. */
-@OneToOne(fetch=FetchType.EAGER, mappedBy="webMembership")
+@OneToOne(fetch=FetchType.LAZY, mappedBy="webMembership")
 	private WebMembershipEmail webMembershipEmail;
 	
 	/** The web membership info. */
-	@OneToOne(fetch=FetchType.EAGER)
+	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="WebMembershipInfoID")
 	private WebMembershipInfo webMembershipInfo;
 	

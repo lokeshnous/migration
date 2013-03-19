@@ -1,7 +1,6 @@
 package com.advanceweb.afc.jb.common.util;
 
 import java.util.Date;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -34,7 +33,7 @@ public class XmlUrl {
     private String loc;
 
     @XmlElement
-    private String lastmod = new Date().toString();
+    private String lastmod = MMUtils.convertDateToStdDateString(new Date());
 //    private String lastmod = new DateTime(null).toString(DateTimeFormat.forPattern("yyyy-MM-dd"));
 
     @XmlElement

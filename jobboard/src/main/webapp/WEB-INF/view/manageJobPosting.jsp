@@ -157,7 +157,7 @@
 									val = $(this).val();
 									$("form").attr(
 											"action",
-											"${pageContext.request.contextPath}/employer/manageJobPost.html?jobStatus="
+											"${pageContext.request.contextPath}/employer/managejobpost.html?jobStatus="
 													+ val);
 									$("form").submit();
 								});
@@ -168,7 +168,7 @@
 									$('#noOfPageLowerId').val(val);
 									$("form").attr(
 											"action",
-											"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+											"${pageContext.request.contextPath}/employer/managejobpost.html?noOfPage="
 													+ val);
 									$("form").submit();
 								});
@@ -179,7 +179,7 @@
 									$('#noOfPageLowerId').val(val);
 									$("form").attr(
 											"action",
-											"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+											"${pageContext.request.contextPath}/employer/managejobpost.html?noOfPage="
 													+ val);
 									$("form").submit();
 								});
@@ -189,7 +189,7 @@
 							val = $('#noOfPageId').val();
 							$("form").attr(
 									"action",
-									"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+									"${pageContext.request.contextPath}/employer/managejobpost.html?noOfPage="
 											+ val + "&sort=true");
 							$("form").submit();
 						});
@@ -199,7 +199,7 @@
 							val = $('#noOfPageId').val();
 							$("form").attr(
 									"action",
-									"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+									"${pageContext.request.contextPath}/employer/managejobpost.html?noOfPage="
 											+ val + "&sort=true");
 							$("form").submit();
 						});
@@ -209,7 +209,7 @@
 							val = $('#noOfPageId').val();
 							$("form").attr(
 									"action",
-									"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+									"${pageContext.request.contextPath}/employer/managejobpost.html?noOfPage="
 											+ val + "&sort=true");
 							$("form").submit();
 						});
@@ -219,7 +219,7 @@
 								val = $('#noOfPageId').val();
 								$("form").attr(
 										"action",
-										"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+										"${pageContext.request.contextPath}/employer/managejobpost.html?noOfPage="
 												+ val);
 								$("form").submit();
 							}); */
@@ -229,7 +229,7 @@
 								val = $('#noOfPageId').val();
 								$("form").attr(
 										"action",
-										"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+										"${pageContext.request.contextPath}/employer/managejobpost.html?noOfPage="
 												+ val + "&sort=true");
 								$("form").submit();
 							}); */
@@ -239,7 +239,7 @@
 								val = $('#noOfPageId').val();
 								$("form").attr(
 										"action",
-										"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+										"${pageContext.request.contextPath}/employer/managejobpost.html?noOfPage="
 												+ val + "&sort=true");
 								$("form").submit();
 							});
@@ -249,7 +249,7 @@
 								val = $('#noOfPageId').val();
 								$("form").attr(
 										"action",
-										"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+										"${pageContext.request.contextPath}/employer/managejobpost.html?noOfPage="
 												+ val + "&sort=true");
 								$("form").submit();
 							});
@@ -259,7 +259,7 @@
 								val = $('#noOfPageId').val();
 								$("form").attr(
 										"action",
-										"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+										"${pageContext.request.contextPath}/employer/managejobpost.html?noOfPage="
 												+ val + "&sort=true");
 								$("form").submit();
 							});
@@ -270,7 +270,7 @@
 								//alert(val);
 								$("form").attr(
 										"action",
-										"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+										"${pageContext.request.contextPath}/employer/managejobpost.html?noOfPage="
 												+ val + "&sort=true");
 								$("form").submit();
 							});
@@ -280,7 +280,7 @@
 							val = $('#noOfPageId').val();
 							$("form").attr(
 									"action",
-									"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+									"${pageContext.request.contextPath}/employer/managejobpost.html?noOfPage="
 											+ val + "&sort=true");
 							$("form").submit();
 						});
@@ -290,7 +290,7 @@
 							val = $('#noOfPageId').val();
 							$("form").attr(
 									"action",
-									"${pageContext.request.contextPath}/employer/manageJobPost.html?noOfPage="
+									"${pageContext.request.contextPath}/employer/managejobpost.html?noOfPage="
 											+ val + "&sort=true");
 							$("form").submit();
 						});*/
@@ -352,7 +352,7 @@
 							<span>Page:</span>
 							<%--For displaying Previous link except for the 1st page --%>
 							<c:if test="${currentPage != 1 && noOfPages gt 10}">
-								<td><a href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage-10}&jobStatus=${statusValue}&next=${begin-10}&noOfPage=${jobPostForm.noOfPage}"> <img
+								<td><a href="<%=request.getContextPath()%>/employer/managejobpost.html?page=${currentPage-10}&jobStatus=${statusValue}&next=${begin-10}&noOfPage=${jobPostForm.noOfPage}"> <img
 										src="../resources/images/ArrowLeft.png"> Previous</a></td>
 							</c:if>
 
@@ -368,7 +368,7 @@
 									<c:otherwise>
 										<span class="active"> <c:if test="${i lt begin+10}">
 												<a
-													href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${i}&jobStatus=${jobPostForm.statusValue}&noOfPage=${jobPostForm.noOfPage}"
+													href="<%=request.getContextPath()%>/employer/managejobpost.html?page=${i}&jobStatus=${jobPostForm.statusValue}&noOfPage=${jobPostForm.noOfPage}"
 													>${i}</a>
 											</c:if></span>
 
@@ -378,7 +378,7 @@
 							
 								<span>
 								<c:if test="${noOfPages gt 10 && noOfPages != currentPage}"><a
-									href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage+10}&jobStatus=${jobPostForm.statusValue}&next=${begin+10}&noOfPage=${jobPostForm.noOfPage}">Next <img
+									href="<%=request.getContextPath()%>/employer/managejobpost.html?page=${currentPage+10}&jobStatus=${jobPostForm.statusValue}&next=${begin+10}&noOfPage=${jobPostForm.noOfPage}">Next <img
 										src="../resources/images/ArrowRight.png">
 								</a></c:if></span>
 							
@@ -552,7 +552,7 @@
 							
 							<%--For displaying Previous link except for the 1st page --%>
 							<c:if test="${currentPage != 1 && noOfPages gt 10}">
-								<td><a href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage-10}&jobStatus=${statusValue}&next=${begin-10}"> <img
+								<td><a href="<%=request.getContextPath()%>/employer/managejobpost.html?page=${currentPage-10}&jobStatus=${statusValue}&next=${begin-10}"> <img
 										src="../resources/images/ArrowLeft.png"> Previous</a></td>
 							</c:if>
 
@@ -568,7 +568,7 @@
 									<c:otherwise>
 										<span class="active"> <c:if test="${i lt begin+10}">
 												<a
-													href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${i}&jobStatus=${jobPostForm.statusValue}">${i}</a>
+													href="<%=request.getContextPath()%>/employer/managejobpost.html?page=${i}&jobStatus=${jobPostForm.statusValue}">${i}</a>
 											</c:if></span>
 
 									</c:otherwise>
@@ -577,7 +577,7 @@
 							
 								<span>
 								<c:if test="${noOfPages gt 10 && noOfPages != currentPage}"><a
-									href="<%=request.getContextPath()%>/employer/manageJobPost.html?page=${currentPage+10}&jobStatus=${jobPostForm.statusValue}&next=${begin+10}&noOfPage=${jobPostForm.noOfPage}">Next <img
+									href="<%=request.getContextPath()%>/employer/managejobpost.html?page=${currentPage+10}&jobStatus=${jobPostForm.statusValue}&next=${begin+10}&noOfPage=${jobPostForm.noOfPage}">Next <img
 										src="../resources/images/ArrowRight.png">
 								</a></c:if></span>
 						</div>

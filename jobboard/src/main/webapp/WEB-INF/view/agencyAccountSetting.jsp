@@ -407,6 +407,7 @@ $("#cityOrTown2").change(function(){
 						</form:select>
 						<span class="required">(Required)</span>
 					</div>
+					<form:hidden path="originalEmail"/>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">
 							Email:

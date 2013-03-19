@@ -49,6 +49,7 @@ import com.advanceweb.afc.jb.data.entities.JpJobLocation;
 import com.advanceweb.afc.jb.data.entities.JpJobType;
 import com.advanceweb.afc.jb.data.entities.JpJobTypeCombo;
 import com.advanceweb.afc.jb.data.entities.JpLocation;
+import com.advanceweb.afc.jb.data.entities.JpSource;
 import com.advanceweb.afc.jb.data.entities.JpTemplate;
 import com.advanceweb.afc.jb.data.entities.JpTypeAddonXref;
 import com.advanceweb.afc.jb.data.exception.JobBoardDataException;
@@ -259,47 +260,56 @@ public class JobPostDAOImpl implements JobPostDAO {
 					template, admFacility);
 			jpJob.setJpJobType(jobType);
 
-			hibernateTemplate.saveOrUpdate(jpJob);
-			
-			// Update the JpJobAddon entity
-			List<AdmInventoryDetail> invList = hibernateTemplate.find(
-					FIND_INVENTORY_DETAILS_BY_INV_ID,
-					Integer.valueOf(dto.getJobPostingType()));
-			if (null != invList && !invList.isEmpty()) {
-				AdmInventoryDetail admInventoryDetail = invList.get(0);
-
-				List<JpTypeAddonXref> xrefList = hibernateTemplate.find(
-						"from JpTypeAddonXref xrf where xrf.comboId=?",
-						admInventoryDetail.getProductId());
-				List<JpJobAddon> jpJobAddonList = jobPostConversionHelper.transformXrefToJpJob(xrefList,
-						jpJob, dto);
-				hibernateTemplate.saveOrUpdateAll(jpJobAddonList);
+			if (dto.getSourceId() != MMJBCommonConstants.SOURCE_ID_ONE) {
+				JpSource jpSource = hibernateTemplate.get(JpSource.class, 2);
+				if (null != jpSource) {
+					jpJob.setJpSource(jpSource);
+				}
 			}
 			
+			hibernateTemplate.saveOrUpdate(jpJob);
+			
+			if (dto.getSourceId() != MMJBCommonConstants.SOURCE_ID_ONE) {
+				// Update the JpJobAddon entity
+				List<AdmInventoryDetail> invList = hibernateTemplate.find(
+						FIND_INVENTORY_DETAILS_BY_INV_ID,
+						Integer.valueOf(dto.getJobPostingType()));
+				if (null != invList && !invList.isEmpty()) {
+					AdmInventoryDetail admInventoryDetail = invList.get(0);
 
-			AdmFacilityJpAudit audit = new AdmFacilityJpAudit();
-			AdmFacilityJpAuditPK pKey = new AdmFacilityJpAuditPK();
-			pKey.setFacilityId(dto.getFacilityId());
-			pKey.setJobId(jpJob.getJobId());
-			pKey.setUserId(dto.getUserId());
-			pKey.setInventoryDetailId(Integer.valueOf(dto.getJobPostingType()));
-			audit.setCreateDt(new Date());
-			audit.setId(pKey);
+					List<JpTypeAddonXref> xrefList = hibernateTemplate.find(
+							"from JpTypeAddonXref xrf where xrf.comboId=?",
+							admInventoryDetail.getProductId());
+					List<JpJobAddon> jpJobAddonList = jobPostConversionHelper
+							.transformXrefToJpJob(xrefList, jpJob, dto);
+					hibernateTemplate.saveOrUpdateAll(jpJobAddonList);
+				}
 
-			AdmFacilityJpAudit auditObj = (AdmFacilityJpAudit) DataAccessUtils
-					.uniqueResult(hibernateTemplate
-							.find("from AdmFacilityJpAudit admFacilityAudit where admFacilityAudit.id.facilityId = ? and admFacilityAudit.id.userId = ? and admFacilityAudit.id.jobId = ?",
-									audit.getId().getFacilityId(), audit
-											.getId().getUserId(), audit.getId()
-											.getJobId()));
+				AdmFacilityJpAudit audit = new AdmFacilityJpAudit();
+				AdmFacilityJpAuditPK pKey = new AdmFacilityJpAuditPK();
+				pKey.setFacilityId(dto.getFacilityId());
+				pKey.setJobId(jpJob.getJobId());
+				pKey.setUserId(dto.getUserId());
+				pKey.setInventoryDetailId(Integer.valueOf(dto
+						.getJobPostingType()));
+				audit.setCreateDt(new Date());
+				audit.setId(pKey);
 
-			if (null != auditObj) {
-				audit.setCreateDt(auditObj.getCreateDt());
-				hibernateTemplate.delete(auditObj);
-				hibernateTemplate.save(audit);
-				LOGGER.debug("Job post updated successfully");
-			} else {
-				hibernateTemplate.save(audit);
+				AdmFacilityJpAudit auditObj = (AdmFacilityJpAudit) DataAccessUtils
+						.uniqueResult(hibernateTemplate
+								.find("from AdmFacilityJpAudit admFacilityAudit where admFacilityAudit.id.facilityId = ? and admFacilityAudit.id.userId = ? and admFacilityAudit.id.jobId = ?",
+										audit.getId().getFacilityId(), audit
+												.getId().getUserId(), audit
+												.getId().getJobId()));
+
+				if (null != auditObj) {
+					audit.setCreateDt(auditObj.getCreateDt());
+					hibernateTemplate.delete(auditObj);
+					hibernateTemplate.save(audit);
+					LOGGER.debug("Job post updated successfully");
+				} else {
+					hibernateTemplate.save(audit);
+				}
 			}
 			List<JpJobApply> applyJobList = jobPostConversionHelper
 					.transformJobPostDTOToJpJobApply(dto, jpJob);
@@ -314,6 +324,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 			
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
+			return false;
 		}
 
 		return true;
@@ -358,6 +369,10 @@ public class JobPostDAOImpl implements JobPostDAO {
 				}
 			}
 
+		} else if (dto.getSourceId() == MMJBCommonConstants.SOURCE_ID_ONE) {
+
+			jobType = hibernateTemplate.get(JpJobType.class,
+					MMJBCommonConstants.SOURCE_ID_ONE);
 		}
 		return jobType;
 	}
@@ -912,6 +927,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 				
 				schedulerDTO = new SchedulerDTO();
 				schedulerDTO.setJobId(Integer.parseInt(String.valueOf(obj[0])));
+				schedulerDTO.setFacilityId(Integer.parseInt(String.valueOf(obj[1])));
 				schedulerDTO.setUserId(Integer.parseInt(String.valueOf(obj[2])));
 				schedulerDTO.setCompanyName(String.valueOf(obj[3]));
 				schedulerDTO.setExpireDate(String.valueOf(obj[4]));
@@ -1144,7 +1160,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 	public boolean validateAndDecreaseAvailableCredits(int invDtlId,
 			int facilityId) {
 
-		LOGGER.info("Executing -> decreaseAvailableCredits()");
+		LOGGER.debug("Executing -> validateAndDecreaseAvailableCredits()");
 		// Schedule Jobs
 		try {
 			// Based on inventory detail id, we are retreiving product id
@@ -1189,7 +1205,7 @@ public class JobPostDAOImpl implements JobPostDAO {
 		} catch (DataAccessException e) {
 			LOGGER.error(e);
 		}
-		LOGGER.info("Executed -> decreaseAvailableCredits()");
+		LOGGER.debug("Executed -> validateAndDecreaseAvailableCredits()");
 		return false;
 	}
 
@@ -1323,19 +1339,20 @@ public class JobPostDAOImpl implements JobPostDAO {
 			JpJob mer = hibernateTemplate.get(JpJob.class, jobId);
 			
 			Date endDate = CommonUtil.convertToDate(apd.getEndDt());
-			Date currentDate = new Date();
 			
-			if (endDate.after(currentDate) || endDate.equals(currentDate)) {
-				//mer.setJobStatus(MMJBCommonConstants.STATUS_ACTIVE);
-				mer.setActive((byte) 1);
-			} else{
-				//mer.setJobStatus(MMJBCommonConstants.STATUS_EXPIRED);
-			}
-			Calendar endDt= Calendar.getInstance();
+			Calendar currentDate = Calendar.getInstance();
+			Calendar endDt = Calendar.getInstance();
+			//endDt.setTime(apd.getEndDt());
 			endDt.setTime(endDate);
 			endDt.set(Calendar.HOUR_OF_DAY, 23);
 			endDt.set(Calendar.MINUTE, 59);
 			endDt.set(Calendar.SECOND, 59);
+			if (endDt.getTime().after(currentDate.getTime()) || endDt.getTime().equals(currentDate.getTime())) {
+				// mer.setJobStatus(MMJBCommonConstants.STATUS_ACTIVE);
+				mer.setActive((byte) 1);
+			} else {
+				// mer.setJobStatus(MMJBCommonConstants.STATUS_EXPIRED);
+			}
 			mer.setEndDt(endDt.getTime());
 			hibernateTemplate.update(mer);
 			isUpdate = true;

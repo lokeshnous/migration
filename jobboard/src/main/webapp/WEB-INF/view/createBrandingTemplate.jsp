@@ -63,13 +63,25 @@
                 		});
                 });
                 
-                function removeTestimoni(divID,pID){
-                	
+                function removeTestimoni(delDivID){
+                	//alert(delDivID);
+                	var pID = delDivID.replace("testimoniDel", "");
+                	var divID = "testimoni"+pID;
+                	//alert(pID);
                 	$.ajax({
                 		type : "POST",
                 		url : "${pageContext.request.contextPath}/brandingTemplates/removeTestimonies.html?id="+pID+"&"+$("#brandingTemplateFormId").serialize() ,
                 		success : function(data) {
                 			$("#"+divID).remove();
+                			var divCount = $("#testimonialsSectionDivId > div").size();
+                			for(var i=0; i < divCount; i++){
+                				//alert($("#testimonialsSectionDivId > div:eq(" + i + ")").attr('id'));
+                				$("#testimonialsSectionDivId > div:eq(" + i + ")").attr('id','testimoni'+i);
+                				//alert($("#testimonialsSectionDivId > div:eq(" + i + ") > span > textarea").attr('id'));
+                				$("#testimonialsSectionDivId > div:eq(" + i + ") > span > textarea").attr('id','listTestimony'+i+'.testimony');
+                				$("#testimonialsSectionDivId > div:eq(" + i + ") > span > textarea").attr('name','listTestimony['+i+'].testimony');
+                				$("#testimonialsSectionDivId > div:eq(" + i + ") > span > div > p > img").attr('id','testimoniDel'+i);
+                			}
                 		},
                 	});
                 }
@@ -311,16 +323,22 @@
 									<span class="floatLeft marginRight10">
 										<form:textarea path="listTestimony[${status.index}].testimony" class="textareaBoxCResumeTemplate" rows="5" cols="30" />
 										
-								<c:if test="${status.count != 1}">  
-													<div class="floatRight margin0">
+										<c:choose>
+										<c:when test="${status.count == 1}">
+										<div class="floatRight margin0" style="display: none;">
+										</c:when>
+										<c:otherwise>
+										<div class="floatRight margin0">
+										</c:otherwise>
+										</c:choose>
+													
 														<p class="floatRight margin0">
-															<img id="closeCheckOut"
-																onclick="removeTestimoni('testimoni${testimonies.itemId}',${testimonies.itemId})"
+															<img id="testimoniDel${testimonies.itemId}"
+																onclick="removeTestimoni(this.id)"
 																src="<%= request.getContextPath() %>/resources/images/Close.png"
 																class="cursor" title="Delete" alt="Delete" />
 														</p>
 													</div>
-												</c:if> 
 									</span>	
 									
 									</div>
@@ -365,7 +383,7 @@
 										
 													<div class="floatRight margin0">
 														<p class="floatRight margin0">
-															<img id="closeCheckOut"
+															<img id="closeCheckOut${images.itemId}"
 																onclick="removeImage('image${images.itemId}',${images.itemId})"
 																src="<%= request.getContextPath() %>/resources/images/Close.png"
 																class="cursor" title="Delete" alt="Delete" />
@@ -419,7 +437,7 @@
 										
 													<div class="floatRight margin0">
 														<p class="floatRight margin0">
-															<img id="closeCheckOut"
+															<img id="closeCheckOut${videos.itemId}"
 																onclick="removeVideo('video${videos.itemId}',${videos.itemId})"
 																src="<%= request.getContextPath() %>/resources/images/Close.png"
 																class="cursor" title="Delete" alt="Delete" />

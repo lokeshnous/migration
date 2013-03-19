@@ -28,7 +28,7 @@ public interface BrandingTemplateService {
 	 * @param merUserDTO
 	 * @return
 	 */
-	List<BrandingTemplateDTO> getBrandingTemplate(int userId);
+	List<BrandingTemplateDTO> getBrandingTemplate(int facilityId);
 
 	/**
 	 * Create the job posting Branding Template.

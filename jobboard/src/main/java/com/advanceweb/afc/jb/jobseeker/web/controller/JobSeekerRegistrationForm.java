@@ -84,6 +84,10 @@ public class JobSeekerRegistrationForm extends ContactInfoForm {
 	
 	/** The adv pass user. */
 	private boolean advPassUser;
+	
+	/** The adv pass user. */
+	private boolean advPassUserWithNullPass;
+	
 	// used for social media sign up
 	/** The social sign up. */
 	private boolean socialSignUp;
@@ -813,6 +817,14 @@ public class JobSeekerRegistrationForm extends ContactInfoForm {
 	 */
 	public void setEmailSub(String[] emailSub) {
 		this.emailSub = emailSub;
+	}
+
+	public boolean isAdvPassUserWithNullPass() {
+		return advPassUserWithNullPass;
+	}
+
+	public void setAdvPassUserWithNullPass(boolean advPassUserWithNullPass) {
+		this.advPassUserWithNullPass = advPassUserWithNullPass;
 	}
 
 }

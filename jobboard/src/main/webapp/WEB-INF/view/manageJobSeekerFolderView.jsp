@@ -40,20 +40,20 @@
 <body class="job_board">
 	<form:form commandName="manageJobSeekerForm" id="manageJobSeeker">
 		<form:hidden path="selectedRow" id="selectedRow" />
-		<div id="jobSeekerRegister1" class="job_seeker_login popUpContainer"
+		<div id="jobSeekerRegister1" class="job_seeker_login "
 			style="display: block">
-			<div class="popupHeader">
+			<!-- <div class="popupHeader">
 				<h2>Move To Folder</h2>
 				<img src="../resources/images/Close.png" title="Close" width="19"
 					height="19" class="nyroModalClose" alt="close">
-			</div>
+			</div> -->
 
 			<div class="content_columns_search_results width100P">
 				<h3>Folders</h3>
 			<div class="column1 width100P marginTop10">
 					<div class="section">
 						<div class="refineResults">
-						<span class="refineResultsItem ">Manage Job Seekers</span>
+						<!-- <span class="refineResultsItem ">Manage Job Seekers</span> -->
 						<!--  <span class="refineResultsItem plus">Manage Job Seekers</span>
                                		<div class="refineResultsSubContent">
                                     	<ul>

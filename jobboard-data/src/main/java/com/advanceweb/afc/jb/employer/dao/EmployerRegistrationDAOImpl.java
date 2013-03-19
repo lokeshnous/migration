@@ -57,6 +57,7 @@ import com.mysql.jdbc.StringUtils;
  * @created 21-Jun-2012 2:25:55 PM
  */
 @SuppressWarnings("unchecked")
+@Transactional
 @Repository("employerRegistrationDAO")
 public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 
@@ -158,67 +159,129 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 				roleId = role.getRoleId();
 			}
 			// saving the data in adm_facility
-			AdmFacility facility = empHelper
+			AdmFacility facility=null;
+			AdmFacility nsFacility=null;
+			boolean nsExists=false;
+			boolean primaryAddrExists=false;
+			empDTO.getMerUserDTO().setFacilityCreateDate(new Date());
+			
+			List<AdmFacility> listAdmFacility = hibernateTemplateCareers.find("from AdmFacility where nsCustomerID=?",empDTO.getMerUserDTO().getNsCustomerID());
+			if(null != listAdmFacility && !listAdmFacility.isEmpty()){
+				nsFacility = listAdmFacility.get(0);
+				empDTO.getMerUserDTO().setHelthSystem(nsFacility.getFacilityType().equalsIgnoreCase(MMJBCommonConstants.FACILITY_GROUP));
+				empDTO.getMerUserDTO().setEmailId(nsFacility.getEmail());
+				empDTO.getMerUserDTO().setFacilityParentId(nsFacility.getFacilityParentId());
+				empDTO.getMerUserDTO().setFacilityCreateDate(nsFacility.getCreateDt());
+				nsExists = true;
+				
+			}
+			
+			if (empDTO.getMerUserDTO().getFacilityId() > 0) {
+				facility = hibernateTemplateCareers.get(AdmFacility.class, empDTO
+						.getMerUserDTO().getFacilityId());
+				LOGGER.info("NetSuite record already exists: "+empDTO.getMerUserDTO().getNsCustomerID()+" . Hence new facility not created.");
+			}
+			else if(nsExists){
+				facility = nsFacility;
+				LOGGER.info("NetSuite record already exists: "+empDTO.getMerUserDTO().getNsCustomerID()+" . Hence new facility not created.");
+			}
+			else{
+			facility = empHelper
 					.transformEmpDTOToAdmFAcility(empDTO);
+			LOGGER.info("NetSuite record does not exist: "+empDTO.getMerUserDTO().getNsCustomerID()+" . Hence new facility will be created.");
+			}
 			if (empDTO.getMerUserDTO().isHelthSystem()) {
+				int parentFacilityId = 0;
 				setFacility(facility, MMJBCommonConstants.FACILITY_GROUP,
-						empDTO, MMJBCommonConstants.ZERO_INT);
-				int parentFacilityId = (Integer) hibernateTemplateCareers
-						.save(facility);
-				// saving the data in adm_facility_contact
-				AdmFacilityContact contact = empHelper
-						.transformEmpDTOToAdmFacilityContact(empDTO, facility);
-				/**
-				 * creating employer Users in OpenAM
-				 */
-				// boolean
-				// isCreated=OpenAMEUtility.openAMCreateEmp(merUser,contact);
-				// LOGGER.info("Open AM :Employee User is created!"+isCreated);
-				// Ends OpenAM code
+						empDTO, empDTO.getMerUserDTO().getFacilityParentId());
+				if (!nsExists) {
+					parentFacilityId = (Integer) hibernateTemplateCareers
+							.save(facility);
+				}
+				if (null != facility.getAdmFacilityContacts()
+						&& !facility.getAdmFacilityContacts().isEmpty()) {
+					for (AdmFacilityContact admFacilityContact : facility
+							.getAdmFacilityContacts()) {
+						primaryAddrExists = admFacilityContact.getContactType()
+								.equals(MMJBCommonConstants.PRIMARY) ? true
+								: false;
+						if (primaryAddrExists) {
+							break;
+						}
+					}
+				}
+				if (!primaryAddrExists) {
+					// saving the data in adm_facility_contact
+					AdmFacilityContact contact = empHelper
+							.transformEmpDTOToAdmFacilityContact(empDTO,
+									facility);
+					/**
+					 * creating employer Users in OpenAM
+					 */
+					// boolean
+					// isCreated=OpenAMEUtility.openAMCreateEmp(merUser,contact);
+					// LOGGER.info("Open AM :Employee User is created!"+isCreated);
+					// Ends OpenAM code
 
-				hibernateTemplateCareers.saveOrUpdate(contact);
-
+					hibernateTemplateCareers.saveOrUpdate(contact);
+				}
 				// saving the data in the adm_user_facility
 				setUserFacility(facility, merUser.getUserId(), roleId);
 
 				// saving the data for child facility related to the facility
 				// group
-				AdmFacility childFacility = empHelper
-						.transformEmpDTOToAdmFAcility(empDTO);
-				setFacility(childFacility, MMJBCommonConstants.FACILITY,
-						empDTO, parentFacilityId);
-				childFacility.setCreateUserId(merUser.getUserId());
-				hibernateTemplateCareers.save(childFacility);
-				AdmFacilityContact childFacilityContact = empHelper
-						.transformEmpDTOToAdmFacilityContact(empDTO,
-								childFacility);
-				hibernateTemplateCareers.save(childFacilityContact);
+				if (!nsExists) {
+					AdmFacility childFacility = empHelper
+							.transformEmpDTOToAdmFAcility(empDTO);
+					setFacility(childFacility, MMJBCommonConstants.FACILITY,
+							empDTO, parentFacilityId);
+					childFacility.setCreateUserId(merUser.getUserId());
+					hibernateTemplateCareers.save(childFacility);
+					AdmFacilityContact childFacilityContact = empHelper
+							.transformEmpDTOToAdmFacilityContact(empDTO,
+									childFacility);
+					hibernateTemplateCareers.save(childFacilityContact);
+				}
 
 			} else {
 				setFacility(facility, MMJBCommonConstants.FACILITY, empDTO,
 						MMJBCommonConstants.ZERO_INT);
-				hibernateTemplateCareers.save(facility);
+				hibernateTemplateCareers.saveOrUpdate(facility);
 
-				// saving the data in adm_facility_contact
-				AdmFacilityContact contact = empHelper
-						.transformEmpDTOToAdmFacilityContact(empDTO, facility);
-				/**
-				 * creating employer Users in OpenAM
-				 */
-				// boolean
-				// isCreated=OpenAMEUtility.openAMCreateEmp(merUser,contact);
-				// LOGGER.info("Open AM :Employee User is created!"+isCreated);
-				// Ends OpenAM code
-				hibernateTemplateCareers.saveOrUpdate(contact);
-
+				if (null != facility.getAdmFacilityContacts()
+						&& !facility.getAdmFacilityContacts().isEmpty()) {
+					for (AdmFacilityContact admFacilityContact : facility
+							.getAdmFacilityContacts()) {
+						primaryAddrExists = admFacilityContact.getContactType()
+								.equals(MMJBCommonConstants.PRIMARY) ? true
+								: false;
+						if (primaryAddrExists) {
+							break;
+						}
+					}
+				}
+				if (!primaryAddrExists) {
+					// saving the data in adm_facility_contact
+					AdmFacilityContact contact = empHelper
+							.transformEmpDTOToAdmFacilityContact(empDTO,
+									facility);
+					/**
+					 * creating employer Users in OpenAM
+					 */
+					// boolean
+					// isCreated=OpenAMEUtility.openAMCreateEmp(merUser,contact);
+					// LOGGER.info("Open AM :Employee User is created!"+isCreated);
+					// Ends OpenAM code
+					hibernateTemplateCareers.saveOrUpdate(contact);
+				}
 				// saving the data in the adm_user_facility
 				setUserFacility(facility, merUser.getUserId(), roleId);
 			}
-			if(!empDTO.getMerUserDTO().isOldUser() && !empDTO.getMerUserDTO().isAdvPassUser()){
+			if(!empDTO.getMerUserDTO().isOldUser() && !empDTO.getMerUserDTO().isAdvPassUser() && !empDTO.getMerUserDTO().isAdvPassUserWithNullPass()){
 			saveAdvancePassDetails(facility.getFacilityId(),merUser);
 			}else{
 				AccountProfileDTO apDto=empHelper.transformToAccountProfileDTO(empDTO);
-				editAdvancePassDetails(apDto,merUser.getEmail());
+				editAdvancePassDetails(apDto,merUser.getEmail(),empDTO.getMerUserDTO().isAdvPassUserWithNullPass());
 			}
 			return empHelper.transformMerUserToUserDTO(merUser);
 
@@ -245,7 +308,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 		facility.setEmail(empDTO.getMerUserDTO().getEmailId());
 		facility.setFacilityParentId(parentFacilityId);
 		facility.setNsCustomerID(empDTO.getMerUserDTO().getNsCustomerID());
-		facility.setCreateDt(new Date());
+		facility.setCreateDt(empDTO.getMerUserDTO().getFacilityCreateDate());
 		return facility;
 	}
 
@@ -521,10 +584,10 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 				// update meruser Entity
 				MerUser mer = hibernateTemplateTracker.get(MerUser.class,
 						userId);
-				editAdvancePassDetails(apd,mer.getEmail());
+				editAdvancePassDetails(apd,mer.getEmail(),false);
 				mer.setFirstName(apd.getFirstName());
 				mer.setLastName(apd.getLastName());
-				if(apd.getEmail()!=null){
+				if(apd.isAdminLogin()){
 				mer.setEmail(apd.getEmail());
 				}
 				hibernateTemplateTracker.update(mer);
@@ -541,7 +604,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 				facility.setState(apd.getState());
 				facility.setPostcode(apd.getZipCode());
 				facility.setCountry(apd.getCountry());
-				if(apd.getEmail()!=null){
+				if(apd.isAdminLogin()){
 				facility.setEmail(apd.getEmail());
 				}
 				facility.setPhone(apd.getPhone());
@@ -710,7 +773,7 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 	 * @param facilityIdP
 	 * @param merUser
 	 */
-	private void editAdvancePassDetails(AccountProfileDTO empDTO, String email) {
+	private void editAdvancePassDetails(AccountProfileDTO empDTO, String email,Boolean advPassUserWithNullPass) {
 		WebMembership webMembership = new WebMembership();
 		WebMembershipInfo membershipInfo = new WebMembershipInfo();
 
@@ -721,13 +784,17 @@ public class EmployerRegistrationDAOImpl implements EmployerRegistrationDAO {
 
 			// Update WebMembershipEmail
 			WebMembershipEmail webMembershipEmail = membershipEmailList.get(0);
-			if (null != empDTO.getEmail()) {
+			if (empDTO.isAdminLogin()) {
 				webMembershipEmail.setEmail(empDTO.getEmail());
 			}
 
 			// Update WebMembership
 			webMembership = webMembershipEmail.getWebMembership();
-
+			if(advPassUserWithNullPass){
+				webMembership.setPassword(empDTO.getPassword());
+				webMembership.setEncryptPassword(null);
+				webMembership.setSalt(null);
+			}
 			// Update WebMembershipInfo
 			membershipInfo = webMembership.getWebMembershipInfo();
 

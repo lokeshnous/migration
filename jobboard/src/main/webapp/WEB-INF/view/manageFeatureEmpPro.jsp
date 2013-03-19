@@ -42,16 +42,19 @@
 		            hasError = false;
 				}
 			} 
-	        var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+	        var emailReg = new RegExp("^[!#\\$%&''\\*\\+\\-/=\\?\\^_\\{\\|}~0-9a-zA-Z][!#\\$%&''\\*\\+\\-/=\\?\\^_\\{\\|}~0-9a-zA-Z\\.]+@[\\-a-zA-Z0-9]+(\\.?[\\-a-zA-Z0-9]+)+$");
 	        var emailaddressVal = $("#companyEmaiAddress").val();
 	      /*   if(emailaddressVal == '') {
 	            hasError = false;
 	            $("#errMsg").text('Please enter the E-Mail Address');
 	        }*/
-	         if(!emailReg.test(emailaddressVal)) {
+	         if(!emailReg.test(emailaddressVal) && emailaddressVal != "" ) {
 	            $("#errMsg").text('Enter a valid email address.');
 	            hasError = false;
 	        } 
+	         if($('#companyWebsiteErrMsg').text() != ''){
+		        	hasError = false;
+		        }
 	        return hasError; 
 	    });
 		
@@ -75,6 +78,21 @@
 <script type="text/javascript">
 	function cancelProcess() {
 		window.location.href = '${pageContext.request.contextPath}/employer/employerDashBoard.html';
+	}
+	
+	function appendURL() {
+		var str = $("#companyWebsiteID").val();
+		if (str.indexOf('www') == 0 && str.indexOf('.') == 3) {
+			str = 'http://' + str;
+			$("#companyWebsiteID").val(str);
+			$("#companyWebsiteErrMsg").text('');
+		} else {
+			if ($("#companyWebsiteID").val() != '') {
+				$("#companyWebsiteErrMsg").text(' Please enter the valid url');
+			}else{
+				$("#companyWebsiteErrMsg").text('');
+			}
+		}
 	}
 </script>
 
@@ -135,8 +153,9 @@
 
 								<div class="floatLeft">
 									<form:input path="companyWebsite" name="Exclude"
-										class="jb_input2Coverletter width300" />
+										class="jb_input2Coverletter width300" id="companyWebsiteID" onblur="appendURL()" />
 								</div>
+								<div id="companyWebsiteErrMsg" class="FormErrorDisplayText paddingleft0" ></div>
 							</div>
 
 

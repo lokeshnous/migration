@@ -75,6 +75,8 @@ public class AccountProfileDTO implements Serializable{
 	
 	private String password;
 	
+	private boolean isAdminLogin;
+	
 	public String getPassword() {
 		return password;
 	}
@@ -237,6 +239,11 @@ public class AccountProfileDTO implements Serializable{
 	public void setFacilityContactId(int facilityContactId) {
 		this.facilityContactId = facilityContactId;
 	}
-	
+	public boolean isAdminLogin() {
+		return isAdminLogin;
+	}
+	public void setAdminLogin(boolean isAdminLogin) {
+		this.isAdminLogin = isAdminLogin;
+	}
 	
 }

@@ -414,6 +414,7 @@ public class JobPostConversionHelper<JobPostForm> {
 
 		setJobStatus(jpJob, jobPostDTO);
 		jobPostDTO.setbTemplateOverride(jpJob.getTemplateOverride()==1?true:false);
+		jobPostDTO.setSourceId(jpJob.getJpSource().getSourceId());
 		return jobPostDTO;
 
 	}

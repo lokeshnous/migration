@@ -9,7 +9,6 @@ package com.advanceweb.afc.jb.login.web.controller;
 
 import java.io.IOException;
 import java.net.URLConnection;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -32,6 +31,7 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import org.springframework.util.StringUtils;
 
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
+import com.advanceweb.afc.jb.common.FacilityContactDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.employer.service.FacilityService;
@@ -77,7 +77,7 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 		String pageValue = request.getParameter(MMJBCommonConstants.PAGE_VALUE);
 		
 		HttpSession session;
-		if (authentication instanceof UsernamePasswordAuthenticationToken || authentication instanceof PreAuthenticatedAuthenticationToken) {
+		if (authentication instanceof UsernamePasswordAuthenticationToken) {
 			session = request.getSession(false);
 		} 
 		 else {
@@ -96,15 +96,15 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 			}
 			if(pageValue!=null && pageValue.equals(MMJBCommonConstants.JOB_SEEKER)){
 				sendRedirect(request, response,
-						"/jobseekerregistration/createJobSeekerCreateYrAcct.html?profileId="+profileId+"&serviceProviderId="+serviceProviderId);
+						"/jobseekerregistration/createjobseekercreateyracct.html?profileId="+profileId+"&serviceProviderId="+serviceProviderId);
 			}
 			if(pageValue!=null && pageValue.equals(MMJBCommonConstants.EMPLOYER)){
 				sendRedirect(request, response,
-						"/employerRegistration/employerregistration.html?profileId="+profileId+"&serviceProviderId="+serviceProviderId);
+						"/employerreg/employerregistration.html?profileId="+profileId+"&serviceProviderId="+serviceProviderId);
 			}
 			if(pageValue!=null && pageValue.equals(MMJBCommonConstants.AGENCY)){
 				sendRedirect(request, response,
-						"/agencyRegistration/agencyregistration.html?profileId="+profileId+"&serviceProviderId="+serviceProviderId);
+						"/agencyreg/agencyregistration.html?profileId="+profileId+"&serviceProviderId="+serviceProviderId);
 			}
 			
 		}
@@ -141,6 +141,8 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 					new SimpleGrantedAuthority(
 							MMJBCommonConstants.ROLE_MERION_ADMIN))) {
 		response.addCookie(createCookie(advancePassUser.getEmailId(),advancePassUser.getPassword()));
+		response.addCookie(createUserCookie());
+//		response.addCookie(createAuthCookie());
 			}
 		
 		}
@@ -183,9 +185,10 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 				socalLogin = true;
 			}
 			response.addCookie(deleteCookie());
+			response.addCookie(deleteUserCookie());
 			session.invalidate();
 			sendRedirect(request, response,
-					"/commonLogin/login.html?error=true&page=" + pageValue
+					"/commonlogin/login.html?error=true&page=" + pageValue
 							+ "&socalLogin=" + socalLogin);
 		}
 		}
@@ -318,7 +321,7 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 			user.setPassword(advPassUser.getPassword());
 			session.setAttribute(MMJBCommonConstants.USER_DTO, user);
 			sendRedirect(request, response,
-					"/jobseekerregistration/createJobSeekerCreateYrAcct.html");
+					"/jobseekerregistration/createjobseekercreateyracct.html");
 
 		}
 	}
@@ -340,7 +343,7 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 			HttpServletResponse response, HttpSession session,String userRegistration)
 			throws IOException, ServletException {
 		if(userRegistration!=null){
-			sendRedirect(request, response, "/employerRegistration/redirectToAddPage.html");
+			sendRedirect(request, response, "/employerreg/redirectToAddPage.html");
 		}
 		
 		if (profileRegistration.validateProfileAttributes(user.getUserId())) {
@@ -349,9 +352,15 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 		} else {
 			UserDTO advPassUser=userService.getAdvancePassUser(user.getEmailId());
 			user.setPassword(advPassUser.getPassword());
+			EmployerInfoDTO infoDTO = facilityService.facilityDetails(user
+					.getUserId());
+			if(infoDTO!=null){
+			FacilityContactDTO facilityContactDTO=facilityService.getFacilityContactDetails(infoDTO.getFacilityId());
+			session.setAttribute("FacilityContactDTO", facilityContactDTO);
+			}
 			session.setAttribute(MMJBCommonConstants.USER_DTO, user);
 			sendRedirect(request, response,
-					"/employerRegistration/employerregistration.html");
+					"/employerreg/employerregistration.html");
 		}
 
 	}
@@ -380,9 +389,15 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 		} else {
 			UserDTO advPassUser=userService.getAdvancePassUser(user.getEmailId());
 			user.setPassword(advPassUser.getPassword());
+			EmployerInfoDTO infoDTO = facilityService.facilityDetails(user
+					.getUserId());
+			if(infoDTO!=null){
+			FacilityContactDTO facilityContactDTO=facilityService.getFacilityContactDetails(infoDTO.getFacilityId());
+			session.setAttribute("FacilityContactDTO", facilityContactDTO);
+			}
 			session.setAttribute(MMJBCommonConstants.USER_DTO, user);
 			sendRedirect(request, response,
-					"/agencyRegistration/agencyregistration.html");
+					"/agencyreg/agencyregistration.html");
 		}
 
 	}
@@ -402,9 +417,35 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 			cookie=new Cookie(".ASPXAUTH",cookieValue);
 			cookie.setDomain(".advanceweb.com");
 			cookie.setPath("/");
-			//cookie.setMaxAge((int)TimeUnit.SECONDS.convert(30, TimeUnit.MINUTES));
+			cookie.setMaxAge((int)TimeUnit.SECONDS.convert(120, TimeUnit.MINUTES));
 		} catch (Exception e) {
 			LOGGER.error("createCookie exception"+e.getMessage());
+		}
+		return cookie;
+	}
+	
+//	private Cookie createAuthCookie(){
+//		Cookie cookie= null;
+//		try {
+//			cookie=new Cookie(".ASPXAUTH","localemp1@local.com");
+//			cookie.setDomain(".localhost");
+//			cookie.setPath("/");
+//			cookie.setMaxAge((int)TimeUnit.SECONDS.convert(120, TimeUnit.MINUTES));
+//		} catch (Exception e) {
+//			LOGGER.error("createCookie exception"+e.getMessage());
+//		}
+//		return cookie;
+//	}
+	
+	private Cookie createUserCookie(){
+		Cookie cookie= null;
+		try {
+			cookie=new Cookie(".USERCOOKIE","cookie value");
+			cookie.setDomain(".advanceweb.com");
+			cookie.setPath("/");
+//			cookie.setMaxAge((int)TimeUnit.SECONDS.convert(30, TimeUnit.MINUTES));
+		} catch (Exception e) {
+			LOGGER.error("createUserCookie() exception "+e.getMessage());
 		}
 		return cookie;
 	}
@@ -423,13 +464,15 @@ public class LoginManager extends SimpleUrlAuthenticationSuccessHandler {
 	}
 	
 	/**
-	 * Gets the cookie max age.
+	 * Delete user cookie.
 	 *
-	 * @return the cookie max age
+	 * @return the cookie
 	 */
-	private int getCookieMaxAge(){
-		Calendar cal = Calendar.getInstance();
-		int time=(int)(TimeUnit.SECONDS.convert(cal.getTimeInMillis(), TimeUnit.MILLISECONDS)+TimeUnit.SECONDS.convert(30, TimeUnit.MINUTES));
-		return time;
+	private Cookie deleteUserCookie(){
+		Cookie cookie=new Cookie(".USERCOOKIE","Deleted cookie");
+			cookie.setDomain(".advanceweb.com");
+			cookie.setPath("/");
+			cookie.setMaxAge(0);
+		return cookie;
 	}
 }

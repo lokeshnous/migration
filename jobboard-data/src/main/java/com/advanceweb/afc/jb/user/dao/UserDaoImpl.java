@@ -360,6 +360,28 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.dao.UserDao#checkAdvUserPassword(java.lang.String)
+	 */
+	@Override
+	public boolean checkAdvUserPassword(String email) {
+		try {
+			if (!StringUtils.isEmptyOrWhitespaceOnly(email)) {
+				List<MerUser> usersList = hibernateTemplateTracker.find("from MerUser e where e.email = ?",email);
+				List<WebMembershipEmail> webMembershipEmails = hibernateTemplateAdvancePass.find("from WebMembershipEmail e where e.email = ? and e.deleteDate is NULL", email);
+				
+				if(!webMembershipEmails.isEmpty() && usersList.isEmpty()){
+					if(webMembershipEmails.get(0).getWebMembership().getPassword()==null){
+					return true;
+					}
+				}
+			}
+		} catch (HibernateException e) {
+			LOGGER.error(e);
+		}
+		return false;
+	}
+
+	/* (non-Javadoc)
 	 * @see com.advanceweb.afc.jb.user.dao.UserDao#getAdminInfo(java.lang.String)
 	 */
 	@Override

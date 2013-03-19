@@ -25,7 +25,7 @@
 		    			$("#jobOwnerErrorMsg").html("<span> </span>");
 			    		var ownerName = $.trim($("#ownerName").val());
 						var ownerEmail = $.trim($("#ownerEmail").val());
-						var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;           
+						var email_regex = new RegExp("^[!#\\$%&''\\*\\+\\-/=\\?\\^_\\{\\|}~0-9a-zA-Z][!#\\$%&''\\*\\+\\-/=\\?\\^_\\{\\|}~0-9a-zA-Z\\.]+@[\\-a-zA-Z0-9]+(\\.?[\\-a-zA-Z0-9]+)+$");           
 						
 						if (ownerName.length <= 0
 							&& ownerEmail .length <= 0){

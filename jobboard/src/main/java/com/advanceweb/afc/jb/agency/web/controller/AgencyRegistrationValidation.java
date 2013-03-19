@@ -194,8 +194,12 @@ public class AgencyRegistrationValidation {
 		AgencyRegistrationForm registerForm = (AgencyRegistrationForm) target;
 
 		validateEmail(registerForm, errors);
+		if(((!registerForm.isOldUSer() && registerForm.isAdvPassUser())
+				&& (registerForm.isOldUSer() && !registerForm.isAdvPassUser()))
+				||(!registerForm.isOldUSer() && !registerForm.isAdvPassUser())){
 		validatePassoword(registerForm.getPassword(),
 				registerForm.getConfirmPassword(), errors);
+		}
 	}
 
 

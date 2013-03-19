@@ -10,6 +10,7 @@ package com.advanceweb.afc.jb.employer.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import com.advanceweb.afc.jb.common.AddOnDTO;
@@ -26,6 +27,10 @@ import com.advanceweb.afc.jb.common.JobPostingPlanDTO;
 @Repository("transformJobPost")
 public class TransformJobPost {
 
+	//Number of days the job will be active
+	private @Value("${jobPostDuration}")
+	int jobPostDuration;
+	
 	/**
 	 * This method will transform JobPostForm to JobPostDTO
 	 * @param form
@@ -82,8 +87,16 @@ public class TransformJobPost {
 		jobPostDTO.setScheduleStartDt(form.getScheduleStartDate());
 		jobPostDTO.setScheduleExpiryDt(form.getScheduleEndDate());
 		
+//		Calendar endCal = Calendar.getInstance();
+//		endCal.setTime(new Date());
+//		endCal.add(Calendar.DATE, jobPostDuration);
+//		
+//		jobPostDTO.setScheduleStartDt(new Date().toString());
+//		jobPostDTO.setScheduleExpiryDt(endCal.getTime().toString());
+		
 		jobPostDTO.setJobStatus(form.getJobStatus());
 		jobPostDTO.setXmlStartEndDateEnabled(form.isXmlStartEndDateEnabled());
+		jobPostDTO.setSourceId(form.getSourceId());
 		
 		return jobPostDTO;
 	}
@@ -123,6 +136,7 @@ public class TransformJobPost {
 		jobPostform.setbTemplateOverride(jobPostDTO.isbTemplateOverride());
 		jobPostform.setFacilityId(jobPostDTO.getFacilityId());
 		jobPostform.setAutoRenew(jobPostDTO.isAutoRenew());
+		jobPostform.setSourceId(jobPostDTO.getSourceId());
 		return jobPostform;
 		
 	}

@@ -69,12 +69,12 @@
 
 					<div class="headerLoginSectionColumns" style="display: none">
 						<span class="boldText">${msg.commonEmployer}</span><br /> <a
-							href="">${msg.commonLogIn}</a>${msg.commonVerticalBar}<a href="">${msg.commonPostJobs}</a>
+							href="">${msg.commonlogin}</a>${msg.commonVerticalBar}<a href="">${msg.commonPostJobs}</a>
 					</div>
 					<!-- loginHeader -->
 					<div class="headerLoginSectionColumns" style="display: none">
 						<span class="boldText">${msg.commonAdAgency}</span><br /> <a
-							href="">${msg.commonLogIn}</a>${msg.commonVerticalBar}<a href="">${msg.commonPostJobs}</a>
+							href="">${msg.commonlogin}</a>${msg.commonVerticalBar}<a href="">${msg.commonPostJobs}</a>
 					</div>
 					<!-- loginHeader -->
 				</div>
@@ -96,12 +96,12 @@
 
 					<div class="headerLoginSectionColumns" style="display: none">
 						<span class="boldText">${msg.commonEmployer}</span><br/> <a
-							href="">${msg.commonLogIn}</a>${msg.commonVerticalBar}<a href="">${msg.commonPostJobs}</a>
+							href="">${msg.commonlogin}</a>${msg.commonVerticalBar}<a href="">${msg.commonPostJobs}</a>
 					</div>
 					<!-- loginHeader -->
 					<div class="headerLoginSectionColumns" style="display: none">
 						<span class="boldText">${msg.commonAdAgency}</span><br /> <a
-							href="">${msg.commonLogIn}</a>${msg.commonVerticalBar}<a href="">${msg.commonPostJobs}</a>
+							href="">${msg.commonlogin}</a>${msg.commonVerticalBar}<a href="">${msg.commonPostJobs}</a>
 					</div>
 					<!-- loginHeader -->
 				</div>
@@ -123,12 +123,12 @@
 
 					<div class="headerLoginSectionColumns" style="display: none">
 						<span class="boldText">${msg.commonEmployer}</span><br /> <a
-							href="">${msg.commonLogIn}</a>${msg.commonVerticalBar}<a href="">${msg.commonPostJobs}</a>
+							href="">${msg.commonlogin}</a>${msg.commonVerticalBar}<a href="">${msg.commonPostJobs}</a>
 					</div>
 					<!-- loginHeader -->
 					<div class="headerLoginSectionColumns" style="display: none">
 						<span class="boldText">${msg.commonAdAgency}</span><br /> <a
-							href="">${msg.commonLogIn}</a>${msg.commonVerticalBar}<a href="">${msg.commonPostJobs}</a>
+							href="">${msg.commonlogin}</a>${msg.commonVerticalBar}<a href="">${msg.commonPostJobs}</a>
 					</div>
 					<!-- loginHeader -->
 				</div>
@@ -160,20 +160,20 @@
 					</div>
 					<div class="floatleft">
 					
-						<span> <a href="<%=request.getContextPath()%>/commonLogin/login.html?page=jobSeeker">Login</a>
+						<span> <a href="<%=request.getContextPath()%>/commonlogin/login.html?page=jobSeeker">Login</a>
 							| <a
-							href="<%=request.getContextPath()%>/jobseekerregistration/createJobSeekerCreateYrAcct.html">Sign
+							href="<%=request.getContextPath()%>/jobseekerregistration/createjobseekercreateyracct.html">Sign
 								Up</a> |
 						</span>
 					</div>
 				</div>
 				<div class="headerLoginSectionColumns">
-					<span class="boldText">Employer:</span><br /> <a href="<%=request.getContextPath()%>/commonLogin/login.html?page=employer">Login</a>
-					| <a href="<%=request.getContextPath()%>/employerRegistration/employerregistration.html">Post Jobs</a>
+					<span class="boldText">Employer:</span><br /> <a href="<%=request.getContextPath()%>/commonlogin/login.html?page=employer">Login</a>
+					| <a href="<%=request.getContextPath()%>/employerreg/employerregistration.html">Post Jobs</a>
 				</div>
 				<div class="headerLoginSectionColumns">
-					<span class="boldText">Ad Agency:</span><br /> <a href="<%=request.getContextPath()%>/commonLogin/login.html?page=agency">Login</a>
-					| <a href="<%=request.getContextPath()%>/agencyRegistration/agencyregistration.html">Post Jobs</a>
+					<span class="boldText">Ad Agency:</span><br /> <a href="<%=request.getContextPath()%>/commonlogin/login.html?page=agency">Login</a>
+					| <a href="<%=request.getContextPath()%>/agencyreg/agencyregistration.html">Post Jobs</a>
 				</div>
 
 			</security:authorize>

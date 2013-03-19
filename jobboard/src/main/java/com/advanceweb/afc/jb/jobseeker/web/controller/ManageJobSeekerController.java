@@ -45,6 +45,7 @@ import com.advanceweb.afc.jb.common.AdmFolderDTO;
 import com.advanceweb.afc.jb.common.DropDownDTO;
 import com.advanceweb.afc.jb.common.ManageJobSeekerDTO;
 import com.advanceweb.afc.jb.common.ResumeDTO;
+import com.advanceweb.afc.jb.common.ResumeViewedDTO;
 import com.advanceweb.afc.jb.common.util.MMJBCommonConstants;
 import com.advanceweb.afc.jb.job.service.ManageJobSeekerService;
 import com.advanceweb.afc.jb.mail.service.EmailDTO;
@@ -245,6 +246,28 @@ public class ManageJobSeekerController {
 			manageJobSeekerForm.setAdmFolderDTOList(admFolderDTOList);
 		}
 		if (null != manageJobSeekerDTOList && !manageJobSeekerDTOList.isEmpty()) {
+			for (ManageJobSeekerDTO manageJobSeekerDTO : manageJobSeekerDTOList) {
+				if (manageJobSeekerDTO.getResumeId() > 0
+						&& (Integer) session
+								.getAttribute(MMJBCommonConstants.USER_ID) > 0) {
+					List<ResumeViewedDTO> resVieweds;
+					try {
+						resVieweds = resumeService
+								.getViewDetails(
+										manageJobSeekerDTO.getResumeId(),
+										(Integer) session
+												.getAttribute(MMJBCommonConstants.USER_ID));
+						if (null != resVieweds && resVieweds.size() > 0) {
+							manageJobSeekerDTO.setResumeViewed(true);
+						}
+					} catch (JobBoardServiceException jbex) {
+						LOGGER.error("error occured" + jbex);
+					}
+					
+				}
+
+			}
+
 			manageJobSeekerForm
 					.setManageJobSeekerDTOList(manageJobSeekerDTOList);
 		}
@@ -382,6 +405,27 @@ public class ManageJobSeekerController {
 		model.addObject("begin", (manageJobSeekerForm.getBeginVal() <= 0 ? 1
 				: manageJobSeekerForm.getBeginVal()));
 		if (null != manageJobSeekerDTOList && !manageJobSeekerDTOList.isEmpty()) {
+			for (ManageJobSeekerDTO manageJobSeekerDTO : manageJobSeekerDTOList) {
+				if (manageJobSeekerDTO.getResumeId() > 0
+						&& (Integer) session
+								.getAttribute(MMJBCommonConstants.USER_ID) > 0) {
+					List<ResumeViewedDTO> resVieweds;
+					try {
+						resVieweds = resumeService
+								.getViewDetails(
+										manageJobSeekerDTO.getResumeId(),
+										(Integer) session
+												.getAttribute(MMJBCommonConstants.USER_ID));
+						if (null != resVieweds && resVieweds.size() > 0) {
+							manageJobSeekerDTO.setResumeViewed(true);
+						}
+					} catch (JobBoardServiceException jbex) {
+						LOGGER.error("error occured" + jbex);
+					}
+					
+				}
+
+			}
 			manageJobSeekerForm
 					.setManageJobSeekerDTOList(manageJobSeekerDTOList);
 		}
@@ -442,6 +486,27 @@ public class ManageJobSeekerController {
 								.getAttribute(MMJBCommonConstants.USER_ID));
 				if (null != manageJobSeekerDTOList
 						&& !manageJobSeekerDTOList.isEmpty()) {
+					for (ManageJobSeekerDTO manageJobSeekerDTO : manageJobSeekerDTOList) {
+						if (manageJobSeekerDTO.getResumeId() > 0
+								&& (Integer) session
+										.getAttribute(MMJBCommonConstants.USER_ID) > 0) {
+							List<ResumeViewedDTO> resVieweds;
+							try {
+								resVieweds = resumeService
+										.getViewDetails(
+												manageJobSeekerDTO.getResumeId(),
+												(Integer) session
+														.getAttribute(MMJBCommonConstants.USER_ID));
+								if (null != resVieweds && resVieweds.size() > 0) {
+									manageJobSeekerDTO.setResumeViewed(true);
+								}
+							} catch (JobBoardServiceException jbex) {
+								LOGGER.error("error occured" + jbex);
+							}
+							
+						}
+
+					}
 					manageJobSeekerForm
 							.setManageJobSeekerDTOList(manageJobSeekerDTOList);
 				}
@@ -795,6 +860,27 @@ public class ManageJobSeekerController {
 				}
 				if (null != manageJobSeekerDTOList
 						&& !manageJobSeekerDTOList.isEmpty()) {
+					for (ManageJobSeekerDTO manageJobSeekerDTO : manageJobSeekerDTOList) {
+						if (manageJobSeekerDTO.getResumeId() > 0
+								&& (Integer) session
+										.getAttribute(MMJBCommonConstants.USER_ID) > 0) {
+							List<ResumeViewedDTO> resVieweds;
+							try {
+								resVieweds = resumeService
+										.getViewDetails(
+												manageJobSeekerDTO.getResumeId(),
+												(Integer) session
+														.getAttribute(MMJBCommonConstants.USER_ID));
+								if (null != resVieweds && resVieweds.size() > 0) {
+									manageJobSeekerDTO.setResumeViewed(true);
+								}
+							} catch (JobBoardServiceException jbex) {
+								LOGGER.error("error occured" + jbex);
+							}
+							
+						}
+
+					}
 					manageJobSeekerForm
 							.setManageJobSeekerDTOList(manageJobSeekerDTOList);
 
@@ -885,8 +971,30 @@ public class ManageJobSeekerController {
 								.getAttribute(MMJBCommonConstants.USER_ID));
 				if (null != manageJobSeekerDTOList
 						&& !manageJobSeekerDTOList.isEmpty()) {
+					for (ManageJobSeekerDTO manageJobSeekerDTO : manageJobSeekerDTOList) {
+						if (manageJobSeekerDTO.getResumeId() > 0
+								&& (Integer) session
+										.getAttribute(MMJBCommonConstants.USER_ID) > 0) {
+							List<ResumeViewedDTO> resVieweds;
+							try {
+								resVieweds = resumeService
+										.getViewDetails(
+												manageJobSeekerDTO.getResumeId(),
+												(Integer) session
+														.getAttribute(MMJBCommonConstants.USER_ID));
+								if (null != resVieweds && resVieweds.size() > 0) {
+									manageJobSeekerDTO.setResumeViewed(true);
+								}
+							} catch (JobBoardServiceException jbex) {
+								LOGGER.error("error occured" + jbex);
+							}
+							
+						}
+
+					}
 					addResumeDTOtoResumeDTOList(manageJobSeekerForm, resumeId,
 							manageJobSeekerDTOList, resumeDTOList, tokenize);
+					
 				}
 				manageJobSeekerForm.setTotalRecordForComp(resumeDTOList.size());
 				manageJobSeekerForm.setResumeDTOList(resumeDTOList);
@@ -913,6 +1021,7 @@ public class ManageJobSeekerController {
 			List<ManageJobSeekerDTO> manageJobSeekerDTOList,
 			List<ResumeDTO> resumeDTOList, StringTokenizer tokenize) {
 		int folderResumeId;
+		
 		manageJobSeekerForm.setManageJobSeekerDTOList(manageJobSeekerDTOList);
 
 		while (tokenize.hasMoreTokens()) {

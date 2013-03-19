@@ -420,6 +420,7 @@ function validateNumber(event) {
 							commandName="registerForm" enctype="multipart/form-data" id="registerFormId">
 							<form:hidden path="clickBack" />
 							<form:hidden path="advPassUser" />
+							<form:hidden path="advPassUserWithNullPass" />
 							<c:forEach items="${registerForm.listProfAttribForms}"
 								var="profAttrib" varStatus="status">
 

@@ -78,7 +78,7 @@
 									$("#signUpLink")
 											.attr(
 													"href",
-													"${pageContext.request.contextPath}/employerRegistration/employerregistration.html?profileId="
+													"${pageContext.request.contextPath}/employerreg/employerregistration.html?profileId="
 															+ $("#profileId")
 																	.val()
 															+ "&serviceProviderId="
@@ -90,7 +90,7 @@
 									$("#signUpLink")
 											.attr(
 													"href",
-													"${pageContext.request.contextPath}/jobseekerregistration/createJobSeekerCreateYrAcct.html?profileId="
+													"${pageContext.request.contextPath}/jobseekerregistration/createjobseekercreateyracct.html?profileId="
 															+ $("#profileId")
 																	.val()
 															+ "&serviceProviderId="
@@ -102,7 +102,7 @@
 									$("#signUpLink")
 											.attr(
 													"href",
-													"${pageContext.request.contextPath}/agencyRegistration/agencyregistration.html?profileId="
+													"${pageContext.request.contextPath}/agencyreg/agencyregistration.html?profileId="
 															+ $("#profileId")
 																	.val()
 															+ "&serviceProviderId="

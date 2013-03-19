@@ -215,7 +215,11 @@
 								</h3>
 								<div id="descriptionText" class="article">${jobDetail.adText}</div>
 								<br />
-								<img src="${jobDetail.trackingPixel}" />
+								<div>
+									<c:if test="${jobDetail.trackingPixel != ''}">
+										<img src="${jobDetail.trackingPixel}" />
+									</c:if>
+								</div>
 								<div class="jobDetailsIntroOptionsTborder">
 									<div class="jobDetailsIntroOptions">
 										<div class="rowEvenTB10Spacing">

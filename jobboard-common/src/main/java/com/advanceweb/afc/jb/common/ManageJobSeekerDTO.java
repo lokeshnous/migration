@@ -43,6 +43,8 @@ public class ManageJobSeekerDTO implements Serializable {
 	
 	/** The folder resume id. */
 	private int folderResumeId;
+	/** The resume viewed. */
+	private boolean resumeViewed;
 	/**
 	 * @return the resumeId
 	 */
@@ -144,6 +146,18 @@ public class ManageJobSeekerDTO implements Serializable {
 	 */
 	public void setFolderResumeId(int folderResumeId) {
 		this.folderResumeId = folderResumeId;
+	}
+	/**
+	 * @return the resumeViewed
+	 */
+	public boolean isResumeViewed() {
+		return resumeViewed;
+	}
+	/**
+	 * @param resumeViewed the resumeViewed to set
+	 */
+	public void setResumeViewed(boolean resumeViewed) {
+		this.resumeViewed = resumeViewed;
 	}
 	
    

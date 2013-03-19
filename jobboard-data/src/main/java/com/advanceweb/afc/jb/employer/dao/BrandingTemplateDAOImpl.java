@@ -76,24 +76,28 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 	 * Fetch the job posting Branding Templates
 	 */
 	@Override
-	public List<BrandingTemplateDTO> getBrandingTemplate(int userId) {
+	public List<BrandingTemplateDTO> getBrandingTemplate(int facilityId) {
 		List<BrandingTemplateDTO> templatesDTO = null;
 		try {
-			if (userId != 0) {
-				AdmUserRole userRole = (AdmUserRole) hibernateTemplateCareer
-						.find("from AdmUserRole a where a.id.userId=?", userId)
-						.get(0);
-				AdmUserFacility userFacility = (AdmUserFacility) hibernateTemplateCareer
-						.find("from AdmUserFacility f where f.id.userId=? and f.id.roleId=?",
-								userRole.getRolePK().getUserId(),
-								userRole.getRolePK().getRoleId()).get(0);
+//			if (userId != 0) {
+//				AdmUserRole userRole = (AdmUserRole) hibernateTemplateCareer
+//						.find("from AdmUserRole a where a.id.userId=?", userId)
+//						.get(0);
+//				AdmUserFacility userFacility = (AdmUserFacility) hibernateTemplateCareer
+//						.find("from AdmUserFacility f where f.id.userId=? and f.id.roleId=?",
+//								userRole.getRolePK().getUserId(),
+//								userRole.getRolePK().getRoleId()).get(0);
 				// List<JpTemplate> brandingTemplateList =
 				// hibernateTemplateCareer
 				// .find("from  JpTemplate where admFacility.facilityId=?",
 				// userFacility.getAdmFacility().getFacilityId());
+//				List<JpTemplate> brandingTemplateList = hibernateTemplateCareer
+//						.find("from  JpTemplate where admFacility.facilityId=? and deleteDt is null",
+//								userFacility.getAdmFacility().getFacilityId());
 				List<JpTemplate> brandingTemplateList = hibernateTemplateCareer
 						.find("from  JpTemplate where admFacility.facilityId=? and deleteDt is null",
-								userFacility.getAdmFacility().getFacilityId());
+								facilityId);
+				
 				templatesDTO = new ArrayList<BrandingTemplateDTO>();
 				for (JpTemplate template : brandingTemplateList) {
 					// get the count of template id used by
@@ -103,7 +107,7 @@ public class BrandingTemplateDAOImpl implements BrandingTemplateDAO {
 					templatesDTO.add(brandTemplateConversionHelper
 							.convertToBrandTemplateDTO(template, count));
 				}
-			}
+//			}
 		} catch (HibernateException e) {
 			// logger call
 			LOGGER.error("Error occured while getting brand template",e);

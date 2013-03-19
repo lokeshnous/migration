@@ -31,15 +31,15 @@ public class LoginFailureManager extends SimpleUrlAuthenticationFailureHandler {
 
 		if (pageValue != null
 				&& pageValue.equals(MMJBCommonConstants.JOB_SEEKER)) {
-			super.setDefaultFailureUrl("/commonLogin/login.html?error=true&page=jobSeeker");
+			super.setDefaultFailureUrl("/commonlogin/login.html?error=true&page=jobSeeker");
 		}
 
 		else if (pageValue != null
 				&& pageValue.equals(MMJBCommonConstants.EMPLOYER)) {
-			super.setDefaultFailureUrl("/commonLogin/login.html?error=true&page=employer");
+			super.setDefaultFailureUrl("/commonlogin/login.html?error=true&page=employer");
 		} else if (pageValue != null
 				&& pageValue.equals(MMJBCommonConstants.AGENCY)) {
-			super.setDefaultFailureUrl("/commonLogin/login.html?error=true&page=agency");
+			super.setDefaultFailureUrl("/commonlogin/login.html?error=true&page=agency");
 		}
 
 		super.onAuthenticationFailure(request, response, exception);

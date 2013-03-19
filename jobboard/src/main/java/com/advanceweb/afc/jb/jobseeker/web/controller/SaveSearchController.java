@@ -62,13 +62,13 @@ public class SaveSearchController {
 
 	/** The Constant LOGGED_NAV_PATH. */
 	private static final String LOGGED_NAV_PATH = "LoggedInNavigationPath";
-	
+
 	/** The Constant SAVE_SEARCH_FORM. */
 	private static final String SAVE_SEARCH_FORM = "saveSearchForm";
-	
+
 	/** The Constant RECENT_SRCH_LIST. */
 	private static final String RECENT_SRCH_LIST = "recentSearchList";
-	
+
 	/** The save search service. */
 	@Autowired
 	private SaveSearchService saveSearchService;
@@ -110,10 +110,11 @@ public class SaveSearchController {
 
 		List<SaveSearchedJobsDTO> saveSearchedJobsDTOList = saveSearchService
 				.viewMySavedSearches(userId, false);
-		/*int savedSearchCount = saveSearchedJobsDTOList.size();
-		if (savedSearchCount == Integer.parseInt(savedSearchsLimit)) {
-			saveSearchService.deleteFirstSearch(userId);
-		}*/
+		/*
+		 * int savedSearchCount = saveSearchedJobsDTOList.size(); if
+		 * (savedSearchCount == Integer.parseInt(savedSearchsLimit)) {
+		 * saveSearchService.deleteFirstSearch(userId); }
+		 */
 
 		JSONObject jsonObject = new JSONObject();
 		Map<String, String> sessionMap = checkSessionMap
@@ -121,7 +122,7 @@ public class SaveSearchController {
 
 		if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
 			jsonObject.put("NavigationPath", navigationPath);
-			
+
 		} else {
 			// int userId = (Integer) session
 			// .getAttribute(MMJBCommonConstants.USER_ID);
@@ -163,9 +164,10 @@ public class SaveSearchController {
 								.getAttribute("clearAllSearchId"));
 						saveSearchService.updateSearchName(id, searchName);
 					} else {
-						
+
 						int savedSearchCount = saveSearchedJobsDTOList.size();
-						if (savedSearchCount == Integer.parseInt(savedSearchsLimit)) {
+						if (savedSearchCount == Integer
+								.parseInt(savedSearchsLimit)) {
 							saveSearchService.deleteFirstSearch(userId);
 						}
 						saveSearchService.saveSearchedJobs(searchedJobsDTO);
@@ -176,11 +178,9 @@ public class SaveSearchController {
 						jsonObject.put(MMJBCommonConstants.RETAIN_SEARCH, true);
 					}
 					jsonObject.put(LOGGED_NAV_PATH, "");
-					jsonObject
-					.put("success","success");
+					jsonObject.put("success", "success");
 				}
-				
-				
+
 			}
 
 		}
@@ -203,7 +203,8 @@ public class SaveSearchController {
 	public @ResponseBody
 	JSONObject saveThisSearch(@Valid SaveSearchForm saveSearchForm,
 			Map<String, SaveSearchForm> model, HttpSession session,
-			@RequestParam("keywords") String keywords, HttpServletRequest request) {
+			@RequestParam("keywords") String keywords,
+			HttpServletRequest request) {
 
 		JSONObject jsonObject = new JSONObject();
 		try {
@@ -214,8 +215,8 @@ public class SaveSearchController {
 			// Check for job seeker login
 			if (session.getAttribute(MMJBCommonConstants.USER_ID) == null) {
 				model.put(SAVE_SEARCH_FORM, new SaveSearchForm());
-				jsonObject.put(LOGGED_NAV_PATH,
-						request.getContextPath()+"/savedSearches/anonymousSaveThisSearchPopUp");
+				jsonObject.put(LOGGED_NAV_PATH, request.getContextPath()
+						+ "/savedSearches/anonymousSaveThisSearchPopUp");
 			} else if ((sessionMap
 					.get(MMJBCommonConstants.PERFORM_SAVED_SEARCH) == null)
 					&& (sessionMap.get(MMJBCommonConstants.SEARCH_TYPE) != null
@@ -253,14 +254,14 @@ public class SaveSearchController {
 				session.removeAttribute(sessionMap
 						.remove(MMJBCommonConstants.SEARCH_TYPE));
 
-				jsonObject.put("NavigationPath",
-						request.getContextPath()+"/jobSeeker/jobSeekerDashBoard");
+				jsonObject.put("NavigationPath", request.getContextPath()
+						+ "/jobSeeker/jobSeekerDashBoard");
 
 			} else {
 				if (keywords != null && keywords != MMJBCommonConstants.EMPTY) {
 					model.put(SAVE_SEARCH_FORM, new SaveSearchForm());
-					jsonObject.put(LOGGED_NAV_PATH,
-							request.getContextPath()+"/savedSearches/displaySaveThisSearchPopup");
+					jsonObject.put(LOGGED_NAV_PATH, request.getContextPath()
+							+ "/savedSearches/displaySaveThisSearchPopup");
 				} else {
 					jsonObject.put("failure", saveThisSearchErrMsg);
 				}
@@ -284,7 +285,7 @@ public class SaveSearchController {
 	@RequestMapping(value = "/displaysavesearchpopup", method = RequestMethod.GET)
 	public @ResponseBody
 	JSONObject displaySaveSearchPopup(@Valid SaveSearchForm saveSearchForm,
-			Model model, HttpSession session,HttpServletRequest request,
+			Model model, HttpSession session, HttpServletRequest request,
 			@RequestParam("savesearchid") int saveSearchID) {
 
 		JSONObject jsonObject = new JSONObject();
@@ -292,10 +293,12 @@ public class SaveSearchController {
 			session.setAttribute("recentSearchId", saveSearchID);
 			saveSearchForm.setSaveSearchId(saveSearchID);
 			model.addAttribute(SAVE_SEARCH_FORM, saveSearchForm);
-			jsonObject.put("NavigationPath",
-					request.getContextPath()+"/savedSearches/displaySaveThisSearchPopup");
+			jsonObject.put("NavigationPath", request.getContextPath()
+					+ "/savedSearches/displaySaveThisSearchPopup");
 		} catch (Exception e) {
-			LOGGER.error("display the Save This SearchPopup on recent search page :", e);
+			LOGGER.error(
+					"display the Save This SearchPopup on recent search page :",
+					e);
 		}
 		return jsonObject;
 	}
@@ -311,12 +314,14 @@ public class SaveSearchController {
 	 */
 	@RequestMapping(value = "/saveRecentSearch", method = RequestMethod.GET)
 	public @ResponseBody
-	JSONObject saveRecentSearch(Model model, HttpSession session, HttpServletRequest request) {
+	JSONObject saveRecentSearch(Model model, HttpSession session,
+			HttpServletRequest request) {
 		JSONObject jsonObject = new JSONObject();
 		try {
-			int saveSearchId = Integer.parseInt(session.getAttribute("recentSearchId").toString());
+			int saveSearchId = Integer.parseInt(session.getAttribute(
+					"recentSearchId").toString());
 			String saveSearchName = request.getParameter("searchName");
-			
+
 			if (saveSearchName == MMJBCommonConstants.EMPTY) {
 				jsonObject.put("EmptySearchName", "EmptySearchName");
 				return jsonObject;
@@ -325,11 +330,10 @@ public class SaveSearchController {
 					saveSearchName, getUserID(session));
 
 			if (isSrchNameExist) {
-				jsonObject
-						.put("DuplicateSearchName", "DuplicateSearchName");
+				jsonObject.put("DuplicateSearchName", "DuplicateSearchName");
 				return jsonObject;
-				
-			} 
+
+			}
 			session.removeAttribute("recentSearchId");
 			// Before user saves his search need to check save search
 			// records are more than 5 searches.
@@ -346,8 +350,8 @@ public class SaveSearchController {
 
 			saveSearchService.saveRecentSearch(saveSearchId, saveSearchName);
 
-			jsonObject.put("NavigationPath",
-					request.getContextPath()+"/savedSearches/viewrecentsearches");
+			jsonObject.put("NavigationPath", request.getContextPath()
+					+ "/savedSearches/viewrecentsearches");
 		} catch (Exception e) {
 			LOGGER.error("Save this search ERROR", e);
 		}
@@ -559,7 +563,7 @@ public class SaveSearchController {
 	public ModelAndView retainSaveSearch(HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		session.setAttribute(MMJBCommonConstants.RETAIN_SEARCH, true);
-		model.setViewName("redirect:/commonLogin/login.html?page=jobSeeker");
+		model.setViewName("redirect:/commonlogin/login.html?page=jobSeeker");
 		return model;
 
 	}
@@ -600,7 +604,7 @@ public class SaveSearchController {
 
 		return userId;
 	}
-	
+
 	/**
 	 * The method helps to view all recent searches of user
 	 * 
@@ -609,21 +613,41 @@ public class SaveSearchController {
 	 * @return
 	 */
 	@RequestMapping(value = "/viewrecentsearches", method = RequestMethod.GET)
-	public ModelAndView viewRecentsearches(HttpSession session, HttpServletRequest request) {
+	public ModelAndView viewRecentsearches(HttpSession session,
+			HttpServletRequest request) {
 
 		ModelAndView modelAndView = new ModelAndView();
 		session.removeAttribute("recentSearchId");
 		// get the userId from session
 		int userId = getUserID(session);
-		if(userId > 0){
+		if (userId > 0) {
 			List<SaveSearchedJobsDTO> recentSearches = saveSearchService
 					.viewMySavedSearches(userId, true);
-			
+
 			session.setAttribute(RECENT_SRCH_LIST, recentSearches);
 		}
 		modelAndView.setViewName("myrecentsearchespopup");
 
 		return modelAndView;
+	}
+
+	/**
+	 * This method is used to remove the retainSaveSearch session values after
+	 * clicking the cancel button from save this search popup
+	 * 
+	 * @param request
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/deleteData", method = RequestMethod.GET)
+	public @ResponseBody
+	JSONObject deleteData(HttpServletRequest request, HttpSession session) {
+		JSONObject jsonObject = new JSONObject();
+		if (null != session.getAttribute(MMJBCommonConstants.RETAIN_SEARCH)) {
+			session.removeAttribute(MMJBCommonConstants.RETAIN_SEARCH);
+			jsonObject.put(MMJBCommonConstants.RETAIN_SEARCH, false);
+		}
+		return jsonObject;
 	}
 
 }

@@ -68,6 +68,8 @@ public class ManageJobSeekerForm {
 	/** The total record for comp. */
 	private int totalRecordForComp;
 
+	/** The resume viewed. */
+	private boolean resumeViewed;
 	/**
 	 * @return the noOfPage
 	 */
@@ -274,6 +276,20 @@ public class ManageJobSeekerForm {
 	 */
 	public void setTotalRecordForComp(int totalRecordForComp) {
 		this.totalRecordForComp = totalRecordForComp;
+	}
+
+	/**
+	 * @return the resumeViewed
+	 */
+	public boolean isResumeViewed() {
+		return resumeViewed;
+	}
+
+	/**
+	 * @param resumeViewed the resumeViewed to set
+	 */
+	public void setResumeViewed(boolean resumeViewed) {
+		this.resumeViewed = resumeViewed;
 	}
 
 	/**

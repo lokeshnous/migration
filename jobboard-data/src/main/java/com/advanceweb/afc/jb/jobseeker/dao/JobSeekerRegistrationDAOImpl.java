@@ -150,15 +150,15 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 				userRole.setRolePK(admUserRolePK);
 				hibernateTemplateCareers.saveOrUpdate(userRole);
 			}
-			UserDTO userDTO=registrationConversionHelper.transformMerUserToUserDTO(merUser,jsDTO.getMerUserDTO().isOldUser(),jsDTO.getMerUserDTO().isAdvPassUser());
+			UserDTO userDTO=registrationConversionHelper.transformMerUserToUserDTO(merUser,jsDTO.getMerUserDTO().isOldUser(),jsDTO.getMerUserDTO().isAdvPassUser(),jsDTO.getMerUserDTO().isAdvPassUserWithNullPass());
 			jsDTO.setMerUserDTO(userDTO);
-			if(!userDTO.isOldUser() && !userDTO.isAdvPassUser()){
+			if(!userDTO.isOldUser() && !userDTO.isAdvPassUser() && !userDTO.isAdvPassUserWithNullPass()){
 			saveAdvancePassDetails(jsDTO);
 			}
 			else{
 				updateAdvancePassDetails(jsDTO);
 			}
-			return registrationConversionHelper.transformMerUserToUserDTO(merUser,jsDTO.getMerUserDTO().isOldUser(),jsDTO.getMerUserDTO().isAdvPassUser());
+			return registrationConversionHelper.transformMerUserToUserDTO(merUser,jsDTO.getMerUserDTO().isOldUser(),jsDTO.getMerUserDTO().isAdvPassUser(),jsDTO.getMerUserDTO().isAdvPassUserWithNullPass());
 			
 		} catch (HibernateException e) {
 			LOGGER.error(e);
@@ -468,6 +468,11 @@ public class JobSeekerRegistrationDAOImpl implements JobSeekerRegistrationDAO {
 
 			// Update WebMembership
 			webMembership = webMembershipEmail.getWebMembership();
+			if(jsDTO.getMerUserDTO().isAdvPassUserWithNullPass()){
+				webMembership.setPassword(jsDTO.getMerUserDTO().getPassword());
+				webMembership.setEncryptPassword(null);
+				webMembership.setSalt(null);
+			}
 //			webMembership.setWebMembershipLevelID(2);
 
 			// Update WebMembershipInfo

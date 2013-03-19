@@ -89,7 +89,35 @@ public class ActiveJobsJobWorker implements JobWorker {
 	/** The user service. */
 	@Autowired
 	private UserService userService;
+	
+	/** The NetSuite package internal ID. */
+	@Value("${FEATURE_30}")
+	private String FEATURE_30;
 
+	/** The NetSuite package internal ID. */
+	@Value("${FEATURE_90}")
+	private String FEATURE_90;
+	
+	/** The NetSuite package internal ID. */
+	@Value("${FEATURE_180}")
+	private String FEATURE_180;
+	
+	/** The NetSuite package internal ID. */
+	@Value("${FEATURE_365}")
+	private String FEATURE_365;
+	
+	/** The NetSuite package internal ID. */
+	@Value("${XML_90}")
+	private String XML_90;
+	
+	/** The NetSuite package internal ID. */
+	@Value("${XML_180}")
+	private String XML_180;
+	
+	/** The NetSuite package internal ID. */
+	@Value("${XML_365}")
+	private String XML_365;
+	
 	/* (non-Javadoc)
 	 * @see com.advanceweb.afc.jb.common.schedulers.jobs.JobWorker#executeJob()
 	 */
@@ -124,18 +152,18 @@ public class ActiveJobsJobWorker implements JobWorker {
 			List<String> purchasedPackages = manageFeaturedEmployerProfile
 					.getNSCustomerPackages(nsCustomerID);
 			dto.setbFeatured(purchasedPackages
-					.contains(MMJBCommonConstants.FEATURE_30)
+					.contains(FEATURE_30)
 					|| purchasedPackages
-							.contains(MMJBCommonConstants.FEATURE_90)
+							.contains(FEATURE_90)
 					|| purchasedPackages
-							.contains(MMJBCommonConstants.FEATURE_180)
+							.contains(FEATURE_180)
 					|| purchasedPackages
-							.contains(MMJBCommonConstants.FEATURE_365));
+							.contains(FEATURE_365));
 			// Verify the employer is applicable for free posting or not
 			dto.setXmlStartEndDateEnabled(purchasedPackages
-					.contains(MMJBCommonConstants.XML_90)
-					|| purchasedPackages.contains(MMJBCommonConstants.XML_180)
-					|| purchasedPackages.contains(MMJBCommonConstants.XML_365));
+					.contains(XML_90)
+					|| purchasedPackages.contains(XML_180)
+					|| purchasedPackages.contains(XML_365));
 		}
 		//Executing the jobs
 		List<SchedulerDTO> schedulerDTOList = employerJobPostDAO.executeActiveJobWorker(jobsList);
@@ -222,64 +250,95 @@ public class ActiveJobsJobWorker implements JobWorker {
 		emailDTO.setFromAddress(advanceWebAddress);
 		emailDTO.setSubject(emailConfiguration.getProperty(
 				"employer.jobpost.expired.email.subject").trim());
-
+         LOGGER.info("Scheduler for Expired job Mail send Started");
 		for (SchedulerDTO schedulerDTO : schedulerDTOList) {
-			
-			FacilityDTO mainFacilityDTO = facilityService.getParentFacility(schedulerDTO.getFacilityId());
-//	        UserDTO mainuserDto = userService.getUserByUserId(mainFacilityDTO
-//					.getUserId());
-	        
-	        // check for job is posted by Job owner and send mail on interest
-	        if(schedulerDTO.getCreateUserId() !=  mainFacilityDTO.getUserId()){
-	        	List<UserAlertDTO> alertDTOs = alertService.viewAlerts(schedulerDTO
-						.getCreateUserId());
-	        	UserDTO mainuserDto = userService.getUserByUserId(schedulerDTO
-						.getCreateUserId());
-	        	InternetAddress[] jsToAddress = new InternetAddress[1];
-				try {
-					jsToAddress[0] = new InternetAddress(mainuserDto.getEmailId());
-				} catch (AddressException jbex) {
-					LOGGER.error(
-							"Error occured while geting InternetAddress reference",
-							jbex);
-				}
-				if (null != alertDTOs && alertDTOs.size() > 0) {
-					for (UserAlertDTO alertDTO : alertDTOs) {
-						if (alertDTO.getAlertId() > 0
-								&& alertDTO.getAlertId() == MMJBCommonConstants.YOUR_JOB_HAS_EXPIRED) {
-							expireJobSendMail(emailDTO, schedulerDTO, jsToAddress);
+			if (schedulerDTO.getFacilityId() > 0) {
+				FacilityDTO mainFacilityDTO = facilityService
+						.getParentFacility(schedulerDTO.getFacilityId());
+				// Get all associated user for the above facility id
+				List<FacilityDTO> admUserFacilities = facilityService
+						.getUserFacilityDetails(mainFacilityDTO.getFacilityId());
+				if (null != admUserFacilities && admUserFacilities.size() > 0) {
+					// iterate each associated user for the above facility id
+					// and
+					// send mail
+					for (FacilityDTO admUserFacility : admUserFacilities) {
+						// check for job is posted by Job owner and send mail
+						// to all associated users who are interested
+
+						List<UserAlertDTO> alertDTOs = alertService
+								.viewAlerts(admUserFacility.getUserId());
+						UserDTO mainuserDto = userService
+								.getUserByUserId(admUserFacility.getUserId());
+						InternetAddress[] jsToAddress = new InternetAddress[1];
+						try {
+							jsToAddress[0] = new InternetAddress(
+									mainuserDto.getEmailId());
+						} catch (AddressException jbex) {
+							LOGGER.error(
+									"Error occured while geting InternetAddress reference",
+									jbex);
+						}
+						if (null != alertDTOs && alertDTOs.size() > 0) {
+							for (UserAlertDTO alertDTO : alertDTOs) {
+								if (alertDTO.getAlertId() > 0
+										&& alertDTO.getAlertId() == MMJBCommonConstants.YOUR_JOB_HAS_EXPIRED) {
+									expireJobSendMail(emailDTO, schedulerDTO,
+											jsToAddress);
+								}
+							}
+						} else {
+							expireJobSendMail(emailDTO, schedulerDTO,
+									jsToAddress);
 						}
 					}
-				} else {
-					expireJobSendMail(emailDTO, schedulerDTO, jsToAddress);
 				}
-	        }
-	        // send mail to employer on interest
-			List<UserAlertDTO> alertDTOs = alertService
-					.viewAlerts(mainFacilityDTO.getUserId());
-			UserDTO mainuserDto = userService.getUserByUserId(mainFacilityDTO
-					.getUserId());
-			InternetAddress[] jsToAddress = new InternetAddress[1];
-			try {
-				jsToAddress[0] = new InternetAddress(mainuserDto.getEmailId());
-			} catch (AddressException jbex) {
-				LOGGER.error(
-						"Error occured while geting InternetAddress reference",
-						jbex);
-			}
-			if (null != alertDTOs && alertDTOs.size() > 0) {
-				for (UserAlertDTO alertDTO : alertDTOs) {
-					if (alertDTO.getAlertId() > 0
-							&& alertDTO.getAlertId() == MMJBCommonConstants.YOUR_JOB_HAS_EXPIRED) {
-						expireJobSendMail(emailDTO, schedulerDTO, jsToAddress);
+				// if Mail not sent to the main Facility (i.e. facility is a Job
+				// Owner),send mail to all associated users who are interested
+				if (!mainFacilityDTO.getFacilityId().equals(schedulerDTO
+						.getFacilityId()) && schedulerDTO.getFacilityId() > 0) {
+
+					FacilityDTO facilityDTO = facilityService
+							.getFacilityByFacilityId(schedulerDTO
+									.getFacilityId());
+					List<FacilityDTO> admUserFacilityList = facilityService
+							.getUserFacilityDetails(facilityDTO.getFacilityId());
+					if (null != admUserFacilityList
+							&& admUserFacilityList.size() > 0) {
+						for (FacilityDTO admUserFacility : admUserFacilityList) {
+
+							List<UserAlertDTO> alertDTOs = alertService
+									.viewAlerts(admUserFacility.getUserId());
+							UserDTO userDto = userService
+									.getUserByUserId(admUserFacility
+											.getUserId());
+							InternetAddress[] jsToAddress = new InternetAddress[1];
+							try {
+								jsToAddress[0] = new InternetAddress(
+										userDto.getEmailId());
+							} catch (AddressException jbex) {
+								LOGGER.error(
+										"Error occured while geting InternetAddress reference",
+										jbex);
+							}
+							if (null != alertDTOs && alertDTOs.size() > 0) {
+								for (UserAlertDTO alertDTO : alertDTOs) {
+									if (alertDTO.getAlertId() > 0
+											&& alertDTO.getAlertId() == MMJBCommonConstants.YOUR_JOB_HAS_EXPIRED) {
+										expireJobSendMail(emailDTO,
+												schedulerDTO, jsToAddress);
+									}
+								}
+							} else {
+								expireJobSendMail(emailDTO, schedulerDTO,
+										jsToAddress);
+							}
+						}
 					}
 				}
-			} else {
-				expireJobSendMail(emailDTO, schedulerDTO, jsToAddress);
+
 			}
 		}
-			
-		
 		return true;
 	}
 
@@ -340,6 +399,7 @@ public class ActiveJobsJobWorker implements JobWorker {
 
 		emailDTO.setBody(expireJobPost.toString());
 		emailDTO.setHtmlFormat(true);
+		LOGGER.debug("Expired job mail send to :" +emailDTO.getToAddress());
 		emailService.sendEmail(emailDTO);
 	}
 	

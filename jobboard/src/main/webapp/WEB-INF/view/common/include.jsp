@@ -1,4 +1,5 @@
 		<!-- STYLESHEETS -->
+<link rel='shortcut icon' href='<%=request.getContextPath() %>/resources/images/favicon.ico' type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/resources/css/JB.css" />
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/resources/css/JB_nav.css" />
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/resources/css/jquery.megamenu.css" />

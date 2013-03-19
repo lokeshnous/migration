@@ -166,6 +166,10 @@ public class JobPostDTO implements Serializable {
     
     /** The email id. */
     private String emailId;
+    
+	/** The Source ID. */
+	private int sourceId;
+	
    /* private String brandTemplateVal;
     private String autoRenewVal="No";*/
 	/**
@@ -1025,5 +1029,12 @@ public class JobPostDTO implements Serializable {
 		this.encodedJobTitle = encodedJobTitle;
 	}
 
+	public int getSourceId() {
+		return sourceId;
+	}
+
+	public void setSourceId(int sourceId) {
+		this.sourceId = sourceId;
+	}
 		
 }

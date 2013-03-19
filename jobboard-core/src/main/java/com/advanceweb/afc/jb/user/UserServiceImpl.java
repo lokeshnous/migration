@@ -129,6 +129,14 @@ public class UserServiceImpl implements UserService{
 	}
 
 	/* (non-Javadoc)
+	 * @see com.advanceweb.afc.jb.user.UserService#checkUserMail(java.lang.String)
+	 */
+	@Override
+	public boolean checkAdvUserPassword(String email) {
+		return userDAO.checkAdvUserPassword(email);
+	}
+	
+	/* (non-Javadoc)
 	 * @see com.advanceweb.afc.jb.user.UserService#getAdminInfo(java.lang.String)
 	 */
 	@Override

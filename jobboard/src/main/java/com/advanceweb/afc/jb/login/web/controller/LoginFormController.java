@@ -60,7 +60,7 @@ import com.advanceweb.common.client.ClientContext;
  */
 
 @Controller
-@RequestMapping(value = "/commonLogin")
+@RequestMapping(value = "/commonlogin")
 @SessionAttributes("loginForm")
 public class LoginFormController extends AbstractController{
 
@@ -390,13 +390,13 @@ public class LoginFormController extends AbstractController{
 		}
 		else{
 			if(page!=null && page.equals("jobSeeker")){
-				return redirect(URIBuilder.fromUri("/commonLogin/login.html").queryParam("page", "jobSeeker").build().toString());
+				return redirect(URIBuilder.fromUri("/commonlogin/login.html").queryParam("page", "jobSeeker").build().toString());
 			}
 			else if(page!=null && page.equals("employer")){
-				return redirect(URIBuilder.fromUri("/commonLogin/login.html").queryParam("page", "employer").build().toString());
+				return redirect(URIBuilder.fromUri("/commonlogin/login.html").queryParam("page", "employer").build().toString());
 			}
 			else if(page!=null && page.equals("agency")){
-				return redirect(URIBuilder.fromUri("/commonLogin/login.html").queryParam("page", "agency").build().toString());
+				return redirect(URIBuilder.fromUri("/commonlogin/login.html").queryParam("page", "agency").build().toString());
 			}
 			else{
 			return redirect(URIBuilder.fromUri("/healthcare/index.html").build().toString());

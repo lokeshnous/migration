@@ -429,6 +429,10 @@ public class AgencyRegistrationConversionHelper {
 			}
 			
 		}
+		if(dto.getMerUserDTO().isAdvPassUserWithNullPass())
+		{
+			aPDto.setPassword(dto.getMerUserDTO().getPassword());
+		}
 		return aPDto;
 	}
 

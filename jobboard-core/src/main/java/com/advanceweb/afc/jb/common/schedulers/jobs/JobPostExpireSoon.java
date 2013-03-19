@@ -83,77 +83,85 @@ public class JobPostExpireSoon implements JobWorker{
 		emailDTO.setSubject(emailConfiguration.getProperty("employer.jobpost.expiresoon.email.subject").trim());
 		
 		for (SchedulerDTO schedulerDTO : schedulerDTOList) {
-			
-			FacilityDTO mainFacilityDTO = facilityService.getParentFacility(schedulerDTO.getFacilityId());
-//	        UserDTO mainuserDto = userService.getUserByUserId(mainFacilityDTO
-//					.getUserId());
-	        
-	        // check for job is posted by Job owner and send mail on interest
-			 if(schedulerDTO.getCreateUserId() !=  mainFacilityDTO.getUserId()){
-	        	List<UserAlertDTO> alertDTOs = alertService.viewAlerts(schedulerDTO
-						.getCreateUserId());
-	        	UserDTO mainuserDto = userService.getUserByUserId(schedulerDTO
-						.getCreateUserId());
-	        	InternetAddress[] toAddress = new InternetAddress[1];
-				try {
-					toAddress[0] = new InternetAddress(mainuserDto.getEmailId());
-				} catch (AddressException jbex) {
-					LOGGER.error(
-							"Error occured while geting InternetAddress reference",
-							jbex);
-				}
-				if (null != alertDTOs && alertDTOs.size() > 0) {
-					for (UserAlertDTO alertDTO : alertDTOs) {
-						if (alertDTO.getAlertId() > 0
-								&& alertDTO.getAlertId() == MMJBCommonConstants.JOB_POSTING_EXPIRING_SOON) {
-							sendExpiringSoonMail(emailDTO, toAddress, schedulerDTO);
+			if (schedulerDTO.getFacilityId() > 0) {
+				FacilityDTO mainFacilityDTO = facilityService
+						.getParentFacility(schedulerDTO.getFacilityId());
+				FacilityDTO facilityDTO = facilityService
+						.getFacilityByFacilityId(schedulerDTO.getFacilityId());
+				List<FacilityDTO> admUserFacilities = facilityService
+						.getUserFacilityDetails(mainFacilityDTO.getFacilityId());
+				if (null != admUserFacilities && admUserFacilities.size() > 0) {
+					for (FacilityDTO admUserFacility : admUserFacilities) {
+						// check for job is posted by Job owner and send mail on
+						// interest
+
+						List<UserAlertDTO> alertDTOs = alertService
+								.viewAlerts(admUserFacility.getUserId());
+						UserDTO mainuserDto = userService
+								.getUserByUserId(admUserFacility.getUserId());
+						InternetAddress[] jsToAddress = new InternetAddress[1];
+						try {
+							jsToAddress[0] = new InternetAddress(
+									mainuserDto.getEmailId());
+						} catch (AddressException jbex) {
+							LOGGER.error(
+									"Error occured while geting InternetAddress reference",
+									jbex);
+						}
+						if (null != alertDTOs && alertDTOs.size() > 0) {
+							for (UserAlertDTO alertDTO : alertDTOs) {
+								if (alertDTO.getAlertId() > 0
+										&& alertDTO.getAlertId() == MMJBCommonConstants.JOB_POSTING_EXPIRING_SOON) {
+									sendExpiringSoonMail(emailDTO, jsToAddress,
+											schedulerDTO);
+								}
+							}
+						} else {
+							sendExpiringSoonMail(emailDTO, jsToAddress,
+									schedulerDTO);
 						}
 					}
-				} else {
-					sendExpiringSoonMail(emailDTO, toAddress, schedulerDTO);
 				}
-	        }
-	        // send mail to employer on interest
-			List<UserAlertDTO> alertDTOs = alertService
-					.viewAlerts(mainFacilityDTO.getUserId());
-			UserDTO mainuserDto = userService.getUserByUserId(mainFacilityDTO
-					.getUserId());
-			InternetAddress[] toAddress = new InternetAddress[1];
-			try {
-				toAddress[0] = new InternetAddress(mainuserDto.getEmailId());
-			} catch (AddressException jbex) {
-				LOGGER.error(
-						"Error occured while geting InternetAddress reference",
-						jbex);
-			}
-			if (null != alertDTOs && alertDTOs.size() > 0) {
-				for (UserAlertDTO alertDTO : alertDTOs) {
-					if (alertDTO.getAlertId() > 0
-							&& alertDTO.getAlertId() == MMJBCommonConstants.JOB_POSTING_EXPIRING_SOON) {
-						sendExpiringSoonMail(emailDTO, toAddress, schedulerDTO);
+				// if Mail not sent to the main Facility,send mail on interest
+				if (!mainFacilityDTO.getFacilityId().equals(facilityDTO
+						.getFacilityId()) && schedulerDTO.getFacilityId() > 0) {
+					List<FacilityDTO> admUserFacilityList = facilityService
+							.getUserFacilityDetails(facilityDTO.getFacilityId());
+					if (null != admUserFacilityList
+							&& admUserFacilityList.size() > 0) {
+						for (FacilityDTO admUserFacility : admUserFacilityList) {
+
+							List<UserAlertDTO> alertDTOs = alertService
+									.viewAlerts(admUserFacility.getUserId());
+							UserDTO userDto = userService
+									.getUserByUserId(admUserFacility
+											.getUserId());
+							InternetAddress[] jsToAddress = new InternetAddress[1];
+							try {
+								jsToAddress[0] = new InternetAddress(
+										userDto.getEmailId());
+							} catch (AddressException jbex) {
+								LOGGER.error(
+										"Error occured while geting InternetAddress reference",
+										jbex);
+							}
+							if (null != alertDTOs && alertDTOs.size() > 0) {
+								for (UserAlertDTO alertDTO : alertDTOs) {
+									if (alertDTO.getAlertId() > 0
+											&& alertDTO.getAlertId() == MMJBCommonConstants.JOB_POSTING_EXPIRING_SOON) {
+										sendExpiringSoonMail(emailDTO,
+												jsToAddress, schedulerDTO);
+									}
+								}
+							} else {
+								sendExpiringSoonMail(emailDTO, jsToAddress,
+										schedulerDTO);
+							}
+						}
 					}
 				}
-			} else {
-				sendExpiringSoonMail(emailDTO, toAddress, schedulerDTO);
+
 			}
-		
-			/*// if employer / agency has set alert starts
-			List<UserAlertDTO> alertDTOs = alertService.viewAlerts(schedulerDTO
-					.getUserId());
-			if (null != alertDTOs && alertDTOs.size() > 0) {
-				for (UserAlertDTO alertDTO : alertDTOs) {
-					if (alertDTO.getAlertId() > 0
-							&& alertDTO.getAlertId() == MMJBCommonConstants.JOB_POSTING_EXPIRING_SOON) {
-						sendExpiringSoonMail(emailDTO, jsToAddress,
-								schedulerDTO);
-					}
-
-				} // if employer / agency has set alert ends
-
-			} else {// if employer / agency has not set any alert(Default)
-				sendExpiringSoonMail(emailDTO, jsToAddress, schedulerDTO);
-			}*/
-			LOGGER.info("Scheduler : Job Expires Soon Scheduler completed .......");
 		}
 	}
 
@@ -170,13 +178,6 @@ public class JobPostExpireSoon implements JobWorker{
 		StringBuffer mailBody;
 		int start;
 		int end;
-//		try {
-//			jsToAddress[0] = new InternetAddress(schedulerDTO.getEmailId());
-//			// TODO: remove the hard code values
-//			//jsToAddress[0] = new InternetAddress("pramod1356@gmail.com");
-//		} catch (AddressException jbex) {
-//			LOGGER.error("Error occured while geting InternetAddress reference",jbex);
-//		}
 		emailDTO.setToAddress(jsToAddress);
 		
 		jobPostExpiresSoon  = new StringBuffer();
@@ -241,6 +242,7 @@ public class JobPostExpireSoon implements JobWorker{
 		
 		emailDTO.setBody(jobPostExpiresSoon.toString());
 		emailDTO.setHtmlFormat(true);
+		LOGGER.debug("Expiring soon job mail send to :" +emailDTO.getToAddress());
 		emailService.sendEmail(emailDTO);
 	}
 

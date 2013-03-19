@@ -302,13 +302,12 @@ public class AgencyDashBoardController extends AbstractController {
 			BindingResult result, HttpSession session,HttpServletRequest request) {
 		boolean isUpdated = false;
 		try {
-			if (employeeAccountForm.isAdminLogin()) {
-				if (facilityService.getUser(employeeAccountForm.getEmail()) != null
-						|| userService.getAdvancePassUser(employeeAccountForm
-								.getEmail()) != null) {
-					return emailInUse;
-				}
-			}
+			if (employeeAccountForm.isAdminLogin() && !employeeAccountForm.getEmail().equals(employeeAccountForm.getOriginalEmail())) {
+                UserDTO userDto=facilityService.getUser(employeeAccountForm.getEmail());
+                if(userDto!=null || userService.getAdvancePassUser(employeeAccountForm.getEmail())!=null ){
+                       return emailInUse;
+                }
+          }
 			int userId = (Integer) session.getAttribute("userId");
 			AdmFacilityContactDTO listProfAttribForms = empRegService
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.PRIMARY);
@@ -564,6 +563,7 @@ public class AgencyDashBoardController extends AbstractController {
 			employeeAccountForm.setState(listProfAttribForms.getState());
 			employeeAccountForm.setCountry(listProfAttribForms.getCountry());
 			employeeAccountForm.setEmail(listProfAttribForms.getEmail());
+			employeeAccountForm.setOriginalEmail(listProfAttribForms.getEmail());
 			employeeAccountForm.setZipCode(listProfAttribForms.getZipCode());
 			employeeAccountForm.setPhone(listProfAttribForms.getPhone());
 

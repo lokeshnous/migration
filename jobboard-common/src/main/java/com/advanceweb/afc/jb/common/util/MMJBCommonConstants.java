@@ -26,7 +26,9 @@ public interface MMJBCommonConstants {
 	String MOBILE_PATTERN = "\\(\\d{3}\\)\\s\\d{3}-\\d{4}";
 	
 	/** The email pattern. */
-	String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	//String EMAIL_PATTERN = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+	String EMAIL_PATTERN = "^[!#\\$%&''\\*\\+\\-/=\\?\\^_\\{\\|}~0-9a-zA-Z][!#\\$%&''\\*\\+\\-/=\\?\\^_\\{\\|}~0-9a-zA-Z\\.]+@[\\-a-zA-Z0-9]+(\\.?[\\-a-zA-Z0-9]+)+$";
 	
 	/** The mmddyyyy pattern. */
 	String MMDDYYYY_PATTERN = "^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d$";
@@ -544,6 +546,9 @@ public interface MMJBCommonConstants {
 	/** The role advance pass user. */
 	String ROLE_ADVANCE_PASS_USER = "ROLE_ADVANCE_PASS_USER";
 	
+	/** The role advance pass user. */
+	String ROLE_ANONYMOUS_USER = "ROLE_ANONYMOUS";
+	
 	/** The role merion admin. */
 	String ROLE_MERION_ADMIN = "ROLE_MERION_ADMIN";
 	
@@ -692,95 +697,6 @@ public interface MMJBCommonConstants {
 	/** The package silver. */
 	String PACKAGE_SILVER = "silver";
 
-	// For offline purchased packages in Sandbox (test)
-//	String GOLD_90 = "4809";
-//	String GOLD_180 = "4864";
-//	String GOLD_365 = "4808";
-//	String PLATINUM_90 = "4811";
-//	String PLATINUM_180 = "4865";
-//	String PLATINUM_365 = "4810";
-//	String SILVER_90 = "4813";
-//	String SILVER_180 = "4866";
-//	String SILVER_365 = "4812";
-//	String FEATURE_30 = "4867";
-//	String FEATURE_90 = "4868";
-//	String FEATURE_180 = "4870";
-//	String FEATURE_365 = "4869";
-//	String SCRAPE_90 = "947";
-//	String SCRAPE_180 = "913";
-//	String SCRAPE_365 = "4871";
-//	String XML_90 = "4872";
-//	String XML_180 = "963";
-//	String XML_365 = "976";
-
-	// For production NetSuite purchased packages
-	/** The GOL d_90. */
-	String GOLD_90 = "2919";
-	
-	/** The GOL d_180. */
-	String GOLD_180 = "2929";
-	
-	/** The GOL d_365. */
-	String GOLD_365 = "2920";
-	
-	/** The PLATINU m_90. */
-	String PLATINUM_90 = "2917";
-	
-	/** The PLATINU m_180. */
-	String PLATINUM_180 = "2928";
-	
-	/** The PLATINU m_365. */
-	String PLATINUM_365 = "2918";
-	
-	/** The SILVE r_90. */
-	String SILVER_90 = "2922";
-	
-	/** The SILVE r_180. */
-	String SILVER_180 = "2927";
-	
-	/** The SILVE r_365. */
-	String SILVER_365 = "2921";
-	
-	/** The FEATUR e_30. */
-	String FEATURE_30 = "2930";
-	
-	/** The FEATUR e_90. */
-	String FEATURE_90 = "2931";
-	
-	/** The FEATUR e_180. */
-	String FEATURE_180 = "2932";
-	
-	/** The FEATUR e_365. */
-	String FEATURE_365 = "2933";
-	
-	/** The SCRAP e_90. */
-	String SCRAPE_90 = "945";
-	
-	/** The SCRAP e_180. */
-	String SCRAPE_180 = "913";
-	
-	/** The SCRAP e_365. */
-	String SCRAPE_365 = "929";
-	
-	/** The XM l_90. */
-	String XML_90 = "991";
-	
-	/** The XM l_180. */
-	String XML_180 = "959";
-	
-	/** The XM l_365. */
-	String XML_365 = "975";
-	
-	// Net suite promotion codes	
-	/** The PROMOCOD e_15 advoff. */
-	String PROMOCODE_15ADVOFF = "15ADVoff";
-	
-	/** The ns discount item id. */
-	String NS_DISCOUNT_ITEM_ID="2934";
-	//	For Sandbox (Test)
-//	String NS_DISCOUNT_ITEM_ID="5724";
-	
-	
 	// for Branding template
 	/** The image type jpg. */
 	String IMAGE_TYPE_JPG = ".jpg";
@@ -810,10 +726,10 @@ public interface MMJBCommonConstants {
 	String VIDEO = "Video";
 	
 	/** The kilo byte. */
-	int KILO_BYTE = 1000;
+	int KILO_BYTE = 1024;
 	
 	/** The mega byte. */
-	int MEGA_BYTE = 1000000;
+	int MEGA_BYTE = 1048576;
 
 	// Media file format-Manage Featured Employer Profile
 	/** The video type mov. */
@@ -1411,5 +1327,8 @@ public interface MMJBCommonConstants {
 	
 	/** The no active postings on advance. */
 	int NO_ACTIVE_POSTINGS_ON_ADVANCE =7;
+	
+	/** The source_id of job with value 1 */
+	int SOURCE_ID_ONE = 1;
 	
 }

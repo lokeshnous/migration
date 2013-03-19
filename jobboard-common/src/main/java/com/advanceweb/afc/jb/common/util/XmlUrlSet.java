@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  */
 @XmlAccessorType(value = XmlAccessType.NONE)
-@XmlRootElement(name = "urlset", namespace = "http://www.sitemaps.org/schemas/sitemap/0.9")
+@XmlRootElement(name = "urlset")
 public class XmlUrlSet {
 
     @XmlElements({@XmlElement(name = "url", type = XmlUrl.class)})

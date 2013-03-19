@@ -102,6 +102,29 @@ function closePopup() {
 				}
 			});
 		});
+		
+		$("#deleteData").click(function(event){							
+			$.ajax({url: "${pageContext.request.contextPath}/savedSearches/deleteData.html",
+				success: function(data){ 
+					$.each(data, function(key, val) {
+						if (key == "NavigationPath") {
+							$.nmManual(val + '.html');
+							parent.$.nmTop().close();
+						}
+						
+						if (key == "LoggedInNavigationPath") {
+							parent.$.nmTop().close();
+						}
+					}); 
+				},				
+				error: function(response) {
+					//alert("Server Error : "+response.status);
+				},
+				complete: function() {
+					
+				}
+			});
+		});
 	});
 	function MM_jumpMenu(targ, selObj, restore) { //v3.0
 		eval(targ + ".location='" + selObj.options[selObj.selectedIndex].value
@@ -138,7 +161,7 @@ function closePopup() {
 				</c:when>					
 				<c:otherwise>
 				<input type="button" id="saveData" class="orange cursor" value="Save"/>
-				<input type="button" class="nyroModalClose orange cursor" value="Cancel"/>
+				<input type="button" id="deleteData" class="nyroModalClose orange cursor" value="Cancel"/>
 				</c:otherwise>
 				</c:choose>
 				</div>

@@ -211,8 +211,12 @@ public class EmployerRegistrationValidation {
 		EmployerRegistrationForm registerForm = (EmployerRegistrationForm) target;
 
 		validateEmail(registerForm, errors);
+		if (((!registerForm.isOldUser() && registerForm.isAdvPassUser())
+				&& (registerForm.isOldUser() && !registerForm.isAdvPassUser()))
+				||(!registerForm.isOldUser() && !registerForm.isAdvPassUser())) {
 		validatePassoword(registerForm.getPassword(),
 				registerForm.getConfirmPassword(), errors);
+		}
 	}
 	
 	

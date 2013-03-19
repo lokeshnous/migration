@@ -72,14 +72,14 @@ public class EmployerDelegateImpl implements EmployerDelegate {
 
 			LOGGER.debug("CustomerID from JSON for Employer===>"
 					+ userDTO.getNsCustomerID());
-			if (userDTO.getNsStatus() != null && userDTO.getNsStatus().equalsIgnoreCase("record already exist")) {
-				LOGGER.debug("User Already Exist. Please login to continue.");
-			} else {
+//			if (userDTO.getNsStatus() != null && userDTO.getNsStatus().equalsIgnoreCase("record already exist")) {
+//				LOGGER.debug("User Already Exist. Please login to continue.");
+//			} else {
 				empProfileDTO.getMerUserDTO().setNsCustomerID(
 						userDTO.getNsCustomerID());
 
 				userDTO = employerRegistrationDAO.createUser(empProfileDTO);
-			}
+//			}
 
 		} catch (JobBoardNetSuiteServiceException e) {
 			throw new JobBoardServiceException(

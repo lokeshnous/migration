@@ -817,7 +817,9 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 			List<MerUserProfile> userProfiles = hibernateTemplateTracker
 					.find("from MerUserProfile m where m.profilePK.userId=? and m.merProfileAttrib.profileAttribId = 13",
 							userId);
-			profile = userProfiles.get(0);
+			if(null != userProfiles && !userProfiles.isEmpty()){
+				profile = userProfiles.get(0);
+			}
 			int profileAttribId = 0;
 			try {
 				profileAttribId = Integer.parseInt(profile.getAttribValue());
@@ -880,7 +882,9 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 			List<MerUserProfile> userProfiles = hibernateTemplateTracker
 					.find("from MerUserProfile m where m.profilePK.userId=? and m.merProfileAttrib.profileAttribId = 13",
 							userId);
-			profile = userProfiles.get(0);
+			if (null != userProfiles && !userProfiles.isEmpty()) {
+				profile = userProfiles.get(0);
+			}
 			int profileAttribId = 0;
 			try {
 				profileAttribId = Integer.parseInt(profile.getAttribValue());
@@ -942,7 +946,9 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 			List<MerUserProfile> userProfiles = hibernateTemplateTracker
 					.find("from MerUserProfile m where m.profilePK.userId=? and m.merProfileAttrib.profileAttribId = 13",
 							userId);
-			profile = userProfiles.get(0);
+			if (null != userProfiles && !userProfiles.isEmpty()) {
+				profile = userProfiles.get(0);
+			}
 			int profileAttribId = 0;
 			try {
 				profileAttribId = Integer.parseInt(profile.getAttribValue());
@@ -986,7 +992,11 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 	}
 
 	/**
-	 * This method is get the E-mailer publications for user based on
+	 * This method is to get the E-mailer publications for user based on his
+	 * profession
+	 * 
+	 * @param userId
+	 * @return DropDownDTo
 	 */
 	@Override
 	public List<DropDownDTO> getSubscriptionsEmailer(int userId) {
@@ -999,7 +1009,9 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 			List<MerUserProfile> userProfiles = hibernateTemplateTracker
 					.find("from MerUserProfile m where m.profilePK.userId=? and m.merProfileAttrib.profileAttribId = 13",
 							userId);
-			profile = userProfiles.get(0);
+			if (null != userProfiles && !userProfiles.isEmpty()) {
+				profile = userProfiles.get(0);
+			}
 			int profileAttribId = 0;
 			try {
 				profileAttribId = Integer.parseInt(profile.getAttribValue());
@@ -1007,6 +1019,8 @@ public class UserSubscriptionsDAOImpl implements UserSubscriptionsDAO {
 				LOGGER.error("Error while getting magazines from DB" + e);
 			}
 
+			// If selected professions are other than Others then
+			// profileAttribId will be greater than 0
 			if (profileAttribId != 0) {
 				List<MerProfileAttribList> attribLists = hibernateTemplateTracker
 						.find("from MerProfileAttribList e where e.profileAttribListId=?",

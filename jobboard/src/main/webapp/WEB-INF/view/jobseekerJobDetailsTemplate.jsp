@@ -447,7 +447,7 @@
                 </div>
                         
                 <div class="row marginTop20">
-                          <h3 class="TextColorA01 FontSize18">Name of Facility</h3>
+                          <h3 class="TextColorA01 FontSize18">${jobDetail.companyNameDisp}</h3>
                   <c:if test="${jobDetail.hideCity == 0}" >        
                   <div class="row marginTop5">
                     <h1 class="FloatLeft FontSize12 HeadText marginRight5" style="color: ${jobDetail.getColor().substring(4)}"><strong>CITY :</strong></h1>
@@ -519,15 +519,15 @@
                   
                  </div>
                  
-                 <c:if test="${jobDetail.getPackageId()==3}">
+                 <c:if test="${jobDetail.getPackageId()==3 and not empty jobDTOList}">
                  <div class="row">
                  <div class="ContantLeftBlueBox " style="background: ${jobDetail.getColor().substring(4)} ">
                     <div class="BlueBoxCont TextColor02">
                               <h1 class="FontSize18">More Job Opportunities <br />
                         From This Employer </h1>
                             </div>
-                    <c:forEach items="${jobDTOList}" var="jobDTO">   
-	                    <div class="BlueBoxCont"><a href="#" class="TextColorA02Link" onclick="viewJobDetails(${jobDTO.jobId},'${jobDTO.encodedJobTitle}')">
+                    <c:forEach items="${jobDTOList}" var="jobDTO">
+	                    <div class="BlueBoxCont"><a class="cursor TextColorA02Link" onclick="viewJobDetails(${jobDTO.jobId},'${jobDTO.jobTitleEncode}')">
 	                      <h3 class="TextColor02">${jobDTO.jobTitle}</h3>
 	                      </a></div>
                     </c:forEach> 
@@ -639,7 +639,11 @@
 		                <!-- <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p> -->
 		                <div id="descriptionText" class="article">${jobDetail.adText}</div>
 		                <br />
-		                <img src="${jobDetail.trackingPixel}" />
+		                <div>
+							<c:if test="${jobDetail.trackingPixel != ''}">
+								<img src="${jobDetail.trackingPixel}" />
+							</c:if>
+						</div>
 	               		</div>
                 	</div>
                 

@@ -183,6 +183,13 @@ public class AdminDAOImpl implements AdminDAO {
 	public boolean impersonateUser(AdminDTO adminDTO) {
 		boolean status = true;
 		try {
+			List<AdmFacility> admList = hibernateTemplateCareers.find(
+					VALIDATE_ADM_USERID, adminDTO.getAdminUserId());
+			
+			for(AdmFacility facility:admList){
+				facility.setAdminUserId(0);
+				hibernateTemplateCareers.update(facility);
+			}
 			List<MerUser> usersList1 = hibernateTemplateTracker.find(GET_EMAIL,
 					adminDTO.getEmpOrAgencyEmail());
 			AdmFacility admfacility = null;
@@ -194,14 +201,14 @@ public class AdminDAOImpl implements AdminDAO {
 					admfacility = facilityList.get(0).getAdmFacility();
 				}
 			}
-			List<AdmFacility> admList = hibernateTemplateCareers.find(
-					VALIDATE_ADM_USERID, adminDTO.getAdminUserId());
+			
 			admfacility.setAdminUserId(adminDTO.getAdminUserId());
-			if (!admList.isEmpty()) {
-				AdmFacility fac = admList.get(0);
-				fac.setAdminUserId(0);
-				hibernateTemplateCareers.update(fac);
-			}
+//			if (!admList.isEmpty()) {
+//				AdmFacility fac = admList.get(0);
+//				fac.setAdminUserId(0);
+//				hibernateTemplateCareers.update(fac);
+//			}
+			
 			hibernateTemplateCareers.saveOrUpdate(admfacility);
 
 		} catch (Exception e) {

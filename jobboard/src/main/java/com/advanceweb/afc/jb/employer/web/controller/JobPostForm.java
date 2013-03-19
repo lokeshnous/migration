@@ -157,7 +157,9 @@ public class JobPostForm {
     /** The view page. */
     private boolean viewPage = false;
     
-    
+    /** The Source ID. */
+	private int sourceId;
+	
 	/**
 	 * Checks if is admin login.
 	 *
@@ -955,6 +957,12 @@ public class JobPostForm {
 		this.viewPage = viewPage;
 	}
 
-	
+	public int getSourceId() {
+		return sourceId;
+	}
+
+	public void setSourceId(int sourceId) {
+		this.sourceId = sourceId;
+	}
 
 }

@@ -31,10 +31,7 @@ tinyMCE.init({
 	theme_advanced_buttons3 : "",
 	theme_advanced_toolbar_location : "top",
 	theme_advanced_toolbar_align : "left",	
-	max_chars : 5000,
-	max_chars_indicator : "characterCounter",
-	/*plugins : 'inlinepopups',*/
-	plugins : "autolink,advlink,maxchars",
+	plugins : "autolink,advlink",
 	content_css : "css/mycontent.css"
 });
 
@@ -406,10 +403,7 @@ function appendURLForATS(){
 							$('#stateDpId').val("");
 							$('#countryDpId').val("");
 						});
-						
-						//Need to set default country as USA
-						$('#countryDpId').val("USA");
-						
+												
 						if ($("#readOnly").val() == 'true') {
 							$('#postNewJobFormId').each(
 									function() {
@@ -429,7 +423,10 @@ function appendURLForATS(){
 				            
 				            /* showing job post type tooltip */
 							$("#postTypeToolTip").attr("title",$("#postTypeId :selected").text());
-
+							$("#countryDpId:selected").text();
+						}else{
+							//Need to set default country as USA
+							$("#countryDpId").val("USA");
 						}
 						
 						if ($("#activeOrInactive").val() == 'true') {
@@ -586,7 +583,7 @@ function appendURLForATS(){
 	
 			function cancelProcess() {
 				if ($("#jobId").val() > 0) {
-					window.location.href = '${pageContext.request.contextPath}/employer/manageJobPost.html';
+					window.location.href = '${pageContext.request.contextPath}/employer/managejobpost.html';
 				}else{
 				window.location.href = '${pageContext.request.contextPath}/employer/employerDashBoard.html';
 				}
@@ -640,6 +637,7 @@ function appendURLForATS(){
 				<form:hidden path="enableJobTitle" />
 				<form:hidden path="jobStatus" />
 				<form:hidden path="adminLogin" />
+				<form:hidden path="sourceId" />
 				<div class="main">
 					<jsp:include page="../templates/templates_header.jsp"></jsp:include>
 					<div class="clearfix"></div>
@@ -653,7 +651,7 @@ function appendURLForATS(){
 							<h2>VIEW JOB</h2>
 							</c:if>
 							<span class="floatRight marginRight10"><a
-								href="<%=request.getContextPath()%>/employer/manageJobPost.html"
+								href="<%=request.getContextPath()%>/employer/managejobpost.html"
 								class="link_color3_emphasized FontSize12 FontWeight">Back to
 									Manage / Edit Job Postings</a></span>
 						</div>

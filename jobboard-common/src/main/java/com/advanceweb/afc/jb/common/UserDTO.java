@@ -140,9 +140,20 @@ public class UserDTO implements Serializable{
 	/** The adv pass user. */
 	private boolean advPassUser;
 	
+	/** The adv pass user. */
+	private boolean advPassUserWithNullPass;
+	
 	/** The discount item. */
 	private String discountItem;
 	
+	/** The facility id. */
+	private int facilityId;
+	
+	/** The facility parent id. */
+	private int facilityParentId;
+	
+	/** The facility parent id. */
+	private Date facilityCreateDate;
 	
 	/**
 	 * Checks if is adv pass user.
@@ -893,4 +904,37 @@ public class UserDTO implements Serializable{
 	public void setDiscountItem(String discountItem) {
 		this.discountItem = discountItem;
 	}
+
+	public int getFacilityId() {
+		return facilityId;
+	}
+
+	public void setFacilityId(int facilityId) {
+		this.facilityId = facilityId;
+	}
+
+	public int getFacilityParentId() {
+		return facilityParentId;
+	}
+
+	public void setFacilityParentId(int facilityParentId) {
+		this.facilityParentId = facilityParentId;
+	}
+
+	public Date getFacilityCreateDate() {
+		return facilityCreateDate;
+	}
+
+	public void setFacilityCreateDate(Date facilityCreateDate) {
+		this.facilityCreateDate = facilityCreateDate;
+	}
+
+	public boolean isAdvPassUserWithNullPass() {
+		return advPassUserWithNullPass;
+	}
+
+	public void setAdvPassUserWithNullPass(boolean advPassUserWithNullPass) {
+		this.advPassUserWithNullPass = advPassUserWithNullPass;
+	}
+	
 }

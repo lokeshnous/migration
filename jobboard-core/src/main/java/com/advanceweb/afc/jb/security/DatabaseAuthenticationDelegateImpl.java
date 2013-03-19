@@ -44,7 +44,7 @@ public class DatabaseAuthenticationDelegateImpl implements
 		String cookieValue=null;
 		boolean returnValue=false;
 		try {
-		connection = getConnection(email, URLEncoder.encode(password,"UTF-8"));
+		connection = getConnection(email, password);
 		} catch (Exception e) {
 			LOGGER.debug("Exception while creating the URLConnection for authentication"+e.getMessage());
 		}
@@ -85,7 +85,7 @@ public class DatabaseAuthenticationDelegateImpl implements
 			throws IOException, MalformedURLException {
 		URLConnection connection=null;
 		try {
-			URL url = new URL(advancepassUrl+"?EmailAddress="+ email + "&password=" + password);
+			URL url = new URL(advancepassUrl+"?EmailAddress="+ email + "&password=" + URLEncoder.encode(password,"UTF-8"));
 //			connection = new URL(
 //					" https://securedev.advanceweb.com/AuthenticateUser.aspx?EmailAddress="
 //							+ email + "&password=" + password).openConnection();

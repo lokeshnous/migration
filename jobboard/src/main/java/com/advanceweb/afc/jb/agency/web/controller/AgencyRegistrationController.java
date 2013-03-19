@@ -47,6 +47,7 @@ import com.advanceweb.afc.jb.advt.service.AdService;
 import com.advanceweb.afc.jb.common.AgencyProfileDTO;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
+import com.advanceweb.afc.jb.common.FacilityContactDTO;
 import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
@@ -71,7 +72,7 @@ import com.advanceweb.common.client.ClientContext;
  */
 @SuppressWarnings("deprecation")
 @Controller
-@RequestMapping("/agencyRegistration")
+@RequestMapping("/agencyreg")
 @SessionAttributes("agencyRegForm")
 @Scope("session")
 public class AgencyRegistrationController extends AbstractController {
@@ -259,9 +260,15 @@ public class AgencyRegistrationController extends AbstractController {
 					"?serviceProviderId", serviceProviderId));
 			}
 		}
+		if(session.getAttribute("FacilityContactDTO") != null){
+			FacilityContactDTO facilityContactDTO= (FacilityContactDTO) session.getAttribute("FacilityContactDTO");
+			agencyRegForm.setListProfAttribForms(transformAgencyRegistration.transformContactDTOToProfileAttribForm(registerDTO,facilityContactDTO,userDTO));
+			session.removeAttribute("FacilityContactDTO");
+		}else{
 		List<AgencyProfileAttribForm> listProfAttribForms = transformAgencyRegistration
 				.transformDTOToProfileAttribForm(registerDTO, userDTO);
 		agencyRegForm.setListProfAttribForms(listProfAttribForms);
+		}
 		model.addObject(AGENCY_REG_FORM, agencyRegForm);
 		List<CountryDTO> countryList = populateDropdownsService
 				.getCountryList();
@@ -336,13 +343,18 @@ public class AgencyRegistrationController extends AbstractController {
 			HttpSession session, HttpServletRequest req,HttpServletResponse response, BindingResult result) {
 		ModelAndView model = new ModelAndView();
 		boolean advPassUser=false;
+		boolean advPassUserWithNullPass=false;
 		populateAds(req, session, model);
+		
+		if(!agencyRegistrationForm.isAdvPassUser()){
+			advPassUserWithNullPass=userService.checkAdvUserPassword(agencyRegistrationForm.getEmailId());
+			}
 		if(!agencyRegistrationForm.isAdvPassUser()){
 			advPassUser=userService.checkUserMail(agencyRegistrationForm.getEmailId());
 		}
 		if (null != agencyRegistrationForm.getListProfAttribForms()) {
 			model.setViewName(AGENCYREG);
-			if (!validateEmpRegForm(agencyRegistrationForm, model, result,req,advPassUser)) {
+			if (!validateEmpRegForm(agencyRegistrationForm, model, result,req,advPassUser,advPassUserWithNullPass)) {
 				return model;
 			}
 		}
@@ -372,14 +384,13 @@ public class AgencyRegistrationController extends AbstractController {
 		AgencyProfileDTO empDTO = new AgencyProfileDTO();
 		UserDTO userDTO = transformAgencyRegistration
 				.createUserDTO(agencyRegistrationForm);
+		userDTO.setAdvPassUserWithNullPass(advPassUserWithNullPass);
 		List<ProfileAttribDTO> attribLists = transformAgencyRegistration
 				.transformProfileAttribFormToDTO(agencyRegistrationForm);
 		empDTO.setAttribList(attribLists);
-		if(agencyRegistrationForm.isAdvPassUser()){
-			UserDTO advUser=userService.getAdvancePassUser(agencyRegistrationForm.getEmailId());
-			if(advUser!=null){
-			userDTO.setPassword(advUser.getPassword());
-			}
+		if (agencyRegistrationForm.isOldUSer()) {
+			userDTO.setFacilityId((Integer) session
+					.getAttribute(MMJBCommonConstants.FACILITY_ID));
 		}
 		empDTO.setMerUserDTO(userDTO);
 		userDTO = agencyRegistration.createUser(empDTO);
@@ -427,7 +438,7 @@ public class AgencyRegistrationController extends AbstractController {
 	 */
 	private boolean validateEmpRegForm(
 			AgencyRegistrationForm agencyRegistrationForm, ModelAndView model,
-			BindingResult result, HttpServletRequest req,Boolean advPassUser) {
+			BindingResult result, HttpServletRequest req,Boolean advPassUser, Boolean advPassUserWithNullPass) {
 		boolean status = true;
 
 		if (null != agencyRegistrationForm.getListProfAttribForms()) {
@@ -512,15 +523,17 @@ public class AgencyRegistrationController extends AbstractController {
 			// model.setViewName(AGENCYREG);
 			return false;
 		}
+		if(!advPassUserWithNullPass){
 		if ((!agencyRegistrationForm.isbReadOnly()
 				&& agencyRegistration.validateEmail(agencyRegistrationForm
 						.getEmailId()) && advPassUser)|| (agencyRegistration.validateEmail(agencyRegistrationForm
 								.getEmailId()) && !agencyRegistrationForm.isAdvPassUser() && !agencyRegistrationForm.isOldUSer())) {
 			result.rejectValue("emailId", "NotEmpty", emailExists.replace(
 					"?ageLoginLink",req.getRequestURL().toString()
-					.replace(req.getServletPath(),"/commonLogin/login.html?page=agency")));
+					.replace(req.getServletPath(),"/commonlogin/login.html?page=agency")));
 			// model.setViewName(AGENCYREG);
 			return false;
+		}
 		}
 
 		return status;

@@ -56,6 +56,7 @@ import com.advanceweb.afc.jb.common.AdmFacilityContactDTO;
 import com.advanceweb.afc.jb.common.CountryDTO;
 import com.advanceweb.afc.jb.common.EmployerInfoDTO;
 import com.advanceweb.afc.jb.common.EmployerProfileDTO;
+import com.advanceweb.afc.jb.common.FacilityContactDTO;
 import com.advanceweb.afc.jb.common.ProfileAttribDTO;
 import com.advanceweb.afc.jb.common.StateDTO;
 import com.advanceweb.afc.jb.common.UserDTO;
@@ -89,7 +90,7 @@ import com.advanceweb.common.client.ClientContext;
 
 @SuppressWarnings("deprecation")
 @Controller
-@RequestMapping("/employerRegistration")
+@RequestMapping("/employerreg")
 @SessionAttributes("empRegisterForm")
 @Scope("session")
 public class EmployerRegistrationController extends AbstractController{
@@ -259,6 +260,7 @@ public class EmployerRegistrationController extends AbstractController{
 			empRegisterForm.setUserId(userDTO.getUserId());
 			empRegisterForm.setbReadOnly(true);
 			empRegisterForm.setOldUser(true);
+		
 		}
 		if(profileId != null && !profileId.equals("null") ){
 			empRegisterForm.setServiceProviderName(serviceProviderId);
@@ -285,10 +287,17 @@ public class EmployerRegistrationController extends AbstractController{
 			}
 			
 		}
+		if(session.getAttribute("FacilityContactDTO") != null){
+			FacilityContactDTO facilityContactDTO= (FacilityContactDTO) session.getAttribute("FacilityContactDTO");
+			empRegisterForm.setListProfAttribForms(transformEmpReg.transformContactDTOToProfileAttribForm(registerDTO,facilityContactDTO,userDTO));
+			session.removeAttribute("FacilityContactDTO");
+		}else{
 		List<EmployerProfileAttribForm> listProfAttribForms = transformEmpReg
 				.transformDTOToProfileAttribForm(registerDTO, userDTO);
 
 		empRegisterForm.setListProfAttribForms(listProfAttribForms);
+		
+		}
 		model.addObject(EMPREGFORM, empRegisterForm);
 		List<CountryDTO> countryList = populateDropdownsService
 				.getCountryList();
@@ -320,15 +329,20 @@ public class EmployerRegistrationController extends AbstractController{
 			Map map, HttpSession session,HttpServletRequest req,
 			BindingResult result, HttpServletRequest request,HttpServletResponse response) {
 		boolean advPassUser=false;
+		boolean advPassUserWithNullPass=false;
 		ModelAndView model = new ModelAndView();
 		if (null != empRegForm.getListProfAttribForms()) {
 			model.setViewName(EMPLOYERREG);
 			if(!empRegForm.isAdvPassUser()){
+			advPassUserWithNullPass=userService.checkAdvUserPassword(empRegForm.getEmailId());
+			}
+			
+			if(!empRegForm.isAdvPassUser() && !advPassUserWithNullPass){
 				advPassUser=userService.checkUserMail(empRegForm.getEmailId());
 			}
 			// get the Ads
 			populateAds (request, session, model, PageNames.EMPLOYER_REGISTRATION);
-			if (!validateEmpRegForm(empRegForm, model, result,req,advPassUser)) {
+			if (!validateEmpRegForm(empRegForm, model, result,req,advPassUser,advPassUserWithNullPass)) {
 				return model;
 			}
 		}
@@ -365,9 +379,14 @@ public class EmployerRegistrationController extends AbstractController{
 		//Recaptcha code end here
 		EmployerProfileDTO empDTO = new EmployerProfileDTO();
 		UserDTO userDTO = transformEmpReg.createUserDTO(empRegForm);
+		userDTO.setAdvPassUserWithNullPass(advPassUserWithNullPass);
 		List<ProfileAttribDTO> attribLists = transformEmpReg
 				.transformProfileAttribFormToDTO(empRegForm);
 		empDTO.setAttribList(attribLists);
+		if (empRegForm.isOldUser()) {
+			userDTO.setFacilityId((Integer) session
+					.getAttribute(MMJBCommonConstants.FACILITY_ID));
+		}
 		empDTO.setMerUserDTO(userDTO);
 		userDTO = employerRegistration.createUser(empDTO);
 				
@@ -522,7 +541,7 @@ public class EmployerRegistrationController extends AbstractController{
 	 * @return
 	 */
 	public boolean validateEmpRegForm(EmployerRegistrationForm empRegForm,
-			ModelAndView model, BindingResult result, HttpServletRequest req,Boolean advPassUser) {
+			ModelAndView model, BindingResult result, HttpServletRequest req,Boolean advPassUser,Boolean advPassUserWithNullPass) {
 		boolean status = true;
 		String state=null,city=null,zipCode=null;
 		for (EmployerProfileAttribForm form : empRegForm
@@ -591,13 +610,15 @@ public class EmployerRegistrationController extends AbstractController{
 			}
 		}
 		registerValidation.validate(empRegForm, result);
+		if(!advPassUserWithNullPass){
 		if ((!empRegForm.isbReadOnly()
 				&& employerRegistration.validateEmail(empRegForm.getEmailId()) && advPassUser)|| (employerRegistration.validateEmail(empRegForm.getEmailId()) && !empRegForm.isAdvPassUser() && !empRegForm.isOldUser())) {
 			result.rejectValue("emailId", "NotEmpty", emailExists.replace(
 					"?empLoginLink",req.getRequestURL().toString()
-					.replace(req.getServletPath(),"/commonLogin/login.html?page=employer")));
+					.replace(req.getServletPath(),"/commonlogin/login.html?page=employer")));
 			// model.setViewName(employerReg);
 			return false;
+		}
 		}
 		if (result.hasErrors()) {
 			// model.setViewName(employerReg);
@@ -675,11 +696,13 @@ public class EmployerRegistrationController extends AbstractController{
 		boolean isUpdated = false;
 
 		try {
-			if(employeeAccountForm.isAdminLogin()){
-				if(facilityService.getUser(employeeAccountForm.getEmail())!=null || userService.getAdvancePassUser(employeeAccountForm.getEmail())!=null){
-					return emailInUse;
-				}
-			}
+			if (employeeAccountForm.isAdminLogin() && !employeeAccountForm.getEmail().equals(employeeAccountForm.getOriginalEmail())) {
+                UserDTO userDto=facilityService.getUser(employeeAccountForm.getEmail());
+                if(userDto!=null || userService.getAdvancePassUser(employeeAccountForm.getEmail())!=null ){
+                       return emailInUse;
+                }
+          }
+
 			int userId = (Integer) session.getAttribute("userId");
 			AdmFacilityContactDTO listProfAttribForms = empRegService
 					.getEmployeePrimaryKey(userId, MMJBCommonConstants.PRIMARY);
@@ -726,7 +749,7 @@ public class EmployerRegistrationController extends AbstractController{
 
 		} catch (Exception e) {
 
-			LOGGER.error("This is Account Addresss edite option error");
+			LOGGER.error("This is Account Addresss edite option error",e);
 		}
 		return "";
 	}
@@ -934,6 +957,7 @@ public class EmployerRegistrationController extends AbstractController{
 			employeeAccountForm.setState(listProfAttribForms.getState());
 			employeeAccountForm.setCountry(listProfAttribForms.getCountry());
 			employeeAccountForm.setEmail(listProfAttribForms.getEmail());
+			employeeAccountForm.setOriginalEmail(listProfAttribForms.getEmail());
 			employeeAccountForm.setZipCode(listProfAttribForms.getZipCode());
 			employeeAccountForm.setPhone(listProfAttribForms.getPhone());
 

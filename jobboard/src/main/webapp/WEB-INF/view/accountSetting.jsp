@@ -97,7 +97,7 @@ function copyAccToBillingAddr() {
  			var href = $('#BackToTopId').attr('href');
 			location.href = href;
  			$("#errmsg").html("Processing...");
-			$.ajax({url:"${pageContext.request.contextPath}/employerRegistration/employeeAccountSetting.html",
+			$.ajax({url:"${pageContext.request.contextPath}/employerreg/employeeAccountSetting.html",
 				data:$('#editAccountSettingData').serialize(),
 				type:"POST",
 				success: function(data) {
@@ -287,7 +287,7 @@ $('#country2').val("");
  			var href = $('#BackToMdlId').attr('href');
 			location.href = href;
  			$("#errmsgData").html("Processing...");
-			$.ajax({url:"${pageContext.request.contextPath}/employerRegistration/employeeBillingSetting.html",
+			$.ajax({url:"${pageContext.request.contextPath}/employerreg/employeeBillingSetting.html",
 				data:$('#editBillingSettingData').serialize(),
 				type:"POST",
 				success: function(data) {
@@ -331,7 +331,7 @@ $('#country2').val("");
 				</a>
 			</div>
 			<div class="popUpContainerWrapper">
-				<form:form action="../employerRegistration/employeeAccountSetting.html" method="POST" commandName="employeeAccountForm" id="editAccountSettingData" name="editAccountSettingData" enctype="multipart/form-data">
+				<form:form action="../employerreg/employeeAccountSetting.html" method="POST" commandName="employeeAccountForm" id="editAccountSettingData" name="editAccountSettingData" enctype="multipart/form-data">
 					<form:hidden path="readOnly"/>
 					<div class="EvenNewSpacing marginLeft20">
 						<h3>Account Profile</h3>
@@ -415,6 +415,7 @@ $('#country2').val("");
 						</form:select>
 					<span class="required">(Required)</span>
 					</div>
+					<form:hidden path="originalEmail"/>
 					<div class="rowEvenNewSpacing">
 						<span class="lableText3">
 							Email:
@@ -454,7 +455,7 @@ $('#country2').val("");
 					</form:form>
 					 <div class="borderBottomDotted row">
 					</div>
-					<form:form action="../employerRegistration/employeeBillingSetting.html" method="get" commandName="employeeBillingForm" id="editBillingSettingData" enctype="multipart/form-data">
+					<form:form action="../employerreg/employeeBillingSetting.html" method="get" commandName="employeeBillingForm" id="editBillingSettingData" enctype="multipart/form-data">
 				<div class="row marginLeft20 marginTop25" id="billingId">
 					<h3>Billing Contact</h3>
 				</div>

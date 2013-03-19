@@ -222,6 +222,19 @@ public class MMUtils {
 	}
 	
 	/**
+	 * This method converts the date in string format to 'yyyy-MM-dd' 
+	 * format for displaying it in the site map xml page.
+	 * 
+	 * @param dateString
+	 * @return String
+	 */	
+	public static String convertDateToStdDateString(Date date) {
+		SimpleDateFormat formatter = new SimpleDateFormat(
+				MMJBCommonConstants.DATE_PATTERN, Locale.US);
+		return formatter.format(date);
+	}
+	
+	/**
 	 * The method helps to encode the given string value by replacing the special 
 	 * characters to valid strings.
 	 * 

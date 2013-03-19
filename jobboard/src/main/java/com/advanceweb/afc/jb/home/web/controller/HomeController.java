@@ -387,6 +387,13 @@ public class HomeController extends AbstractController {
 				// .getBanner(clientContext, size, position).getTag();
 				// model.addAttribute(MMJBCommonConstants.ADPGRIGHT_TOP_MIDDLE,
 				// bannerString);
+			}else if (pageName.equalsIgnoreCase(PageNames.FEATURED_EMPS)) {
+				size = AdSize.IAB_MEDIUM_RECTANGLE;
+				position = AdPosition.RIGHT_TOP;
+				bannerString = adService.getBanner(clientContext, size,
+						position).getTag();
+				model.addAttribute(MMJBCommonConstants.ADPGRIGHT_TOP,
+						bannerString);
 			}
 
 		} catch (Exception e) {
@@ -930,7 +937,7 @@ public class HomeController extends AbstractController {
 					.setViewName("redirect:/jobSeeker/jobSeekerDashBoard.html");
 		} else {
 			modelAndView
-					.setViewName("redirect:/commonLogin/login.html?page=jobSeeker");
+					.setViewName("redirect:/commonlogin/login.html?page=jobSeeker");
 		}
 
 		return modelAndView;
@@ -1022,6 +1029,48 @@ public class HomeController extends AbstractController {
 		// populate the Ads
 		populateAds(request, session, model, PageNames.FEATURED_EMP);
 		return "featuredemployerdetails";
+	}
+	
+	
+	@RequestMapping(value = "/redirectSessionExpiredCookieExist")
+	public ModelAndView redirectSessionExpiredPage() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirectSessionExpiredCookieExist");
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/redirectSessionExpired")
+	public ModelAndView redirectSessionExpiredCookieExistPage() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirectSessionExpired");
+		return modelAndView;
+	}
+	
+	
+	@RequestMapping(value = "/sessionExpired")
+	public ModelAndView getSessionExpiredPage(Model model,@RequestParam(value="cookieExist",required=false)boolean cookieExist) {
+		ModelAndView modelAndView = new ModelAndView();
+		if(cookieExist){
+			modelAndView.setViewName("sessionExpiredCookieExist");
+		}
+		else{
+		modelAndView.setViewName("sessionExpired");
+		}
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/redirectCookieExpired")
+	public ModelAndView redirectCookieExpiredPage() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirectCookieExpired");
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/cookieExpired")
+	public ModelAndView getCookieExpiredPage(Model model) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("cookieExpired");
+		return modelAndView;
 	}
 
 }

@@ -138,6 +138,30 @@ public class BrandingTemplateController extends AbstractController {
 	private @Value("${virus.found.file.msg}")
 	String virusFoundMsg;
 	
+	/** The NetSuite package internal ID. */
+	@Value("${PLATINUM_90}")
+	private String PLATINUM_90;
+
+	/** The NetSuite package internal ID. */
+	@Value("${PLATINUM_180}")
+	private String PLATINUM_180;
+	
+	/** The NetSuite package internal ID. */
+	@Value("${PLATINUM_365}")
+	private String PLATINUM_365;
+	
+	/** The NetSuite package internal ID. */
+	@Value("${GOLD_90}")
+	private String GOLD_90;
+	
+	/** The NetSuite package internal ID. */
+	@Value("${GOLD_180}")
+	private String GOLD_180;
+	
+	/** The NetSuite package internal ID. */
+	@Value("${GOLD_365}")
+	private String GOLD_365;
+	
 	/** The Constant STR_BRANDINGTEMPLATEFORM. */
 	private static final String STR_BRANDINGTEMPLATEFORM = "brandingTemplateForm";
 	
@@ -338,7 +362,6 @@ public class BrandingTemplateController extends AbstractController {
 		 * Introduced a new variable "templateForm" to resolve PMD issue.
 		 */
 		BrandingTemplateForm brandingTemplateForm = form;
-		Boolean status = null;
 		ModelAndView model = new ModelAndView();
 
 		// Retrieve facilityId from session.
@@ -376,7 +399,7 @@ public class BrandingTemplateController extends AbstractController {
 		}
 
 		// Upload the media files to File server
-		status = uploadMedia(brandingTemplateForm, result);
+		uploadMedia(brandingTemplateForm, result);
 		if (result.hasErrors()) {
 			/*
 			 * result.rejectValue(STR_LOGOFILEDATA, STR_NOTEMPTY,
@@ -450,16 +473,16 @@ public class BrandingTemplateController extends AbstractController {
 		purchasedPackages = brandingTemplateService
 				.getBrandingInformation(nsCustomerID);
 		if (null != purchasedPackages && !purchasedPackages.isEmpty()) {
-			if (purchasedPackages.contains(MMJBCommonConstants.PLATINUM_90)
+			if (purchasedPackages.contains(PLATINUM_90)
 					|| purchasedPackages
-							.contains(MMJBCommonConstants.PLATINUM_180)
+							.contains(PLATINUM_180)
 					|| purchasedPackages
-							.contains(MMJBCommonConstants.PLATINUM_365)) {
+							.contains(PLATINUM_365)) {
 				brandingTemplateForm.setIsSilverCustomer(Boolean.FALSE);
 				packageId = MMJBCommonConstants.INT_PLATINUM;
-			} else if (purchasedPackages.contains(MMJBCommonConstants.GOLD_90)
-					|| purchasedPackages.contains(MMJBCommonConstants.GOLD_180)
-					|| purchasedPackages.contains(MMJBCommonConstants.GOLD_365)) {
+			} else if (purchasedPackages.contains(GOLD_90)
+					|| purchasedPackages.contains(GOLD_180)
+					|| purchasedPackages.contains(GOLD_365)) {
 				brandingTemplateForm.setIsSilverCustomer(Boolean.FALSE);
 				packageId = MMJBCommonConstants.INT_GOLD;
 			} else {
@@ -738,11 +761,12 @@ public class BrandingTemplateController extends AbstractController {
 		List<TestimonyForm> listTestimonies = new ArrayList<TestimonyForm>();
 		List<TestimonyForm> listModTestimonies = new ArrayList<TestimonyForm>();
 		listTestimonies = brandingTemplateForm.getListTestimony();
-
-		for (TestimonyForm testimony : listTestimonies) {
-			if (!testimony.getTestimony().isEmpty()) {
-
-				listModTestimonies.add(testimony);
+		if(null != listTestimonies && !listTestimonies.isEmpty()){
+			for (TestimonyForm testimony : listTestimonies) {
+				if (!testimony.getTestimony().trim().isEmpty()) {
+					
+					listModTestimonies.add(testimony);
+				}
 			}
 		}
 		brandingTemplateForm.setListTestimony(listModTestimonies);
@@ -940,22 +964,24 @@ public class BrandingTemplateController extends AbstractController {
 		TestimonyForm testimony = new TestimonyForm();
 		ModelAndView model = new ModelAndView();
 		model.setViewName("addTestimonies");
-
-		model.addObject("testimonyPosId", brandingTemplateForm
-				.getListTestimony().size());
-
-		boolean isTestimonialEmpty = (null == brandingTemplateForm
-				.getListTestimony() ? true : false);
-		testimony.setItemId(brandingTemplateForm.getListTestimony().size());
-		if (isTestimonialEmpty) {
-			List<TestimonyForm> listTestimonies = new ArrayList<TestimonyForm>();
-			listTestimonies.add(testimony);
-			brandingTemplateForm.setListTestimony(listTestimonies);
-		} else {
-
-			brandingTemplateForm.getListTestimony().add(testimony);
-
+		int testimonialId = 0;
+		if (null != brandingTemplateForm.getListTestimony()
+				 && !brandingTemplateForm.getListTestimony().isEmpty()) {
+			testimonialId = brandingTemplateForm.getListTestimony()
+					.get(brandingTemplateForm.getListTestimony().size() - 1)
+					.getItemId();
+			testimonialId++;
 		}
+		model.addObject("testimonyPosId", testimonialId);
+
+		testimony.setItemId(testimonialId);		
+		if (null == brandingTemplateForm.getListTestimony()) {
+			List<TestimonyForm> listImages = new ArrayList<TestimonyForm>();
+			listImages.add(testimony);
+			brandingTemplateForm.setListTestimony(listImages);
+		} else {
+			brandingTemplateForm.getListTestimony().add(testimony);
+		}		
 		model.addObject(STR_BRANDINGTEMPLATEFORM, brandingTemplateForm);
 		return model;
 	}
@@ -978,7 +1004,8 @@ public class BrandingTemplateController extends AbstractController {
 //		model.addObject("imagePosId", brandingTemplateForm.getListAddImages()
 //				.size());
 		int imgId = 0;
-		if (null != brandingTemplateForm.getListAddImages()) {
+		if (null != brandingTemplateForm.getListAddImages()
+				 && !brandingTemplateForm.getListAddImages().isEmpty()) {
 			imgId = brandingTemplateForm.getListAddImages()
 					.get(brandingTemplateForm.getListAddImages().size() - 1)
 					.getItemId();
@@ -1015,7 +1042,7 @@ public class BrandingTemplateController extends AbstractController {
 		ModelAndView model = new ModelAndView();
 		model.setViewName("addVideos");
 		int videoId = 0;
-		if (null != brandingTemplateForm.getListVideos()) {
+		if (null != brandingTemplateForm.getListVideos() && !brandingTemplateForm.getListVideos().isEmpty()) {
 			videoId = brandingTemplateForm.getListVideos()
 					.get(brandingTemplateForm.getListVideos().size() - 1)
 					.getItemId();
@@ -1055,13 +1082,13 @@ public class BrandingTemplateController extends AbstractController {
 
 		// If logged in user is job owner then get his parent id
 		int parentFacilityId = brandingTemplateService.getParentId(facilityId);
-		parentUserId = brandingTemplateService.getParentUserId(userId,
-				parentFacilityId);
+//		parentUserId = brandingTemplateService.getParentUserId(userId,
+//				parentFacilityId);
 		isBrandPurchased = brandingTemplateService
 				.getBrandPurchaseInfo(parentFacilityId);
 		ModelAndView modelView = new ModelAndView();
 		List<BrandingTemplateDTO> brandTemplateList = brandingTemplateService
-				.getBrandingTemplate(parentUserId);
+				.getBrandingTemplate(parentFacilityId);
 		model.put("templatesList", brandTemplateList);
 		modelView.addObject("isBrandPurchased", isBrandPurchased);
 		modelView.addObject(STR_ERRORMESSAGE, empBrandTemplatePurchase);
@@ -1381,21 +1408,20 @@ public class BrandingTemplateController extends AbstractController {
 	@ResponseBody
 	@RequestMapping(value = "/removeTestimonies", method = RequestMethod.POST)
 	public int removeTestimonies(HttpSession session,
-			BrandingTemplateForm brandingTemplateForm, @RequestParam("id") int id) {
-
+	BrandingTemplateForm brandingTemplateForm, @RequestParam("id") int id) {
 		try {
+			TestimonyForm deletedTestimonyForm = null;
 			if (null != brandingTemplateForm.getListTestimony()) {
 				//int count = 0;
 				for (TestimonyForm testimonyForm : brandingTemplateForm.getListTestimony()) {
 					if (testimonyForm.getItemId() == id) {
 						brandingTemplateForm.getListTestimony().remove(testimonyForm);
+						deletedTestimonyForm = testimonyForm;
 						break;
 					}
 					//count++;
 				}
-
 			//	brandingTemplateForm.getListTestimony().remove(count);
-
 			}
 		} catch (Exception exp) {
 			LOGGER.error("Exception occured while deleting testimlni",exp);

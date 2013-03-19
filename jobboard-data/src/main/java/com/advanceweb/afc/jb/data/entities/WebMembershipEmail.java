@@ -42,7 +42,7 @@ public class WebMembershipEmail implements Serializable {
 //	private int webMembershipID;
 //	
 	/** The web membership. */
-@OneToOne(fetch=FetchType.EAGER)
+     @OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="WebMembershipID")
 	private WebMembership webMembership;
 

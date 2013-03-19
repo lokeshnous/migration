@@ -117,6 +117,9 @@ public class JobsController extends AbstractController {
 
 		// set default page value
 		int page = 1;
+		
+		Object totalNoRecords = 0;
+		Object searchResultsList = null;
 		// set the number of records per page
 		int recordsPerPage = MMJBCommonConstants.JOBTITLES_GRID_PAGESIZE;
 		int noOfRecords = 0;
@@ -138,6 +141,8 @@ public class JobsController extends AbstractController {
 		if (jobSearchResultDTO != null) {
 			// convert the results to JSON object
 			jobSrchJsonObj = searchJobToJSON(jobSearchResultDTO);
+			totalNoRecords = jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS);
+			searchResultsList = jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS);
 		}
 		// set the absolute path for next and previous links to fetch the set of
 		// records
@@ -152,9 +157,9 @@ public class JobsController extends AbstractController {
 		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 
 		modelAndView.addObject(MMJBCommonConstants.TOTAL_NO_RECORDS,
-				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
+				totalNoRecords);
 		modelAndView.addObject(MMJBCommonConstants.SEARCH_RESULTS_LIST,
-				jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS));
+				searchResultsList);
 		modelAndView.addObject(MMJBCommonConstants.PAGE, page);
 		modelAndView.addObject(JOB_SEARCH_RESULT_FORM, jobSearchResultForm);
 		modelAndView.addObject(NO_OF_PAGES, noOfPages);
@@ -193,7 +198,7 @@ public class JobsController extends AbstractController {
 		jobSearchResultForm.setSearchtype(MMJBCommonConstants.BASIC_SEARCH_TYPE);
 
 		// set the FQ parameters
-		String jobTitle = MMUtils.decodeString(desc.trim());
+		String jobTitle =desc.trim().replace("-", " ");
 //		request.setAttribute(MMJBCommonConstants.FIRST_FQ_PARAM, jobTitle);
 		jobSearchResultForm.setKeywords(jobTitle);
 		request.setAttribute(SearchParamDTO.KEYWORDS, jobTitle);
@@ -204,6 +209,9 @@ public class JobsController extends AbstractController {
 
 		// set default page value
 		int page = 1;
+		
+		Object totalNoRecords = 0;
+		Object searchResultsList = null;
 		// set the number of records per page
 		int recordsPerPage = MMJBCommonConstants.JOBTITLES_GRID_PAGESIZE;
 		int noOfRecords = 0;
@@ -225,6 +233,8 @@ public class JobsController extends AbstractController {
 		if (jobSearchResultDTO != null) {
 			// convert the results to JSON object
 			jobSrchJsonObj = searchJobToJSON(jobSearchResultDTO);
+			totalNoRecords = jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS);
+			searchResultsList = jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS);
 		}
 		// set the absolute path for next and previous links to fetch the set of
 		// records
@@ -239,9 +249,9 @@ public class JobsController extends AbstractController {
 		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 
 		modelAndView.addObject(MMJBCommonConstants.TOTAL_NO_RECORDS,
-				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
+				totalNoRecords);
 		modelAndView.addObject(MMJBCommonConstants.SEARCH_RESULTS_LIST,
-				jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS));
+				searchResultsList);
 		modelAndView.addObject(MMJBCommonConstants.PAGE, page);
 		modelAndView.addObject("jobTitle", jobTitle);
 		modelAndView.addObject(JOB_SEARCH_RESULT_FORM, jobSearchResultForm);
@@ -297,6 +307,8 @@ public class JobsController extends AbstractController {
 
 		// set default page value
 		int page = 1;
+		Object totalNoRecords = 0;
+		Object searchResultsList = null;
 		// set the number of records per page
 		int recordsPerPage = MMJBCommonConstants.JOBTITLES_GRID_PAGESIZE;
 		int noOfRecords = 0;
@@ -318,6 +330,8 @@ public class JobsController extends AbstractController {
 		if (jobSearchResultDTO != null) {
 			// convert the results to JSON object
 			jobSrchJsonObj = searchJobToJSON(jobSearchResultDTO);
+			totalNoRecords = jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS);
+			searchResultsList = jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS);
 		}
 		// set the absolute path for next and previous links to fetch the set of
 		// records
@@ -332,9 +346,9 @@ public class JobsController extends AbstractController {
 		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 
 		modelAndView.addObject(MMJBCommonConstants.TOTAL_NO_RECORDS,
-				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
+				totalNoRecords);
 		modelAndView.addObject(MMJBCommonConstants.SEARCH_RESULTS_LIST,
-				jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS));
+				searchResultsList);
 		modelAndView.addObject(MMJBCommonConstants.PAGE, page);
 		modelAndView.addObject("employerName", employerName);
 		modelAndView.addObject(JOB_SEARCH_RESULT_FORM, jobSearchResultForm);
@@ -376,6 +390,7 @@ public class JobsController extends AbstractController {
 		// set the FQ parameters
 		String selectedSate = MMUtils.decodeString(desc.trim());
 		request.setAttribute(MMJBCommonConstants.THIRD_FQ_PARAM, selectedSate);
+		request.setAttribute(MMJBCommonConstants.IS_FQ_PARAM_LOWERCASE, true);
 		request.setAttribute(SearchParamDTO.KEYWORDS, MMJBCommonConstants.EMPTY);
 
 		// merge the parameters
@@ -384,6 +399,9 @@ public class JobsController extends AbstractController {
 
 		// set default page value
 		int page = 1;
+		Object totalNoRecords = 0;
+		Object searchResultsList = null;
+		
 		// set the number of records per page
 		int recordsPerPage = MMJBCommonConstants.JOBTITLES_GRID_PAGESIZE;
 		int noOfRecords = 0;
@@ -405,6 +423,8 @@ public class JobsController extends AbstractController {
 		if (jobSearchResultDTO != null) {
 			// convert the results to JSON object
 			jobSrchJsonObj = searchJobToJSON(jobSearchResultDTO);
+			totalNoRecords = jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS);
+			searchResultsList = jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS);
 		}
 		// set the absolute path for next and previous links to fetch the set of
 		// records
@@ -419,9 +439,9 @@ public class JobsController extends AbstractController {
 		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 
 		modelAndView.addObject(MMJBCommonConstants.TOTAL_NO_RECORDS,
-				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
+				totalNoRecords);
 		modelAndView.addObject(MMJBCommonConstants.SEARCH_RESULTS_LIST,
-				jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS));
+				searchResultsList);
 		modelAndView.addObject(MMJBCommonConstants.PAGE, page);
 		// modelAndView.addObject("jobTitle", location);
 		modelAndView.addObject(JOB_SEARCH_RESULT_FORM, jobSearchResultForm);
@@ -467,6 +487,7 @@ public class JobsController extends AbstractController {
 		request.setAttribute(MMJBCommonConstants.THIRD_FQ_PARAM, selectedState);
 		request.setAttribute(MMJBCommonConstants.FIFTH_FQ_PARAM, selectedArea);
 		request.setAttribute(SearchParamDTO.KEYWORDS, MMJBCommonConstants.EMPTY);
+		request.setAttribute(MMJBCommonConstants.IS_FQ_PARAM_LOWERCASE, true);
 
 		// merge the parameters
 		Map<String, String> paramMap = getParameterMap(jobSearchResultForm,
@@ -474,6 +495,8 @@ public class JobsController extends AbstractController {
 
 		// set default page value
 		int page = 1;
+		Object totalNoRecords = 0;
+		Object searchResultsList = null;
 		// set the number of records per page
 		int recordsPerPage = MMJBCommonConstants.JOBTITLES_GRID_PAGESIZE;
 		int noOfRecords = 0;
@@ -495,6 +518,8 @@ public class JobsController extends AbstractController {
 		if (jobSearchResultDTO != null) {
 			// convert the results to JSON object
 			jobSrchJsonObj = searchJobToJSON(jobSearchResultDTO);
+			totalNoRecords = jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS);
+			searchResultsList = jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS);
 		}
 		// set the absolute path for next and previous links to fetch the set of
 		// records
@@ -509,9 +534,9 @@ public class JobsController extends AbstractController {
 		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 
 		modelAndView.addObject(MMJBCommonConstants.TOTAL_NO_RECORDS,
-				jobSrchJsonObj.get(MMJBCommonConstants.TOTAL_NO_RECORDS));
+				totalNoRecords);
 		modelAndView.addObject(MMJBCommonConstants.SEARCH_RESULTS_LIST,
-				jobSrchJsonObj.get(MMJBCommonConstants.JSON_ROWS));
+				searchResultsList);
 		modelAndView.addObject(MMJBCommonConstants.PAGE, page);
 		modelAndView.addObject("jobTitle", location);
 		modelAndView.addObject(JOB_SEARCH_RESULT_FORM, jobSearchResultForm);
@@ -574,21 +599,45 @@ public class JobsController extends AbstractController {
 		}
 		String thirdFQParam = MMJBCommonConstants.EMPTY;
 		if (request.getAttribute(MMJBCommonConstants.THIRD_FQ_PARAM) != null) {
+			if(request.getAttribute(MMJBCommonConstants.IS_FQ_PARAM_LOWERCASE) != null){
+				thirdFQParam = MMJBCommonConstants.FQ_STATE_LOWER_CASE
+						+ request
+								.getAttribute(MMJBCommonConstants.THIRD_FQ_PARAM)
+						+ '"';
+			}else{
 			thirdFQParam = MMJBCommonConstants.FQ_STATE
-					+ request.getAttribute(MMJBCommonConstants.THIRD_FQ_PARAM)
+					+ request
+							.getAttribute(MMJBCommonConstants.THIRD_FQ_PARAM)
 					+ '"';
+			}
 		}
 		String fouthFQParam = MMJBCommonConstants.EMPTY;
 		if (request.getAttribute(MMJBCommonConstants.FOURTH_FQ_PARAM) != null) {
+			if(request.getAttribute(MMJBCommonConstants.IS_FQ_PARAM_LOWERCASE) != null){
+				fouthFQParam = MMJBCommonConstants.FQ_CITY_LOWER_CASE
+						+ request
+								.getAttribute(MMJBCommonConstants.FOURTH_FQ_PARAM)
+						+ '"';
+			}else{
 			fouthFQParam = MMJBCommonConstants.FQ_CITY
-					+ request.getAttribute(MMJBCommonConstants.FOURTH_FQ_PARAM)
+					+ request
+							.getAttribute(MMJBCommonConstants.FOURTH_FQ_PARAM)
 					+ '"';
+			}
 		}
 		String fifthFQParam = MMJBCommonConstants.EMPTY;
 		if (request.getAttribute(MMJBCommonConstants.FIFTH_FQ_PARAM) != null) {
+			if(request.getAttribute(MMJBCommonConstants.IS_FQ_PARAM_LOWERCASE) != null){
+				fifthFQParam = MMJBCommonConstants.FQ_AREA_LOWER_CASE
+						+ request
+						.getAttribute(MMJBCommonConstants.FIFTH_FQ_PARAM)
+						+ '"';
+			}else{
 			fifthFQParam = MMJBCommonConstants.FQ_AREA
-					+ request.getAttribute(MMJBCommonConstants.FIFTH_FQ_PARAM)
+					+ request
+							.getAttribute(MMJBCommonConstants.FIFTH_FQ_PARAM)
 					+ '"';
+			}
 		}
 		String facetSort = MMJBCommonConstants.INDEX_STR;
 		// set the sort order for search results
@@ -624,6 +673,10 @@ public class JobsController extends AbstractController {
 				fqParamMap.get(MMJBCommonConstants.SORT_ORDER));
 		paramMap.put(MMJBCommonConstants.FACET_SORT,
 				fqParamMap.get(MMJBCommonConstants.FACET_SORT));
+		paramMap.put(MMJBCommonConstants.FacilityId_FQ_PARAM,
+				MMJBCommonConstants.EMPTY);
+		paramMap.put(MMJBCommonConstants.FacilityId_NAME_FQ_PARAM,
+				MMJBCommonConstants.EMPTY);
 
 		return paramMap;
 
@@ -672,102 +725,119 @@ public class JobsController extends AbstractController {
 		final List<JobDTO> jobDTOList = jSResultDTO.getResultList();
 
 		for (JobDTO jobDTO : jobDTOList) {
-			final JSONObject jobSrchJson = new JSONObject();
-			jobSrchJson.put(MMJBCommonConstants.AD_TEXT,
-					MMUtils.isNull(jobDTO.getAdText()));
-			jobSrchJson.put(MMJBCommonConstants.CAP_COMPANY,
-					MMUtils.isNull(jobDTO.getCompany()));
-			jobSrchJson.put(MMJBCommonConstants.JOB_TITLE,
-					MMUtils.isNull(jobDTO.getJobTitle()));
-			String title = MMUtils.isNull(jobDTO.getJobTitle());
-			if (!title.isEmpty()) {
-				jobSrchJson
-						.put(MMJBCommonConstants.JOB_TITLE_ENCODE,
-								title.replaceAll(
-										MMJBCommonConstants.IGNORE_SPECIAL_CHAR_PATTERN,
-										""));
-			} else {
-				jobSrchJson.put(MMJBCommonConstants.JOB_TITLE_ENCODE, title);
-			}
-			StringBuffer location = new StringBuffer();
-			if (jobDTO.getHideCity() == 0) {
-				location.append(jobDTO.getCity());
-				if (jobDTO.getHideState() == 0) {
-					location.append(MMJBCommonConstants.COMMA+" ");
+			try {
+				final JSONObject jobSrchJson = new JSONObject();
+				jobSrchJson.put(MMJBCommonConstants.AD_TEXT,
+						MMUtils.isNull(jobDTO.getAdText()));
+				jobSrchJson.put(MMJBCommonConstants.CAP_COMPANY,
+						MMUtils.isNull(jobDTO.getCompany()));
+				jobSrchJson.put(MMJBCommonConstants.JOB_TITLE,
+						MMUtils.isNull(jobDTO.getJobTitle()));
+				String title = MMUtils.isNull(jobDTO.getJobTitle());
+				if (!title.isEmpty()) {
+					jobSrchJson
+							.put(MMJBCommonConstants.JOB_TITLE_ENCODE,
+									title.replaceAll(
+											MMJBCommonConstants.IGNORE_SPECIAL_CHAR_PATTERN,
+											""));
+				} else {
+					jobSrchJson
+							.put(MMJBCommonConstants.JOB_TITLE_ENCODE, title);
 				}
-			}
-			if (jobDTO.getHideState() == 0) {
-				location.append(jobDTO.getState());
-			}
-			jobSrchJson.put(MMJBCommonConstants.CAP_CITY, location.toString()
-					.equals("null, null") ? "Multiple Locations" : location.toString());
-			jobSrchJson.put(MMJBCommonConstants.POSTED_DATE,
-					DateUtils.convertDateStringToDisplayDatePattern(jobDTO.getPostedDate().toString()));
-			jobSrchJson.put(MMJBCommonConstants.APPLY_ONLINE,
-					jobDTO.getApplyOnline());
-			jobSrchJson.put(MMJBCommonConstants.BLIND_AD, jobDTO.getBlindAd());
-			jobSrchJson.put(MMJBCommonConstants.FACILITY_NAME,
-					MMUtils.isNull(jobDTO.getFacilityName()));
-			jobSrchJson.put(MMJBCommonConstants.EMAIL_DISPLAY,
-					MMUtils.isNull(jobDTO.getEmailDisplay()));
-			jobSrchJson.put(MMJBCommonConstants.EMAIL,
-					MMUtils.isNull(jobDTO.getEmail()));
-			jobSrchJson.put(MMJBCommonConstants.IS_INTERNATIONAL,
-					jobDTO.isInternationalJob());
-			jobSrchJson.put(MMJBCommonConstants.IS_NATIONAL,
-					jobDTO.isNationalJob());
-			jobSrchJson.put(MMJBCommonConstants.IS_FEATURED,
-					jobDTO.isFeatured());
-			jobSrchJson
-					.put(MMJBCommonConstants.JOB_COUNT, jobDTO.getJobCount());
-			jobSrchJson.put(MMJBCommonConstants.JOB_ID,
-					MMUtils.isNull(String.valueOf(jobDTO.getJobId())));
-			jobSrchJson.put(MMJBCommonConstants.JOB_NUMBER,
-					MMUtils.isNull(jobDTO.getJobNumber()));
-			jobSrchJson.put(MMJBCommonConstants.JOB_GEO,
-					MMUtils.isNull(jobDTO.getJobGeo()));
-			jobSrchJson.put(MMJBCommonConstants.JOB_POSITION,
-					MMUtils.isNull(jobDTO.getJobPosition()));
-			jobSrchJson.put(MMJBCommonConstants.JOB_GEO_0_LATLON,
-					MMUtils.isNull(jobDTO.getJobGeo0LatLon()));
-			jobSrchJson.put(MMJBCommonConstants.JOB_GEO_1_LATLON,
-					MMUtils.isNull(jobDTO.getJobGeo1LatLon()));
-			jobSrchJson.put(MMJBCommonConstants.URL_DISPLAY,
-					MMUtils.isNull(jobDTO.getUrlDisplay()));
-			jobSrchJson.put(MMJBCommonConstants.STATE,
-					MMUtils.isNull(jobDTO.getState()));
-			jobSrchJson.put(MMJBCommonConstants.URL,
-					MMUtils.isNull(jobDTO.getUrl()));
-			// Newly added fields
-			jobSrchJson.put(MMJBCommonConstants.TEMPLATE_ID_STRING,
-					jobDTO.getTemplateId());
-			jobSrchJson.put(MMJBCommonConstants.PACKAGE_NAME_STRING,
-					MMUtils.isNull(jobDTO.getPackageName()));
-			jobSrchJson.put(MMJBCommonConstants.IS_PREMIUM_STRING,
-					jobDTO.getIsPremium());
-			jobSrchJson.put(MMJBCommonConstants.IS_UNIVERSAL_GEO_STRING,
-					MMUtils.isNull(String.valueOf(jobDTO.isUniversalGeo())));
-			jobSrchJson.put(MMJBCommonConstants.HIDE_CITY_STRING,
-					MMUtils.isNull(String.valueOf(jobDTO.getHideCity())));
-			jobSrchJson.put(MMJBCommonConstants.HIDE_STATE_STRING,
-					MMUtils.isNull(String.valueOf(jobDTO.getHideState())));
-			jobSrchJson.put(MMJBCommonConstants.HIDE_POSCODE_STRING,
-					MMUtils.isNull(String.valueOf(jobDTO.getHidePostcode())));
-			jobSrchJson.put(MMJBCommonConstants.HIDE_COUNTRY_STRING,
-					MMUtils.isNull(String.valueOf(jobDTO.getHideCountry())));
-			jobSrchJson.put(MMJBCommonConstants.COUNTRY,
-					MMUtils.isNull(jobDTO.getCountry()));
+				StringBuffer location = new StringBuffer();
+				if (jobDTO.getHideCity() == 0) {
+					location.append(jobDTO.getCity());
+					if (jobDTO.getHideState() == 0) {
+						location.append(MMJBCommonConstants.COMMA + " ");
+					}
+				}
+				if (jobDTO.getHideState() == 0) {
+					location.append(jobDTO.getState());
+				}
+				jobSrchJson.put(MMJBCommonConstants.CAP_CITY, location
+						.toString().equals("null, null") ? "Multiple Locations"
+						: location.toString());
+				jobSrchJson.put(MMJBCommonConstants.POSTED_DATE, DateUtils
+						.convertDateStringToDisplayDatePattern(jobDTO
+								.getPostedDate().toString()));
+				jobSrchJson.put(MMJBCommonConstants.APPLY_ONLINE,
+						jobDTO.getApplyOnline());
+				jobSrchJson.put(MMJBCommonConstants.BLIND_AD,
+						jobDTO.getBlindAd());
+				jobSrchJson.put(MMJBCommonConstants.FACILITY_NAME,
+						MMUtils.isNull(jobDTO.getFacilityName()));
+				jobSrchJson.put(MMJBCommonConstants.EMAIL_DISPLAY,
+						MMUtils.isNull(jobDTO.getEmailDisplay()));
+				jobSrchJson.put(MMJBCommonConstants.EMAIL,
+						MMUtils.isNull(jobDTO.getEmail()));
+				jobSrchJson.put(MMJBCommonConstants.IS_INTERNATIONAL,
+						jobDTO.isInternationalJob());
+				jobSrchJson.put(MMJBCommonConstants.IS_NATIONAL,
+						jobDTO.isNationalJob());
+				jobSrchJson.put(MMJBCommonConstants.IS_FEATURED,
+						jobDTO.isFeatured());
+				jobSrchJson.put(MMJBCommonConstants.JOB_COUNT,
+						jobDTO.getJobCount());
+				jobSrchJson.put(MMJBCommonConstants.JOB_ID,
+						MMUtils.isNull(String.valueOf(jobDTO.getJobId())));
+				jobSrchJson.put(MMJBCommonConstants.JOB_NUMBER,
+						MMUtils.isNull(jobDTO.getJobNumber()));
+				jobSrchJson.put(MMJBCommonConstants.JOB_GEO,
+						MMUtils.isNull(jobDTO.getJobGeo()));
+				jobSrchJson.put(MMJBCommonConstants.JOB_POSITION,
+						MMUtils.isNull(jobDTO.getJobPosition()));
+				jobSrchJson.put(MMJBCommonConstants.JOB_GEO_0_LATLON,
+						MMUtils.isNull(jobDTO.getJobGeo0LatLon()));
+				jobSrchJson.put(MMJBCommonConstants.JOB_GEO_1_LATLON,
+						MMUtils.isNull(jobDTO.getJobGeo1LatLon()));
+				jobSrchJson.put(MMJBCommonConstants.URL_DISPLAY,
+						MMUtils.isNull(jobDTO.getUrlDisplay()));
+				jobSrchJson.put(MMJBCommonConstants.STATE,
+						MMUtils.isNull(jobDTO.getState()));
+				jobSrchJson.put(MMJBCommonConstants.URL,
+						MMUtils.isNull(jobDTO.getUrl()));
+				// Newly added fields
+				jobSrchJson.put(MMJBCommonConstants.TEMPLATE_ID_STRING,
+						jobDTO.getTemplateId());
+				jobSrchJson.put(MMJBCommonConstants.PACKAGE_NAME_STRING,
+						MMUtils.isNull(jobDTO.getPackageName()));
+				jobSrchJson.put(MMJBCommonConstants.IS_PREMIUM_STRING,
+						jobDTO.getIsPremium());
+				jobSrchJson
+						.put(MMJBCommonConstants.IS_UNIVERSAL_GEO_STRING,
+								MMUtils.isNull(String.valueOf(jobDTO
+										.isUniversalGeo())));
+				jobSrchJson.put(MMJBCommonConstants.HIDE_CITY_STRING,
+						MMUtils.isNull(String.valueOf(jobDTO.getHideCity())));
+				jobSrchJson.put(MMJBCommonConstants.HIDE_STATE_STRING,
+						MMUtils.isNull(String.valueOf(jobDTO.getHideState())));
+				jobSrchJson
+						.put(MMJBCommonConstants.HIDE_POSCODE_STRING,
+								MMUtils.isNull(String.valueOf(jobDTO
+										.getHidePostcode())));
+				jobSrchJson
+						.put(MMJBCommonConstants.HIDE_COUNTRY_STRING,
+								MMUtils.isNull(String.valueOf(jobDTO
+										.getHideCountry())));
+				jobSrchJson.put(MMJBCommonConstants.COUNTRY,
+						MMUtils.isNull(jobDTO.getCountry()));
 
-			jsonRows.add(jobSrchJson);
+				jsonRows.add(jobSrchJson);
+			} catch (Exception e) {
+				LOGGER.error("Error Occured while converting to job to JSON",e);
+			}
 
 		}
+		try {
+			// Get the refine results along with the job count
+			fetchRefineResults(jSResultDTO.getFacetMap(), jobSrchJsonObj);
 
-		// Get the refine results along with the job count
-		fetchRefineResults(jSResultDTO.getFacetMap(), jobSrchJsonObj);
+			// Get the location region list
+			getLocationRegionResults(jSResultDTO.getFacetMap(), jobSrchJsonObj);
 
-		// Get the location region list
-		getLocationRegionResults(jSResultDTO.getFacetMap(), jobSrchJsonObj);
-
+		} catch (Exception e) {
+			LOGGER.error("Error Occured while converting to job to JSON",e);
+		}
 		jobSrchJsonObj.put(MMJBCommonConstants.TOTAL_NO_RECORDS,
 				jSResultDTO.getResultCount());
 		jobSrchJsonObj.put(MMJBCommonConstants.JSON_ROWS, jsonRows);

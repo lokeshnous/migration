@@ -272,6 +272,10 @@ public class EmployerRegistrationConversionHelper {
 			}
 			
 		}
+		if(dto.getMerUserDTO().isAdvPassUserWithNullPass())
+		{
+			aPDto.setPassword(dto.getMerUserDTO().getPassword());
+		}
 		return aPDto;
 	}
 
